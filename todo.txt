@@ -1,0 +1,26 @@
+depend on newset bbmisc version
+
+convert2irace should probably be included here
+
+analog for makeNumericParamSet for discrete?
+
+add helper functions so optpath can be easier used for EAs, eg, look at pascal
+feat sel code 
+
+rename opt.path everywhere where path is used - mlr/mlrTune/mbo/mies*.
+
+setHyperPars: allow names for discrete values?
+
+its stupid that roxygen2 forces us to use aParam so that @name does not get overwritten
+
+### unclear ###
+
+should we include a discrete type "ordered"?    
+#Patrick: Might be a little bit ambiguous? Ordered discrete parameters can 
+be easily represented by integers.
+
+remove mlr:par.valnames.to.vals? or move to ParamHelpers
+
+# for the future:
+extend support of constraints to linear constraints
+
