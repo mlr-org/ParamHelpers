@@ -1,0 +1,58 @@
+#' Converts a ParamSet object to a parameter object of the irace package.
+#' 
+#' Converts to a textual description used in irace and then potentially calls \link[irace]{readParameters}.
+#' 
+#' @param par.set [\code{\link{ParamSet}}]\cr
+#'   Parameter set.
+#' @param digits [\code{integer(1)}]\cr
+#'   Number of digits used in transformation to irace textual description,
+#'   code\link{formatC} is used here internally.
+#' @param as.chars [\code{logical(1)}]\cr
+#'   Return results as character vector of lines \code{FALSE} or call
+#'   \code{\link[irace]{readParameters}} on it (\code{TRUE}).
+#'   Default is \code{FALSE}.
+#' @return [\code{\link{list}}].
+#' @export
+convertParamSetToIrace = function(par.set, digits=4, as.chars = FALSE) {  
+  checkArg(par.set, "ParamSet")
+  digits = convertInteger(digits)
+  checkArg(digits, "integer", len=1L, na.ok=FALSE, lower=1L)  
+  checkArg(as.chars, "logical", len=1L, na.ok=FALSE)  
+  requirePackages("irace", "convertParamSetToIrace")
+  lines = character(0)
+  fnum = function(x) formatC(x, format="f", digits=digits)
+  count = 1
+  for (i in seq_along(par.set$pars)) {
+    p = par.set$pars[[i]]
+    type = switch(
+      p$type,
+      numeric = "r",
+      numericvector = "r",
+      integer = "i",
+      integervector = "i",
+      discrete = "c",
+      discretevector = "c",
+      logical = "c",
+      logicalvector = "c",
+      ordered = "o"
+    )   
+    for (j in 1:p$len) {
+      id = if(p$len == 1) p$id else paste(p$id, j, sep="")
+      if (p$type %in% c("numeric", "numericvector")) 
+        lines[count] = sprintf('%s "" %s (%s, %s)', id, type, fnum(p$lower[j]), fnum(p$upper[j]))
+      if (p$type %in% c("integer", "integervector")) 
+        lines[count] = sprintf('%s "" %s (%i, %i)', id, type, p$lower[j], p$upper[j])
+      if (p$type %in% c("discrete", "discretevector", "logical", "logicalvector")) {
+        v = paste("\"", names(p$values), "\"", sep="")
+        lines[count] = sprintf('%s "" %s (%s)', id, type, collapse(v))
+      }
+      count = count + 1
+    }
+  }
+  if (as.chars) {
+    return(lines)
+  } else {
+    lines = collapse(lines, "\n")
+    return(readParameters(text=lines))
+  }
+}
