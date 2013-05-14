@@ -1,4 +1,5 @@
 pkg
+pkg.Rcheck
 ParamHelpers.Rproj
 .Rproj.user
 
