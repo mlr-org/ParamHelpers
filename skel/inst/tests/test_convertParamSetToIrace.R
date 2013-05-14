@@ -32,7 +32,15 @@ test_that("convertParamSetToIrace", {
   runIrace(ps, hook.run)
   ps = makeParamSet(
     makeDiscreteParam("x1", values=c("a", "b")),
-    makeLogicalVectorParam("x2", requires=quote(x1 == "a"))
+    makeLogicalParam("x2", requires=quote(x1 == "a"))
   )
-  convertParamSetToIace(ps)
+  ips = convertParamSetToIrace(ps)
+  expect_false(identical(ips$constraints$x2, expression(TRUE)))
+  hook.run = function(instance, candidate, extra.params = NULL, config = list()) {
+    v = candidate$values
+    if ((v$x1 == "a" && is.na(v$x2)) || (v$x1 == "b" && !is.na(v$x2)))
+      stop("foo")
+    1
+  }
+  runIrace(ps, hook.run, max.exps = 100)
 })
