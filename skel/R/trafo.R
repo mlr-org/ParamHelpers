@@ -24,7 +24,10 @@ trafoValue = function(par, x) {
   if (is(par, "ParamSet"))
     Map(trafoValue, par$pars, x)
   else
-    par$trafo(x)
+    if(is.null(par$trafo))
+      x
+    else
+      par$trafo(x)
 }
 
 #' Transform optimization path.

@@ -1,10 +1,11 @@
 #' @rdname Param
 #' @export 
-makeNumericParam = function(id, lower=-Inf, upper=Inf, trafo=identity, requires=NULL) {
+makeNumericParam = function(id, lower=-Inf, upper=Inf, trafo=NULL, requires=NULL) {
   checkArg(id, "character", len=1, na.ok=FALSE)
   checkArg(lower, "numeric", len=1, na.ok=FALSE)
   checkArg(upper, "numeric", len=1, na.ok=FALSE)
-  checkArg(trafo, "function")
+  if (!is.null(trafo))
+    checkArg(trafo, "function")
   if (!is.null(requires))
     checkArg(requires, c("call", "expression"))
   if (upper < lower)
@@ -14,7 +15,7 @@ makeNumericParam = function(id, lower=-Inf, upper=Inf, trafo=identity, requires=
 
 #' @rdname Param
 #' @export 
-makeNumericVectorParam = function(id, len, lower=-Inf, upper=Inf, trafo=identity, requires=NULL) {
+makeNumericVectorParam = function(id, len, lower=-Inf, upper=Inf, trafo=NULL, requires=NULL) {
   checkArg(id, "character", len=1, na.ok=FALSE)
   len = convertInteger(len)
   checkArg(len, "integer", len=1, na.ok=FALSE)
@@ -24,7 +25,8 @@ makeNumericVectorParam = function(id, len, lower=-Inf, upper=Inf, trafo=identity
     upper = rep(upper, len)
   checkArg(lower, "numeric", min.len=1, na.ok=FALSE)
   checkArg(upper, "numeric", min.len=1, na.ok=FALSE)
-  checkArg(trafo, "function")
+  if (!is.null(trafo))
+    checkArg(trafo, "function")
   if (!is.null(requires))
     checkArg(requires, c("call", "expression"))
   if (any(upper < lower))
@@ -34,11 +36,12 @@ makeNumericVectorParam = function(id, len, lower=-Inf, upper=Inf, trafo=identity
 
 #' @rdname Param
 #' @export 
-makeIntegerParam = function(id, lower=-Inf, upper=Inf, trafo=identity, requires=NULL) {
+makeIntegerParam = function(id, lower=-Inf, upper=Inf, trafo=NULL, requires=NULL) {
   checkArg(id, "character", len=1, na.ok=FALSE)
   checkArg(lower, "numeric", len=1, na.ok=FALSE)
   checkArg(upper, "numeric", len=1, na.ok=FALSE)
-  checkArg(trafo, "function")
+  if (!is.null(trafo))
+    checkArg(trafo, "function")
   if (!is.null(requires))
     checkArg(requires, c("call", "expression"))
   if (upper < lower)
@@ -48,7 +51,7 @@ makeIntegerParam = function(id, lower=-Inf, upper=Inf, trafo=identity, requires=
 
 #' @rdname Param
 #' @export 
-makeIntegerVectorParam = function(id, len, lower=-Inf, upper=Inf, trafo=identity, requires=NULL) {
+makeIntegerVectorParam = function(id, len, lower=-Inf, upper=Inf, trafo=NULL, requires=NULL) {
   checkArg(id, "character", len=1, na.ok=FALSE)
   len = convertInteger(len)
   checkArg(len, "integer", len=1, na.ok=FALSE)
@@ -58,7 +61,8 @@ makeIntegerVectorParam = function(id, len, lower=-Inf, upper=Inf, trafo=identity
     upper = rep(upper, len)
   checkArg(lower, "numeric", min.len=1, na.ok=FALSE)
   checkArg(upper, "numeric", min.len=1, na.ok=FALSE)
-  checkArg(trafo, "function")
+  if (!is.null(trafo))
+    checkArg(trafo, "function")
   if (!is.null(requires))
     checkArg(requires, c("call", "expression"))
   if (any(upper < lower))

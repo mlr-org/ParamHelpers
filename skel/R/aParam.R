@@ -8,7 +8,7 @@
 #' \item{lower [\code{numeric}]}{See argument of same name.}
 #' \item{upper [\code{numeric}]}{See argument of same name.}
 #' \item{values [\code{list}}{Discrete values, always stored as a named list.}
-#' \item{trafo [\code{function(x)}]}{See argument of same name.}
+#' \item{trafo [NULL | \code{function(x)}]}{See argument of same name.}
 #' \item{requires [\code{expression}]}{See argument of same name.}
 #' }
 #' 
@@ -33,7 +33,7 @@
 #'   Function to transform parameter. Is should be applied to the parameter value 
 #'   before it is e.g. passed to a corresponding fitness function. 
 #'   Function must accept a parameter value as the first argument and return a transformed one.
-#'   Default is \code{\link{identity}}.   
+#'   Default is \code{NULL} which means no transformation.   
 #' @param requires [R expression]\cr
 #'   States requirements on other paramaters' values, so that setting
 #'   this parameter makes sense (dependent parameter).
@@ -48,7 +48,7 @@
 #' makeDiscreteParam("y", values=c("a","b"))
 NULL
 
-makeParam = function(id, type, len, lower, upper, values, trafo=identity, requires=NULL) {
+makeParam = function(id, type, len, lower, upper, values, trafo=NULL, requires=NULL) {
   structure(list(
     id = id,
     type = type,
@@ -64,7 +64,7 @@ makeParam = function(id, type, len, lower, upper, values, trafo=identity, requir
 #' @S3method print Param
 print.Param = function(x, ...) {
   type = x$type
-  ut = !identical(x$trafo, identity)
+  ut = !is.null(x$trafo)
   req = !is.null(x$requires)
   if (type == "numeric")
     catf("Num param '%s'. Constr: %s to %s. Trafo: %s. Requires: %s", x$id, x$lower, x$upper, ut, req) 
