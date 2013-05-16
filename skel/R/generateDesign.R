@@ -85,7 +85,7 @@ generateDesign = function(n=10L, par.set, fun, fun.args=list(), trafo=FALSE, int
       col = (cc + 1) : (cc + p$len)   
     else 
       col = cc + 1    
-    trafo.fun = if (trafo) p$trafo else identity
+    trafo.fun = if (trafo && !is.null(p$trafo)) p$trafo else identity
     if (p$type == "numeric")
       v = (p$upper-p$lower)*des[,col] + p$lower
     else if (p$type == "integer") {
