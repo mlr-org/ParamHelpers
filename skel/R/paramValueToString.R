@@ -1,11 +1,11 @@
 #' Convert a value to a string.
 #' 
 #' For discrete parameter values always the name of the discrete value is used.
+#' 
 #' @param par [\code{\link{Param}} | \code{\link{ParamSet}}]\cr
 #'   Parameter or parameter set.
 #' @param x [any]\cr
-#'   Value for parameter or value for parameter set. In the latter case it must be list
-#'   in the same order as the parameters in the set.  
+#'   Value for parameter or value for parameter set. In the latter case it must be named list.
 #' @return [\code{character(1)}].
 #' @export
 #' @examples 
@@ -52,6 +52,10 @@ paramValueToString.Param = function(par, x) {
 
 #' @S3method paramValueToString ParamSet
 paramValueToString.ParamSet = function(par, x) {
-  x = Map(paramValueToString, par$pars, x)
-  paste(names(par$pars), x, sep="=", collapse=",")
+  res = character(0)
+  for (i in seq_along(x)) {
+    pn = names(x)[i]
+    res[i] = paste(pn, paramValueToString(par$pars[[pn]], x[[pn]]), sep="=")
+  }
+  return(collapse(res, sep=","))
 }
