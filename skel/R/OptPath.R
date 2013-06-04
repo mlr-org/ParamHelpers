@@ -1,7 +1,7 @@
 #' Create optimization path.
 #' 
-#' Optimizers can log their evaluated points
-#' iteratively into this object. Can be converted into a data.frame with
+#' Optimizers can iteratively log their evaluated points
+#' into this object. Can be converted into a data.frame with
 #' \code{as.data.frame(x, discrete.as.factor = TRUE / FALSE)}.
 #' 
 #' A optimization path has a number of path elements, where each element consists of: the value of the
@@ -9,7 +9,7 @@
 #' of this point and the end-of-life (eol) of this point.    
 #'
 #' For discrete parameters always the name of the value is stored as a character. 
-#' When you retrieve an element with \code{\link{getOptPathEl}} this name is converted to the actual discrete value.
+#' When you retrieve an element with \code{\link{getOptPathEl}}, this name is converted to the actual discrete value.
 #'
 #' If parameters have associated transformation you are free to decide whether you want to
 #' add x values before or after transformation, see argument \code{add.transformed.x} and 
@@ -26,7 +26,7 @@
 #'
 #' @param par.set [\code{\link{ParamSet}}]\cr 
 #'   Parameter set for the decision variables that are optimized.
-#' @param y.names [\code{logical(1)}]\cr 
+#' @param y.names [\code{character}]\cr 
 #'   Names of performance measures that are optimized or logged.
 #' @param minimize [\code{logical(1)}]\cr 
 #'   Which of the performance measures in y.names should be minimized?
