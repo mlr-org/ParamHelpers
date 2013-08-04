@@ -28,8 +28,9 @@
 #'   Parameter set for the decision variables that are optimized.
 #' @param y.names [\code{character}]\cr 
 #'   Names of performance measures that are optimized or logged.
-#' @param minimize [\code{logical(1)}]\cr 
+#' @param minimize [\code{logical}]\cr 
 #'   Which of the performance measures in y.names should be minimized?
+#'   Vector of booleans in the same order as \code{y.names}.
 #' @param add.transformed.x [\code{logical(1)}]\cr 
 #'   If some parameters have associated transformations, are you going to 
 #'   add x values after they have been transformed?
