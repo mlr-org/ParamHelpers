@@ -24,3 +24,11 @@ remove mlr:par.valnames.to.vals? or move to ParamHelpers
 # for the future:
 extend support of constraints to linear constraints
 
+Idea from Michel:
+makeConditionalParameter([name], [Rexp], requires = c([name1], [name2], ...))
+Wird evaluiert wenn alle requires bestimmt sind. Problem: Rekursive
+Requirements.
+Und dann kann man sowas machen wie
+make[]Parameter(..., requires = quote(isTRUE(highdim)))
+
+
