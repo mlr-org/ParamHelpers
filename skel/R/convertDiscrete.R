@@ -1,38 +1,41 @@
 #' Convert encoding name(s) to discrete value(s).
-#' 
-#' @param par [\code{\link{Param}}]\cr 
-#'   Discrete parameter or discrete vector.  
-#' @param name [\code{character}]\cr 
-#'   Name (string) encoding the value for a discrete parameter, 
-#'   or a character vector of names for a discrete vector.   
-#' @return [any]. Parameter value for a discrete parameter 
+#'
+#' @param par [\code{\link{Param}}]\cr
+#'   Discrete parameter or discrete vector.
+#' @param name [\code{character}]\cr
+#'   Name (string) encoding the value for a discrete parameter,
+#'   or a character vector of names for a discrete vector.
+#' @return [any]. Parameter value for a discrete parameter
 #'   or a list of values for a discrete vector.
 #' @examples
 #' p <- makeDiscreteParam("u", values=c(x1="a", x2="b", x3="b"))
 #' discreteNameToValue(p, "x3")
 #' @export
 discreteNameToValue = function(par, name) {
+  # FIXME ugly hack
+  if (is.na(name))
+    return(NA)
   checkArg(par, "Param")
   checkArg(par$type, choices=c("discrete", "discretevector"))
   checkArg(name, "character", na.ok=FALSE, len=ifelse(par$type == "discrete", 1, par$len))
   d = setdiff(name, names(par$values))
   if (length(d) > 0)
     stopf("Names not used in values for parameter %s: %s", par$id, collapse(d))
-  if (par$type == "discrete")  
+  if (par$type == "discrete")
     par$values[[name]]
-  else if (par$type == "discretevector")  
+  else if (par$type == "discretevector")
     par$values[name]
 }
 
-#' Convert discrete value(s) to encoding name(s). 
+#' Convert discrete value(s) to encoding name(s).
 #'
-#' @param par [\code{\link{Param}}]\cr 
-#'   Discrete parameter or discrete vector.  
-#' @param x [any]\cr 
+#' @param par [\code{\link{Param}}]\cr
+#'   Discrete parameter or discrete vector.
+#' @param x [any]\cr
 #'   Parameter value or a list of values for a discrete vector.
 #' @return [\code{character}]. Single name for a discrete parameter or a character vector of
 #'   names for a discrete vector.
-#' @examples 
+#' @examples
 #' p <- makeDiscreteParam("u", values=c(x1="a", x2="b", x3="c"))
 #' discreteValueToName(p, "b")
 #' @export
