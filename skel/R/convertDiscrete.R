@@ -13,7 +13,7 @@
 #' @export
 discreteNameToValue = function(par, name) {
   # FIXME ugly hack
-  if (is.na(name))
+  if (length(name) == 1L && is.na(name))
     return(NA)
   checkArg(par, "Param")
   checkArg(par$type, choices=c("discrete", "discretevector"))
@@ -40,6 +40,9 @@ discreteNameToValue = function(par, name) {
 #' discreteValueToName(p, "b")
 #' @export
 discreteValueToName = function(par, x) {
+  # FIXME ugly hack
+  if (length(x) == 1L && is.na(x))
+    return(NA)
   checkArg(par, "Param")
   checkArg(par$type, choices=c("discrete", "discretevector"))
   if (par$type == "discretevector")
