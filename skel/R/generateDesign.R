@@ -23,6 +23,10 @@
 #'   Should discrete parameters have columns of type \dQuote{factor} in result?
 #'   Otherwise character columns are generated.
 #'   Default is \code{TRUE}.  
+#' @param logicals.as.factor [\code{logical(1)}]\cr
+#'   Should logical parameters have columns of type \dQuote{factor} in result?
+#'   Otherwise logical columns are generated.
+#'   Default is \code{FALSE}.  
 #' @return The created design is a data.frame. Columns are named by the ids of the parameters.
 #'   If the \code{par.set} argument contains a vector parameter, its corresponding column names  
 #'   in the design are the parameter id concatenated with 1 to dimension of the vector.   
@@ -47,7 +51,7 @@
 #'   makeNumericVectorParam("y", len=2, lower=0, upper=1, trafo=function(x) x/sum(x)) 
 #' )
 #' generateDesign(10, ps, trafo=TRUE)
-generateDesign = function(n=10L, par.set, fun, fun.args=list(), trafo=FALSE, ints.as.num=FALSE, discretes.as.factor=TRUE) {
+generateDesign = function(n=10L, par.set, fun, fun.args=list(), trafo=FALSE, ints.as.num=FALSE, discretes.as.factor=TRUE, logicals.as.factor=FALSE) {
   n = convertInteger(n)
   checkArg(n, "integer", len=1L, na.ok=FALSE)
   checkArg(par.set, "ParamSet")
@@ -136,7 +140,7 @@ generateDesign = function(n=10L, par.set, fun, fun.args=list(), trafo=FALSE, int
   }
   
   colnames(des) = getParamIds(par.set, repeated=TRUE, with.nr=TRUE)
-  des = convertDfCols(des, ints.as.num=ints.as.num, chars.as.factor=discretes.as.factor)
+  des = convertDfCols(des, ints.as.num=ints.as.num, chars.as.factor=discretes.as.factor, logicals.as.factor=logicals.as.factor)
   attr(des, "trafo") = trafo
   return(des)
 }
