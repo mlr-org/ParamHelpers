@@ -1,11 +1,16 @@
 #' Convert a value to a string.
 #'
+#' Useful helper for logging.
 #' For discrete parameter values always the name of the discrete value is used.
-#'
+#' 
 #' @param par [\code{\link{Param}} | \code{\link{ParamSet}}]\cr
 #'   Parameter or parameter set.
 #' @param x [any]\cr
 #'   Value for parameter or value for parameter set. In the latter case it must be named list.
+#' @param show.missing.values [\code{logical(1)}]\cr
+#'   Display \dQuote{NA} for parameters, which have no setting, because their requirements are not satified 
+#'   (dependent parameters), instead of nothing?
+#'   Default is \code{FALSE}.
 #' @return [\code{character(1)}].
 #' @export
 #' @examples
@@ -21,14 +26,20 @@
 #'
 #' p <- makeDiscreteParam("x", values=list(a=NULL, b=2))
 #' paramValueToString(p, NULL) # "a"
-paramValueToString = function(par, x) {
+paramValueToString = function(par, x, show.missing.values=FALSE) {
   UseMethod("paramValueToString")
 }
 
 #' @S3method paramValueToString Param
-paramValueToString.Param = function(par, x) {
-  if (length(x) == 1L && is.na(x))
-    return("<NA>")
+paramValueToString.Param = function(par, x, show.missing.values=FALSE) {
+  # handle missings
+  if (isMissingValue(x)) {
+    if (show.missing.values)
+      return("NA")
+    else
+      return("")
+  }
+
   type = par$type
   if (type == "numeric")
     sprintf("%.2f", x)
@@ -53,11 +64,15 @@ paramValueToString.Param = function(par, x) {
 }
 
 #' @S3method paramValueToString ParamSet
-paramValueToString.ParamSet = function(par, x) {
+paramValueToString.ParamSet = function(par, x, show.missing.values=FALSE) {
   res = character(0)
   for (i in seq_along(x)) {
     pn = names(x)[i]
-    res[i] = paste(pn, paramValueToString(par$pars[[pn]], x[[pn]]), sep="=")
+    val = x[[pn]]
+    if (show.missing.values || !isMissingValue(val))  {             
+      p = par$pars[[pn]]
+      res[length(res)+1] = sprintf("%s=%s", pn, paramValueToString(p, val, show.missing.values))          
+    }
   }
   return(collapse(res, sep=","))
 }

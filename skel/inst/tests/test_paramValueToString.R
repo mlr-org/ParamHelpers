@@ -28,8 +28,11 @@ test_that("requires works", {
     makeNumericParam("y", lower=1, upper=2, requires = quote(x == "a")),
     makeIntegerVectorParam("z", len=2, lower=1, upper=20, requires = quote(x == "b"))
   )
-  expect_equal(paramValueToString(ps, list(x="a", y=1, z=NA)), "x=a,y=1.00,z=NA")
-  expect_equal(paramValueToString(ps, list(x="b", y=NA, z=2:3)), "x=b,y=NA,z=2,3")
-  expect_equal(paramValueToString(ps, list(x="b", z=2:3)), "x=b,z=2,3")
+  expect_equal(paramValueToString(ps, list(x="a", y=1, z=NA), show.missing.values=TRUE), "x=a,y=1.00,z=NA")
+  expect_equal(paramValueToString(ps, list(x="b", y=NA, z=2:3), show.missing.values=TRUE), "x=b,y=NA,z=2,3")
+  expect_equal(paramValueToString(ps, list(x="b", z=2:3), show.missing.values=TRUE), "x=b,z=2,3")
+  expect_equal(paramValueToString(ps, list(x="a", y=1, z=NA), show.missing.values=FALSE), "x=a,y=1.00")
+  expect_equal(paramValueToString(ps, list(x="b", y=NA, z=2:3), show.missing.values=FALSE), "x=b,z=2,3")
+  expect_equal(paramValueToString(ps, list(x="b", z=2:3), show.missing.values=FALSE), "x=b,z=2,3")
 })
 

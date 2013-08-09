@@ -1,4 +1,7 @@
 #' Convert encoding name(s) to discrete value(s).
+#' 
+#' If the \code{name} is \code{NA}, indicating a missing parameter value due to unsatisfied requirements, 
+#' \code{NA} is returned.
 #'
 #' @param par [\code{\link{Param}}]\cr
 #'   Discrete parameter or discrete vector.
@@ -12,8 +15,8 @@
 #' discreteNameToValue(p, "x3")
 #' @export
 discreteNameToValue = function(par, name) {
-  # FIXME ugly hack
-  if (length(name) == 1L && is.na(name))
+  # handle missing parameter values (requires)
+  if (isMissingName(name))
     return(NA)
   checkArg(par, "Param")
   checkArg(par$type, choices=c("discrete", "discretevector"))
@@ -28,6 +31,9 @@ discreteNameToValue = function(par, name) {
 }
 
 #' Convert discrete value(s) to encoding name(s).
+#' 
+#' If the value \code{x} is \code{NA}, indicating a missing parameter value due to unsatisfied requirements, 
+#' \code{NA} is returned.
 #'
 #' @param par [\code{\link{Param}}]\cr
 #'   Discrete parameter or discrete vector.
@@ -40,9 +46,9 @@ discreteNameToValue = function(par, name) {
 #' discreteValueToName(p, "b")
 #' @export
 discreteValueToName = function(par, x) {
-  # FIXME ugly hack
-  if (length(x) == 1L && is.na(x))
-    return(NA)
+  # handle missing parameter values (requires)
+  if (isMissingValue(x))
+    return(NA_character_)
   checkArg(par, "Param")
   checkArg(par$type, choices=c("discrete", "discretevector"))
   if (par$type == "discretevector")
