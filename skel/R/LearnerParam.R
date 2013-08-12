@@ -9,7 +9,6 @@
 #' \item{default [any]}{See argument of same name.}
 #' \item{has.default [\code{logical(1)}]}{Was a default value provided? We cannot check \code{default} for \code{NULL} or \code{NA} as this could be the default value!}
 #' \item{when [\code{numeric}]}{See argument of same name.}
-#' \item{requires [\code{numeric}]}{See argument of same name.}
 #' }
 #' 
 #' @param id [\code{character(1)}]
