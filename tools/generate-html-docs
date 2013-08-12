@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript --vanilla
 
 library(methods)
-setwd("html-docs")
+setwd("html")
 try ({
   library(knitr)
   knit_rd("ParamHelpers")

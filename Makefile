@@ -13,13 +13,14 @@ usage:
 	echo " package       - build source package"
 	echo " install       - install the package"
 	echo " test          - run unit tests"
-	echo " html          - build static html documentation"
 	echo " check         - run R CMD check on the package"
+	echo " html          - build static html documentation"
 
 clean:
 	echo "Cleaning up ..."
 	${DELETE} skel/src/*.o skel/src/*.so pkg.Rcheck
 	${DELETE} pkg
+	${DELETE} html
 	${DELETE} .RData .Rhistory
 
 roxygenize: clean
@@ -41,14 +42,13 @@ test: install
 	echo "Testing package ..."
 	${RSCRIPT} ./test_all.R
 
-html: install
-	echo "Generating html docs..."
-	${DELETE} html-docs
-	mkdir html-docs
-	${RSCRIPT} ./tools/generate-html-docs
-
 check: roxygenize
 	echo "Running R CMD check ..."
 	${R} CMD check pkg
 
+html: install
+	echo "Generating html docs..."
+	${DELETE} html
+	mkdir html
+	${RSCRIPT} ./tools/generate-html-docs
   
