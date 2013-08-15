@@ -1,10 +1,23 @@
-#' Check parameters for requirements / dependencies.
+#' Check parameter / parameter set for requirements / dependencies.
+#' 
+#' \code{TRUE} iff the parameter has any requirements or any parameter in the set has
+#' requirements. 
 #'
-#' @param par.set [\code{\link{ParamSet}}]\cr
-#'   Parameter set.
-#' @return Named logical vector with TRUE for parameters with requirements.
+#' @param par [\code{\link{Param}} | \code{\link{ParamSet}}]\cr
+#'   Parameter or parameter set.
+#' @return [\code{logical(1)}].
 #' @export
-hasRequires = function(par.set) {
-  checkArg(par.set, "ParamSet")
-  vapply(par.set$pars, function(x) is.null(x$requires), logical(1L))
+hasRequires = function(par) {
+  UseMethod("hasRequires")
 }
+
+#' @S3method hasRequires Param
+hasRequires.Param = function(par) {
+  !is.null(par$requires)
+}
+
+#' @S3method hasRequires ParamSet
+hasRequires.ParamSet = function(par) {
+   any(vapply(par$pars, hasRequires, logical(1L)))
+}
+
