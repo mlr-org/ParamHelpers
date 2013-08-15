@@ -42,6 +42,9 @@ NULL
 
 makeLearnerParam = function(p, has.default, default, when, requires) {
   p$has.default = has.default
+  #FIXME: Do we need to check for NA here? hopefully not because this might occur in mlr?
+  if (isScalarNA(default)) 
+    warningf("NA used as a default value for learner parameter %s.\nParamHelpers uses NA as a special value for dependent parameters.", p$id)
   p$default = default
   p$when = when
   p$requires = requires
