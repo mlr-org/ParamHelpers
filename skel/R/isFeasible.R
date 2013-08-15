@@ -3,8 +3,8 @@
 #' Check if a parameter value satisfies the constraints of the
 #' parameter description. This includes the \code{requires} expressions,
 #' if \code{par} is a \code{\link{ParamSet}}. If \code{requires} is not satisfied,
-#' the parameter value must be set to a vector of \code{NA}s (length of the parameter) 
-#' to be still feasible.
+#' the parameter value must be set to scalar \code{NA} to be still feasible, a single scalar even in a 
+#' case of a vector parameter.
 #' 
 #' @param par [\code{\link{Param}} | \code{\link{ParamSet}}]\cr
 #'   Parameter or parameter set.
@@ -57,7 +57,7 @@ isFeasible.ParamSet = function(par, x) {
       # requires, is it ok?
       if (!requiresOk(par, x, i)) {
         # if not, val must be NA
-        if (!(is.vector(v) && length(v) == p$len && all(is.na(v))))
+        if (!isScalarNA(v))
           return(FALSE)
       } else {
         # requires, ok, check constraints

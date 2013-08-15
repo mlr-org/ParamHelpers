@@ -1,4 +1,6 @@
 #' Sample a random value from a parameter or a parameter set uniformly.
+#'
+#' Dependent parameters whose requirements are not satisfied are represented by a scalar NA in the output.
 #' 
 #' @param par [\code{\link{Param}} | \code{\link{ParamSet}}]\cr
 #'   Parameter or parameter set.
@@ -70,15 +72,25 @@ sampleValue.Param = function(par, discrete.names=FALSE) {
 sampleValue.ParamSet = function(par, discrete.names=FALSE) {
   val = lapply(par$pars, sampleValue, discrete.names=discrete.names)
   setNames(lapply(seq_along(val), function(i) {
-    if (!is.null(par$pars[[i]]$requires) && !requiresOk(par, val, i))
-      rep(NA, par$pars[[i]]$len)  
-    else
+    if (!is.null(par$pars[[i]]$requires) && !requiresOk(par, val, i)) {
+      type = par$pars[[i]]$type
+      type = switch(type,
+        numericvector = "numeric",
+        integervector = "integer",
+        logicalvector = "logical",
+        type
+      )
+      as(NA, type)
+     } else {
       val[[i]]
+     }
   }), names(par$pars))
 }
 
 
 #' Sample n random values from a parameter or a parameter set uniformly.
+#' 
+#' Dependent parameters whose requirements are not satisfied are represented by a scalar NA in the output.
 #'
 #' @param par [\code{\link{Param}} | \code{\link{ParamSet}}]\cr
 #'   Parameter or parameter set.

@@ -78,6 +78,8 @@ print.OptPath = function(x, ...) {
 
 #' Get the length of the optimization path.
 #'
+#' Dependent parameters whose requirements are not satisfied are represented by a scalar NA in the output.
+#'
 #' @param op [\code{\link{OptPath}}]\cr
 #'   Optimization path.
 #' @return [\code{integer(1)}]
@@ -87,6 +89,8 @@ getOptPathLength = function(op) {
 }
 
 #' Get an element from the optimization path.
+#'
+#'
 #'
 #' @param op [\code{\link{OptPath}}]\cr
 #'   Optimization path.
@@ -105,6 +109,9 @@ getOptPathEl = function(op, index) {
 #' Note that when adding parameters that have associated tranformations, it is probably
 #' best to add the untransformed values to the path. Otherwise you have to switch off the
 #' feasibility check, as constraints might now not hold anymore.
+#'
+#' Dependent parameters whose requirements are not satisfied must be represented by a scalar NA in the input.
+#' 
 #' @param op [\code{\link{OptPath}}] \cr
 #'   Optimization path.
 #' @param x [\code{list}]\cr

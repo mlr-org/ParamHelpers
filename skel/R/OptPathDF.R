@@ -50,8 +50,14 @@ addOptPathEl.OptPathDF = function(op, x, y, dob=getOptPathLength(op)+1L, eol=as.
     if(!isFeasible(op$par.set, x))
       stop("Trying to add infeasible x values to opt path: ", listToShortString(x))
   }
-  x = Map(function(p, v) if (p$type %in% c("discrete", "discretevector")) discreteValueToName(p, v) else v,
-    op$par.set$pars, x)  
+  x = Map(function(p, v) {
+    if (isScalarNA(v))
+      v = rep(NA, p$len)
+    if (p$type %in% c("discrete", "discretevector")) 
+      discreteValueToName(p, v) 
+    else 
+      v
+  }, op$par.set$pars, x)  
   el = do.call(cbind, lapply(x, function(v) as.data.frame(t(v), stringsAsFactors=FALSE)))
   el = cbind(el, as.data.frame(as.list(y), stringsAsFactors=FALSE))
   colnames(el) = colnames(op$env$path)

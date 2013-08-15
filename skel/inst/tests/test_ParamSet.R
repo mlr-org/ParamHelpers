@@ -140,8 +140,7 @@ test_that("requires works", {
     makeNumericParam("y", requires=quote(x == "a")),
     makeIntegerVectorParam("z", len=2, requires=quote(x == "b"))
   )
-  expect_true(isFeasible(ps, list(x="a", y=1,  z=c(NA, NA))))
-  expect_false(isFeasible(ps, list(x="a", y=1,  z=NA)))
+  expect_true(isFeasible(ps, list(x="a", y=1,  z=NA)))
   expect_false(isFeasible(ps, list(x="a", y=NA, z=1)))
   expect_false(isFeasible(ps, list(x="a", y=NA, z=c(NA, NA))))
   expect_false(isFeasible(ps, list(x="b", y=1, z=c(2,2))))

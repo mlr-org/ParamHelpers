@@ -162,7 +162,7 @@ test_that("requires works", {
     makeIntegerVectorParam("z", len=2, lower=1, upper=20, requires = quote(x == "b"))
   )
   op = makeOptPathDF(par.set=ps, y.names="foo", minimize=TRUE)
-  addOptPathEl(op, x=list(x="a", y=1, z=c(NA, NA)), y=0)
+  addOptPathEl(op, x=list(x="a", y=1, z=NA), y=0)
   addOptPathEl(op, x=list(x="b", y=NA, z=c(2, 3)), y=0)
   d = as.data.frame(op, discretes.as.factor=TRUE)
   expect_equal(d[,1:4], data.frame(x=c("a", "b"), y=c(1, NA), z1=c(NA, 2L), z2=c(NA, 3L)))

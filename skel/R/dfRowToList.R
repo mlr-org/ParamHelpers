@@ -1,4 +1,6 @@
 #' Convert a data.frame row to list of parameter-value-lists.
+#' 
+#' Dependent parameters whose requirements are not satisfied are represented by a scalar NA in the output.
 #'
 #' @param df [\code{data.frame}]\cr
 #'   Data.frame, probably from OptPatDF.
@@ -9,15 +11,15 @@
 #'   Row index.
 #' @return [\code{list}]. Named by parameter ids. 
 #' @export
-dfRowToList = function(df, par.set, i, remove.missing.values=FALSE) {
+dfRowToList = function(df, par.set, i) {
   for (j in 1:ncol(df)) {
     if (is.factor(df[,j]))
       df[,j] = as.character(df[,j])
   }
-  dfRowToList2(df, par.set, i, remove.missing.values)
+  dfRowToList2(df, par.set, i)
 }
 
-dfRowToList2 = function(df, par.set, i, remove.missing.values=FALSE) {
+dfRowToList2 = function(df, par.set, i) {
   df = df[i,,drop=FALSE]
   pars = par.set$pars
   col = 0
@@ -45,19 +47,15 @@ dfRowToList2 = function(df, par.set, i, remove.missing.values=FALSE) {
         x[[p$id]] = discreteNameToValue(p, as.character(entry))
     }
   }
-  if (remove.missing.values) {
-    j = sapply(x, isScalarNA)
-    x[j] = NULL
-  }
   return(x)
 }
 
 #' @export
 #' @rdname dfRowToList
-dfRowsToList = function(df, par.set, remove.missing.values=FALSE) {
+dfRowsToList = function(df, par.set) {
   for (j in 1:ncol(df)) {
     if (is.factor(df[,j]))
       df[,j] = as.character(df[,j])
   }
-  lapply(1:nrow(df), dfRowToList2, df=df, par.set=par.set, remove.missing.values=remove.missing.values)
+  lapply(1:nrow(df), dfRowToList2, df=df, par.set=par.set)
 }
