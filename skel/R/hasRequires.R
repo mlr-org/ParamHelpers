@@ -18,6 +18,6 @@ hasRequires.Param = function(par) {
 
 #' @S3method hasRequires ParamSet
 hasRequires.ParamSet = function(par) {
-   any(vapply(par$pars, hasRequires, logical(1L)))
+  any(vapply(par$pars, hasRequires, logical(1L)))
 }
 
