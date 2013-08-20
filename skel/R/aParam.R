@@ -1,42 +1,45 @@
 #' Create a description object for a parameter.
 #' 
+#' For each parameter type a special constructor function is available, see below. 
+#' 
 #' The S3 class is a list which stores these elements:
 #' \describe{
 #' \item{id [\code{character(1)}]}{See argument of same name.}
-#' \item{type [\code{character(1)}]}{Data type of parameter. Possible types are \dQuote{numeric}, \dQuote{numericvector}, \dQuote{integer}, \dQuote{integervector}, \dQuote{logical}, \dQuote{logicalvector}, \dQuote{discrete}, \dQuote{function}, \dQuote{untyped}.}
+#' \item{type [\code{character(1)}]}{Data type of parameter. Possible types are \dQuote{numeric}, \dQuote{numericvector}, \dQuote{integer}, \dQuote{integervector}, \dQuote{logical}, \dQuote{logicalvector}, \dQuote{discrete}, \dQuote{discretevector}, \dQuote{function}, \dQuote{untyped}.}
 #' \item{len [\code{integer(1)}]}{See argument of same name.}
-#' \item{lower [\code{numeric}]}{See argument of same name.}
-#' \item{upper [\code{numeric}]}{See argument of same name.}
-#' \item{values [\code{list}}{Discrete values, always stored as a named list.}
-#' \item{trafo [NULL | \code{function(x)}]}{See argument of same name.}
-#' \item{requires [\code{expression}]}{See argument of same name.}
+#' \item{lower [\code{numeric}]}{See argument of same name. Length of this vector is \code{len}.}
+#' \item{upper [\code{numeric}]}{See argument of same name. Length of this vector is \code{len}.}
+#' \item{values [\code{list}]}{Discrete values, always stored as a named list.}
+#' \item{trafo [\code{NULL} | \code{function(x)}]}{See argument of same name.}
+#' \item{requires [\code{NULL} | \code{expression}]}{See argument of same name.}
 #' }
 #' 
-#' Create a description object for a parameter.
-#' 
-#' @param id [\code{character(1)}]
+#' @param id [\code{character(1)}]\cr
 #'   Name of parameter.
 #' @param len [\code{integer(1)}]\cr
-#'   Length of vector.
+#'   Length of vector parameter.
 #' @param lower [\code{numeric}]\cr
-#'   Lower bound. 
+#'   Lower bounds. 
+#'   A singe value of length 1 is automatically replicated to \code{len} for vector parameters. 
 #'   Default is \code{-Inf}.
 #' @param upper [\code{numeric}]\cr
-#'   Upper bound. 
+#'   Upper bounds. 
+#'   A singe value of length 1 is automatically replicated to \code{len} for vector parameters. 
 #'   Default is \code{Inf}.
 #' @param values [\code{vector} | \code{list}]\cr
-#'   Possible discrete values. You are allowed to pass a list of complex R values,
+#'   Possible discrete values. Instead of using a vector of atomic values,
+#'   you are also allowed to pass a list of quite \dQuote{complex} R objects,
 #'   which are used as discrete choices. If you do the latter,
 #'   the elements must be uniquely named, so that the names can be used
-#'   as internal represenatation for the choice.    
-#' @param trafo [\code{function(x)}]\cr
-#'   Function to transform parameter. Is should be applied to the parameter value 
-#'   before it is e.g. passed to a corresponding fitness function. 
+#'   as internal represenatations for the choice.    
+#' @param trafo [\code{NULL} | \code{function(x)}]\cr
+#'   Function to transform parameter. It should be applied to the parameter value 
+#'   before it is, e.g., passed to a corresponding objective function. 
 #'   Function must accept a parameter value as the first argument and return a transformed one.
 #'   Default is \code{NULL} which means no transformation.   
-#' @param requires [R expression]\cr
+#' @param requires [\code{NULL} | R expression]\cr
 #'   States requirements on other paramaters' values, so that setting
-#'   this parameter makes sense (dependent parameter).
+#'   this parameter only makes sense if its requirements are satisfied (dependent parameter).
 #'   Only really useful if the parameter is included in a \code{\link{ParamSet}}.
 #'   Default is \code{NULL} which means no requirements.   
 #' @return [\code{\link{Param}}].
