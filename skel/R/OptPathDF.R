@@ -1,4 +1,5 @@
 #' @rdname OptPath
+#' @aliases OptPathDF
 #' @export
 makeOptPathDF = function(par.set, y.names, minimize, add.transformed.x=FALSE) {
   checkArg(par.set, "ParamSet")

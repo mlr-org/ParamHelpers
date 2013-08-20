@@ -32,8 +32,10 @@
 #'   in the design are the parameter id concatenated with 1 to dimension of the vector.   
 #'   The data type of a column 
 #'   is defined in the following way. Numeric parameters generate numeric columns, integer parameters generate numeric/integer columns, 
-#'   logical parameters generate logical columns.
+#'   logical parameters generate logical/factor columns.
 #'   For discrete parameters the value names are used and character or factor columns are generated.
+#'   Dependent parameters whose constaints are unsatisfied generate \code{NA} entries in their
+#'   respective columns.
 #'   The result will have an \code{logical(1)} attribute \dQuote{trafo}, 
 #'   which is set to the value of argument \code{trafo}.
 #' @export 

@@ -90,7 +90,9 @@ getOptPathLength = function(op) {
 
 #' Get an element from the optimization path.
 #'
-#'
+#' Dependent parameters whose requirements 
+#' are not satisfied are represented by a scalar NA in the elements of \code{x} 
+#' of the return value.
 #'
 #' @param op [\code{\link{OptPath}}]\cr
 #'   Optimization path.
@@ -146,7 +148,7 @@ addOptPathEl = function(op, x, y, dob=getOptPathLength(op)+1L, eol=as.integer(NA
 #'
 #' @param op [\code{\link{OptPath}}]\cr
 #'   Optimization path.
-#' @param y.name [\code{character(1)}]
+#' @param y.name [\code{character(1)}]\cr
 #'   Name of target value to decide which element is best.
 #'   Default is \code{y.names[1]}.
 #' @param dob [\code{integer}]\cr

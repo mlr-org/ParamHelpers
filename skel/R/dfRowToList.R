@@ -3,7 +3,7 @@
 #' Dependent parameters whose requirements are not satisfied are represented by a scalar NA in the output.
 #'
 #' @param df [\code{data.frame}]\cr
-#'   Data.frame, probably from OptPatDF.
+#'   Data.frame, potentially from \code{\link{OptPathDF}}.
 #'   Columns are assumed to be in the same order as par.set. 
 #' @param par.set [\code{\link{ParamSet}}]\cr
 #'   Parameter set.
