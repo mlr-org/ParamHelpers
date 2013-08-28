@@ -2,9 +2,10 @@ Package: ParamHelpers
 Title: Helpers for parameters in black-optimization, tuning and maching learning.
 Description: A small package containing useful functions for parameter descriptions and operations in black-optimization, tuning and machine learning.
 Author: Bernd Bischl <bernd_bischl@gmx.net>,
-  Patrick Koch <patrick.koch@fh-koeln.de> 
+  Patrick Koch <patrick.koch@fh-koeln.de>, 
+  Michel Lang <lang@statistik.tu-dortmund.de>
 Maintainer: Bernd Bischl <bernd_bischl@gmx.net>
-License: BSD
+License: BSD_3_clause + file LICENSE
 Imports: BBmisc
 Suggests: lhs, irace, testthat
 LazyData: yes
