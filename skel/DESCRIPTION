@@ -1,6 +1,6 @@
 Package: ParamHelpers
-Title: Helpers for parameters in black-optimization, tuning and maching learning.
-Description: A small package containing useful functions for parameter descriptions and operations in black-optimization, tuning and machine learning.
+Title: Helpers for parameters in black-box optimization, tuning and machine learning.
+Description: A small package containing useful functions for parameter descriptions and operations in black-box optimization, tuning and machine learning.
 Author: Bernd Bischl <bernd_bischl@gmx.net>,
   Patrick Koch <patrick.koch@fh-koeln.de>, 
   Michel Lang <lang@statistik.tu-dortmund.de>
