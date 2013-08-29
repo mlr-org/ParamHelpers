@@ -3,6 +3,7 @@
 #' @param x [\code{list}]\cr
 #'   List of paramter values.
 #' @return [\code{list}].
+#' @export
 removeMissingValues = function(x) {
   Filter(Negate(isScalarNA), x)
 }
