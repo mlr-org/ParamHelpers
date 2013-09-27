@@ -22,6 +22,7 @@ getOptPathLength.OptPathDF = function(op) {
 as.data.frame.OptPathDF = function(x, row.names = NULL, optional = FALSE, discretes.as.factor = FALSE, ...) {
   df = x$env$path
   df = cbind(df, dob=x$env$dob, eol=x$env$eol)
+  #FIXME deprecated
   convertDfCols(df, chars.as.factor=discretes.as.factor)
 }
 

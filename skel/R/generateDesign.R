@@ -142,6 +142,7 @@ generateDesign = function(n=10L, par.set, fun, fun.args=list(), trafo=FALSE, int
   }
   
   colnames(des) = getParamIds(par.set, repeated=TRUE, with.nr=TRUE)
+  # FIXME deprecated
   des = convertDfCols(des, ints.as.num=ints.as.num, chars.as.factor=discretes.as.factor, logicals.as.factor=logicals.as.factor)
   attr(des, "trafo") = trafo
   return(des)
