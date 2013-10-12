@@ -1,0 +1,37 @@
+\name{filterParams}
+\alias{filterParams}
+\title{Get parameter subset of only certain parameters.}
+\usage{
+  filterParams(par.set, type)
+}
+\arguments{
+  \item{par.set}{[\code{\link{ParamSet}}]\cr Parameter
+  set.}
+
+  \item{type}{[\code{character}]\cr Vector of allowed
+  types, subset of: \dQuote{numeric}, \dQuote{integer},
+  \dQuote{numericvector}, \dQuote{integervector},
+  \dQuote{discrete}, \dQuote{discretevector},
+  \dQuote{logical}, \dQuote{logicalvector},
+  \dQuote{function}, \dQuote{untyped}.}
+}
+\value{
+  [\code{\link{ParamSet}}].
+}
+\description{
+  Parameter order is not changed.
+}
+\examples{
+ps <- makeParamSet(
+  makeNumericParam("u", lower=1),
+  makeIntegerParam("v", lower=1, upper=2),
+  makeDiscreteParam("w", values=1:2),
+  makeLogicalParam("x"),
+  makeNumericParam("y")
+)
+# filter for numeric parameters
+filterParams(ps, "numeric")
+# filter for numeric and integer parameters
+filterParams(ps, c("integer","numeric"))
+}
+

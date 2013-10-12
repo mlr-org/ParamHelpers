@@ -1,0 +1,35 @@
+\name{getParamIds}
+\alias{getParamIds}
+\title{Return ids of parameters in parameter set.}
+\usage{
+  getParamIds(par.set, repeated = FALSE, with.nr = FALSE)
+}
+\arguments{
+  \item{par.set}{[\code{\link{ParamSet}}]\cr Parameter
+  set.}
+
+  \item{repeated}{[\code{logical(1)}]\cr Should ids be
+  repeated length-times if parameter is a vector?  Default
+  is \code{FALSE}.}
+
+  \item{with.nr}{[\code{logical(1)}]\cr Should number from
+  1 to length be appended to id if \code{repeated} is
+  \code{TRUE}?  Otherwise ignored.  Default is
+  \code{FALSE}.}
+}
+\value{
+  [\code{character}].
+}
+\description{
+  Useful if vectors are included.
+}
+\examples{
+ps <- makeParamSet(
+  makeNumericParam("u"),
+  makeIntegerVectorParam("v", len=2)
+)
+getParamIds(ps)
+getParamIds(ps, repeated=TRUE)
+getParamIds(ps, repeated=TRUE, with.nr=TRUE)
+}
+

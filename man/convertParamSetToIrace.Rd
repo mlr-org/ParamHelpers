@@ -1,0 +1,28 @@
+\name{convertParamSetToIrace}
+\alias{convertParamSetToIrace}
+\title{Converts a ParamSet object to a parameter object of the irace package.}
+\usage{
+  convertParamSetToIrace(par.set, digits = 4,
+    as.chars = FALSE)
+}
+\arguments{
+  \item{par.set}{[\code{\link{ParamSet}}]\cr Parameter
+  set.}
+
+  \item{digits}{[\code{integer(1)}]\cr Number of digits
+  used in transformation to irace textual description,
+  code\link{formatC} is used here internally.}
+
+  \item{as.chars}{[\code{logical(1)}]\cr Return results as
+  character vector of lines \code{FALSE} or call
+  \code{\link[irace]{readParameters}} on it (\code{TRUE}).
+  Default is \code{FALSE}.}
+}
+\value{
+  [\code{\link{list}}].
+}
+\description{
+  Converts to a textual description used in irace and then
+  potentially calls \link[irace]{readParameters}.
+}
+

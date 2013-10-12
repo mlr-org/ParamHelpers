@@ -1,0 +1,16 @@
+.gitignore
+
+Makefile
+
+todo.txt
+
+test_all.R
+test_src.R
+
+.Rproj.user
+
+ ^.*tar.gz$
+ ^.*\.swp$
+
+
+

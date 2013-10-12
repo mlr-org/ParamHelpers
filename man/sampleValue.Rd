@@ -1,0 +1,45 @@
+\name{sampleValue}
+\alias{sampleValue}
+\title{Sample a random value from a parameter or a parameter set uniformly.}
+\usage{
+  sampleValue(par, discrete.names = FALSE)
+}
+\arguments{
+  \item{par}{[\code{\link{Param}} |
+  \code{\link{ParamSet}}]\cr Parameter or parameter set.}
+
+  \item{discrete.names}{[\code{logical(1)}]\cr Should names
+  be sampled for discrete / logical paramaters or values
+  instead?  Default is code {FALSE}.}
+}
+\value{
+  The return type is determined by the type of the
+  parameter. For a set a named list of such values in the
+  correct order is returned.
+}
+\description{
+  Dependent parameters whose requirements are not satisfied
+  are represented by a scalar NA in the output.
+}
+\examples{
+# bounds are necessary here, can't sample with Inf bounds:
+u <- makeNumericParam("x", lower=0, upper=1)
+# returns a random number between 0 and 1:
+sampleValue(u)
+
+p <- makeDiscreteParam("x", values=c("a","b","c"))
+# can be either "a", "b" or "c"
+sampleValue(p)
+
+p <- makeIntegerVectorParam("x", len=2, lower=1, upper=5)
+# vector of two random integers between 1 and 5:
+sampleValue(p)
+
+ps <- makeParamSet(
+  makeNumericParam("x", lower=1, upper=10),
+  makeIntegerParam("y", lower=1, upper=10),
+  makeDiscreteParam("z", values=1:2)
+)
+sampleValue(ps)
+}
+

@@ -1,0 +1,51 @@
+\name{getLower}
+\alias{getLower}
+\alias{getUpper}
+\alias{getValues}
+\title{Get lower / upper bounds and allowed discrete values for parameters.}
+\usage{
+  getLower(par.set, with.nr = FALSE)
+
+  getUpper(par.set, with.nr = FALSE)
+
+  getValues(par.set)
+}
+\arguments{
+  \item{par.set}{[\code{\link{ParamSet}}]\cr Parameter
+  set.}
+
+  \item{with.nr}{[\code{logical(1)}]\cr Should number from
+  1 to length be appended to names of vector params?
+  Default is \code{FALSE}.}
+}
+\value{
+  [\code{vector} | \code{list}]. Named by parameter ids.
+}
+\description{
+  \code{getLower} and \code{getUpper} return a numerical
+  vector of lower and upper bounds, \code{getValues}
+  returns a list of possible value sets for discrete
+  parameters.
+}
+\details{
+  Parameters for which such bound make no sense - due to
+  their type - are not present in the result.
+}
+\examples{
+ps <- makeParamSet(
+  makeNumericParam("u"),
+  makeIntegerParam("v", lower=1, upper=2),
+  makeDiscreteParam("w", values=1:2),
+  makeNumericVectorParam("x", len=2, lower=c(0, 10), upper=c(1, 11))
+)
+getLower(ps)
+getUpper(ps)
+
+ps <- makeParamSet(
+  makeNumericParam("u"),
+  makeDiscreteParam("v", values=c("a", "b")),
+  makeDiscreteParam("w", values=list(a=list(), b=NULL))
+)
+getValues(ps)
+}
+

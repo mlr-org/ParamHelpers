@@ -1,6 +1,8 @@
 R	:= R --no-save --no-restore
 RSCRIPT	:= Rscript
 DELETE	:= rm -fR
+VERSION := $(shell ./tools/set-version)
+TARGZ   := ParamHelpers_$(VERSION).tar.gz
 
 .SILENT:
 .PHONEY: clean roxygenize package windows install test check
@@ -16,38 +18,36 @@ usage:
 	echo " check         - run R CMD check on the package"
 	echo " html          - build static html documentation"
 
+
 clean:
-	echo "Cleaning up ..."
-	${DELETE} skel/src/*.o skel/src/*.so pkg.Rcheck
-	${DELETE} pkg
+	echo "\nCleaning up ..."
+	${DELETE} src/*.o src/*.so *.tar.gz
 	${DELETE} html
 	${DELETE} .RData .Rhistory
+	echo "Getting version and writing to DESCRIPTION: $(VERSION)"
 
 roxygenize: clean
-	echo "Roxygenizing package ..."
+	echo "\nRoxygenizing package ..."
 	${RSCRIPT} ./tools/roxygenize
-	echo "Setting version ..."
-	${RSCRIPT} ./tools/set-version
-	find pkg -depth -type d -name .svn -exec rm -rf {} \;
 
 package: roxygenize
-	echo "Building package file ..."
-	${R} CMD build pkg/
+	echo "\nBuilding package file $(TARGZ)"
+	${R} CMD build . 
  
-install: roxygenize
-	echo "Installing package ..."
-	${R} CMD INSTALL pkg
+install: package
+	echo "\nInstalling package $(TARGZ)"
+	${R} CMD INSTALL $(TARGZ) 
 
 test: install
-	echo "Testing package ..."
+	echo "\nTesting package $(TARGZ)"
 	${RSCRIPT} ./test_all.R
 
-check: roxygenize
-	echo "Running R CMD check ..."
-	${R} CMD check pkg
+check: package
+	echo "\nRunning R CMD check ..."
+	${R} CMD check $(TARGZ)
 
 html: install
-	echo "Generating html docs..."
+	echo "\nGenerating html docs..."
 	${DELETE} html
 	mkdir html
 	${RSCRIPT} ./tools/generate-html-docs

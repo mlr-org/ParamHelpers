@@ -1,0 +1,39 @@
+\name{isFeasible}
+\alias{isFeasible}
+\title{Check if parameter value is valid.}
+\usage{
+  isFeasible(par, x)
+}
+\arguments{
+  \item{par}{[\code{\link{Param}} |
+  \code{\link{ParamSet}}]\cr Parameter or parameter set.}
+
+  \item{x}{[any] \cr Single value to check.  For a
+  parameter set this must be a list in the correct order.}
+}
+\value{
+  logical(1)
+}
+\description{
+  Check if a parameter value satisfies the constraints of
+  the parameter description. This includes the
+  \code{requires} expressions, if \code{par} is a
+  \code{\link{ParamSet}}. If \code{requires} is not
+  satisfied, the parameter value must be set to scalar
+  \code{NA} to be still feasible, a single scalar even in a
+  case of a vector parameter.
+}
+\examples{
+p <- makeNumericParam("x", lower=-1, upper=1)
+isFeasible(p,0) # True
+isFeasible(p,2) # False, out of bounds
+isFeasible(p,"a") # False, wrong type
+# now for parameter sets
+ps <- makeParamSet(
+  makeNumericParam("x",lower=-1,upper=1),
+  makeDiscreteParam("y", values=c("a","b"))
+)
+isFeasible(ps, list(0,"a")) # True
+isFeasible(ps, list("a",0)) # False, wrong order
+}
+
