@@ -10,8 +10,8 @@ ParamHelpers_1.1-35:
 -- removeMissingValues	
 
 ParamHelpers_1.0-55:
-- disabled one unreasobale unit test for CRAN
-- some dependencies are now imports like they shoud be
+- disabled one unreasonable unit test for CRAN
+- some dependencies are now imports like they should be
 
 ParamHelpers_1.0-54: 
 - First submit to CRAN.
