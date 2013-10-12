@@ -59,3 +59,19 @@ dfRowsToList = function(df, par.set) {
   }
   lapply(1:nrow(df), dfRowToList2, df=df, par.set=par.set)
 }
+
+# dfRowToList3 = function(df, par.set, i) {
+#   x = df[i,, drop=FALSE] 
+#   FIXME NA handling still missing
+#   pars = par.set$pars
+#   xi = rep(seq_along(pars), extractSubList(pars, "len"))
+#   res = lapply(seq_along(pars), function(i) {
+#     par = pars[[i]]
+#     entry = unlist(x[i == xi], use.names=FALSE)
+#     if (par$type %in% c("discrete", "discretevector"))
+#       discreteNameToValue(par, as.character(entry))
+#     else
+#       entry
+#   })
+#   setNames(res, extractSubList(pars, "id"))
+# }
