@@ -13,7 +13,7 @@
 #'   Default is \code{FALSE}.
 #' @return [\code{\link{list}}].
 #' @export
-convertParamSetToIrace = function(par.set, digits=4, as.chars = FALSE) {  
+convertParamSetToIrace = function(par.set, digits=4, as.chars=FALSE) {  
   checkArg(par.set, "ParamSet")
   digits = convertInteger(digits)
   checkArg(digits, "integer", len=1L, na.ok=FALSE, lower=1L)  
