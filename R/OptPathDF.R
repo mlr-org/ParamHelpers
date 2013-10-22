@@ -50,7 +50,7 @@ addOptPathEl.OptPathDF = function(op, x, y, dob=getOptPathLength(op)+1L, eol=as.
   checkArg(eol, "integer", 1)
   if (check.feasible) {
     if(!isFeasible(op$par.set, x))
-      stop("Trying to add infeasible x values to opt path: ", listToShortString(x))
+      stop("Trying to add infeasible x values to opt path: ", convertToShortString(x))
   }
   x = Map(function(p, v) {
     if (isScalarNA(v))
