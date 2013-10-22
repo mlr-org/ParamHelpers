@@ -14,6 +14,9 @@
 #'   See \code{\link{Param}}.
 #' @param len [\code{integer(1)}]\cr
 #'   See \code{\link{Param}}.
+#    For vector parameters of a learner it is sometimes useful to not explicitly set  
+#    the length. For this reason, \code{NA} is also allowed, which means 
+#    vectors of any length are ok as values. 
 #' @param lower [\code{numeric}]\cr
 #'   See \code{\link{Param}}.
 #' @param upper [\code{numeric}]\cr
