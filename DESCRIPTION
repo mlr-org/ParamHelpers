@@ -10,7 +10,7 @@ Author: Bernd Bischl <bernd_bischl@gmx.net>, Patrick Koch
 Maintainer: Bernd Bischl <bernd_bischl@gmx.net>
 License: BSD_3_clause + file LICENSE
 Imports:
-    BBmisc
+    BBmisc (>= 1.4)
 Suggests:
     lhs,
     irace,
