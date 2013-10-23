@@ -16,7 +16,7 @@ Suggests:
     irace,
     testthat
 LazyData: yes
-Version: 1.1-51
+Version: 1.1-53
 Collate:
     'aParam.R'
     'convertDiscrete.R'
