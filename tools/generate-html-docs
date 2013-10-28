@@ -1,6 +1,5 @@
 #!/usr/bin/env Rscript --vanilla
 
-library(methods)
 setwd("html")
 try ({
   library(knitr)
