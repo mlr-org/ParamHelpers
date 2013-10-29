@@ -21,7 +21,6 @@ Collate:
     'aParam.R'
     'convertDiscrete.R'
     'convertParamSetToIrace.R'
-    'dfRowToList.R'
     'filterParams.R'
     'generateDesign.R'
     'getBounds.R'
@@ -42,3 +41,5 @@ Collate:
     'trafo.R'
     'zzz.R'
     'generateDesign2.R'
+    'dfRowToList2.R'
+    'dfRowsToList.R'

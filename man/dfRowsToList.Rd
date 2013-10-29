@@ -1,11 +1,11 @@
-\name{dfRowToList}
-\alias{dfRowsToList2}
+\name{dfRowsToList}
+\alias{dfRowsToList}
 \alias{dfRowToList}
 \title{Convert a data.frame row to list of parameter-value-lists.}
 \usage{
-  dfRowToList(df, par.set, i)
+  dfRowsToList(df, par.set)
 
-  dfRowsToList2(df, par.set)
+  dfRowToList(df, par.set, i)
 }
 \arguments{
   \item{df}{[\code{data.frame}]\cr Data.frame, potentially

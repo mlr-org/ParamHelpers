@@ -52,7 +52,7 @@ dfRowToList2 = function(df, par.set, i) {
 
 #' @export
 #' @rdname dfRowToList
-dfRowsToList = function(df, par.set) {
+dfRowsToList2 = function(df, par.set) {
   for (j in 1:ncol(df)) {
     if (is.factor(df[,j]))
       df[,j] = as.character(df[,j])
