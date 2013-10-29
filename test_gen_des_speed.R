@@ -1,5 +1,6 @@
 library(devtools)
 library(testthat)
+library(BBmisc)
 
 load_all(".", reset=TRUE)
 source("R/generateDesign.R")
@@ -39,5 +40,5 @@ measure = function(ps, n) {
 }
 
 measure(ps1, 10000)
-# measure(ps2, 10000)
-# measure(ps3, 10000)
+measure(ps2, 10000)
+measure(ps3, 10000)
