@@ -136,7 +136,7 @@ generateDesign = function(n=10L, par.set, fun, fun.args=list(), trafo=FALSE, int
   res = .Call(c_generateDesign2, res, types2, names(pars), lens, trafos, par.requires, new.env())
   colnames(res) = pids1
   res = convertDataFrameCols(res, ints.as.num=ints.as.num, 
-    chars.as.factor=!discretes.as.factor, logicals.as.factor=logicals.as.factor)
+    chars.as.factor=discretes.as.factor, logicals.as.factor=logicals.as.factor)
   attr(res, "trafo") = trafo
   return(res)
 }
