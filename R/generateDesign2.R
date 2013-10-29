@@ -39,7 +39,6 @@
 #'   The result will have an \code{logical(1)} attribute \dQuote{trafo}, 
 #'   which is set to the value of argument \code{trafo}.
 #' @export 
-#' @useDynLib ParamHelpers c_generateDesign1 c_generateDesign2
 #' @examples
 #' ps <- makeParamSet(
 #'   makeNumericParam("x1", lower=-2, upper=1), 
@@ -54,7 +53,7 @@
 #'   makeNumericVectorParam("y", len=2, lower=0, upper=1, trafo=function(x) x/sum(x)) 
 #' )
 #' generateDesign(10, ps, trafo=TRUE)
-generateDesign = function(n=10L, par.set, fun, fun.args=list(), trafo=FALSE, ints.as.num=FALSE, discretes.as.factor=TRUE, logicals.as.factor=FALSE) {
+generateDesign2 = function(n=10L, par.set, fun, fun.args=list(), trafo=FALSE, ints.as.num=FALSE, discretes.as.factor=TRUE, logicals.as.factor=FALSE) {
   n = convertInteger(n)
   checkArg(n, "integer", len=1L, na.ok=FALSE)
   checkArg(par.set, "ParamSet")
@@ -72,71 +71,84 @@ generateDesign = function(n=10L, par.set, fun, fun.args=list(), trafo=FALSE, int
     stop("par.set must not be empty!")        
   if(any(sapply(par.set$pars, function(x) is(x, "LearnerParameter"))))
     stop("No par.set parameter in 'generateDesign' can be of class 'LearnerParameter'! Use basic parameters instead to describe you region of interest!")        
-  lower = getLower(par.set, with.nr=TRUE)
-  upper = getUpper(par.set, with.nr=TRUE)
-  values =getValues(par.set)
-
+  lower = getLower(par.set)
+  upper = getUpper(par.set)
+  
   if (any(is.infinite(c(lower, upper))))
     stop("generateDesign requires finite box constraints!")
   
   pars = par.set$pars
-  pids1 = getParamIds(par.set, repeated=TRUE, with.nr=TRUE)
-  pids2 = getParamIds(par.set, repeated=TRUE, with.nr=FALSE)
-  lens = getParamLengths(par.set)
-  k = sum(lens)
-
-  des = do.call(fun, c(list(n=n, k=k), fun.args))
   
-  types.df = as.character(unlist(sapply(par.set$pars, function(x) {
-    y = x$type
-    y = if (y == "numericvector")
-      "numeric"
-    else if (y == "integervector")
-      "integer"
-    else if (y %in% c("discrete", "discretevector"))
-      "integer"
-    else if (y %in% c("logical", "logicalvector"))
-      "logical"
-    else
-      y
-    rep(y, x$len)  
-  })))
-  types2 = as.integer(unlist(sapply(par.set$pars, function(x) {
-    y = x$type
-    y =if (y %in% c("numeric", "numericvector"))
-      1L
-    else if (y %in% c("integer", "integervector"))
-      2L
-    else if (y %in% c("discrete", "discretevector"))
-      3L
-    else if (y %in% c("logical", "logicalvector"))
-      4L
-    else 99L
-    rep(y, x$len)
-  })))
+  k = sum(getParamLengths(par.set))
+  des = do.call(fun, c(list(n=n, k=k), fun.args))
+  des = as.data.frame(des)
+  
+  col = 0
+  for (i in 1:length(pars)) {
+    p = pars[[i]]
+    cc = rev(col)[1]
+    if (p$type %in% c("numericvector", "integervector", "discretevector", "logicalvector")) 
+      col = (cc + 1) : (cc + p$len)   
+    else 
+      col = cc + 1    
+    trafo.fun = if (trafo && !is.null(p$trafo)) p$trafo else identity
+    if (p$type == "numeric")
+      v = (p$upper-p$lower)*des[,col] + p$lower
+    else if (p$type == "integer") {
+      v = as.integer(floor((p$upper-p$lower+1)*des[,col] + p$lower))
+    } else if (p$type == "numericvector") {
+      v = t((p$upper-p$lower)*t(des[,col]) + p$lower)
+    } else if (p$type == "integervector") {
+      v = floor((p$upper-p$lower+1)*as.matrix(des[,col]) + p$lower)
+      if (!ints.as.num)
+        mode(v) = "integer"
+    } else if (p$type %in% c("logical", "logicalvector"))
+      v = ifelse(des[,col] <= 0.5, FALSE, TRUE)
+    else if (p$type %in% c("discrete", "discretevector")) {
+      ns = names(p$values)
+      indices = ceiling(des[,col,drop=FALSE] * length(ns))
+      v = lapply(1:ncol(indices), function(i) {
+        ns[indices[,i]]
+      })
+      v = do.call(function(...) data.frame(..., stringsAsFactors=FALSE), v)
+    }
+    
+    # trafo
+    if (trafo) {
+      if (p$type %in% c("numeric", "integer"))
+        v = trafo.fun(v)
+      else if (p$type %in% c("numericvector", "integervector"))
+        v = t(apply(v, 1, trafo.fun))
+    }
+    des[, col] = v
+  }
  
-  res = makeDataFrame(n, k, col.types=types.df)
-  lower2 = setNames(rep(NA_real_, k), pids1)
-  lower2 = insert(lower2, lower) 
-  upper2 = setNames(rep(NA_real_, k), pids1)
-  upper2 = insert(upper2, upper) 
-  nlevs = setNames(rep(NA_integer_, k), pids1)
-  for (i in seq_len(k))
-    nlevs[i] = length(values[[pids2[i]]])
-  trafos = lapply(pars, function(p) p$trafo)
-  par.requires = lapply(pars, function(p) p$requires)
+  xxx = sapply(par.set$pars, function(p) !is.null(p$requires))
+  if (any(xxx)) {
 
-  res = .Call(c_generateDesign1, des, res, types2, lower2, upper2, nlevs) 
-  for (i in seq_col(res)) {
-    if (types2[i] == 3L) { 
-      res[, i] = as.character(factor(res[, i], 
-        levels=seq_len(nlevs[i]), labels=names(values[[pids2[[i]]]])))
+  #FIXME: *very* inefficient
+  vals = dfRowsToList(des, par.set)
+  for (i in 1:length(vals)) {
+    v = vals[[i]]
+    col = 0
+    for (j in seq_along(par.set$pars)) {
+      p = par.set$pars[[j]]
+      cc = rev(col)[1]
+      if (p$type %in% c("numericvector", "integervector", "discretevector", "logicalvector")) 
+        col = (cc + 1) : (cc + p$len)   
+      else 
+        col = cc + 1      
+      if (!is.null(p$requires) && !requiresOk(par.set, v, j)) {
+        des[i, col] = NA
+      }
     }
   }
-  res = .Call(c_generateDesign2, res, types2, names(pars), lens, trafos, par.requires, new.env())
-  colnames(res) = pids1
-  res = convertDataFrameCols(res, ints.as.num=ints.as.num, 
-    chars.as.factor=!discretes.as.factor, logicals.as.factor=logicals.as.factor)
-  attr(res, "trafo") = trafo
-  return(res)
+
+  }
+
+  colnames(des) = getParamIds(par.set, repeated=TRUE, with.nr=TRUE)
+  # FIXME deprecated
+  des = convertDfCols(des, ints.as.num=ints.as.num, chars.as.factor=discretes.as.factor, logicals.as.factor=logicals.as.factor)
+  attr(des, "trafo") = trafo
+  return(des)
 }

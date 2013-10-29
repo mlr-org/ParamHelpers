@@ -22,6 +22,7 @@ usage:
 clean:
 	echo "\nCleaning up ..."
 	${DELETE} src/*.o src/*.so *.tar.gz
+	${DELETE} *.Rcheck
 	${DELETE} html
 	${DELETE} .RData .Rhistory
 
@@ -31,11 +32,11 @@ roxygenize: clean
 
 package: roxygenize
 	echo "\nBuilding package file $(TARGZ)"
-	${R} CMD build . 
- 
+	${R} CMD build .
+
 install: package
 	echo "\nInstalling package $(TARGZ)"
-	${R} CMD INSTALL $(TARGZ) 
+	${R} CMD INSTALL $(TARGZ)
 
 test: install
 	echo "\nTesting package $(TARGZ)"
@@ -54,4 +55,4 @@ html: install
 	${DELETE} html
 	mkdir html
 	${RSCRIPT} ./tools/generate-html-docs
-  
+
