@@ -40,6 +40,4 @@ Collate:
     'sample.R'
     'trafo.R'
     'zzz.R'
-    'generateDesign2.R'
-    'dfRowToList2.R'
     'dfRowsToList.R'

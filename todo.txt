@@ -1,6 +1,3 @@
-correct last version number (1.1.35) in NEWS
-
-depend on newset bbmisc version
 
 analog for makeNumericParamSet for discrete?
 

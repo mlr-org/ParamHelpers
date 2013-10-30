@@ -22,8 +22,7 @@ getOptPathLength.OptPathDF = function(op) {
 as.data.frame.OptPathDF = function(x, row.names = NULL, optional = FALSE, discretes.as.factor = FALSE, ...) {
   df = x$env$path
   df = cbind(df, dob=x$env$dob, eol=x$env$eol)
-  #FIXME deprecated
-  convertDfCols(df, chars.as.factor=discretes.as.factor)
+  convertDataFrameCols(df, chars.as.factor=discretes.as.factor)
 }
 
 #' @S3method getOptPathEl OptPathDF
@@ -52,11 +51,15 @@ addOptPathEl.OptPathDF = function(op, x, y, dob=getOptPathLength(op)+1L, eol=as.
     if(!isFeasible(op$par.set, x))
       stop("Trying to add infeasible x values to opt path: ", convertToShortString(x))
   }
+
   x = Map(function(p, v) {
     if (isScalarNA(v))
       v = rep(NA, p$len)
     if (p$type %in% c("discrete", "discretevector")) 
       discreteValueToName(p, v) 
+    # we need to make sure cols in df do not get converted to num
+    else if (p$type %in% c("integer", "integervector")) 
+      as.integer(v) 
     else 
       v
   }, op$par.set$pars, x)  

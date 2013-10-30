@@ -37,21 +37,21 @@ SEXP c_dfRowsToList(SEXP s_df, SEXP s_pars, SEXP s_types, SEXP s_parnames, SEXP 
         s_parval = PROTECT(NEW_INTEGER(parlen));
         for (k = 0; k < parlen; k++) {
           INTEGER(s_parval)[k] = INTEGER(VECTOR_ELT(s_df, colcount+k))[row];
-          if (INTEGER(s_parval)[k] == NA_INTEGER)
+          if (INTEGER(s_parval)[k] != NA_INTEGER)
             all_missing = FALSE;
         }
       } else if (type == 3) { /* factors */
         s_parval = PROTECT(NEW_CHARACTER(parlen));
         for (k = 0; k < parlen; k++) {
           SET_STRING_ELT(s_parval, k, STRING_ELT(VECTOR_ELT(s_df, colcount+k), row));
-          if (STRING_ELT(s_parval, k) == NA_STRING)
+          if (STRING_ELT(s_parval, k) != NA_STRING)
             all_missing = FALSE;
         }
       } else if (type == 4) { /* logical */
         s_parval = PROTECT(NEW_LOGICAL(parlen));
         for (k = 0; k < parlen; k++) {
           LOGICAL(s_parval)[k] = LOGICAL(VECTOR_ELT(s_df, colcount+k))[row];
-          if (LOGICAL(s_parval)[k] == NA_LOGICAL)
+          if (LOGICAL(s_parval)[k] != NA_LOGICAL)
             all_missing = FALSE;
         }
       }
