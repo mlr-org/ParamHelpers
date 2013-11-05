@@ -34,6 +34,11 @@ dfRowsToList = function(df, par.set) {
     rep(y, x$len)
   })))
   df = convertDataFrameCols(df, factors.as.char=TRUE)
+  # if we have ints encoded as numerics, recode them
+  for (j in seq_col(df)) {
+    if (types2[j] == 2L && is.double(df[,j]))
+      df[,j] = as.integer(df[,j])
+  }
   .Call(c_dfRowsToList, df, par.set$pars, types2, names(par.set$pars), lens)
 }
 

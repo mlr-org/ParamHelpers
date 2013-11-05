@@ -45,3 +45,15 @@ test_that("requires works", {
   vals = dfRowsToList(des, ps)
   mycheck(vals)
 })
+
+test_that("ints in data frame work", {
+  df = data.frame(x=1:3, y=as.numeric(1:3))
+  ps = makeParamSet(
+    makeIntegerParam("x"),
+    makeIntegerParam("y")
+  )
+  xs = dfRowsToList(df, ps)
+  expect_equal(xs[[1]], list(x=1L, y=1L))
+})
+
+
