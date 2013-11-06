@@ -17,29 +17,25 @@ dfRowsToList = function(df, par.set) {
   checkArg(df, "data.frame")
   checkArg(par.set, "ParamSet")
 
+  ### recode types to integers
+  types = extractSubList(par.set$pars, "type")
   lens = getParamLengths(par.set)
+  lookup = rep(1:4, each=2L)
+  nlookup = c("numeric", "numericvector", "integer", "integervector",
+              "discrete", "discretevector", "logical", "logicalvector")
+  int.type = lookup[match(types, nlookup)]
+  int.type[is.na(int.type)] = 99L
+  int.type = rep.int(int.type, lens)
 
-  types2 = as.integer(unlist(sapply(par.set$pars, function(x) {
-    y = x$type
-    y =if (y %in% c("numeric", "numericvector"))
-      1L
-    else if (y %in% c("integer", "integervector"))
-      2L
-    else if (y %in% c("discrete", "discretevector"))
-      3L
-    else if (y %in% c("logical", "logicalvector"))
-      4L
-    else 99L
-    rep(y, x$len)
-  })))
+
+  ### fix type conversions ... rather ugly
   df = convertDataFrameCols(df, factors.as.char=TRUE)
-
-  ints.as.double = mapply(function(type, col) type == 2L && is.double(col), type=types2, col=df)
+  ints.as.double = mapply(function(type, col) type == 2L && is.double(col), type=int.type, col=df)
   df[ints.as.double] = lapply(df[ints.as.double], as.integer)
-  logicals.as.char = mapply(function(type, col) type == 4L && is.character(col), type=types2, col=df)
+  logicals.as.char = mapply(function(type, col) type == 4L && is.character(col), type=int.type, col=df)
   df[logicals.as.char] = lapply(df[logicals.as.char], as.logical)
 
-  .Call(c_dfRowsToList, df, par.set$pars, types2, names(par.set$pars), lens)
+  .Call("c_dfRowsToList", df, par.set$pars, int.type, names(par.set$pars), lens, PACKAGE="ParamHelpers")
 }
 
 #' @export
