@@ -1,16 +1,15 @@
-
 #' Convert a data.frame row to list of parameter-value-lists.
-#' 
+#'
 #' Dependent parameters whose requirements are not satisfied are represented by a scalar NA in the output.
 #'
 #' @param df [\code{data.frame}]\cr
 #'   Data.frame, potentially from \code{\link{OptPathDF}}.
-#'   Columns are assumed to be in the same order as par.set. 
+#'   Columns are assumed to be in the same order as par.set.
 #' @param par.set [\code{\link{ParamSet}}]\cr
 #'   Parameter set.
 #' @param i [\code{integer(1)}]\cr
 #'   Row index.
-#' @return [\code{list}]. Named by parameter ids. 
+#' @return [\code{list}]. Named by parameter ids.
 #' @export
 #' @useDynLib ParamHelpers c_dfRowsToList
 #' @rdname dfRowsToList
@@ -34,11 +33,12 @@ dfRowsToList = function(df, par.set) {
     rep(y, x$len)
   })))
   df = convertDataFrameCols(df, factors.as.char=TRUE)
-  # if we have ints encoded as numerics, recode them
-  for (j in seq_col(df)) {
-    if (types2[j] == 2L && is.double(df[,j]))
-      df[,j] = as.integer(df[,j])
-  }
+
+  ints.as.double = mapply(function(type, col) type == 2L && is.double(col), type=types2, col=df)
+  df[ints.as.double] = lapply(df[ints.as.double], as.integer)
+  logicals.as.char = mapply(function(type, col) type == 4L && is.character(col), type=types2, col=df)
+  df[logicals.as.char] = lapply(df[logicals.as.char], as.logical)
+
   .Call(c_dfRowsToList, df, par.set$pars, types2, names(par.set$pars), lens)
 }
 
