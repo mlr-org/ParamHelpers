@@ -157,3 +157,25 @@ test_that("requires works", {
   expect_true(all(oks))
 })
 
+test_that("nested requires", {
+  ps7 = makeParamSet(
+    makeDiscreteParam("disc", values=c("a", "b", "c")),
+    makeNumericParam("realA", lower=0, upper=100, requires=quote(disc == "a")),
+    makeIntegerParam("intA", lower=-100, upper=100, requires=quote(disc == "a")),
+    makeDiscreteParam("discA", values=c("m", "w"), requires=quote(disc == "a")),
+    makeNumericParam("realB", lower=-100, upper=100, requires=quote(disc == "b")),
+    makeDiscreteParam("discB", values=c("R", "NR"), requires=quote(disc == "b")),
+    makeNumericParam("realBR", lower=0, upper=2*pi, requires=quote(identical(discB, "R") && identical(disc, "b"))),
+    makeNumericParam("realBNR", lower=0, upper=2*pi, requires=quote(identical(discB, "NR") && identical(disc, "b")))
+  )
+  des = generateDesign(50, par.set=ps7)
+  expect_true(all(is.na(des[des$disc=="a",5:8])))
+  expect_true(all(is.na(des[des$disc=="b",2:4])))
+  expect_true(all(is.na(des[des$disc=="b" & des$discB=="NR",7])))
+  expect_true(all(is.na(des[des$disc=="b" & des$discB=="R",8])))
+  
+  vals = dfRowsToList(des, ps7)
+  oks = sapply(vals, isFeasible, par=ps7)
+  expect_true(all(oks))
+}
+
