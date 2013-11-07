@@ -178,5 +178,5 @@ test_that("nested requires", {
   vals = dfRowsToList(des, ps7)
   oks = sapply(vals, isFeasible, par=ps7)
   expect_true(all(oks))
-}
+})
 

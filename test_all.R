@@ -2,6 +2,7 @@ library(methods)
 library(devtools)
 library(testthat)
 library(BBmisc)
+library(lhs)
 
 if (interactive()) {
   load_all(".", reset=TRUE)
