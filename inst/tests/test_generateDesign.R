@@ -171,6 +171,7 @@ test_that("nested requires", {
   des = generateDesign(50, par.set=ps7)
   expect_true(all(is.na(des[des$disc=="a",5:8])))
   expect_true(all(is.na(des[des$disc=="b",2:4])))
+  expect_true(all(is.na(des[des$disc=="c",2:8])))
   expect_true(all(is.na(des[des$disc=="b" & des$discB=="NR",7])))
   expect_true(all(is.na(des[des$disc=="b" & des$discB=="R",8])))
   
