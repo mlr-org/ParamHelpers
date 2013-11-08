@@ -6,3 +6,5 @@ test_src.R
 html
 *.tar.gz
 *.swp
+src/*.so
+src/*.o
