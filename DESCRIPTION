@@ -41,3 +41,5 @@ Collate:
     'trafo.R'
     'zzz.R'
     'dfRowsToList.R'
+    'getTypes.R'
+    'convertTypesToCInts.R'

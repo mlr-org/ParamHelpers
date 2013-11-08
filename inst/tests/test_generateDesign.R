@@ -3,7 +3,7 @@ context("generateDesign")
 
 test_that("simple num design", {
   ps1 = makeParamSet(
-    makeNumericParam("x1", lower=-2, upper=1) 
+    makeNumericParam("x1", lower=-2, upper=1)
   )
   des = generateDesign(13, ps1, randomLHS)
   expect_equal(nrow(des), 13)
@@ -15,11 +15,11 @@ test_that("simple num design", {
   expect_equal(ncol(des), 1)
   expect_true(des[,1] >= -2 && des[,1] <= 1)
 })
-  
+
 test_that("simple num/int design", {
   ps2 = makeParamSet(
-    makeNumericParam("x1", lower=-2, upper=1), 
-    makeIntegerParam("x2", lower=10, upper=20) 
+    makeNumericParam("x1", lower=-2, upper=1),
+    makeIntegerParam("x2", lower=10, upper=20)
   )
   des = generateDesign(13, ps2, randomLHS)
   expect_equal(nrow(des), 13)
@@ -39,10 +39,10 @@ test_that("simple num/int design", {
 
 test_that("simple num/int/discrete/log design", {
   ps3 = makeParamSet(
-    makeNumericParam("x1", lower=-2, upper=1), 
-    makeIntegerParam("x2", lower=10, upper=20), 
+    makeNumericParam("x1", lower=-2, upper=1),
+    makeIntegerParam("x2", lower=10, upper=20),
     makeDiscreteParam("x3", values=c("a", "b", "c")),
-    makeLogicalParam("x4") 
+    makeLogicalParam("x4")
   )
   des = generateDesign(500, ps3, discretes.as.factor=FALSE)
   expect_equal(nrow(des), 500)
@@ -58,7 +58,7 @@ test_that("simple num/int/discrete/log design", {
   expect_true(all(tab > 140 & tab < 180))
   tab = as.numeric(table(des[,4]))
   expect_true(all(tab > 200 & tab < 300))
-  
+
   des = generateDesign(13, ps3, discretes.as.factor=TRUE)
   expect_equal(nrow(des), 13)
   expect_equal(ncol(des), 4)
@@ -70,13 +70,13 @@ test_that("simple num/int/discrete/log design", {
   expect_true(all(des[,3] %in% names(ps3$pars[[3]]$values)))
   expect_true(is.logical(des[,4]))
 })
-  
+
 test_that("num/int/disc vec design", {
   ps4 = makeParamSet(
-    makeNumericVectorParam("x", len=2, lower=-2, upper=1), 
+    makeNumericVectorParam("x", len=2, lower=-2, upper=1),
     makeIntegerVectorParam("y", len=3, lower=10L, upper=20L),
     makeDiscreteVectorParam("z", len=2, values=list(a="a", b=list())),
-    makeLogicalVectorParam("a", len=2) 
+    makeLogicalVectorParam("a", len=2)
   )
   des = generateDesign(13, ps4)
   expect_equal(nrow(des), 13)
@@ -102,8 +102,8 @@ test_that("num/int/disc vec design", {
 
 test_that("num/int vec design with trafo", {
   ps5 = makeParamSet(
-    makeNumericVectorParam("x", len=2, lower=-2, upper=1, trafo =  function(x) 2^x), 
-    makeIntegerVectorParam("y", len=3, lower=10L, upper=20L, trafo=function(x) 3L*x) 
+    makeNumericVectorParam("x", len=2, lower=-2, upper=1, trafo =  function(x) 2^x),
+    makeIntegerVectorParam("y", len=3, lower=10L, upper=20L, trafo=function(x) 3L*x)
   )
   des = generateDesign(100, ps5, trafo=TRUE)
   expect_equal(nrow(des), 100)
@@ -119,11 +119,11 @@ test_that("num/int vec design with trafo", {
   expect_true(des[,3] >= 30 && des[,3] <= 60)
   expect_true(des[,4] >= 30 && des[,4] <= 60)
   expect_true(des[,5] >= 30 && des[,5] <= 60)
-  
+
   ps6 = makeParamSet(
-    makeNumericVectorParam("x", len=2, lower=0, upper=1, trafo = function(x) x / sum(x)), 
+    makeNumericVectorParam("x", len=2, lower=0, upper=1, trafo = function(x) x / sum(x)),
     makeIntegerVectorParam("y", len=2, lower=10L, upper=20L, trafo=function(x) 1:2),
-    makeDiscreteVectorParam("z", len=2, values=c("a", "b")) 
+    makeDiscreteVectorParam("z", len=2, values=c("a", "b"))
   )
   des = generateDesign(5, ps6, trafo=TRUE)
   expect_equal(nrow(des), 5)
@@ -174,7 +174,7 @@ test_that("nested requires", {
   expect_true(all(is.na(des[des$disc=="c",2:8])))
   expect_true(all(is.na(des[des$disc=="b" & des$discB=="NR",7])))
   expect_true(all(is.na(des[des$disc=="b" & des$discB=="R",8])))
-  
+
   vals = dfRowsToList(des, ps7)
   oks = sapply(vals, isFeasible, par=ps7)
   expect_true(all(oks))

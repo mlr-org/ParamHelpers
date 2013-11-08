@@ -3,7 +3,7 @@
 #' Please note that (naturally) the columns of \code{df} have to be of the correct type
 #' type w.r.t. the corresponding parameter. The only exception are integer parameters
 #' where the corresponding columns in \code{df} are allowed to be numerics.
-#' Dependent parameters whose requirements are not satisfied are represented by a scalar 
+#' Dependent parameters whose requirements are not satisfied are represented by a scalar
 #' NA in the output.
 #'
 #' @param df [\code{data.frame}]\cr
@@ -21,17 +21,10 @@ dfRowsToList = function(df, par.set) {
   checkArg(df, "data.frame")
   checkArg(par.set, "ParamSet")
 
-  # recode types to integers
-  types = extractSubList(par.set$pars, "type")
   lens = getParamLengths(par.set)
-  lookup = rep(1:4, each=2L)
-  nlookup = c("numeric", "numericvector", "integer", "integervector",
-    "discrete", "discretevector", "logical", "logicalvector")
-  int.type = lookup[match(types, nlookup)]
-  # FIXME 99? wtf?
-  int.type[is.na(int.type)] = 99L
-  int.type = rep.int(int.type, lens)
+  int.type = convertTypesToCInts(getTypes(par.set, df.cols=TRUE))
 
+  # factors to chars, so we can evaluate requires
   df = convertDataFrameCols(df, factors.as.char=TRUE)
   # ints might just be encoded as nums in df, convert before going to C
   ints.as.double = mapply(function(type, col) type == 2L && is.double(col), type=int.type, col=df)
