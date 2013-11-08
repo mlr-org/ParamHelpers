@@ -187,3 +187,10 @@ test_that("nested requires", {
   expect_true(all(oks))
 })
 
+test_that("we dont drop levels in factors", {
+  ps = makeParamSet(
+    makeDiscreteParam("x", values=letters[1:5])
+  )
+  des = generateDesign(1, ps)
+  expect_true(is.factor(des$x) && levels(des$x) == letters[1:5])
+})

@@ -94,7 +94,7 @@ generateDesign = function(n=10L, par.set, fun, fun.args=list(), trafo=FALSE, int
   des = do.call(fun, c(list(n=n, k=k), fun.args))
 
   # FIXME most of the code structure really sucks in the whole function
-  # we should probably introduce more helper functions to deal with that  
+  # we should probably introduce more helper functions to deal with that
 
   # allocate result df
   types.df = getTypes(par.set, df.cols=TRUE)
@@ -127,7 +127,16 @@ generateDesign = function(n=10L, par.set, fun, fun.args=list(), trafo=FALSE, int
   res = .Call(c_generateDesign2, res, types.int, names(pars), lens, trafos, par.requires, new.env())
   colnames(res) = pids1
   res = convertDataFrameCols(res, ints.as.num=ints.as.num,
-    chars.as.factor=discretes.as.factor, logicals.as.factor=logicals.as.factor)
+    chars.as.factor=FALSE, logicals.as.factor=logicals.as.factor)
+  # explicitly set levels of factors so we have all value names as levels
+  # FIXME all of this sucks and is ugly as sin...
+  if (discretes.as.factor) {
+    for (i in seq_col(res)) {
+      if (types.int[i] == 3L) {
+        res[, i] = factor(res[, i], levels=names(values[[pids2[[i]]]]))
+      }
+    }
+  }
   attr(res, "trafo") = trafo
   return(res)
 }
