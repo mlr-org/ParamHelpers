@@ -1,3 +1,9 @@
+#FIXME generateDesign will NOT work if there are dependencies
+# over multiple levels of params and one only states the dependency only
+#  wrt to the "last" param. also see daniels unit test.
+#  it works as long all dependencies are stated, we need to at least document this
+
+
 #' Generates a statistical design for a parameter set.
 #'
 #' Currently only lhs designs are supported.
