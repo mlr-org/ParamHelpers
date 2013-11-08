@@ -109,7 +109,11 @@ generateDesign = function(n=10L, par.set, fun, fun.args=list(), trafo=FALSE, int
   nlevs = setNames(rep(NA_integer_, k), pids1)
   for (i in seq_len(k))
     nlevs[i] = length(values[[pids2[i]]])
-  trafos = lapply(pars, function(p) p$trafo)
+  # ignore trafos if the user did not request transformed values
+  trafos = if(trafo)
+    lapply(pars, function(p) p$trafo)
+  else
+    replicate(length(pars), NULL, simplify=FALSE)
   par.requires = lapply(pars, function(p) p$requires)
 
   res = .Call(c_generateDesign1, des, res, types.int, lower2, upper2, nlevs)

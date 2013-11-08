@@ -136,6 +136,13 @@ test_that("num/int vec design with trafo", {
   expect_equal(des[,1] + des[,2], rep(1, 5))
   expect_equal(des[,3], rep(1, 5))
   expect_equal(des[,4], rep(2, 5))
+
+  # check that trafo can be switched off
+  ps = makeParamSet(
+    makeNumericParam("x", lower=-10, upper=-1, trafo=function(x) -x)
+  )
+  des = generateDesign(10, ps, trafo=FALSE)
+  expect_true(is.numeric(des$x) && all(des$x <= -1))
 })
 
 test_that("requires works", {
