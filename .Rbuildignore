@@ -1,11 +1,13 @@
+attic
+^.*tar.gz$
 .gitignore
+.Rproj.user
+.travis.yml
 Makefile
-todo.txt
+README.md
 test_all.R
 test_src.R
-.Rproj.user
- ^.*tar.gz$
- ^.*\.swp$
-.travis.yml
+todo.txt
+
 
 
