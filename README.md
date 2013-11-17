@@ -9,7 +9,7 @@ http://cran.r-project.org/web/packages/ParamHelpers/index.html
 R Documentation in HTML:
 http://www.statistik.tu-dortmund.de/~bischl/rdocs/ParamHelpers/
 
-Travis CI: [![Build Status](https://travis-ci.org/tudo-r/BatchJobs.png)](https://travis-ci.org/berndbischl/ParamHelpers)
+Travis CI: [![Build Status](https://travis-ci.org/berndbischl/ParamHelpers.png)](https://travis-ci.org/berndbischl/ParamHelpers)
 
 Installation
 ============
