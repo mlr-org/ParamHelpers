@@ -7,7 +7,7 @@ Helpers for parameters in black-box optimization, tuning and machine learning.
   http://cran.r-project.org/web/packages/ParamHelpers/index.html
 
 * R Documentation in HTML:
-  http://www.statistik.tu-dortmund.de/~bischl/rdocs/ParamHelpers/
+  http://berndbischl.github.io/ParamHelpers/man
 
 * Run this in R to install the current GitHub version:
   ```r
