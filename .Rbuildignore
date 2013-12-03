@@ -1,13 +1,15 @@
 attic
+makeR
+
 ^.*tar.gz$
+
 .gitignore
 .Rproj.user
 .travis.yml
+
 Makefile
 README.md
 test_all.R
 test_src.R
 todo.txt
-
-
 
