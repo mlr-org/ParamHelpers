@@ -1,11 +1,11 @@
 #' Construct a parameter set.
-#' 
+#'
 #' \code{makeParamSet}: Contruct from a bunch of parameters.
-#' 
+#'
 #' Multiple sets can be concatenated with \code{c}.
-#' 
+#'
 #' The constructed S3 class is simply a list that contains the element \code{pars}.
-#' \code{pars} is a list of the passed parameters, named by their ids. 
+#' \code{pars} is a list of the passed parameters, named by their ids.
 #'
 #' @param ... [\code{\link{Param}}]\cr
 #'   Parameters.
@@ -13,8 +13,8 @@
 #'   List of parameters, alternative way instead of using \code{...}.
 #' @return [\code{\link{ParamSet}}].
 #' @aliases ParamSet
-#' @export 
-#' @examples 
+#' @export
+#' @examples
 #' makeParamSet(
 #'   makeNumericParam("u", lower=1),
 #'   makeIntegerParam("v", lower=1, upper=2),
@@ -45,7 +45,7 @@ makeParamSet = function(..., params) {
 print.ParamSet = function(x, ...) {
   if (length(x$pars) == 0)
     print("Empty parameter set.")
-  else  
+  else
     sapply(x$pars, print)
 }
 
@@ -63,39 +63,39 @@ c.ParamSet = function(..., recursive=FALSE) {
 #' @param len [\code{integer(1)}]\cr
 #'   Length of vector.
 #' @param lower [\code{numeric}]\cr
-#'   Lower bound. 
+#'   Lower bound.
 #'   Default is \code{-Inf}.
 #' @param upper [\code{numeric}] \cr
-#'   Upper bound. 
+#'   Upper bound.
 #'   Default is \code{Inf}.
 #' @param vector [\code{logical(1)}] \cr
-#'   Should a \code{NumericVectorParam} be used instead of 
+#'   Should a \code{NumericVectorParam} be used instead of
 #'   n \code{NumericParam} objects?
 #'   Default is \code{TRUE}.
 #' @rdname makeParamSet
-#' @export 
+#' @export
 makeNumericParamSet = function(id="x", len, lower=-Inf, upper=Inf, vector=TRUE) {
-	checkArg(id, "character", len=1L, na.ok=FALSE)
+  checkArg(id, "character", len=1L, na.ok=FALSE)
   if (missing(len)) {
     if (!missing(lower))
       len = length(lower)
     else if (!missing(upper))
       len = length(upper)
   } else {
-		len = convertInteger(len)
-		checkArg(len, "integer", len=1L, na.ok=FALSE)
-	}
+    len = convertInteger(len)
+    checkArg(len, "integer", len=1L, na.ok=FALSE)
+  }
   if (is.numeric(lower) && length(lower) == 1)
     lower = rep(lower, len)
   if (is.numeric(upper) && length(upper) == 1)
     upper = rep(upper, len)
-	checkArg(lower, "numeric", len=len, na.ok=FALSE)
-	checkArg(upper, "numeric", len=len, na.ok=FALSE)
-	checkArg(vector, "logical", len=1L, na.ok=FALSE)
+    checkArg(lower, "numeric", len=len, na.ok=FALSE)
+    checkArg(upper, "numeric", len=len, na.ok=FALSE)
+    checkArg(vector, "logical", len=1L, na.ok=FALSE)
   if (vector) {
     makeParamSet(makeNumericVectorParam(id=id, len=len, lower=lower, upper=upper))
   } else {
     makeParamSet(params=lapply(1:len, function(i)
       makeNumericParam(id=paste(id, i, sep=""), lower=lower[i], upper=upper[i])))
-  } 
+  }
 }
