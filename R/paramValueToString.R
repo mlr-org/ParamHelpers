@@ -74,5 +74,5 @@ paramValueToString.ParamSet = function(par, x, show.missing.values=FALSE) {
       res[length(res)+1] = sprintf("%s=%s", pn, paramValueToString(p, val, show.missing.values))          
     }
   }
-  return(collapse(res, sep=","))
+  return(collapse(res, sep="; "))
 }

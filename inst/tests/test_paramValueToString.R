@@ -18,8 +18,8 @@ test_that("paramValueToString ", {
   expect_equal(paramValueToString(y, c(TRUE, FALSE)), "TRUE,FALSE")
   expect_equal(paramValueToString(z, list(1, 1)), "a,a")
   expect_equal(paramValueToString(z, list(1, list())), "a,b")
-  expect_equal(paramValueToString(ps, list(u=1, v=1:2, w=list(), x=FALSE, y=c(TRUE, FALSE), z=list(1,list()))), 
-    "u=1.00,v=1,2,w=b,x=FALSE,y=TRUE,FALSE,z=a,b")
+  expect_equal(paramValueToString(ps, list(u=1, v=1:2, w=list(), x=FALSE, y=c(TRUE, FALSE), z=list(1,list()))),
+    "u=1.00; v=1,2; w=b; x=FALSE; y=TRUE,FALSE; z=a,b")
 })
 
 test_that("requires works", {
@@ -28,11 +28,11 @@ test_that("requires works", {
     makeNumericParam("y", lower=1, upper=2, requires = quote(x == "a")),
     makeIntegerVectorParam("z", len=2, lower=1, upper=20, requires = quote(x == "b"))
   )
-  expect_equal(paramValueToString(ps, list(x="a", y=1, z=NA), show.missing.values=TRUE), "x=a,y=1.00,z=NA")
-  expect_equal(paramValueToString(ps, list(x="b", y=NA, z=2:3), show.missing.values=TRUE), "x=b,y=NA,z=2,3")
-  expect_equal(paramValueToString(ps, list(x="b", z=2:3), show.missing.values=TRUE), "x=b,z=2,3")
-  expect_equal(paramValueToString(ps, list(x="a", y=1, z=NA), show.missing.values=FALSE), "x=a,y=1.00")
-  expect_equal(paramValueToString(ps, list(x="b", y=NA, z=2:3), show.missing.values=FALSE), "x=b,z=2,3")
-  expect_equal(paramValueToString(ps, list(x="b", z=2:3), show.missing.values=FALSE), "x=b,z=2,3")
+  expect_equal(paramValueToString(ps, list(x="a", y=1, z=NA), show.missing.values=TRUE), "x=a; y=1.00; z=NA")
+  expect_equal(paramValueToString(ps, list(x="b", y=NA, z=2:3), show.missing.values=TRUE), "x=b; y=NA; z=2,3")
+  expect_equal(paramValueToString(ps, list(x="b", z=2:3), show.missing.values=TRUE), "x=b; z=2,3")
+  expect_equal(paramValueToString(ps, list(x="a", y=1, z=NA), show.missing.values=FALSE), "x=a; y=1.00")
+  expect_equal(paramValueToString(ps, list(x="b", y=NA, z=2:3), show.missing.values=FALSE), "x=b; z=2,3")
+  expect_equal(paramValueToString(ps, list(x="b", z=2:3), show.missing.values=FALSE), "x=b; z=2,3")
 })
 
