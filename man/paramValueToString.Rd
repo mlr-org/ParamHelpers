@@ -9,12 +9,14 @@
   \code{\link{ParamSet}}]\cr Parameter or parameter set.}
 
   \item{x}{[any]\cr Value for parameter or value for
-  parameter set. In the latter case it must be named list.}
+  parameter set. In the latter case it must be named list.
+  For discrete parameters their values must be used, not
+  their names.}
 
   \item{show.missing.values}{[\code{logical(1)}]\cr Display
   \dQuote{NA} for parameters, which have no setting,
   because their requirements are not satified (dependent
-  parameters), instead of nothing?  Default is
+  parameters), instead of displaying nothing?  Default is
   \code{FALSE}.}
 }
 \value{
@@ -26,16 +28,22 @@
 }
 \examples{
 p <- makeNumericParam("x")
-paramValueToString(p, 1) # "1.00"
-paramValueToString(p, 1.2345) # "1.23"
+paramValueToString(p, 1)
+paramValueToString(p, 1.2345)
 
 p <- makeIntegerVectorParam("x", len=2)
-paramValueToString(p, c(1L, 2L)) # 1,2
+paramValueToString(p, c(1L, 2L))
 
 p <- makeLogicalParam("x")
-paramValueToString(p, TRUE) # "TRUE"
+paramValueToString(p, TRUE)
 
 p <- makeDiscreteParam("x", values=list(a=NULL, b=2))
-paramValueToString(p, NULL) # "a"
+paramValueToString(p, NULL)
+
+ps <- makeParamSet(
+  makeNumericVectorParam("x", len=2L),
+  makeDiscreteParam("y", values=list(a=NULL, b=2))
+)
+paramValueToString(ps, list(x=c(1,2), y=NULL))
 }
 
