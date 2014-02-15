@@ -11,34 +11,34 @@ test_that("OptPath", {
   expect_equal(op$env$dob, 1:2)
   setOptPathElEOL(op, 2, 8)
   expect_equal(op$env$eol[2], 8)
-  
+
   # test getters
   expect_equal(getOptPathY(op, "z1"), c(1,3))
   expect_equal(getOptPathY(op, "z2"), c(4,2))
   expect_equal(getOptPathDOB(op), c(1,2))
   expect_equal(getOptPathEOL(op), c(NA,8))
-  
+
   x = as.data.frame(op)
   expect_true(is.data.frame(x))
   expect_equal(nrow(x), 2)
   expect_equal(ncol(x), 6)
-  
+
   expect_output(print(op), "Optimization path")
-  
+
   expect_equal(getOptPathEl(op, 1)$x, list(x=1, y="a"))
-  
+
   gbe = function(op, y.name, dob) {
     i = getOptPathBestIndex(op, y.name, dob)
     getOptPathEl(op, i)
   }
-  
+
   expect_equal(gbe(op, y.name="z1", dob=1:2), getOptPathEl(op, 1))
   expect_equal(gbe(op, y.name="z2", dob=1:2), getOptPathEl(op, 1))
   expect_equal(gbe(op, y.name="z1", dob=1), getOptPathEl(op, 1))
   expect_equal(gbe(op, y.name="z2", dob=1), getOptPathEl(op, 1))
   expect_equal(gbe(op, y.name="z1", dob=2), getOptPathEl(op, 2))
   expect_equal(gbe(op, y.name="z2", dob=2), getOptPathEl(op, 2))
-  
+
   setOptPathElDOB(op, 1, 1)
   setOptPathElDOB(op, 2, 3)
   expect_equal(as.data.frame(op)$dob, c(1, 3))
@@ -53,7 +53,7 @@ test_that("OptPath", {
   expect_equal(as.data.frame(op)$eol, c(7, 7))
   setOptPathElEOL(op, 1:2, 4:5)
   expect_equal(as.data.frame(op)$eol, c(4, 5))
-  
+
   ps = makeParamSet(
     makeNumericVectorParam("x", len=2),
     makeIntegerParam("y")
@@ -80,7 +80,7 @@ test_that("OptPath with vector and discrete params works", {
     makeLogicalVectorParam("x7", len=3)
   )
   op = makeOptPathDF(par.set=ps, y.names="y", minimize=TRUE)
-  x = list(x0=c(1L,3L), x1="a", x2=2L, x3=5, x4=identity, x5=FALSE, 
+  x = list(x0=c(1L,3L), x1="a", x2=2L, x3=5, x4=identity, x5=FALSE,
     x6=list(b=1, a=identity), x7=c(TRUE,FALSE,TRUE))
   addOptPathEl(op, x=x, y=0)
   d = as.data.frame(op)
@@ -99,7 +99,7 @@ test_that("OptPath with vector and discrete params works", {
   expect_true(is.logical(d$x73))
   expect_true(
        d[1,1] == 1L && d[1,2] == 3L
-    && d[1,3] == "a" && d[1,4] == "2" && d[1,5] == "5" && d[1,6] == "foo" 
+    && d[1,3] == "a" && d[1,4] == "2" && d[1,5] == "5" && d[1,6] == "foo"
     && d[1,7] == FALSE && d[1,8] == "b" && d[1,9] == "a"
     && d[1,10] == TRUE && d[1,11] == FALSE && d[1,12] == TRUE)
   d = as.data.frame(op, discretes.as.factor=TRUE)
@@ -118,13 +118,13 @@ test_that("OptPath with vector and discrete params works", {
   expect_true(is.logical(d$x73))
   expect_true(
     d[1,1] == 1L && d[1,2] == 3L
-    && d[1,3] == "a" && d[1,4] == "2" && d[1,5] == "5" && d[1,6] == "foo" 
+    && d[1,3] == "a" && d[1,4] == "2" && d[1,5] == "5" && d[1,6] == "foo"
     && d[1,7] == FALSE && d[1,8] == "b" && d[1,9] == "a"
     && d[1,10] == TRUE && d[1,11] == FALSE && d[1,12] == TRUE)
   e = getOptPathEl(op, 1)
   expect_equal(e$x, x)
 })
-  
+
 test_that("getOptPathBestIndex tie-handling", {
   ps = makeParamSet(
     makeNumericParam("x")
@@ -153,7 +153,7 @@ test_that("getOptPathBestIndex tie-handling", {
   expect_true(getOptPathBestIndex(op, ties="random") %in% c(3L, 5L))
   expect_equal(getOptPathBestIndex(op, ties="all"), c(3L, 5L))
 })
-    
+
 
 test_that("requires works", {
   ps = makeParamSet(
@@ -172,6 +172,6 @@ test_that("requires works", {
   expect_equal(d[,1:4], data.frame(x=c("a", "b"), y=c(1, NA), z1=c(NA, 2L), z2=c(NA, 3L)))
 })
 
-  
-  
-  
+
+
+
