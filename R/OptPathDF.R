@@ -19,7 +19,9 @@ getOptPathLength.OptPathDF = function(op) {
 }
 
 #' @S3method as.data.frame OptPathDF
-as.data.frame.OptPathDF = function(x, row.names = NULL, optional = FALSE, discretes.as.factor = FALSE, ...) {
+as.data.frame.OptPathDF = function(x, row.names = NULL, optional = FALSE,
+  discretes.as.factor = FALSE, ...) {
+
   df = x$env$path
   df = cbind(df, dob=x$env$dob, eol=x$env$eol)
   convertDataFrameCols(df, chars.as.factor=discretes.as.factor)
@@ -45,7 +47,9 @@ getOptPathEl.OptPathDF = function(op, index) {
 }
 
 #' @S3method addOptPathEl OptPathDF
-addOptPathEl.OptPathDF = function(op, x, y, dob=getOptPathLength(op)+1L, eol=as.integer(NA), check.feasible=!op$add.transformed.x) {
+addOptPathEl.OptPathDF = function(op, x, y, dob=getOptPathLength(op)+1L, eol=as.integer(NA),
+  check.feasible=!op$add.transformed.x) {
+
   checkArg(x, "list", length(op$par.set$pars))
   checkArg(y, "numeric", length(op$y.names))
   dob = convertInteger(dob)
@@ -60,20 +64,20 @@ addOptPathEl.OptPathDF = function(op, x, y, dob=getOptPathLength(op)+1L, eol=as.
   x = Map(function(p, v) {
     if (isScalarNA(v))
       v = rep(NA, p$len)
-    if (p$type %in% c("discrete", "discretevector")) 
-      discreteValueToName(p, v) 
+    if (p$type %in% c("discrete", "discretevector"))
+      discreteValueToName(p, v)
     # we need to make sure cols in df do not get converted to num
-    else if (p$type %in% c("integer", "integervector")) 
-      as.integer(v) 
-    else 
+    else if (p$type %in% c("integer", "integervector"))
+      as.integer(v)
+    else
       v
-  }, op$par.set$pars, x)  
+  }, op$par.set$pars, x)
   el = do.call(cbind, lapply(x, function(v) as.data.frame(t(v), stringsAsFactors=FALSE)))
   el = cbind(el, as.data.frame(as.list(y), stringsAsFactors=FALSE))
   colnames(el) = colnames(op$env$path)
   op$env$path = rbind(op$env$path, el)
   k = length(op$env$dob) + 1
-  op$env$dob[k] = dob  
+  op$env$dob[k] = dob
   op$env$eol[k] = eol
   invisible(NULL)
 }
@@ -83,17 +87,17 @@ addOptPathEl.OptPathDF = function(op, x, y, dob=getOptPathLength(op)+1L, eol=as.
 getOptPathY.OptPathDF = function(op, name) {
   checkArg(name, choices=op$y.names)
   op$env$path[, name]
-}  
+}
 
 #' @S3method getOptPathDOB OptPathDF
 getOptPathDOB.OptPathDF = function(op) {
   op$env$dob
-}  
+}
 
 #' @S3method getOptPathEOL OptPathDF
 getOptPathEOL.OptPathDF = function(op) {
   op$env$eol
-}  
+}
 
 
 
