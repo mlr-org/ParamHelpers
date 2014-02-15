@@ -5,11 +5,12 @@
 #' \code{as.data.frame(x, discrete.as.factor = TRUE / FALSE)}.
 #'
 #' A optimization path has a number of path elements, where each element consists of: the value of the
-#' decision variables at this point, the values of the performance measures at this point, the date-of-birth (dob)
-#' of this point and the end-of-life (eol) of this point.
+#' decision variables at this point, the values of the performance measures at this point,
+#' the date-of-birth (dob) of this point and the end-of-life (eol) of this point.
 #'
 #' For discrete parameters always the name of the value is stored as a character.
-#' When you retrieve an element with \code{\link{getOptPathEl}}, this name is converted to the actual discrete value.
+#' When you retrieve an element with \code{\link{getOptPathEl}}, this name is converted to
+#' the actual discrete value.
 #'
 #' If parameters have associated transformation you are free to decide whether you want to
 #' add x values before or after transformation, see argument \code{add.transformed.x} and
@@ -21,7 +22,8 @@
 #' \item{y.names [\code{character}]}{See argument of same name.}
 #' \item{minimize [\code{logical}]}{See argument of same name.}
 #' \item{add.transformed.x [\code{logical(1)}]}{See argument of same name.}
-#' \item{env [\code{environment}]}{Environment which stores the optimization path. Contents depend on implementation.}
+#' \item{env [\code{environment}]}{Environment which stores the optimization path.
+#'   Contents depend on implementation.}
 #' }
 #'
 #' @param par.set [\code{\link{ParamSet}}]\cr
@@ -37,11 +39,13 @@
 #'   Default is \code{FALSE}.
 #' @name OptPath
 #' @rdname OptPath
-#' @seealso \code{\link{getOptPathLength}}, \code{\link{getOptPathEl}}, \code{\link{addOptPathEl}}, \code{\link{getOptPathY}}, \code{\link{setOptPathElDOB}}, \code{\link{setOptPathElEOL}}
+#' @seealso \code{\link{getOptPathLength}}, \code{\link{getOptPathEl}}, \code{\link{addOptPathEl}},
+#'   \code{\link{getOptPathY}}, \code{\link{setOptPathElDOB}}, \code{\link{setOptPathElEOL}}
 NULL
 
 makeOptPath = function(par.set, y.names, minimize, add.transformed.x=FALSE) {
-  ok = c("numeric", "integer", "numericvector", "integervector", "logical", "logicalvector", "discrete", "discretevector")
+  ok = c("numeric", "integer", "numericvector", "integervector", "logical",
+    "logicalvector", "discrete", "discretevector")
   if(length(par.set$pars) > length(filterParams(par.set, ok)$pars))
     stop("OptPath can currently only be used for: ", paste(ok, collapse=","))
   x.names = getParamIds(par.set)
@@ -78,7 +82,8 @@ print.OptPath = function(x, ...) {
 
 #' Get the length of the optimization path.
 #'
-#' Dependent parameters whose requirements are not satisfied are represented by a scalar NA in the output.
+#' Dependent parameters whose requirements are not satisfied are represented by a scalar
+#' NA in the output.
 #'
 #' @param op [\code{\link{OptPath}}]\cr
 #'   Optimization path.
@@ -90,8 +95,8 @@ getOptPathLength = function(op) {
 
 #' Get an element from the optimization path.
 #'
-#' Dependent parameters whose requirements 
-#' are not satisfied are represented by a scalar NA in the elements of \code{x} 
+#' Dependent parameters whose requirements
+#' are not satisfied are represented by a scalar NA in the elements of \code{x}
 #' of the return value.
 #'
 #' @param op [\code{\link{OptPath}}]\cr
@@ -112,8 +117,9 @@ getOptPathEl = function(op, index) {
 #' best to add the untransformed values to the path. Otherwise you have to switch off the
 #' feasibility check, as constraints might now not hold anymore.
 #'
-#' Dependent parameters whose requirements are not satisfied must be represented by a scalar NA in the input.
-#' 
+#' Dependent parameters whose requirements are not satisfied must be represented by a scalar
+#' NA in the input.
+#'
 #' @param op [\code{\link{OptPath}}] \cr
 #'   Optimization path.
 #' @param x [\code{list}]\cr
@@ -140,7 +146,9 @@ getOptPathEl = function(op, index) {
 #' addOptPathEl(op, x=list(p1=7, p2="b"), y=1)
 #' addOptPathEl(op, x=list(p1=-1, p2="a"), y=2)
 #' as.data.frame(op)
-addOptPathEl = function(op, x, y, dob=getOptPathLength(op)+1L, eol=as.integer(NA), check.feasible=!op$add.transformed.x) {
+addOptPathEl = function(op, x, y, dob=getOptPathLength(op)+1L, eol=as.integer(NA),
+  check.feasible=!op$add.transformed.x) {
+
   UseMethod("addOptPathEl")
 }
 
