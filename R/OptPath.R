@@ -95,9 +95,8 @@ getOptPathLength = function(op) {
 
 #' Get an element from the optimization path.
 #'
-#' Dependent parameters whose requirements
-#' are not satisfied are represented by a scalar NA in the elements of \code{x}
-#' of the return value.
+#' Dependent parameters whose requirements are not satisfied are represented by a scalar NA
+#' in the elements of \code{x} of the return value.
 #'
 #' @param op [\code{\link{OptPath}}]\cr
 #'   Optimization path.
@@ -110,6 +109,7 @@ getOptPathLength = function(op) {
 getOptPathEl = function(op, index) {
   UseMethod("getOptPathEl")
 }
+
 #' Add a new element to an optimization path.
 #'
 #' Changes the argument in-place.
