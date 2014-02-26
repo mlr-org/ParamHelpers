@@ -37,9 +37,6 @@ getOptPathEl.OptPathDF = function(op, index) {
   e = op$env
   path = e$path
   y = unlist(path[index, op$y.names, drop=FALSE])
-  # if length = 1, remove name, otherwise named y vec is ok
-  if (length(y) == 1L)
-    y = as.numeric(y)
   # remove y names from path, only consider x
   path = path[, setdiff(colnames(path), op$y.names), drop=FALSE]
   x = dfRowToList(path, op$par.set, index)

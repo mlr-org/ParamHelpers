@@ -66,6 +66,8 @@ test_that("OptPath", {
   expect_equal(colnames(df), c("x1", "x2", "y", "z", "dob", "eol"))
   e = getOptPathEl(op, 1)
   expect_equal(e$x, list(x=c(1,1), y=7L))
+  # really make sure that names are there
+  expect_equal(names(e$y), "z")
 })
 
 test_that("OptPath with vector and discrete params works", {
