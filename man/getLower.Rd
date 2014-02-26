@@ -4,11 +4,11 @@
 \alias{getValues}
 \title{Get lower / upper bounds and allowed discrete values for parameters.}
 \usage{
-  getLower(par.set, with.nr = FALSE)
+getLower(par.set, with.nr = FALSE)
 
-  getUpper(par.set, with.nr = FALSE)
+getUpper(par.set, with.nr = FALSE)
 
-  getValues(par.set)
+getValues(par.set)
 }
 \arguments{
   \item{par.set}{[\code{\link{ParamSet}}]\cr Parameter
@@ -19,17 +19,16 @@
   Default is \code{FALSE}.}
 }
 \value{
-  [\code{vector} | \code{list}]. Named by parameter ids.
+[\code{vector} | \code{list}]. Named by parameter ids.
 }
 \description{
-  \code{getLower} and \code{getUpper} return a numerical
-  vector of lower and upper bounds, \code{getValues}
-  returns a list of possible value sets for discrete
-  parameters.
+\code{getLower} and \code{getUpper} return a numerical
+vector of lower and upper bounds, \code{getValues} returns
+a list of possible value sets for discrete parameters.
 }
 \details{
-  Parameters for which such bound make no sense - due to
-  their type - are not present in the result.
+Parameters for which such bound make no sense - due to
+their type - are not present in the result.
 }
 \examples{
 ps <- makeParamSet(

@@ -1,11 +1,11 @@
 \name{dfRowsToList}
-\alias{dfRowsToList}
 \alias{dfRowToList}
+\alias{dfRowsToList}
 \title{Convert a data.frame row to list of parameter-value-lists.}
 \usage{
-  dfRowsToList(df, par.set)
+dfRowsToList(df, par.set)
 
-  dfRowToList(df, par.set, i)
+dfRowToList(df, par.set, i)
 }
 \arguments{
   \item{df}{[\code{data.frame}]\cr Data.frame, potentially
@@ -18,15 +18,14 @@
   \item{i}{[\code{integer(1)}]\cr Row index.}
 }
 \value{
-  [\code{list}]. Named by parameter ids.
+[\code{list}]. Named by parameter ids.
 }
 \description{
-  Please note that (naturally) the columns of \code{df}
-  have to be of the correct type type w.r.t. the
-  corresponding parameter. The only exception are integer
-  parameters where the corresponding columns in \code{df}
-  are allowed to be numerics. Dependent parameters whose
-  requirements are not satisfied are represented by a
-  scalar NA in the output.
+Please note that (naturally) the columns of \code{df} have
+to be of the correct type type w.r.t. the corresponding
+parameter. The only exception are integer parameters where
+the corresponding columns in \code{df} are allowed to be
+numerics. Dependent parameters whose requirements are not
+satisfied are represented by a scalar NA in the output.
 }
 

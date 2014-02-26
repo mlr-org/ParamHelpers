@@ -2,18 +2,18 @@
 \alias{getParamLengths}
 \title{Return lengths of parameters in parameter set.}
 \usage{
-  getParamLengths(par.set)
+getParamLengths(par.set)
 }
 \arguments{
   \item{par.set}{[\code{\link{ParamSet}}]\cr Parameter
   set.}
 }
 \value{
-  [\code{integer}]. Named and in same order as
-  \code{par.set}.
+[\code{integer}]. Named and in same order as
+\code{par.set}.
 }
 \description{
-  Useful for vector parameters.
+Useful for vector parameters.
 }
 \examples{
 ps <- makeParamSet(

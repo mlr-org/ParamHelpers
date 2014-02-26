@@ -2,7 +2,7 @@
 \alias{getOptPathY}
 \title{Get y vector from the optimization path.}
 \usage{
-  getOptPathY(op, name)
+getOptPathY(op, name)
 }
 \arguments{
   \item{op}{[\code{\link{OptPath}}]\cr Optimization path.}
@@ -11,9 +11,9 @@
   measure.}
 }
 \value{
-  [\code{numeric}].
+[\code{numeric}].
 }
 \description{
-  Get y vector from the optimization path.
+Get y vector from the optimization path.
 }
 

@@ -2,9 +2,9 @@
 \alias{generateDesign}
 \title{Generates a statistical design for a parameter set.}
 \usage{
-  generateDesign(n = 10L, par.set, fun, fun.args = list(),
-    trafo = FALSE, ints.as.num = FALSE,
-    discretes.as.factor = TRUE, logicals.as.factor = FALSE)
+generateDesign(n = 10L, par.set, fun, fun.args = list(), trafo = FALSE,
+  ints.as.num = FALSE, discretes.as.factor = TRUE,
+  logicals.as.factor = FALSE)
 }
 \arguments{
   \item{n}{[\code{integer(1)}]\cr Number of samples in
@@ -45,24 +45,24 @@
   Default is \code{FALSE}.}
 }
 \value{
-  The created design is a data.frame. Columns are named by
-  the ids of the parameters.  If the \code{par.set}
-  argument contains a vector parameter, its corresponding
-  column names in the design are the parameter id
-  concatenated with 1 to dimension of the vector.  The data
-  type of a column is defined in the following way. Numeric
-  parameters generate numeric columns, integer parameters
-  generate numeric/integer columns, logical parameters
-  generate logical/factor columns.  For discrete parameters
-  the value names are used and character or factor columns
-  are generated.  Dependent parameters whose constaints are
-  unsatisfied generate \code{NA} entries in their
-  respective columns.  The result will have an
-  \code{logical(1)} attribute \dQuote{trafo}, which is set
-  to the value of argument \code{trafo}.
+The created design is a data.frame. Columns are named by
+the ids of the parameters.  If the \code{par.set} argument
+contains a vector parameter, its corresponding column names
+in the design are the parameter id concatenated with 1 to
+dimension of the vector.  The data type of a column is
+defined in the following way. Numeric parameters generate
+numeric columns, integer parameters generate
+numeric/integer columns, logical parameters generate
+logical/factor columns.  For discrete parameters the value
+names are used and character or factor columns are
+generated.  Dependent parameters whose constaints are
+unsatisfied generate \code{NA} entries in their respective
+columns.  The result will have an \code{logical(1)}
+attribute \dQuote{trafo}, which is set to the value of
+argument \code{trafo}.
 }
 \description{
-  Currently only lhs designs are supported.
+Currently only lhs designs are supported.
 }
 \examples{
 ps <- makeParamSet(

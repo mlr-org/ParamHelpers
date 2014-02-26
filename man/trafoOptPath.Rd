@@ -2,19 +2,19 @@
 \alias{trafoOptPath}
 \title{Transform optimization path.}
 \usage{
-  trafoOptPath(opt.path)
+trafoOptPath(opt.path)
 }
 \arguments{
   \item{opt.path}{[\code{\link{OptPath}}]\cr Optimization
   path.}
 }
 \value{
-  [\code{\link{OptPath}}].
+[\code{\link{OptPath}}].
 }
 \description{
-  Transform optimization path with associated
-  transformation functions of parameters. Can only be done
-  when x values where added \dQuote{untransformed}.
+Transform optimization path with associated transformation
+functions of parameters. Can only be done when x values
+where added \dQuote{untransformed}.
 }
 \examples{
 ps <- makeParamSet(

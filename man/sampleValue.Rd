@@ -2,7 +2,7 @@
 \alias{sampleValue}
 \title{Sample a random value from a parameter or a parameter set uniformly.}
 \usage{
-  sampleValue(par, discrete.names = FALSE)
+sampleValue(par, discrete.names = FALSE)
 }
 \arguments{
   \item{par}{[\code{\link{Param}} |
@@ -13,13 +13,13 @@
   instead?  Default is code {FALSE}.}
 }
 \value{
-  The return type is determined by the type of the
-  parameter. For a set a named list of such values in the
-  correct order is returned.
+The return type is determined by the type of the parameter.
+For a set a named list of such values in the correct order
+is returned.
 }
 \description{
-  Dependent parameters whose requirements are not satisfied
-  are represented by a scalar NA in the output.
+Dependent parameters whose requirements are not satisfied
+are represented by a scalar NA in the output.
 }
 \examples{
 # bounds are necessary here, can't sample with Inf bounds:

@@ -2,15 +2,15 @@
 \alias{getOptPathDOB}
 \title{Get date-of-birth vector from the optimization path.}
 \usage{
-  getOptPathDOB(op)
+getOptPathDOB(op)
 }
 \arguments{
   \item{op}{[\code{\link{OptPath}}]\cr Optimization path.}
 }
 \value{
-  [\code{integer}].
+[\code{integer}].
 }
 \description{
-  Get date-of-birth vector from the optimization path.
+Get date-of-birth vector from the optimization path.
 }
 

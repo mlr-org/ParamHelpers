@@ -2,15 +2,15 @@
 \alias{removeMissingValues}
 \title{Removes all scalar NAs from a parameter setting list.}
 \usage{
-  removeMissingValues(x)
+removeMissingValues(x)
 }
 \arguments{
   \item{x}{[\code{list}]\cr List of paramter values.}
 }
 \value{
-  [\code{list}].
+[\code{list}].
 }
 \description{
-  Removes all scalar NAs from a parameter setting list.
+Removes all scalar NAs from a parameter setting list.
 }
 

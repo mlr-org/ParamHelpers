@@ -2,7 +2,7 @@
 \alias{discreteValueToName}
 \title{Convert discrete value(s) to encoding name(s).}
 \usage{
-  discreteValueToName(par, x)
+discreteValueToName(par, x)
 }
 \arguments{
   \item{par}{[\code{\link{Param}}]\cr Discrete parameter or
@@ -12,13 +12,13 @@
   a discrete vector.}
 }
 \value{
-  [\code{character}]. Single name for a discrete parameter
-  or a character vector of names for a discrete vector.
+[\code{character}]. Single name for a discrete parameter or
+a character vector of names for a discrete vector.
 }
 \description{
-  If the value \code{x} is \code{NA}, indicating a missing
-  parameter value due to unsatisfied requirements,
-  \code{NA} is returned.
+If the value \code{x} is \code{NA}, indicating a missing
+parameter value due to unsatisfied requirements, \code{NA}
+is returned.
 }
 \examples{
 p <- makeDiscreteParam("u", values=c(x1="a", x2="b", x3="c"))

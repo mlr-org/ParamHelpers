@@ -12,37 +12,32 @@
 \alias{makeUntypedLearnerParam}
 \title{Create a description object for a parameter of a machine learning algorithm.}
 \usage{
-  makeNumericLearnerParam(id, lower = -Inf, upper = Inf,
-    default, when = "train", requires = NULL)
+makeNumericLearnerParam(id, lower = -Inf, upper = Inf, default,
+  when = "train", requires = NULL)
 
-  makeNumericVectorLearnerParam(id, len = as.integer(NA),
-    lower = -Inf, upper = Inf, default, when = "train",
-    requires = NULL)
+makeNumericVectorLearnerParam(id, len = as.integer(NA), lower = -Inf,
+  upper = Inf, default, when = "train", requires = NULL)
 
-  makeIntegerLearnerParam(id, lower = -Inf, upper = Inf,
-    default, when = "train", requires = NULL)
+makeIntegerLearnerParam(id, lower = -Inf, upper = Inf, default,
+  when = "train", requires = NULL)
 
-  makeIntegerVectorLearnerParam(id, len = as.integer(NA),
-    lower = -Inf, upper = Inf, default, when = "train",
-    requires = NULL)
+makeIntegerVectorLearnerParam(id, len = as.integer(NA), lower = -Inf,
+  upper = Inf, default, when = "train", requires = NULL)
 
-  makeDiscreteLearnerParam(id, values, default,
-    when = "train", requires = NULL)
+makeDiscreteLearnerParam(id, values, default, when = "train",
+  requires = NULL)
 
-  makeDiscreteVectorLearnerParam(id, len = as.integer(NA),
-    values, default, when = "train", requires = NULL)
+makeDiscreteVectorLearnerParam(id, len = as.integer(NA), values, default,
+  when = "train", requires = NULL)
 
-  makeLogicalLearnerParam(id, default, when = "train",
-    requires = NULL)
+makeLogicalLearnerParam(id, default, when = "train", requires = NULL)
 
-  makeLogicalVectorLearnerParam(id, len = as.integer(NA),
-    default, when = "train", requires = NULL)
+makeLogicalVectorLearnerParam(id, len = as.integer(NA), default,
+  when = "train", requires = NULL)
 
-  makeUntypedLearnerParam(id, default, when = "train",
-    requires = NULL)
+makeUntypedLearnerParam(id, default, when = "train", requires = NULL)
 
-  makeFunctionLearnerParam(id, default, when = "train",
-    requires = NULL)
+makeFunctionLearnerParam(id, default, when = "train", requires = NULL)
 }
 \arguments{
   \item{id}{[\code{character(1)}]\cr See
@@ -73,19 +68,19 @@
   \dQuote{train}.}
 }
 \value{
-  [\code{\link{LearnerParam}}].
+[\code{\link{LearnerParam}}].
 }
 \description{
-  This specializes \code{\link{Param}} by adding a few more
-  attributes, like a default value, whether it refers to a
-  training or a predict function, etc.
+This specializes \code{\link{Param}} by adding a few more
+attributes, like a default value, whether it refers to a
+training or a predict function, etc.
 }
 \details{
-  The S3 class is a \code{\link{Param}} which additionally
-  stores these elements: \describe{ \item{default
-  [any]}{See argument of same name.} \item{has.default
-  [\code{logical(1)}]}{Was a default value provided?}
-  \item{when [\code{character(1)}]}{See argument of same
-  name.} }
+The S3 class is a \code{\link{Param}} which additionally
+stores these elements: \describe{ \item{default [any]}{See
+argument of same name.} \item{has.default
+[\code{logical(1)}]}{Was a default value provided?}
+\item{when [\code{character(1)}]}{See argument of same
+name.} }
 }
 

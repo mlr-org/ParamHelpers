@@ -2,7 +2,7 @@
 \alias{filterParams}
 \title{Get parameter subset of only certain parameters.}
 \usage{
-  filterParams(par.set, type)
+filterParams(par.set, type)
 }
 \arguments{
   \item{par.set}{[\code{\link{ParamSet}}]\cr Parameter
@@ -16,10 +16,10 @@
   \dQuote{function}, \dQuote{untyped}.}
 }
 \value{
-  [\code{\link{ParamSet}}].
+[\code{\link{ParamSet}}].
 }
 \description{
-  Parameter order is not changed.
+Parameter order is not changed.
 }
 \examples{
 ps <- makeParamSet(

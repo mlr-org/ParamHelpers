@@ -2,8 +2,7 @@
 \alias{convertParamSetToIrace}
 \title{Converts a ParamSet object to a parameter object of the irace package.}
 \usage{
-  convertParamSetToIrace(par.set, digits = 4,
-    as.chars = FALSE)
+convertParamSetToIrace(par.set, digits = 4, as.chars = FALSE)
 }
 \arguments{
   \item{par.set}{[\code{\link{ParamSet}}]\cr Parameter
@@ -19,10 +18,10 @@
   Default is \code{FALSE}.}
 }
 \value{
-  [\code{\link{list}}].
+[\code{\link{list}}].
 }
 \description{
-  Converts to a textual description used in irace and then
-  potentially calls \link[irace]{readParameters}.
+Converts to a textual description used in irace and then
+potentially calls \link[irace]{readParameters}.
 }
 

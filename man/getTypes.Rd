@@ -2,8 +2,7 @@
 \alias{getTypes}
 \title{Returns type information for a parameter set.}
 \usage{
-  getTypes(par.set, df.cols = FALSE, use.names = FALSE,
-    with.nr = TRUE)
+getTypes(par.set, df.cols = FALSE, use.names = FALSE, with.nr = TRUE)
 }
 \arguments{
   \item{par.set}{[\code{\link{ParamSet}}]\cr Parameter
@@ -26,9 +25,9 @@
   \code{TRUE}.}
 }
 \value{
-  [\code{character}].
+[\code{character}].
 }
 \description{
-  Returns type information for a parameter set.
+Returns type information for a parameter set.
 }
 

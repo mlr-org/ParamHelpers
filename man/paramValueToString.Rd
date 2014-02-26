@@ -2,7 +2,7 @@
 \alias{paramValueToString}
 \title{Convert a value to a string.}
 \usage{
-  paramValueToString(par, x, show.missing.values = FALSE)
+paramValueToString(par, x, show.missing.values = FALSE)
 }
 \arguments{
   \item{par}{[\code{\link{Param}} |
@@ -20,11 +20,11 @@
   \code{FALSE}.}
 }
 \value{
-  [\code{character(1)}].
+[\code{character(1)}].
 }
 \description{
-  Useful helper for logging. For discrete parameter values
-  always the name of the discrete value is used.
+Useful helper for logging. For discrete parameter values
+always the name of the discrete value is used.
 }
 \examples{
 p <- makeNumericParam("x")

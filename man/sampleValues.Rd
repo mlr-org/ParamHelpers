@@ -2,7 +2,7 @@
 \alias{sampleValues}
 \title{Sample n random values from a parameter or a parameter set uniformly.}
 \usage{
-  sampleValues(par, n, discrete.names = FALSE)
+sampleValues(par, n, discrete.names = FALSE)
 }
 \arguments{
   \item{par}{[\code{\link{Param}} |
@@ -15,11 +15,11 @@
   instead?  Default is code {FALSE}.}
 }
 \value{
-  [\code{list}]. For consistency always a list is returned.
+[\code{list}]. For consistency always a list is returned.
 }
 \description{
-  Dependent parameters whose requirements are not satisfied
-  are represented by a scalar NA in the output.
+Dependent parameters whose requirements are not satisfied
+are represented by a scalar NA in the output.
 }
 \examples{
 p <- makeIntegerParam("x", lower=-10, upper=10)

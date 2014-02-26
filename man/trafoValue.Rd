@@ -2,7 +2,7 @@
 \alias{trafoValue}
 \title{Transform a value.}
 \usage{
-  trafoValue(par, x)
+trafoValue(par, x)
 }
 \arguments{
   \item{par}{[\code{\link{Param}} |
@@ -12,11 +12,11 @@
   parameter set this must be a list in the correct order.}
 }
 \value{
-  Transformed value.
+Transformed value.
 }
 \description{
-  Transform a value with associated transformation
-  function(s).
+Transform a value with associated transformation
+function(s).
 }
 \examples{
 # transform simple parameter:

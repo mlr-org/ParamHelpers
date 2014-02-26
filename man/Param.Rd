@@ -1,4 +1,5 @@
 \name{Param}
+\alias{Param}
 \alias{makeDiscreteParam}
 \alias{makeDiscreteVectorParam}
 \alias{makeFunctionParam}
@@ -9,32 +10,31 @@
 \alias{makeNumericParam}
 \alias{makeNumericVectorParam}
 \alias{makeUntypedParam}
-\alias{Param}
 \title{Create a description object for a parameter.}
 \usage{
-  makeNumericParam(id, lower = -Inf, upper = Inf,
-    trafo = NULL, requires = NULL)
+makeNumericParam(id, lower = -Inf, upper = Inf, trafo = NULL,
+  requires = NULL)
 
-  makeNumericVectorParam(id, len, lower = -Inf,
-    upper = Inf, trafo = NULL, requires = NULL)
+makeNumericVectorParam(id, len, lower = -Inf, upper = Inf, trafo = NULL,
+  requires = NULL)
 
-  makeIntegerParam(id, lower = -Inf, upper = Inf,
-    trafo = NULL, requires = NULL)
+makeIntegerParam(id, lower = -Inf, upper = Inf, trafo = NULL,
+  requires = NULL)
 
-  makeIntegerVectorParam(id, len, lower = -Inf,
-    upper = Inf, trafo = NULL, requires = NULL)
+makeIntegerVectorParam(id, len, lower = -Inf, upper = Inf, trafo = NULL,
+  requires = NULL)
 
-  makeLogicalParam(id, requires = NULL)
+makeLogicalParam(id, requires = NULL)
 
-  makeLogicalVectorParam(id, len, requires = NULL)
+makeLogicalVectorParam(id, len, requires = NULL)
 
-  makeDiscreteParam(id, values, requires = NULL)
+makeDiscreteParam(id, values, requires = NULL)
 
-  makeDiscreteVectorParam(id, len, values, requires = NULL)
+makeDiscreteVectorParam(id, len, values, requires = NULL)
 
-  makeFunctionParam(id, requires = NULL)
+makeFunctionParam(id, requires = NULL)
 
-  makeUntypedParam(id, requires = NULL)
+makeUntypedParam(id, requires = NULL)
 }
 \arguments{
   \item{id}{[\code{character(1)}]\cr Name of parameter.}
@@ -76,31 +76,31 @@
   Default is \code{NULL} which means no requirements.}
 }
 \value{
-  [\code{\link{Param}}].
+[\code{\link{Param}}].
 }
 \description{
-  For each parameter type a special constructor function is
-  available, see below.
+For each parameter type a special constructor function is
+available, see below.
 }
 \details{
-  The S3 class is a list which stores these elements:
-  \describe{ \item{id [\code{character(1)}]}{See argument
-  of same name.} \item{type [\code{character(1)}]}{Data
-  type of parameter. Possible types are \dQuote{numeric},
-  \dQuote{numericvector}, \dQuote{integer},
-  \dQuote{integervector}, \dQuote{logical},
-  \dQuote{logicalvector}, \dQuote{discrete},
-  \dQuote{discretevector}, \dQuote{function},
-  \dQuote{untyped}.} \item{len [\code{integer(1)}]}{See
-  argument of same name.} \item{lower [\code{numeric}]}{See
-  argument of same name. Length of this vector is
-  \code{len}.} \item{upper [\code{numeric}]}{See argument
-  of same name. Length of this vector is \code{len}.}
-  \item{values [\code{list}]}{Discrete values, always
-  stored as a named list.} \item{trafo [\code{NULL} |
-  \code{function(x)}]}{See argument of same name.}
-  \item{requires [\code{NULL} | \code{expression}]}{See
-  argument of same name.} }
+The S3 class is a list which stores these elements:
+\describe{ \item{id [\code{character(1)}]}{See argument of
+same name.} \item{type [\code{character(1)}]}{Data type of
+parameter. Possible types are \dQuote{numeric},
+\dQuote{numericvector}, \dQuote{integer},
+\dQuote{integervector}, \dQuote{logical},
+\dQuote{logicalvector}, \dQuote{discrete},
+\dQuote{discretevector}, \dQuote{function},
+\dQuote{untyped}.} \item{len [\code{integer(1)}]}{See
+argument of same name.} \item{lower [\code{numeric}]}{See
+argument of same name. Length of this vector is
+\code{len}.} \item{upper [\code{numeric}]}{See argument of
+same name. Length of this vector is \code{len}.}
+\item{values [\code{list}]}{Discrete values, always stored
+as a named list.} \item{trafo [\code{NULL} |
+\code{function(x)}]}{See argument of same name.}
+\item{requires [\code{NULL} | \code{expression}]}{See
+argument of same name.} }
 }
 \examples{
 makeNumericParam("x",lower=-1, upper=1)

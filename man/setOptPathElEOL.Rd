@@ -2,7 +2,7 @@
 \alias{setOptPathElEOL}
 \title{Set the end of life dates of parameter values, in-place.}
 \usage{
-  setOptPathElEOL(op, index, eol)
+setOptPathElEOL(op, index, eol)
 }
 \arguments{
   \item{op}{[\code{\link{OptPath}}]\cr Optimization path.}
@@ -14,9 +14,9 @@
   length of \code{index}.}
 }
 \value{
-  Nothing.
+Nothing.
 }
 \description{
-  Set the end of life dates of parameter values, in-place.
+Set the end of life dates of parameter values, in-place.
 }
 

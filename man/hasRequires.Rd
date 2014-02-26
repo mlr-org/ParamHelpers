@@ -2,17 +2,17 @@
 \alias{hasRequires}
 \title{Check parameter / parameter set for requirements / dependencies.}
 \usage{
-  hasRequires(par)
+hasRequires(par)
 }
 \arguments{
   \item{par}{[\code{\link{Param}} |
   \code{\link{ParamSet}}]\cr Parameter or parameter set.}
 }
 \value{
-  [\code{logical(1)}].
+[\code{logical(1)}].
 }
 \description{
-  \code{TRUE} iff the parameter has any requirements or any
-  parameter in the set has requirements.
+\code{TRUE} iff the parameter has any requirements or any
+parameter in the set has requirements.
 }
 

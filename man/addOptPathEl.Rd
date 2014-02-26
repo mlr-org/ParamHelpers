@@ -2,9 +2,8 @@
 \alias{addOptPathEl}
 \title{Add a new element to an optimization path.}
 \usage{
-  addOptPathEl(op, x, y, dob = getOptPathLength(op) + 1L,
-    eol = as.integer(NA),
-    check.feasible = !op$add.transformed.x)
+addOptPathEl(op, x, y, dob = getOptPathLength(op) + 1L,
+  eol = as.integer(NA), check.feasible = !op$add.transformed.x)
 }
 \arguments{
   \item{op}{[\code{\link{OptPath}}] \cr Optimization path.}
@@ -27,18 +26,18 @@
   Default is \code{TRUE}.}
 }
 \value{
-  Nothing.
+Nothing.
 }
 \description{
-  Changes the argument in-place. Note that when adding
-  parameters that have associated tranformations, it is
-  probably best to add the untransformed values to the
-  path. Otherwise you have to switch off the feasibility
-  check, as constraints might now not hold anymore.
+Changes the argument in-place. Note that when adding
+parameters that have associated tranformations, it is
+probably best to add the untransformed values to the path.
+Otherwise you have to switch off the feasibility check, as
+constraints might now not hold anymore.
 }
 \details{
-  Dependent parameters whose requirements are not satisfied
-  must be represented by a scalar NA in the input.
+Dependent parameters whose requirements are not satisfied
+must be represented by a scalar NA in the input.
 }
 \examples{
 ps <- makeParamSet(

@@ -1,13 +1,13 @@
 \name{makeParamSet}
+\alias{ParamSet}
 \alias{makeNumericParamSet}
 \alias{makeParamSet}
-\alias{ParamSet}
 \title{Construct a parameter set.}
 \usage{
-  makeParamSet(..., params)
+makeParamSet(..., params)
 
-  makeNumericParamSet(id = "x", len, lower = -Inf,
-    upper = Inf, vector = TRUE)
+makeNumericParamSet(id = "x", len, lower = -Inf, upper = Inf,
+  vector = TRUE)
 }
 \arguments{
   \item{...}{[\code{\link{Param}}]\cr Parameters.}
@@ -30,20 +30,20 @@
   \code{NumericParam} objects?  Default is \code{TRUE}.}
 }
 \value{
-  [\code{\link{ParamSet}}].
+[\code{\link{ParamSet}}].
 }
 \description{
-  \code{makeParamSet}: Contruct from a bunch of parameters.
+\code{makeParamSet}: Contruct from a bunch of parameters.
 
-  \code{makeNumericParamSet}: Convenience function for
-  numerics.
+\code{makeNumericParamSet}: Convenience function for
+numerics.
 }
 \details{
-  Multiple sets can be concatenated with \code{c}.
+Multiple sets can be concatenated with \code{c}.
 
-  The constructed S3 class is simply a list that contains
-  the element \code{pars}. \code{pars} is a list of the
-  passed parameters, named by their ids.
+The constructed S3 class is simply a list that contains the
+element \code{pars}. \code{pars} is a list of the passed
+parameters, named by their ids.
 }
 \examples{
 makeParamSet(

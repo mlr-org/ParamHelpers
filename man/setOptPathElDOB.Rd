@@ -2,7 +2,7 @@
 \alias{setOptPathElDOB}
 \title{Set the dates of birth of parameter values, in-place.}
 \usage{
-  setOptPathElDOB(op, index, dob)
+setOptPathElDOB(op, index, dob)
 }
 \arguments{
   \item{op}{[\code{\link{OptPath}}]\cr Optimization path.}
@@ -14,9 +14,9 @@
   same length of \code{index}.}
 }
 \value{
-  Nothing.
+Nothing.
 }
 \description{
-  Set the dates of birth of parameter values, in-place.
+Set the dates of birth of parameter values, in-place.
 }
 

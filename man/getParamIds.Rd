@@ -2,7 +2,7 @@
 \alias{getParamIds}
 \title{Return ids of parameters in parameter set.}
 \usage{
-  getParamIds(par.set, repeated = FALSE, with.nr = FALSE)
+getParamIds(par.set, repeated = FALSE, with.nr = FALSE)
 }
 \arguments{
   \item{par.set}{[\code{\link{ParamSet}}]\cr Parameter
@@ -18,10 +18,10 @@
   \code{FALSE}.}
 }
 \value{
-  [\code{character}].
+[\code{character}].
 }
 \description{
-  Useful if vectors are included.
+Useful if vectors are included.
 }
 \examples{
 ps <- makeParamSet(

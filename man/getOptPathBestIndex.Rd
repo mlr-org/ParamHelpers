@@ -2,8 +2,8 @@
 \alias{getOptPathBestIndex}
 \title{Get index of the best element from optimization path.}
 \usage{
-  getOptPathBestIndex(op, y.name = op$y.names[1],
-    dob = op$env$dob, eol = op$env$eol, ties = "last")
+getOptPathBestIndex(op, y.name = op$y.names[1], dob = op$env$dob,
+  eol = op$env$eol, ties = "last")
 }
 \arguments{
   \item{op}{[\code{\link{OptPath}}]\cr Optimization path.}
@@ -26,11 +26,11 @@
   optimal element in path.  Default is \dQuote{last}.}
 }
 \value{
-  [\code{integer}] Index or indices into path. See
-  \code{ties}.
+[\code{integer}] Index or indices into path. See
+\code{ties}.
 }
 \description{
-  Get index of the best element from optimization path.
+Get index of the best element from optimization path.
 }
 \examples{
 ps <- makeParamSet(makeNumericParam("x"))
