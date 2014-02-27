@@ -47,8 +47,8 @@ getOptPathEl.OptPathDF = function(op, index) {
 addOptPathEl.OptPathDF = function(op, x, y, dob=getOptPathLength(op)+1L, eol=as.integer(NA),
   check.feasible=!op$add.transformed.x) {
 
-  checkArg(x, "list", length(op$par.set$pars))
-  checkArg(y, "numeric", length(op$y.names))
+  checkArg(x, "list", len=length(op$par.set$pars))
+  checkArg(y, "numeric", len=length(op$y.names))
   dob = convertInteger(dob)
   checkArg(dob, "integer", 1)
   eol = convertInteger(eol)

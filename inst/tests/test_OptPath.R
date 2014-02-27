@@ -68,6 +68,8 @@ test_that("OptPath", {
   expect_equal(e$x, list(x=c(1,1), y=7L))
   # really make sure that names are there
   expect_equal(names(e$y), "z")
+  # check error msg for wrong y
+  expect_error(addOptPathEl(op, x=list(c(1,1), 7L), y=c(1, 1)), "Argument y must be of length")
 })
 
 test_that("OptPath with vector and discrete params works", {
