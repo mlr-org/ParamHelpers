@@ -15,6 +15,10 @@ test_that("OptPath", {
   # test getters
   expect_equal(getOptPathY(op, "z1"), c(1,3))
   expect_equal(getOptPathY(op, "z2"), c(4,2))
+  expect_equal(getOptPathY(op), matrix(c(1, 3, 4, 2), nrow=2L, dimnames=list(1:2, c("z1", "z2"))))
+  expect_equal(getOptPathY(op, "z2", drop=FALSE), matrix(c(4, 2), nrow=2L, dimnames=list(1:2, c("z2"))))
+  expect_equal(getOptPathY(op, "z2", drop=TRUE), c(4, 2))
+  expect_equal(getOptPathY(op, "z2"), c(4,2))
   expect_equal(getOptPathDOB(op), c(1,2))
   expect_equal(getOptPathEOL(op), c(NA,8))
 

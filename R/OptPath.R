@@ -212,15 +212,19 @@ getOptPathBestIndex = function(op, y.name=op$y.names[1], dob=op$env$dob, eol=op$
   }
 }
 
-#' Get y vector from the optimization path.
+#' Get y-vector or y-matrix from the optimization path.
 #'
 #' @param op [\code{\link{OptPath}}]\cr
 #'   Optimization path.
-#' @param name [\code{character(1)}]\cr
-#'   Name of performance measure.
-#' @return [\code{numeric}].
+#' @param names [\code{character}]\cr
+#'   Names of performance measure.
+#'   Default is all performance measures in path.
+#' @param drop [\code{logical(1)}]\cr
+#'   Return vector instead of matrix when only one y-column was selected?
+#'   Default is \code{TRUE}.
+#' @return [\code{numeric} | \code{matrix}]. The columns of the matrix are always named.
 #' @export
-getOptPathY = function(op, name) {
+getOptPathY = function(op, names, drop=TRUE) {
   UseMethod("getOptPathY")
 }
 

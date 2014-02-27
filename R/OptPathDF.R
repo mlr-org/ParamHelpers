@@ -81,9 +81,16 @@ addOptPathEl.OptPathDF = function(op, x, y, dob=getOptPathLength(op)+1L, eol=as.
 
 
 #' @S3method getOptPathY OptPathDF
-getOptPathY.OptPathDF = function(op, name) {
-  checkArg(name, choices=op$y.names)
-  op$env$path[, name]
+getOptPathY.OptPathDF = function(op, names, drop=TRUE) {
+  if (missing(names))
+    names = op$y.names
+  else
+    checkArg(names, subset=op$y.names)
+  checkArg(drop, "logical", len=1L, na.ok=FALSE)
+  y = as.matrix(op$env$path[, names, drop=FALSE])
+  if (drop && length(names) == 1L)
+    y = as.numeric(y)
+  return(y)
 }
 
 #' @S3method getOptPathDOB OptPathDF

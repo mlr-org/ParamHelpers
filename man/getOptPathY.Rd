@@ -1,19 +1,24 @@
 \name{getOptPathY}
 \alias{getOptPathY}
-\title{Get y vector from the optimization path.}
+\title{Get y-vector or y-matrix from the optimization path.}
 \usage{
-getOptPathY(op, name)
+getOptPathY(op, names, drop = TRUE)
 }
 \arguments{
   \item{op}{[\code{\link{OptPath}}]\cr Optimization path.}
 
-  \item{name}{[\code{character(1)}]\cr Name of performance
-  measure.}
+  \item{names}{[\code{character}]\cr Names of performance
+  measure.  Default is all performance measures in path.}
+
+  \item{drop}{[\code{logical(1)}]\cr Return vector instead
+  of matrix when only only one y-column was selected?
+  Default is \code{TRUE}.}
 }
 \value{
-[\code{numeric}].
+[\code{numeric} | \code{matrix}]. The columns of the matrix
+are always named.
 }
 \description{
-Get y vector from the optimization path.
+Get y-vector or y-matrix from the optimization path.
 }
 

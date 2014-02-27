@@ -3,6 +3,8 @@ ParamHelpers_1.2:
   the case of dependent parameters
 - paramValueToString produces better readable output
 - getLower and getUpper have with.nr argument now
+- slightly change interface of getOptPathY, so one can now return a matrix of multiple measures.
+
 
 ParamHelpers_1.1-35:
 - concept of dependent parameters was introduced (argument "requires")
