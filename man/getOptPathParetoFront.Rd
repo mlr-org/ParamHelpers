@@ -1,0 +1,44 @@
+\name{getOptPathParetoFront}
+\alias{getOptPathParetoFront}
+\title{Get indices of pareto front of optimization path.}
+\usage{
+getOptPathParetoFront(op, y.names = op$y.names, dob = op$env$dob,
+  eol = op$env$eol, index = FALSE)
+}
+\arguments{
+  \item{op}{[\code{\link{OptPath}}]\cr Optimization path.}
+
+  \item{y.names}{[\code{character}]\cr Names of performance
+  measures to construct pareto front for.  Default is all
+  performance measures.}
+
+  \item{dob}{[\code{integer}]\cr Possible dates of birth to
+  select elements from. Defaults to all.}
+
+  \item{eol}{[\code{integer}]\cr Possible end of life to
+  select elements from. Defaults to all.}
+
+  \item{index}{[\code{logical(1)}]\cr Return indices into
+  path of front or y-matrix of nondominated points?
+  Default is \code{FALSE}.}
+}
+\value{
+[\code{matrix} | \code{integer}]. Either matrix (with named
+columns) of points of front in objective space or indices
+into path for front.
+}
+\description{
+Get indices of pareto front of optimization path.
+}
+\examples{
+ps <- makeParamSet(makeNumericParam("x"))
+op <- makeOptPathDF(par.set=ps, y.names=c("y1", "y2"), minimize=c(TRUE, TRUE))
+addOptPathEl(op, x=list(x=1), y=c(5, 3))
+addOptPathEl(op, x=list(x=2), y=c(2, 4))
+addOptPathEl(op, x=list(x=3), y=c(9, 4))
+addOptPathEl(op, x=list(x=4), y=c(4, 9))
+as.data.frame(op)
+getOptPathParetoFront(op)
+getOptPathParetoFront(op, index=TRUE)
+}
+

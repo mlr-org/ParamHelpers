@@ -12,6 +12,7 @@ License: BSD_3_clause + file LICENSE
 Imports:
     BBmisc (>= 1.4)
 Suggests:
+    emoa,
     lhs,
     irace,
     testthat

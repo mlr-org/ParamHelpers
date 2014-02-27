@@ -180,6 +180,25 @@ test_that("requires works", {
   expect_equal(d[,1:4], data.frame(x=c("a", "b"), y=c(1, NA), z1=c(NA, 2L), z2=c(NA, 3L)))
 })
 
+test_that("pareto front", {
+  ps = makeParamSet(makeNumericParam("x"))
+  op = makeOptPathDF(par.set=ps, y.names=c("y1", "y2"), minimize=c(TRUE, TRUE))
+  addOptPathEl(op, x=list(x=3), y=c(9, 4))
+  addOptPathEl(op, x=list(x=4), y=c(4, 9))
+  addOptPathEl(op, x=list(x=1), y=c(5, 3))
+  addOptPathEl(op, x=list(x=2), y=c(2, 4))
+  f = getOptPathParetoFront(op, index=TRUE)
+  expect_equal(f, 3:4)
+  f = getOptPathParetoFront(op, index=FALSE)
+  expect_equal(f, matrix(c(5, 2, 3, 4), nrow=2L, dimnames=list(3:4, c("y1", "y2"))))
+  f = getOptPathParetoFront(op, index=TRUE, dob=3:4)
+  expect_equal(f, 3:4)
+  f = getOptPathParetoFront(op, index=FALSE, dob=3:4)
+  expect_equal(f, matrix(c(5, 2, 3, 4), nrow=2L, dimnames=list(3:4, c("y1", "y2"))))
+  op$minimize = c(TRUE, FALSE)
+  f = getOptPathParetoFront(op, index=TRUE)
+  expect_equal(f, c(2, 4))
+})
 
 
 

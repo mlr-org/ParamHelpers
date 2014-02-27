@@ -1,9 +1,11 @@
 ParamHelpers_1.2:
-- rewrote generateDesign and dfRowsToList in C to greatly increase speed in 
+- rewrote generateDesign and dfRowsToList in C to greatly increase speed in
   the case of dependent parameters
 - paramValueToString produces better readable output
 - getLower and getUpper have with.nr argument now
 - slightly change interface of getOptPathY, so one can now return a matrix of multiple measures.
+- new functions
+-- getOptPathParetoFront
 
 
 ParamHelpers_1.1-35:
@@ -11,15 +13,15 @@ ParamHelpers_1.1-35:
 - as.data.frame.OptPath: discretes.as.factor option
 - all arguments "length" renamed to len
 - new functions
--- convertParamSetToIrace  
+-- convertParamSetToIrace
 -- dfRowToList, dfRowsToList
 -- getOptPathDOB, getOptPathEOL
 -- hasRequires
--- removeMissingValues	
+-- removeMissingValues
 
 ParamHelpers_1.0-55:
 - disabled one unreasonable unit test for CRAN
 - some dependencies are now imports like they should be
 
-ParamHelpers_1.0-54: 
+ParamHelpers_1.0-54:
 - First submit to CRAN.

@@ -184,6 +184,12 @@ addOptPathEl = function(op, x, y, dob=getOptPathLength(op)+1L, eol=as.integer(NA
 #' getOptPathBestIndex(op)
 #' getOptPathBestIndex(op, ties="first")
 getOptPathBestIndex = function(op, y.name=op$y.names[1], dob=op$env$dob, eol=op$env$eol, ties="last") {
+  checkArg(op, "OptPath")
+  checkArg(y.name, choices=op$y.names, len=1L, na.ok=FALSE)
+  dob = convertIntegers(dob)
+  checkArg(dob, "integer", na.ok=TRUE)
+  eol = convertIntegers(eol)
+  checkArg(eol, "integer", na.ok=TRUE)
   checkArg(ties, choices=c("all", "first", "last", "random"))
   life.inds = which(op$env$dob %in% dob & op$env$eol %in% eol)
   if (length(life.inds) == 0)
@@ -210,6 +216,56 @@ getOptPathBestIndex = function(op, y.name=op$y.names[1], dob=op$env$dob, eol=op$
   } else {
     return(best.inds)
   }
+}
+
+#' Get indices of pareto front of optimization path.
+#'
+#' @param op [\code{\link{OptPath}}]\cr
+#'   Optimization path.
+#' @param y.names [\code{character}]\cr
+#'   Names of performance measures to construct pareto front for.
+#'   Default is all performance measures.
+#' @param dob [\code{integer}]\cr
+#'   Possible dates of birth to select elements from. Defaults to all.
+#' @param eol [\code{integer}]\cr
+#'   Possible end of life to select elements from. Defaults to all.
+#' @param index [\code{logical(1)}]\cr
+#'   Return indices into path of front or y-matrix of nondominated points?
+#'   Default is \code{FALSE}.
+#' @return [\code{matrix} | \code{integer}]. Either matrix (with named columns) of points of front
+#'   in objective space or indices into path for front.
+#' @export
+#' @examples
+#' ps <- makeParamSet(makeNumericParam("x"))
+#' op <- makeOptPathDF(par.set=ps, y.names=c("y1", "y2"), minimize=c(TRUE, TRUE))
+#' addOptPathEl(op, x=list(x=1), y=c(5, 3))
+#' addOptPathEl(op, x=list(x=2), y=c(2, 4))
+#' addOptPathEl(op, x=list(x=3), y=c(9, 4))
+#' addOptPathEl(op, x=list(x=4), y=c(4, 9))
+#' as.data.frame(op)
+#' getOptPathParetoFront(op)
+#' getOptPathParetoFront(op, index=TRUE)
+getOptPathParetoFront = function(op, y.names=op$y.names, dob=op$env$dob, eol=op$env$eol, index=FALSE) {
+  checkArg(op, "OptPath")
+  checkArg(y.names, subset=op$y.names, min.len=2L)
+  dob = convertIntegers(dob)
+  checkArg(dob, "integer", na.ok=TRUE)
+  eol = convertIntegers(eol)
+  checkArg(eol, "integer", na.ok=TRUE)
+  checkArg(index, "logical", len=1L, na.ok=TRUE)
+  requirePackages("emoa")
+  life.inds = which(op$env$dob %in% dob & op$env$eol %in% eol)
+  if (length(life.inds) == 0)
+    stop("No element found which matches dob and eol restrictions!")
+  y = getOptPathY(op, y.names, drop=FALSE)[life.inds, ]
+  # multiply columns with -1 if maximize
+  k = ifelse(op$minimize, 1, -1)
+  y2 = t(y) * k
+  nondom = which(!is_dominated(y2))
+  if (index)
+    return(life.inds[nondom])
+  else
+    y[nondom,]
 }
 
 #' Get y-vector or y-matrix from the optimization path.

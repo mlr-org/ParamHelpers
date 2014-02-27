@@ -11,8 +11,8 @@ getOptPathY(op, names, drop = TRUE)
   measure.  Default is all performance measures in path.}
 
   \item{drop}{[\code{logical(1)}]\cr Return vector instead
-  of matrix when only only one y-column was selected?
-  Default is \code{TRUE}.}
+  of matrix when only one y-column was selected?  Default
+  is \code{TRUE}.}
 }
 \value{
 [\code{numeric} | \code{matrix}]. The columns of the matrix
