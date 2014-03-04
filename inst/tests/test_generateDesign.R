@@ -194,3 +194,11 @@ test_that("we dont drop levels in factors", {
   des = generateDesign(1, ps)
   expect_true(is.factor(des$x) && levels(des$x) == letters[1:5])
 })
+
+test_that("list of further arguments passed to lhs function produces no error", {
+  ps = makeParamSet(
+    makeDiscreteParam("x", values = c("a", "b", "c")),
+    makeNumericParam("realA", lower=0, upper=100)
+  )
+  expect_true({generateDesign(10L, ps, fun.args = list(k=3)); TRUE})
+})
