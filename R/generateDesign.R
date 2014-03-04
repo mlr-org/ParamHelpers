@@ -91,7 +91,7 @@ generateDesign = function(n=10L, par.set, fun, fun.args=list(), trafo=FALSE, int
   lens = getParamLengths(par.set)
   k = sum(lens)
 
-  des = do.call(fun, c(list(n=n, k=k), fun.args))
+  des = do.call(fun, insert(list(n=n, k=k), fun.args))
 
   # FIXME most of the code structure really sucks in the whole function
   # we should probably introduce more helper functions to deal with that
