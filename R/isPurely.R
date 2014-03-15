@@ -1,59 +1,67 @@
-#' Check parameter / parameter set for discrete params.
-#'
-#' \code{TRUE} iff the parameter is discrete or all parameters in the set are
-#' discrete.
+#' Check parameter / parameter set contains ONLY a certain type.
 #'
 #' @param par [\code{\link{Param}} | \code{\link{ParamSet}}]\cr
 #'   Parameter or parameter set.
+#' @param include.int [\code{logical(1)}]\cr
+#'   Are integers also considered as numeric?
+#'   Default is \code{TRUE}.
 #' @return [\code{logical(1)}].
+#' @name isType
+#' @rdname isType
+NULL
+
 #' @export
-isPurelyDiscrete = function(par) {
-  UseMethod("isPurelyDiscrete")
+#' @rdname isType
+isNumeric = function(par, include.int = TRUE) {
+  checkArg(par, c("Param", "ParamSet"))
+  UseMethod("isNumeric")
 }
 
-#' @S3method isPurelyDiscrete ParamSet
-isPurelyDiscrete.ParamSet = function(par) {
+#' @S3method isDiscrete ParamSet
+isNumeric.ParamSet = function(par, include.int = TRUE) {
+  all(sapply(par$pars, isNumeric.Param, include.int = include.int))
+}
+
+#' @S3method isDiscrete Param
+isNumeric.Param = function(par, include.int = TRUE) {
+  types = if (include.int)
+    c("numeric", "numericvector", "integer", "integervector")
+  else
+    c("numeric", "numericvector")
+  return(par$type %in% types)
+}
+
+#' @export
+#' @rdname isType
+isDiscrete = function(par) {
+  checkArg(par, c("Param", "ParamSet"))
+  UseMethod("isDiscrete")
+}
+
+#' @S3method isDiscrete ParamSet
+isDiscrete.ParamSet = function(par) {
   return(hasAllParamsOfTypes(par, types = c("discrete", "discretevector")))
 }
 
-#' @S3method isPurelyDiscrete Param
-isPurelyDiscrete.Param = function(par) {
-  return(hasAllParamsOfTypes(par, types = c("discrete", "discretevector")))
+#' @S3method isDiscrete Param
+isDiscrete.Param = function(par) {
+  return(par$type %in% c("discrete", "discretevector"))
 }
 
-#' Check parameter / parameter set for integer params.
-#'
-#' \code{TRUE} iff the parameter is of type integer or all parameters in the set are
-#' integer parameters.
-#'
-#' @param par [\code{\link{Param}} | \code{\link{ParamSet}}]\cr
-#'   Parameter or parameter set.
-#' @return [\code{logical(1)}].
 #' @export
-isPurelyInteger = function(par) {
-    UseMethod("isPurelyInteger")
+#' @rdname isType
+isInteger = function(par) {
+  checkArg(par, c("Param", "ParamSet"))
+  UseMethod("isInteger")
 }
 
-#' @S3method isPurelyInteger ParamSet
-isPurelyInteger.ParamSet = function(par) {
+#' @S3method isInteger ParamSet
+isInteger.ParamSet = function(par) {
   return(hasAllParamsOfTypes(par, types = c("integer", "integervector")))
 }
 
-#' @S3method isPurelyInteger Param
-isPurelyInteger.Param = function(par) {
-  return(hasAllParamsOfTypes(par, types = c("integer", "integervector")))
-}
-
-#' Check parameter / parameter set for numeric params.
-#'
-#' \code{TRUE} iff the parameter is of type numeric or all parameters in the set are
-#' numeric parameters.
-#'
-#' @param par [\code{\link{Param}} | \code{\link{ParamSet}}]\cr
-#'   Parameter or parameter set.
-#' @return [\code{logical(1)}].
-#' @export
-isPurelyNumeric = function(par) {
-  return(hasAllParamsOfTypes(par, types = c("numeric", "numericvector")))
+#' @S3method isInteger Param
+isInteger.Param = function(par) {
+  return(par$type %in% c("integer", "integervector"))
 }
 
