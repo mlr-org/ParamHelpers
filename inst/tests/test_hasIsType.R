@@ -1,9 +1,8 @@
-context("isPurely{Discrete, Integer, Numeric} and has{Discrete, Integer, Numeric}")
+context("is{Discrete, Integer, Numeric} and has{Discrete, Integer, Numeric}")
 
-test_that("isPurely{Discrete, Integer, Numeric} and has{Discrete, Integer, Numeric}", {
+test_that("is{Discrete, Integer, Numeric} and has{Discrete, Integer, Numeric}", {
   par.set.empty = makeParamSet()
-  methods = c(isPurelyInteger, isPurelyDiscrete, isPurelyNumeric,
-    hasInteger, hasDiscrete, hasNumeric)
+  methods = c(hasInteger, hasDiscrete, hasNumeric)
 
   lapply(methods, function(fun) {
     expect_false(fun(par.set.empty))
@@ -23,15 +22,15 @@ test_that("isPurely{Discrete, Integer, Numeric} and has{Discrete, Integer, Numer
     makeDiscreteVectorParam("y", len=2, values=c("x", "y"))
   )
 
-  expect_true(isPurelyDiscrete(par.set.discrete))
-  expect_false(isPurelyInteger(par.set.discrete))
-  expect_false(isPurelyNumeric(par.set.discrete))
+  expect_true(isDiscrete(par.set.discrete))
+  expect_false(isInteger(par.set.discrete))
+  expect_false(isNumeric(par.set.discrete))
   expect_false(hasNumeric(par.set.discrete))
   expect_false(hasInteger(par.set.discrete))
 
-  expect_false(isPurelyDiscrete(par.set.mixed))
-  expect_false(isPurelyInteger(par.set.mixed))
-  expect_false(isPurelyNumeric(par.set.mixed))
+  expect_false(isDiscrete(par.set.mixed))
+  expect_false(isInteger(par.set.mixed))
+  expect_false(isNumeric(par.set.mixed))
   expect_true(hasNumeric(par.set.mixed))
   expect_true(hasInteger(par.set.mixed))
 })

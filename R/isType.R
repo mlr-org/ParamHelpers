@@ -1,9 +1,9 @@
-#' Check parameter / parameter set contains ONLY a certain type.
+#' Check parameter / parameter set contain ONLY a certain type.
 #'
 #' @param par [\code{\link{Param}} | \code{\link{ParamSet}}]\cr
 #'   Parameter or parameter set.
 #' @param include.int [\code{logical(1)}]\cr
-#'   Are integers also considered as numeric?
+#'   Are integers also considered to be numeric?
 #'   Default is \code{TRUE}.
 #' @return [\code{logical(1)}].
 #' @name isType

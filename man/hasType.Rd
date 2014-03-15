@@ -16,7 +16,7 @@ hasNumeric(par.set, include.int = TRUE)
   set.}
 
   \item{include.int}{[\code{logical(1)}]\cr Are integers
-  also considered as numeric?  Default is \code{TRUE}.}
+  also considered to be numeric?  Default is \code{TRUE}.}
 }
 \value{
 [\code{logical(1)}].

@@ -6,7 +6,7 @@
 #' @param par.set [\code{\link{ParamSet}}]\cr
 #'   Parameter set.
 #' @param include.int [\code{logical(1)}]\cr
-#'   Are integers also considered as numeric?
+#'   Are integers also considered to be numeric?
 #'   Default is \code{TRUE}.
 #' @return [\code{logical(1)}].
 #' @name hasType
@@ -48,7 +48,8 @@ hasSomeParamsOfTypes = function(par.set, types) {
 
 # are all param types contained in 'types'
 hasAllParamsOfTypes = function(par.set, types) {
-  all(types %in% getTypes(par.set, df.cols = FALSE, with.nr = FALSE , use.names = FALSE))
+  all(getTypes(par.set, df.cols = FALSE, with.nr = FALSE , use.names = FALSE) %in% types)
+
 }
 
 
