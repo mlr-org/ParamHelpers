@@ -2,12 +2,12 @@ context("is{Discrete, Integer, Numeric} and has{Discrete, Integer, Numeric}")
 
 test_that("is{Discrete, Integer, Numeric} and has{Discrete, Integer, Numeric}", {
   par.set.empty = makeParamSet()
-  methods = c(hasInteger, hasDiscrete, hasNumeric)
+  methods1 = c(hasInteger, hasDiscrete, hasNumeric)
+  methods2 = c(isInteger, isDiscrete, isNumeric)
 
-  lapply(methods, function(fun) {
-    expect_false(fun(par.set.empty))
-  })
-
+  lapply(methods1, function(fun) expect_false(fun(par.set.empty)))
+  lapply(methods2, function(fun) expect_true(fun(par.set.empty)))
+  
   par.set.mixed = makeParamSet(
     makeNumericParam("u", lower=1),
     makeIntegerParam("v", lower=1, upper=2),

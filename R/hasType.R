@@ -39,7 +39,6 @@ hasNumeric = function(par.set, include.int = TRUE) {
 }
 
 ##### helpers
-# FIXME: do we really need to consider the empty parset for the next functons?
 
 # is at least one of types somewhere in par.set?
 hasSomeParamsOfTypes = function(par.set, types) {

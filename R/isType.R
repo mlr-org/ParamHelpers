@@ -1,4 +1,6 @@
 #' Check parameter / parameter set contain ONLY a certain type.
+#
+#  An empty param set is considered to be of all types.
 #'
 #' @param par [\code{\link{Param}} | \code{\link{ParamSet}}]\cr
 #'   Parameter or parameter set.
