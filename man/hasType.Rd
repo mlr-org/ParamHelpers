@@ -1,0 +1,29 @@
+\name{hasType}
+\alias{hasDiscrete}
+\alias{hasInteger}
+\alias{hasNumeric}
+\alias{hasType}
+\title{Check whether parameter set contains a certain type.}
+\usage{
+hasDiscrete(par.set)
+
+hasInteger(par.set)
+
+hasNumeric(par.set, include.int = TRUE)
+}
+\arguments{
+  \item{par.set}{[\code{\link{ParamSet}}]\cr Parameter
+  set.}
+
+  \item{include.int}{[\code{logical(1)}]\cr Are integers
+  also considered as numeric?  Default is \code{TRUE}.}
+}
+\value{
+[\code{logical(1)}].
+}
+\description{
+\code{TRUE} iff the parameter set contains at least one
+parameter of the mentioned type x. Type x always subsumes x
+and x-vector.
+}
+
