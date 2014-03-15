@@ -57,21 +57,3 @@ isPurelyNumeric = function(par) {
   return(hasAllParamsOfTypes(par, types = c("numeric", "numericvector")))
 }
 
-hasSomeParamsOfTypes = function(par, types) {
-  par.types = getParamTypes(par)
-  commonTypes = intersect(par.types, types)
-  return(length(commonTypes) > 0)
-}
-
-hasAllParamsOfTypes = function(par, types) {
-  par.types = getParamTypes(par)
-  if (length(par.types) == 0)
-    return(FALSE)
-  return(all(par.types %in% types))
-}
-
-getParamTypes = function(par) {
-  if (inherits(par, "Param"))
-    return(par$type)
-  return(getTypes(par))
-}
