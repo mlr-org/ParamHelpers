@@ -43,7 +43,7 @@ getUpper = function(par.set, with.nr=FALSE) {
 getValues = function(par.set) {
   checkArg(par.set, "ParamSet")
   par.set = filterParams(par.set, c("discrete", "discretevector", "logical", "logicalvector"))
-  if (length(par.set$pars) == 0)
+  if (isEmpty(par.set))
     return(list())
   lapply(par.set$pars, function(p) p$values)
 }
@@ -52,7 +52,7 @@ getValues = function(par.set) {
 getBounds = function(par.set, type.of.bounds, with.nr=FALSE) {
   checkArg(par.set, "ParamSet")
   par.set = filterParams(par.set, c("numeric", "integer", "numericvector", "integervector"))
-  if (length(par.set$pars) == 0)
+  if (isEmpty(par.set))
     return(numeric(0))
   bounds = lapply(par.set$pars, function(p) p[[type.of.bounds]])
   bounds = do.call(c, bounds)

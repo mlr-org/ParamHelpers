@@ -74,7 +74,7 @@ generateDesign = function(n=10L, par.set, fun, fun.args=list(), trafo=FALSE, int
   checkArg(ints.as.num, "logical", len=1L, na.ok=FALSE)
   checkArg(discretes.as.factor, "logical", len=1L, na.ok=FALSE)
 
-  if (length(par.set$pars) == 0)
+  if (isEmpty(par.set))
     stop("par.set must not be empty!")
   if(any(sapply(par.set$pars, function(x) is(x, "LearnerParameter"))))
     stop("No par.set parameter in 'generateDesign' can be of class 'LearnerParameter'! Use basic parameters instead to describe you region of interest!")

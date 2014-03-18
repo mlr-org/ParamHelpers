@@ -1,10 +1,10 @@
 #' Return lengths of parameters in parameter set.
-#' 
+#'
 #' Useful for vector parameters.
 #' @param par.set [\code{\link{ParamSet}}]\cr
 #'   Parameter set.
 #' @return [\code{integer}]. Named and in same order as \code{par.set}.
-#' @examples 
+#' @examples
 #' ps <- makeParamSet(
 #'   makeNumericParam("u"),
 #'   makeIntegerParam("v", lower=1, upper=2),
@@ -12,13 +12,13 @@
 #'   makeDiscreteVectorParam("x", len=2, values=c("a", "b"))
 #' )
 #' getParamLengths(ps)
-#' # the length of the vector x is 2, for all other single value parameters the length is 1. 
+#' # the length of the vector x is 2, for all other single value parameters the length is 1.
 #' @export
 getParamLengths = function(par.set) {
   checkArg(par.set, "ParamSet")
   # if we dont do this check we get an empty list
-  if (length(par.set$pars) == 0)  
+  if (isEmpty(par.set))
     integer(0)
-  else  
+  else
     extractSubList(par.set$pars, "len")
 }
