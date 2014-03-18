@@ -48,7 +48,4 @@ hasSomeParamsOfTypes = function(par.set, types) {
 # are all param types contained in 'types'
 hasAllParamsOfTypes = function(par.set, types) {
   all(getTypes(par.set, df.cols = FALSE, with.nr = FALSE , use.names = FALSE) %in% types)
-
 }
-
-
