@@ -1,0 +1,16 @@
+\name{isEmpty}
+\alias{isEmpty}
+\title{Check whether parameter set is empty.}
+\usage{
+isEmpty(par.set)
+}
+\arguments{
+  \item{par.set}{\code{\link{ParamSet}}]\cr Parameter set.}
+}
+\value{
+[\code{logical(1)}].
+}
+\description{
+Check whether parameter set is empty.
+}
+

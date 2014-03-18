@@ -8,6 +8,7 @@ test_that("empty paramset", {
   expect_equal(getUpper(ps), numeric(0))
   expect_equal(getValues(ps), list())
   expect_output(print(ps), "Empty parameter set.")
+  expect_true(isEmpty(ps))
 })
 
 
@@ -29,13 +30,13 @@ test_that("mixed paramset", {
   expect_equal(getValues(ps), list(w=values1, x=values3, y=values2))
   expect_output(print(ps), "Num param 'u'")
 })
-  
+
 test_that("mixed paramset 2", {
   p1 = makeNumericParam(id="x1", lower=-1L, upper=1)
   p2 = makeNumericParam(id="x2", lower=0, upper=Inf)
   p3 = makeDiscreteParam(id="x3", values=list(a="char", b=2L, c=2.2, "e"))
   ps = makeParamSet(p1, p2, p3)
-  
+
   expect_true(isFeasible(ps, list(0,0,"char")))
   expect_true(!isFeasible(ps, list(2,0,"char")))
   expect_equal(getLower(ps), c(x1=-1, x2=0))
@@ -48,10 +49,10 @@ test_that("cannot build param set from wrong stuff", {
     makeParamSet(
       makeNumericParam("x"),
       makeNumericParam("x")
-    ), "unique" 
+    ), "unique"
  )
 })
-  
+
 test_that("paramset with vector", {
   ps = makeParamSet(
     makeNumericParam("x", lower=1),
@@ -66,7 +67,7 @@ test_that("paramset with vector", {
   expect_true(is.list(getValues(ps)))
   expect_equal(length(getValues(ps)), 0)
   expect_output(print(ps), "Num param 'x'")
-}) 
+})
 
 test_that("list works", {
   ps = makeParamSet(params = list(
@@ -87,8 +88,8 @@ test_that("combination with c works", {
     makeLogicalParam("x")
   )
   ps = c(ps1, ps2)
-  expect_equal(length(ps$pars), 4)  
-  expect_equal(getParamIds(ps), c(getParamIds(ps1), getParamIds(ps2)))  
+  expect_equal(length(ps$pars), 4)
+  expect_equal(getParamIds(ps), c(getParamIds(ps1), getParamIds(ps2)))
 })
 
 

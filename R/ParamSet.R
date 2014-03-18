@@ -43,7 +43,7 @@ makeParamSet = function(..., params) {
 
 #' @S3method print ParamSet
 print.ParamSet = function(x, ...) {
-  if (length(x$pars) == 0)
+  if (isEmpty(x))
     print("Empty parameter set.")
   else
     sapply(x$pars, print)
@@ -54,6 +54,22 @@ c.ParamSet = function(..., recursive=FALSE) {
   pss = list(...)
   pars = Reduce(c, lapply(pss, function(ps) ps$pars))
   do.call(makeParamSet, pars)
+}
+
+#' Check whether parameter set is empty.
+#'
+#' @param par.set \code{\link{ParamSet}}]\cr
+#'   Parameter set.
+#' @return [\code{logical(1)}].
+#' @export
+isEmpty = function(par.set) {
+  checkArg(par.set, c("ParamSet"))
+  UseMethod("isEmpty")
+}
+
+#' @S3method isEmpty ParamSet
+isEmpty.ParamSet = function(par.set) {
+  length(par.set$pars) == 0
 }
 
 #' \code{makeNumericParamSet}: Convenience function for numerics.
@@ -99,3 +115,5 @@ makeNumericParamSet = function(id="x", len, lower=-Inf, upper=Inf, vector=TRUE) 
       makeNumericParam(id=paste(id, i, sep=""), lower=lower[i], upper=upper[i])))
   }
 }
+
+
