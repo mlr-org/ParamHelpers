@@ -19,12 +19,12 @@ isNumeric = function(par, include.int = TRUE) {
   UseMethod("isNumeric")
 }
 
-#' @S3method isDiscrete ParamSet
+#' @S3method isNumeric ParamSet
 isNumeric.ParamSet = function(par, include.int = TRUE) {
   all(sapply(par$pars, isNumeric.Param, include.int = include.int))
 }
 
-#' @S3method isDiscrete Param
+#' @S3method isNumeric Param
 isNumeric.Param = function(par, include.int = TRUE) {
   types = if (include.int)
     c("numeric", "numericvector", "integer", "integervector")
