@@ -1,10 +1,10 @@
 #' Get lower / upper bounds and allowed discrete values for parameters.
-#' 
+#'
 #' \code{getLower} and \code{getUpper} return a numerical vector of lower and upper
 #' bounds, \code{getValues} returns a list of possible value sets for discrete parameters.
 #'
-#' Parameters for which such bound make no sense - due to their type - are not present in the result. 
-#' 
+#' Parameters for which such bound make no sense - due to their type - are not present in the result.
+#'
 #' @param par.set [\code{\link{ParamSet}}]\cr
 #'   Parameter set.
 #' @param with.nr [\code{logical(1)}]\cr
@@ -12,7 +12,7 @@
 #'   Default is \code{FALSE}.
 #' @return [\code{vector} | \code{list}]. Named by parameter ids.
 #' @export
-#' @examples 
+#' @examples
 #' ps <- makeParamSet(
 #'   makeNumericParam("u"),
 #'   makeIntegerParam("v", lower=1, upper=2),
@@ -29,32 +29,17 @@
 #' )
 #' getValues(ps)
 getLower = function(par.set, with.nr=FALSE) {
-  checkArg(par.set, "ParamSet")
-  par.set = filterParams(par.set, c("numeric", "integer", "numericvector", "integervector")) 
-  if (length(par.set$pars) == 0)
-    return(numeric(0))
-  bounds = lapply(par.set$pars, function(p) p$lower)
-  bounds = do.call(c, bounds)
-  names(bounds) = getParamIds(par.set, repeated=TRUE, with.nr=with.nr)
-  return(bounds)
+  return(getBounds(par.set, type.of.bounds="lower", with.nr=with.nr))
 }
 
 #' @export
-#' @rdname getLower 
+#' @rdname getLower
 getUpper = function(par.set, with.nr=FALSE) {
-  checkArg(par.set, "ParamSet")
-  par.set = filterParams(par.set, c("numeric", "integer", "numericvector", "integervector")) 
-  if (length(par.set$pars) == 0)
-    return(numeric(0))
-  bounds = lapply(par.set$pars, function(p) p$upper)
-  bounds = do.call(c, bounds)
-  if (length(bounds) > 0)
-    names(bounds) = getParamIds(par.set, repeated=TRUE, with.nr=with.nr)
-  return(bounds)
+  return(getBounds(par.set, type.of.bounds="upper", with.nr=with.nr))
 }
 
 #' @export
-#' @rdname getLower 
+#' @rdname getLower
 getValues = function(par.set) {
   checkArg(par.set, "ParamSet")
   par.set = filterParams(par.set, c("discrete", "discretevector", "logical", "logicalvector"))
@@ -63,3 +48,15 @@ getValues = function(par.set) {
   lapply(par.set$pars, function(p) p$values)
 }
 
+# common functionality of getLower and getUpper
+getBounds = function(par.set, type.of.bounds, with.nr=FALSE) {
+  checkArg(par.set, "ParamSet")
+  par.set = filterParams(par.set, c("numeric", "integer", "numericvector", "integervector"))
+  if (length(par.set$pars) == 0)
+    return(numeric(0))
+  bounds = lapply(par.set$pars, function(p) p[[type.of.bounds]])
+  bounds = do.call(c, bounds)
+  if (length(bounds) > 0)
+    names(bounds) = getParamIds(par.set, repeated=TRUE, with.nr=with.nr)
+  return(bounds)
+}

@@ -22,7 +22,6 @@ isInteger(par)
 [\code{logical(1)}].
 }
 \description{
-Check parameter / parameter set contain ONLY a certain
-type.
+An empty param set is considered to be of all types.
 }
 
