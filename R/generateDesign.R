@@ -33,6 +33,13 @@
 #'   Should logical parameters have columns of type \dQuote{factor} in result?
 #'   Otherwise logical columns are generated.
 #'   Default is \code{FALSE}.
+#' @param remove.duplicates [\code{logical(1)}]\cr
+#'   Must the design NOT contain duplicate lines?
+#'   Default is \code{FALSE}.
+#' @param remove.duplicates.iter [\code{integer(1)}]\cr
+#'   If \code{remove.duplicates} is set to \code{TRUE} and duplicates occur within the design, i. e., if
+#'   at least one line appears multiple times, the function tries hard to fix to replace the duplicated lines.
+#'   The parameter controls how many attempts the algorithm will at most start.
 #' @return The created design is a data.frame. Columns are named by the ids of the parameters.
 #'   If the \code{par.set} argument contains a vector parameter, its corresponding column names
 #'   in the design are the parameter id concatenated with 1 to dimension of the vector.
@@ -60,7 +67,10 @@
 #'   makeNumericVectorParam("y", len=2, lower=0, upper=1, trafo=function(x) x/sum(x))
 #' )
 #' generateDesign(10, ps, trafo=TRUE)
-generateDesign = function(n=10L, par.set, fun, fun.args=list(), trafo=FALSE, ints.as.num=FALSE, discretes.as.factor=TRUE, logicals.as.factor=FALSE) {
+generateDesign = function(n=10L, par.set, fun, fun.args=list(),
+  trafo=FALSE, ints.as.num=FALSE,
+  discretes.as.factor=TRUE, logicals.as.factor=FALSE,
+  remove.duplicates=FALSE, remove.duplicates.iter=5L) {
   n = convertInteger(n)
   checkArg(n, "integer", len=1L, na.ok=FALSE)
   checkArg(par.set, "ParamSet")
@@ -73,6 +83,8 @@ generateDesign = function(n=10L, par.set, fun, fun.args=list(), trafo=FALSE, int
   checkArg(trafo, "logical", len=1L, na.ok=FALSE)
   checkArg(ints.as.num, "logical", len=1L, na.ok=FALSE)
   checkArg(discretes.as.factor, "logical", len=1L, na.ok=FALSE)
+  checkArg(remove.duplicates, "logical", len=1L, na.ok=FALSE)
+  checkArg(remove.duplicates.iter, "integer", len=1L, lower=1L, na.ok=FALSE)
 
   if (isEmpty(par.set))
     stop("par.set must not be empty!")
@@ -90,8 +102,6 @@ generateDesign = function(n=10L, par.set, fun, fun.args=list(), trafo=FALSE, int
   pids2 = getParamIds(par.set, repeated=TRUE, with.nr=FALSE)
   lens = getParamLengths(par.set)
   k = sum(lens)
-
-  des = do.call(fun, insert(list(n=n, k=k), fun.args))
 
   # FIXME most of the code structure really sucks in the whole function
   # we should probably introduce more helper functions to deal with that
@@ -116,8 +126,32 @@ generateDesign = function(n=10L, par.set, fun, fun.args=list(), trafo=FALSE, int
     replicate(length(pars), NULL, simplify=FALSE)
   par.requires = lapply(pars, function(p) p$requires)
 
+  des = do.call(fun, insert(list(n=n, k=k), fun.args))
   res = .Call(c_generateDesign1, des, res, types.int, lower2, upper2, nlevs)
-  # FIXME maybe do this in C
+
+  # try to replace duplicates a couple of times
+  #FIXME this stuff sucks as the whole function dows. We should definitely
+  # reorganize the code!
+  if (remove.duplicates) {
+    to.remove = duplicated(res)
+    to.keep = !to.remove
+    nmissing = sum(to.remove)
+    i = 0
+    while(nmissing > 0 && i < remove.duplicates.iter) {
+      des = des[to.keep,]
+      des = do.call(lhs::augmentLHS, list(lhs=des, m=nmissing))
+      res = .Call(c_generateDesign1, des, res, types.int, lower2, upper2, nlevs)
+      to.remove = duplicated(res)
+      to.keep = !to.remove
+      nmissing = sum(to.remove)
+      i = i + 1
+    }
+    if (nmissing > 0) {
+      stopf("Algorithm was unable to generate design with no duplicated rows!")
+    }
+  }
+
+  #FIXME maybe do this in C
   for (i in seq_col(res)) {
     if (types.int[i] == 3L) {
       res[, i] = as.character(factor(res[, i],
@@ -125,6 +159,7 @@ generateDesign = function(n=10L, par.set, fun, fun.args=list(), trafo=FALSE, int
     }
   }
   res = .Call(c_generateDesign2, res, types.int, names(pars), lens, trafos, par.requires, new.env())
+
   colnames(res) = pids1
   res = convertDataFrameCols(res, ints.as.num=ints.as.num,
     chars.as.factor=FALSE, logicals.as.factor=logicals.as.factor)

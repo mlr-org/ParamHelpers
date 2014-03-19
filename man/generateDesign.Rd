@@ -4,7 +4,8 @@
 \usage{
 generateDesign(n = 10L, par.set, fun, fun.args = list(), trafo = FALSE,
   ints.as.num = FALSE, discretes.as.factor = TRUE,
-  logicals.as.factor = FALSE)
+  logicals.as.factor = FALSE, remove.duplicates = FALSE,
+  remove.duplicates.iter = 5L)
 }
 \arguments{
   \item{n}{[\code{integer(1)}]\cr Number of samples in
@@ -43,6 +44,18 @@ generateDesign(n = 10L, par.set, fun, fun.args = list(), trafo = FALSE,
   logical parameters have columns of type \dQuote{factor}
   in result?  Otherwise logical columns are generated.
   Default is \code{FALSE}.}
+
+  \item{remove.duplicates}{[\code{logical(1)}]\cr Must the
+  design NOT contain duplicate lines?  Default is
+  \code{FALSE}.}
+
+  \item{remove.duplicates.iter}{[\code{integer(1)}]\cr If
+  \code{remove.duplicates} is set to \code{TRUE} and
+  duplicates occur within the design, i. e., if at least
+  one line appears multiple times, the function tries hard
+  to fix to replace the duplicated lines.  The parameter
+  controls how many attempts the algorithm will at most
+  start.}
 }
 \value{
 The created design is a data.frame. Columns are named by

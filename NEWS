@@ -1,6 +1,8 @@
 ParamHelpers_1.2:
 - rewrote generateDesign and dfRowsToList in C to greatly increase speed in
   the case of dependent parameters
+- generateDesign now offers the possibility to create designs which are
+  free of duplicates
 - paramValueToString produces better readable output
 - getLower and getUpper have with.nr argument now
 - slightly change interface of getOptPathY, so one can now return a matrix of multiple measures.
