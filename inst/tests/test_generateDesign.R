@@ -202,3 +202,28 @@ test_that("list of further arguments passed to lhs function produces no error", 
   )
   expect_true({generateDesign(10L, ps, fun.args = list(k=3)); TRUE})
 })
+
+test_that("removing duplicates", {
+  # this param set has 6 possilbe combinations of param values ...
+  ps = makeParamSet(
+    makeIntegerParam("int", lower = 0, upper = 1),
+    makeDiscreteParam("disc", values = letters[1:3])
+  )
+  # ... and therefore creating a design with n > 6 duplicate free rows should fail
+  expect_error(generateDesign(7L, ps, remove.duplicates = TRUE))
+
+  ps = makeParamSet(
+    makeIntegerParam("int", lower=-2, upper=1),
+    makeDiscreteParam("disc", values=letters[1:3])
+  )
+
+  set.seed(1)
+  des1 = generateDesign(par.set = ps)
+  expect_true(any(duplicated(des1)))
+
+  set.seed(1)
+  des2 = generateDesign(par.set = ps, remove.duplicates = TRUE)
+  expect_true(all(!duplicated(des2)))
+
+  expect_equal(nrow(des1), nrow(des2))
+})
