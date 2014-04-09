@@ -96,12 +96,12 @@ makeLogicalVectorParam = function(id, len, requires=NULL) {
 
 #' @rdname Param
 #' @export 
-makeDiscreteParam = function(id, values, requires=NULL) {
+makeDiscreteParam = function(id, values, trafo=NULL, requires=NULL) {
   checkArg(id, "character", len=1, na.ok=FALSE)
   if (!is.null(requires))
     checkArg(requires, c("call", "expression"))
   values = checkValuesForDiscreteParam(id, values)
-  makeParam(id, "discrete", 1L, NULL, NULL, values, requires=requires)
+  makeParam(id, "discrete", 1L, NULL, NULL, values, trafo, requires=requires)
 } 
 
 #' @rdname Param
