@@ -28,7 +28,7 @@ makeLogicalParam(id, requires = NULL)
 
 makeLogicalVectorParam(id, len, requires = NULL)
 
-makeDiscreteParam(id, values, requires = NULL)
+makeDiscreteParam(id, values, trafo = NULL, requires = NULL)
 
 makeDiscreteVectorParam(id, len, values, requires = NULL)
 

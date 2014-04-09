@@ -92,7 +92,7 @@ generateDesign = function(n=10L, par.set, fun, fun.args=list(),
     stop("No par.set parameter in 'generateDesign' can be of class 'LearnerParameter'! Use basic parameters instead to describe you region of interest!")
   lower = getLower(par.set, with.nr=TRUE)
   upper = getUpper(par.set, with.nr=TRUE)
-  values =getValues(par.set)
+  values = getValues(par.set)
 
   if (any(is.infinite(c(lower, upper))))
     stop("generateDesign requires finite box constraints!")
