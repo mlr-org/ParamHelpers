@@ -1,4 +1,4 @@
-\name{OptPath}
+\name{makeOptPathDF}
 \alias{OptPath}
 \alias{OptPathDF}
 \alias{makeOptPathDF}
