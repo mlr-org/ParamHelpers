@@ -2,7 +2,8 @@
 \alias{paramValueToString}
 \title{Convert a value to a string.}
 \usage{
-paramValueToString(par, x, show.missing.values = FALSE)
+paramValueToString(par, x, show.missing.values = FALSE,
+  num.format = "\%.3g")
 }
 \arguments{
   \item{par}{[\code{\link{Param}} |
@@ -18,6 +19,11 @@ paramValueToString(par, x, show.missing.values = FALSE)
   because their requirements are not satified (dependent
   parameters), instead of displaying nothing?  Default is
   \code{FALSE}.}
+
+  \item{num.format}{[\code{character(1)}]\cr Number format
+  for output of numeric parameters. See the details section
+  of the manual for \code{\link[base]{sprintf}} for
+  details.}
 }
 \value{
 [\code{character(1)}].
@@ -30,6 +36,8 @@ always the name of the discrete value is used.
 p <- makeNumericParam("x")
 paramValueToString(p, 1)
 paramValueToString(p, 1.2345)
+paramValueToString(p, 0.000039)
+paramValueToString(p, 8.13402, num.format = "\%.2f")
 
 p <- makeIntegerVectorParam("x", len=2)
 paramValueToString(p, c(1L, 2L))

@@ -9,15 +9,20 @@
 #'   Value for parameter or value for parameter set. In the latter case it must be named list.
 #'   For discrete parameters their values must be used, not their names.
 #' @param show.missing.values [\code{logical(1)}]\cr
-#'   Display \dQuote{NA} for parameters, which have no setting, because their requirements are not 
+#'   Display \dQuote{NA} for parameters, which have no setting, because their requirements are not
 #'   satified (dependent parameters), instead of displaying nothing?
 #'   Default is \code{FALSE}.
+#' @param num.format [\code{character(1)}]\cr
+#'   Number format for output of numeric parameters. See the details section of the manual for
+#'   \code{\link[base]{sprintf}} for details.
 #' @return [\code{character(1)}].
 #' @export
 #' @examples
 #' p <- makeNumericParam("x")
 #' paramValueToString(p, 1)
 #' paramValueToString(p, 1.2345)
+#' paramValueToString(p, 0.000039)
+#' paramValueToString(p, 8.13402, num.format = "%.2f")
 #'
 #' p <- makeIntegerVectorParam("x", len=2)
 #' paramValueToString(p, c(1L, 2L))
@@ -33,13 +38,14 @@
 #'   makeDiscreteParam("y", values=list(a=NULL, b=2))
 #' )
 #' paramValueToString(ps, list(x=c(1,2), y=NULL))
-paramValueToString = function(par, x, show.missing.values=FALSE) {
-  checkArg(show.missing.values, "logical", len=1L, na.ok=FALSE)
+paramValueToString = function(par, x, show.missing.values = FALSE, num.format = "%.3g") {
+  checkArg(show.missing.values, "logical", len = 1L, na.ok = FALSE)
+  checkArg(num.format, "character", len = 1L, na.ok = FALSE)
   UseMethod("paramValueToString")
 }
 
 #' @S3method paramValueToString Param
-paramValueToString.Param = function(par, x, show.missing.values=FALSE) {
+paramValueToString.Param = function(par, x, show.missing.values = FALSE, num.format = "%.3g") {
   # handle missings
   if (isMissingValue(x)) {
     if (show.missing.values)
@@ -50,9 +56,9 @@ paramValueToString.Param = function(par, x, show.missing.values=FALSE) {
 
   type = par$type
   if (type == "numeric")
-    sprintf("%.2f", x)
+    sprintf(num.format, x)
   else if (type == "numericvector")
-    paste(sprintf("%.2f", x), collapse=",")
+    paste(sprintf(num.format, x), collapse=",")
   else if (type == "integer")
     as.character(x)
   else if (type == "integervector")
@@ -72,7 +78,7 @@ paramValueToString.Param = function(par, x, show.missing.values=FALSE) {
 }
 
 #' @S3method paramValueToString ParamSet
-paramValueToString.ParamSet = function(par, x, show.missing.values=FALSE) {
+paramValueToString.ParamSet = function(par, x, show.missing.values=FALSE, num.format = "%.3g") {
   checkArg(x, "list")
   if (!isProperlyNamed(x))
     stop("'x' must be a properly named list!")
@@ -85,7 +91,7 @@ paramValueToString.ParamSet = function(par, x, show.missing.values=FALSE) {
     val = x[[pn]]
     if (show.missing.values || !isMissingValue(val))  {
       p = par$pars[[pn]]
-      res[length(res)+1] = sprintf("%s=%s", pn, paramValueToString(p, val, show.missing.values))
+      res[length(res)+1] = sprintf("%s=%s", pn, paramValueToString(p, val, show.missing.values, num.format))
     }
   }
   return(collapse(res, sep="; "))
