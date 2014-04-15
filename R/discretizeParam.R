@@ -1,18 +1,22 @@
-#' Discretesizes a given parameter to a sequence of values.
-#' 
+#' Discretizes a given parameter to a sequence of values.
+#'
 #' @param par [\code{\link{Param}}]
-#'   The Parameter you want to be discretized.
+#'   The parameter you want to discretize.
 #' @param lower [\code{numeric}(1)]
-#'   Lower bound. Will overwrite the value in Param if set.
+#'   Lower bound.
+#'   Will overwrite the value in Param if set.
 #' @param upper [\code{numeric}(1)]
-#'   Upper bound. Will overwrite the value in Param if set.
+#'   Upper bound.
+#'   Will overwrite the value in Param if set.
 #' @param by [\code{numeric}(1)]
 #'   Increment of the sequence.
+#'   Do not pass this if you use \code{length.out}.
 #' @param length.out [\code{numeric}(1)]
 #'   Desired length of the sequence.
-#' @param trafo [\code{boolean}(1)]
+#'   Do not pass this if you use \code{by}.
+#' @param trafo [\code{logical(1)}]
 #'   Should the transformation be applied?
-#' @return [\code{\link{Param}}]
+#' @return [\code{\link{Param}}].
 #'   A \code{Param} of the type \code{discrete}.
 #' @examples
 #' par <- makeNumericParam("x1", lower=-2, upper=1)
@@ -31,10 +35,10 @@ discretizeParam = function(par, lower, upper, by, length.out, trafo = FALSE) {
     length.out = convertInteger(length.out)
     checkArg(length.out, "integer", na.ok = FALSE, len = 1)
   }
-  
+
   supported.discrete = c("discrete", "logical")
   supported.cont = c("integer", "numeric")
-  
+
   if (par$type %in% supported.discrete) {
     par.disc = par
   } else if (par$type %in% supported.cont) {
@@ -48,7 +52,7 @@ discretizeParam = function(par, lower, upper, by, length.out, trafo = FALSE) {
       upper = par$upper
     if (any(is.infinite(c(lower, upper))))
       stop("discretizeParam requires finite box constraints!")
-    
+
     if(!missing(by)) {
       disc.vals = seq(from = lower, to = upper, by = by)
     } else if (!missing(length.out)) {
