@@ -7,6 +7,9 @@
 #' @param include.int [\code{logical(1)}]\cr
 #'   Are integers also considered to be numeric?
 #'   Default is \code{TRUE}.
+#' @param include.logical [\code{logical(1)}]\cr
+#'   Are logicals also considered to be discrete?
+#'   Default is \code{TRUE}.
 #' @return [\code{logical(1)}].
 #' @name isType
 #' @rdname isType
@@ -35,19 +38,27 @@ isNumeric.Param = function(par, include.int = TRUE) {
 
 #' @export
 #' @rdname isType
-isDiscrete = function(par) {
+isDiscrete = function(par, include.logical = TRUE) {
   checkArg(par, c("Param", "ParamSet"))
   UseMethod("isDiscrete")
 }
 
 #' @S3method isDiscrete ParamSet
-isDiscrete.ParamSet = function(par) {
-  return(hasAllParamsOfTypes(par, types = c("discrete", "discretevector")))
+isDiscrete.ParamSet = function(par, include.logical = TRUE) {
+  types = if (include.logical)
+    c("discrete", "discretevector", "logical", "logicalvector")
+  else
+    c("discrete", "discretevector")
+  return(hasAllParamsOfTypes(par, types = types))
 }
 
 #' @S3method isDiscrete Param
-isDiscrete.Param = function(par) {
-  return(par$type %in% c("discrete", "discretevector"))
+isDiscrete.Param = function(par, include.logical = TRUE) {
+  types = if (include.logical)
+    c("discrete", "discretevector", "logical", "logicalvector")
+  else
+    c("discrete", "discretevector")
+  return(par$type %in% types)
 }
 
 #' @export
