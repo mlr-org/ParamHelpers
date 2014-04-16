@@ -21,7 +21,7 @@
 #' # now the values of "u" and "v" are transformed: 
 #' trafoValue(ps, list(3, c(2, 4), "a"))
 trafoValue = function(par, x) {
-  if (is(par, "ParamSet"))
+  if (inherits(par, "ParamSet"))
     Map(trafoValue, par$pars, x)
   else
     if(is.null(par$trafo))

@@ -67,10 +67,10 @@
 #'   makeNumericVectorParam("y", len=2, lower=0, upper=1, trafo=function(x) x/sum(x))
 #' )
 #' generateDesign(10, ps, trafo=TRUE)
-generateDesign = function(n=10L, par.set, fun, fun.args=list(),
-  trafo=FALSE, ints.as.num=FALSE,
-  discretes.as.factor=TRUE, logicals.as.factor=FALSE,
-  remove.duplicates=FALSE, remove.duplicates.iter=5L) {
+generateDesign = function(n=10L, par.set, fun, fun.args = list(), trafo = FALSE,
+  ints.as.num = FALSE,  discretes.as.factor = TRUE, logicals.as.factor = FALSE,
+  remove.duplicates = FALSE, remove.duplicates.iter = 5L) {
+
   n = convertInteger(n)
   checkArg(n, "integer", len=1L, na.ok=FALSE)
   checkArg(par.set, "ParamSet")
@@ -88,7 +88,7 @@ generateDesign = function(n=10L, par.set, fun, fun.args=list(),
 
   if (isEmpty(par.set))
     stop("par.set must not be empty!")
-  if(any(sapply(par.set$pars, function(x) is(x, "LearnerParameter"))))
+  if(any(sapply(par.set$pars, function(x) inherits(x, "LearnerParameter"))))
     stop("No par.set parameter in 'generateDesign' can be of class 'LearnerParameter'! Use basic parameters instead to describe you region of interest!")
   lower = getLower(par.set, with.nr=TRUE)
   upper = getUpper(par.set, with.nr=TRUE)
@@ -103,7 +103,7 @@ generateDesign = function(n=10L, par.set, fun, fun.args=list(),
   lens = getParamLengths(par.set)
   k = sum(lens)
 
-  # FIXME most of the code structure really sucks in the whole function
+  # FIXME: most of the code structure really sucks in the whole function
   # we should probably introduce more helper functions to deal with that
 
   # allocate result df
@@ -130,7 +130,7 @@ generateDesign = function(n=10L, par.set, fun, fun.args=list(),
   res = .Call(c_generateDesign1, des, res, types.int, lower2, upper2, nlevs)
 
   # try to replace duplicates a couple of times
-  #FIXME this stuff sucks as the whole function dows. We should definitely
+  #FIXME: this stuff sucks as the whole function dows. We should definitely
   # reorganize the code!
   if (remove.duplicates) {
     to.remove = duplicated(res)
@@ -151,11 +151,12 @@ generateDesign = function(n=10L, par.set, fun, fun.args=list(),
     }
   }
 
-  #FIXME maybe do this in C
+  #FIXME: maybe do this in C
+  # convert discrete integer coding back to chars
   for (i in seq_col(res)) {
     if (types.int[i] == 3L) {
       res[, i] = as.character(factor(res[, i],
-        levels=seq_len(nlevs[i]), labels=names(values[[pids2[[i]]]])))
+        levels = seq_len(nlevs[i]), labels = names(values[[pids2[[i]]]])))
     }
   }
   res = .Call(c_generateDesign2, res, types.int, names(pars), lens, trafos, par.requires, new.env())
