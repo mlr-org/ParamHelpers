@@ -8,6 +8,7 @@ ParamHelpers_1.2:
 - slightly change interface of getOptPathY, so one can now return a matrix of multiple measures.
 - new functions
 -- getOptPathParetoFront
+-- generateGridDesign
 -- isNumeric, isDiscrete, isInteger, isLogical
 -- hasNumeric, hasInteger, hasDiscrete, hasLogical
 
