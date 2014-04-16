@@ -29,6 +29,13 @@ hasInteger = function(par.set) {
 
 #' @export
 #' @rdname hasType
+hasLogical = function(par.set) {
+  checkArg(par.set, "ParamSet")
+  return(hasSomeParamsOfTypes(par.set, types = c("logical", "logicalvector")))
+}
+
+#' @export
+#' @rdname hasType
 hasNumeric = function(par.set, include.int = TRUE) {
   checkArg(par.set, "ParamSet")
   types = if (include.int)

@@ -78,3 +78,21 @@ isInteger.Param = function(par) {
   return(par$type %in% c("integer", "integervector"))
 }
 
+#' @export
+#' @rdname isType
+isLogical = function(par) {
+  checkArg(par, c("Param", "ParamSet"))
+  UseMethod("isLogical")
+}
+
+#' @S3method isLogical ParamSet
+isLogical.ParamSet = function(par) {
+  return(hasAllParamsOfTypes(par, types = c("logical", "logicalvector")))
+}
+
+#' @S3method isLogical Param
+isLogical.Param = function(par) {
+  return(par$type %in% c("logical", "logicalvector"))
+}
+
+
