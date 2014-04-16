@@ -2,33 +2,50 @@
 \alias{generateGridDesign}
 \title{Generates a grid design for a parameter set.}
 \usage{
-generateGridDesign(n = 10L, par.set, trafo = FALSE)
+generateGridDesign(par.set, resolution, trafo = FALSE, ints.as.num = FALSE,
+  discretes.as.factor = TRUE, logicals.as.factor = FALSE)
 }
 \arguments{
-  \item{n}{[\code{integer(k)}]\cr Resolution of the grid
-  for each ot the \code{k} parameters in the
-  \code{par.set}.}
+  \item{n}{[\code{integer}]\cr Resolution of the grid for
+  each numeric/integer parameter in \code{par.set}.  For
+  vector parameters, n is the resolution per dimension.
+  Either pass one resolution for all parameters, or a named
+  vector.}
 
   \item{par.set}{[\code{\link{ParamSet}}]\cr Parameter
   set.}
+
+  \item{ints.as.num}{[\code{logical(1)}]\cr Should
+  parameters of type \dQuote{integer} or
+  \dQuote{integervector} generate numeric columns?  Default
+  is \code{FALSE}.}
+
+  \item{discretes.as.factor}{[\code{logical(1)}]\cr Should
+  discrete parameters have columns of type \dQuote{factor}
+  in result?  Otherwise character columns are generated.
+  Default is \code{TRUE}.}
+
+  \item{logicals.as.factor}{[\code{logical(1)}]\cr Should
+  logical parameters have columns of type \dQuote{factor}
+  in result?  Otherwise logical columns are generated.
+  Default is \code{FALSE}.}
 
   \item{trafo}{[\code{logical(1)}]\cr Transform all
   parameters by using theirs respective transformation
   functions.  Default is \code{FALSE}.}
 }
 \value{
-The created design is a data.frame. Columns are named by
-the ids of the parameters.  If the \code{par.set} argument
-contains a vector parameter, its corresponding column names
-The result will have an \code{logical(1)} attribute
-\dQuote{trafo}, which is set to the value of argument
-\code{trafo}.
+[\code{data.frame.}]. Columns are named by the ids of the
+parameters.  If the \code{par.set} argument contains a
+vector parameter, its corresponding column names The result
+will have an \code{logical(1)} attribute \dQuote{trafo},
+which is set to the value of argument \code{trafo}.
 }
 \description{
 Generates a grid design for a parameter set.
 }
 \examples{
-ps <- makeParamSet(
+ps = makeParamSet(
   makeNumericParam("x1", lower=-2, upper=1),
   makeIntegerParam("x2", lower=10, upper=20, trafo = function(x) x^(-2))
 )

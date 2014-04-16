@@ -1,6 +1,7 @@
 \name{isType}
 \alias{isDiscrete}
 \alias{isInteger}
+\alias{isLogical}
 \alias{isNumeric}
 \alias{isType}
 \title{Check parameter / parameter set contain ONLY a certain type.}
@@ -10,6 +11,8 @@ isNumeric(par, include.int = TRUE)
 isDiscrete(par, include.logical = TRUE)
 
 isInteger(par)
+
+isLogical(par)
 }
 \arguments{
   \item{par}{[\code{\link{Param}} |

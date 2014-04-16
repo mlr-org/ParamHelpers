@@ -1,6 +1,7 @@
 \name{hasType}
 \alias{hasDiscrete}
 \alias{hasInteger}
+\alias{hasLogical}
 \alias{hasNumeric}
 \alias{hasType}
 \title{Check whether parameter set contains a certain type.}
@@ -8,6 +9,8 @@
 hasDiscrete(par.set)
 
 hasInteger(par.set)
+
+hasLogical(par.set)
 
 hasNumeric(par.set, include.int = TRUE)
 }
