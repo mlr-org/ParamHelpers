@@ -47,6 +47,7 @@ print.ParamSet = function(x, ...) {
     print("Empty parameter set.")
   else
     sapply(x$pars, print)
+  invisible(NULL)
 }
 
 #' @S3method c ParamSet
