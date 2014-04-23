@@ -15,7 +15,9 @@
 #'   Parameter set.
 #' @param fun [\code{function}]\cr
 #'   Function from package lhs.
-#'   Possible are: \code{\link[lhs]{maximinLHS}}, \code{\link[lhs]{randomLHS}}, \code{\link[lhs]{geneticLHS}}, \code{\link[lhs]{improvedLHS}}, \code{\link[lhs]{optAugmentLHS}}, \code{\link[lhs]{optimumLHS}}
+#'   Possible are: \code{\link[lhs]{maximinLHS}}, \code{\link[lhs]{randomLHS}}, 
+#'   \code{\link[lhs]{geneticLHS}}, \code{\link[lhs]{improvedLHS}}, \code{\link[lhs]{optAugmentLHS}}, 
+#'   \code{\link[lhs]{optimumLHS}}
 #'   Default is \code{\link[lhs]{randomLHS}}.
 #' @param fun.args [\code{list}]\cr
 #'   List of further arguments passed to \code{fun}.
