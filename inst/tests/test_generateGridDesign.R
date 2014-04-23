@@ -80,7 +80,7 @@ test_that("generateGridDesign", {
     x2 = seq(0, 1, length.out = 4),
     KEEP.OUT.ATTRS = FALSE
   )
-  e = rowApply(e, function(x) x / sum(x))
+  e = apply(e, 1, function(x) x / sum(x))
   attr(e, "trafo") = TRUE
   expect_equal(d, e)
 })

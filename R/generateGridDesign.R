@@ -51,11 +51,9 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE, ints.as.num = 
   pids2 = getParamIds(par.set, repeated = TRUE, with.nr = TRUE)
 
   resolution = convertIntegers(resolution)
-  print(str(resolution))
   if (length(resolution) == 1L) {
     resolution = setNames(rep(resolution, n), pids1)
   }
-  print(str(resolution))
   checkArg(resolution, "integer", na.ok = FALSE, lower = 1L, len = n)
   if (!isProperlyNamed(resolution) || !all(names(resolution) == pids1))
     stop("'resolution' must be named with parameter ids!")
