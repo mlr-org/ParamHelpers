@@ -1,4 +1,4 @@
-#FIXME generateGridDesign will NOT work if there are dependencies
+#FIXME: generateGridDesign will NOT work if there are dependencies
 
 #' Generates a grid design for a parameter set.
 #'
@@ -47,9 +47,9 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE, ints.as.num = 
     stop("No par.set parameter in 'generateDesign' can be of class 'LearnerParameter'! Use basic parameters instead to describe you region of interest!")
 
   m = sum(getParamLengths(par.set))
-  pids1 = getParamIds(par.set)  
-  pids2 = getParamIds(par.set, repeated = TRUE, with.nr = TRUE)  
-  
+  pids1 = getParamIds(par.set)
+  pids2 = getParamIds(par.set, repeated = TRUE, with.nr = TRUE)
+
   resolution = convertIntegers(resolution)
   print(str(resolution))
   if (length(resolution) == 1L) {
@@ -80,14 +80,14 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE, ints.as.num = 
       if (isDiscrete(p, include.logical = FALSE)) {
         newvals = names(discvals)
       } else if (isLogical(p)) {
-        newvals = if (logicals.as.factor) 
-          factor(c("TRUE", "FALSE"), levels = c("TRUE", "FALSE")) 
-        else 
+        newvals = if (logicals.as.factor)
+          factor(c("TRUE", "FALSE"), levels = c("TRUE", "FALSE"))
+        else
           c(TRUE, FALSE)
       } else if (isNumeric(p, include.int = TRUE)) {
         newvals = seq(from = lower[[j]], to = upper[[j]], length.out = reso)
         # round for integer
-        if (isInteger(p)) { 
+        if (isInteger(p)) {
           newvals = as.integer(unique(round(newvals)))
           if (ints.as.num)
             newvals = as.numeric(newvals)
