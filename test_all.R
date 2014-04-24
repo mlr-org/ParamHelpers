@@ -7,8 +7,8 @@ library(lhs)
 if (interactive()) {
   load_all(".", reset=TRUE)
 } else {
-  library(ParamHelpers)  
+  library(ParamHelpers)
 }
-test_dir("inst/tests")
+test_dir("tests/testthat")
 
 

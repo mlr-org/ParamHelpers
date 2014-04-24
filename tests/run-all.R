@@ -2,4 +2,4 @@ library(testthat)
 library(BBmisc)
 library(ParamHelpers)
 
-test_package("ParamHelpers")
+test_check("ParamHelpers")
