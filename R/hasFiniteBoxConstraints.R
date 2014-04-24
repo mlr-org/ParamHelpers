@@ -1,0 +1,26 @@
+#' Checks if a parameter or each parameter of a parameter set has ONLY
+#' finite lower and upper bounds.
+#'
+#' @param par [\code{\link{Param}} | \code{\link{ParamSet}}]\cr
+#'   Parameter or parameter set.
+#' @return [\code{logical(1)}]
+#' @export
+hasFiniteBoxConstraints = function(par) {
+  UseMethod("hasFiniteBoxConstraints")
+}
+
+#' @S3method hasFiniteBoxConstraints Param
+hasFiniteBoxConstraints.Param = function(par) {
+  bounds = c(par$lower, par$upper)
+  if (length(bounds) == 0)
+    return(TRUE)
+  return(all(is.finite(bounds)))
+}
+
+#' @S3method hasFiniteBoxConstraints ParamSet
+hasFiniteBoxConstraints.ParamSet = function(par) {
+  bounds = c(getLower(par), getUpper(par))
+  if (length(bounds) == 0)
+    return(TRUE)
+  return(all(is.finite(bounds)))
+}

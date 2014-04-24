@@ -1,0 +1,19 @@
+\name{hasFiniteBoxConstraints}
+\alias{hasFiniteBoxConstraints}
+\title{Checks if a parameter or each parameter of a parameter set has ONLY
+finite lower and upper bounds.}
+\usage{
+hasFiniteBoxConstraints(par)
+}
+\arguments{
+  \item{par}{[\code{\link{Param}} |
+  \code{\link{ParamSet}}]\cr Parameter or parameter set.}
+}
+\value{
+[\code{logical(1)}]
+}
+\description{
+Checks if a parameter or each parameter of a parameter set
+has ONLY finite lower and upper bounds.
+}
+
