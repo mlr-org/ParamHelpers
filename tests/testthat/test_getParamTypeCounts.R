@@ -1,6 +1,15 @@
 context("getParamTypeCounts")
 
 test_that("getParamTypeCounts", {
+  checkNonOccuringTypes = function(or, par.set) {
+    sapply(setdiff(getSupportedParamTypes(), getTypes(par.set)), function(type) {
+      expect_equal(or[[type]], 0L)
+    })
+  }
+
+  par.set = makeParamSet()
+  checkNonOccuringTypes(getParamTypeCounts(par.set), par.set)
+
   par.set = makeParamSet(
     makeNumericParam("numeric1", lower = 0L, upper = 10L),
     makeIntegerParam("integer1", lower = 0L, upper = 5L),
@@ -12,7 +21,5 @@ test_that("getParamTypeCounts", {
   expect_equal(or$numeric, 1L)
   expect_equal(or$integer, 2L)
   expect_equal(or$discrete, 1L)
-  sapply(setdiff(getSupportedParamTypes(), getTypes(par.set)), function(type) {
-    expect_equal(or[[type]], 0L)
-  })
+  checkNonOccuringTypes(or, par.set)
 })
