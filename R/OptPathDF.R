@@ -1,13 +1,13 @@
 #' @rdname OptPath
 #' @aliases OptPathDF
 #' @export
-makeOptPathDF = function(par.set, y.names, minimize, add.transformed.x=FALSE) {
+makeOptPathDF = function(par.set, y.names, minimize, add.transformed.x = FALSE) {
   checkArg(par.set, "ParamSet")
-  checkArg(y.names, "character", na.ok=FALSE)
-  checkArg(minimize, "logical", na.ok=FALSE)
+  checkArg(y.names, "character", na.ok = FALSE)
+  checkArg(minimize, "logical", na.ok = FALSE)
   obj = makeOptPath(par.set, y.names, minimize, add.transformed.x)
-  ns = c(getParamIds(par.set, repeated=TRUE, with.nr=TRUE), y.names)
-  obj$env$path = as.data.frame(matrix(0, nrow=0, ncol=length(ns)))
+  ns = c(getParamIds(par.set, repeated = TRUE, with.nr = TRUE), y.names)
+  obj$env$path = as.data.frame(matrix(0, nrow = 0, ncol = length(ns)))
   colnames(obj$env$path) = ns
   class(obj) = c("OptPathDF", class(obj))
   return(obj)
@@ -37,19 +37,19 @@ getOptPathEl.OptPathDF = function(op, index) {
     stop("Index must be between 1 and ", n, "!")
   e = op$env
   path = e$path
-  y = unlist(path[index, op$y.names, drop=FALSE])
+  y = unlist(path[index, op$y.names, drop = FALSE])
   # remove y names from path, only consider x
-  path = path[, setdiff(colnames(path), op$y.names), drop=FALSE]
+  path = path[, setdiff(colnames(path), op$y.names), drop = FALSE]
   x = dfRowToList(path, op$par.set, index)
-  list(x=x, y=y, dob=e$dob[index], eol=e$eol[index], error.message = e$error.message[index])
+  list(x = x, y = y, dob = e$dob[index], eol = e$eol[index], error.message = e$error.message[index])
 }
 
 #' @S3method addOptPathEl OptPathDF
-addOptPathEl.OptPathDF = function(op, x, y, dob=getOptPathLength(op)+1L, eol=as.integer(NA),
-  error.message = NA_character_, check.feasible=!op$add.transformed.x) {
+addOptPathEl.OptPathDF = function(op, x, y, dob = getOptPathLength(op)+1L, eol = as.integer(NA),
+  error.message = NA_character_, check.feasible = !op$add.transformed.x) {
 
-  checkArg(x, "list", len=length(op$par.set$pars))
-  checkArg(y, "numeric", len=length(op$y.names))
+  checkArg(x, "list", len = length(op$par.set$pars))
+  checkArg(y, "numeric", len = length(op$y.names))
   dob = convertInteger(dob)
   checkArg(dob, "integer", 1)
   eol = convertInteger(eol)
@@ -71,8 +71,8 @@ addOptPathEl.OptPathDF = function(op, x, y, dob=getOptPathLength(op)+1L, eol=as.
     else
       v
   }, op$par.set$pars, x)
-  el = do.call(cbind, lapply(x, function(v) as.data.frame(t(v), stringsAsFactors=FALSE)))
-  el = cbind(el, as.data.frame(as.list(y), stringsAsFactors=FALSE))
+  el = do.call(cbind, lapply(x, function(v) as.data.frame(t(v), stringsAsFactors = FALSE)))
+  el = cbind(el, as.data.frame(as.list(y), stringsAsFactors = FALSE))
   colnames(el) = colnames(op$env$path)
   op$env$path = rbind(op$env$path, el)
   k = length(op$env$dob) + 1
@@ -84,13 +84,13 @@ addOptPathEl.OptPathDF = function(op, x, y, dob=getOptPathLength(op)+1L, eol=as.
 
 
 #' @S3method getOptPathY OptPathDF
-getOptPathY.OptPathDF = function(op, names, drop=TRUE) {
+getOptPathY.OptPathDF = function(op, names, drop = TRUE) {
   if (missing(names))
     names = op$y.names
   else
-    checkArg(names, subset=op$y.names)
-  checkArg(drop, "logical", len=1L, na.ok=FALSE)
-  y = as.matrix(op$env$path[, names, drop=FALSE])
+    checkArg(names, subset = op$y.names)
+  checkArg(drop, "logical", len = 1L, na.ok = FALSE)
+  y = as.matrix(op$env$path[, names, drop = FALSE])
   if (drop && length(names) == 1L)
     y = as.numeric(y)
   return(y)
