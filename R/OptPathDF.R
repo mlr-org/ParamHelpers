@@ -46,7 +46,7 @@ getOptPathEl.OptPathDF = function(op, index) {
 
 #' @S3method addOptPathEl OptPathDF
 addOptPathEl.OptPathDF = function(op, x, y, dob=getOptPathLength(op)+1L, eol=as.integer(NA),
-  check.feasible=!op$add.transformed.x, error.message = NA_character_) {
+  error.message = NA_character_, check.feasible=!op$add.transformed.x) {
 
   checkArg(x, "list", len=length(op$par.set$pars))
   checkArg(y, "numeric", len=length(op$y.names))
