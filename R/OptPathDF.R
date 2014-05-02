@@ -23,8 +23,9 @@ as.data.frame.OptPathDF = function(x, row.names = NULL, optional = FALSE,
   discretes.as.factor = FALSE, ...) {
 
   df = x$env$path
-  df = cbind(df, dob=x$env$dob, eol=x$env$eol)
-  convertDataFrameCols(df, chars.as.factor=discretes.as.factor)
+  df = cbind(df, dob = x$env$dob, eol = x$env$eol)
+  df = convertDataFrameCols(df, chars.as.factor = discretes.as.factor)
+  cbind(df, error.message = x$env$error.message, stringsAsFactors = FALSE)
 }
 
 #' @S3method getOptPathEl OptPathDF
@@ -40,12 +41,12 @@ getOptPathEl.OptPathDF = function(op, index) {
   # remove y names from path, only consider x
   path = path[, setdiff(colnames(path), op$y.names), drop=FALSE]
   x = dfRowToList(path, op$par.set, index)
-  list(x=x, y=y, dob=e$dob[index], eol=e$eol[index])
+  list(x=x, y=y, dob=e$dob[index], eol=e$eol[index], error.message = e$error.message[index])
 }
 
 #' @S3method addOptPathEl OptPathDF
 addOptPathEl.OptPathDF = function(op, x, y, dob=getOptPathLength(op)+1L, eol=as.integer(NA),
-  check.feasible=!op$add.transformed.x) {
+  check.feasible=!op$add.transformed.x, error.message = NA_character_) {
 
   checkArg(x, "list", len=length(op$par.set$pars))
   checkArg(y, "numeric", len=length(op$y.names))
@@ -53,6 +54,7 @@ addOptPathEl.OptPathDF = function(op, x, y, dob=getOptPathLength(op)+1L, eol=as.
   checkArg(dob, "integer", 1)
   eol = convertInteger(eol)
   checkArg(eol, "integer", 1)
+  checkArg(error.message, "character", 1)
   if (check.feasible) {
     if(!isFeasible(op$par.set, x))
       stop("Trying to add infeasible x values to opt path: ", convertToShortString(x))
@@ -76,6 +78,7 @@ addOptPathEl.OptPathDF = function(op, x, y, dob=getOptPathLength(op)+1L, eol=as.
   k = length(op$env$dob) + 1
   op$env$dob[k] = dob
   op$env$eol[k] = eol
+  op$env$error.message[k] = error.message
   invisible(NULL)
 }
 
@@ -101,6 +104,11 @@ getOptPathDOB.OptPathDF = function(op) {
 #' @S3method getOptPathEOL OptPathDF
 getOptPathEOL.OptPathDF = function(op) {
   op$env$eol
+}
+
+#' @S3method getOptPathErrorMessages OptPathDF
+getOptPathErrorMessages.OptPathDF = function(op) {
+  op$env$error.message
 }
 
 

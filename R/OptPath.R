@@ -6,7 +6,8 @@
 #'
 #' A optimization path has a number of path elements, where each element consists of: the value of the
 #' decision variables at this point, the values of the performance measures at this point,
-#' the date-of-birth (dob) of this point and the end-of-life (eol) of this point.
+#' the date-of-birth (dob) of this point, the end-of-life (eol) of this point and possibly
+#' an error message.
 #'
 #' For discrete parameters always the name of the value is stored as a character.
 #' When you retrieve an element with \code{\link{getOptPathEl}}, this name is converted to
@@ -43,14 +44,14 @@
 #'   \code{\link{getOptPathY}}, \code{\link{setOptPathElDOB}}, \code{\link{setOptPathElEOL}}
 NULL
 
-makeOptPath = function(par.set, y.names, minimize, add.transformed.x=FALSE) {
+makeOptPath = function(par.set, y.names, minimize, add.transformed.x = FALSE) {
   ok = c("numeric", "integer", "numericvector", "integervector", "logical",
     "logicalvector", "discrete", "discretevector")
   if(length(par.set$pars) > length(filterParams(par.set, ok)$pars))
     stop("OptPath can currently only be used for: ", paste(ok, collapse=","))
   x.names = getParamIds(par.set)
   # be really sure that x and y columns are uniquely named
-  x.names2 = c(getParamIds(par.set, with.nr=TRUE), getParamIds(par.set, with.nr=FALSE))
+  x.names2 = c(getParamIds(par.set, with.nr = TRUE), getParamIds(par.set, with.nr = FALSE))
   if (length(intersect(x.names2, y.names)) > 0)
     stop("'x.names' and 'y.names' must not contain common elements!")
   if (length(minimize) != length(y.names))
@@ -59,8 +60,8 @@ makeOptPath = function(par.set, y.names, minimize, add.transformed.x=FALSE) {
     stop("Given names for 'minimize' must be the same as 'y.names'!")
   if (is.null(names(minimize)))
     names(minimize) = y.names
-  if (any(c(" ", "eol") %in% (union(x.names, y.names))))
-    stop("'dob' and 'eol' are not allowed in parameter names or 'y.names'!")
+  if (any(c("dob", "eol", "error.message") %in% (union(x.names, y.names))))
+    stop("'dob', 'eol' and 'error.message' are not allowed in parameter names or 'y.names'!")
   structure(list(
     par.set = par.set,
     y.names = y.names,
@@ -103,7 +104,8 @@ getOptPathLength = function(op) {
 #' @param index [\code{integer(1)}]\cr
 #'   Index of element.
 #' @return List with elements \code{x} [named \code{list}], \code{y} [named \code{numeric}],
-#'   \code{dob} [\code{integer(1)}] and \code{eol} [\code{integer(1)}].
+#'   \code{dob} [\code{integer(1)}], \code{eol} [\code{integer(1)}] and
+#'   \code{error.message} [\code{character(1)}].
 #' @rdname getOptPathEl
 #' @export
 getOptPathEl = function(op, index) {
@@ -132,6 +134,9 @@ getOptPathEl = function(op, index) {
 #' @param eol [\code{integer(1)}]\cr
 #'   End of life of point.
 #'   Default is \code{NA}.
+#' @param error.message [\code{character(1)}]\cr
+#'   Possible error message that occurred for this parameter values.
+#'   Default is \code{NA}.
 #' @param check.feasible [\code{logical(1)}]\cr
 #'   Should \code{x} be checked with \code{\link{isFeasible}}?
 #'   Default is \code{TRUE}.
@@ -147,7 +152,7 @@ getOptPathEl = function(op, index) {
 #' addOptPathEl(op, x=list(p1=-1, p2="a"), y=2)
 #' as.data.frame(op)
 addOptPathEl = function(op, x, y, dob=getOptPathLength(op)+1L, eol=as.integer(NA),
-  check.feasible=!op$add.transformed.x) {
+  error.message = error.message, check.feasible=!op$add.transformed.x) {
 
   UseMethod("addOptPathEl")
 }
@@ -302,6 +307,16 @@ getOptPathDOB = function(op) {
 #' @export
 getOptPathEOL = function(op) {
   UseMethod("getOptPathEOL")
+}
+
+#' Get error-message vector from the optimization path.
+#'
+#' @param op [\code{\link{OptPath}}]\cr
+#'   Optimization path.
+#' @return [\code{character}].
+#' @export
+getOptPathErrorMessages = function(op) {
+  UseMethod("getOptPathErrorMessages")
 }
 
 #' Set the dates of birth of parameter values, in-place.

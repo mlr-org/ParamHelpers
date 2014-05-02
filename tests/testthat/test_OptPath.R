@@ -25,7 +25,7 @@ test_that("OptPath", {
   x = as.data.frame(op)
   expect_true(is.data.frame(x))
   expect_equal(nrow(x), 2)
-  expect_equal(ncol(x), 6)
+  expect_equal(ncol(x), 7)
 
   expect_output(print(op), "Optimization path")
 
@@ -66,8 +66,8 @@ test_that("OptPath", {
   addOptPathEl(op, x=list(c(1,1), 7L), y=1)
   addOptPathEl(op, x=list(c(2,2), 8L), y=3)
   df = as.data.frame(op)
-  expect_equal(dim(df), c(2,3+1+2))
-  expect_equal(colnames(df), c("x1", "x2", "y", "z", "dob", "eol"))
+  expect_equal(dim(df), c(2, 3 + 1 + 3))
+  expect_equal(colnames(df), c("x1", "x2", "y", "z", "dob", "eol", "error.message"))
   e = getOptPathEl(op, 1)
   expect_equal(e$x, list(x=c(1,1), y=7L))
   # really make sure that names are there
@@ -92,7 +92,7 @@ test_that("OptPath with vector and discrete params works", {
     x6=list(b=1, a=identity), x7=c(TRUE,FALSE,TRUE))
   addOptPathEl(op, x=x, y=0)
   d = as.data.frame(op)
-  expect_true(nrow(d) == 1 && ncol(d) == 2+7+1+2+3)
+  expect_true(nrow(d) == 1 && ncol(d) == 3 + 7 + 1 + 2 + 3)
   expect_true(is.integer(d$x01))
   expect_true(is.integer(d$x02))
   expect_true(is.character(d$x1))
@@ -111,7 +111,7 @@ test_that("OptPath with vector and discrete params works", {
     && d[1,7] == FALSE && d[1,8] == "b" && d[1,9] == "a"
     && d[1,10] == TRUE && d[1,11] == FALSE && d[1,12] == TRUE)
   d = as.data.frame(op, discretes.as.factor=TRUE)
-  expect_true(nrow(d) == 1 && ncol(d) == 2+7+1+2+3)
+  expect_true(nrow(d) == 1 && ncol(d) == 3 + 7 + 1 + 2 + 3)
   expect_true(is.integer(d$x01))
   expect_true(is.integer(d$x02))
   expect_true(is.factor(d$x1))
@@ -200,5 +200,13 @@ test_that("pareto front", {
   expect_equal(f, c(2, 4))
 })
 
-
-
+test_that("error message", {
+  ps = makeParamSet(makeNumericParam("x"))
+  op = makeOptPathDF(par.set=ps, y.names="y", minimize=TRUE)
+  addOptPathEl(op, x=list(x=1), y=5)
+  addOptPathEl(op, x=list(x=2), y=3)
+  addOptPathEl(op, x=list(x=3), y=9)
+  addOptPathEl(op, x=list(x=4), y=3, error.message = "bla")
+  errors = which(!is.na(getOptPathErrorMessages(op)))
+  expect_equal("bla", getOptPathEl(op, errors)$error.message)
+})

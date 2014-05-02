@@ -11,8 +11,9 @@ getOptPathEl(op, index)
 }
 \value{
 List with elements \code{x} [named \code{list}], \code{y}
-[named \code{numeric}], \code{dob} [\code{integer(1)}] and
-\code{eol} [\code{integer(1)}].
+[named \code{numeric}], \code{dob} [\code{integer(1)}],
+\code{eol} [\code{integer(1)}] and \code{error.message}
+[\code{character(1)}].
 }
 \description{
 Dependent parameters whose requirements are not satisfied

@@ -1,4 +1,4 @@
-\name{makeOptPathDF}
+\name{OptPath}
 \alias{OptPath}
 \alias{OptPathDF}
 \alias{makeOptPathDF}
@@ -32,7 +32,8 @@ A optimization path has a number of path elements, where
 each element consists of: the value of the decision
 variables at this point, the values of the performance
 measures at this point, the date-of-birth (dob) of this
-point and the end-of-life (eol) of this point.
+point, the end-of-life (eol) of this point and possibly an
+error message.
 
 For discrete parameters always the name of the value is
 stored as a character. When you retrieve an element with

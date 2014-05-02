@@ -3,7 +3,8 @@
 \title{Add a new element to an optimization path.}
 \usage{
 addOptPathEl(op, x, y, dob = getOptPathLength(op) + 1L,
-  eol = as.integer(NA), check.feasible = !op$add.transformed.x)
+  eol = as.integer(NA), error.message = error.message,
+  check.feasible = !op$add.transformed.x)
 }
 \arguments{
   \item{op}{[\code{\link{OptPath}}] \cr Optimization path.}
@@ -19,6 +20,10 @@ addOptPathEl(op, x, y, dob = getOptPathLength(op) + 1L,
   new parameters.  Default is length of path + 1.}
 
   \item{eol}{[\code{integer(1)}]\cr End of life of point.
+  Default is \code{NA}.}
+
+  \item{error.message}{[\code{character(1)}]\cr Possible
+  error message that occurred for this parameter values.
   Default is \code{NA}.}
 
   \item{check.feasible}{[\code{logical(1)}]\cr Should
