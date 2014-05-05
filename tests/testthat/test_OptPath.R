@@ -207,6 +207,16 @@ test_that("error message", {
   addOptPathEl(op, x=list(x=2), y=3)
   addOptPathEl(op, x=list(x=3), y=9)
   addOptPathEl(op, x=list(x=4), y=3, error.message = "bla")
+  expect_equal(ncol(as.data.frame(op)), 5)
   errors = which(!is.na(getOptPathErrorMessages(op)))
   expect_equal("bla", getOptPathEl(op, errors)$error.message)
+  
+  # Test backward compatibility
+  op$env$error.message = NULL
+  expect_equal(ncol(as.data.frame(op)), 4)
+  expect_equal(getOptPathErrorMessages(op), NULL)
+  expect_equal(length(getOptPathEl(op, 4)), 4)
+  addOptPathEl(op, list(x = 75), 6)
+  expect_equal(ncol(as.data.frame(op)), 5)
+  expect_equal(length(getOptPathEl(op, 4)), 5)
 })
