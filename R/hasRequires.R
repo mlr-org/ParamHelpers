@@ -11,12 +11,12 @@ hasRequires = function(par) {
   UseMethod("hasRequires")
 }
 
-#' @S3method hasRequires Param
+#' @export
 hasRequires.Param = function(par) {
   !is.null(par$requires)
 }
 
-#' @S3method hasRequires ParamSet
+#' @export
 hasRequires.ParamSet = function(par) {
   any(vapply(par$pars, hasRequires, logical(1L)))
 }

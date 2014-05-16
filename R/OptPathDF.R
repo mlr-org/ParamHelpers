@@ -13,12 +13,12 @@ makeOptPathDF = function(par.set, y.names, minimize, add.transformed.x=FALSE) {
   return(obj)
 }
 
-#' @S3method getOptPathLength OptPathDF
+#' @export
 getOptPathLength.OptPathDF = function(op) {
   nrow(op$env$path)
 }
 
-#' @S3method as.data.frame OptPathDF
+#' @export
 as.data.frame.OptPathDF = function(x, row.names = NULL, optional = FALSE,
   discretes.as.factor = FALSE, ...) {
 
@@ -31,7 +31,7 @@ as.data.frame.OptPathDF = function(x, row.names = NULL, optional = FALSE,
   return(df)
 }
 
-#' @S3method getOptPathEl OptPathDF
+#' @export
 getOptPathEl.OptPathDF = function(op, index) {
   index = convertInteger(index)
   checkArg(index, "integer", 1)
@@ -51,7 +51,7 @@ getOptPathEl.OptPathDF = function(op, index) {
     list(x=x, y=y, dob=e$dob[index], eol=e$eol[index], error.message = e$error.message[index])
 }
 
-#' @S3method addOptPathEl OptPathDF
+#' @export
 addOptPathEl.OptPathDF = function(op, x, y, dob=getOptPathLength(op)+1L, eol=as.integer(NA),
   error.message = NA_character_, check.feasible=!op$add.transformed.x) {
 
@@ -93,7 +93,7 @@ addOptPathEl.OptPathDF = function(op, x, y, dob=getOptPathLength(op)+1L, eol=as.
 }
 
 
-#' @S3method getOptPathY OptPathDF
+#' @export
 getOptPathY.OptPathDF = function(op, names, drop=TRUE) {
   if (missing(names))
     names = op$y.names
@@ -106,17 +106,17 @@ getOptPathY.OptPathDF = function(op, names, drop=TRUE) {
   return(y)
 }
 
-#' @S3method getOptPathDOB OptPathDF
+#' @export
 getOptPathDOB.OptPathDF = function(op) {
   op$env$dob
 }
 
-#' @S3method getOptPathEOL OptPathDF
+#' @export
 getOptPathEOL.OptPathDF = function(op) {
   op$env$eol
 }
 
-#' @S3method getOptPathErrorMessages OptPathDF
+#' @export
 getOptPathErrorMessages.OptPathDF = function(op) {
   op$env$error.message
 }

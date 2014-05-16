@@ -64,7 +64,7 @@ makeParam = function(id, type, len, lower, upper, values, trafo=NULL, requires=N
   ), class="Param")
 }
 
-#' @S3method print Param
+#' @export
 print.Param = function(x, ...) {
   type = x$type
   ut = !is.null(x$trafo)

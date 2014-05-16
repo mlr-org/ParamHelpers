@@ -71,7 +71,7 @@ makeOptPath = function(par.set, y.names, minimize, add.transformed.x = FALSE) {
   ), class="OptPath")
 }
 
-#' @S3method print OptPath
+#' @export
 print.OptPath = function(x, ...) {
   catf("Optimization path")
   catf("  Dimensions: x=%i/%i, y=%i",

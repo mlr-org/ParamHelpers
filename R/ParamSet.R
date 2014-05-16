@@ -41,7 +41,7 @@ makeParamSet = function(..., params) {
   return(x)
 }
 
-#' @S3method print ParamSet
+#' @export
 print.ParamSet = function(x, ...) {
   if (isEmpty(x))
     print("Empty parameter set.")
@@ -50,7 +50,7 @@ print.ParamSet = function(x, ...) {
   invisible(NULL)
 }
 
-#' @S3method c ParamSet
+#' @export
 c.ParamSet = function(..., recursive=FALSE) {
   pss = list(...)
   pars = Reduce(c, lapply(pss, function(ps) ps$pars))
@@ -68,7 +68,7 @@ isEmpty = function(par.set) {
   UseMethod("isEmpty")
 }
 
-#' @S3method isEmpty ParamSet
+#' @export
 isEmpty.ParamSet = function(par.set) {
   length(par.set$pars) == 0
 }

@@ -44,7 +44,7 @@ paramValueToString = function(par, x, show.missing.values = FALSE, num.format = 
   UseMethod("paramValueToString")
 }
 
-#' @S3method paramValueToString Param
+#' @export
 paramValueToString.Param = function(par, x, show.missing.values = FALSE, num.format = "%.3g") {
   # handle missings
   if (isMissingValue(x)) {
@@ -77,7 +77,7 @@ paramValueToString.Param = function(par, x, show.missing.values = FALSE, num.for
     sprintf("<%s>", class(x)[1])
 }
 
-#' @S3method paramValueToString ParamSet
+#' @export
 paramValueToString.ParamSet = function(par, x, show.missing.values=FALSE, num.format = "%.3g") {
   checkArg(x, "list")
   if (!isProperlyNamed(x))

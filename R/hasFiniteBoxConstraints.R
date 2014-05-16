@@ -9,7 +9,7 @@ hasFiniteBoxConstraints = function(par) {
   UseMethod("hasFiniteBoxConstraints")
 }
 
-#' @S3method hasFiniteBoxConstraints Param
+#' @export
 hasFiniteBoxConstraints.Param = function(par) {
   bounds = c(par$lower, par$upper)
   if (length(bounds) == 0)
@@ -17,7 +17,7 @@ hasFiniteBoxConstraints.Param = function(par) {
   return(all(is.finite(bounds)))
 }
 
-#' @S3method hasFiniteBoxConstraints ParamSet
+#' @export
 hasFiniteBoxConstraints.ParamSet = function(par) {
   bounds = c(getLower(par), getUpper(par))
   if (length(bounds) == 0)

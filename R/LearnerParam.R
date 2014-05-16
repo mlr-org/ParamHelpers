@@ -48,7 +48,7 @@ makeLearnerParam = function(p, has.default, default, when) {
   return(p)
 }
 
-#' @S3method print LearnerParam
+#' @export
 print.LearnerParam = function(x, ...) {
   print.Param(x)
   def = if(is.null(x$default)) 

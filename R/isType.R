@@ -22,12 +22,12 @@ isNumeric = function(par, include.int = TRUE) {
   UseMethod("isNumeric")
 }
 
-#' @S3method isNumeric ParamSet
+#' @export
 isNumeric.ParamSet = function(par, include.int = TRUE) {
   all(sapply(par$pars, isNumeric.Param, include.int = include.int))
 }
 
-#' @S3method isNumeric Param
+#' @export
 isNumeric.Param = function(par, include.int = TRUE) {
   types = if (include.int)
     c("numeric", "numericvector", "integer", "integervector")
@@ -43,7 +43,7 @@ isDiscrete = function(par, include.logical = TRUE) {
   UseMethod("isDiscrete")
 }
 
-#' @S3method isDiscrete ParamSet
+#' @export
 isDiscrete.ParamSet = function(par, include.logical = TRUE) {
   types = if (include.logical)
     c("discrete", "discretevector", "logical", "logicalvector")
@@ -52,7 +52,7 @@ isDiscrete.ParamSet = function(par, include.logical = TRUE) {
   return(hasAllParamsOfTypes(par, types = types))
 }
 
-#' @S3method isDiscrete Param
+#' @export
 isDiscrete.Param = function(par, include.logical = TRUE) {
   types = if (include.logical)
     c("discrete", "discretevector", "logical", "logicalvector")
@@ -68,12 +68,12 @@ isInteger = function(par) {
   UseMethod("isInteger")
 }
 
-#' @S3method isInteger ParamSet
+#' @export
 isInteger.ParamSet = function(par) {
   return(hasAllParamsOfTypes(par, types = c("integer", "integervector")))
 }
 
-#' @S3method isInteger Param
+#' @export
 isInteger.Param = function(par) {
   return(par$type %in% c("integer", "integervector"))
 }
@@ -85,12 +85,12 @@ isLogical = function(par) {
   UseMethod("isLogical")
 }
 
-#' @S3method isLogical ParamSet
+#' @export
 isLogical.ParamSet = function(par) {
   return(hasAllParamsOfTypes(par, types = c("logical", "logicalvector")))
 }
 
-#' @S3method isLogical Param
+#' @export
 isLogical.Param = function(par) {
   return(par$type %in% c("logical", "logicalvector"))
 }

@@ -34,7 +34,7 @@ sampleValue = function(par, discrete.names=FALSE) {
   UseMethod("sampleValue")
 }
 
-#' @S3method sampleValue Param
+#' @export
 sampleValue.Param = function(par, discrete.names=FALSE) {
   type = par$type
   if (par$type %in% c("numeric", "numericvector", "integer", "integervector"))
@@ -68,7 +68,7 @@ sampleValue.Param = function(par, discrete.names=FALSE) {
   }
 }
 
-#' @S3method sampleValue ParamSet
+#' @export
 sampleValue.ParamSet = function(par, discrete.names=FALSE) {
   val = lapply(par$pars, sampleValue, discrete.names=discrete.names)
   setNames(lapply(seq_along(val), function(i) {

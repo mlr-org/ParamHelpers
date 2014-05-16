@@ -29,19 +29,19 @@ isFeasible = function(par, x) {
   UseMethod("isFeasible")
 }
 
-#' @S3method isFeasible Param
+#' @export
 isFeasible.Param = function(par, x) {
   # we dont have to consider requires here, it is not a param set
   constraintsOkParam(par, x)
 }
 
-#' @S3method isFeasible LearnerParam
+#' @export
 isFeasible.LearnerParam = function(par, x) {
   # we dont have to consider requires here, it is not a param set
   constraintsOkLearnerParam(par, x)
 }
 
-#' @S3method isFeasible ParamSet
+#' @export
 isFeasible.ParamSet = function(par, x) {
   if (!(is.list(x) && length(x) == length(par$pars) && all(names(x) == names(par$pars))))
     return(FALSE)
