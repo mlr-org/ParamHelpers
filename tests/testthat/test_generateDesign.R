@@ -3,7 +3,7 @@ context("generateDesign")
 
 test_that("simple num design", {
   ps1 = makeParamSet(
-    makeNumericParam("x1", lower=-2, upper=1)
+    makeNumericParam("x1", lower = -2, upper = 1)
   )
   des = generateDesign(13, ps1, randomLHS)
   expect_equal(nrow(des), 13)
@@ -18,8 +18,8 @@ test_that("simple num design", {
 
 test_that("simple num/int design", {
   ps2 = makeParamSet(
-    makeNumericParam("x1", lower=-2, upper=1),
-    makeIntegerParam("x2", lower=10, upper=20)
+    makeNumericParam("x1", lower = -2, upper = 1),
+    makeIntegerParam("x2", lower = 10, upper = 20)
   )
   des = generateDesign(13, ps2, randomLHS)
   expect_equal(nrow(des), 13)
@@ -39,12 +39,12 @@ test_that("simple num/int design", {
 
 test_that("simple num/int/discrete/log design", {
   ps3 = makeParamSet(
-    makeNumericParam("x1", lower=-2, upper=1),
-    makeIntegerParam("x2", lower=10, upper=20),
-    makeDiscreteParam("x3", values=c("a", "b", "c")),
+    makeNumericParam("x1", lower = -2, upper = 1),
+    makeIntegerParam("x2", lower = 10, upper = 20),
+    makeDiscreteParam("x3", values = c("a", "b", "c")),
     makeLogicalParam("x4")
   )
-  des = generateDesign(500, ps3, discretes.as.factor=FALSE)
+  des = generateDesign(500, ps3, discretes.as.factor = FALSE)
   expect_equal(nrow(des), 500)
   expect_equal(ncol(des), 4)
   expect_true(is.numeric(des[,1]))
@@ -59,7 +59,7 @@ test_that("simple num/int/discrete/log design", {
   tab = as.numeric(table(des[,4]))
   expect_true(all(tab > 200 & tab < 300))
 
-  des = generateDesign(13, ps3, discretes.as.factor=TRUE)
+  des = generateDesign(13, ps3, discretes.as.factor = TRUE)
   expect_equal(nrow(des), 13)
   expect_equal(ncol(des), 4)
   expect_true(is.numeric(des[,1]))
@@ -73,10 +73,10 @@ test_that("simple num/int/discrete/log design", {
 
 test_that("num/int/disc vec design", {
   ps4 = makeParamSet(
-    makeNumericVectorParam("x", len=2, lower=-2, upper=1),
-    makeIntegerVectorParam("y", len=3, lower=10L, upper=20L),
-    makeDiscreteVectorParam("z", len=2, values=list(a="a", b=list())),
-    makeLogicalVectorParam("a", len=2)
+    makeNumericVectorParam("x", len = 2, lower = -2, upper = 1),
+    makeIntegerVectorParam("y", len = 3, lower = 10L, upper = 20L),
+    makeDiscreteVectorParam("z", len = 2, values = list(a = "a", b = list())),
+    makeLogicalVectorParam("a", len = 2)
   )
   des = generateDesign(13, ps4)
   expect_equal(nrow(des), 13)
@@ -102,10 +102,10 @@ test_that("num/int/disc vec design", {
 
 test_that("num/int vec design with trafo", {
   ps5 = makeParamSet(
-    makeNumericVectorParam("x", len=2, lower=-2, upper=1, trafo =  function(x) 2^x),
-    makeIntegerVectorParam("y", len=3, lower=10L, upper=20L, trafo=function(x) 3L*x)
+    makeNumericVectorParam("x", len = 2, lower = -2, upper = 1, trafo =  function(x) 2^x),
+    makeIntegerVectorParam("y", len = 3, lower = 10L, upper = 20L, trafo = function(x) 3L*x)
   )
-  des = generateDesign(100, ps5, trafo=TRUE)
+  des = generateDesign(100, ps5, trafo = TRUE)
   expect_equal(nrow(des), 100)
   expect_equal(ncol(des), 5)
   expect_equal(colnames(des), c("x1", "x2", "y1", "y2", "y3"))
@@ -121,11 +121,11 @@ test_that("num/int vec design with trafo", {
   expect_true(des[,5] >= 30 && des[,5] <= 60)
 
   ps6 = makeParamSet(
-    makeNumericVectorParam("x", len=2, lower=0, upper=1, trafo = function(x) x / sum(x)),
-    makeIntegerVectorParam("y", len=2, lower=10L, upper=20L, trafo=function(x) 1:2),
-    makeDiscreteVectorParam("z", len=2, values=c("a", "b"))
+    makeNumericVectorParam("x", len = 2, lower = 0, upper = 1, trafo = function(x) x / sum(x)),
+    makeIntegerVectorParam("y", len = 2, lower = 10L, upper = 20L, trafo = function(x) 1:2),
+    makeDiscreteVectorParam("z", len = 2, values = c("a", "b"))
   )
-  des = generateDesign(5, ps6, trafo=TRUE)
+  des = generateDesign(5, ps6, trafo = TRUE)
   expect_equal(nrow(des), 5)
   expect_equal(ncol(des), 6)
   expect_equal(colnames(des), c("x1", "x2", "y1", "y2", "z1", "z2"))
@@ -139,57 +139,58 @@ test_that("num/int vec design with trafo", {
 
   # check that trafo can be switched off
   ps = makeParamSet(
-    makeNumericParam("x", lower=-10, upper=-1, trafo=function(x) -x)
+    makeNumericParam("x", lower = -10, upper = -1, trafo = function(x) -x)
   )
-  des = generateDesign(10, ps, trafo=FALSE)
+  des = generateDesign(10, ps, trafo = FALSE)
   expect_true(is.numeric(des$x) && all(des$x <= -1))
 })
 
 test_that("requires works", {
   ps = makeParamSet(
     makeDiscreteParam("x", values = c("a", "b")),
-    makeNumericParam("y", lower=1, upper=2, requires = quote(x == "a"))
+    makeNumericParam("y", lower = 1, upper = 2, requires = quote(x == "a")),
+    makeDiscreteParam("z", values = 1:2, requires = quote(x == "b"))
   )
-  des = generateDesign(50, par.set=ps)
+  des = generateDesign(50, par.set = ps)
   vals = dfRowsToList(des, ps)
-  oks = sapply(vals, isFeasible, par=ps)
+  oks = sapply(vals, isFeasible, par = ps)
   expect_true(all(oks))
   ps = makeParamSet(
     makeDiscreteParam("x", values = c("a", "b")),
-    makeNumericVectorParam("y", len=2, lower=1, upper=2, requires = quote(x == "a"))
+    makeNumericVectorParam("y", len = 2, lower = 1, upper = 2, requires = quote(x == "a"))
   )
-  des = generateDesign(50, par.set=ps)
+  des = generateDesign(50, par.set = ps)
   vals = dfRowsToList(des, ps)
-  oks = sapply(vals, isFeasible, par=ps)
+  oks = sapply(vals, isFeasible, par = ps)
   expect_true(all(oks))
 })
 
 test_that("nested requires", {
   ps7 = makeParamSet(
-    makeDiscreteParam("disc", values=c("a", "b", "c")),
-    makeNumericParam("realA", lower=0, upper=100, requires=quote(disc == "a")),
-    makeIntegerParam("intA", lower=-100, upper=100, requires=quote(disc == "a")),
-    makeDiscreteParam("discA", values=c("m", "w"), requires=quote(disc == "a")),
-    makeNumericParam("realB", lower=-100, upper=100, requires=quote(disc == "b")),
-    makeDiscreteParam("discB", values=c("R", "NR"), requires=quote(disc == "b")),
-    makeNumericParam("realBR", lower=0, upper=2*pi, requires=quote(identical(discB, "R") && identical(disc, "b"))),
-    makeNumericParam("realBNR", lower=0, upper=2*pi, requires=quote(identical(discB, "NR") && identical(disc, "b")))
+    makeDiscreteParam("disc", values = c("a", "b", "c")),
+    makeNumericParam("realA", lower = 0, upper = 100, requires = quote(disc == "a")),
+    makeIntegerParam("intA", lower = -100, upper = 100, requires = quote(disc == "a")),
+    makeDiscreteParam("discA", values = c("m", "w"), requires = quote(disc == "a")),
+    makeNumericParam("realB", lower = -100, upper = 100, requires = quote(disc == "b")),
+    makeDiscreteParam("discB", values = c("R", "NR"), requires = quote(disc == "b")),
+    makeNumericParam("realBR", lower = 0, upper = 2*pi, requires = quote(identical(discB, "R") && identical(disc, "b"))),
+    makeNumericParam("realBNR", lower = 0, upper = 2*pi, requires = quote(identical(discB, "NR") && identical(disc, "b")))
   )
-  des = generateDesign(50, par.set=ps7)
-  expect_true(all(is.na(des[des$disc=="a",5:8])))
-  expect_true(all(is.na(des[des$disc=="b",2:4])))
-  expect_true(all(is.na(des[des$disc=="c",2:8])))
-  expect_true(all(is.na(des[des$disc=="b" & des$discB=="NR",7])))
-  expect_true(all(is.na(des[des$disc=="b" & des$discB=="R",8])))
+  des = generateDesign(50, par.set = ps7)
+  expect_true(all(is.na(des[des$disc == "a", 5:8])))
+  expect_true(all(is.na(des[des$disc == "b", 2:4])))
+  expect_true(all(is.na(des[des$disc == "c", 2:8])))
+  expect_true(all(is.na(des[des$disc == "b" & des$discB == "NR",7])))
+  expect_true(all(is.na(des[des$disc == "b" & des$discB == "R",8])))
 
   vals = dfRowsToList(des, ps7)
-  oks = sapply(vals, isFeasible, par=ps7)
+  oks = sapply(vals, isFeasible, par = ps7)
   expect_true(all(oks))
 })
 
 test_that("we dont drop levels in factors", {
   ps = makeParamSet(
-    makeDiscreteParam("x", values=letters[1:5])
+    makeDiscreteParam("x", values = letters[1:5])
   )
   des = generateDesign(1, ps)
   expect_true(is.factor(des$x) && levels(des$x) == letters[1:5])
@@ -198,9 +199,9 @@ test_that("we dont drop levels in factors", {
 test_that("list of further arguments passed to lhs function produces no error", {
   ps = makeParamSet(
     makeDiscreteParam("x", values = c("a", "b", "c")),
-    makeNumericParam("realA", lower=0, upper=100)
+    makeNumericParam("realA", lower = 0, upper = 100)
   )
-  expect_true({generateDesign(10L, ps, fun.args = list(k=3)); TRUE})
+  expect_true({generateDesign(10L, ps, fun.args = list(k = 3)); TRUE})
 })
 
 test_that("removing duplicates", {
@@ -213,8 +214,8 @@ test_that("removing duplicates", {
   expect_error(generateDesign(7L, ps, remove.duplicates = TRUE))
 
   ps = makeParamSet(
-    makeIntegerParam("int", lower=-2, upper=1),
-    makeDiscreteParam("disc", values=letters[1:3])
+    makeIntegerParam("int", lower = -2, upper = 1),
+    makeDiscreteParam("disc", values = letters[1:3])
   )
 
   set.seed(1)

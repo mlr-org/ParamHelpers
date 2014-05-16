@@ -78,6 +78,8 @@ sampleValue.ParamSet = function(par, discrete.names = FALSE) {
         numericvector = "numeric",
         integervector = "integer",
         logicalvector = "logical",
+        discrete = "character",
+        discretevector = "character",
         type
       )
       as(NA, type)

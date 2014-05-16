@@ -98,7 +98,7 @@ test_that("discrete sampling", {
   expect_true(is.list(r))
   expect_equal(length(r), 10)
   ok = function(x) is.list(x) && length(x) == 2 &&
-    (length(x[[1]]) = =0 || x[[1]] %in% 1:3) &&  (length(x[[2]]) = =0 || x[[2]] %in% 1:3)
+    (length(x[[1]]) == 0L || x[[1]] %in% 1:3) &&  (length(x[[2]]) == 0L || x[[2]] %in% 1:3)
   expect_true(all(sapply(r, ok)))
 })
 
@@ -117,7 +117,7 @@ test_that("sampleValues with paramset works", {
   r = sampleValues(ps, 5, discrete.names = TRUE)
   expect_true(is.list(r))
   expect_equal(length(r), 5)
-  expect_true(all(sapply(r, function(x) is.numeric(x[[1]]) && x[[1]] > = 1 &&  x[[1]] <= 100)))
+  expect_true(all(sapply(r, function(x) is.numeric(x[[1]]) && x[[1]] >= 1 &&  x[[1]] <= 100)))
   expect_true(all(sapply(r, function(x) x[[2]] %in% c("xx", "yy"))))
 })
 
@@ -126,7 +126,8 @@ test_that("requires works", {
   ps = makeParamSet(
     makeDiscreteParam("x", values = c("a", "b")),
     makeNumericParam("y", lower = 1, upper = 2, requires = quote(x == "a")),
-    makeIntegerVectorParam("z", len = 2, lower = 1, upper = 20, requires = quote(x == "b"))
+    makeIntegerVectorParam("z", len = 2, lower = 1, upper = 20, requires = quote(x == "b")),
+    makeDiscreteParam("w", values = 1:2, requires = quote(x == "a"))
   )
   vals = sampleValues(ps, n = 100)
   oks = sapply(vals, function(v) isFeasible(ps, v))
