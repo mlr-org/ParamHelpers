@@ -64,7 +64,7 @@ makeParam = function(id, type, len, lower, upper, values, default, trafo = NULL,
   }
   #FIXME: Do we need to check for NA here? hopefully not because this might occur in mlr?
   if (has.default && isScalarNA(default))
-    warningf("NA used as a default value for learner parameter %s.\nParamHelpers uses NA as a special value for dependent parameters.", p$id)
+    warningf("NA used as a default value for learner parameter %s.\nParamHelpers uses NA as a special value for dependent parameters.", id)
   p = makeS3Obj("Param",
     id = id,
     type = type,
