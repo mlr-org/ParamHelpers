@@ -1,6 +1,6 @@
 #' @rdname Param
 #' @export
-makeNumericParam = function(id, lower = -Inf, upper = Inf, trafo = NULL, requires = NULL) {
+makeNumericParam = function(id, lower = -Inf, upper = Inf, default, trafo = NULL, requires = NULL) {
   checkArg(id, "character", len = 1, na.ok = FALSE)
   checkArg(lower, "numeric", len = 1, na.ok = FALSE)
   checkArg(upper, "numeric", len = 1, na.ok = FALSE)
@@ -10,12 +10,12 @@ makeNumericParam = function(id, lower = -Inf, upper = Inf, trafo = NULL, require
     checkArg(requires, c("call", "expression"))
   if (upper < lower)
     stop("No possible value!")
-  makeParam(id, "numeric", 1L, lower, upper, NULL, trafo, requires)
+  makeParam(id, "numeric", 1L, lower, upper, NULL, default, trafo, requires)
 }
 
 #' @rdname Param
 #' @export
-makeNumericVectorParam = function(id, len, lower = -Inf, upper = Inf, trafo = NULL, requires = NULL) {
+makeNumericVectorParam = function(id, len, lower = -Inf, upper = Inf, default, trafo = NULL, requires = NULL) {
   checkArg(id, "character", len = 1, na.ok = FALSE)
   len = convertInteger(len)
   checkArg(len, "integer", len = 1, na.ok = FALSE)
@@ -31,12 +31,12 @@ makeNumericVectorParam = function(id, len, lower = -Inf, upper = Inf, trafo = NU
     checkArg(requires, c("call", "expression"))
   if (any(upper < lower))
     stop("No possible value!")
-  makeParam(id, "numericvector", len, lower, upper, NULL, trafo, requires)
+  makeParam(id, "numericvector", len, lower, upper, NULL, default, trafo, requires)
 }
 
 #' @rdname Param
 #' @export
-makeIntegerParam = function(id, lower = -Inf, upper = Inf, trafo = NULL, requires = NULL) {
+makeIntegerParam = function(id, lower = -Inf, upper = Inf, default, trafo = NULL, requires = NULL) {
   checkArg(id, "character", len = 1, na.ok = FALSE)
   checkArg(lower, "numeric", len = 1, na.ok = FALSE)
   checkArg(upper, "numeric", len = 1, na.ok = FALSE)
@@ -46,12 +46,12 @@ makeIntegerParam = function(id, lower = -Inf, upper = Inf, trafo = NULL, require
     checkArg(requires, c("call", "expression"))
   if (upper < lower)
     stop("No possible value!")
-  makeParam(id, "integer", 1L,  lower, upper, NULL, trafo, requires)
+  makeParam(id, "integer", 1L,  lower, upper, NULL, default, trafo, requires)
 }
 
 #' @rdname Param
 #' @export
-makeIntegerVectorParam = function(id, len, lower = -Inf, upper = Inf, trafo = NULL, requires = NULL) {
+makeIntegerVectorParam = function(id, len, lower = -Inf, upper = Inf, default, trafo = NULL, requires = NULL) {
   checkArg(id, "character", len = 1, na.ok = FALSE)
   len = convertInteger(len)
   checkArg(len, "integer", len = 1, na.ok = FALSE)
@@ -67,23 +67,23 @@ makeIntegerVectorParam = function(id, len, lower = -Inf, upper = Inf, trafo = NU
     checkArg(requires, c("call", "expression"))
   if (any(upper < lower))
     stop("No possible value!")
-  makeParam(id, "integervector", len,  lower, upper, NULL, trafo, requires)
+  makeParam(id, "integervector", len,  lower, upper, NULL, default, trafo, requires)
 }
 
 #' @rdname Param
 #' @export
-makeLogicalParam = function(id, requires = NULL) {
+makeLogicalParam = function(id, default, requires = NULL) {
   checkArg(id, "character", len = 1, na.ok = FALSE)
   if (!is.null(requires))
     checkArg(requires, c("call", "expression"))
   values = list(TRUE, FALSE)
   names(values) = c("TRUE", "FALSE")
-  makeParam(id, "logical", 1L, NULL, NULL, values, requires = requires)
+  makeParam(id, "logical", 1L, NULL, NULL, values, default = default, requires = requires)
 }
 
 #' @rdname Param
 #' @export
-makeLogicalVectorParam = function(id, len, requires = NULL) {
+makeLogicalVectorParam = function(id, len, default, requires = NULL) {
   checkArg(id, "character", len = 1, na.ok = FALSE)
   len = convertInteger(len)
   checkArg(len, "integer", len = 1, na.ok = FALSE)
@@ -91,49 +91,49 @@ makeLogicalVectorParam = function(id, len, requires = NULL) {
     checkArg(requires, c("call", "expression"))
   values = list(TRUE, FALSE)
   names(values) = c("TRUE", "FALSE")
-  makeParam(id, "logicalvector", len, NULL, NULL, values, requires = requires)
+  makeParam(id, "logicalvector", len, NULL, NULL, values, default = default, requires = requires)
 }
 
 #' @rdname Param
 #' @export
-makeDiscreteParam = function(id, values, trafo = NULL, requires = NULL) {
+makeDiscreteParam = function(id, values, trafo = NULL, default, requires = NULL) {
   checkArg(id, "character", len = 1, na.ok = FALSE)
   if (!is.null(requires))
     checkArg(requires, c("call", "expression"))
   values = checkValuesForDiscreteParam(id, values)
-  makeParam(id, "discrete", 1L, NULL, NULL, values, trafo, requires = requires)
+  makeParam(id, "discrete", 1L, NULL, NULL, values, default, trafo, requires)
 }
 
 #' @rdname Param
 #' @export
-makeDiscreteVectorParam = function(id, len, values, requires = NULL) {
+makeDiscreteVectorParam = function(id, len, values, default, requires = NULL) {
   checkArg(id, "character", len = 1, na.ok = FALSE)
   len = convertInteger(len)
   checkArg(len, "integer", len = 1, na.ok = FALSE)
   if (!is.null(requires))
     checkArg(requires, c("call", "expression"))
   values = checkValuesForDiscreteParam(id, values)
-  makeParam(id, "discretevector", len, NULL, NULL, values, requires = requires)
+  makeParam(id, "discretevector", len, NULL, NULL, values, default = default, requires = requires)
 }
 
 #' @rdname Param
 #' @export
-makeFunctionParam = function(id, requires = NULL) {
+makeFunctionParam = function(id, default = default, requires = NULL) {
   checkArg(id, "character", len = 1, na.ok = FALSE)
   if (!is.null(requires))
     checkArg(requires, c("call", "expression"))
-  makeParam(id, "function", 1L, NULL, NULL, NULL, requires = requires)
+  makeParam(id, "function", 1L, NULL, NULL, NULL, default = default, requires = requires)
 }
 
 #FIXME what happens if NA is later used for untyped params? because we might interpret this as
 # missing value wrt. dependent params
 #' @rdname Param
 #' @export
-makeUntypedParam = function(id, requires = NULL) {
+makeUntypedParam = function(id, default, requires = NULL) {
   checkArg(id, "character", len = 1, na.ok = FALSE)
   if (!is.null(requires))
     checkArg(requires, c("call", "expression"))
-  makeParam(id, "untyped", 1L, NULL, NULL, NULL, requires = requires)
+  makeParam(id, "untyped", 1L, NULL, NULL, NULL, default = default, requires = requires)
 }
 
 

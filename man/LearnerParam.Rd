@@ -60,8 +60,7 @@ See \code{\link{Param}}.}
 See \code{\link{Param}}.}
 
 \item{default}{[any]\cr
-Default value used in learner.
-If this argument is missing, it means no default value is available.}
+See \code{\link{Param}}.}
 
 \item{when}{[\code{character(1)}]\cr
 Specifies when parameter is used in the learner: \dQuote{train}, \dQuote{predict} or \dQuote{both}.

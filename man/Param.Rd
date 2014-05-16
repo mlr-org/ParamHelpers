@@ -13,29 +13,29 @@
 \alias{makeUntypedParam}
 \title{Create a description object for a parameter.}
 \usage{
-makeNumericParam(id, lower = -Inf, upper = Inf, trafo = NULL,
+makeNumericParam(id, lower = -Inf, upper = Inf, default, trafo = NULL,
   requires = NULL)
 
-makeNumericVectorParam(id, len, lower = -Inf, upper = Inf, trafo = NULL,
+makeNumericVectorParam(id, len, lower = -Inf, upper = Inf, default,
+  trafo = NULL, requires = NULL)
+
+makeIntegerParam(id, lower = -Inf, upper = Inf, default, trafo = NULL,
   requires = NULL)
 
-makeIntegerParam(id, lower = -Inf, upper = Inf, trafo = NULL,
-  requires = NULL)
+makeIntegerVectorParam(id, len, lower = -Inf, upper = Inf, default,
+  trafo = NULL, requires = NULL)
 
-makeIntegerVectorParam(id, len, lower = -Inf, upper = Inf, trafo = NULL,
-  requires = NULL)
+makeLogicalParam(id, default, requires = NULL)
 
-makeLogicalParam(id, requires = NULL)
+makeLogicalVectorParam(id, len, default, requires = NULL)
 
-makeLogicalVectorParam(id, len, requires = NULL)
+makeDiscreteParam(id, values, trafo = NULL, default, requires = NULL)
 
-makeDiscreteParam(id, values, trafo = NULL, requires = NULL)
+makeDiscreteVectorParam(id, len, values, default, requires = NULL)
 
-makeDiscreteVectorParam(id, len, values, requires = NULL)
+makeFunctionParam(id, default = default, requires = NULL)
 
-makeFunctionParam(id, requires = NULL)
-
-makeUntypedParam(id, requires = NULL)
+makeUntypedParam(id, default, requires = NULL)
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr
@@ -60,6 +60,10 @@ you are also allowed to pass a list of quite \dQuote{complex} R objects,
 which are used as discrete choices. If you do the latter,
 the elements must be uniquely named, so that the names can be used
 as internal represenatations for the choice.}
+
+\item{default}{[any]\cr
+Default value used in learner.
+If this argument is missing, it means no default value is available.}
 
 \item{trafo}{[\code{NULL} | \code{function(x)}]\cr
 Function to transform parameter. It should be applied to the parameter value
@@ -93,8 +97,8 @@ The S3 class is a list which stores these elements:
 }
 }
 \examples{
-makeNumericParam("x",lower=-1, upper=1)
-makeNumericVectorParam("x", len=2)
-makeDiscreteParam("y", values=c("a","b"))
+makeNumericParam("x",lower = -1, upper = 1)
+makeNumericVectorParam("x", len = 2)
+makeDiscreteParam("y", values = c("a","b"))
 }
 

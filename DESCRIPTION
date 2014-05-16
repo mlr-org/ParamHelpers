@@ -11,11 +11,12 @@ Maintainer: Bernd Bischl <bernd_bischl@gmx.net>
 License: BSD_3_clause + file LICENSE
 Roxygen: list(wrap = FALSE)
 Imports:
-    BBmisc (>= 1.4)
+    BBmisc (>= 1.6)
 Suggests:
     emoa,
     lhs,
     irace,
     testthat
 LazyData: yes
+ByteCompile: yes
 Version: 1.2

@@ -32,6 +32,9 @@
 #'   which are used as discrete choices. If you do the latter,
 #'   the elements must be uniquely named, so that the names can be used
 #'   as internal represenatations for the choice.
+#' @param default [any]\cr
+#'   Default value used in learner.
+#'   If this argument is missing, it means no default value is available.
 #' @param trafo [\code{NULL} | \code{function(x)}]\cr
 #'   Function to transform parameter. It should be applied to the parameter value
 #'   before it is, e.g., passed to a corresponding objective function.
@@ -51,44 +54,65 @@
 #' makeDiscreteParam("y", values = c("a","b"))
 NULL
 
-makeParam = function(id, type, len, lower, upper, values, trafo = NULL, requires = NULL) {
-  structure(list(
+makeParam = function(id, type, len, lower, upper, values, default, trafo = NULL, requires = NULL) {
+  #We cannot check default} for NULL or NA as this could be the default value!
+  if (missing(default)) {
+    has.default = FALSE
+    default = NULL
+  } else {
+    has.default = TRUE
+  }
+  #FIXME: Do we need to check for NA here? hopefully not because this might occur in mlr?
+  if (has.default && isScalarNA(default))
+    warningf("NA used as a default value for learner parameter %s.\nParamHelpers uses NA as a special value for dependent parameters.", p$id)
+  p = makeS3Obj("Param",
     id = id,
     type = type,
     len = len,
     lower = lower,
     upper = upper,
     values = values,
+    has.default = has.default,
+    default = default,
     trafo = trafo,
     requires = requires
-  ), class = "Param")
+  )
+  if (has.default && !isFeasible(p, default))
+    stop(p$id, " : 'default' must be a feasible parameter setting.")
+  return(p)
 }
+
 
 #' @export
 print.Param = function(x, ...) {
   type = x$type
   ut = !is.null(x$trafo)
   req = !is.null(x$requires)
+  def = if (x$has.default)
+    paramValueToString(x, x$default)
+  else
+    "<none>"
   if (type == "numeric")
-    catf("Num param '%s'. Constr: %s to %s. Trafo: %s. Requires: %s", x$id, x$lower, x$upper, ut, req)
+    catf("Num param '%s'. Constr: %s to %s. Def: %s. Trafo: %s. Requires: %s", x$id, x$lower, x$upper, def, ut, req)
   else if (type == "integer")
-    catf("Int param '%s'. Constr: %s to %s. Trafo: %s. Requires: %s", x$id, x$lower, x$upper, ut, req)
+    catf("Int param '%s'. Constr: %s to %s. Def: %s. Trafo: %s. Requires: %s", x$id, x$lower, x$upper, def, ut, req)
   else if (type == "numericvector")
-    catf("Num vec param '%s'. Len: %i. Constr: %s to %s. Trafo: %s. Requires: %s",
-      x$id, x$len, collapse(x$lower), collapse(x$upper), ut, req)
+    catf("Num vec param '%s'. Len: %i. Constr: %s to %s. Def: %s. Trafo: %s. Requires: %s",
+      x$id, x$len, collapse(x$lower), collapse(x$upper), def, ut, req)
   else if (type == "integervector")
-    catf("Int vec param '%s'. Len: %i. Constr: %s to %s. Trafo: %s. Requires: %s",
-      x$id, x$len, collapse(x$lower), collapse(x$upper), ut, req)
+    catf("Int vec param '%s'. Len: %i. Constr: %s to %s. Def %s. Trafo: %s. Requires: %s",
+      x$id, x$len, collapse(x$lower), collapse(x$upper), def, ut, req)
   else if (type == "discrete")
-    catf("Disc param '%s'. Vals: %s. Trafo: %s. Requires: %s", x$id, collapse(names(x$values)), ut, req)
+    catf("Disc param '%s'. Vals: %s. Def: %s. Requires: %s", x$id, collapse(names(x$values)), def, req)
   else if (type == "discretevector")
-    catf("Disc vec param '%s'. Len: %i. Vals: %s. Requires: %s", x$id, x$len, collapse(names(x$values)), req)
+    catf("Disc vec param '%s'. Len: %i. Vals: %s. Def: %s. Requires: %s", x$id, x$len, collapse(names(x$values)), def, req)
   else if (type == "logical")
-    catf("Log param '%s'. Requires: %s", x$id, req)
+    catf("Log param '%s'. Def: %s. Requires: %s", x$id, def, req)
   else if (type == "logicalvector")
-    catf("Log vec param '%s'. Len: %i. Requires: %s", x$id, x$len, req)
+    catf("Log vec param '%s'. Len: %i. Def: %s. Requires: %s", x$id, x$len, def, req)
   else if (type == "function")
-    catf("Fun param '%s'. Requires: %s", x$id, req)
+    catf("Fun param '%s'. Def: %s. Requires: %s", x$id, def, req)
   else if (type == "untyped")
-    catf("Untyped param '%s'. Trafo: %s. Requires: %s", x$id, ut, req)
+    catf("Untyped param '%s'. Def: %s. Requires: %s", x$id, def, req)
 }
+

@@ -7,6 +7,7 @@ ParamHelpers_1.2:
 - getLower and getUpper have with.nr argument now
 - slightly change interface of getOptPathY, so one can now return a matrix of multiple measures.
 - Added option to log error messages in the optimization path.
+- normal parameters can now have a default value
 - new functions
 -- getOptPathParetoFront
 -- generateGridDesign

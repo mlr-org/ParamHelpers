@@ -26,8 +26,7 @@
 #' @param requires [\code{NULL} | R expression]\cr
 #'   See \code{\link{Param}}.
 #' @param default [any]\cr
-#'   Default value used in learner. 
-#'   If this argument is missing, it means no default value is available.
+#'   See \code{\link{Param}}.
 #' @param when [\code{character(1)}]\cr
 #'   Specifies when parameter is used in the learner: \dQuote{train}, \dQuote{predict} or \dQuote{both}.
 #'   Default is \dQuote{train}.
@@ -36,13 +35,7 @@
 #' @rdname LearnerParam
 NULL
 
-makeLearnerParam = function(p, has.default, default, when) {
-  #We cannot check default} for NULL or NA as this could be the default value!
-  p$has.default = has.default
-  #FIXME: Do we need to check for NA here? hopefully not because this might occur in mlr?
-  if (isScalarNA(default)) 
-    warningf("NA used as a default value for learner parameter %s.\nParamHelpers uses NA as a special value for dependent parameters.", p$id)
-  p$default = default
+makeLearnerParam = function(p, when) {
   p$when = when
   class(p) = c("LearnerParam", "Param")
   return(p)
@@ -51,9 +44,5 @@ makeLearnerParam = function(p, has.default, default, when) {
 #' @export
 print.LearnerParam = function(x, ...) {
   print.Param(x)
-  def = if(is.null(x$default)) 
-    "<none>" 
-  else 
-    paramValueToString(x, x$default)
-  catf("Used: %s. Default: %s.", x$when, def)
+  catf("Used: %s.", x$when)
 }
