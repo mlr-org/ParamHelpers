@@ -45,9 +45,8 @@ Generates a grid design for a parameter set.
 \examples{
 ps = makeParamSet(
   makeNumericParam("x1", lower = -2, upper = 1),
-  makeIntegerParam("x2", lower = 10, upper = 20, trafo = function(x) x^(-2))
+  makeNumericParam("x2", lower = -2, upper = 2, trafo = function(x) x^2)
 )
-# simple gridDesign
 generateGridDesign(ps, resolution = c(x1 = 4, x2 = 5), trafo = TRUE)
 }
 

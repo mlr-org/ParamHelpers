@@ -28,9 +28,8 @@
 #' @examples
 #' ps = makeParamSet(
 #'   makeNumericParam("x1", lower = -2, upper = 1),
-#'   makeIntegerParam("x2", lower = 10, upper = 20, trafo = function(x) x^(-2))
+#'   makeNumericParam("x2", lower = -2, upper = 2, trafo = function(x) x^2)
 #' )
-#' # simple gridDesign
 #' generateGridDesign(ps, resolution = c(x1 = 4, x2 = 5), trafo = TRUE)
 generateGridDesign = function(par.set, resolution, trafo = FALSE, ints.as.num = FALSE,
   discretes.as.factor = TRUE, logicals.as.factor = FALSE) {
