@@ -57,24 +57,24 @@
 #' @useDynLib ParamHelpers c_generateDesign1 c_generateDesign2
 #' @examples
 #' ps <- makeParamSet(
-#'   makeNumericParam("x1", lower=-2, upper=1),
-#'   makeIntegerParam("x2", lower=10, upper=20)
+#'   makeNumericParam("x1", lower = -2, upper = 1),
+#'   makeIntegerParam("x2", lower = 10, upper = 20)
 #' )
 #' # random latin hypercube design with 5 samples:
 #' generateDesign(5, ps)
 #'
 #' # with trafo
 #' ps <- makeParamSet(
-#'   makeNumericParam("x", lower=-2, upper=1),
-#'   makeNumericVectorParam("y", len=2, lower=0, upper=1, trafo=function(x) x/sum(x))
+#'   makeNumericParam("x", lower = -2, upper = 1),
+#'   makeNumericVectorParam("y", len = 2, lower = 0, upper = 1, trafo = function(x) x/sum(x))
 #' )
-#' generateDesign(10, ps, trafo=TRUE)
-generateDesign = function(n=10L, par.set, fun, fun.args = list(), trafo = FALSE,
+#' generateDesign(10, ps, trafo = TRUE)
+generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALSE,
   ints.as.num = FALSE,  discretes.as.factor = TRUE, logicals.as.factor = FALSE,
   remove.duplicates = FALSE, remove.duplicates.iter = 5L) {
 
   n = convertInteger(n)
-  checkArg(n, "integer", len=1L, na.ok=FALSE)
+  checkArg(n, "integer", len = 1L, na.ok = FALSE)
   checkArg(par.set, "ParamSet")
   requirePackages("lhs", "generateDesign")
   if (missing(fun))
@@ -82,26 +82,26 @@ generateDesign = function(n=10L, par.set, fun, fun.args = list(), trafo = FALSE,
   else
     checkArg(fun, "function")
   checkArg(fun.args, "list")
-  checkArg(trafo, "logical", len=1L, na.ok=FALSE)
-  checkArg(ints.as.num, "logical", len=1L, na.ok=FALSE)
-  checkArg(discretes.as.factor, "logical", len=1L, na.ok=FALSE)
-  checkArg(remove.duplicates, "logical", len=1L, na.ok=FALSE)
-  checkArg(remove.duplicates.iter, "integer", len=1L, lower=1L, na.ok=FALSE)
+  checkArg(trafo, "logical", len = 1L, na.ok = FALSE)
+  checkArg(ints.as.num, "logical", len = 1L, na.ok = FALSE)
+  checkArg(discretes.as.factor, "logical", len = 1L, na.ok = FALSE)
+  checkArg(remove.duplicates, "logical", len = 1L, na.ok = FALSE)
+  checkArg(remove.duplicates.iter, "integer", len = 1L, lower = 1L, na.ok = FALSE)
 
   if (isEmpty(par.set))
     stop("par.set must not be empty!")
   if(any(sapply(par.set$pars, function(x) inherits(x, "LearnerParameter"))))
     stop("No par.set parameter in 'generateDesign' can be of class 'LearnerParameter'! Use basic parameters instead to describe you region of interest!")
-  lower = getLower(par.set, with.nr=TRUE)
-  upper = getUpper(par.set, with.nr=TRUE)
+  lower = getLower(par.set, with.nr = TRUE)
+  upper = getUpper(par.set, with.nr = TRUE)
   values = getValues(par.set)
 
   if (any(is.infinite(c(lower, upper))))
     stop("generateDesign requires finite box constraints!")
 
   pars = par.set$pars
-  pids1 = getParamIds(par.set, repeated=TRUE, with.nr=TRUE)
-  pids2 = getParamIds(par.set, repeated=TRUE, with.nr=FALSE)
+  pids1 = getParamIds(par.set, repeated = TRUE, with.nr = TRUE)
+  pids2 = getParamIds(par.set, repeated = TRUE, with.nr = FALSE)
   lens = getParamLengths(par.set)
   k = sum(lens)
 
@@ -109,10 +109,10 @@ generateDesign = function(n=10L, par.set, fun, fun.args = list(), trafo = FALSE,
   # we should probably introduce more helper functions to deal with that
 
   # allocate result df
-  types.df = getTypes(par.set, df.cols=TRUE)
+  types.df = getTypes(par.set, df.cols = TRUE)
   types.int = convertTypesToCInts(types.df)
   types.df[types.df == "factor"] = "integer"
-  res = makeDataFrame(n, k, col.types=types.df)
+  res = makeDataFrame(n, k, col.types = types.df)
 
   lower2 = setNames(rep(NA_real_, k), pids1)
   lower2 = insert(lower2, lower)
@@ -125,10 +125,10 @@ generateDesign = function(n=10L, par.set, fun, fun.args = list(), trafo = FALSE,
   trafos = if(trafo)
     lapply(pars, function(p) p$trafo)
   else
-    replicate(length(pars), NULL, simplify=FALSE)
+    replicate(length(pars), NULL, simplify = FALSE)
   par.requires = lapply(pars, function(p) p$requires)
 
-  des = do.call(fun, insert(list(n=n, k=k), fun.args))
+  des = do.call(fun, insert(list(n = n, k = k), fun.args))
   res = .Call(c_generateDesign1, des, res, types.int, lower2, upper2, nlevs)
 
   # try to replace duplicates a couple of times
@@ -141,7 +141,7 @@ generateDesign = function(n=10L, par.set, fun, fun.args = list(), trafo = FALSE,
     i = 0
     while(nmissing > 0 && i < remove.duplicates.iter) {
       des = des[to.keep,]
-      des = do.call(lhs::augmentLHS, list(lhs=des, m=nmissing))
+      des = do.call(lhs::augmentLHS, list(lhs = des, m = nmissing))
       res = .Call(c_generateDesign1, des, res, types.int, lower2, upper2, nlevs)
       to.remove = duplicated(res)
       to.keep = !to.remove
@@ -164,14 +164,14 @@ generateDesign = function(n=10L, par.set, fun, fun.args = list(), trafo = FALSE,
   res = .Call(c_generateDesign2, res, types.int, names(pars), lens, trafos, par.requires, new.env())
 
   colnames(res) = pids1
-  res = convertDataFrameCols(res, ints.as.num=ints.as.num,
-    chars.as.factor=FALSE, logicals.as.factor=logicals.as.factor)
+  res = convertDataFrameCols(res, ints.as.num = ints.as.num,
+    chars.as.factor = FALSE, logicals.as.factor = logicals.as.factor)
   # explicitly set levels of factors so we have all value names as levels
   # FIXME all of this sucks and is ugly as sin...
   if (discretes.as.factor) {
     for (i in seq_col(res)) {
       if (types.int[i] == 3L) {
-        res[, i] = factor(res[, i], levels=names(values[[pids2[[i]]]]))
+        res[, i] = factor(res[, i], levels = names(values[[pids2[[i]]]]))
       }
     }
   }
