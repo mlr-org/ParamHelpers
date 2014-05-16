@@ -1,11 +1,11 @@
 #' Generates a grid design for a parameter set.
 #'
-#' @param n [\code{integer}]\cr
-#'   Resolution of the grid for each numeric/integer parameter in \code{par.set}.
-#'   For vector parameters, n is the resolution per dimension.
-#'   Either pass one resolution for all parameters, or a named vector.
 #' @param par.set [\code{\link{ParamSet}}]\cr
 #'   Parameter set.
+#' @param resolution [\code{integer}]\cr
+#'   Resolution of the grid for each numeric/integer parameter in \code{par.set}.
+#'   For vector parameters, it is the resolution per dimension.
+#'   Either pass one resolution for all parameters, or a named vector.
 #' @param ints.as.num [\code{logical(1)}]\cr
 #'   Should parameters of type \dQuote{integer} or \dQuote{integervector} generate numeric columns?
 #'   Default is \code{FALSE}.
@@ -27,11 +27,11 @@
 #' @export
 #' @examples
 #' ps = makeParamSet(
-#'   makeNumericParam("x1", lower=-2, upper=1),
-#'   makeIntegerParam("x2", lower=10, upper=20, trafo = function(x) x^(-2))
+#'   makeNumericParam("x1", lower = -2, upper = 1),
+#'   makeIntegerParam("x2", lower = 10, upper = 20, trafo = function(x) x^(-2))
 #' )
 #' # simple gridDesign
-#' generateGridDesign(c(4,5), ps, trafo = TRUE)
+#' generateGridDesign(ps, resolution = c(x1 = 4, x2 = 5), trafo = TRUE)
 generateGridDesign = function(par.set, resolution, trafo = FALSE, ints.as.num = FALSE,
   discretes.as.factor = TRUE, logicals.as.factor = FALSE) {
 
@@ -111,7 +111,7 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE, ints.as.num = 
     trafos = if(trafo)
       lapply(pars, function(p) p$trafo)
     else
-      replicate(length(pars), NULL, simplify=FALSE)
+      replicate(length(pars), NULL, simplify = FALSE)
     par.requires = lapply(pars, function(p) p$requires)
     res = convertDataFrameCols(res, factors.as.char = TRUE)
     res = .Call(c_generateDesign2, res, types.int, names(pars), lens, trafos, par.requires, new.env())
