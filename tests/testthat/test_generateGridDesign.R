@@ -66,21 +66,21 @@ test_that("generateGridDesign", {
   d = generateGridDesign(ps, resolution = c(x = 2, y = 4), trafo = TRUE)
   e = expand.grid(
     x = seq(0, 1, length.out = 2),
-    y = sqrt(seq(3, 4, length.out = 4)),
+    y = 2*(seq(3, 4, length.out = 4)),
     KEEP.OUT.ATTRS = FALSE
   )
   attr(e, "trafo") = TRUE
   expect_equal(d, e)
   ps = makeParamSet(
-    makeNumericVectorParam("x", len = 2, lower = 0, upper = 1, trafo = function(x) x / sum(x))
+    makeNumericVectorParam("x", len = 2, lower = 1, upper = 2, trafo = function(x) x / sum(x))
   )
   d = generateGridDesign(ps, resolution = 4, trafo = TRUE)
   e = expand.grid(
-    x1 = seq(0, 1, length.out = 4),
-    x2 = seq(0, 1, length.out = 4),
+    x1 = seq(1, 2, length.out = 4),
+    x2 = seq(1, 2, length.out = 4),
     KEEP.OUT.ATTRS = FALSE
   )
-  e = apply(e, 1, function(x) x / sum(x))
-  attr(e, "trafo") = TRUE
-  expect_equal(d, e)
+  f = as.data.frame(t(apply(e, 1, function(x) x / sum(x))))
+  attr(f, "trafo") = TRUE
+  expect_equal(d, f)
 })

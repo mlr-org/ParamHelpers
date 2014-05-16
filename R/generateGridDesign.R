@@ -46,7 +46,8 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE, ints.as.num = 
   if(any(sapply(pars, function(x) inherits(x, "LearnerParameter"))))
     stop("No par.set parameter in 'generateDesign' can be of class 'LearnerParameter'! Use basic parameters instead to describe you region of interest!")
 
-  m = sum(getParamLengths(par.set))
+  lens = getParamLengths(par.set)
+  m = sum(lens)
   pids1 = getParamIds(par.set)
   pids2 = getParamIds(par.set, repeated = TRUE, with.nr = TRUE)
 
@@ -63,6 +64,8 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE, ints.as.num = 
 
   vals.list = setNames(vector("list", m), pids2)
   el.counter = 1L
+  
+  # iterate over all params
   for (i in 1:n) {
     p = pars[[i]]
     type = p$type
@@ -74,6 +77,8 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE, ints.as.num = 
     if (isDiscrete(p, include.logical = FALSE)) {
      discvals = p$values
     }
+
+    # iterate over vector elements
     for (j in 1:p$len) {
       if (isDiscrete(p, include.logical = FALSE)) {
         newvals = names(discvals)
@@ -99,6 +104,18 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE, ints.as.num = 
   }
   res = expand.grid(vals.list, KEEP.OUT.ATTRS = FALSE)
   colnames(res) = pids2
+  
+  # the following lines are mainly copy paste from generateDesign
+  types.df = getTypes(par.set, df.cols = TRUE)
+  types.int = convertTypesToCInts(types.df)
+  # ignore trafos if the user did not request transformed values
+  trafos = if(trafo)
+    lapply(pars, function(p) p$trafo)
+  else
+    replicate(length(pars), NULL, simplify=FALSE)
+  par.requires = lapply(pars, function(p) p$requires)
+  res = .Call(c_generateDesign2, res, types.int, names(pars), lens, trafos, par.requires, new.env())
+
   attr(res, "trafo") = trafo
   res
 }
