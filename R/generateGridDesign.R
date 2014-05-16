@@ -1,5 +1,3 @@
-#FIXME: generateGridDesign will NOT work if there are dependencies
-
 #' Generates a grid design for a parameter set.
 #'
 #' @param n [\code{integer}]\cr
@@ -64,7 +62,7 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE, ints.as.num = 
 
   vals.list = setNames(vector("list", m), pids2)
   el.counter = 1L
-  
+
   # iterate over all params
   for (i in 1:n) {
     p = pars[[i]]
@@ -104,18 +102,21 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE, ints.as.num = 
   }
   res = expand.grid(vals.list, KEEP.OUT.ATTRS = FALSE)
   colnames(res) = pids2
-  
-  # the following lines are mainly copy paste from generateDesign
-  types.df = getTypes(par.set, df.cols = TRUE)
-  types.int = convertTypesToCInts(types.df)
-  # ignore trafos if the user did not request transformed values
-  trafos = if(trafo)
-    lapply(pars, function(p) p$trafo)
-  else
-    replicate(length(pars), NULL, simplify=FALSE)
-  par.requires = lapply(pars, function(p) p$requires)
-  res = .Call(c_generateDesign2, res, types.int, names(pars), lens, trafos, par.requires, new.env())
 
+  if (trafo || hasRequires(par.set)) {
+    # the following lines are mainly copy paste from generateDesign
+    types.df = getTypes(par.set, df.cols = TRUE)
+    types.int = convertTypesToCInts(types.df)
+    # ignore trafos if the user did not request transformed values
+    trafos = if(trafo)
+      lapply(pars, function(p) p$trafo)
+    else
+      replicate(length(pars), NULL, simplify=FALSE)
+    par.requires = lapply(pars, function(p) p$requires)
+    res = convertDataFrameCols(res, factors.as.char = TRUE)
+    res = .Call(c_generateDesign2, res, types.int, names(pars), lens, trafos, par.requires, new.env())
+    res = convertDataFrameCols(res, chars.as.factor = discretes.as.factor)
+  }
   attr(res, "trafo") = trafo
   res
 }

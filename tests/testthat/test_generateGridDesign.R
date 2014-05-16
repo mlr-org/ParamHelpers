@@ -84,3 +84,48 @@ test_that("generateGridDesign", {
   attr(f, "trafo") = TRUE
   expect_equal(d, f)
 })
+
+test_that("requires works", {
+  ps = makeParamSet(
+    makeDiscreteParam("x", values = c("a", "b")),
+    makeNumericParam("y", lower = 1, upper = 2, requires = quote(x == "a"))
+  )
+  des = generateGridDesign(par.set = ps, resolution = 3)
+  vals = dfRowsToList(des, ps)
+  oks = sapply(vals, isFeasible, par = ps)
+  expect_true(all(oks))
+  ps = makeParamSet(
+    makeDiscreteParam("x", values = c("a", "b")),
+    makeNumericVectorParam("y", len = 2, lower = 1, upper = 2, requires = quote(x == "a"))
+  )
+  des = generateGridDesign(par.set = ps, resolution = 3)
+  vals = dfRowsToList(des, ps)
+  oks = sapply(vals, isFeasible, par = ps)
+  expect_true(all(oks))
+})
+
+test_that("nested requires", {
+  ps7 = makeParamSet(
+    makeDiscreteParam("disc", values = c("a", "b", "c")),
+    makeNumericParam("realA", lower = 0, upper = 100, requires = quote(disc == "a")),
+    makeIntegerParam("intA", lower = -100, upper = 100, requires = quote(disc == "a")),
+    makeDiscreteParam("discA", values = c("m", "w"), requires = quote(disc == "a")),
+    makeNumericParam("realB", lower = -100, upper = 100, requires = quote(disc == "b")),
+    makeDiscreteParam("discB", values = c("R", "NR"), requires = quote(disc == "b")),
+    makeNumericParam("realBR", lower = 0, upper = 2*pi, requires = quote(identical(discB, "R") && identical(disc, "b"))),
+    makeNumericParam("realBNR", lower = 0, upper = 2*pi, requires = quote(identical(discB, "NR") && identical(disc, "b")))
+  )
+  des = generateGridDesign(par.set = ps7, resolution = 3)
+  expect_true(all(is.na(des[des$disc == "a",5:8])))
+  expect_true(all(is.na(des[des$disc == "b",2:4])))
+  expect_true(all(is.na(des[des$disc == "c",2:8])))
+  expect_true(all(is.na(des[des$disc == "b" & des$discB == "NR",7])))
+  expect_true(all(is.na(des[des$disc == "b" & des$discB == "R",8])))
+
+  vals = dfRowsToList(des, ps7)
+  oks = sapply(vals, isFeasible, par = ps7)
+  expect_true(all(oks))
+})
+
+
+
