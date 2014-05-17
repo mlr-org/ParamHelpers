@@ -10,7 +10,7 @@ Helpers for parameters in black-box optimization, tuning and machine learning.
   http://berndbischl.github.io/ParamHelpers/man
 
 * Run this in R to install the current GitHub version:
-  ```r
+  ```splus
   devtools::install_github("ParamHelpers", username="berndbischl")
   ```
 
