@@ -16,7 +16,8 @@ Suggests:
     emoa,
     lhs,
     irace,
-    testthat
+    testthat,
+    soobench
 LazyData: yes
 ByteCompile: yes
 Version: 1.2
