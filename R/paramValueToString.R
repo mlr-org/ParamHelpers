@@ -78,7 +78,7 @@ paramValueToString.Param = function(par, x, show.missing.values = FALSE, num.for
 }
 
 #' @export
-paramValueToString.ParamSet = function(par, x, show.missing.values=FALSE, num.format = "%.3g") {
+paramValueToString.ParamSet = function(par, x, show.missing.values = FALSE, num.format = "%.3g") {
   checkArg(x, "list")
   if (!isProperlyNamed(x))
     stop("'x' must be a properly named list!")
@@ -94,5 +94,5 @@ paramValueToString.ParamSet = function(par, x, show.missing.values=FALSE, num.fo
       res[length(res)+1] = sprintf("%s=%s", pn, paramValueToString(p, val, show.missing.values, num.format))
     }
   }
-  return(collapse(res, sep="; "))
+  return(collapse(res, sep = "; "))
 }
