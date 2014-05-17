@@ -25,12 +25,12 @@ Default is \code{FALSE}.}
 Useful if vectors are included.
 }
 \examples{
-ps <- makeParamSet(
+ps = makeParamSet(
   makeNumericParam("u"),
-  makeIntegerVectorParam("v", len=2)
+  makeIntegerVectorParam("v", len = 2)
 )
 getParamIds(ps)
-getParamIds(ps, repeated=TRUE)
-getParamIds(ps, repeated=TRUE, with.nr=TRUE)
+getParamIds(ps, repeated = TRUE)
+getParamIds(ps, repeated = TRUE, with.nr = TRUE)
 }
 

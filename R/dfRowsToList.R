@@ -22,15 +22,15 @@ dfRowsToList = function(df, par.set) {
   checkArg(par.set, "ParamSet")
 
   lens = getParamLengths(par.set)
-  int.type = convertTypesToCInts(getTypes(par.set, df.cols=TRUE))
+  int.type = convertTypesToCInts(getTypes(par.set, df.cols = TRUE))
 
   # factors to chars, so we can evaluate requires
-  df = convertDataFrameCols(df, factors.as.char=TRUE)
+  df = convertDataFrameCols(df, factors.as.char = TRUE)
   # ints might just be encoded as nums in df, convert before going to C
-  ints.as.double = mapply(function(type, col) type == 2L && is.double(col), type=int.type, col=df)
+  ints.as.double = mapply(function(type, col) type == 2L && is.double(col), type = int.type, col = df)
   df[ints.as.double] = lapply(df[ints.as.double], as.integer)
 
-  .Call("c_dfRowsToList", df, par.set$pars, int.type, names(par.set$pars), lens, PACKAGE="ParamHelpers")
+  .Call("c_dfRowsToList", df, par.set$pars, int.type, names(par.set$pars), lens, PACKAGE = "ParamHelpers")
 }
 
 #' @export

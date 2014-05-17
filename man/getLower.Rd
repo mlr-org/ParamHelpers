@@ -39,10 +39,10 @@ ps <- makeParamSet(
 getLower(ps)
 getUpper(ps)
 
-ps <- makeParamSet(
+ps = makeParamSet(
   makeNumericParam("u"),
-  makeDiscreteParam("v", values=c("a", "b")),
-  makeDiscreteParam("w", values=list(a=list(), b=NULL))
+  makeDiscreteParam("v", values = c("a", "b")),
+  makeDiscreteParam("w", values = list(a = list(), b = NULL))
 )
 getValues(ps)
 }

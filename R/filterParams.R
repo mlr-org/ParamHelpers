@@ -9,10 +9,10 @@
 #'   \dQuote{logicalvector}, \dQuote{function}, \dQuote{untyped}.
 #' @return [\code{\link{ParamSet}}].
 #' @examples
-#' ps <- makeParamSet(
-#'   makeNumericParam("u", lower=1),
-#'   makeIntegerParam("v", lower=1, upper=2),
-#'   makeDiscreteParam("w", values=1:2),
+#' ps = makeParamSet(
+#'   makeNumericParam("u", lower = 1),
+#'   makeIntegerParam("v", lower = 1, upper = 2),
+#'   makeDiscreteParam("w", values = 1:2),
 #'   makeLogicalParam("x"),
 #'   makeNumericParam("y")
 #' )
@@ -22,7 +22,7 @@
 #' filterParams(ps, c("integer","numeric"))
 #' @export
 filterParams = function(par.set, type) {
-  checkArg(type, subset=c("numeric", "integer", "numericvector", "integervector", "discrete",
+  checkArg(type, subset = c("numeric", "integer", "numericvector", "integervector", "discrete",
     "discretevector", "logical", "logicalvector", "function", "untyped"))
   par.set$pars = Filter(function(p) p$type %in% type, par.set$pars)
   return(par.set)

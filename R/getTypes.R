@@ -7,7 +7,7 @@
 #'   i.e., \code{par$type}.
 #'   If \code{TRUE}, convert types so they correspond to R types of a data.frame
 #'   where values of this set might be stored.
-#'   This also results in replication of output types for 
+#'   This also results in replication of output types for
 #'   vector parameters.
 #'   Default is \code{FALSE}.
 #' @param use.names [\code{logical(1)}]\cr
@@ -17,13 +17,13 @@
 #'   Should number from 1 to length be appended to name?
 #'   Only used if \code{use.name} and are \code{TRUE}.
 #'   Default is \code{TRUE}.
-#' @return [\code{character}]. 
+#' @return [\code{character}].
 #' @export
-getTypes = function(par.set, df.cols=FALSE, use.names=FALSE, with.nr=TRUE) {
+getTypes = function(par.set, df.cols = FALSE, use.names = FALSE, with.nr = TRUE) {
   checkArg(par.set, "ParamSet")
-  checkArg(df.cols, "logical", len=1L, na.ok=FALSE)
-  checkArg(use.names, "logical", len=1L, na.ok=FALSE)
-  checkArg(with.nr, "logical", len=1L, na.ok=FALSE)
+  checkArg(df.cols, "logical", len = 1L, na.ok = FALSE)
+  checkArg(use.names, "logical", len = 1L, na.ok = FALSE)
+  checkArg(with.nr, "logical", len = 1L, na.ok = FALSE)
 
   types = extractSubList(par.set$pars, "type")
   recode = function(types, ...) {
@@ -46,8 +46,8 @@ getTypes = function(par.set, df.cols=FALSE, use.names=FALSE, with.nr=TRUE) {
    }
 
   ns = if (use.names)
-    getParamIds(par.set, repeated=df.cols, with.nr=with.nr)
-  else 
+    getParamIds(par.set, repeated = df.cols, with.nr = with.nr)
+  else
     NULL
   setNames(types, ns)
-} 
+}

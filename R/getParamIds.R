@@ -1,5 +1,5 @@
 #' Return ids of parameters in parameter set.
-#' 
+#'
 #' Useful if vectors are included.
 #' @param par.set [\code{\link{ParamSet}}]\cr
 #'   Parameter set.
@@ -13,19 +13,19 @@
 #' @return [\code{character}].
 #' @export
 #' @examples
-#' ps <- makeParamSet(
+#' ps = makeParamSet(
 #'   makeNumericParam("u"),
-#'   makeIntegerVectorParam("v", len=2)
+#'   makeIntegerVectorParam("v", len = 2)
 #' )
 #' getParamIds(ps)
-#' getParamIds(ps, repeated=TRUE)
-#' getParamIds(ps, repeated=TRUE, with.nr=TRUE)
-getParamIds = function(par.set, repeated=FALSE, with.nr=FALSE) {
+#' getParamIds(ps, repeated = TRUE)
+#' getParamIds(ps, repeated = TRUE, with.nr = TRUE)
+getParamIds = function(par.set, repeated = FALSE, with.nr = FALSE) {
   ns = lapply(par.set$pars, function(x) {
     if (repeated && x$type %in% c("numericvector", "integervector", "discretevector", "logicalvector")) {
       n = x$len
       if (n > 1 && with.nr)
-        paste(rep(x$id, n), 1:n, sep="")
+        paste(rep(x$id, n), 1:n, sep = "")
       else
         rep(x$id, n)
     } else {

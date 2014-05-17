@@ -21,10 +21,10 @@ Vector of allowed types, subset of: \dQuote{numeric}, \dQuote{integer}, \dQuote{
 Parameter order is not changed.
 }
 \examples{
-ps <- makeParamSet(
-  makeNumericParam("u", lower=1),
-  makeIntegerParam("v", lower=1, upper=2),
-  makeDiscreteParam("w", values=1:2),
+ps = makeParamSet(
+  makeNumericParam("u", lower = 1),
+  makeIntegerParam("v", lower = 1, upper = 2),
+  makeDiscreteParam("w", values = 1:2),
   makeLogicalParam("x"),
   makeNumericParam("y")
 )

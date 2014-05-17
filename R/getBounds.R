@@ -22,20 +22,20 @@
 #' getLower(ps)
 #' getUpper(ps)
 #'
-#' ps <- makeParamSet(
+#' ps = makeParamSet(
 #'   makeNumericParam("u"),
-#'   makeDiscreteParam("v", values=c("a", "b")),
-#'   makeDiscreteParam("w", values=list(a=list(), b=NULL))
+#'   makeDiscreteParam("v", values = c("a", "b")),
+#'   makeDiscreteParam("w", values = list(a = list(), b = NULL))
 #' )
 #' getValues(ps)
-getLower = function(par.set, with.nr=FALSE) {
-  return(getBounds(par.set, type.of.bounds="lower", with.nr=with.nr))
+getLower = function(par.set, with.nr = FALSE) {
+  return(getBounds(par.set, type.of.bounds = "lower", with.nr = with.nr))
 }
 
 #' @export
 #' @rdname getLower
-getUpper = function(par.set, with.nr=FALSE) {
-  return(getBounds(par.set, type.of.bounds="upper", with.nr=with.nr))
+getUpper = function(par.set, with.nr = FALSE) {
+  return(getBounds(par.set, type.of.bounds = "upper", with.nr = with.nr))
 }
 
 #' @export
@@ -49,7 +49,7 @@ getValues = function(par.set) {
 }
 
 # common functionality of getLower and getUpper
-getBounds = function(par.set, type.of.bounds, with.nr=FALSE) {
+getBounds = function(par.set, type.of.bounds, with.nr = FALSE) {
   checkArg(par.set, "ParamSet")
   par.set = filterParams(par.set, c("numeric", "integer", "numericvector", "integervector"))
   if (isEmpty(par.set))
@@ -57,6 +57,6 @@ getBounds = function(par.set, type.of.bounds, with.nr=FALSE) {
   bounds = lapply(par.set$pars, function(p) p[[type.of.bounds]])
   bounds = do.call(c, bounds)
   if (length(bounds) > 0)
-    names(bounds) = getParamIds(par.set, repeated=TRUE, with.nr=with.nr)
+    names(bounds) = getParamIds(par.set, repeated = TRUE, with.nr = with.nr)
   return(bounds)
 }
