@@ -2,6 +2,7 @@ library(methods)
 library(devtools)
 library(testthat)
 library(BBmisc)
+library(soobench)
 library(lhs)
 
 if (interactive()) {
