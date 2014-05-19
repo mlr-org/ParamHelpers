@@ -4,12 +4,14 @@
 #'   Source function.
 #' @return [\code{\link[ParamHelpers]{ParamSet}}]
 #'   Parameter set of type \code{\link[ParamHelpers]{ParamSet}}.
-#' @examples
-#' library(soobench)
-#' fn = ackley_function(4)
-#' par.set = extractParamSetFromSooFunction(fn)
-#' print(par.set)
 #' @export
+
+# FIXME: example disabled because of annying soobench interface change
+# @examples
+# library(soobench)
+# fn = ackley_function(4)
+# par.set = extractParamSetFromSooFunction(fn)
+# print(par.set)
 extractParamSetFromSooFunction = function(fn) {
   checkArg(fn, "soo_function")
   makeNumericParamSet(
