@@ -13,6 +13,7 @@ ParamHelpers_1.2:
 -- generateGridDesign
 -- isNumeric, isDiscrete, isInteger, isLogical
 -- hasNumeric, hasInteger, hasDiscrete, hasLogical
+-- getParamNr
 
 ParamHelpers_1.1-35:
 - concept of dependent parameters was introduced (argument "requires")
