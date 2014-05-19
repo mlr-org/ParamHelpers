@@ -1,8 +1,9 @@
 #' Check if parameter value is valid.
 #'
 #' Check if a parameter value satisfies the constraints of the
-#' parameter description. This includes the \code{requires} expressions,
-#' if \code{par} is a \code{\link{ParamSet}}. If \code{requires} is not satisfied,
+#' parameter description. This includes the \code{requires} expressions and
+#' the \code{forbidden} expression, if \code{par} is a \code{\link{ParamSet}}.
+#' If \code{requires} is not satisfied,
 #' the parameter value must be set to scalar \code{NA} to be still feasible, a single scalar even in a
 #' case of a vector parameter.
 #'
@@ -45,7 +46,9 @@ isFeasible.LearnerParam = function(par, x) {
 isFeasible.ParamSet = function(par, x) {
   if (!(is.list(x) && length(x) == length(par$pars) && all(names(x) == names(par$pars))))
     return(FALSE)
-  #FIXME very slow
+  if (isForbidden(par, x))
+    return(FALSE)
+  #FIXME: very slow
   for (i in seq_along(par$pars)) {
     p = par$pars[[i]]
     v = x[[i]]

@@ -62,7 +62,7 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE, ints.as.num = 
   vals.list = setNames(vector("list", m), pids2)
   el.counter = 1L
 
-  # iterate over all params
+  # iterate over all params and discretize them
   for (i in 1:n) {
     p = pars[[i]]
     type = p$type
@@ -75,7 +75,7 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE, ints.as.num = 
      discvals = p$values
     }
 
-    # iterate over vector elements
+    # iterate over vector elements and d
     for (j in 1:p$len) {
       if (isDiscrete(p, include.logical = FALSE)) {
         newvals = names(discvals)
@@ -95,6 +95,7 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE, ints.as.num = 
       } else {
         stopf("generateGridDesign cannot be used for param '%s' of type '%s'!", p$id, p$type)
       }
+      if (!isForbidden(par.set, new))
       vals.list[[el.counter]] = newvals
       el.counter = el.counter + 1
     }

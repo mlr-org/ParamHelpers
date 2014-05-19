@@ -70,8 +70,14 @@ sampleValue.Param = function(par, discrete.names = FALSE) {
 
 #' @export
 sampleValue.ParamSet = function(par, discrete.names = FALSE) {
-  val = lapply(par$pars, sampleValue, discrete.names = discrete.names)
-  setNames(lapply(seq_along(val), function(i) {
+  # sample value for each param, do it until we a get one which is not forbidden
+  repeat {
+    val = lapply(par$pars, sampleValue, discrete.names = discrete.names)
+    if (is.null(par$forbidden) || !isForbidden(par, val))
+      break
+  }
+  # set conditional params to NA is condition not OK
+  val = lapply(seq_along(val), function(i) {
     if (!is.null(par$pars[[i]]$requires) && !requiresOk(par, val, i)) {
       type = par$pars[[i]]$type
       type = switch(type,
@@ -86,7 +92,9 @@ sampleValue.ParamSet = function(par, discrete.names = FALSE) {
      } else {
       val[[i]]
      }
-  }), names(par$pars))
+  })
+  names(val) = names(par$pars)
+  return(val)
 }
 
 

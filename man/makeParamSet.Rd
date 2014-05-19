@@ -5,7 +5,7 @@
 \alias{makeParamSet}
 \title{Construct a parameter set.}
 \usage{
-makeParamSet(..., params)
+makeParamSet(..., params, forbidden = NULL)
 
 makeNumericParamSet(id = "x", len, lower = -Inf, upper = Inf,
   vector = TRUE)
@@ -16,6 +16,16 @@ Parameters.}
 
 \item{params}{[list of \code{\link{Param}}]\cr
 List of parameters, alternative way instead of using \code{...}.}
+
+\item{forbidden}{[\code{NULL} | R expression]\cr
+States forbidden region of parameter set via an expression.
+Every setting which satisfies this expression is considered to be infeasible.
+This makes it possible to exclude more complex region of the parameter space
+than through simple constraints or \code{requires}-conditions
+(although these should be always used when possible).
+If parameters have associated trafos, the forbidden region must always be specified on the original
+scale and not the transformed one.
+Default is \code{NULL} which means no forbidden region.}
 
 \item{id}{[\code{character(1)}]
 Name of parameter.}
@@ -42,13 +52,12 @@ Default is \code{TRUE}.}
 \description{
 \code{makeParamSet}: Contruct from a bunch of parameters.
 
-\code{makeNumericParamSet}: Convenience function for numerics.
-}
-\details{
 Multiple sets can be concatenated with \code{c}.
 
 The constructed S3 class is simply a list that contains the element \code{pars}.
 \code{pars} is a list of the passed parameters, named by their ids.
+
+\code{makeNumericParamSet}: Convenience function for numerics.
 }
 \examples{
 makeParamSet(

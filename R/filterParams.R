@@ -24,6 +24,8 @@
 filterParams = function(par.set, type) {
   checkArg(type, subset = c("numeric", "integer", "numericvector", "integervector", "discrete",
     "discretevector", "logical", "logicalvector", "function", "untyped"))
+  if (!is.null(par.set$forbidden))
+    stopf("Operation not allowed for param set with forbidden region currently!")
   par.set$pars = Filter(function(p) p$type %in% type, par.set$pars)
   return(par.set)
 }

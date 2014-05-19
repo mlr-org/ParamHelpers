@@ -1,5 +1,6 @@
-#' Construct a parameter set.
+#' @title Construct a parameter set.
 #'
+#' @description
 #' \code{makeParamSet}: Contruct from a bunch of parameters.
 #'
 #' Multiple sets can be concatenated with \code{c}.
@@ -11,6 +12,15 @@
 #'   Parameters.
 #' @param params [list of \code{\link{Param}}]\cr
 #'   List of parameters, alternative way instead of using \code{...}.
+#' @param forbidden [\code{NULL} | R expression]\cr
+#'   States forbidden region of parameter set via an expression.
+#'   Every setting which satisfies this expression is considered to be infeasible.
+#'   This makes it possible to exclude more complex region of the parameter space
+#'   than through simple constraints or \code{requires}-conditions
+#'   (although these should be always used when possible).
+#'   If parameters have associated trafos, the forbidden region must always be specified on the original
+#'   scale and not the transformed one.
+#'   Default is \code{NULL} which means no forbidden region.
 #' @return [\code{\link{ParamSet}}].
 #' @aliases ParamSet
 #' @export
@@ -22,7 +32,7 @@
 #'   makeLogicalParam("x"),
 #'   makeDiscreteVectorParam("y", len=2, values=c("a", "b"))
 #' )
-makeParamSet = function(..., params) {
+makeParamSet = function(..., params, forbidden = NULL) {
   pars = list(...)
   if (length(pars) > 0 && !missing(params))
     stop("You can only use one of ... or params!")
@@ -36,9 +46,7 @@ makeParamSet = function(..., params) {
   if (any(duplicated(ns)))
     stop("All parameters must have unique names!")
   names(pars) = ns
-  x = list(pars=pars)
-  class(x) = "ParamSet"
-  return(x)
+  makeS3Obj("ParamSet", pars = pars, forbidden = forbidden)
 }
 
 #' @export
@@ -47,6 +55,8 @@ print.ParamSet = function(x, ...) {
     print("Empty parameter set.")
   else
     sapply(x$pars, print)
+  if (hasForbidden(x))
+    catf("Forbidden region specified.")
   invisible(NULL)
 }
 

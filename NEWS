@@ -1,4 +1,6 @@
 ParamHelpers_1.2:
+- parameter spaces can now define a forbidden region of infeasibility.
+  all operations on the set respect this, although a few are disallowed and produce an exception.
 - rewrote generateDesign and dfRowsToList in C to greatly increase speed in
   the case of dependent parameters
 - generateDesign now offers the possibility to create designs which are
@@ -15,6 +17,7 @@ ParamHelpers_1.2:
 -- hasNumeric, hasInteger, hasDiscrete, hasLogical
 -- getParamNr
 -- getDefaults
+-- isForbidden, hasForbidden
 
 ParamHelpers_1.1-35:
 - concept of dependent parameters was introduced (argument "requires")

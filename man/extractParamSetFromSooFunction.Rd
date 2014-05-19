@@ -16,10 +16,4 @@ Source function.}
 \description{
 Extracts ParamSet from soobench function.
 }
-\examples{
-library(soobench)
-fn = ackley_function(4)
-par.set = extractParamSetFromSooFunction(fn)
-print(par.set)
-}
 
