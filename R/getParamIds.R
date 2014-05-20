@@ -21,7 +21,14 @@
 #' getParamIds(ps, repeated = TRUE)
 #' getParamIds(ps, repeated = TRUE, with.nr = TRUE)
 getParamIds = function(par.set, repeated = FALSE, with.nr = FALSE) {
-  ns = lapply(par.set$pars, function(x) {
+  checkArg(par.set, "ParamSet")
+  checkArg(repeated, "logical", len = 1L, na.ok = FALSE)
+  checkArg(with.nr, "logical", len = 1L, na.ok = FALSE)
+  getParamIds2(par.set$pars, repeated, with.nr)
+}
+
+getParamIds2 = function(pars, repeated = FALSE, with.nr = FALSE) {
+  ns = lapply(pars, function(x) {
     if (repeated && x$type %in% c("numericvector", "integervector", "discretevector", "logicalvector")) {
       n = x$len
       if (n > 1 && with.nr)
@@ -34,3 +41,4 @@ getParamIds = function(par.set, repeated = FALSE, with.nr = FALSE) {
   })
   as.character(do.call(c, ns))
 }
+
