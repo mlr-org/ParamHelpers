@@ -4,7 +4,17 @@
 #  it works as long all dependencies are stated, we need to at least document this
 
 
-#' Generates a statistical design for a parameter set.
+#' @title Generates a statistical design for a parameter set.
+#'
+#' @description
+#' The following types of columns are created:
+#' \tabular{ll}{
+#'  numeric(vector)   \tab  \code{numeric}  \cr
+#'  integer(vector)   \tab  \code{integer}  \cr
+#'  discrete(vector)  \tab  \code{factor}   \cr
+#'  logical(vector)   \tab  \code{logical}
+#' }
+#' If you want to convert these, look at \code{\link[BBmisc]{convertDataFrameCols}}.
 #'
 #' Currently only lhs designs are supported.
 #'
@@ -15,25 +25,14 @@
 #'   Parameter set.
 #' @param fun [\code{function}]\cr
 #'   Function from package lhs.
-#'   Possible are: \code{\link[lhs]{maximinLHS}}, \code{\link[lhs]{randomLHS}}, 
-#'   \code{\link[lhs]{geneticLHS}}, \code{\link[lhs]{improvedLHS}}, \code{\link[lhs]{optAugmentLHS}}, 
+#'   Possible are: \code{\link[lhs]{maximinLHS}}, \code{\link[lhs]{randomLHS}},
+#'   \code{\link[lhs]{geneticLHS}}, \code{\link[lhs]{improvedLHS}}, \code{\link[lhs]{optAugmentLHS}},
 #'   \code{\link[lhs]{optimumLHS}}
 #'   Default is \code{\link[lhs]{randomLHS}}.
 #' @param fun.args [\code{list}]\cr
 #'   List of further arguments passed to \code{fun}.
 #' @param trafo [\code{logical(1)}]\cr
 #'   Transform all parameters by using theirs respective transformation functions.
-#'   Default is \code{FALSE}.
-#' @param ints.as.num [\code{logical(1)}]\cr
-#'   Should parameters of type \dQuote{integer} or \dQuote{integervector} generate numeric columns?
-#'   Default is \code{FALSE}.
-#' @param discretes.as.factor [\code{logical(1)}]\cr
-#'   Should discrete parameters have columns of type \dQuote{factor} in result?
-#'   Otherwise character columns are generated.
-#'   Default is \code{TRUE}.
-#' @param logicals.as.factor [\code{logical(1)}]\cr
-#'   Should logical parameters have columns of type \dQuote{factor} in result?
-#'   Otherwise logical columns are generated.
 #'   Default is \code{FALSE}.
 #' @param remove.duplicates [\code{logical(1)}]\cr
 #'   Must the design NOT contain duplicate lines?
@@ -70,14 +69,13 @@
 #' )
 #' generateDesign(10, ps, trafo = TRUE)
 generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALSE,
-  ints.as.num = FALSE,  discretes.as.factor = TRUE, logicals.as.factor = FALSE,
   remove.duplicates = FALSE, remove.duplicates.iter = 5L) {
 
   n = convertInteger(n)
   checkArg(n, "integer", len = 1L, na.ok = FALSE)
-  z = doBasicGenDesignChecks(par.set, ints.as.num, discretes.as.factor, logicals.as.factor)
+  z = doBasicGenDesignChecks(par.set)
   lower = z$lower; upper = z$upper
-  
+
   requirePackages("lhs", "generateDesign")
   if (missing(fun))
     fun = lhs::randomLHS
@@ -155,15 +153,12 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
   res = .Call(c_generateDesign2, res, types.int, names(pars), lens, trafos, par.requires, new.env())
 
   colnames(res) = pids1
-  res = convertDataFrameCols(res, ints.as.num = ints.as.num,
-    chars.as.factor = FALSE, logicals.as.factor = logicals.as.factor)
+  res = convertDataFrameCols(res, chars.as.factor = FALSE)
   # explicitly set levels of factors so we have all value names as levels
   # FIXME all of this sucks and is ugly as sin...
-  if (discretes.as.factor) {
-    for (i in seq_col(res)) {
-      if (types.int[i] == 3L) {
-        res[, i] = factor(res[, i], levels = names(values[[pids2[[i]]]]))
-      }
+  for (i in seq_col(res)) {
+    if (types.int[i] == 3L) {
+      res[, i] = factor(res[, i], levels = names(values[[pids2[[i]]]]))
     }
   }
   attr(res, "trafo") = trafo

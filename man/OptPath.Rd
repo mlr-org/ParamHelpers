@@ -5,7 +5,8 @@
 \alias{makeOptPathDF}
 \title{Create optimization path.}
 \usage{
-makeOptPathDF(par.set, y.names, minimize, add.transformed.x = FALSE)
+makeOptPathDF(par.set, y.names, minimize, add.transformed.x = FALSE,
+  include.error.message = FALSE)
 }
 \arguments{
 \item{par.set}{[\code{\link{ParamSet}}]\cr

@@ -32,9 +32,9 @@ Parameters for which such bound make no sense - due to their type - are not pres
 \examples{
 ps <- makeParamSet(
   makeNumericParam("u"),
-  makeIntegerParam("v", lower=1, upper=2),
-  makeDiscreteParam("w", values=1:2),
-  makeNumericVectorParam("x", len=2, lower=c(0, 10), upper=c(1, 11))
+  makeIntegerParam("v", lower = 1, upper = 2),
+  makeDiscreteParam("w", values = 1:2),
+  makeNumericVectorParam("x", len = 2, lower = c(0, 10), upper = c(1, 11))
 )
 getLower(ps)
 getUpper(ps)

@@ -44,7 +44,7 @@ test_that("simple num/int/discrete/log design", {
     makeDiscreteParam("x3", values = c("a", "b", "c")),
     makeLogicalParam("x4")
   )
-  des = generateDesign(500, ps3, discretes.as.factor = FALSE)
+  des = generateDesign(500, ps3)
   expect_equal(nrow(des), 500)
   expect_equal(ncol(des), 4)
   expect_true(is.numeric(des[,1]))
@@ -59,16 +59,6 @@ test_that("simple num/int/discrete/log design", {
   tab = as.numeric(table(des[,4]))
   expect_true(all(tab > 200 & tab < 300))
 
-  des = generateDesign(13, ps3, discretes.as.factor = TRUE)
-  expect_equal(nrow(des), 13)
-  expect_equal(ncol(des), 4)
-  expect_true(is.numeric(des[,1]))
-  expect_true(des[,1] >= -2 && des[,1] <= 1)
-  expect_true(is.integer(des[,2]))
-  expect_true(des[,2] >= 10 && des[,2] <= 20)
-  expect_true(is.factor(des[,3]))
-  expect_true(all(des[,3] %in% names(ps3$pars[[3]]$values)))
-  expect_true(is.logical(des[,4]))
 })
 
 test_that("num/int/disc vec design", {

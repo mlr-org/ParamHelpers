@@ -11,15 +11,12 @@ stopIfFunOrUntypedParams = function(par.set) {
     stopf("Parameters of this type are not allowed, but were found: %s", collapse(not.ok))
 }
 
-doBasicGenDesignChecks = function(par.set, ints.as.num, discretes.as.factor, logicals.as.factor) {
+doBasicGenDesignChecks = function(par.set) {
   checkArg(par.set, "ParamSet")
   if (isEmpty(par.set))
     stop("par.set must not be empty!")
   stopIfLearnerParams(par.set)
   stopIfFunOrUntypedParams(par.set)
-  checkArg(ints.as.num, "logical", len = 1L, na.ok = FALSE)
-  checkArg(discretes.as.factor, "logical", len = 1L, na.ok = FALSE)
-  checkArg(logicals.as.factor, "logical", len = 1L, na.ok = FALSE)
 
   lower = getLower(par.set, with.nr = TRUE)
   upper = getUpper(par.set, with.nr = TRUE)

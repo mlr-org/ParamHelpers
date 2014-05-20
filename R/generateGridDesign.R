@@ -1,26 +1,24 @@
 #' Generates a grid design for a parameter set.
 #'
+#' The following types of columns are created:
+#' \tabular{ll}{
+#'  numeric(vector)   \tab  \code{numeric}  \cr
+#'  integer(vector)   \tab  \code{integer}  \cr
+#'  discrete(vector)  \tab  \code{factor}   \cr
+#'  logical(vector)   \tab  \code{logical}
+#' }
+#' If you want to convert these, look at \code{\link[BBmisc]{convertDataFrameCols}}.
+#'
 #' @param par.set [\code{\link{ParamSet}}]\cr
 #'   Parameter set.
 #' @param resolution [\code{integer}]\cr
 #'   Resolution of the grid for each numeric/integer parameter in \code{par.set}.
 #'   For vector parameters, it is the resolution per dimension.
 #'   Either pass one resolution for all parameters, or a named vector.
-#' @param ints.as.num [\code{logical(1)}]\cr
-#'   Should parameters of type \dQuote{integer} or \dQuote{integervector} generate numeric columns?
-#'   Default is \code{FALSE}.
-#' @param discretes.as.factor [\code{logical(1)}]\cr
-#'   Should discrete parameters have columns of type \dQuote{factor} in result?
-#'   Otherwise character columns are generated.
-#'   Default is \code{TRUE}.
-#' @param logicals.as.factor [\code{logical(1)}]\cr
-#'   Should logical parameters have columns of type \dQuote{factor} in result?
-#'   Otherwise logical columns are generated.
-#'   Default is \code{FALSE}.
 #' @param trafo [\code{logical(1)}]\cr
 #'   Transform all parameters by using theirs respective transformation functions.
 #'   Default is \code{FALSE}.
-#' @return [\code{data.frame.}]. Columns are named by the ids of the parameters.
+#' @return [\code{data.frame}]. Columns are named by the ids of the parameters.
 #'   If the \code{par.set} argument contains a vector parameter, its corresponding column names
 #'   The result will have an \code{logical(1)} attribute \dQuote{trafo},
 #'   which is set to the value of argument \code{trafo}.
@@ -31,10 +29,9 @@
 #'   makeNumericParam("x2", lower = -2, upper = 2, trafo = function(x) x^2)
 #' )
 #' generateGridDesign(ps, resolution = c(x1 = 4, x2 = 5), trafo = TRUE)
-generateGridDesign = function(par.set, resolution, trafo = FALSE, ints.as.num = FALSE,
-  discretes.as.factor = TRUE, logicals.as.factor = FALSE) {
+generateGridDesign = function(par.set, resolution, trafo = FALSE) {
 
-  z = doBasicGenDesignChecks(par.set, ints.as.num, discretes.as.factor, logicals.as.factor)
+  z = doBasicGenDesignChecks(par.set)
 
   ids = getParamIds(par.set)
   pars = par.set$pars
@@ -76,17 +73,12 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE, ints.as.num = 
       if (isDiscrete(p, include.logical = FALSE)) {
         newvals = names(discvals)
       } else if (isLogical(p)) {
-        newvals = if (logicals.as.factor)
-          factor(c("TRUE", "FALSE"), levels = c("TRUE", "FALSE"))
-        else
-          c(TRUE, FALSE)
+        newvals = c(TRUE, FALSE)
       } else if (isNumeric(p, include.int = TRUE)) {
         newvals = seq(from = lower[[j]], to = upper[[j]], length.out = reso)
         # round for integer
         if (isInteger(p)) {
           newvals = as.integer(unique(round(newvals)))
-          if (ints.as.num)
-            newvals = as.numeric(newvals)
         }
       } else {
         stopf("generateGridDesign cannot be used for param '%s' of type '%s'!", p$id, p$type)
@@ -123,8 +115,8 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE, ints.as.num = 
     par.requires = lapply(pars, function(p) p$requires)
     res = convertDataFrameCols(res, factors.as.char = TRUE)
     res = .Call(c_generateDesign2, res, types.int, names(pars), lens, trafos, par.requires, new.env())
-    res = convertDataFrameCols(res, chars.as.factor = discretes.as.factor)
   }
+  res = convertDataFrameCols(res, chars.as.factor = TRUE)
   attr(res, "trafo") = trafo
   res
 }

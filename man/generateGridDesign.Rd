@@ -3,8 +3,7 @@
 \alias{generateGridDesign}
 \title{Generates a grid design for a parameter set.}
 \usage{
-generateGridDesign(par.set, resolution, trafo = FALSE, ints.as.num = FALSE,
-  discretes.as.factor = TRUE, logicals.as.factor = FALSE)
+generateGridDesign(par.set, resolution, trafo = FALSE)
 }
 \arguments{
 \item{par.set}{[\code{\link{ParamSet}}]\cr
@@ -15,32 +14,25 @@ Resolution of the grid for each numeric/integer parameter in \code{par.set}.
 For vector parameters, it is the resolution per dimension.
 Either pass one resolution for all parameters, or a named vector.}
 
-\item{ints.as.num}{[\code{logical(1)}]\cr
-Should parameters of type \dQuote{integer} or \dQuote{integervector} generate numeric columns?
-Default is \code{FALSE}.}
-
-\item{discretes.as.factor}{[\code{logical(1)}]\cr
-Should discrete parameters have columns of type \dQuote{factor} in result?
-Otherwise character columns are generated.
-Default is \code{TRUE}.}
-
-\item{logicals.as.factor}{[\code{logical(1)}]\cr
-Should logical parameters have columns of type \dQuote{factor} in result?
-Otherwise logical columns are generated.
-Default is \code{FALSE}.}
-
 \item{trafo}{[\code{logical(1)}]\cr
 Transform all parameters by using theirs respective transformation functions.
 Default is \code{FALSE}.}
 }
 \value{
-[\code{data.frame.}]. Columns are named by the ids of the parameters.
+[\code{data.frame}]. Columns are named by the ids of the parameters.
   If the \code{par.set} argument contains a vector parameter, its corresponding column names
   The result will have an \code{logical(1)} attribute \dQuote{trafo},
   which is set to the value of argument \code{trafo}.
 }
 \description{
-Generates a grid design for a parameter set.
+The following types of columns are created:
+\tabular{ll}{
+ numeric(vector)   \tab  \code{numeric}  \cr
+ integer(vector)   \tab  \code{integer}  \cr
+ discrete(vector)  \tab  \code{factor}   \cr
+ logical(vector)   \tab  \code{logical}
+}
+If you want to convert these, look at \code{\link[BBmisc]{convertDataFrameCols}}.
 }
 \examples{
 ps = makeParamSet(

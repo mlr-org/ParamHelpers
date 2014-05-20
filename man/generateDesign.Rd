@@ -4,9 +4,7 @@
 \title{Generates a statistical design for a parameter set.}
 \usage{
 generateDesign(n = 10L, par.set, fun, fun.args = list(), trafo = FALSE,
-  ints.as.num = FALSE, discretes.as.factor = TRUE,
-  logicals.as.factor = FALSE, remove.duplicates = FALSE,
-  remove.duplicates.iter = 5L)
+  remove.duplicates = FALSE, remove.duplicates.iter = 5L)
 }
 \arguments{
 \item{n}{[\code{integer(1)}]\cr
@@ -28,20 +26,6 @@ List of further arguments passed to \code{fun}.}
 
 \item{trafo}{[\code{logical(1)}]\cr
 Transform all parameters by using theirs respective transformation functions.
-Default is \code{FALSE}.}
-
-\item{ints.as.num}{[\code{logical(1)}]\cr
-Should parameters of type \dQuote{integer} or \dQuote{integervector} generate numeric columns?
-Default is \code{FALSE}.}
-
-\item{discretes.as.factor}{[\code{logical(1)}]\cr
-Should discrete parameters have columns of type \dQuote{factor} in result?
-Otherwise character columns are generated.
-Default is \code{TRUE}.}
-
-\item{logicals.as.factor}{[\code{logical(1)}]\cr
-Should logical parameters have columns of type \dQuote{factor} in result?
-Otherwise logical columns are generated.
 Default is \code{FALSE}.}
 
 \item{remove.duplicates}{[\code{logical(1)}]\cr

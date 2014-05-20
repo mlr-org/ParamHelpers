@@ -5,12 +5,8 @@ test_that("generateGridDesign", {
     makeNumericParam("x", lower = 1, upper = 5),
     makeIntegerParam("y", lower = 2, upper= 6)
   )
-  d = generateGridDesign(ps, resolution = 3L, ints.as.num = FALSE)
+  d = generateGridDesign(ps, resolution = 3L)
   e = expand.grid(x = c(1, 3, 5), y = c(2L, 4L, 6L), KEEP.OUT.ATTRS = FALSE)
-  attr(e, "trafo") = FALSE
-  expect_equal(d, e)
-  d = generateGridDesign(ps, resolution = 3L, ints.as.num = TRUE)
-  e = expand.grid(x = c(1, 3, 5), y = c(2, 4, 6), KEEP.OUT.ATTRS = FALSE)
   attr(e, "trafo") = FALSE
   expect_equal(d, e)
 
@@ -20,15 +16,9 @@ test_that("generateGridDesign", {
     makeLogicalParam("w"),
     makeDiscreteParam("x", values = c("a", "b"))
   )
-  d = generateGridDesign(ps, resolution = 3L, logicals.as.factor = FALSE, discretes.as.factor = FALSE)
+  d = generateGridDesign(ps, resolution = 3L)
   e = expand.grid(u = c(1, 3, 5), v = c(2L, 4L, 6L), w = c(TRUE, FALSE), x = c("a", "b"),
     KEEP.OUT.ATTRS = FALSE)
-  e$x = as.character(e$x)
-  attr(e, "trafo") = FALSE
-  expect_equal(d, e)
-  d = generateGridDesign(ps, resolution = 3L, logicals.as.factor = TRUE, discretes.as.factor = TRUE)
-  e = expand.grid(u = c(1, 3, 5), v = c(2L, 4L, 6L), w = c("TRUE", "FALSE"), x = c("a", "b"),
-    KEEP.OUT.ATTRS = FALSE, stringsAsFactors = TRUE)
   attr(e, "trafo") = FALSE
   expect_equal(d, e)
 
@@ -43,20 +33,6 @@ test_that("generateGridDesign", {
     x1 = c(1, 2), x2 = c(1, 2),
     y1 = c(3L, 4L), y2 = c(3L, 4L),
     z1 = c(TRUE, FALSE), z2 = c(TRUE, FALSE),
-    KEEP.OUT.ATTRS = FALSE
-  )
-  attr(e, "trafo") = FALSE
-  expect_equal(d, e)
-  ps = makeParamSet(
-    makeNumericVectorParam("x", len = 2L, lower = 1, upper = 2),
-    makeIntegerVectorParam("y", len = 2L, lower = 3, upper = 4),
-    makeLogicalVectorParam("z", len = 2L)
-  )
-  d = generateGridDesign(ps, resolution = 2L, logicals.as.factor = TRUE, ints.as.num = TRUE)
-  e = expand.grid(
-    x1 = c(1, 2), x2 = c(1, 2),
-    y1 = c(3, 4), y2 = c(3, 4),
-    z1 = c("TRUE", "FALSE"), z2 = c("TRUE", "FALSE"),
     KEEP.OUT.ATTRS = FALSE
   )
   attr(e, "trafo") = FALSE

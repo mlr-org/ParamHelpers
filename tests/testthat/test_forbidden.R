@@ -20,12 +20,12 @@ test_that("forbidden", {
   expect_true(!any(fb))
   ok = sapply(xs, isFeasible, par = ps)
   expect_true(all(ok))
-  
+
   d = generateGridDesign(ps, resolution = 10)
-  expect_true(d$x <= 2)
-  
+  expect_true(all(d$x <= 2))
+
   d = generateDesign(1000, ps)
-  expect_true(d$x <= 2)
+  expect_true(all(d$x <= 2))
 })
 
 

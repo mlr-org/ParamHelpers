@@ -10,6 +10,7 @@ ParamHelpers_1.2:
 - slightly change interface of getOptPathY, so one can now return a matrix of multiple measures.
 - Added option to log error messages in the optimization path.
 - normal parameters can now have a default value
+- generateDesign and generateGridDesign do not support type conversion anymore. See help page.  
 - new functions
 -- getOptPathParetoFront
 -- generateGridDesign
