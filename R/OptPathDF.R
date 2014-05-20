@@ -1,11 +1,16 @@
 #' @rdname OptPath
 #' @aliases OptPathDF
 #' @export
-makeOptPathDF = function(par.set, y.names, minimize, add.transformed.x = FALSE) {
+makeOptPathDF = function(par.set, y.names, minimize, add.transformed.x = FALSE,
+  include.error.message = FALSE) {
+
   checkArg(par.set, "ParamSet")
   checkArg(y.names, "character", na.ok = FALSE)
   checkArg(minimize, "logical", na.ok = FALSE)
-  obj = makeOptPath(par.set, y.names, minimize, add.transformed.x)
+  checkArg(add.transformed.x, "logical", len = 1L, na.ok = FALSE)
+  checkArg(include.error.message, "logical", len = 1L, na.ok = FALSE)
+
+  obj = makeOptPath(par.set, y.names, minimize, add.transformed.x, include.error.message)
   ns = c(getParamIds(par.set, repeated = TRUE, with.nr = TRUE), y.names)
   obj$env$path = as.data.frame(matrix(0, nrow = 0, ncol = length(ns)))
   colnames(obj$env$path) = ns
@@ -25,7 +30,7 @@ as.data.frame.OptPathDF = function(x, row.names = NULL, optional = FALSE,
   df = x$env$path
   df = cbind(df, dob = x$env$dob, eol = x$env$eol)
   df = convertDataFrameCols(df, chars.as.factor = discretes.as.factor)
-  # backward compatibility with "old" OptPath objects
+  # if err message included, add it
   if (!is.null(x$env$error.message))
     df = cbind(df, error.message = x$env$error.message, stringsAsFactors = FALSE)
   return(df)
@@ -44,7 +49,7 @@ getOptPathEl.OptPathDF = function(op, index) {
   # remove y names from path, only consider x
   path = path[, setdiff(colnames(path), op$y.names), drop = FALSE]
   x = dfRowToList(path, op$par.set, index)
-  # backward compatibility with "old" OptPath objects
+  # if errmsg there, return it
   if (is.null(e$error.message))
     list(x = x, y = y, dob = e$dob[index], eol = e$eol[index])
   else
@@ -58,10 +63,14 @@ addOptPathEl.OptPathDF = function(op, x, y, dob = getOptPathLength(op)+1L, eol =
   checkArg(x, "list", len = length(op$par.set$pars))
   checkArg(y, "numeric", len = length(op$y.names))
   dob = convertInteger(dob)
-  checkArg(dob, "integer", 1)
+  checkArg(dob, "integer", len = 1L)
   eol = convertInteger(eol)
-  checkArg(eol, "integer", 1)
-  checkArg(error.message, "character", 1)
+  checkArg(eol, "integer", len = 1L)
+  checkArg(error.message, "character", len = 1L)
+
+  if (!is.na(error.message) && is.null(op$env$error.message))
+    stopf("Trying to add error.message to opt path, without enabling that option!")
+
   if (check.feasible) {
     if (!isFeasible(op$par.set, x))
       stop("Trying to add infeasible x values to opt path: ", convertToShortString(x))
@@ -85,10 +94,8 @@ addOptPathEl.OptPathDF = function(op, x, y, dob = getOptPathLength(op)+1L, eol =
   k = length(op$env$dob) + 1
   op$env$dob[k] = dob
   op$env$eol[k] = eol
-  # backward compatibility with "old" OptPath objects
-  if (is.null(op$env$error.message))
-    op$env$error.message[1:(k-1)] = NA_character_
-  op$env$error.message[k] = error.message
+  if (!is.null(op$env$error.message))
+    op$env$error.message[k] = error.message
   invisible(NULL)
 }
 

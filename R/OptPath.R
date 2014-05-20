@@ -44,7 +44,9 @@
 #'   \code{\link{getOptPathY}}, \code{\link{setOptPathElDOB}}, \code{\link{setOptPathElEOL}}
 NULL
 
-makeOptPath = function(par.set, y.names, minimize, add.transformed.x = FALSE) {
+makeOptPath = function(par.set, y.names, minimize, add.transformed.x = FALSE,
+  include.error.message = FALSE) {
+
   ok = c("numeric", "integer", "numericvector", "integervector", "logical",
     "logicalvector", "discrete", "discretevector")
   if(length(par.set$pars) > length(filterParams(par.set, ok)$pars))
@@ -62,12 +64,19 @@ makeOptPath = function(par.set, y.names, minimize, add.transformed.x = FALSE) {
     names(minimize) = y.names
   if (any(c("dob", "eol", "error.message") %in% (union(x.names, y.names))))
     stop("'dob', 'eol' and 'error.message' are not allowed in parameter names or 'y.names'!")
+  ee = new.env()
+  ee$dob = ee$eol = integer(0)
+  if (include.error.message)
+    ee$error.message = character(0)
+  else
+    ee$error.message = NULL
+
   structure(list(
     par.set = par.set,
     y.names = y.names,
     minimize = minimize,
     add.transformed.x = add.transformed.x,
-    env = new.env()
+    env = ee
   ), class="OptPath")
 }
 
