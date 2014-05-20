@@ -15,16 +15,20 @@ test_that("generateGridDesign", {
   expect_equal(d, e)
 
   ps = makeParamSet(
-    makeNumericParam("x", lower = 1, upper = 5),
-    makeIntegerParam("y", lower = 2, upper= 6),
-    makeLogicalParam("z")
+    makeNumericParam("u", lower = 1, upper = 5),
+    makeIntegerParam("v", lower = 2, upper= 6),
+    makeLogicalParam("w"),
+    makeDiscreteParam("x", values = c("a", "b"))
   )
-  d = generateGridDesign(ps, resolution = 3L, logicals.as.factor = FALSE)
-  e = expand.grid(x = c(1, 3, 5), y = c(2L, 4L, 6L), z = c(TRUE, FALSE), KEEP.OUT.ATTRS = FALSE)
+  d = generateGridDesign(ps, resolution = 3L, logicals.as.factor = FALSE, discretes.as.factor = FALSE)
+  e = expand.grid(u = c(1, 3, 5), v = c(2L, 4L, 6L), w = c(TRUE, FALSE), x = c("a", "b"),
+    KEEP.OUT.ATTRS = FALSE)
+  e$x = as.character(e$x)
   attr(e, "trafo") = FALSE
   expect_equal(d, e)
-  d = generateGridDesign(ps, resolution = 3L, logicals.as.factor = TRUE)
-  e = expand.grid(x = c(1, 3, 5), y = c(2L, 4L, 6L), z = c("TRUE", "FALSE"), KEEP.OUT.ATTRS = FALSE)
+  d = generateGridDesign(ps, resolution = 3L, logicals.as.factor = TRUE, discretes.as.factor = TRUE)
+  e = expand.grid(u = c(1, 3, 5), v = c(2L, 4L, 6L), w = c("TRUE", "FALSE"), x = c("a", "b"),
+    KEEP.OUT.ATTRS = FALSE, stringsAsFactors = TRUE)
   attr(e, "trafo") = FALSE
   expect_equal(d, e)
 

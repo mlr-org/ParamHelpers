@@ -34,15 +34,11 @@
 generateGridDesign = function(par.set, resolution, trafo = FALSE, ints.as.num = FALSE,
   discretes.as.factor = TRUE, logicals.as.factor = FALSE) {
 
-  checkArg(par.set, "ParamSet")
+  z = doBasicGenDesignChecks(par.set, ints.as.num, discretes.as.factor, logicals.as.factor)
+
   ids = getParamIds(par.set)
   pars = par.set$pars
   n = length(pars)
-  if (n == 0L)
-    stop("par.set must not be empty!")
-  if(any(sapply(pars, function(x) inherits(x, "LearnerParameter"))))
-    stop("No par.set parameter in 'generateDesign' can be of class 'LearnerParameter'! Use basic parameters instead to describe you region of interest!")
-
   lens = getParamLengths(par.set)
   m = sum(lens)
   pids1 = getParamIds(par.set)
@@ -72,7 +68,7 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE, ints.as.num = 
       upper = p$upper
     }
     if (isDiscrete(p, include.logical = FALSE)) {
-     discvals = p$values
+      discvals = p$values
     }
 
     # iterate over vector elements and d
@@ -95,13 +91,25 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE, ints.as.num = 
       } else {
         stopf("generateGridDesign cannot be used for param '%s' of type '%s'!", p$id, p$type)
       }
-      if (!isForbidden(par.set, new))
       vals.list[[el.counter]] = newvals
       el.counter = el.counter + 1
     }
   }
-  res = expand.grid(vals.list, KEEP.OUT.ATTRS = FALSE)
+  res = expand.grid(vals.list, KEEP.OUT.ATTRS = FALSE, stringsAsFactors = FALSE)
+  # data types here:
+  # num(vec): numeric
+  # int(vec): integer
+  # log(vec): logical
+  # dis(vec): character
+
   colnames(res) = pids2
+
+  # check each row if forbidden, then remove
+  if (hasForbidden(par.set)) {
+    #FIXME: this is pretty slow, but correct
+    fb = rowSapply(res, isForbidden, par.set = par.set)
+    res = res[!fb, , drop = FALSE]
+  }
 
   if (trafo || hasRequires(par.set)) {
     # the following lines are mainly copy paste from generateDesign

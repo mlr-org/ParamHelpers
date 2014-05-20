@@ -75,7 +75,9 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
 
   n = convertInteger(n)
   checkArg(n, "integer", len = 1L, na.ok = FALSE)
-  checkArg(par.set, "ParamSet")
+  z = doBasicGenDesignChecks(par.set, ints.as.num, discretes.as.factor, logicals.as.factor)
+  lower = z$lower; upper = z$upper
+  
   requirePackages("lhs", "generateDesign")
   if (missing(fun))
     fun = lhs::randomLHS
@@ -83,21 +85,10 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
     checkArg(fun, "function")
   checkArg(fun.args, "list")
   checkArg(trafo, "logical", len = 1L, na.ok = FALSE)
-  checkArg(ints.as.num, "logical", len = 1L, na.ok = FALSE)
-  checkArg(discretes.as.factor, "logical", len = 1L, na.ok = FALSE)
   checkArg(remove.duplicates, "logical", len = 1L, na.ok = FALSE)
   checkArg(remove.duplicates.iter, "integer", len = 1L, lower = 1L, na.ok = FALSE)
 
-  if (isEmpty(par.set))
-    stop("par.set must not be empty!")
-  if(any(sapply(par.set$pars, function(x) inherits(x, "LearnerParameter"))))
-    stop("No par.set parameter in 'generateDesign' can be of class 'LearnerParameter'! Use basic parameters instead to describe you region of interest!")
-  lower = getLower(par.set, with.nr = TRUE)
-  upper = getUpper(par.set, with.nr = TRUE)
   values = getValues(par.set)
-
-  if (any(is.infinite(c(lower, upper))))
-    stop("generateDesign requires finite box constraints!")
 
   pars = par.set$pars
   pids1 = getParamIds(par.set, repeated = TRUE, with.nr = TRUE)
