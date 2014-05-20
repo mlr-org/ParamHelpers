@@ -41,9 +41,9 @@ test_that("trafo opt.path", {
   df2 = as.data.frame(op2)
   df2b = rbind(
     data.frame(u = 6, v1 = 2/6, v2 = 4/6, w = "a", y = 0, dob = 1, eol = 1,
-      error.message = NA_character_, stringsAsFactors = FALSE),
+      stringsAsFactors = FALSE),
     data.frame(u = 8, v1 = 5/8, v2 = 3/8, w = "b", y = 2, dob = 5, eol = 7,
-      error.message = NA_character_, stringsAsFactors = FALSE)
+      stringsAsFactors = FALSE)
   )
   expect_equal(df2, df2b)
 })
