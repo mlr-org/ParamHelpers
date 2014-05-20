@@ -23,13 +23,18 @@ Vector of booleans in the same order as \code{y.names}.}
 If some parameters have associated transformations, are you going to
 add x values after they have been transformed?
 Default is \code{FALSE}.}
+
+\item{include.error.message}{[\code{logical(1)}]\cr
+Should it be possible to include an error message string (or NA if no error orccured)
+into the path for each evaluation? See \code{\link{addOptPathEl}}.
+This is useful if you have complex, long running objective evaluations that might fail.
+Default is \code{FALSE}.}
 }
 \description{
 Optimizers can iteratively log their evaluated points
 into this object. Can be converted into a data.frame with
-\code{as.data.frame(x, discrete.as.factor = TRUE / FALSE)}.
-}
-\details{
+\code{as.data.frame(x, discretes.as.factor = TRUE / FALSE)}.
+
 A optimization path has a number of path elements, where each element consists of: the value of the
 decision variables at this point, the values of the performance measures at this point,
 the date-of-birth (dob) of this point, the end-of-life (eol) of this point and possibly

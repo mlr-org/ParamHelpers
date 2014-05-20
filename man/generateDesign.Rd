@@ -51,6 +51,15 @@ The created design is a data.frame. Columns are named by the ids of the paramete
   which is set to the value of argument \code{trafo}.
 }
 \description{
+The following types of columns are created:
+\tabular{ll}{
+ numeric(vector)   \tab  \code{numeric}  \cr
+ integer(vector)   \tab  \code{integer}  \cr
+ discrete(vector)  \tab  \code{factor}   \cr
+ logical(vector)   \tab  \code{logical}
+}
+If you want to convert these, look at \code{\link[BBmisc]{convertDataFrameCols}}.
+
 Currently only lhs designs are supported.
 }
 \examples{
