@@ -51,7 +51,7 @@ test_that("simple num/int/discrete/log design", {
   expect_true(des[,1] >= -2 && des[,1] <= 1)
   expect_true(is.integer(des[,2]))
   expect_true(des[,2] >= 10 && des[,2] <= 20)
-  expect_true(is.character(des[,3]))
+  expect_true(is.factor(des[,3]))
   expect_true(all(des[,3] %in% names(ps3$pars[[3]]$values)))
   expect_true(is.logical(des[,4]))
   tab = as.numeric(table(des[,3]))
