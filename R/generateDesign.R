@@ -86,13 +86,20 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
   checkArg(remove.duplicates, "logical", len = 1L, na.ok = FALSE)
   checkArg(remove.duplicates.iter, "integer", len = 1L, lower = 1L, na.ok = FALSE)
 
-  values = getValues(par.set)
-
+  # recompute some useful stuff
   pars = par.set$pars
-  pids1 = getParamIds(par.set, repeated = TRUE, with.nr = TRUE)
-  pids2 = getParamIds(par.set, repeated = TRUE, with.nr = FALSE)
   lens = getParamLengths(par.set)
   k = sum(lens)
+  pids1 = getParamIds(par.set, repeated = TRUE, with.nr = TRUE)
+  pids2 = getParamIds(par.set, repeated = TRUE, with.nr = FALSE)
+  lower2 = setNames(rep(NA_real_, k), pids1)
+  lower2 = insert(lower2, lower)
+  upper2 = setNames(rep(NA_real_, k), pids1)
+  upper2 = insert(upper2, upper)
+  values = getValues(par.set)
+  nlevs = setNames(rep(NA_integer_, k), pids1)
+  for (i in seq_len(k))
+    nlevs[i] = length(values[[pids2[i]]])
 
   # FIXME: most of the code structure really sucks in the whole function
   # we should probably introduce more helper functions to deal with that
@@ -103,13 +110,6 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
   types.df[types.df == "factor"] = "integer"
   res = makeDataFrame(n, k, col.types = types.df)
 
-  lower2 = setNames(rep(NA_real_, k), pids1)
-  lower2 = insert(lower2, lower)
-  upper2 = setNames(rep(NA_real_, k), pids1)
-  upper2 = insert(upper2, upper)
-  nlevs = setNames(rep(NA_integer_, k), pids1)
-  for (i in seq_len(k))
-    nlevs[i] = length(values[[pids2[i]]])
   # ignore trafos if the user did not request transformed values
   trafos = if(trafo)
     lapply(pars, function(p) p$trafo)
@@ -119,28 +119,6 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
 
   des = do.call(fun, insert(list(n = n, k = k), fun.args))
   res = .Call(c_generateDesign1, des, res, types.int, lower2, upper2, nlevs)
-
-  # try to replace duplicates a couple of times
-  #FIXME: this stuff sucks as the whole function dows. We should definitely
-  # reorganize the code!
-  if (remove.duplicates) {
-    to.remove = duplicated(res)
-    to.keep = !to.remove
-    nmissing = sum(to.remove)
-    i = 0
-    while(nmissing > 0 && i < remove.duplicates.iter) {
-      des = des[to.keep,]
-      des = do.call(lhs::augmentLHS, list(lhs = des, m = nmissing))
-      res = .Call(c_generateDesign1, des, res, types.int, lower2, upper2, nlevs)
-      to.remove = duplicated(res)
-      to.keep = !to.remove
-      nmissing = sum(to.remove)
-      i = i + 1
-    }
-    if (nmissing > 0) {
-      stopf("Algorithm was unable to generate design with no duplicated rows!")
-    }
-  }
 
   #FIXME: maybe do this in C
   # convert discrete integer coding back to chars

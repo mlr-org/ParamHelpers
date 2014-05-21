@@ -9,7 +9,7 @@
   const R_len_t K = ncols(S);
 
 SEXP c_generateDesign1(SEXP s_des, SEXP s_res, SEXP s_types,
-  SEXP s_low, SEXP s_upp, SEXP s_nlevs) {
+  SEXP s_low, SEXP s_upp, SEXP s_values) {
 
   UNPACK_REAL_MATRIX(s_des, des, nrow_des, ncol_des);
   int *types = INTEGER(s_types);
