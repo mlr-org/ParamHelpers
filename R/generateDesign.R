@@ -37,7 +37,7 @@
 #' @param remove.duplicates [\code{logical(1)}]\cr
 #'   Must the design NOT contain duplicate lines?
 #'   Default is \code{FALSE}.
-#' @param remove.duplicates.iter [\code{integer(1)}]\cr
+#' @param augment [\code{integer(1)}]\cr
 #'   If \code{remove.duplicates} is set to \code{TRUE} and duplicates occur within the design, i. e., if
 #'   at least one line appears multiple times, the function tries hard to fix to replace the duplicated lines.
 #'   The parameter controls how many attempts the algorithm will at most start.
@@ -101,23 +101,53 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
   nlevs = setNames(rep(NA_integer_, k), pids1)
   for (i in seq_len(k))
     values2[[i]] = names(values1[[pids2[i]]])
+  # complete design, so we can augment it 
+  des.all = matrix()
 
-  # allocate result df
-  types.df = getTypes(par.set, df.cols = TRUE)
-  types.int = convertTypesToCInts(types.df)
-  types.df[types.df == "factor"] = "character"
-  res = makeDataFrame(n, k, col.types = types.df)
-  # ignore trafos if the user did not request transformed values
-  trafos = if(trafo)
-    lapply(pars, function(p) p$trafo)
-  else
-    replicate(length(pars), NULL, simplify = FALSE)
-  par.requires = lapply(pars, function(p) p$requires)
+  repeat {
 
-  des = do.call(fun, insert(list(n = n, k = k), fun.args))
-  res = .Call(c_generateDesign, des, res, types.int, lower2, upper2, values2)
+    # allocate result df
+    types.df = getTypes(par.set, df.cols = TRUE)
+    types.int = convertTypesToCInts(types.df)
+    types.df[types.df == "factor"] = "character"
+    res = makeDataFrame(n, k, col.types = types.df)
+    # ignore trafos if the user did not request transformed values
+    trafos = if(trafo)
+      lapply(pars, function(p) p$trafo)
+    else
+      replicate(length(pars), NULL, simplify = FALSE)
+    par.requires = lapply(pars, function(p) p$requires)
 
-  res = .Call(c_trafo_and_set_dep_to_na, res, types.int, names(pars), lens, trafos, par.requires, new.env())
+    des = do.call(fun, insert(list(n = n, k = k), fun.args))
+    res = .Call(c_generateDesign, des, res, types.int, lower2, upper2, values2)
+
+    res = .Call(c_trafo_and_set_dep_to_na, res, types.int, names(pars), lens, trafos, par.requires, new.env())
+
+    # try to replace duplicates a couple of times
+    if (remove.duplicates) {
+      to.remove = duplicated(res)
+      to.keep = !to.remove
+      nmissing = sum(to.remove)
+      i = 0
+      while(nmissing > 0 && i < remove.duplicates.iter) {
+        des = des[to.keep,]
+        des = do.call(lhs::augmentLHS, list(lhs=des, m = nmissing))
+        res = .Call(c_generateDesign, des, res, types.int, lower2, upper2, nlevs)
+        res = .Call(c_trafo_and_set_dep_to_na, res, types.int, names(pars), lens, trafos, par.requires, new.env())
+        to.remove = duplicated(res)
+        to.keep = !to.remove
+        nmissing = sum(to.remove)
+        i = i + 1
+      }
+      if (nmissing > 0) {
+        stopf("Algorithm was unable to generate design with no duplicated rows!")
+      }
+    }
+ 
+    # stop if we have enough rows in design
+    if (nrow(res) == n)
+      break
+  }
 
   colnames(res) = pids1
 
