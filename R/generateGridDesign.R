@@ -114,7 +114,7 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE) {
       replicate(length(pars), NULL, simplify = FALSE)
     par.requires = lapply(pars, function(p) p$requires)
     res = convertDataFrameCols(res, factors.as.char = TRUE)
-    res = .Call(c_generateDesign2, res, types.int, names(pars), lens, trafos, par.requires, new.env())
+    res = .Call(c_trafo_and_set_dep_to_na, res, types.int, names(pars), lens, trafos, par.requires, new.env())
   }
   res = convertDataFrameCols(res, chars.as.factor = TRUE)
   attr(res, "trafo") = trafo

@@ -8,14 +8,14 @@
   const R_len_t N = nrows(S); \
   const R_len_t K = ncols(S);
 
-SEXP c_generateDesign1(SEXP s_des, SEXP s_res, SEXP s_types,
+SEXP c_generateDesign(SEXP s_des, SEXP s_res, SEXP s_types,
   SEXP s_low, SEXP s_upp, SEXP s_values) {
 
   UNPACK_REAL_MATRIX(s_des, des, nrow_des, ncol_des);
   int *types = INTEGER(s_types);
   double *low = REAL(s_low);
   double *upp = REAL(s_upp);
-  int *nlevs = INTEGER(s_nlevs);
+  /* int *nlevs = INTEGER(s_nlevs); */
   int row, col; /* loop counters for rows, cols, params, vector param elements */
   int type; /* type of column we are currently handling */
   double span; /* = upper - lower */
@@ -45,9 +45,13 @@ SEXP c_generateDesign1(SEXP s_des, SEXP s_res, SEXP s_types,
     }
     /* factors */
     if (type == 3) {
-      rescol_int = INTEGER(s_rescol);
+      /* SET_STRING_ELT(s_rescol, ); */
+      SEXP s_values_col = VECTOR_ELT(s_values, col);
+      int nlevs = LENGTH(s_values_col);
       for (row = 0; row < nrow_des; row++) {
-        rescol_int[row] =  floor(1 + nlevs[col] * des[row + col*nrow_des]);
+        int val_index = floor(nlevs * des[row + col*nrow_des]);
+        /* int val_index = des[row + col*nrow_des]; */
+        SET_STRING_ELT(s_rescol, row, STRING_ELT(s_values_col, val_index));
       }
     }
     /* logicals */
@@ -63,7 +67,7 @@ SEXP c_generateDesign1(SEXP s_des, SEXP s_res, SEXP s_types,
 }
 
 
-SEXP c_generateDesign2(SEXP s_res, SEXP s_types,
+SEXP c_trafo_and_set_dep_to_na(SEXP s_res, SEXP s_types,
   SEXP s_parnames, SEXP s_lens, SEXP s_trafos, SEXP s_requires, SEXP s_env) {
 
   int *types = INTEGER(s_types);

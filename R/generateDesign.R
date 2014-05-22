@@ -53,7 +53,7 @@
 #'   The result will have an \code{logical(1)} attribute \dQuote{trafo},
 #'   which is set to the value of argument \code{trafo}.
 #' @export
-#' @useDynLib ParamHelpers c_generateDesign1 c_generateDesign2
+#' @useDynLib ParamHelpers c_generateDesign c_trafo_and_set_dep_to_na
 #' @examples
 #' ps <- makeParamSet(
 #'   makeNumericParam("x1", lower = -2, upper = 1),
@@ -96,20 +96,17 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
   lower2 = insert(lower2, lower)
   upper2 = setNames(rep(NA_real_, k), pids1)
   upper2 = insert(upper2, upper)
-  values = getValues(par.set)
+  values1 = getValues(par.set)
+  values2 = vector("list", k)
   nlevs = setNames(rep(NA_integer_, k), pids1)
   for (i in seq_len(k))
-    nlevs[i] = length(values[[pids2[i]]])
-
-  # FIXME: most of the code structure really sucks in the whole function
-  # we should probably introduce more helper functions to deal with that
+    values2[[i]] = names(values1[[pids2[i]]])
 
   # allocate result df
   types.df = getTypes(par.set, df.cols = TRUE)
   types.int = convertTypesToCInts(types.df)
-  types.df[types.df == "factor"] = "integer"
+  types.df[types.df == "factor"] = "character"
   res = makeDataFrame(n, k, col.types = types.df)
-
   # ignore trafos if the user did not request transformed values
   trafos = if(trafo)
     lapply(pars, function(p) p$trafo)
@@ -118,25 +115,16 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
   par.requires = lapply(pars, function(p) p$requires)
 
   des = do.call(fun, insert(list(n = n, k = k), fun.args))
-  res = .Call(c_generateDesign1, des, res, types.int, lower2, upper2, nlevs)
+  res = .Call(c_generateDesign, des, res, types.int, lower2, upper2, values2)
 
-  #FIXME: maybe do this in C
-  # convert discrete integer coding back to chars
-  for (i in seq_col(res)) {
-    if (types.int[i] == 3L) {
-      res[, i] = as.character(factor(res[, i],
-        levels = seq_len(nlevs[i]), labels = names(values[[pids2[[i]]]])))
-    }
-  }
-  res = .Call(c_generateDesign2, res, types.int, names(pars), lens, trafos, par.requires, new.env())
+  res = .Call(c_trafo_and_set_dep_to_na, res, types.int, names(pars), lens, trafos, par.requires, new.env())
 
   colnames(res) = pids1
-  res = convertDataFrameCols(res, chars.as.factor = FALSE)
-  # explicitly set levels of factors so we have all value names as levels
-  # FIXME all of this sucks and is ugly as sin...
+
+  # convert to factor and set levels so we have all of them
   for (i in seq_col(res)) {
     if (types.int[i] == 3L) {
-      res[, i] = factor(res[, i], levels = names(values[[pids2[[i]]]]))
+      res[, i] = factor(res[, i], levels = values2[[i]])
     }
   }
   attr(res, "trafo") = trafo
