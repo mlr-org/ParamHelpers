@@ -201,7 +201,8 @@ test_that("removing duplicates", {
     makeDiscreteParam("disc", values = letters[1:3])
   )
   # ... and therefore creating a design with n > 6 duplicate free rows should fail
-  expect_error(generateDesign(7L, ps, remove.duplicates = TRUE))
+  expect_warning(res <- generateDesign(7L, ps, remove.duplicates = TRUE))
+  expect_true(nrow(res) <= 6L)
 
   ps = makeParamSet(
     makeIntegerParam("int", lower = -2, upper = 1),

@@ -11,12 +11,23 @@
 #' \tabular{ll}{
 #'  numeric(vector)   \tab  \code{numeric}  \cr
 #'  integer(vector)   \tab  \code{integer}  \cr
-#'  discrete(vector)  \tab  \code{factor}   \cr
+#'  discrete(vector)  \tab  \code{factor} (names of values = levels) \cr
 #'  logical(vector)   \tab  \code{logical}
 #' }
 #' If you want to convert these, look at \code{\link[BBmisc]{convertDataFrameCols}}.
 #'
+#' Dependent parameters whose constaints are unsatisfied generate \code{NA} entries in their
+#' respective columns.
+#'
 #' Currently only lhs designs are supported.
+#'
+#' The algorithm currently iterates the following steps:
+#' We create a space filling design for all paramaters, disregarding \code{requires}, a \code{trafo}
+#' or the forbidden region.
+#' Parameters are trafoed; dependent parameters whose constaints are unsatisfied are set to 
+#' \code{NA} entries.
+#' Duplicated and forbidden design points are removed. 
+#' If we removed some points we now try to augment the design in a space filling way and iterate.
 #'
 #' @param n [\code{integer(1)}]\cr
 #'   Number of samples in design.
@@ -35,21 +46,21 @@
 #'   Transform all parameters by using theirs respective transformation functions.
 #'   Default is \code{FALSE}.
 #' @param remove.duplicates [\code{logical(1)}]\cr
-#'   Must the design NOT contain duplicate lines?
+#'   In some cases (discrete parameters and dependencies) it might happen that duplicated lines
+#'   occur in the generated design. This option guards against this, by removing the duplicated lines
+#'   from the design.
 #'   Default is \code{FALSE}.
 #' @param augment [\code{integer(1)}]\cr
-#'   If \code{remove.duplicates} is set to \code{TRUE} and duplicates occur within the design, i. e., if
-#'   at least one line appears multiple times, the function tries hard to fix to replace the duplicated lines.
-#'   The parameter controls how many attempts the algorithm will at most start.
+#'   \code{remove.duplicates} and forbidden regions in the parameter space can lead to the design
+#'   becoming smaller than \code{n}. With this option it is possible to augment the design again
+#'   to size \code{n}. It is not guaranteed that this always works (to full size)
+#'   and \code{augment} specifies the number of tries to augment.
+#'   If the the design is of size less than \code{n} after all tries, a warning is issued
+#'   and the smaller design is returned.
+#'   Default is 5.
 #' @return The created design is a data.frame. Columns are named by the ids of the parameters.
 #'   If the \code{par.set} argument contains a vector parameter, its corresponding column names
 #'   in the design are the parameter id concatenated with 1 to dimension of the vector.
-#'   The data type of a column
-#'   is defined in the following way. Numeric parameters generate numeric columns, integer parameters generate numeric/integer columns,
-#'   logical parameters generate logical/factor columns.
-#'   For discrete parameters the value names are used and character or factor columns are generated.
-#'   Dependent parameters whose constaints are unsatisfied generate \code{NA} entries in their
-#'   respective columns.
 #'   The result will have an \code{logical(1)} attribute \dQuote{trafo},
 #'   which is set to the value of argument \code{trafo}.
 #' @export
@@ -69,7 +80,7 @@
 #' )
 #' generateDesign(10, ps, trafo = TRUE)
 generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALSE,
-  remove.duplicates = FALSE, remove.duplicates.iter = 5L) {
+  remove.duplicates = FALSE, augment = 5L) {
 
   n = convertInteger(n)
   checkArg(n, "integer", len = 1L, na.ok = FALSE)
@@ -84,9 +95,10 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
   checkArg(fun.args, "list")
   checkArg(trafo, "logical", len = 1L, na.ok = FALSE)
   checkArg(remove.duplicates, "logical", len = 1L, na.ok = FALSE)
-  checkArg(remove.duplicates.iter, "integer", len = 1L, lower = 1L, na.ok = FALSE)
+  augment = convertInteger(augment)
+  checkArg(augment, "integer", len = 1L, lower = 0L, na.ok = FALSE)
 
-  # recompute some useful stuff
+  ### precompute some useful stuff
   pars = par.set$pars
   lens = getParamLengths(par.set)
   k = sum(lens)
@@ -101,53 +113,47 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
   nlevs = setNames(rep(NA_integer_, k), pids1)
   for (i in seq_len(k))
     values2[[i]] = names(values1[[pids2[i]]])
-  # complete design, so we can augment it 
-  des.all = matrix()
+  types.df = getTypes(par.set, df.cols = TRUE)
+  types.int = convertTypesToCInts(types.df)
+  types.df[types.df == "factor"] = "character"
+  # ignore trafos if the user did not request transformed values
+  trafos = if(trafo)
+    lapply(pars, function(p) p$trafo)
+  else
+    replicate(length(pars), NULL, simplify = FALSE)
+  par.requires = lapply(pars, function(p) p$requires)
 
+
+  nmissing = n
+  iters = 0
   repeat {
 
-    # allocate result df
-    types.df = getTypes(par.set, df.cols = TRUE)
-    types.int = convertTypesToCInts(types.df)
-    types.df[types.df == "factor"] = "character"
-    res = makeDataFrame(n, k, col.types = types.df)
-    # ignore trafos if the user did not request transformed values
-    trafos = if(trafo)
-      lapply(pars, function(p) p$trafo)
+    ### get design, types converted, trafos, conditionals set to NA
+    # create new design or augment if we already have some points
+    des = if (nmissing == n)
+      do.call(fun, insert(list(n = nmissing, k = k), fun.args))
     else
-      replicate(length(pars), NULL, simplify = FALSE)
-    par.requires = lapply(pars, function(p) p$requires)
-
-    des = do.call(fun, insert(list(n = n, k = k), fun.args))
+      augmentLHS(des, m = nmissing)
+    # preallocate result for C
+    res = makeDataFrame(n, k, col.types = types.df)
     res = .Call(c_generateDesign, des, res, types.int, lower2, upper2, values2)
-
     res = .Call(c_trafo_and_set_dep_to_na, res, types.int, names(pars), lens, trafos, par.requires, new.env())
 
-    # try to replace duplicates a couple of times
     if (remove.duplicates) {
       to.remove = duplicated(res)
-      to.keep = !to.remove
-      nmissing = sum(to.remove)
-      i = 0
-      while(nmissing > 0 && i < remove.duplicates.iter) {
-        des = des[to.keep,]
-        des = do.call(lhs::augmentLHS, list(lhs=des, m = nmissing))
-        res = .Call(c_generateDesign, des, res, types.int, lower2, upper2, nlevs)
-        res = .Call(c_trafo_and_set_dep_to_na, res, types.int, names(pars), lens, trafos, par.requires, new.env())
-        to.remove = duplicated(res)
-        to.keep = !to.remove
-        nmissing = sum(to.remove)
-        i = i + 1
-      }
-      if (nmissing > 0) {
-        stopf("Algorithm was unable to generate design with no duplicated rows!")
-      }
+      des = des[!to.remove, , drop = FALSE]
+      res = res[!to.remove, , drop = FALSE]
     }
- 
-    # stop if we have enough rows in design
-    if (nrow(res) == n)
+    nmissing = n - nrow(res)
+
+    # enough points or augment tries? we are done!
+    iters = iters + 1L
+    if (nmissing == 0L || iters >= augment)
       break
   }
+
+  if (nrow(res) < n)
+    warningf("generateDesign could only produce %i points instead of %i!", nrow(res), n)
 
   colnames(res) = pids1
 
