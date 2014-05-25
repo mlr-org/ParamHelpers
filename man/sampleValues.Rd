@@ -23,16 +23,16 @@ Default is code {FALSE}.}
 Dependent parameters whose requirements are not satisfied are represented by a scalar NA in the output.
 }
 \examples{
-p <- makeIntegerParam("x", lower = -10, upper = 10)
+p = makeIntegerParam("x", lower = -10, upper = 10)
 sampleValues(p, 4)
 
-p <- makeNumericParam("x", lower = -10, upper = 10)
+p = makeNumericParam("x", lower = -10, upper = 10)
 sampleValues(p, 4)
 
-p <- makeLogicalParam("x")
+p = makeLogicalParam("x")
 sampleValues(p, 4)
 
-ps <- makeParamSet(
+ps = makeParamSet(
   makeNumericParam("u", lower = 1, upper = 10),
   makeIntegerParam("v", lower = 1, upper = 10),
   makeDiscreteParam("w", values = 1:2)

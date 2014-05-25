@@ -43,7 +43,7 @@ The algorithm currently performs these steps:
   \item{Forbidden points are removed.}
   \item{Parameters are trafoed (maybe); dependent parameters whose constraints are unsatisfied
     are set to \code{NA} entries.}
-  \item{Duplicated design points are removed.}
+  \item{Duplicated design points are removed. Duplicates can ocur due to \code{requires}.}
 }
 }
 \examples{

@@ -36,8 +36,8 @@ Default is \dQuote{last}.}
 Get index of the best element from optimization path.
 }
 \examples{
-ps <- makeParamSet(makeNumericParam("x"))
-op <- makeOptPathDF(par.set=ps, y.names="y", minimize=TRUE)
+ps = makeParamSet(makeNumericParam("x"))
+op = makeOptPathDF(par.set=ps, y.names="y", minimize=TRUE)
 addOptPathEl(op, x=list(x=1), y=5)
 addOptPathEl(op, x=list(x=2), y=3)
 addOptPathEl(op, x=list(x=3), y=9)

@@ -32,8 +32,8 @@ Default is \code{FALSE}.}
 Get indices of pareto front of optimization path.
 }
 \examples{
-ps <- makeParamSet(makeNumericParam("x"))
-op <- makeOptPathDF(par.set=ps, y.names=c("y1", "y2"), minimize=c(TRUE, TRUE))
+ps = makeParamSet(makeNumericParam("x"))
+op = makeOptPathDF(par.set=ps, y.names=c("y1", "y2"), minimize=c(TRUE, TRUE))
 addOptPathEl(op, x=list(x=1), y=c(5, 3))
 addOptPathEl(op, x=list(x=2), y=c(2, 4))
 addOptPathEl(op, x=list(x=3), y=c(9, 4))

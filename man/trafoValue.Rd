@@ -21,10 +21,10 @@ Transform a value with associated transformation function(s).
 }
 \examples{
 # transform simple parameter:
-p <- makeNumericParam(id="x", trafo=function(x) x^2)
+p = makeNumericParam(id="x", trafo=function(x) x^2)
 trafoValue(p, 2)
 # for a parameter set different transformation functions are possible:
-ps <- makeParamSet(
+ps = makeParamSet(
   makeIntegerParam("u", trafo=function(x) 2*x),
   makeNumericVectorParam("v", len=2, trafo=function(x) x/sum(x)),
   makeDiscreteParam("w", values=c("a", "b"))

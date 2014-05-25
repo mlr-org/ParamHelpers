@@ -60,7 +60,7 @@ The following types of columns are created:
 }
 If you want to convert these, look at \code{\link[BBmisc]{convertDataFrameCols}}.
 
-Dependent parameters whose constaints are unsatisfied generate \code{NA} entries in their
+Dependent parameters whose constraints are unsatisfied generate \code{NA} entries in their
 respective columns.
 
 Currently only lhs designs are supported.
@@ -78,7 +78,7 @@ The algorithm currently iterates the following steps:
 }
 }
 \examples{
-ps <- makeParamSet(
+ps = makeParamSet(
   makeNumericParam("x1", lower = -2, upper = 1),
   makeIntegerParam("x2", lower = 10, upper = 20)
 )
@@ -86,7 +86,7 @@ ps <- makeParamSet(
 generateDesign(5, ps)
 
 # with trafo
-ps <- makeParamSet(
+ps = makeParamSet(
   makeNumericParam("x", lower = -2, upper = 1),
   makeNumericVectorParam("y", len = 2, lower = 0, upper = 1, trafo = function(x) x/sum(x))
 )

@@ -30,7 +30,7 @@ bounds, \code{getValues} returns a list of possible value sets for discrete para
 Parameters for which such bound make no sense - due to their type - are not present in the result.
 }
 \examples{
-ps <- makeParamSet(
+ps = makeParamSet(
   makeNumericParam("u"),
   makeIntegerParam("v", lower = 1, upper = 2),
   makeDiscreteParam("w", values = 1:2),

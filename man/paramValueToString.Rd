@@ -31,22 +31,22 @@ Useful helper for logging.
 For discrete parameter values always the name of the discrete value is used.
 }
 \examples{
-p <- makeNumericParam("x")
+p = makeNumericParam("x")
 paramValueToString(p, 1)
 paramValueToString(p, 1.2345)
 paramValueToString(p, 0.000039)
 paramValueToString(p, 8.13402, num.format = "\%.2f")
 
-p <- makeIntegerVectorParam("x", len=2)
+p = makeIntegerVectorParam("x", len=2)
 paramValueToString(p, c(1L, 2L))
 
-p <- makeLogicalParam("x")
+p = makeLogicalParam("x")
 paramValueToString(p, TRUE)
 
-p <- makeDiscreteParam("x", values=list(a=NULL, b=2))
+p = makeDiscreteParam("x", values=list(a=NULL, b=2))
 paramValueToString(p, NULL)
 
-ps <- makeParamSet(
+ps = makeParamSet(
   makeNumericVectorParam("x", len=2L),
   makeDiscreteParam("y", values=list(a=NULL, b=2))
 )
