@@ -25,10 +25,11 @@
 #' \enumerate{
 #'   \item{We create a space filling design for all paramaters, disregarding \code{requires},
 #'     a \code{trafo} or the forbidden region.}
-#'   \item{Parameters are trafoed; dependent parameters whose constaints are unsatisfied are set to
-#'     \code{NA} entries.}
-#'   \item{Duplicated and forbidden design points are removed.}
-#'   \item{If we removed some points we now try to augment the design in a space filling way and iterate.}
+#'   \item{Forbidden points are removed.}
+#'   \item{Parameters are trafoed (maybe); dependent parameters whose constaints are unsatisfied
+#'     are set to \code{NA} entries.}
+#'   \item{Duplicated design points are removed.}
+#'   \item{If we removed some points, we now try to augment the design in a space filling way and iterate.}
 #' }
 #'
 #' @param n [\code{integer(1)}]\cr
