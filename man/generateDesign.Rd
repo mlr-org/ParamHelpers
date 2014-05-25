@@ -67,13 +67,14 @@ Currently only lhs designs are supported.
 
 The algorithm currently iterates the following steps:
 \enumerate{
-  \item{We create a space filling design for all paramaters, disregarding \code{requires},
+  \item{We create a space filling design for all parameters, disregarding \code{requires},
     a \code{trafo} or the forbidden region.}
   \item{Forbidden points are removed.}
-  \item{Parameters are trafoed (maybe); dependent parameters whose constaints are unsatisfied
+  \item{Parameters are trafoed (maybe); dependent parameters whose constraints are unsatisfied
     are set to \code{NA} entries.}
   \item{Duplicated design points are removed.}
-  \item{If we removed some points, we now try to augment the design in a space filling way and iterate.}
+  \item{If we removed some points, we now try to augment the design in a space filling way
+    and iterate.}
 }
 }
 \examples{

@@ -1,13 +1,26 @@
-#' Generates a grid design for a parameter set.
+#' @title Generates a grid design for a parameter set.
 #'
+#' @description
 #' The following types of columns are created:
 #' \tabular{ll}{
 #'  numeric(vector)   \tab  \code{numeric}  \cr
 #'  integer(vector)   \tab  \code{integer}  \cr
-#'  discrete(vector)  \tab  \code{factor}   \cr
+#'  discrete(vector)  \tab  \code{factor} (names of values = levels) \cr
 #'  logical(vector)   \tab  \code{logical}
 #' }
 #' If you want to convert these, look at \code{\link[BBmisc]{convertDataFrameCols}}.
+
+#' Dependent parameters whose constaints are unsatisfied generate \code{NA} entries in their
+#' respective columns.
+#'
+#' The algorithm currently performs these steps:
+#' \enumerate{
+#'   \item{We create a grid. For numerics and integers we use the specfied resolution.}
+#'   \item{Forbidden points are removed.}
+#'   \item{Parameters are trafoed (maybe); dependent parameters whose constraints are unsatisfied
+#'     are set to \code{NA} entries.}
+#'   \item{Duplicated design points are removed. Duplicates can ocur due to \code{requires}.}
+#' }
 #'
 #' @param par.set [\code{\link{ParamSet}}]\cr
 #'   Parameter set.
@@ -20,6 +33,7 @@
 #'   Default is \code{FALSE}.
 #' @return [\code{data.frame}]. Columns are named by the ids of the parameters.
 #'   If the \code{par.set} argument contains a vector parameter, its corresponding column names
+#'   in the design are the parameter id concatenated with 1 to dimension of the vector.
 #'   The result will have an \code{logical(1)} attribute \dQuote{trafo},
 #'   which is set to the value of argument \code{trafo}.
 #' @export
@@ -116,6 +130,10 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE) {
     res = convertDataFrameCols(res, factors.as.char = TRUE)
     res = .Call(c_trafo_and_set_dep_to_na, res, types.int, names(pars), lens, trafos, par.requires, new.env())
   }
+
+  # remove duplicates
+  res = res[!duplicated(res), , drop = FALSE]
+
   res = convertDataFrameCols(res, chars.as.factor = TRUE)
   attr(res, "trafo") = trafo
   res
