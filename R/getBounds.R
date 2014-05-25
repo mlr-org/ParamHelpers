@@ -13,7 +13,7 @@
 #' @return [\code{vector} | \code{list}]. Named by parameter ids.
 #' @export
 #' @examples
-#' ps <- makeParamSet(
+#' ps = makeParamSet(
 #'   makeNumericParam("u"),
 #'   makeIntegerParam("v", lower = 1, upper = 2),
 #'   makeDiscreteParam("w", values = 1:2),

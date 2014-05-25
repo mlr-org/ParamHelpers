@@ -12,19 +12,19 @@
 #' @export
 #' @examples
 #' # bounds are necessary here, can't sample with Inf bounds:
-#' u <- makeNumericParam("x", lower = 0, upper = 1)
+#' u = makeNumericParam("x", lower = 0, upper = 1)
 #' # returns a random number between 0 and 1:
 #' sampleValue(u)
 #'
-#' p <- makeDiscreteParam("x", values = c("a","b","c"))
+#' p = makeDiscreteParam("x", values = c("a","b","c"))
 #' # can be either "a", "b" or "c"
 #' sampleValue(p)
 #'
-#' p <- makeIntegerVectorParam("x", len = 2, lower = 1, upper = 5)
+#' p = makeIntegerVectorParam("x", len = 2, lower = 1, upper = 5)
 #' # vector of two random integers between 1 and 5:
 #' sampleValue(p)
 #'
-#' ps <- makeParamSet(
+#' ps = makeParamSet(
 #'   makeNumericParam("x", lower = 1, upper = 10),
 #'   makeIntegerParam("y", lower = 1, upper = 10),
 #'   makeDiscreteParam("z", values = 1:2)
@@ -112,16 +112,16 @@ sampleValue.ParamSet = function(par, discrete.names = FALSE) {
 #' @return [\code{list}]. For consistency always a list is returned.
 #' @export
 #' @examples
-#' p <- makeIntegerParam("x", lower = -10, upper = 10)
+#' p = makeIntegerParam("x", lower = -10, upper = 10)
 #' sampleValues(p, 4)
 #'
-#' p <- makeNumericParam("x", lower = -10, upper = 10)
+#' p = makeNumericParam("x", lower = -10, upper = 10)
 #' sampleValues(p, 4)
 #'
-#' p <- makeLogicalParam("x")
+#' p = makeLogicalParam("x")
 #' sampleValues(p, 4)
 #'
-#' ps <- makeParamSet(
+#' ps = makeParamSet(
 #'   makeNumericParam("u", lower = 1, upper = 10),
 #'   makeIntegerParam("v", lower = 1, upper = 10),
 #'   makeDiscreteParam("w", values = 1:2)

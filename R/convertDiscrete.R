@@ -42,7 +42,7 @@ discreteNameToValue = function(par, name) {
 #' @return [\code{character}]. Single name for a discrete parameter or a character vector of
 #'   names for a discrete vector.
 #' @examples
-#' p <- makeDiscreteParam("u", values=c(x1="a", x2="b", x3="c"))
+#' p = makeDiscreteParam("u", values=c(x1="a", x2="b", x3="c"))
 #' discreteValueToName(p, "b")
 #' @export
 discreteValueToName = function(par, x) {

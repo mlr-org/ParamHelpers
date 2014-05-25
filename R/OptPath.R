@@ -158,11 +158,11 @@ getOptPathEl = function(op, index) {
 #' @return Nothing.
 #' @export
 #' @examples
-#' ps <- makeParamSet(
+#' ps = makeParamSet(
 #'   makeNumericParam("p1"),
 #'   makeDiscreteParam("p2", values=c("a", "b"))
 #' )
-#' op <- makeOptPathDF(par.set=ps, y.names="y", minimize=TRUE)
+#' op = makeOptPathDF(par.set=ps, y.names="y", minimize=TRUE)
 #' addOptPathEl(op, x=list(p1=7, p2="b"), y=1)
 #' addOptPathEl(op, x=list(p1=-1, p2="a"), y=2)
 #' as.data.frame(op)
@@ -194,8 +194,8 @@ addOptPathEl = function(op, x, y, dob=getOptPathLength(op)+1L, eol=as.integer(NA
 #'   Index or indices into path. See \code{ties}.
 #' @export
 #' @examples
-#' ps <- makeParamSet(makeNumericParam("x"))
-#' op <- makeOptPathDF(par.set=ps, y.names="y", minimize=TRUE)
+#' ps = makeParamSet(makeNumericParam("x"))
+#' op = makeOptPathDF(par.set=ps, y.names="y", minimize=TRUE)
 #' addOptPathEl(op, x=list(x=1), y=5)
 #' addOptPathEl(op, x=list(x=2), y=3)
 #' addOptPathEl(op, x=list(x=3), y=9)
@@ -256,8 +256,8 @@ getOptPathBestIndex = function(op, y.name=op$y.names[1], dob=op$env$dob, eol=op$
 #'   in objective space or indices into path for front.
 #' @export
 #' @examples
-#' ps <- makeParamSet(makeNumericParam("x"))
-#' op <- makeOptPathDF(par.set=ps, y.names=c("y1", "y2"), minimize=c(TRUE, TRUE))
+#' ps = makeParamSet(makeNumericParam("x"))
+#' op = makeOptPathDF(par.set=ps, y.names=c("y1", "y2"), minimize=c(TRUE, TRUE))
 #' addOptPathEl(op, x=list(x=1), y=c(5, 3))
 #' addOptPathEl(op, x=list(x=2), y=c(2, 4))
 #' addOptPathEl(op, x=list(x=3), y=c(9, 4))

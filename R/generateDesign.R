@@ -70,7 +70,7 @@
 #' @export
 #' @useDynLib ParamHelpers c_generateDesign c_trafo_and_set_dep_to_na
 #' @examples
-#' ps <- makeParamSet(
+#' ps = makeParamSet(
 #'   makeNumericParam("x1", lower = -2, upper = 1),
 #'   makeIntegerParam("x2", lower = 10, upper = 20)
 #' )
@@ -78,7 +78,7 @@
 #' generateDesign(5, ps)
 #'
 #' # with trafo
-#' ps <- makeParamSet(
+#' ps = makeParamSet(
 #'   makeNumericParam("x", lower = -2, upper = 1),
 #'   makeNumericVectorParam("y", len = 2, lower = 0, upper = 1, trafo = function(x) x/sum(x))
 #' )
