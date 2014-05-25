@@ -22,12 +22,14 @@
 #' Currently only lhs designs are supported.
 #'
 #' The algorithm currently iterates the following steps:
-#' We create a space filling design for all paramaters, disregarding \code{requires}, a \code{trafo}
-#' or the forbidden region.
-#' Parameters are trafoed; dependent parameters whose constaints are unsatisfied are set to 
-#' \code{NA} entries.
-#' Duplicated and forbidden design points are removed. 
-#' If we removed some points we now try to augment the design in a space filling way and iterate.
+#' \enumerate{
+#'   \item{We create a space filling design for all paramaters, disregarding \code{requires},
+#'     a \code{trafo} or the forbidden region.}
+#'   \item{Parameters are trafoed; dependent parameters whose constaints are unsatisfied are set to
+#'     \code{NA} entries.}
+#'   \item{Duplicated and forbidden design points are removed.}
+#'   \item{If we removed some points we now try to augment the design in a space filling way and iterate.}
+#' }
 #'
 #' @param n [\code{integer(1)}]\cr
 #'   Number of samples in design.

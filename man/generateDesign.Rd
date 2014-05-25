@@ -4,7 +4,7 @@
 \title{Generates a statistical design for a parameter set.}
 \usage{
 generateDesign(n = 10L, par.set, fun, fun.args = list(), trafo = FALSE,
-  remove.duplicates = FALSE, remove.duplicates.iter = 5L)
+  remove.duplicates = FALSE, augment = 5L)
 }
 \arguments{
 \item{n}{[\code{integer(1)}]\cr
@@ -29,24 +29,24 @@ Transform all parameters by using theirs respective transformation functions.
 Default is \code{FALSE}.}
 
 \item{remove.duplicates}{[\code{logical(1)}]\cr
-Must the design NOT contain duplicate lines?
+In some cases (discrete parameters and dependencies) it might happen that duplicated lines
+occur in the generated design. This option guards against this, by removing the duplicated lines
+from the design.
 Default is \code{FALSE}.}
 
-\item{remove.duplicates.iter}{[\code{integer(1)}]\cr
-If \code{remove.duplicates} is set to \code{TRUE} and duplicates occur within the design, i. e., if
-at least one line appears multiple times, the function tries hard to fix to replace the duplicated lines.
-The parameter controls how many attempts the algorithm will at most start.}
+\item{augment}{[\code{integer(1)}]\cr
+\code{remove.duplicates} and forbidden regions in the parameter space can lead to the design
+becoming smaller than \code{n}. With this option it is possible to augment the design again
+to size \code{n}. It is not guaranteed that this always works (to full size)
+and \code{augment} specifies the number of tries to augment.
+If the the design is of size less than \code{n} after all tries, a warning is issued
+and the smaller design is returned.
+Default is 5.}
 }
 \value{
 The created design is a data.frame. Columns are named by the ids of the parameters.
   If the \code{par.set} argument contains a vector parameter, its corresponding column names
   in the design are the parameter id concatenated with 1 to dimension of the vector.
-  The data type of a column
-  is defined in the following way. Numeric parameters generate numeric columns, integer parameters generate numeric/integer columns,
-  logical parameters generate logical/factor columns.
-  For discrete parameters the value names are used and character or factor columns are generated.
-  Dependent parameters whose constaints are unsatisfied generate \code{NA} entries in their
-  respective columns.
   The result will have an \code{logical(1)} attribute \dQuote{trafo},
   which is set to the value of argument \code{trafo}.
 }
@@ -55,12 +55,25 @@ The following types of columns are created:
 \tabular{ll}{
  numeric(vector)   \tab  \code{numeric}  \cr
  integer(vector)   \tab  \code{integer}  \cr
- discrete(vector)  \tab  \code{factor}   \cr
+ discrete(vector)  \tab  \code{factor} (names of values = levels) \cr
  logical(vector)   \tab  \code{logical}
 }
 If you want to convert these, look at \code{\link[BBmisc]{convertDataFrameCols}}.
 
+Dependent parameters whose constaints are unsatisfied generate \code{NA} entries in their
+respective columns.
+
 Currently only lhs designs are supported.
+
+The algorithm currently iterates the following steps:
+\enumerate{
+  \item{We create a space filling design for all paramaters, disregarding \code{requires},
+    a \code{trafo} or the forbidden region.}
+  \item{Parameters are trafoed; dependent parameters whose constaints are unsatisfied are set to
+    \code{NA} entries.}
+  \item{Duplicated and forbidden design points are removed.}
+  \item{If we removed some points we now try to augment the design in a space filling way and iterate.}
+}
 }
 \examples{
 ps <- makeParamSet(
