@@ -1,8 +1,8 @@
 #' Return lengths of parameters in parameter set.
 #'
 #' Useful for vector parameters.
-#' @param par.set [\code{\link{ParamSet}}]\cr
-#'   Parameter set.
+#'
+#' @template parset
 #' @return [\code{integer}]. Named and in same order as \code{par.set}.
 #' @examples
 #' ps = makeParamSet(

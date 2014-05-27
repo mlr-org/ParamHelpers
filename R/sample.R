@@ -30,12 +30,12 @@
 #'   makeDiscreteParam("z", values = 1:2)
 #' )
 #' sampleValue(ps)
-sampleValue = function(par, discrete.names = FALSE) {
+sampleValue = function(par, discrete.names = FALSE, trafo = FALSE) {
   UseMethod("sampleValue")
 }
 
 #' @export
-sampleValue.Param = function(par, discrete.names = FALSE) {
+sampleValue.Param = function(par, discrete.names = FALSE, trafo = FALSE) {
   type = par$type
   if (par$type %in% c("numeric", "numericvector", "integer", "integervector"))
     if (any(is.infinite(c(par$lower, par$upper))))
@@ -69,7 +69,7 @@ sampleValue.Param = function(par, discrete.names = FALSE) {
 }
 
 #' @export
-sampleValue.ParamSet = function(par, discrete.names = FALSE) {
+sampleValue.ParamSet = function(par, discrete.names = FALSE, trafo = FALSE) {
   # sample value for each param, do it until we a get one which is not forbidden
   repeat {
     val = lapply(par$pars, sampleValue, discrete.names = discrete.names)
@@ -127,7 +127,7 @@ sampleValue.ParamSet = function(par, discrete.names = FALSE) {
 #'   makeDiscreteParam("w", values = 1:2)
 #' )
 #' sampleValues(ps, 2)
-sampleValues = function(par, n, discrete.names = FALSE) {
+sampleValues = function(par, n, discrete.names = FALSE, trafo = FALSE) {
   checkArg(par, c("Param", "ParamSet"))
   n = convertInteger(n)
   checkArg(n, "integer", 1, na.ok = FALSE)

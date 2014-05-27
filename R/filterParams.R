@@ -1,8 +1,8 @@
 #' Get parameter subset of only certain parameters.
 #'
 #' Parameter order is not changed.
-#' @param par.set [\code{\link{ParamSet}}]\cr
-#'   Parameter set.
+#'
+#' @template parset
 #' @param type [\code{character}]\cr
 #'   Vector of allowed types, subset of: \dQuote{numeric}, \dQuote{integer}, \dQuote{numericvector},
 #'   \dQuote{integervector}, \dQuote{discrete}, \dQuote{discretevector}, \dQuote{logical},

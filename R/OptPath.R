@@ -28,8 +28,7 @@
 #'   Contents depend on implementation.}
 #' }
 #'
-#' @param par.set [\code{\link{ParamSet}}]\cr
-#'   Parameter set for the decision variables that are optimized.
+#' @template parset
 #' @param y.names [\code{character}]\cr
 #'   Names of performance measures that are optimized or logged.
 #' @param minimize [\code{logical}]\cr

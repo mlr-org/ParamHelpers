@@ -1,7 +1,6 @@
 #' Returns information on the number of parameters of a each type.
 #'
-#' @param par.set [\code{link{ParamSet}}]\cr
-#'  Parameter set.
+#' @template parset
 #' @return [\code{list}]
 #'  Named list which contains for each supported parameter type the
 #'  number of parameters of this type in the given ParamSet.

@@ -3,8 +3,7 @@
 #' \code{TRUE} iff the parameter set contains at least one parameter of the mentioned type x.
 #' Type x always subsumes x and x-vector.
 #'
-#' @param par.set [\code{\link{ParamSet}}]\cr
-#'   Parameter set.
+#' @template parset
 #' @param include.int [\code{logical(1)}]\cr
 #'   Are integers also considered to be numeric?
 #'   Default is \code{TRUE}.

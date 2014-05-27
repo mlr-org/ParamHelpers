@@ -1,7 +1,6 @@
 #' Check parameter set for forbidden region.
 #'
-#' @param par.set [\code{\link{ParamSet}}]\cr
-#'   Parameter set.
+#' @template parset
 #' @return [\code{logical(1)}].
 #' @export
 hasForbidden = function(par.set) {

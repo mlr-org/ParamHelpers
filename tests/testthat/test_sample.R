@@ -134,4 +134,14 @@ test_that("requires works", {
   expect_true(all(oks))
 })
 
+test_that("trafo works", {
+  ps = makeParamSet(
+    makeNumericParam("x", lower =-2, upper = 2)
+  )
+  vals = sampleValues(ps, n = 100, trafo = TRUE)
+  vals = extractSubList(vals, "x")
+  expect_true(all(x >= 2^(-2) & x <= 2^2))
+})
+
+
 
