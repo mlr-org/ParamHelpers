@@ -2,8 +2,7 @@
 #'
 #' Dependent parameters whose requirements are not satisfied are represented by a scalar NA in the output.
 #'
-#' @param par [\code{\link{Param}} | \code{\link{ParamSet}}]\cr
-#'   Parameter or parameter set.
+#' @template arg_par_or_set
 #' @param discrete.names [\code{logical(1)}]\cr
 #'   Should names be sampled for discrete / logical paramaters or values instead?
 #'   Default is code {FALSE}.

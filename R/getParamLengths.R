@@ -2,7 +2,7 @@
 #'
 #' Useful for vector parameters.
 #'
-#' @template parset
+#' @template arg_parset
 #' @return [\code{integer}]. Named and in same order as \code{par.set}.
 #' @examples
 #' ps = makeParamSet(

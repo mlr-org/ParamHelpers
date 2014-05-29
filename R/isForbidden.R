@@ -2,8 +2,7 @@
 #'
 #' Parameter sets without a forbidden region always return \code{FALSE}.
 #'
-#' @param par.set [\code{\link{ParamSet}}]\cr
-#'   Parameter or parameter set.
+#' @template arg_par_or_set
 #' @param x [named \code{list}] \cr
 #'   Parameter setting to check.
 #' @return [\code{logical(1)}].

@@ -2,7 +2,7 @@
 #'
 #' Parameter order is not changed.
 #'
-#' @template parset
+#' @template arg_parset
 #' @param type [\code{character}]\cr
 #'   Vector of allowed types, subset of: \dQuote{numeric}, \dQuote{integer}, \dQuote{numericvector},
 #'   \dQuote{integervector}, \dQuote{discrete}, \dQuote{discretevector}, \dQuote{logical},

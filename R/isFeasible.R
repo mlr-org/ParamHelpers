@@ -7,7 +7,7 @@
 #' the parameter value must be set to scalar \code{NA} to be still feasible, a single scalar even in a
 #' case of a vector parameter.
 #'
-#' @template par_or_set
+#' @template arg_par_or_set
 #' @param x [any] \cr
 #'   Single value to check.
 #'   For a parameter set this must be a list in the correct order.

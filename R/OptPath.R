@@ -28,7 +28,7 @@
 #'   Contents depend on implementation.}
 #' }
 #'
-#' @template parset
+#' @template arg_parset
 #' @param y.names [\code{character}]\cr
 #'   Names of performance measures that are optimized or logged.
 #' @param minimize [\code{logical}]\cr
