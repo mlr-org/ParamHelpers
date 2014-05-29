@@ -46,9 +46,7 @@
 #'   Default is \code{\link[lhs]{randomLHS}}.
 #' @param fun.args [\code{list}]\cr
 #'   List of further arguments passed to \code{fun}.
-#' @param trafo [\code{logical(1)}]\cr
-#'   Transform all parameters by using theirs respective transformation functions.
-#'   Default is \code{FALSE}.
+#' @template arg_trafo
 #' @param remove.duplicates [\code{logical(1)}]\cr
 #'   In some cases (discrete parameters and dependencies) it might happen that duplicated lines
 #'   occur in the generated design. This option guards against this, by removing the duplicated lines
