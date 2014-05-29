@@ -59,7 +59,6 @@ The following types of columns are created:
  logical(vector)   \tab  \code{logical}
 }
 If you want to convert these, look at \code{\link[BBmisc]{convertDataFrameCols}}.
-
 Dependent parameters whose constraints are unsatisfied generate \code{NA} entries in their
 respective columns.
 
