@@ -82,38 +82,27 @@ makeParam = function(id, type, len, lower, upper, values, default, trafo = NULL,
   return(p)
 }
 
+getParPrintData = function(x, trafo = TRUE, used = TRUE) {
+  g = function(n) collapse(sprintf("%.3g", n))
+  if (isNumeric(x))
+    constr = sprintf("%s to %s", g(x$lower), g(x$upper))
+  else
+    constr = ""
+  d = data.frame(
+    Type = x$type,
+    len = ifelse(isVector(x), x$len, "-"),
+    Def = if (x$has.default) paramValueToString(x, x$default) else "-",
+    Constr = constr,
+    Req = ifelse(is.null(x$requires), "-", "Y")
+  )
+  if (trafo)
+    d$Trafo = ifelse(is.null(x$trafo), "-", "Y")
+  return(d)
+}
+
 
 #' @export
 print.Param = function(x, ..., trafo = TRUE) {
-  type = x$type
-  ut = !is.null(x$trafo)
-  req = !is.null(x$requires)
-  def = if (x$has.default)
-    paramValueToString(x, x$default)
-  else
-    "<none>"
-  straf = ifelse(trafo, sprintf(" Trafo: %s.", ut),  "")
-  if (type == "numeric")
-    catf("Num param '%s'. Constr: %s to %s. Def: %s.%s Requires: %s", x$id, x$lower, x$upper, def, straf, req)
-  else if (type == "integer")
-    catf("Int param '%s'. Constr: %s to %s. Def: %s.%s Requires: %s", x$id, x$lower, x$upper, def, straf, req)
-  else if (type == "numericvector")
-    catf("Num vec param '%s'. Len: %i. Constr: %s to %s. Def: %s.%s Requires: %s",
-      x$id, x$len, collapse(x$lower), collapse(x$upper), def, straf, req)
-  else if (type == "integervector")
-    catf("Int vec param '%s'. Len: %i. Constr: %s to %s. Def %s.%s Requires: %s",
-      x$id, x$len, collapse(x$lower), collapse(x$upper), def, straf, req)
-  else if (type == "discrete")
-    catf("Disc param '%s'. Vals: %s. Def: %s. Requires: %s", x$id, collapse(names(x$values)), def, req)
-  else if (type == "discretevector")
-    catf("Disc vec param '%s'. Len: %i. Vals: %s. Def: %s. Requires: %s", x$id, x$len, collapse(names(x$values)), def, req)
-  else if (type == "logical")
-    catf("Log param '%s'. Def: %s. Requires: %s", x$id, def, req)
-  else if (type == "logicalvector")
-    catf("Log vec param '%s'. Len: %i. Def: %s. Requires: %s", x$id, x$len, def, req)
-  else if (type == "function")
-    catf("Fun param '%s'. Def: %s. Requires: %s", x$id, def, req)
-  else if (type == "untyped")
-    catf("Untyped param '%s'. Def: %s. Requires: %s", x$id, def, req)
+  getParPrintData(x, trafo = trafo)
 }
 
