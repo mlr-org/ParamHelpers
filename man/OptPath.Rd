@@ -10,7 +10,7 @@ makeOptPathDF(par.set, y.names, minimize, add.transformed.x = FALSE,
 }
 \arguments{
 \item{par.set}{[\code{\link{ParamSet}}]\cr
-Parameter set for the decision variables that are optimized.}
+Parameter set.}
 
 \item{y.names}{[\code{character}]\cr
 Names of performance measures that are optimized or logged.}

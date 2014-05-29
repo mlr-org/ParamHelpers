@@ -7,7 +7,7 @@ isForbidden(par.set, x)
 }
 \arguments{
 \item{par.set}{[\code{\link{ParamSet}}]\cr
-Parameter or parameter set.}
+Parameter set.}
 
 \item{x}{[named \code{list}] \cr
 Parameter setting to check.}
