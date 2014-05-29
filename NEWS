@@ -11,6 +11,7 @@ ParamHelpers_1.2:
 - Added option to log error messages in the optimization path.
 - normal parameters can now have a default value
 - generateDesign and generateGridDesign do not support type conversion anymore. See help page.  
+- sampleValue(s) have new option "trafo"
 - new functions
 -- getOptPathParetoFront
 -- generateGridDesign

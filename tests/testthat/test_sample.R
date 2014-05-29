@@ -136,11 +136,11 @@ test_that("requires works", {
 
 test_that("trafo works", {
   ps = makeParamSet(
-    makeNumericParam("x", lower =-2, upper = 2)
+    makeNumericParam("x", lower =-2, upper = 2, trafo = function(x) 2^x)
   )
   vals = sampleValues(ps, n = 100, trafo = TRUE)
   vals = extractSubList(vals, "x")
-  expect_true(all(x >= 2^(-2) & x <= 2^2))
+  expect_true(all(vals >= 2^(-2) & vals <= 2^2))
 })
 
 

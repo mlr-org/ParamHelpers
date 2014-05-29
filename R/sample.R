@@ -41,13 +41,13 @@ sampleValue.Param = function(par, discrete.names = FALSE, trafo = FALSE) {
   if (!is.null(par$len) && is.na(par$len))
     stop("Cannot sample with NA length!")
   if (type == "numeric") {
-    runif(1, min = par$lower, max = par$upper)
+    x = runif(1, min = par$lower, max = par$upper)
   } else if (type == "numericvector") {
-    runif(par$len, min = par$lower, max = par$upper)
+    x = runif(par$len, min = par$lower, max = par$upper)
   } else if (type == "integer") {
-    as.integer(round(runif(1, min = par$lower-0.5, max = par$upper+0.5)))
+    x = as.integer(round(runif(1, min = par$lower-0.5, max = par$upper+0.5)))
   } else if (type == "integervector") {
-    as.integer(round(runif(par$len, min = par$lower-0.5, max = par$upper+0.5)))
+    x = as.integer(round(runif(par$len, min = par$lower-0.5, max = par$upper+0.5)))
   } else if (type %in% c("discrete", "discretevector", "logical", "logicalvector")) {
     x = sample(names(par$values), par$len, replace = TRUE)
     if (!discrete.names) {
@@ -58,19 +58,21 @@ sampleValue.Param = function(par, discrete.names = FALSE, trafo = FALSE) {
       else
         par$values[[x]]
     }
-    return(x)
   } else if (type == "function") {
     stop("Cannot generate random value for function variable!")
   } else if (type == "untyped") {
     stop("Cannot generate random value for untyped variable!")
   }
+  if (trafo && !is.null(par$trafo))
+    x = par$trafo(x)
+  return(x)
 }
 
 #' @export
 sampleValue.ParamSet = function(par, discrete.names = FALSE, trafo = FALSE) {
   # sample value for each param, do it until we a get one which is not forbidden
   repeat {
-    val = lapply(par$pars, sampleValue, discrete.names = discrete.names)
+    val = lapply(par$pars, sampleValue, discrete.names = discrete.names, trafo = trafo)
     if (is.null(par$forbidden) || !isForbidden(par, val))
       break
   }
@@ -126,7 +128,8 @@ sampleValue.ParamSet = function(par, discrete.names = FALSE, trafo = FALSE) {
 sampleValues = function(par, n, discrete.names = FALSE, trafo = FALSE) {
   checkArg(par, c("Param", "ParamSet"))
   n = convertInteger(n)
-  checkArg(n, "integer", 1, na.ok = FALSE)
-  replicate(n, sampleValue(par, discrete.names = discrete.names), simplify = FALSE)
+  checkArg(n, "integer", len = 1L, na.ok = FALSE)
+  checkArg(discrete.names, "logical", len = 1L, na.ok = FALSE)
+  replicate(n, sampleValue(par, discrete.names = discrete.names, trafo = trafo), simplify = FALSE)
 }
 
