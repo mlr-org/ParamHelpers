@@ -84,7 +84,7 @@ makeParam = function(id, type, len, lower, upper, values, default, trafo = NULL,
 
 
 #' @export
-print.Param = function(x, ...) {
+print.Param = function(x, ..., trafo = TRUE) {
   type = x$type
   ut = !is.null(x$trafo)
   req = !is.null(x$requires)
@@ -92,16 +92,17 @@ print.Param = function(x, ...) {
     paramValueToString(x, x$default)
   else
     "<none>"
+  straf = ifelse(trafo, sprintf(" Trafo: %s.", ut),  "")
   if (type == "numeric")
-    catf("Num param '%s'. Constr: %s to %s. Def: %s. Trafo: %s. Requires: %s", x$id, x$lower, x$upper, def, ut, req)
+    catf("Num param '%s'. Constr: %s to %s. Def: %s.%s Requires: %s", x$id, x$lower, x$upper, def, straf, req)
   else if (type == "integer")
-    catf("Int param '%s'. Constr: %s to %s. Def: %s. Trafo: %s. Requires: %s", x$id, x$lower, x$upper, def, ut, req)
+    catf("Int param '%s'. Constr: %s to %s. Def: %s.%s Requires: %s", x$id, x$lower, x$upper, def, straf, req)
   else if (type == "numericvector")
-    catf("Num vec param '%s'. Len: %i. Constr: %s to %s. Def: %s. Trafo: %s. Requires: %s",
-      x$id, x$len, collapse(x$lower), collapse(x$upper), def, ut, req)
+    catf("Num vec param '%s'. Len: %i. Constr: %s to %s. Def: %s.%s Requires: %s",
+      x$id, x$len, collapse(x$lower), collapse(x$upper), def, straf, req)
   else if (type == "integervector")
-    catf("Int vec param '%s'. Len: %i. Constr: %s to %s. Def %s. Trafo: %s. Requires: %s",
-      x$id, x$len, collapse(x$lower), collapse(x$upper), def, ut, req)
+    catf("Int vec param '%s'. Len: %i. Constr: %s to %s. Def %s.%s Requires: %s",
+      x$id, x$len, collapse(x$lower), collapse(x$upper), def, straf, req)
   else if (type == "discrete")
     catf("Disc param '%s'. Vals: %s. Def: %s. Requires: %s", x$id, collapse(names(x$values)), def, req)
   else if (type == "discretevector")

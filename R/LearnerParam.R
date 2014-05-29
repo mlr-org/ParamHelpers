@@ -42,7 +42,8 @@ makeLearnerParam = function(p, when) {
 }
 
 #' @export
-print.LearnerParam = function(x, ...) {
-  print.Param(x)
-  catf("Used: %s.", x$when)
+print.LearnerParam = function(x, ..., trafo = TRUE, used = TRUE) {
+  print.Param(x, trafo = trafo)
+  if (used)
+    catf("Used: %s.", x$when)
 }

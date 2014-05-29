@@ -50,11 +50,11 @@ makeParamSet = function(..., params, forbidden = NULL) {
 }
 
 #' @export
-print.ParamSet = function(x, ...) {
+print.ParamSet = function(x, ..., trafo = TRUE, used = TRUE) {
   if (isEmpty(x))
     print("Empty parameter set.")
   else
-    sapply(x$pars, print)
+    sapply(x$pars, print, trafo = trafo, used = used)
   if (hasForbidden(x))
     catf("Forbidden region specified.")
   invisible(NULL)
