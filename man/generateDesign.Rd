@@ -4,7 +4,7 @@
 \title{Generates a statistical design for a parameter set.}
 \usage{
 generateDesign(n = 10L, par.set, fun, fun.args = list(), trafo = FALSE,
-  remove.duplicates = FALSE, augment = 5L)
+  augment = 5L)
 }
 \arguments{
 \item{n}{[\code{integer(1)}]\cr
@@ -28,14 +28,8 @@ List of further arguments passed to \code{fun}.}
 Transform all parameters by using theirs respective transformation functions.
 Default is \code{FALSE}.}
 
-\item{remove.duplicates}{[\code{logical(1)}]\cr
-In some cases (discrete parameters and dependencies) it might happen that duplicated lines
-occur in the generated design. This option guards against this, by removing the duplicated lines
-from the design.
-Default is \code{FALSE}.}
-
 \item{augment}{[\code{integer(1)}]\cr
-\code{remove.duplicates} and forbidden regions in the parameter space can lead to the design
+Duplicated values and forbidden regions in the parameter space can lead to the design
 becoming smaller than \code{n}. With this option it is possible to augment the design again
 to size \code{n}. It is not guaranteed that this always works (to full size)
 and \code{augment} specifies the number of tries to augment.
@@ -71,8 +65,10 @@ The algorithm currently iterates the following steps:
   \item{Forbidden points are removed.}
   \item{Parameters are trafoed (maybe); dependent parameters whose constraints are unsatisfied
     are set to \code{NA} entries.}
-  \item{Duplicated design points are removed.}
-  \item{If we removed some points, we now try to augment the design in a space filling way
+  \item{Duplicated design points are removed. Duplicated points are not generated in a
+   reasonable space-filling design, but the way discrete parameters and also parameter dependencies
+   are handled make this possible.}
+  \item{If we removed some points, we now try to augment the design in a space-filling way
     and iterate.}
 }
 }
