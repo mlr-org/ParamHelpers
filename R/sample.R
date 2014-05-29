@@ -1,11 +1,10 @@
 #' Sample a random value from a parameter or a parameter set uniformly.
 #'
-#' Dependent parameters whose requirements are not satisfied are represented by a scalar NA in the output.
+#' @template desc_dep_pars_na
 #'
 #' @template arg_par_or_set
-#' @param discrete.names [\code{logical(1)}]\cr
-#'   Should names be sampled for discrete / logical paramaters or values instead?
-#'   Default is code {FALSE}.
+#' @template arg_disc_names
+#' @template arg_trafo
 #' @return The return type is determined by the type of the parameter. For a set a named list
 #'   of such values in the correct order is returned.
 #' @export
@@ -99,15 +98,13 @@ sampleValue.ParamSet = function(par, discrete.names = FALSE, trafo = FALSE) {
 
 #' Sample n random values from a parameter or a parameter set uniformly.
 #'
-#' Dependent parameters whose requirements are not satisfied are represented by a scalar NA in the output.
+#' @template desc_dep_pars_na
 #'
-#' @param par [\code{\link{Param}} | \code{\link{ParamSet}}]\cr
-#'   Parameter or parameter set.
+#' @template arg_par_or_set
 #' @param n [\code{integer(1)}]\cr
 #'   Number of values.
-#' @param discrete.names [\code{logical(1)}]\cr
-#'   Should names be sampled for discrete / logical paramaters or values instead?
-#'   Default is code {FALSE}.
+#' @template arg_disc_names
+#' @template arg_trafo
 #' @return [\code{list}]. For consistency always a list is returned.
 #' @export
 #' @examples
