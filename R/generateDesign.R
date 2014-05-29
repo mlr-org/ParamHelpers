@@ -27,8 +27,10 @@
 #'   \item{Forbidden points are removed.}
 #'   \item{Parameters are trafoed (maybe); dependent parameters whose constraints are unsatisfied
 #'     are set to \code{NA} entries.}
-#'   \item{Duplicated design points are removed.}
-#'   \item{If we removed some points, we now try to augment the design in a space filling way
+#'   \item{Duplicated design points are removed. Duplicated points are not generated in a
+#'    reasonable space-filling design, but the way discrete parameters and also parameter dependencies
+#'    are handled make this possible.}
+#'   \item{If we removed some points, we now try to augment the design in a space-filling way
 #'     and iterate.}
 #' }
 #'
@@ -46,13 +48,8 @@
 #' @param fun.args [\code{list}]\cr
 #'   List of further arguments passed to \code{fun}.
 #' @template arg_trafo
-#' @param remove.duplicates [\code{logical(1)}]\cr
-#'   In some cases (discrete parameters and dependencies) it might happen that duplicated lines
-#'   occur in the generated design. This option guards against this, by removing the duplicated lines
-#'   from the design.
-#'   Default is \code{FALSE}.
 #' @param augment [\code{integer(1)}]\cr
-#'   \code{remove.duplicates} and forbidden regions in the parameter space can lead to the design
+#'   Duplicated values and forbidden regions in the parameter space can lead to the design
 #'   becoming smaller than \code{n}. With this option it is possible to augment the design again
 #'   to size \code{n}. It is not guaranteed that this always works (to full size)
 #'   and \code{augment} specifies the number of tries to augment.
@@ -80,8 +77,7 @@
 #'   makeNumericVectorParam("y", len = 2, lower = 0, upper = 1, trafo = function(x) x/sum(x))
 #' )
 #' generateDesign(10, ps, trafo = TRUE)
-generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALSE,
-  remove.duplicates = FALSE, augment = 5L) {
+generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALSE, augment = 5L) {
 
   n = convertInteger(n)
   checkArg(n, "integer", len = 1L, na.ok = FALSE)
@@ -95,7 +91,6 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
     checkArg(fun, "function")
   checkArg(fun.args, "list")
   checkArg(trafo, "logical", len = 1L, na.ok = FALSE)
-  checkArg(remove.duplicates, "logical", len = 1L, na.ok = FALSE)
   augment = convertInteger(augment)
   checkArg(augment, "integer", len = 1L, lower = 0L, na.ok = FALSE)
 
@@ -140,11 +135,10 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
     res = .Call(c_generateDesign, des, res, types.int, lower2, upper2, values2)
     res = .Call(c_trafo_and_set_dep_to_na, res, types.int, names(pars), lens, trafos, par.requires, new.env())
 
-    if (remove.duplicates) {
-      to.remove = duplicated(res)
-      des = des[!to.remove, , drop = FALSE]
-      res = res[!to.remove, , drop = FALSE]
-    }
+    # remove duplicates
+    to.remove = duplicated(res)
+    des = des[!to.remove, , drop = FALSE]
+    res = res[!to.remove, , drop = FALSE]
     nmissing = n - nrow(res)
 
     # enough points or augment tries? we are done!

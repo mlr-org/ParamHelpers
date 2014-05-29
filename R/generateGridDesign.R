@@ -18,7 +18,8 @@
 #'   \item{Forbidden points are removed.}
 #'   \item{Parameters are trafoed (maybe); dependent parameters whose constraints are unsatisfied
 #'     are set to \code{NA} entries.}
-#'   \item{Duplicated design points are removed. Duplicates can ocur due to \code{requires}.}
+#'   \item{Duplicated points are removed. Duplicated points are not generated in a
+#'    grid design, but the way parameter dependencies are handled make this possible.}
 #' }
 #'
 #' @param par.set [\code{\link{ParamSet}}]\cr
