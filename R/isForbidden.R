@@ -2,7 +2,7 @@
 #'
 #' Parameter sets without a forbidden region always return \code{FALSE}.
 #'
-#' @template arg_par_or_set
+#' @template arg_parset
 #' @param x [named \code{list}] \cr
 #'   Parameter setting to check.
 #' @return [\code{logical(1)}].
