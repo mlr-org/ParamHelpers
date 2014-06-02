@@ -86,8 +86,10 @@ getParPrintData = function(x, trafo = TRUE, used = TRUE) {
   g = function(n) collapse(sprintf("%.3g", n))
   if (isNumeric(x))
     constr = sprintf("%s to %s", g(x$lower), g(x$upper))
+  else if (isDiscrete(x))
+    constr = collapse(x$values)
   else
-    constr = ""
+    constr = "-"
   d = data.frame(
     Type = x$type,
     len = ifelse(isVector(x), x$len, "-"),
