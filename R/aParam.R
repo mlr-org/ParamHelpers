@@ -84,10 +84,10 @@ makeParam = function(id, type, len, lower, upper, values, default, trafo = NULL,
 
 getParPrintData = function(x, trafo = TRUE, used = TRUE) {
   g = function(n) collapse(sprintf("%.3g", n))
-  if (isNumeric(x))
+  if (isNumeric(x, include.int = TRUE))
     constr = sprintf("%s to %s", g(x$lower), g(x$upper))
-  else if (isDiscrete(x))
-    constr = collapse(x$values)
+  else if (isDiscrete(x, include.logical = FALSE))
+    constr = collapse(names(x$values))
   else
     constr = "-"
   d = data.frame(
