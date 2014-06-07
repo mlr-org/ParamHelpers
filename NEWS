@@ -11,6 +11,7 @@ ParamHelpers_1.2:
 - paramValueToString produces better readable output
 - sampleValue(s) have new option "trafo"
 - getLower and getUpper have with.nr argument now
+- getTypes renamed to getParamTypes
 - new functions
 -- getOptPathParetoFront
 -- generateGridDesign

@@ -10,6 +10,10 @@
 #'   This also results in replication of output types for
 #'   vector parameters.
 #'   Default is \code{FALSE}.
+#' @param df.discretes.as.factor [\code{logical(1)}]\cr
+#'   If \code{df.cols} is \code{TRUE}:
+#'   Should type for discrete params be \code{facor} or \code{character}?
+#'   Default is \code{TRUE}.
 #' @param use.names [\code{logical(1)}]\cr
 #'   Name the result vector?
 #'   Default is \code{FALSE}.
@@ -19,9 +23,10 @@
 #'   Default is \code{TRUE}.
 #' @return [\code{character}].
 #' @export
-getTypes = function(par.set, df.cols = FALSE, use.names = FALSE, with.nr = TRUE) {
+getParamTypes = function(par.set, df.cols = FALSE, df.discretes.as.factor = TRUE, use.names = FALSE, with.nr = TRUE) {
   checkArg(par.set, "ParamSet")
   checkArg(df.cols, "logical", len = 1L, na.ok = FALSE)
+  checkArg(df.discretes.as.factor, "logical", len = 1L, na.ok = FALSE)
   checkArg(use.names, "logical", len = 1L, na.ok = FALSE)
   checkArg(with.nr, "logical", len = 1L, na.ok = FALSE)
 
@@ -36,14 +41,24 @@ getTypes = function(par.set, df.cols = FALSE, use.names = FALSE, with.nr = TRUE)
   }
 
   if (df.cols) {
-    types = recode(types,
-      "numericvector", "numeric",
-      "integervector", "integer",
-      "discrete", "factor",
-      "discretevector", "factor",
-      "logicalvector", "logical"
-    )
-   }
+    types = if (df.discretes.as.factor) {
+      recode(types,
+        "numericvector", "numeric",
+        "integervector", "integer",
+        "discrete", "factor",
+        "discretevector", "factor",
+        "logicalvector", "logical"
+      )
+    } else {
+      recode(types,
+        "numericvector", "numeric",
+        "integervector", "integer",
+        "discrete", "character",
+        "discretevector", "character",
+        "logicalvector", "logical"
+      )
+    }
+  }
 
   ns = if (use.names)
     getParamIds(par.set, repeated = df.cols, with.nr = with.nr)

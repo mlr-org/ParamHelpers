@@ -22,7 +22,7 @@ dfRowsToList = function(df, par.set) {
   checkArg(par.set, "ParamSet")
 
   lens = getParamLengths(par.set)
-  int.type = convertTypesToCInts(getTypes(par.set, df.cols = TRUE))
+  int.type = convertTypesToCInts(getParamTypes(par.set, df.cols = TRUE))
 
   # factors to chars, so we can evaluate requires
   df = convertDataFrameCols(df, factors.as.char = TRUE)

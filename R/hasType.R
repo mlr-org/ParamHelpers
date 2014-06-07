@@ -48,10 +48,10 @@ hasNumeric = function(par.set, include.int = TRUE) {
 
 # is at least one of types somewhere in par.set?
 hasSomeParamsOfTypes = function(par.set, types) {
-  any(types %in% getTypes(par.set, df.cols = FALSE, with.nr = FALSE , use.names = FALSE))
+  any(types %in% getParamTypes(par.set, df.cols = FALSE, with.nr = FALSE , use.names = FALSE))
 }
 
 # are all param types contained in 'types'
 hasAllParamsOfTypes = function(par.set, types) {
-  all(getTypes(par.set, df.cols = FALSE, with.nr = FALSE , use.names = FALSE) %in% types)
+  all(getParamTypes(par.set, df.cols = FALSE, with.nr = FALSE , use.names = FALSE) %in% types)
 }

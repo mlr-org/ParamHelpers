@@ -119,7 +119,7 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE) {
 
   if (trafo || hasRequires(par.set)) {
     # the following lines are mainly copy paste from generateDesign
-    types.df = getTypes(par.set, df.cols = TRUE)
+    types.df = getParamTypes(par.set, df.cols = TRUE)
     types.int = convertTypesToCInts(types.df)
     # ignore trafos if the user did not request transformed values
     trafos = if(trafo)

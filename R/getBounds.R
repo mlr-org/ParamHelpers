@@ -42,7 +42,7 @@ getUpper = function(par.set, with.nr = FALSE) {
 #' @rdname getLower
 getValues = function(par.set) {
   checkArg(par.set, "ParamSet")
-  types = getTypes(par.set)
+  types = getParamTypes(par.set)
   is.disc = types %in% c("discrete", "discretevector", "logical", "logicalvector")
   if (!any(is.disc))
     return(list())
@@ -52,7 +52,7 @@ getValues = function(par.set) {
 # common functionality of getLower and getUpper
 getBounds = function(par.set, type.of.bounds, with.nr = FALSE) {
   checkArg(par.set, "ParamSet")
-  types = getTypes(par.set)
+  types = getParamTypes(par.set)
   is.num = types %in% c("numeric", "integer", "numericvector", "integervector")
   if (!any(is.num))
     return(numeric(0))

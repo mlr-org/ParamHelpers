@@ -8,7 +8,7 @@
 getParamTypeCounts = function(par.set) {
   checkArg(par.set, "ParamSet")
   supported.types = getSupportedParamTypes()
-  par.types = getTypes(par.set)
+  par.types = getParamTypes(par.set)
   count = lapply(supported.types, function(type) {
     sum(par.types == type)
   })
