@@ -24,6 +24,7 @@ Other optpath: \code{\link{OptPath}},
   \code{\link{getOptPathDOB}}; \code{\link{getOptPathEOL}};
   \code{\link{getOptPathEl}};
   \code{\link{getOptPathErrorMessages}};
+  \code{\link{getOptPathExecTimes}};
   \code{\link{getOptPathParetoFront}};
   \code{\link{getOptPathY}}; \code{\link{setOptPathElDOB}};
   \code{\link{setOptPathElEOL}}

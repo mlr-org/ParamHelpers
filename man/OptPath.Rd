@@ -26,7 +26,7 @@ add x values after they have been transformed?
 Default is \code{FALSE}.}
 
 \item{include.error.message}{[\code{logical(1)}]\cr
-Should it be possible to include an error message string (or NA if no error orccured)
+Should it be possible to include an error message string (or NA if no error occurred)
 into the path for each evaluation? #'   This is useful if you have complex, long running objective evaluations that might fail.
 Default is \code{FALSE}.}
 
@@ -77,6 +77,7 @@ Other optpath: \code{\link{addOptPathEl}};
   \code{\link{getOptPathDOB}}; \code{\link{getOptPathEOL}};
   \code{\link{getOptPathEl}};
   \code{\link{getOptPathErrorMessages}};
+  \code{\link{getOptPathExecTimes}};
   \code{\link{getOptPathLength}};
   \code{\link{getOptPathParetoFront}};
   \code{\link{getOptPathY}}; \code{\link{setOptPathElDOB}};

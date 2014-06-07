@@ -30,6 +30,7 @@ Other optpath: \code{\link{OptPath}},
   \code{\link{getOptPathBestIndex}};
   \code{\link{getOptPathDOB}}; \code{\link{getOptPathEOL}};
   \code{\link{getOptPathErrorMessages}};
+  \code{\link{getOptPathExecTimes}};
   \code{\link{getOptPathLength}};
   \code{\link{getOptPathParetoFront}};
   \code{\link{getOptPathY}}; \code{\link{setOptPathElDOB}};
