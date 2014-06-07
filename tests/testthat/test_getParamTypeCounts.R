@@ -2,7 +2,7 @@ context("getParamTypeCounts")
 
 test_that("getParamTypeCounts", {
   checkNonOccuringTypes = function(or, par.set) {
-    sapply(setdiff(getSupportedParamTypes(), getTypes(par.set)), function(type) {
+    sapply(setdiff(getSupportedParamTypes(), getParamTypes(par.set)), function(type) {
       expect_equal(or[[type]], 0L)
     })
   }
