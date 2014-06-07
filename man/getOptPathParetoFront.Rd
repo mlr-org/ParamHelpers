@@ -33,13 +33,25 @@ Get indices of pareto front of optimization path.
 }
 \examples{
 ps = makeParamSet(makeNumericParam("x"))
-op = makeOptPathDF(par.set=ps, y.names=c("y1", "y2"), minimize=c(TRUE, TRUE))
-addOptPathEl(op, x=list(x=1), y=c(5, 3))
-addOptPathEl(op, x=list(x=2), y=c(2, 4))
-addOptPathEl(op, x=list(x=3), y=c(9, 4))
-addOptPathEl(op, x=list(x=4), y=c(4, 9))
+op = makeOptPathDF(par.set = ps, y.names = c("y1", "y2"), minimize = c(TRUE, TRUE))
+addOptPathEl(op, x = list(x = 1), y = c(5, 3))
+addOptPathEl(op, x = list(x = 2), y = c(2, 4))
+addOptPathEl(op, x = list(x = 3), y = c(9, 4))
+addOptPathEl(op, x = list(x = 4), y = c(4, 9))
 as.data.frame(op)
 getOptPathParetoFront(op)
-getOptPathParetoFront(op, index=TRUE)
+getOptPathParetoFront(op, index = TRUE)
+}
+\seealso{
+Other optpath: \code{\link{OptPath}},
+  \code{\link{OptPathDF}}, \code{\link{makeOptPathDF}};
+  \code{\link{addOptPathEl}};
+  \code{\link{getOptPathBestIndex}};
+  \code{\link{getOptPathDOB}}; \code{\link{getOptPathEOL}};
+  \code{\link{getOptPathEl}};
+  \code{\link{getOptPathErrorMessages}};
+  \code{\link{getOptPathLength}};
+  \code{\link{getOptPathY}}; \code{\link{setOptPathElDOB}};
+  \code{\link{setOptPathElEOL}}
 }
 

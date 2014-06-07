@@ -15,4 +15,16 @@ Optimization path.}
 \description{
 Get end-of-life vector from the optimization path.
 }
+\seealso{
+Other optpath: \code{\link{OptPath}},
+  \code{\link{OptPathDF}}, \code{\link{makeOptPathDF}};
+  \code{\link{addOptPathEl}};
+  \code{\link{getOptPathBestIndex}};
+  \code{\link{getOptPathDOB}}; \code{\link{getOptPathEl}};
+  \code{\link{getOptPathErrorMessages}};
+  \code{\link{getOptPathLength}};
+  \code{\link{getOptPathParetoFront}};
+  \code{\link{getOptPathY}}; \code{\link{setOptPathElDOB}};
+  \code{\link{setOptPathElEOL}}
+}
 

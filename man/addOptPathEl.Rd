@@ -4,7 +4,7 @@
 \title{Add a new element to an optimization path.}
 \usage{
 addOptPathEl(op, x, y, dob = getOptPathLength(op) + 1L,
-  eol = as.integer(NA), error.message = error.message,
+  eol = as.integer(NA), error.message, exec.time, extra,
   check.feasible = !op$add.transformed.x)
 }
 \arguments{
@@ -29,6 +29,13 @@ Default is \code{NA}.}
 Possible error message that occurred for this parameter values.
 Default is \code{NA}.}
 
+\item{exec.time}{[\code{numeric(1)}]\cr
+Possible exec time for this evaluation.}
+
+\item{extra}{[\code{list}]\cr
+Possible list of extra values to store.
+Must be in same order as in \code{extra.par.set} of \code{\link{OptPath}}.}
+
 \item{check.feasible}{[\code{logical(1)}]\cr
 Should \code{x} be checked with \code{\link{isFeasible}}?
 Default is \code{TRUE}.}
@@ -49,11 +56,23 @@ NA in the input.
 \examples{
 ps = makeParamSet(
   makeNumericParam("p1"),
-  makeDiscreteParam("p2", values=c("a", "b"))
+  makeDiscreteParam("p2", values = c("a", "b"))
 )
-op = makeOptPathDF(par.set=ps, y.names="y", minimize=TRUE)
-addOptPathEl(op, x=list(p1=7, p2="b"), y=1)
-addOptPathEl(op, x=list(p1=-1, p2="a"), y=2)
+op = makeOptPathDF(par.set = ps, y.names = "y", minimize = TRUE)
+addOptPathEl(op, x = list(p1 = 7, p2 = "b"), y = 1)
+addOptPathEl(op, x = list(p1 = -1, p2 = "a"), y = 2)
 as.data.frame(op)
+}
+\seealso{
+Other optpath: \code{\link{OptPath}},
+  \code{\link{OptPathDF}}, \code{\link{makeOptPathDF}};
+  \code{\link{getOptPathBestIndex}};
+  \code{\link{getOptPathDOB}}; \code{\link{getOptPathEOL}};
+  \code{\link{getOptPathEl}};
+  \code{\link{getOptPathErrorMessages}};
+  \code{\link{getOptPathLength}};
+  \code{\link{getOptPathParetoFront}};
+  \code{\link{getOptPathY}}; \code{\link{setOptPathElDOB}};
+  \code{\link{setOptPathElEOL}}
 }
 

@@ -6,7 +6,8 @@
 \title{Create optimization path.}
 \usage{
 makeOptPathDF(par.set, y.names, minimize, add.transformed.x = FALSE,
-  include.error.message = FALSE)
+  include.error.message = FALSE, include.exec.time = FALSE,
+  extra.par.set = NULL)
 }
 \arguments{
 \item{par.set}{[\code{\link{ParamSet}}]\cr
@@ -26,9 +27,21 @@ Default is \code{FALSE}.}
 
 \item{include.error.message}{[\code{logical(1)}]\cr
 Should it be possible to include an error message string (or NA if no error orccured)
-into the path for each evaluation? See \code{\link{addOptPathEl}}.
-This is useful if you have complex, long running objective evaluations that might fail.
+into the path for each evaluation? #'   This is useful if you have complex, long running objective evaluations that might fail.
 Default is \code{FALSE}.}
+
+\item{include.exec.time}{[\code{logical(1)}]\cr
+Should it be possible to include execution time of evaluations
+into the path for each evaluation?
+Note that execution time could also be entered in \code{y.names} as a direct
+performance measure. If you use this option here, time is regarded as an extra measurement
+you might be curious about.
+Default is \code{FALSE}.}
+
+\item{extra.par.set}{[\code{\link{ParamSet}}]\cr
+Should it be possible to include extra info
+into the path for each evaluation?
+Default is \code{NULL} which means no extra info.}
 }
 \description{
 Optimizers can iteratively log their evaluated points
@@ -38,7 +51,7 @@ into this object. Can be converted into a data.frame with
 A optimization path has a number of path elements, where each element consists of: the value of the
 decision variables at this point, the values of the performance measures at this point,
 the date-of-birth (dob) of this point, the end-of-life (eol) of this point and possibly
-an error message.
+an error message. See also \code{\link{addOptPathEl}}.
 
 For discrete parameters always the name of the value is stored as a character.
 When you retrieve an element with \code{\link{getOptPathEl}}, this name is converted to
@@ -59,7 +72,14 @@ The S3 class is a list which stores at least these elements:
 }
 }
 \seealso{
-\code{\link{getOptPathLength}}, \code{\link{getOptPathEl}}, \code{\link{addOptPathEl}},
-  \code{\link{getOptPathY}}, \code{\link{setOptPathElDOB}}, \code{\link{setOptPathElEOL}}
+Other optpath: \code{\link{addOptPathEl}};
+  \code{\link{getOptPathBestIndex}};
+  \code{\link{getOptPathDOB}}; \code{\link{getOptPathEOL}};
+  \code{\link{getOptPathEl}};
+  \code{\link{getOptPathErrorMessages}};
+  \code{\link{getOptPathLength}};
+  \code{\link{getOptPathParetoFront}};
+  \code{\link{getOptPathY}}; \code{\link{setOptPathElDOB}};
+  \code{\link{setOptPathElEOL}}
 }
 

@@ -16,4 +16,16 @@ Optimization path.}
 Dependent parameters whose requirements are not satisfied are represented by a scalar
 NA in the output.
 }
+\seealso{
+Other optpath: \code{\link{OptPath}},
+  \code{\link{OptPathDF}}, \code{\link{makeOptPathDF}};
+  \code{\link{addOptPathEl}};
+  \code{\link{getOptPathBestIndex}};
+  \code{\link{getOptPathDOB}}; \code{\link{getOptPathEOL}};
+  \code{\link{getOptPathEl}};
+  \code{\link{getOptPathErrorMessages}};
+  \code{\link{getOptPathParetoFront}};
+  \code{\link{getOptPathY}}; \code{\link{setOptPathElDOB}};
+  \code{\link{setOptPathElEOL}}
+}
 

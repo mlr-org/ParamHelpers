@@ -23,4 +23,17 @@ Default is \code{TRUE}.}
 \description{
 Get y-vector or y-matrix from the optimization path.
 }
+\seealso{
+Other optpath: \code{\link{OptPath}},
+  \code{\link{OptPathDF}}, \code{\link{makeOptPathDF}};
+  \code{\link{addOptPathEl}};
+  \code{\link{getOptPathBestIndex}};
+  \code{\link{getOptPathDOB}}; \code{\link{getOptPathEOL}};
+  \code{\link{getOptPathEl}};
+  \code{\link{getOptPathErrorMessages}};
+  \code{\link{getOptPathLength}};
+  \code{\link{getOptPathParetoFront}};
+  \code{\link{setOptPathElDOB}};
+  \code{\link{setOptPathElEOL}}
+}
 
