@@ -1,10 +1,9 @@
 #' Check parameter / parameter set for requirements / dependencies.
-#' 
-#' \code{TRUE} iff the parameter has any requirements or any parameter in the set has
-#' requirements. 
 #'
-#' @param par [\code{\link{Param}} | \code{\link{ParamSet}}]\cr
-#'   Parameter or parameter set.
+#' \code{TRUE} iff the parameter has any requirements or any parameter in the set has
+#' requirements.
+#'
+#' @template arg_par_or_set
 #' @return [\code{logical(1)}].
 #' @export
 hasRequires = function(par) {

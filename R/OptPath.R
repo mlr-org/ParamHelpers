@@ -88,6 +88,12 @@ makeOptPath = function(par.set, y.names, minimize, add.transformed.x = FALSE,
 
   if (!is.null(extra.par.set)) {
     checkArg(extra.par.set, "ParamSet")
+    if (hasTrafo(extra.par.set))
+      stopf("'extra.par.set' must not have trafos in it, currently unsupported!")
+    if (hasRequires(extra.par.set))
+      stopf("'extra.par.set' must not have 'requires' in it, currently unsupported!")
+    if (hasForbidden(extra.par.set))
+      stopf("'extra.par.set' must not have forbidden region!")
     ee$extra = makeDataFrame(nrow = 0, ncol = getParamNr(extra.par.set, devectorize = TRUE),
       col.types = getParamTypes(extra.par.set, df.cols = TRUE, df.discretes.as.factor = FALSE),
       col.names = getParamIds(extra.par.set, repeated = TRUE, with.nr = TRUE))
