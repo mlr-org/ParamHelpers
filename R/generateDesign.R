@@ -109,7 +109,7 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
   nlevs = setNames(rep(NA_integer_, k), pids1)
   for (i in seq_len(k))
     values2[[i]] = names(values1[[pids2[i]]])
-  types.df = getTypes(par.set, df.cols = TRUE)
+  types.df = getParamTypes(par.set, df.cols = TRUE)
   types.int = convertTypesToCInts(types.df)
   types.df[types.df == "factor"] = "character"
   # ignore trafos if the user did not request transformed values

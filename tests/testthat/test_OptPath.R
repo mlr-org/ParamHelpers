@@ -200,7 +200,7 @@ test_that("pareto front", {
   expect_equal(f, c(2, 4))
 })
 
-test_that("error message", {
+test_that("error message and exec time works", {
   ps = makeParamSet(makeNumericParam("x"))
   op = makeOptPathDF(par.set = ps, y.names = "y", minimize = TRUE, include.error.message = TRUE)
   addOptPathEl(op, x = list(x = 1), y = 5)
@@ -210,4 +210,29 @@ test_that("error message", {
   expect_equal(ncol(as.data.frame(op)), 5)
   errors = which(!is.na(getOptPathErrorMessages(op)))
   expect_equal("bla", getOptPathEl(op, errors)$error.message)
+
+  ps = makeParamSet(makeNumericParam("x"))
+  op = makeOptPathDF(par.set = ps, y.names = "y", minimize = TRUE, include.error.message = TRUE,
+    include.exec.time = TRUE)
+  addOptPathEl(op, x = list(x = 1), y = 5, exec.time = 2)
+  addOptPathEl(op, x = list(x = 2), y = 3, exec.time = 2)
+  addOptPathEl(op, x = list(x = 3), y = 9, exec.time = 3)
+  addOptPathEl(op, x = list(x = 4), y = 3, exec.time = NA_real_, error.message = "bla")
+  expect_equal(ncol(as.data.frame(op)), 6)
+  errors = which(!is.na(getOptPathErrorMessages(op)))
+  expect_equal("bla", getOptPathEl(op, errors)$error.message)
+  expect_equal(getOptPathExecTimes(op), c(2, 2, 3, NA))
 })
+
+test_that("logging extra works", {
+  ps = makeParamSet(makeNumericParam("v"))
+  ps2 = makeParamSet(makeNumericVectorParam("ee", len = 2L))
+  op = makeOptPathDF(par.set = ps, y.names = "y", minimize = TRUE, extra.par.set = ps2)
+  addOptPathEl(op, x = list(v = 1), y = 5, extra = list(ee = c(3, 7)))
+  df = setRowNames(as.data.frame(op), NULL)
+  expect_equal(df, data.frame(v = 1, y = 5, dob = 1L, eol = NA_integer_, ee1 = 3, ee2 = 7))
+  expect_equal(getOptPathEl(op, 1L), list(x = list(v = 1), y = c(y = 5), dob = 1L, eol = NA_integer_,
+    extra = list(ee = c(3, 7))))
+})
+
+

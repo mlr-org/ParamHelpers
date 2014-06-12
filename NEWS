@@ -6,20 +6,21 @@ ParamHelpers_1.2:
   the case of dependent parameters
 - generateDesign and generateGridDesign do not support type conversion anymore. See help page.
 - generateDesign now ensures that no duplicted settings are produced in rarer cases
-- Added option to log error messages in the optimization path.
+- Added option to log error messages, execution time and extra info in the optimization path.
 - slightly change interface of getOptPathY, so one can now return a matrix of multiple measures.
 - paramValueToString produces better readable output
 - sampleValue(s) have new option "trafo"
 - getLower and getUpper have with.nr argument now
 - getTypes renamed to getParamTypes
 - new functions
--- getOptPathParetoFront
--- generateGridDesign
 -- isNumeric, isDiscrete, isInteger, isLogical
 -- hasNumeric, hasInteger, hasDiscrete, hasLogical
 -- getParamNr
 -- getDefaults
 -- isForbidden, hasForbidden
+-- generateGridDesign
+-- getOptPathExecTimes, getOptPathErrorMessages
+-- getOptPathParetoFront
 
 ParamHelpers_1.1-35:
 - concept of dependent parameters was introduced (argument "requires")
