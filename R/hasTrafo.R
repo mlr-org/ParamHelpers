@@ -7,7 +7,7 @@
 #' @return [\code{logical(1)}].
 #' @export
 hasTrafo = function(par) {
-  UseMethod("hasTrafos")
+  UseMethod("hasTrafo")
 }
 
 #' @export
