@@ -49,17 +49,17 @@
 #'   performance measure. If you use this option here, time is regarded as an extra measurement
 #'   you might be curious about.
 #'   Default is \code{FALSE}.
-#' @param extra.par.set [\code{\link{ParamSet}}]\cr
+#' @param include.extra [\code{logical(1)}]\cr
 #'   Should it be possible to include extra info
 #'   into the path for each evaluation?
-#'   Default is \code{NULL} which means no extra info.
+#'   Default is \code{FALSE}.
 #' @name OptPath
 #' @rdname OptPath
 #' @family optpath
 NULL
 
 makeOptPath = function(par.set, y.names, minimize, add.transformed.x = FALSE,
-  include.error.message = FALSE, include.exec.time = FALSE, extra.par.set = NULL) {
+  include.error.message = FALSE, include.exec.time = FALSE, include.extra = FALSE) {
 
   n.y = length(y.names)
   ok = c("numeric", "integer", "numericvector", "integervector", "logical",
@@ -85,26 +85,13 @@ makeOptPath = function(par.set, y.names, minimize, add.transformed.x = FALSE,
   # potentially init error.message and exec.time in env
   ee$error.message = if (include.error.message) character(0L) else NULL
   ee$exec.time = if (include.exec.time) numeric(0L) else NULL
-
-  if (!is.null(extra.par.set)) {
-    checkArg(extra.par.set, "ParamSet")
-    if (hasTrafo(extra.par.set))
-      stopf("'extra.par.set' must not have trafos in it, currently unsupported!")
-    if (hasRequires(extra.par.set))
-      stopf("'extra.par.set' must not have 'requires' in it, currently unsupported!")
-    if (hasForbidden(extra.par.set))
-      stopf("'extra.par.set' must not have forbidden region!")
-    ee$extra = makeDataFrame(nrow = 0, ncol = getParamNr(extra.par.set, devectorize = TRUE),
-      col.types = getParamTypes(extra.par.set, df.cols = TRUE, df.discretes.as.factor = FALSE),
-      col.names = getParamIds(extra.par.set, repeated = TRUE, with.nr = TRUE))
-  }
+  ee$extra = if (include.extra) list() else NULL
 
   makeS3Obj("OptPath",
     par.set = par.set,
     y.names = y.names,
     minimize = minimize,
     add.transformed.x = add.transformed.x,
-    extra.par.set = extra.par.set,
     env = ee
   )
 }
@@ -114,7 +101,7 @@ print.OptPath = function(x, ...) {
   n = getOptPathLength(x)
   em = x$env$error.message
   et = x$env$exec.time
-  eps = x$extra.par.set
+  ex = x$env$extra
   catf("Optimization path")
   catf("  Dimensions: x = %i/%i, y = %i",
     length(x$par.set$pars), sum(getParamLengths(x$par.set)), length(x$y.names))
@@ -124,9 +111,8 @@ print.OptPath = function(x, ...) {
   catf("  Error messages: %s.%s", !is.null(em), s)
   s = if (is.null(et)) ""  else sprintf(" Range: %g - %g.", min(et, na.rm = TRUE), max(et, na.rm = TRUE))
   catf("  Exec times: %s.%s", !is.null(et), s)
-  if (!is.null(eps))
-  catf("  Extras: %i/%i",
-    length(eps$pars), sum(getParamLengths(eps)))
+  if (!is.null(ex))
+  catf("  Extras: %i columns", ifelse(length(ex) > 0L, length(ex[[1]]), NA))
 }
 
 
@@ -143,7 +129,6 @@ getOptPathLength = function(op) {
   UseMethod("getOptPathLength")
 }
 
-#FIXME:
 #' Get an element from the optimization path.
 #'
 #' Dependent parameters whose requirements are not satisfied are represented by a scalar NA

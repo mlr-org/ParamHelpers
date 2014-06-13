@@ -7,7 +7,7 @@
 \usage{
 makeOptPathDF(par.set, y.names, minimize, add.transformed.x = FALSE,
   include.error.message = FALSE, include.exec.time = FALSE,
-  extra.par.set = NULL)
+  include.extra = FALSE)
 }
 \arguments{
 \item{par.set}{[\code{\link{ParamSet}}]\cr
@@ -38,10 +38,10 @@ performance measure. If you use this option here, time is regarded as an extra m
 you might be curious about.
 Default is \code{FALSE}.}
 
-\item{extra.par.set}{[\code{\link{ParamSet}}]\cr
+\item{include.extra}{[\code{logical(1)}]\cr
 Should it be possible to include extra info
 into the path for each evaluation?
-Default is \code{NULL} which means no extra info.}
+Default is \code{FALSE}.}
 }
 \description{
 Optimizers can iteratively log their evaluated points
