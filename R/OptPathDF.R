@@ -72,7 +72,7 @@ getOptPathEl.OptPathDF = function(op, index) {
 
 #' @export
 addOptPathEl.OptPathDF = function(op, x, y, dob = getOptPathLength(op)+1L, eol = as.integer(NA),
-  error.message = NA_character_, exec.time = NULL, extra = NULL,
+  error.message = NA_character_, exec.time = NA_real_, extra = NULL,
   check.feasible = !op$add.transformed.x) {
 
   env = op$env
@@ -83,9 +83,7 @@ addOptPathEl.OptPathDF = function(op, x, y, dob = getOptPathLength(op)+1L, eol =
   eol = convertInteger(eol)
   checkArg(eol, "integer", len = 1L)
   checkArg(error.message, "character", len = 1L)
-  # potentially check extra and already add it
-  if (!is.null(exec.time))
-    checkArg(exec.time, "numeric", len = 1L, lower = 0, na.ok = TRUE)
+  checkArg(exec.time, "numeric", len = 1L, lower = 0, na.ok = TRUE)
   if (!is.null(extra)) {
     if (is.null(env$extra))
       stopf("Trying to add extra info to opt path, without enabling that option!")
@@ -102,7 +100,7 @@ addOptPathEl.OptPathDF = function(op, x, y, dob = getOptPathLength(op)+1L, eol =
   }
   if (!is.na(error.message) && is.null(env$error.message))
     stopf("Trying to add error.message to opt path, without enabling that option!")
-  if (!is.null(exec.time) && is.null(env$exec.time))
+  if (!is.na(exec.time) && is.null(env$exec.time))
     stopf("Trying to add exec.time to opt path, without enabling that option!")
 
   if (check.feasible) {
@@ -153,7 +151,7 @@ getOptPathY.OptPathDF = function(op, names, drop = TRUE) {
   if (missing(names))
     names = op$y.names
   else
-    checkArg(names, subset = op$y.names)
+c(names, subset = op$y.names)
   checkArg(drop, "logical", len = 1L, na.ok = FALSE)
   y = as.matrix(op$env$path[, names, drop = FALSE])
   if (drop && length(names) == 1L)

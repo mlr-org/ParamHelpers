@@ -4,7 +4,8 @@
 \title{Add a new element to an optimization path.}
 \usage{
 addOptPathEl(op, x, y, dob = getOptPathLength(op) + 1L,
-  eol = as.integer(NA), error.message, exec.time, extra,
+  eol = as.integer(NA), error.message = NA_character_,
+  exec.time = NA_real_, extra = NULL,
   check.feasible = !op$add.transformed.x)
 }
 \arguments{
@@ -30,11 +31,13 @@ Possible error message that occurred for this parameter values.
 Default is \code{NA}.}
 
 \item{exec.time}{[\code{numeric(1)}]\cr
-Possible exec time for this evaluation.}
+Possible exec time for this evaluation.
+Default is \code{NA}.}
 
 \item{extra}{[\code{list}]\cr
 Possible list of extra values to store.
-Must be in same order as in \code{extra.par.set} of \code{\link{OptPath}}.}
+Must be in same order as in \code{extra.par.set} of \code{\link{OptPath}}.
+Default is \code{NULL}}
 
 \item{check.feasible}{[\code{logical(1)}]\cr
 Should \code{x} be checked with \code{\link{isFeasible}}?

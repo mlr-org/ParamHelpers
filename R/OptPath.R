@@ -40,7 +40,8 @@
 #'   Default is \code{FALSE}.
 #' @param include.error.message [\code{logical(1)}]\cr
 #'   Should it be possible to include an error message string (or NA if no error occurred)
-#'   into the path for each evaluation? #'   This is useful if you have complex, long running objective evaluations that might fail.
+#'   into the path for each evaluation?
+#'   This is useful if you have complex, long running objective evaluations that might fail.
 #'   Default is \code{FALSE}.
 #' @param include.exec.time [\code{logical(1)}]\cr
 #'   Should it be possible to include execution time of evaluations
@@ -175,9 +176,11 @@ getOptPathEl = function(op, index) {
 #'   Default is \code{NA}.
 #' @param exec.time [\code{numeric(1)}]\cr
 #'   Possible exec time for this evaluation.
+#'   Default is \code{NA}.
 #' @param extra [\code{list}]\cr
 #'   Possible list of extra values to store.
 #'   Must be in same order as in \code{extra.par.set} of \code{\link{OptPath}}.
+#'   Default is \code{NULL}
 #' @param check.feasible [\code{logical(1)}]\cr
 #'   Should \code{x} be checked with \code{\link{isFeasible}}?
 #'   Default is \code{TRUE}.
@@ -194,7 +197,7 @@ getOptPathEl = function(op, index) {
 #' addOptPathEl(op, x = list(p1 = -1, p2 = "a"), y = 2)
 #' as.data.frame(op)
 addOptPathEl = function(op, x, y, dob = getOptPathLength(op)+1L, eol = as.integer(NA),
-  error.message, exec.time, extra,
+  error.message = NA_character_, exec.time = NA_real_, extra = NULL,
   check.feasible = !op$add.transformed.x) {
 
   UseMethod("addOptPathEl")
