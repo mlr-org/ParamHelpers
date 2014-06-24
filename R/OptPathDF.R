@@ -28,44 +28,38 @@ getOptPathLength.OptPathDF = function(op) {
 }
 
 #' @export
-as.data.frame.OptPathDF = function(op, row.names = NULL, optional = FALSE,
+as.data.frame.OptPathDF = function(x, row.names = NULL, optional = FALSE,
   discretes.as.factor = FALSE, include.x = TRUE, include.y = TRUE, include.rest = TRUE, ...) {
-  
-  checkArg(include.x, "logical", len = 1L)
-  checkArg(include.y, "logical", len = 1L)
-  checkArg(include.rest, "logical", len = 1L)
-  
-  if (!include.x && !include.y && !include.rest) {
+
+  checkArg(include.x, "logical", len = 1L, na.ok = FALSE)
+  checkArg(include.y, "logical", len = 1L, na.ok = FALSE)
+  checkArg(include.rest, "logical", len = 1L, na.ok = FALSE)
+
+  if (!include.x && !include.y && !include.rest)
     stopf("Not able to create data.frame from opt.path. You need to include something!")
-  }
-  
-  # Create empty data.frame with correct number of rows
-  df = data.frame(1:getOptPathLength(op))[, -1]
-  
+
+  res = makeDataFrame(nrow = getOptPathLength(x), ncol = 0)
+
   if (include.x || include.y) {
-    df1 = op$env$path
-    y.cols = which(colnames(df1) == op$y.names)
-  }
-  if (include.x) {
-    df = cbind(df, df1[, -y.cols, drop = FALSE])
-  }
-  if (include.y) {
-    df = cbind(df, df1[, y.cols, drop = FALSE])
+    df = x$env$path
+    y.cols = which(colnames(df) == x$y.names)
+    if (include.x)
+      res = cbind(res, df[, -y.cols, drop = FALSE])
+    if (include.y)
+      res = cbind(res, df[, y.cols, drop = FALSE])
   }
   if (include.rest) {
-    df = cbind(df, dob = op$env$dob, eol = op$env$eol)
-    df = convertDataFrameCols(df, chars.as.factor = discretes.as.factor)
+    res = cbind(res, dob = x$env$dob, eol = x$env$eol)
+    res = convertDataFrameCols(res, chars.as.factor = discretes.as.factor)
     # if err message / exec time included, add it
-    if (!is.null(op$env$error.message))
-      df$error.message = op$env$error.message
-    if (!is.null(op$env$exec.time))
-      df$exec.time = op$env$exec.time
-    if (!is.null(op$env$extra)) {
-      df2 = convertListOfRowsToDataFrame(op$env$extra)
-      df = cbind(df, df2)
-    }
+    if (!is.null(x$env$error.message))
+      res$error.message = x$env$error.message
+    if (!is.null(x$env$exec.time))
+      res$exec.time = x$env$exec.time
+    if (!is.null(x$env$extra))
+      res = cbind(res, convertListOfRowsToDataFrame(x$env$extra))
   }
-  return(df)
+  return(res)
 }
 
 #' @export
@@ -205,7 +199,7 @@ getOptPathExecTimes.OptPathDF = function(op) {
 getOptPathCols.OptPathDF = function(op, names, check.names = TRUE) {
   checkArg(names, "character")
   checkArg(check.names, "logical", len = 1L)
-  
+
   df = as.data.frame(op)
   not.present.names = names[names %nin% colnames(df)]
   if (check.names) {
