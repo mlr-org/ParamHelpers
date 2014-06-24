@@ -201,3 +201,19 @@ getOptPathExecTimes.OptPathDF = function(op) {
   op$env$exec.time
 }
 
+#' @export
+getOptPathCols.OptPathDF = function(op, names, check.names = TRUE) {
+  checkArg(names, "character")
+  checkArg(check.names, "logical", len = 1L)
+  
+  df = as.data.frame(op)
+  not.present.names = names[names %nin% colnames(df)]
+  if (check.names) {
+    if (length(not.present.names) > 0)
+      stopf("You specified some cols that are not present in the opt.path: %s",
+        convertToShortString(not.present.names))
+  }
+  present.names = setdiff(names, not.present.names)
+  df[, present.names, drop = FALSE]
+}
+

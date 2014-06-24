@@ -234,4 +234,33 @@ test_that("logging extra works", {
     extra = list(ee = 7)))
 })
 
-
+test_that("as.data.frame flags and getCols works", {
+  ps = makeParamSet(
+    makeNumericParam("x"),
+    makeDiscreteParam("y", values = c("a", "b"))
+  )
+  op = makeOptPathDF(par.set = ps, y.names = c("z1", "z2"), minimize = c(TRUE, FALSE))
+  addOptPathEl(op, x = list(x = 1, y = "a"), y = c(z1 = 1, z2 = 4))
+  addOptPathEl(op, x = list(x = 2, y = "a"), y = c(z1 = 3, z2 = 2))
+  
+  expect_error(as.data.frame(op, include.x = FALSE, include.y = FALSE, include.rest = FALSE), "include something")
+  df1 = as.data.frame(op, include.rest = FALSE)
+  df2 = as.data.frame(op, include.rest = FALSE, include.x = FALSE)
+  df3 = as.data.frame(op, include.y = FALSE, include.x = FALSE)
+  expect_equal(nrow(df1), 2)
+  expect_equal(nrow(df2), 2)
+  expect_equal(nrow(df3), 2)
+  expect_equal(ncol(df1), 4)
+  expect_equal(ncol(df2), 2)
+  expect_equal(ncol(df3), 2)
+  expect_error(getOptPathCols(op, c("bla", "bla2")), "not present")
+  df1 = getOptPathCols(op, c("bla", "bla2"), check.names = FALSE)
+  df2 = getOptPathCols(op, c("z1", "z2", "dob"), check.names = FALSE)
+  df3 = getOptPathCols(op, c("x", "y", "bla"), check.names = FALSE)
+  expect_equal(nrow(df1), 2)
+  expect_equal(nrow(df2), 2)
+  expect_equal(nrow(df3), 2)
+  expect_equal(ncol(df1), 0)
+  expect_equal(ncol(df2), 3)
+  expect_equal(ncol(df3), 2)
+})

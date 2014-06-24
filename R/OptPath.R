@@ -375,6 +375,21 @@ getOptPathExecTimes = function(op) {
   UseMethod("getOptPathExecTimes")
 }
 
+#' Get columns the optimization path. If
+#'
+#' @template arg_op
+#' @param names [\code{character}]\cr
+#'   Vector of names of columns
+#' @param check.names [\code{logical(1)}]
+#'   Should the existence of the names be checked? If FALSE NULL is returned for
+#'   non-existent cols.
+#' @return [\code{data.frame}].
+#' @export
+#' @family optpath
+getOptPathCols = function(op, names, check.names = TRUE) {
+  UseMethod("getOptPathCols")
+}
+
 #' Set the dates of birth of parameter values, in-place.
 #'
 #' @template arg_op
@@ -415,5 +430,3 @@ setOptPathElEOL = function(op, index, eol) {
   op$env$eol[index] = eol
   invisible(NULL)
 }
-
-
