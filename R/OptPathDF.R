@@ -28,22 +28,44 @@ getOptPathLength.OptPathDF = function(op) {
 }
 
 #' @export
-as.data.frame.OptPathDF = function(x, row.names = NULL, optional = FALSE,
-  discretes.as.factor = FALSE, ...) {
-
-  df1 = x$env$path
-  df1 = cbind(df1, dob = x$env$dob, eol = x$env$eol)
-  df1 = convertDataFrameCols(df1, chars.as.factor = discretes.as.factor)
-  # if err message / exec time included, add it
-  if (!is.null(x$env$error.message))
-    df1$error.message = x$env$error.message
-  if (!is.null(x$env$exec.time))
-    df1$exec.time = x$env$exec.time
-  if (!is.null(x$env$extra)) {
-    df2 = convertListOfRowsToDataFrame(x$env$extra)
-    df1 = cbind(df1, df2)
+as.data.frame.OptPathDF = function(op, row.names = NULL, optional = FALSE,
+  discretes.as.factor = FALSE, include.x = TRUE, include.y = TRUE, include.rest = TRUE, ...) {
+  
+  checkArg(include.x, "logical", len = 1L)
+  checkArg(include.y, "logical", len = 1L)
+  checkArg(include.rest, "logical", len = 1L)
+  
+  if (!include.x && !include.y && !include.rest) {
+    stopf("Not able to create data.frame from opt.path. You need to include something!")
   }
-  return(df1)
+  
+  # Create empty data.frame with correct number of rows
+  df = data.frame(1:getOptPathLength(op))[, -1]
+  
+  if (include.x || include.y) {
+    df1 = op$env$path
+    y.cols = which(colnames(df1) == op$y.names)
+  }
+  if (include.x) {
+    df = cbind(df, df1[, -y.cols, drop = FALSE])
+  }
+  if (include.y) {
+    df = cbind(df, df1[, y.cols, drop = FALSE])
+  }
+  if (include.rest) {
+    df = cbind(df, dob = op$env$dob, eol = op$env$eol)
+    df = convertDataFrameCols(df, chars.as.factor = discretes.as.factor)
+    # if err message / exec time included, add it
+    if (!is.null(op$env$error.message))
+      df$error.message = op$env$error.message
+    if (!is.null(op$env$exec.time))
+      df$exec.time = op$env$exec.time
+    if (!is.null(op$env$extra)) {
+      df2 = convertListOfRowsToDataFrame(op$env$extra)
+      df = cbind(df, df2)
+    }
+  }
+  return(df)
 }
 
 #' @export
