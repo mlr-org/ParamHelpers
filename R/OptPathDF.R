@@ -196,18 +196,22 @@ getOptPathExecTimes.OptPathDF = function(op) {
 }
 
 #' @export
-getOptPathCols.OptPathDF = function(op, names, check.names = TRUE) {
-  checkArg(names, "character")
-  checkArg(check.names, "logical", len = 1L)
-
-  df = as.data.frame(op)
-  not.present.names = names[names %nin% colnames(df)]
-  if (check.names) {
-    if (length(not.present.names) > 0)
-      stopf("You specified some cols that are not present in the opt.path: %s",
-        convertToShortString(not.present.names))
-  }
-  present.names = setdiff(names, not.present.names)
-  df[, present.names, drop = FALSE]
+getOptPathCol.OptPathDF = function(op, name) {
+  checkArg(name, "character", len = 1L, na.ok = FALSE)
+  if (getOptPathLength(op) == 0L)
+    stopf("Trying to return a col from an empty opt.path")
+  if (name %in% colnames(op$env$path))
+    return(op$env$path[, name])
+  if (name == "dob")
+    return(getOptPathDOB(op))
+  if (name == "eol")
+    return(getOptPathEOL(op))
+  if (name == "exec.time")
+    return(getOptPathExecTimes(op))
+  if (name == "error.message")
+    return(getOptPathErrorMessages(op))
+  if (name %in% names(op$env$extra[[1]]))
+    return(extractSubList(op$env$extra, name))
+  stop("The column you specified is not present in the opt.path.")
 }
 
