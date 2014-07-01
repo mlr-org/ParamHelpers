@@ -3,6 +3,9 @@
 #  wrt to the "last" param. also see daniels unit test.
 #  it works as long all dependencies are stated, we need to at least document this
 
+#FIXME: it really makes no sense to calculate the distance for params that are NA when we do the
+# design and augment it right? think about what happens here
+
 
 #' @title Generates a statistical design for a parameter set.
 #'
@@ -121,20 +124,24 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
 
 
   nmissing = n
-  iters = 0
+  iter = 0
+  # result objects
+  res = data.frame()
+  des = matrix(nrow = 0, ncol = k)
   repeat {
-
     ### get design, types converted, trafos, conditionals set to NA
     # create new design or augment if we already have some points
-    des = if (nmissing == n)
+    newdes = if (nmissing == n)
       do.call(fun, insert(list(n = nmissing, k = k), fun.args))
     else
       augmentLHS(des, m = nmissing)
     # preallocate result for C
-    res = makeDataFrame(n, k, col.types = types.df)
-    res = .Call(c_generateDesign, des, res, types.int, lower2, upper2, values2)
-    res = .Call(c_trafo_and_set_dep_to_na, res, types.int, names(pars), lens, trafos, par.requires, new.env())
-
+    newres = makeDataFrame(n, k, col.types = types.df)
+    newres = .Call(c_generateDesign, newdes, newres, types.int, lower2, upper2, values2)
+    newres = .Call(c_trafo_and_set_dep_to_na, newres, types.int, names(pars), lens, trafos, par.requires, new.env())
+    # add to result (design matrix and data.frame)
+    des = rbind(des, newdes)
+    res = rbind(res, newres)
     # remove duplicates
     to.remove = duplicated(res)
     des = des[!to.remove, , drop = FALSE]
@@ -142,8 +149,8 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
     nmissing = n - nrow(res)
 
     # enough points or augment tries? we are done!
-    iters = iters + 1L
-    if (nmissing == 0L || iters >= augment)
+    iter = iter + 1L
+    if (nmissing == 0L || iter >= augment)
       break
   }
 
