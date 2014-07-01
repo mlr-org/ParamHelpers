@@ -26,6 +26,14 @@ Row index.}
 Please note that (naturally) the columns of \code{df} have to be of the correct type
 type w.r.t. the corresponding parameter. The only exception are integer parameters
 where the corresponding columns in \code{df} are allowed to be numerics.
+
+\tabular{ll}{
+ numeric(vector)   \tab  \code{numeric}  \cr
+ integer(vector)   \tab  \code{integer}  \cr
+ discrete(vector)  \tab  \code{factor} (names of values = levels) \cr
+ logical(vector)   \tab  \code{logical}
+}
+
 Dependent parameters whose requirements are not satisfied are represented by a scalar
 NA in the output.
 }
