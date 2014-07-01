@@ -42,7 +42,7 @@ as.data.frame.OptPathDF = function(x, row.names = NULL, optional = FALSE,
 
   if (include.x || include.y) {
     df = x$env$path
-    y.cols = which(colnames(df) == x$y.names)
+    y.cols = which(colnames(df) %in% x$y.names)
     if (include.x)
       res = cbind(res, df[, -y.cols, drop = FALSE])
     if (include.y)
