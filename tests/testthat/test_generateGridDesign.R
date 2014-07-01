@@ -61,8 +61,9 @@ test_that("generateGridDesign", {
     KEEP.OUT.ATTRS = FALSE
   )
   f = as.data.frame(t(apply(e, 1, function(x) x / sum(x))))
+  f = f[!duplicated(f),]
   attr(f, "trafo") = TRUE
-  expect_equal(d, f)
+  expect_equal(setRowNames(d, NULL), setRowNames(f, NULL))
 })
 
 test_that("requires works", {
