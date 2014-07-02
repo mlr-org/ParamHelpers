@@ -17,7 +17,7 @@
 #' getParamNr(ps, devectorize = TRUE)
 #' @export
 getParamNr = function(par.set, devectorize = FALSE) {
-  assertClass(par.set, "ParamSet")))
+  assertClass(par.set, "ParamSet")
   checkArg(devectorize, "logical", len = 1L, na.ok = FALSE)
   if (devectorize)
     sum(getParamLengths(par.set))

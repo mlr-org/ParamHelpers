@@ -4,7 +4,7 @@
 #' @return [\code{logical(1)}].
 #' @export
 hasForbidden = function(par.set) {
-  assertClass(par.set, "ParamSet")))
+  assertClass(par.set, "ParamSet")
   !is.null(par.set$forbidden)
 }
 

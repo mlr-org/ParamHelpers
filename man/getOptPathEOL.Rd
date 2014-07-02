@@ -20,8 +20,8 @@ Other optpath: \code{\link{OptPath}},
   \code{\link{OptPathDF}}, \code{\link{makeOptPathDF}};
   \code{\link{addOptPathEl}};
   \code{\link{getOptPathBestIndex}};
-  \code{\link{getOptPathCols}};
-  \code{\link{getOptPathDOB}}; \code{\link{getOptPathEl}};
+  \code{\link{getOptPathCol}}; \code{\link{getOptPathDOB}};
+  \code{\link{getOptPathEl}};
   \code{\link{getOptPathErrorMessages}};
   \code{\link{getOptPathExecTimes}};
   \code{\link{getOptPathLength}};

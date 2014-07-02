@@ -8,7 +8,7 @@
 #' @return [\code{logical(1)}].
 #' @export
 isForbidden = function(par.set, x) {
-  assertClass(par.set, "ParamSet")))
+  assertClass(par.set, "ParamSet")
   #FIXME: check for correct names here
   checkArg(x, "list")
   if (!hasForbidden(par.set))

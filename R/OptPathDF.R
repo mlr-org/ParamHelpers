@@ -4,7 +4,7 @@
 makeOptPathDF = function(par.set, y.names, minimize, add.transformed.x = FALSE,
   include.error.message = FALSE, include.exec.time = FALSE, include.extra = FALSE) {
 
-  assertClass(par.set, "ParamSet")))
+  assertClass(par.set, "ParamSet")
   checkArg(y.names, "character", na.ok = FALSE)
   checkArg(minimize, "logical", na.ok = FALSE)
   checkArg(add.transformed.x, "logical", len = 1L, na.ok = FALSE)

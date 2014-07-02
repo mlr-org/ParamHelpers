@@ -14,7 +14,7 @@
 #' @return [\code{\link{list}}].
 #' @export
 convertParamSetToIrace = function(par.set, digits = 4, as.chars = FALSE) {
-  assertClass(par.set, "ParamSet")))
+  assertClass(par.set, "ParamSet")
   digits = convertInteger(digits)
   checkArg(digits, "integer", len = 1L, na.ok = FALSE, lower = 1L)
   checkArg(as.chars, "logical", len = 1L, na.ok = FALSE)

@@ -75,9 +75,8 @@ The S3 class is a list which stores at least these elements:
 \seealso{
 Other optpath: \code{\link{addOptPathEl}};
   \code{\link{getOptPathBestIndex}};
-  \code{\link{getOptPathCols}};
-  \code{\link{getOptPathDOB}}; \code{\link{getOptPathEOL}};
-  \code{\link{getOptPathEl}};
+  \code{\link{getOptPathCol}}; \code{\link{getOptPathDOB}};
+  \code{\link{getOptPathEOL}}; \code{\link{getOptPathEl}};
   \code{\link{getOptPathErrorMessages}};
   \code{\link{getOptPathExecTimes}};
   \code{\link{getOptPathLength}};
