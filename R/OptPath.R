@@ -303,7 +303,7 @@ getOptPathParetoFront = function(op, y.names = op$y.names, dob = op$env$dob, eol
   dob = asInteger(dob, na.ok = TRUE)
   eol = convertIntegers(eol)
   eol = asInteger(eol, na.ok = TRUE)
-  checkArg(index, "logical", len = 1L, na.ok = TRUE)
+  assertFlag(index, na.ok = TRUE)
   requirePackages("emoa")
   life.inds = which(op$env$dob %in% dob & op$env$eol %in% eol)
   if (length(life.inds) == 0)
