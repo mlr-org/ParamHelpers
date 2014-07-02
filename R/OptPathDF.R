@@ -86,16 +86,16 @@ getOptPathEl.OptPathDF = function(op, index) {
 }
 
 #' @export
-addOptPathEl.OptPathDF = function(op, x, y, dob = getOptPathLength(op)+1L, eol = as.integer(NA),
+addOptPathEl.OptPathDF = function(op, x, y, dob = getOptPathLength(op)+1L, eol = NA_integer_,
   error.message = NA_character_, exec.time = NA_real_, extra = NULL,
   check.feasible = !op$add.transformed.x) {
 
   env = op$env
   assertList(x, len = length(op$par.set$pars))
   assertNumeric(y, len = length(op$y.names))
-  dob = asInt(dob)
-  eol = asInt(eol)
-  assertString(error.message)
+  dob = asInt(dob, na.ok = TRUE)
+  eol = asInt(eol, na.ok = TRUE)
+  assertString(error.message, na.ok = TRUE)
   assertNumber(exec.time, "numeric", lower = 0, na.ok = TRUE)
   if (!is.null(extra)) {
     if (is.null(env$extra))
