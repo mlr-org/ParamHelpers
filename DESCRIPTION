@@ -5,8 +5,8 @@ Description: A small package containing useful functions for parameter
     descriptions and operations in black-box optimization, tuning
     and machine learning.
 Author: Bernd Bischl <bernd_bischl@gmx.net>,
-  Michel Lang <lang@statistik.tu-dortmund.de>,
-  Daniel Horn <daniel.horn@tu-dortmund.de>
+    Michel Lang <lang@statistik.tu-dortmund.de>,
+    Daniel Horn <daniel.horn@tu-dortmund.de>
 Maintainer: Bernd Bischl <bernd_bischl@gmx.net>
 License: BSD_3_clause + file LICENSE
 Roxygen: list(wrap = FALSE)
