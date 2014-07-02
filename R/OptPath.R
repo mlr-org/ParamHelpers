@@ -235,7 +235,7 @@ addOptPathEl = function(op, x, y, dob = getOptPathLength(op)+1L, eol = as.intege
 #' getOptPathBestIndex(op)
 #' getOptPathBestIndex(op, ties = "first")
 getOptPathBestIndex = function(op, y.name = op$y.names[1], dob = op$env$dob, eol = op$env$eol, ties = "last") {
-  checkArg(op, "OptPath")
+  assertClass(op, "OptPath")
   checkArg(y.name, choices = op$y.names, len = 1L, na.ok = FALSE)
   dob = convertIntegers(dob)
   checkArg(dob, "integer", na.ok = TRUE)
@@ -297,7 +297,7 @@ getOptPathBestIndex = function(op, y.name = op$y.names[1], dob = op$env$dob, eol
 #' getOptPathParetoFront(op)
 #' getOptPathParetoFront(op, index = TRUE)
 getOptPathParetoFront = function(op, y.names = op$y.names, dob = op$env$dob, eol = op$env$eol, index = FALSE) {
-  checkArg(op, "OptPath")
+  assertClass(op, "OptPath")
   checkArg(y.names, subset = op$y.names, min.len = 2L)
   dob = convertIntegers(dob)
   checkArg(dob, "integer", na.ok = TRUE)
@@ -398,7 +398,7 @@ getOptPathCol = function(op, names) {
 #' @export
 #' @family optpath
 setOptPathElDOB = function(op, index, dob) {
-  checkArg(op, "OptPath")
+  assertClass(op, "OptPath")
   index = convertIntegers(index)
   index = asInteger(index)
   dob = convertIntegers(dob)
@@ -419,7 +419,7 @@ setOptPathElDOB = function(op, index, dob) {
 #' @export
 #' @family optpath
 setOptPathElEOL = function(op, index, eol) {
-  checkArg(op, "OptPath")
+  assertClass(op, "OptPath")
   index = convertIntegers(index)
   index = asInteger(index)
   eol = convertIntegers(eol)
