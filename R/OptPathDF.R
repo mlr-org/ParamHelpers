@@ -98,7 +98,7 @@ addOptPathEl.OptPathDF = function(op, x, y, dob = getOptPathLength(op)+1L, eol =
   dob = asInt(dob)
   eol = convertInteger(eol)
   eol = asInt(eol)
-  checkArg(error.message, "character", len = 1L)
+  assertString(error.message)
   checkArg(exec.time, "numeric", len = 1L, lower = 0, na.ok = TRUE)
   if (!is.null(extra)) {
     if (is.null(env$extra))
