@@ -115,7 +115,6 @@ makeNumericParamSet = function(id="x", len, lower=-Inf, upper=Inf, vector=TRUE) 
     else if (!missing(upper))
       len = length(upper)
   } else {
-    len = convertInteger(len)
     len = asInt(len)
   }
   if (is.numeric(lower) && length(lower) == 1)

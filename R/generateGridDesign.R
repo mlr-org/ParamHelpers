@@ -55,7 +55,6 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE) {
   pids1 = getParamIds(par.set)
   pids2 = getParamIds(par.set, repeated = TRUE, with.nr = TRUE)
 
-  resolution = convertIntegers(resolution)
   if (length(resolution) == 1L) {
     resolution = setNames(rep(resolution, n), pids1)
   }

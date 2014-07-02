@@ -82,7 +82,6 @@
 #' generateDesign(10, ps, trafo = TRUE)
 generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALSE, augment = 5L) {
 
-  n = convertInteger(n)
   n = asInt(n)
   z = doBasicGenDesignChecks(par.set)
   lower = z$lower; upper = z$upper
@@ -94,7 +93,6 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
     assertFunction(fun)
   assertList(fun.args)
   assertFlag(trafo)
-  augment = convertInteger(augment)
   augment = asInt(augment, lower = 0L)
 
   ### precompute some useful stuff

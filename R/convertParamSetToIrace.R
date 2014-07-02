@@ -15,7 +15,6 @@
 #' @export
 convertParamSetToIrace = function(par.set, digits = 4, as.chars = FALSE) {
   assertClass(par.set, "ParamSet")
-  digits = convertInteger(digits)
   digits = asInt(digits, lower = 1L)
   assertFlag(as.chars)
   if (!is.null(par.set$forbidden))

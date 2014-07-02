@@ -64,7 +64,6 @@ as.data.frame.OptPathDF = function(x, row.names = NULL, optional = FALSE,
 
 #' @export
 getOptPathEl.OptPathDF = function(op, index) {
-  index = convertInteger(index)
   index = asInt(index)
   n = getOptPathLength(op)
   if (!(index >= 1 && index <= n))
@@ -94,9 +93,7 @@ addOptPathEl.OptPathDF = function(op, x, y, dob = getOptPathLength(op)+1L, eol =
   env = op$env
   assertList(x, len = length(op$par.set$pars))
   assertNumeric(y, len = length(op$y.names))
-  dob = convertInteger(dob)
   dob = asInt(dob)
-  eol = convertInteger(eol)
   eol = asInt(eol)
   assertString(error.message)
   assertNumber(exec.time, "numeric", lower = 0, na.ok = TRUE)

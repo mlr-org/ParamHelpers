@@ -237,9 +237,7 @@ addOptPathEl = function(op, x, y, dob = getOptPathLength(op)+1L, eol = as.intege
 getOptPathBestIndex = function(op, y.name = op$y.names[1], dob = op$env$dob, eol = op$env$eol, ties = "last") {
   assertClass(op, "OptPath")
   assertChoice(y.name, choices = op$y.names)
-  dob = convertIntegers(dob)
   dob = asInteger(dob, na.ok = TRUE)
-  eol = convertIntegers(eol)
   eol = asInteger(eol, na.ok = TRUE)
   assertChoice(ties, c("all", "first", "last", "random"))
   life.inds = which(op$env$dob %in% dob & op$env$eol %in% eol)
@@ -300,9 +298,7 @@ getOptPathParetoFront = function(op, y.names = op$y.names, dob = op$env$dob, eol
   assertClass(op, "OptPath")
   assertCharacter(y.names, len = 2L)
   assertSubset(y.names, op$y.names, empty.ok = FALSE)
-  dob = convertIntegers(dob)
   dob = asInteger(dob, na.ok = TRUE)
-  eol = convertIntegers(eol)
   eol = asInteger(eol, na.ok = TRUE)
   assertFlag(index, na.ok = TRUE)
   requirePackages("emoa")
@@ -400,9 +396,7 @@ getOptPathCol = function(op, names) {
 #' @family optpath
 setOptPathElDOB = function(op, index, dob) {
   assertClass(op, "OptPath")
-  index = convertIntegers(index)
   index = asInteger(index)
-  dob = convertIntegers(dob)
   dob = asInteger(dob)
   op$env$dob[index] = dob
   invisible(NULL)
@@ -421,9 +415,7 @@ setOptPathElDOB = function(op, index, dob) {
 #' @family optpath
 setOptPathElEOL = function(op, index, eol) {
   assertClass(op, "OptPath")
-  index = convertIntegers(index)
   index = asInteger(index)
-  eol = convertIntegers(eol)
   eol = asInteger(eol)
   op$env$eol[index] = eol
   invisible(NULL)

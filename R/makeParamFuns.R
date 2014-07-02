@@ -17,7 +17,6 @@ makeNumericParam = function(id, lower = -Inf, upper = Inf, default, trafo = NULL
 #' @export
 makeNumericVectorParam = function(id, len, lower = -Inf, upper = Inf, default, trafo = NULL, requires = NULL) {
   assertString(id)
-  len = convertInteger(len)
   len = asInt(len)
   if (is.numeric(lower) && length(lower) == 1)
     lower = rep(lower, len)
@@ -53,7 +52,6 @@ makeIntegerParam = function(id, lower = -Inf, upper = Inf, default, trafo = NULL
 #' @export
 makeIntegerVectorParam = function(id, len, lower = -Inf, upper = Inf, default, trafo = NULL, requires = NULL) {
   assertString(id)
-  len = convertInteger(len)
   len = asInt(len)
   if (is.numeric(lower) && length(lower) == 1)
     lower = rep(lower, len)
@@ -85,7 +83,6 @@ makeLogicalParam = function(id, default, requires = NULL) {
 #' @export
 makeLogicalVectorParam = function(id, len, default, requires = NULL) {
   assertString(id)
-  len = convertInteger(len)
   len = asInt(len)
   if (!is.null(requires))
     assertClass(requires, c("call", "expression"))
@@ -108,7 +105,6 @@ makeDiscreteParam = function(id, values, trafo = NULL, default, requires = NULL)
 #' @export
 makeDiscreteVectorParam = function(id, len, values, default, requires = NULL) {
   assertString(id)
-  len = convertInteger(len)
   len = asInt(len)
   if (!is.null(requires))
     assertClass(requires, c("call", "expression"))

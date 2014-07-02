@@ -12,7 +12,6 @@ makeNumericLearnerParam = function(id, lower = -Inf, upper = Inf, default,
 makeNumericVectorLearnerParam = function(id, len = as.integer(NA), lower = -Inf,
   upper = Inf, default, when = "train", requires = NULL) {
 
-  len = convertInteger(len)
   len = asInt(len, na.ok = TRUE)
   if (is.na(len))
     p = makeNumericVectorParam(id, len = 1, lower = lower, upper = upper, default = default, requires = requires)
@@ -38,7 +37,6 @@ makeIntegerLearnerParam = function(id, lower = -Inf, upper = Inf,
 makeIntegerVectorLearnerParam = function(id, len = as.integer(NA), lower = -Inf,
   upper = Inf, default, when = "train", requires = NULL) {
 
-  len = convertInteger(len)
   len = asInt(len, na.ok = TRUE)
   if (is.na(len))
     p = makeIntegerVectorParam(id, len = 1, lower = lower, upper = upper, default = default, requires = requires)
@@ -63,7 +61,6 @@ makeDiscreteLearnerParam = function(id, values, default,
 makeDiscreteVectorLearnerParam = function(id, len = as.integer(NA), values, default,
   when = "train", requires = NULL) {
 
-  len = convertInteger(len)
   len = asInt(len, na.ok = TRUE)
   if (is.na(len))
     p = makeDiscreteVectorParam(id, len = 1, values = values, default = default, requires = requires)
@@ -88,7 +85,6 @@ makeLogicalLearnerParam = function(id, default, when = "train",
 makeLogicalVectorLearnerParam = function(id, len = as.integer(NA), default, when = "train",
   requires = NULL) {
 
-  len = convertInteger(len)
   len = asInt(len, na.ok = TRUE)
   if (is.na(len))
     p = makeLogicalVectorParam(id, len = 1, default = default, requires = requires)
