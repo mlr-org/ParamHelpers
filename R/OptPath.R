@@ -400,7 +400,7 @@ getOptPathCol = function(op, names) {
 setOptPathElDOB = function(op, index, dob) {
   checkArg(op, "OptPath")
   index = convertIntegers(index)
-  checkArg(index, "integer", na.ok = FALSE)
+  index = asInteger(index)
   dob = convertIntegers(dob)
   checkArg(dob, "integer")
   op$env$dob[index] = dob
@@ -421,7 +421,7 @@ setOptPathElDOB = function(op, index, dob) {
 setOptPathElEOL = function(op, index, eol) {
   checkArg(op, "OptPath")
   index = convertIntegers(index)
-  checkArg(index, "integer", na.ok = FALSE)
+  index = asInteger(index)
   eol = convertIntegers(eol)
   checkArg(eol, "integer")
   op$env$eol[index] = eol
