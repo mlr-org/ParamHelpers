@@ -126,7 +126,7 @@ sampleValue.ParamSet = function(par, discrete.names = FALSE, trafo = FALSE) {
 #' )
 #' sampleValues(ps, 2)
 sampleValues = function(par, n, discrete.names = FALSE, trafo = FALSE) {
-  checkArg(par, c("Param", "ParamSet"))
+  assertClass(par, c("Param", "ParamSet"))
   n = convertInteger(n)
   n = asInt(n)
   checkArg(discrete.names, "logical", len = 1L, na.ok = FALSE)
