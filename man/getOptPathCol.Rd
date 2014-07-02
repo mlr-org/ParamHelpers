@@ -3,7 +3,7 @@
 \alias{getOptPathCol}
 \title{Get column from the optimization path.}
 \usage{
-getOptPathCol(op, names)
+getOptPathCol(op, name)
 }
 \arguments{
 \item{op}{[\code{\link{OptPath}}]\cr
