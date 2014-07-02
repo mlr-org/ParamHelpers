@@ -126,7 +126,7 @@ sampleValue.ParamSet = function(par, discrete.names = FALSE, trafo = FALSE) {
 #' )
 #' sampleValues(ps, 2)
 sampleValues = function(par, n, discrete.names = FALSE, trafo = FALSE) {
-  assertClass(par, c("Param", "ParamSet"))
+  assert(checkClass(par, "Param"), checkClass(par, "ParamSet"))
   n = asInt(n)
   assertFlag(discrete.names)
   replicate(n, sampleValue(par, discrete.names = discrete.names, trafo = trafo), simplify = FALSE)

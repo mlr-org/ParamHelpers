@@ -7,7 +7,7 @@ makeNumericParam = function(id, lower = -Inf, upper = Inf, default, trafo = NULL
   if (!is.null(trafo))
     assertFunction(trafo)
   if (!is.null(requires))
-    assertClass(requires, c("call", "expression"))
+    assert(checkClass(requires, "call"), checkClass(requires, "expression"))
   if (upper < lower)
     stop("No possible value!")
   makeParam(id, "numeric", 1L, lower, upper, NULL, default, trafo, requires)
@@ -22,12 +22,12 @@ makeNumericVectorParam = function(id, len, lower = -Inf, upper = Inf, default, t
     lower = rep(lower, len)
   if (is.numeric(upper) && length(upper) == 1)
     upper = rep(upper, len)
-  assertNumeric(lower, min.len = 1L, na.ok = FALSE)
-  assertNumeric(upper, min.len = 1L, na.ok = FALSE)
+  assertNumeric(lower, min.len = 1L, any.missing = FALSE)
+  assertNumeric(upper, min.len = 1L, any.missing = FALSE)
   if (!is.null(trafo))
     assertFunction(trafo)
   if (!is.null(requires))
-    assertClass(requires, c("call", "expression"))
+    assert(checkClass(requires, "call"), checkClass(requires, "expression"))
   if (any(upper < lower))
     stop("No possible value!")
   makeParam(id, "numericvector", len, lower, upper, NULL, default, trafo, requires)
@@ -42,7 +42,7 @@ makeIntegerParam = function(id, lower = -Inf, upper = Inf, default, trafo = NULL
   if (!is.null(trafo))
     assertFunction(trafo)
   if (!is.null(requires))
-    assertClass(requires, c("call", "expression"))
+    assert(checkClass(requires, "call"), checkClass(requires, "expression"))
   if (upper < lower)
     stop("No possible value!")
   makeParam(id, "integer", 1L,  lower, upper, NULL, default, trafo, requires)
@@ -57,12 +57,12 @@ makeIntegerVectorParam = function(id, len, lower = -Inf, upper = Inf, default, t
     lower = rep(lower, len)
   if (is.numeric(upper) && length(upper) == 1)
     upper = rep(upper, len)
-  assertNumeric(lower, min.len = 1L, na.ok = FALSE)
-  assertNumeric(upper, min.len = 1L, na.ok = FALSE)
+  assertNumeric(lower, min.len = 1L, any.missing = FALSE)
+  assertNumeric(upper, min.len = 1L, any.missing = FALSE)
   if (!is.null(trafo))
     assertFunction(trafo)
   if (!is.null(requires))
-    assertClass(requires, c("call", "expression"))
+    assert(checkClass(requires, "call"), checkClass(requires, "expression"))
   if (any(upper < lower))
     stop("No possible value!")
   makeParam(id, "integervector", len,  lower, upper, NULL, default, trafo, requires)
@@ -73,7 +73,7 @@ makeIntegerVectorParam = function(id, len, lower = -Inf, upper = Inf, default, t
 makeLogicalParam = function(id, default, requires = NULL) {
   assertString(id)
   if (!is.null(requires))
-    assertClass(requires, c("call", "expression"))
+    assert(checkClass(requires, "call"), checkClass(requires, "expression"))
   values = list(TRUE, FALSE)
   names(values) = c("TRUE", "FALSE")
   makeParam(id, "logical", 1L, NULL, NULL, values, default = default, requires = requires)
@@ -85,7 +85,7 @@ makeLogicalVectorParam = function(id, len, default, requires = NULL) {
   assertString(id)
   len = asInt(len)
   if (!is.null(requires))
-    assertClass(requires, c("call", "expression"))
+    assert(checkClass(requires, "call"), checkClass(requires, "expression"))
   values = list(TRUE, FALSE)
   names(values) = c("TRUE", "FALSE")
   makeParam(id, "logicalvector", len, NULL, NULL, values, default = default, requires = requires)
@@ -96,7 +96,7 @@ makeLogicalVectorParam = function(id, len, default, requires = NULL) {
 makeDiscreteParam = function(id, values, trafo = NULL, default, requires = NULL) {
   assertString(id)
   if (!is.null(requires))
-    assertClass(requires, c("call", "expression"))
+    assert(checkClass(requires, "call"), checkClass(requires, "expression"))
   values = checkValuesForDiscreteParam(id, values)
   makeParam(id, "discrete", 1L, NULL, NULL, values, default, trafo, requires)
 }
@@ -107,7 +107,7 @@ makeDiscreteVectorParam = function(id, len, values, default, requires = NULL) {
   assertString(id)
   len = asInt(len)
   if (!is.null(requires))
-    assertClass(requires, c("call", "expression"))
+    assert(checkClass(requires, "call"), checkClass(requires, "expression"))
   values = checkValuesForDiscreteParam(id, values)
   makeParam(id, "discretevector", len, NULL, NULL, values, default = default, requires = requires)
 }
@@ -117,7 +117,7 @@ makeDiscreteVectorParam = function(id, len, values, default, requires = NULL) {
 makeFunctionParam = function(id, default = default, requires = NULL) {
   assertString(id)
   if (!is.null(requires))
-    assertClass(requires, c("call", "expression"))
+    assert(checkClass(requires, "call"), checkClass(requires, "expression"))
   makeParam(id, "function", 1L, NULL, NULL, NULL, default = default, requires = requires)
 }
 
@@ -128,7 +128,7 @@ makeFunctionParam = function(id, default = default, requires = NULL) {
 makeUntypedParam = function(id, default, requires = NULL) {
   assertString(id)
   if (!is.null(requires))
-    assertClass(requires, c("call", "expression"))
+    assert(checkClass(requires, "call"), checkClass(requires, "expression"))
   makeParam(id, "untyped", 1L, NULL, NULL, NULL, default = default, requires = requires)
 }
 
