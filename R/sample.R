@@ -129,7 +129,7 @@ sampleValues = function(par, n, discrete.names = FALSE, trafo = FALSE) {
   assertClass(par, c("Param", "ParamSet"))
   n = convertInteger(n)
   n = asInt(n)
-  checkArg(discrete.names, "logical", len = 1L, na.ok = FALSE)
+  assertFlag(discrete.names)
   replicate(n, sampleValue(par, discrete.names = discrete.names, trafo = trafo), simplify = FALSE)
 }
 

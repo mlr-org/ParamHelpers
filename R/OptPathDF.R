@@ -7,10 +7,10 @@ makeOptPathDF = function(par.set, y.names, minimize, add.transformed.x = FALSE,
   assertClass(par.set, "ParamSet")
   checkArg(y.names, "character", na.ok = FALSE)
   checkArg(minimize, "logical", na.ok = FALSE)
-  checkArg(add.transformed.x, "logical", len = 1L, na.ok = FALSE)
-  checkArg(include.error.message, "logical", len = 1L, na.ok = FALSE)
-  checkArg(include.exec.time, "logical", len = 1L, na.ok = FALSE)
-  checkArg(include.extra, "logical", len = 1L, na.ok = FALSE)
+  assertFlag(add.transformed.x)
+  assertFlag(include.error.message)
+  assertFlag(include.exec.time)
+  assertFlag(include.extra)
 
   n.y = length(y.names)
   obj = makeOptPath(par.set, y.names, minimize, add.transformed.x, include.error.message,
@@ -31,9 +31,9 @@ getOptPathLength.OptPathDF = function(op) {
 as.data.frame.OptPathDF = function(x, row.names = NULL, optional = FALSE,
   discretes.as.factor = FALSE, include.x = TRUE, include.y = TRUE, include.rest = TRUE, ...) {
 
-  checkArg(include.x, "logical", len = 1L, na.ok = FALSE)
-  checkArg(include.y, "logical", len = 1L, na.ok = FALSE)
-  checkArg(include.rest, "logical", len = 1L, na.ok = FALSE)
+  assertFlag(include.x)
+  assertFlag(include.y)
+  assertFlag(include.rest)
 
   if (!include.x && !include.y && !include.rest)
     stopf("Not able to create data.frame from opt.path. You need to include something!")
@@ -168,7 +168,7 @@ getOptPathY.OptPathDF = function(op, names, drop = TRUE) {
     names = op$y.names
   else
 c(names, subset = op$y.names)
-  checkArg(drop, "logical", len = 1L, na.ok = FALSE)
+  assertFlag(drop)
   y = as.matrix(op$env$path[, names, drop = FALSE])
   if (drop && length(names) == 1L)
     y = as.numeric(y)

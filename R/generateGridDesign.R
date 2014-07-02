@@ -64,7 +64,7 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE) {
     stop("'resolution' must be named with parameter ids!")
   resolution = resolution[pids1]
 
-  checkArg(trafo, "logical", len = 1L, na.ok = FALSE)
+  assertFlag(trafo)
 
   vals.list = setNames(vector("list", m), pids2)
   el.counter = 1L

@@ -93,7 +93,7 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
   else
     assertFunction(fun)
   checkArg(fun.args, "list")
-  checkArg(trafo, "logical", len = 1L, na.ok = FALSE)
+  assertFlag(trafo)
   augment = convertInteger(augment)
   checkArg(augment, "integer", len = 1L, lower = 0L, na.ok = FALSE)
 
