@@ -1,7 +1,7 @@
 #' @rdname Param
 #' @export
 makeNumericParam = function(id, lower = -Inf, upper = Inf, default, trafo = NULL, requires = NULL) {
-  checkArg(id, "character", len = 1, na.ok = FALSE)
+  assertString(id)
   checkArg(lower, "numeric", len = 1, na.ok = FALSE)
   checkArg(upper, "numeric", len = 1, na.ok = FALSE)
   if (!is.null(trafo))
@@ -16,7 +16,7 @@ makeNumericParam = function(id, lower = -Inf, upper = Inf, default, trafo = NULL
 #' @rdname Param
 #' @export
 makeNumericVectorParam = function(id, len, lower = -Inf, upper = Inf, default, trafo = NULL, requires = NULL) {
-  checkArg(id, "character", len = 1, na.ok = FALSE)
+  assertString(id)
   len = convertInteger(len)
   checkArg(len, "integer", len = 1, na.ok = FALSE)
   if (is.numeric(lower) && length(lower) == 1)
@@ -37,7 +37,7 @@ makeNumericVectorParam = function(id, len, lower = -Inf, upper = Inf, default, t
 #' @rdname Param
 #' @export
 makeIntegerParam = function(id, lower = -Inf, upper = Inf, default, trafo = NULL, requires = NULL) {
-  checkArg(id, "character", len = 1, na.ok = FALSE)
+  assertString(id)
   checkArg(lower, "numeric", len = 1, na.ok = FALSE)
   checkArg(upper, "numeric", len = 1, na.ok = FALSE)
   if (!is.null(trafo))
@@ -52,7 +52,7 @@ makeIntegerParam = function(id, lower = -Inf, upper = Inf, default, trafo = NULL
 #' @rdname Param
 #' @export
 makeIntegerVectorParam = function(id, len, lower = -Inf, upper = Inf, default, trafo = NULL, requires = NULL) {
-  checkArg(id, "character", len = 1, na.ok = FALSE)
+  assertString(id)
   len = convertInteger(len)
   checkArg(len, "integer", len = 1, na.ok = FALSE)
   if (is.numeric(lower) && length(lower) == 1)
@@ -73,7 +73,7 @@ makeIntegerVectorParam = function(id, len, lower = -Inf, upper = Inf, default, t
 #' @rdname Param
 #' @export
 makeLogicalParam = function(id, default, requires = NULL) {
-  checkArg(id, "character", len = 1, na.ok = FALSE)
+  assertString(id)
   if (!is.null(requires))
     checkArg(requires, c("call", "expression"))
   values = list(TRUE, FALSE)
@@ -84,7 +84,7 @@ makeLogicalParam = function(id, default, requires = NULL) {
 #' @rdname Param
 #' @export
 makeLogicalVectorParam = function(id, len, default, requires = NULL) {
-  checkArg(id, "character", len = 1, na.ok = FALSE)
+  assertString(id)
   len = convertInteger(len)
   checkArg(len, "integer", len = 1, na.ok = FALSE)
   if (!is.null(requires))
@@ -97,7 +97,7 @@ makeLogicalVectorParam = function(id, len, default, requires = NULL) {
 #' @rdname Param
 #' @export
 makeDiscreteParam = function(id, values, trafo = NULL, default, requires = NULL) {
-  checkArg(id, "character", len = 1, na.ok = FALSE)
+  assertString(id)
   if (!is.null(requires))
     checkArg(requires, c("call", "expression"))
   values = checkValuesForDiscreteParam(id, values)
@@ -107,7 +107,7 @@ makeDiscreteParam = function(id, values, trafo = NULL, default, requires = NULL)
 #' @rdname Param
 #' @export
 makeDiscreteVectorParam = function(id, len, values, default, requires = NULL) {
-  checkArg(id, "character", len = 1, na.ok = FALSE)
+  assertString(id)
   len = convertInteger(len)
   checkArg(len, "integer", len = 1, na.ok = FALSE)
   if (!is.null(requires))
@@ -119,7 +119,7 @@ makeDiscreteVectorParam = function(id, len, values, default, requires = NULL) {
 #' @rdname Param
 #' @export
 makeFunctionParam = function(id, default = default, requires = NULL) {
-  checkArg(id, "character", len = 1, na.ok = FALSE)
+  assertString(id)
   if (!is.null(requires))
     checkArg(requires, c("call", "expression"))
   makeParam(id, "function", 1L, NULL, NULL, NULL, default = default, requires = requires)
@@ -130,7 +130,7 @@ makeFunctionParam = function(id, default = default, requires = NULL) {
 #' @rdname Param
 #' @export
 makeUntypedParam = function(id, default, requires = NULL) {
-  checkArg(id, "character", len = 1, na.ok = FALSE)
+  assertString(id)
   if (!is.null(requires))
     checkArg(requires, c("call", "expression"))
   makeParam(id, "untyped", 1L, NULL, NULL, NULL, default = default, requires = requires)
