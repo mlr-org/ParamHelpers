@@ -40,7 +40,7 @@
 #' paramValueToString(ps, list(x=c(1,2), y=NULL))
 paramValueToString = function(par, x, show.missing.values = FALSE, num.format = "%.3g") {
   assertFlag(show.missing.values)
-  checkArg(num.format, "character", len = 1L, na.ok = FALSE)
+  assertString(num.format)
   UseMethod("paramValueToString")
 }
 

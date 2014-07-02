@@ -197,7 +197,7 @@ getOptPathExecTimes.OptPathDF = function(op) {
 
 #' @export
 getOptPathCol.OptPathDF = function(op, name) {
-  checkArg(name, "character", len = 1L, na.ok = FALSE)
+  assertString(name)
   if (getOptPathLength(op) == 0L)
     stopf("Trying to return a col from an empty opt.path")
   if (name %in% colnames(op$env$path))

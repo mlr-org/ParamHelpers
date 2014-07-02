@@ -95,7 +95,7 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
   assertList(fun.args)
   assertFlag(trafo)
   augment = convertInteger(augment)
-  checkArg(augment, "integer", len = 1L, lower = 0L, na.ok = FALSE)
+  augment = asInt(augment, lower = 0L)
 
   ### precompute some useful stuff
   pars = par.set$pars

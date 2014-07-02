@@ -241,7 +241,7 @@ getOptPathBestIndex = function(op, y.name = op$y.names[1], dob = op$env$dob, eol
   dob = asInteger(dob, na.ok = TRUE)
   eol = convertIntegers(eol)
   eol = asInteger(eol, na.ok = TRUE)
-  checkArg(ties, choices = c("all", "first", "last", "random"))
+  assertChoice(ties, c("all", "first", "last", "random"))
   life.inds = which(op$env$dob %in% dob & op$env$eol %in% eol)
   if (length(life.inds) == 0)
     stop("No element found which matches dob and eol restrictions!")
@@ -298,7 +298,8 @@ getOptPathBestIndex = function(op, y.name = op$y.names[1], dob = op$env$dob, eol
 #' getOptPathParetoFront(op, index = TRUE)
 getOptPathParetoFront = function(op, y.names = op$y.names, dob = op$env$dob, eol = op$env$eol, index = FALSE) {
   assertClass(op, "OptPath")
-  checkArg(y.names, subset = op$y.names, min.len = 2L)
+  assertCharacter(y.names, len = 2L)
+  assertSubset(y.names, op$y.names, empty.ok = FALSE)
   dob = convertIntegers(dob)
   dob = asInteger(dob, na.ok = TRUE)
   eol = convertIntegers(eol)

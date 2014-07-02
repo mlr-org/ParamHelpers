@@ -27,7 +27,7 @@
 #' @useDynLib ParamHelpers c_dfRowsToList
 #' @rdname dfRowsToList
 dfRowsToList = function(df, par.set) {
-  checkArg(df, "data.frame")
+  assertClass(df, "data.frame")
   assertClass(par.set, "ParamSet")
 
   lens = getParamLengths(par.set)

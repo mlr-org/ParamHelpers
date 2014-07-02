@@ -13,7 +13,7 @@
 # par.set = extractParamSetFromSooFunction(fn)
 # print(par.set)
 extractParamSetFromSooFunction = function(fn) {
-  checkArg(fn, "soo_function")
+  assertClass(fn, "soo_function")
   makeNumericParamSet(
     len = number_of_parameters(fn),
     id = "x",
