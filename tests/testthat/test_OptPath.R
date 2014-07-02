@@ -73,7 +73,7 @@ test_that("OptPath", {
   # really make sure that names are there
   expect_equal(names(e$y), "z")
   # check error msg for wrong y
-  expect_error(addOptPathEl(op, x = list(c(1,1), 7L), y = c(1, 1)), "Argument y must be of length")
+  expect_error(addOptPathEl(op, x = list(c(1,1), 7L), y = c(1, 1)), "Must have length")
 })
 
 test_that("OptPath with vector and discrete params works", {
@@ -242,7 +242,7 @@ test_that("as.data.frame flags and getCols works", {
   op = makeOptPathDF(par.set = ps, y.names = c("z1", "z2"), minimize = c(TRUE, TRUE), include.extra = TRUE)
   addOptPathEl(op, x = list(x = 1, y = "a"), y = c(z1 = 1, z2 = 4), extra = list(ee = 7))
   addOptPathEl(op, x = list(x = 2, y = "a"), y = c(z1 = 3, z2 = 2), extra = list(ee = 8))
-  
+
   expect_error(as.data.frame(op, include.x = FALSE, include.y = FALSE, include.rest = FALSE), "include something")
   df1 = as.data.frame(op, include.rest = FALSE)
   df2 = as.data.frame(op, include.rest = FALSE, include.x = FALSE)

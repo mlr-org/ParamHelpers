@@ -96,7 +96,7 @@ addOptPathEl.OptPathDF = function(op, x, y, dob = getOptPathLength(op)+1L, eol =
   dob = asInt(dob, na.ok = TRUE)
   eol = asInt(eol, na.ok = TRUE)
   assertString(error.message, na.ok = TRUE)
-  assertNumber(exec.time, "numeric", lower = 0, na.ok = TRUE)
+  assertNumber(exec.time, lower = 0, na.ok = TRUE)
   if (!is.null(extra)) {
     if (is.null(env$extra))
       stopf("Trying to add extra info to opt path, without enabling that option!")
