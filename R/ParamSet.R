@@ -124,7 +124,7 @@ makeNumericParamSet = function(id="x", len, lower=-Inf, upper=Inf, vector=TRUE) 
     upper = rep(upper, len)
     checkArg(lower, "numeric", len=len, na.ok=FALSE)
     checkArg(upper, "numeric", len=len, na.ok=FALSE)
-    checkArg(vector, "logical", len=1L, na.ok=FALSE)
+    assertFlag(vector)
   if (vector) {
     makeParamSet(makeNumericVectorParam(id=id, len=len, lower=lower, upper=upper))
   } else {
