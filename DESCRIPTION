@@ -11,7 +11,8 @@ Maintainer: Bernd Bischl <bernd_bischl@gmx.net>
 License: BSD_3_clause + file LICENSE
 Roxygen: list(wrap = FALSE)
 Imports:
-    BBmisc (>= 1.6)
+    BBmisc (>= 1.7),
+    checkmate (>= 1.1)
 Suggests:
     emoa,
     lhs,
