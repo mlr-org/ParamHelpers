@@ -402,7 +402,7 @@ setOptPathElDOB = function(op, index, dob) {
   index = convertIntegers(index)
   index = asInteger(index)
   dob = convertIntegers(dob)
-  checkArg(dob, "integer")
+  dob = asInteger(dob)
   op$env$dob[index] = dob
   invisible(NULL)
 }
@@ -423,7 +423,7 @@ setOptPathElEOL = function(op, index, eol) {
   index = convertIntegers(index)
   index = asInteger(index)
   eol = convertIntegers(eol)
-  checkArg(eol, "integer")
+  eol = asInteger(eol)
   op$env$eol[index] = eol
   invisible(NULL)
 }
