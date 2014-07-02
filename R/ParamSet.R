@@ -108,7 +108,7 @@ isEmpty.ParamSet = function(par.set) {
 #' @rdname makeParamSet
 #' @export
 makeNumericParamSet = function(id="x", len, lower=-Inf, upper=Inf, vector=TRUE) {
-  checkArg(id, "character", len=1L, na.ok=FALSE)
+  assertString(id)
   if (missing(len)) {
     if (!missing(lower))
       len = length(lower)
