@@ -10,7 +10,7 @@
 isForbidden = function(par.set, x) {
   assertClass(par.set, "ParamSet")
   #FIXME: check for correct names here
-  checkArg(x, "list")
+  assertList(x)
   if (!hasForbidden(par.set))
     return(FALSE)
   eval(par.set$forbidden, envir = x)

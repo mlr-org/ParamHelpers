@@ -103,7 +103,7 @@ addOptPathEl.OptPathDF = function(op, x, y, dob = getOptPathLength(op)+1L, eol =
   if (!is.null(extra)) {
     if (is.null(env$extra))
       stopf("Trying to add extra info to opt path, without enabling that option!")
-    checkArg(extra, "list")
+    assertList(extra)
     if (!isProperlyNamed(extra))
       stopf("'extra' must be propely named!")
     if (!all(sapply(extra, isScalarValue)))

@@ -79,7 +79,7 @@ paramValueToString.Param = function(par, x, show.missing.values = FALSE, num.for
 
 #' @export
 paramValueToString.ParamSet = function(par, x, show.missing.values = FALSE, num.format = "%.3g") {
-  checkArg(x, "list")
+  assertList(x)
   if (!isProperlyNamed(x))
     stop("'x' must be a properly named list!")
   rest = setdiff(names(x), names(par$pars))

@@ -142,7 +142,7 @@ makeUntypedParam = function(id, default, requires = NULL) {
 checkValuesForDiscreteParam = function(id, values) {
   if (is.vector(values))
     values = as.list(values)
-  checkArg(values, "list")
+  assertList(values)
 
   if (length(values) == 0L)
     stopf("No possible value for discrete parameter %s!", id)
