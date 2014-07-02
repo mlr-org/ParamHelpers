@@ -37,6 +37,12 @@
 #'     and iterate.}
 #' }
 #'
+#' Note that augmenting currently is somewhat experimental as we simply generate missing points
+#' via new calls to \code{\link[lhs]{randomLHS}}, but do not add points so they are maximally
+#' far away from the already present ones. The reason is that the latter is quite hard to achieve
+#' with complicated dependences and forbidden regions, if one wants to ensure that points actually
+#' get added... But we are working on it,
+#'
 #' @param n [\code{integer(1)}]\cr
 #'   Number of samples in design.
 #'   Default is 10.
@@ -58,7 +64,7 @@
 #'   and \code{augment} specifies the number of tries to augment.
 #'   If the the design is of size less than \code{n} after all tries, a warning is issued
 #'   and the smaller design is returned.
-#'   Default is 5.
+#'   Default is 20.
 #' @return The created design is a data.frame. Columns are named by the ids of the parameters.
 #'   If the \code{par.set} argument contains a vector parameter, its corresponding column names
 #'   in the design are the parameter id concatenated with 1 to dimension of the vector.
@@ -80,7 +86,7 @@
 #'   makeNumericVectorParam("y", len = 2, lower = 0, upper = 1, trafo = function(x) x/sum(x))
 #' )
 #' generateDesign(10, ps, trafo = TRUE)
-generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALSE, augment = 5L) {
+generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALSE, augment = 20L) {
 
   n = asInt(n)
   z = doBasicGenDesignChecks(par.set)
@@ -132,10 +138,18 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
     newdes = if (nmissing == n)
       do.call(fun, insert(list(n = nmissing, k = k), fun.args))
     else
-      augmentLHS(des, m = nmissing)
+      randomLHS(nmissing, k = k)
     # preallocate result for C
-    newres = makeDataFrame(n, k, col.types = types.df)
+    newres = makeDataFrame(nmissing, k, col.types = types.df)
     newres = .Call(c_generateDesign, newdes, newres, types.int, lower2, upper2, values2)
+    colnames(newres) = pids1
+    # check each row if forbidden, then remove
+    if (hasForbidden(par.set)) {
+      #FIXME: this is pretty slow, but correct
+      fb = rowSapply(newres, isForbidden, par.set = par.set)
+      newres = newres[!fb, , drop = FALSE]
+      newdes = newdes[!fb, , drop = FALSE]
+    }
     newres = .Call(c_trafo_and_set_dep_to_na, newres, types.int, names(pars), lens, trafos, par.requires, new.env())
     # add to result (design matrix and data.frame)
     des = rbind(des, newdes)
