@@ -53,7 +53,7 @@ trafoValue = function(par, x) {
 #' op = trafoOptPath(op)
 #' as.data.frame(op)
 trafoOptPath = function(opt.path) {
-  checkArg(opt.path, "OptPath")
+  assertClass(opt.path, "OptPath")
   if (opt.path$add.transformed.x)
     stop("Cannot further trafo opt.path, you already added transformed x values to it!")
   ps = opt.path$par.set

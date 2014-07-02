@@ -80,7 +80,7 @@ c.ParamSet = function(..., recursive=FALSE) {
 #' @return [\code{logical(1)}].
 #' @export
 isEmpty = function(par.set) {
-  checkArg(par.set, c("ParamSet"))
+  assertClass(par.set, "ParamSet")
   UseMethod("isEmpty")
 }
 
