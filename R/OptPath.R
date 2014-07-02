@@ -380,7 +380,7 @@ getOptPathExecTimes = function(op) {
 #' @return [\code{data.frame}].
 #' @export
 #' @family optpath
-getOptPathCol = function(op, names) {
+getOptPathCol = function(op, name) {
   UseMethod("getOptPathCol")
 }
 
