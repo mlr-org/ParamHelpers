@@ -91,7 +91,7 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
   if (missing(fun))
     fun = lhs::randomLHS
   else
-    checkArg(fun, "function")
+    assertFunction(fun)
   checkArg(fun.args, "list")
   checkArg(trafo, "logical", len = 1L, na.ok = FALSE)
   augment = convertInteger(augment)
