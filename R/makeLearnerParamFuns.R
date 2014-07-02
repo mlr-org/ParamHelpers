@@ -114,6 +114,6 @@ makeFunctionLearnerParam = function(id, default, when = "train", requires = NULL
 }
 
 learnerParamFromParam = function(p, when) {
-  checkArg(when, choices = c("train", "predict", "both"))
+  assertChoice(when, c("train", "predict", "both"))
   makeLearnerParam(p, when)
 }

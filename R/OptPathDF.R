@@ -5,8 +5,8 @@ makeOptPathDF = function(par.set, y.names, minimize, add.transformed.x = FALSE,
   include.error.message = FALSE, include.exec.time = FALSE, include.extra = FALSE) {
 
   assertClass(par.set, "ParamSet")
-  checkArg(y.names, "character", na.ok = FALSE)
-  checkArg(minimize, "logical", na.ok = FALSE)
+  assertCharacter(y.names)
+  assertLogical(minimize)
   assertFlag(add.transformed.x)
   assertFlag(include.error.message)
   assertFlag(include.exec.time)
@@ -65,7 +65,7 @@ as.data.frame.OptPathDF = function(x, row.names = NULL, optional = FALSE,
 #' @export
 getOptPathEl.OptPathDF = function(op, index) {
   index = convertInteger(index)
-  checkArg(index, "integer", 1)
+  index = asInt(index)
   n = getOptPathLength(op)
   if (!(index >= 1 && index <= n))
     stop("Index must be between 1 and ", n, "!")
@@ -92,14 +92,14 @@ addOptPathEl.OptPathDF = function(op, x, y, dob = getOptPathLength(op)+1L, eol =
   check.feasible = !op$add.transformed.x) {
 
   env = op$env
-  checkArg(x, "list", len = length(op$par.set$pars))
-  checkArg(y, "numeric", len = length(op$y.names))
+  assertList(x, len = length(op$par.set$pars))
+  assertNumeric(y, len = length(op$y.names))
   dob = convertInteger(dob)
   dob = asInt(dob)
   eol = convertInteger(eol)
   eol = asInt(eol)
   assertString(error.message)
-  checkArg(exec.time, "numeric", len = 1L, lower = 0, na.ok = TRUE)
+  assertNumber(exec.time, "numeric", lower = 0, na.ok = TRUE)
   if (!is.null(extra)) {
     if (is.null(env$extra))
       stopf("Trying to add extra info to opt path, without enabling that option!")

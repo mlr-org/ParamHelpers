@@ -59,7 +59,7 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE) {
   if (length(resolution) == 1L) {
     resolution = setNames(rep(resolution, n), pids1)
   }
-  checkArg(resolution, "integer", na.ok = FALSE, lower = 1L, len = n)
+  resolution = asInteger(resolution, lower = 1L, len = n)
   if (!isProperlyNamed(resolution) || !all(names(resolution) == pids1))
     stop("'resolution' must be named with parameter ids!")
   resolution = resolution[pids1]

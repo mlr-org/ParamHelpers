@@ -236,7 +236,7 @@ addOptPathEl = function(op, x, y, dob = getOptPathLength(op)+1L, eol = as.intege
 #' getOptPathBestIndex(op, ties = "first")
 getOptPathBestIndex = function(op, y.name = op$y.names[1], dob = op$env$dob, eol = op$env$eol, ties = "last") {
   assertClass(op, "OptPath")
-  checkArg(y.name, choices = op$y.names, len = 1L, na.ok = FALSE)
+  assertChoice(y.name, choices = op$y.names)
   dob = convertIntegers(dob)
   dob = asInteger(dob, na.ok = TRUE)
   eol = convertIntegers(eol)
