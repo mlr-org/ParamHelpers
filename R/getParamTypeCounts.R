@@ -6,7 +6,7 @@
 #'  number of parameters of this type in the given ParamSet.
 #' @export
 getParamTypeCounts = function(par.set) {
-  checkArg(par.set, "ParamSet")
+  assertClass(par.set, "ParamSet")))
   supported.types = getSupportedParamTypes()
   par.types = getParamTypes(par.set)
   count = lapply(supported.types, function(type) {

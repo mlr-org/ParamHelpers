@@ -28,7 +28,7 @@
 #' @rdname dfRowsToList
 dfRowsToList = function(df, par.set) {
   checkArg(df, "data.frame")
-  checkArg(par.set, "ParamSet")
+  assertClass(par.set, "ParamSet")))
 
   lens = getParamLengths(par.set)
   int.type = convertTypesToCInts(getParamTypes(par.set, df.cols = TRUE))
