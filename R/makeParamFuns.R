@@ -2,8 +2,8 @@
 #' @export
 makeNumericParam = function(id, lower = -Inf, upper = Inf, default, trafo = NULL, requires = NULL) {
   assertString(id)
-  checkArg(lower, "numeric", len = 1, na.ok = FALSE)
-  checkArg(upper, "numeric", len = 1, na.ok = FALSE)
+  assertNumber(lower)
+  assertNumber(upper)
   if (!is.null(trafo))
     checkArg(trafo, "function")
   if (!is.null(requires))
@@ -38,8 +38,8 @@ makeNumericVectorParam = function(id, len, lower = -Inf, upper = Inf, default, t
 #' @export
 makeIntegerParam = function(id, lower = -Inf, upper = Inf, default, trafo = NULL, requires = NULL) {
   assertString(id)
-  checkArg(lower, "numeric", len = 1, na.ok = FALSE)
-  checkArg(upper, "numeric", len = 1, na.ok = FALSE)
+  assertNumber(lower)
+  assertNumber(upper)
   if (!is.null(trafo))
     checkArg(trafo, "function")
   if (!is.null(requires))
