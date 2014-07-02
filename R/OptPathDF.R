@@ -95,9 +95,9 @@ addOptPathEl.OptPathDF = function(op, x, y, dob = getOptPathLength(op)+1L, eol =
   checkArg(x, "list", len = length(op$par.set$pars))
   checkArg(y, "numeric", len = length(op$y.names))
   dob = convertInteger(dob)
-  checkArg(dob, "integer", len = 1L)
+  dob = asInt(dob)
   eol = convertInteger(eol)
-  checkArg(eol, "integer", len = 1L)
+  eol = asInt(eol)
   checkArg(error.message, "character", len = 1L)
   checkArg(exec.time, "numeric", len = 1L, lower = 0, na.ok = TRUE)
   if (!is.null(extra)) {
