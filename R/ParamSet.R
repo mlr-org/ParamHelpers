@@ -37,10 +37,10 @@ makeParamSet = function(..., params, forbidden = NULL) {
   if (length(pars) > 0 && !missing(params))
     stop("You can only use one of ... or params!")
   if (!missing(params)) {
-    checkListElementClass(params, "Param")
+    assertList(params, types = "Param")
     pars = params
   } else {
-    checkListElementClass(pars, "Param")
+    assertList(pars, types = "Param")
   }
   ns = extractSubList(pars, "id")
   if (any(duplicated(ns)))
