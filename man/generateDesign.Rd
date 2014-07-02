@@ -4,7 +4,7 @@
 \title{Generates a statistical design for a parameter set.}
 \usage{
 generateDesign(n = 10L, par.set, fun, fun.args = list(), trafo = FALSE,
-  augment = 5L)
+  augment = 20L)
 }
 \arguments{
 \item{n}{[\code{integer(1)}]\cr
@@ -35,7 +35,7 @@ to size \code{n}. It is not guaranteed that this always works (to full size)
 and \code{augment} specifies the number of tries to augment.
 If the the design is of size less than \code{n} after all tries, a warning is issued
 and the smaller design is returned.
-Default is 5.}
+Default is 20.}
 }
 \value{
 The created design is a data.frame. Columns are named by the ids of the parameters.
@@ -71,6 +71,12 @@ The algorithm currently iterates the following steps:
   \item{If we removed some points, we now try to augment the design in a space-filling way
     and iterate.}
 }
+
+Note that augmenting currently is somewhat experimental as we simply generate missing points
+via new calls to \code{\link[lhs]{randomLHS}}, but do not add points so they are maximally
+far away from the already present ones. The reason is that the latter is quite hard to achieve
+with complicated dependences and forbidden regions, if one wants to ensure that points actually
+get added... But we are working on it,
 }
 \examples{
 ps = makeParamSet(
