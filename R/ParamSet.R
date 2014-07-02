@@ -116,7 +116,7 @@ makeNumericParamSet = function(id="x", len, lower=-Inf, upper=Inf, vector=TRUE) 
       len = length(upper)
   } else {
     len = convertInteger(len)
-    checkArg(len, "integer", len=1L, na.ok=FALSE)
+    len = asInt(len)
   }
   if (is.numeric(lower) && length(lower) == 1)
     lower = rep(lower, len)

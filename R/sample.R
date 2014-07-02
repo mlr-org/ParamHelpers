@@ -128,7 +128,7 @@ sampleValue.ParamSet = function(par, discrete.names = FALSE, trafo = FALSE) {
 sampleValues = function(par, n, discrete.names = FALSE, trafo = FALSE) {
   checkArg(par, c("Param", "ParamSet"))
   n = convertInteger(n)
-  checkArg(n, "integer", len = 1L, na.ok = FALSE)
+  n = asInt(n)
   checkArg(discrete.names, "logical", len = 1L, na.ok = FALSE)
   replicate(n, sampleValue(par, discrete.names = discrete.names, trafo = trafo), simplify = FALSE)
 }

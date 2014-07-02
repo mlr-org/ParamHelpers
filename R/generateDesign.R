@@ -83,7 +83,7 @@
 generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALSE, augment = 5L) {
 
   n = convertInteger(n)
-  checkArg(n, "integer", len = 1L, na.ok = FALSE)
+  n = asInt(n)
   z = doBasicGenDesignChecks(par.set)
   lower = z$lower; upper = z$upper
 
