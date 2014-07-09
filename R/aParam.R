@@ -105,6 +105,6 @@ getParPrintData = function(x, trafo = TRUE, used = TRUE) {
 
 #' @export
 print.Param = function(x, ..., trafo = TRUE) {
-  getParPrintData(x, trafo = trafo)
+  print(getParPrintData(x, trafo = trafo))
 }
 
