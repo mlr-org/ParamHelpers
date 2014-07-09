@@ -47,10 +47,10 @@ as.data.frame.OptPathDF = function(x, row.names = NULL, optional = FALSE,
       res = cbind(res, df[, -y.cols, drop = FALSE])
     if (include.y)
       res = cbind(res, df[, y.cols, drop = FALSE])
+    res = convertDataFrameCols(res, chars.as.factor = discretes.as.factor)
   }
   if (include.rest) {
     res = cbind(res, dob = x$env$dob, eol = x$env$eol)
-    res = convertDataFrameCols(res, chars.as.factor = discretes.as.factor)
     # if err message / exec time included, add it
     if (!is.null(x$env$error.message))
       res$error.message = x$env$error.message
