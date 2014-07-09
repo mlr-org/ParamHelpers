@@ -55,16 +55,19 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE) {
   pids1 = getParamIds(par.set)
   pids2 = getParamIds(par.set, repeated = TRUE, with.nr = TRUE)
 
-  resolution = convertIntegers(resolution)
   if (length(resolution) == 1L) {
     resolution = setNames(rep(resolution, n), pids1)
   }
-  checkArg(resolution, "integer", na.ok = FALSE, lower = 1L, len = n)
-  if (!isProperlyNamed(resolution) || !all(names(resolution) == pids1))
+  #FIXME: cm removes namesm bug
+  ns = names(resolution)
+  resolution = asInteger(resolution, lower = 1L, len = n)
+  names(resolution) = ns
+  assertNamed(resolution, type = "named")
+  if (!all(names(resolution) == pids1))
     stop("'resolution' must be named with parameter ids!")
   resolution = resolution[pids1]
 
-  checkArg(trafo, "logical", len = 1L, na.ok = FALSE)
+  assertFlag(trafo)
 
   vals.list = setNames(vector("list", m), pids2)
   el.counter = 1L

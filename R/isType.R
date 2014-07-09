@@ -17,7 +17,7 @@ NULL
 #' @export
 #' @rdname isType
 isNumeric = function(par, include.int = TRUE) {
-  checkArg(par, c("Param", "ParamSet"))
+  assert(checkClass(par, "Param"), checkClass(par, "ParamSet"))
   UseMethod("isNumeric")
 }
 
@@ -38,7 +38,7 @@ isNumeric.Param = function(par, include.int = TRUE) {
 #' @export
 #' @rdname isType
 isDiscrete = function(par, include.logical = TRUE) {
-  checkArg(par, c("Param", "ParamSet"))
+  assert(checkClass(par, "Param"), checkClass(par, "ParamSet"))
   UseMethod("isDiscrete")
 }
 
@@ -63,7 +63,7 @@ isDiscrete.Param = function(par, include.logical = TRUE) {
 #' @export
 #' @rdname isType
 isInteger = function(par) {
-  checkArg(par, c("Param", "ParamSet"))
+  assert(checkClass(par, "Param"), checkClass(par, "ParamSet"))
   UseMethod("isInteger")
 }
 
@@ -80,7 +80,7 @@ isInteger.Param = function(par) {
 #' @export
 #' @rdname isType
 isLogical = function(par) {
-  checkArg(par, c("Param", "ParamSet"))
+  assert(checkClass(par, "Param"), checkClass(par, "ParamSet"))
   UseMethod("isLogical")
 }
 

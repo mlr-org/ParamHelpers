@@ -21,9 +21,9 @@
 #' getParamIds(ps, repeated = TRUE)
 #' getParamIds(ps, repeated = TRUE, with.nr = TRUE)
 getParamIds = function(par.set, repeated = FALSE, with.nr = FALSE) {
-  checkArg(par.set, "ParamSet")
-  checkArg(repeated, "logical", len = 1L, na.ok = FALSE)
-  checkArg(with.nr, "logical", len = 1L, na.ok = FALSE)
+  assertClass(par.set, "ParamSet")
+  assertFlag(repeated)
+  assertFlag(with.nr)
   getParamIds2(par.set$pars, repeated, with.nr)
 }
 

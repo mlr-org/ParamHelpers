@@ -12,7 +12,7 @@ stopIfFunOrUntypedParams = function(par.set) {
 }
 
 doBasicGenDesignChecks = function(par.set) {
-  checkArg(par.set, "ParamSet")
+  assertClass(par.set, "ParamSet")
   if (isEmpty(par.set))
     stop("par.set must not be empty!")
   stopIfLearnerParams(par.set)

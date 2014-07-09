@@ -15,7 +15,7 @@
 #' # the length of the vector x is 2, for all other single value parameters the length is 1.
 #' @export
 getParamLengths = function(par.set) {
-  checkArg(par.set, "ParamSet")
+  assertClass(par.set, "ParamSet")
   # if we dont do this check we get an empty list
   if (isEmpty(par.set))
     integer(0)

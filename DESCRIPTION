@@ -4,14 +4,15 @@ Title: Helpers for parameters in black-box optimization, tuning and
 Description: A small package containing useful functions for parameter
     descriptions and operations in black-box optimization, tuning
     and machine learning.
-Author: Bernd Bischl <bernd_bischl@gmx.net>, Patrick Koch
-    <patrick.koch@fh-koeln.de>, Michel Lang
-    <lang@statistik.tu-dortmund.de>
+Author: Bernd Bischl <bernd_bischl@gmx.net>,
+    Michel Lang <lang@statistik.tu-dortmund.de>,
+    Daniel Horn <daniel.horn@tu-dortmund.de>
 Maintainer: Bernd Bischl <bernd_bischl@gmx.net>
 License: BSD_3_clause + file LICENSE
 Roxygen: list(wrap = FALSE)
 Imports:
-    BBmisc (>= 1.6)
+    BBmisc (>= 1.7),
+    checkmate (>= 1.1)
 Suggests:
     emoa,
     lhs,

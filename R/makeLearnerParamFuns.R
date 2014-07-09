@@ -12,8 +12,7 @@ makeNumericLearnerParam = function(id, lower = -Inf, upper = Inf, default,
 makeNumericVectorLearnerParam = function(id, len = as.integer(NA), lower = -Inf,
   upper = Inf, default, when = "train", requires = NULL) {
 
-  len = convertInteger(len)
-  checkArg(len, "integer", len = 1, na.ok = TRUE)
+  len = asInt(len, na.ok = TRUE)
   if (is.na(len))
     p = makeNumericVectorParam(id, len = 1, lower = lower, upper = upper, default = default, requires = requires)
   else
@@ -38,8 +37,7 @@ makeIntegerLearnerParam = function(id, lower = -Inf, upper = Inf,
 makeIntegerVectorLearnerParam = function(id, len = as.integer(NA), lower = -Inf,
   upper = Inf, default, when = "train", requires = NULL) {
 
-  len = convertInteger(len)
-  checkArg(len, "integer", len = 1, na.ok = TRUE)
+  len = asInt(len, na.ok = TRUE)
   if (is.na(len))
     p = makeIntegerVectorParam(id, len = 1, lower = lower, upper = upper, default = default, requires = requires)
   else
@@ -63,8 +61,7 @@ makeDiscreteLearnerParam = function(id, values, default,
 makeDiscreteVectorLearnerParam = function(id, len = as.integer(NA), values, default,
   when = "train", requires = NULL) {
 
-  len = convertInteger(len)
-  checkArg(len, "integer", len = 1, na.ok = TRUE)
+  len = asInt(len, na.ok = TRUE)
   if (is.na(len))
     p = makeDiscreteVectorParam(id, len = 1, values = values, default = default, requires = requires)
   else
@@ -88,8 +85,7 @@ makeLogicalLearnerParam = function(id, default, when = "train",
 makeLogicalVectorLearnerParam = function(id, len = as.integer(NA), default, when = "train",
   requires = NULL) {
 
-  len = convertInteger(len)
-  checkArg(len, "integer", len = 1, na.ok = TRUE)
+  len = asInt(len, na.ok = TRUE)
   if (is.na(len))
     p = makeLogicalVectorParam(id, len = 1, default = default, requires = requires)
   else
@@ -114,6 +110,6 @@ makeFunctionLearnerParam = function(id, default, when = "train", requires = NULL
 }
 
 learnerParamFromParam = function(p, when) {
-  checkArg(when, choices = c("train", "predict", "both"))
+  assertChoice(when, c("train", "predict", "both"))
   makeLearnerParam(p, when)
 }

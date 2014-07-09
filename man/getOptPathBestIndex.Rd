@@ -49,7 +49,7 @@ getOptPathBestIndex(op, ties = "first")
 \seealso{
 Other optpath: \code{\link{OptPath}},
   \code{\link{OptPathDF}}, \code{\link{makeOptPathDF}};
-  \code{\link{addOptPathEl}}; \code{\link{getOptPathCols}};
+  \code{\link{addOptPathEl}}; \code{\link{getOptPathCol}};
   \code{\link{getOptPathDOB}}; \code{\link{getOptPathEOL}};
   \code{\link{getOptPathEl}};
   \code{\link{getOptPathErrorMessages}};

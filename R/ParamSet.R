@@ -37,10 +37,10 @@ makeParamSet = function(..., params, forbidden = NULL) {
   if (length(pars) > 0 && !missing(params))
     stop("You can only use one of ... or params!")
   if (!missing(params)) {
-    checkListElementClass(params, "Param")
+    assertList(params, types = "Param")
     pars = params
   } else {
-    checkListElementClass(pars, "Param")
+    assertList(pars, types = "Param")
   }
   ns = extractSubList(pars, "id")
   if (any(duplicated(ns)))
@@ -80,7 +80,7 @@ c.ParamSet = function(..., recursive=FALSE) {
 #' @return [\code{logical(1)}].
 #' @export
 isEmpty = function(par.set) {
-  checkArg(par.set, c("ParamSet"))
+  assertClass(par.set, "ParamSet")
   UseMethod("isEmpty")
 }
 
@@ -108,23 +108,22 @@ isEmpty.ParamSet = function(par.set) {
 #' @rdname makeParamSet
 #' @export
 makeNumericParamSet = function(id="x", len, lower=-Inf, upper=Inf, vector=TRUE) {
-  checkArg(id, "character", len=1L, na.ok=FALSE)
+  assertString(id)
   if (missing(len)) {
     if (!missing(lower))
       len = length(lower)
     else if (!missing(upper))
       len = length(upper)
   } else {
-    len = convertInteger(len)
-    checkArg(len, "integer", len=1L, na.ok=FALSE)
+    len = asInt(len)
   }
   if (is.numeric(lower) && length(lower) == 1)
     lower = rep(lower, len)
   if (is.numeric(upper) && length(upper) == 1)
     upper = rep(upper, len)
-    checkArg(lower, "numeric", len=len, na.ok=FALSE)
-    checkArg(upper, "numeric", len=len, na.ok=FALSE)
-    checkArg(vector, "logical", len=1L, na.ok=FALSE)
+    assertNumeric(lower, len = len)
+    assertNumeric(upper, len = len)
+    assertFlag(vector)
   if (vector) {
     makeParamSet(makeNumericVectorParam(id=id, len=len, lower=lower, upper=upper))
   } else {

@@ -39,8 +39,8 @@
 #' )
 #' paramValueToString(ps, list(x=c(1,2), y=NULL))
 paramValueToString = function(par, x, show.missing.values = FALSE, num.format = "%.3g") {
-  checkArg(show.missing.values, "logical", len = 1L, na.ok = FALSE)
-  checkArg(num.format, "character", len = 1L, na.ok = FALSE)
+  assertFlag(show.missing.values)
+  assertString(num.format)
   UseMethod("paramValueToString")
 }
 
@@ -79,7 +79,7 @@ paramValueToString.Param = function(par, x, show.missing.values = FALSE, num.for
 
 #' @export
 paramValueToString.ParamSet = function(par, x, show.missing.values = FALSE, num.format = "%.3g") {
-  checkArg(x, "list")
+  assertList(x)
   if (!isProperlyNamed(x))
     stop("'x' must be a properly named list!")
   rest = setdiff(names(x), names(par$pars))

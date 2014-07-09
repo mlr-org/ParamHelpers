@@ -1,5 +1,7 @@
 attic
 makeR
+todo-files
+man-roxygen
 
 ^.*tar.gz$
 

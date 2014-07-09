@@ -4,13 +4,13 @@
 makeOptPathDF = function(par.set, y.names, minimize, add.transformed.x = FALSE,
   include.error.message = FALSE, include.exec.time = FALSE, include.extra = FALSE) {
 
-  checkArg(par.set, "ParamSet")
-  checkArg(y.names, "character", na.ok = FALSE)
-  checkArg(minimize, "logical", na.ok = FALSE)
-  checkArg(add.transformed.x, "logical", len = 1L, na.ok = FALSE)
-  checkArg(include.error.message, "logical", len = 1L, na.ok = FALSE)
-  checkArg(include.exec.time, "logical", len = 1L, na.ok = FALSE)
-  checkArg(include.extra, "logical", len = 1L, na.ok = FALSE)
+  assertClass(par.set, "ParamSet")
+  assertCharacter(y.names)
+  assertLogical(minimize)
+  assertFlag(add.transformed.x)
+  assertFlag(include.error.message)
+  assertFlag(include.exec.time)
+  assertFlag(include.extra)
 
   n.y = length(y.names)
   obj = makeOptPath(par.set, y.names, minimize, add.transformed.x, include.error.message,
@@ -31,9 +31,9 @@ getOptPathLength.OptPathDF = function(op) {
 as.data.frame.OptPathDF = function(x, row.names = NULL, optional = FALSE,
   discretes.as.factor = FALSE, include.x = TRUE, include.y = TRUE, include.rest = TRUE, ...) {
 
-  checkArg(include.x, "logical", len = 1L, na.ok = FALSE)
-  checkArg(include.y, "logical", len = 1L, na.ok = FALSE)
-  checkArg(include.rest, "logical", len = 1L, na.ok = FALSE)
+  assertFlag(include.x)
+  assertFlag(include.y)
+  assertFlag(include.rest)
 
   if (!include.x && !include.y && !include.rest)
     stopf("Not able to create data.frame from opt.path. You need to include something!")
@@ -64,8 +64,7 @@ as.data.frame.OptPathDF = function(x, row.names = NULL, optional = FALSE,
 
 #' @export
 getOptPathEl.OptPathDF = function(op, index) {
-  index = convertInteger(index)
-  checkArg(index, "integer", 1)
+  index = asInt(index)
   n = getOptPathLength(op)
   if (!(index >= 1 && index <= n))
     stop("Index must be between 1 and ", n, "!")
@@ -87,23 +86,21 @@ getOptPathEl.OptPathDF = function(op, index) {
 }
 
 #' @export
-addOptPathEl.OptPathDF = function(op, x, y, dob = getOptPathLength(op)+1L, eol = as.integer(NA),
+addOptPathEl.OptPathDF = function(op, x, y, dob = getOptPathLength(op)+1L, eol = NA_integer_,
   error.message = NA_character_, exec.time = NA_real_, extra = NULL,
   check.feasible = !op$add.transformed.x) {
 
   env = op$env
-  checkArg(x, "list", len = length(op$par.set$pars))
-  checkArg(y, "numeric", len = length(op$y.names))
-  dob = convertInteger(dob)
-  checkArg(dob, "integer", len = 1L)
-  eol = convertInteger(eol)
-  checkArg(eol, "integer", len = 1L)
-  checkArg(error.message, "character", len = 1L)
-  checkArg(exec.time, "numeric", len = 1L, lower = 0, na.ok = TRUE)
+  assertList(x, len = length(op$par.set$pars))
+  assertNumeric(y, len = length(op$y.names))
+  dob = asInt(dob, na.ok = TRUE)
+  eol = asInt(eol, na.ok = TRUE)
+  assertString(error.message, na.ok = TRUE)
+  assertNumber(exec.time, lower = 0, na.ok = TRUE)
   if (!is.null(extra)) {
     if (is.null(env$extra))
       stopf("Trying to add extra info to opt path, without enabling that option!")
-    checkArg(extra, "list")
+    assertList(extra)
     if (!isProperlyNamed(extra))
       stopf("'extra' must be propely named!")
     if (!all(sapply(extra, isScalarValue)))
@@ -168,7 +165,7 @@ getOptPathY.OptPathDF = function(op, names, drop = TRUE) {
     names = op$y.names
   else
 c(names, subset = op$y.names)
-  checkArg(drop, "logical", len = 1L, na.ok = FALSE)
+  assertFlag(drop)
   y = as.matrix(op$env$path[, names, drop = FALSE])
   if (drop && length(names) == 1L)
     y = as.numeric(y)
@@ -197,7 +194,7 @@ getOptPathExecTimes.OptPathDF = function(op) {
 
 #' @export
 getOptPathCol.OptPathDF = function(op, name) {
-  checkArg(name, "character", len = 1L, na.ok = FALSE)
+  assertString(name)
   if (getOptPathLength(op) == 0L)
     stopf("Trying to return a col from an empty opt.path")
   if (name %in% colnames(op$env$path))

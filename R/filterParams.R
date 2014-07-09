@@ -22,7 +22,7 @@
 #' filterParams(ps, c("integer","numeric"))
 #' @export
 filterParams = function(par.set, type) {
-  checkArg(type, subset = c("numeric", "integer", "numericvector", "integervector", "discrete",
+  assertSubset(type, c("numeric", "integer", "numericvector", "integervector", "discrete",
     "discretevector", "logical", "logicalvector", "function", "untyped"))
   if (!is.null(par.set$forbidden))
     stopf("Operation not allowed for param set with forbidden region currently!")

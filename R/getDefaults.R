@@ -6,7 +6,7 @@
 #'   Parameters without defaults are not present in the list.
 #' @export
 getDefaults = function(par.set) {
-  checkArg(par.set, "ParamSet")
+  assertClass(par.set, "ParamSet")
   if (isEmpty(par.set))
     return(list())
   j = vlapply(par.set$pars, function(x) x$has.default)

@@ -24,11 +24,11 @@
 #' @return [\code{character}].
 #' @export
 getParamTypes = function(par.set, df.cols = FALSE, df.discretes.as.factor = TRUE, use.names = FALSE, with.nr = TRUE) {
-  checkArg(par.set, "ParamSet")
-  checkArg(df.cols, "logical", len = 1L, na.ok = FALSE)
-  checkArg(df.discretes.as.factor, "logical", len = 1L, na.ok = FALSE)
-  checkArg(use.names, "logical", len = 1L, na.ok = FALSE)
-  checkArg(with.nr, "logical", len = 1L, na.ok = FALSE)
+  assertClass(par.set, "ParamSet")
+  assertFlag(df.cols)
+  assertFlag(df.discretes.as.factor)
+  assertFlag(use.names)
+  assertFlag(with.nr)
 
   types = extractSubList(par.set$pars, "type")
   recode = function(types, ...) {

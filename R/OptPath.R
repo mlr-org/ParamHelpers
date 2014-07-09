@@ -235,13 +235,11 @@ addOptPathEl = function(op, x, y, dob = getOptPathLength(op)+1L, eol = as.intege
 #' getOptPathBestIndex(op)
 #' getOptPathBestIndex(op, ties = "first")
 getOptPathBestIndex = function(op, y.name = op$y.names[1], dob = op$env$dob, eol = op$env$eol, ties = "last") {
-  checkArg(op, "OptPath")
-  checkArg(y.name, choices = op$y.names, len = 1L, na.ok = FALSE)
-  dob = convertIntegers(dob)
-  checkArg(dob, "integer", na.ok = TRUE)
-  eol = convertIntegers(eol)
-  checkArg(eol, "integer", na.ok = TRUE)
-  checkArg(ties, choices = c("all", "first", "last", "random"))
+  assertClass(op, "OptPath")
+  assertChoice(y.name, choices = op$y.names)
+  dob = asInteger(dob, any.missing = TRUE)
+  eol = asInteger(eol, any.missing = TRUE)
+  assertChoice(ties, c("all", "first", "last", "random"))
   life.inds = which(op$env$dob %in% dob & op$env$eol %in% eol)
   if (length(life.inds) == 0)
     stop("No element found which matches dob and eol restrictions!")
@@ -297,13 +295,12 @@ getOptPathBestIndex = function(op, y.name = op$y.names[1], dob = op$env$dob, eol
 #' getOptPathParetoFront(op)
 #' getOptPathParetoFront(op, index = TRUE)
 getOptPathParetoFront = function(op, y.names = op$y.names, dob = op$env$dob, eol = op$env$eol, index = FALSE) {
-  checkArg(op, "OptPath")
-  checkArg(y.names, subset = op$y.names, min.len = 2L)
-  dob = convertIntegers(dob)
-  checkArg(dob, "integer", na.ok = TRUE)
-  eol = convertIntegers(eol)
-  checkArg(eol, "integer", na.ok = TRUE)
-  checkArg(index, "logical", len = 1L, na.ok = TRUE)
+  assertClass(op, "OptPath")
+  assertCharacter(y.names, len = 2L)
+  assertSubset(y.names, op$y.names, empty.ok = FALSE)
+  dob = asInteger(dob, any.missing = TRUE)
+  eol = asInteger(eol, any.missing = TRUE)
+  assertFlag(index, na.ok = TRUE)
   requirePackages("emoa")
   life.inds = which(op$env$dob %in% dob & op$env$eol %in% eol)
   if (length(life.inds) == 0)
@@ -383,7 +380,7 @@ getOptPathExecTimes = function(op) {
 #' @return [\code{data.frame}].
 #' @export
 #' @family optpath
-getOptPathCol = function(op, names) {
+getOptPathCol = function(op, name) {
   UseMethod("getOptPathCol")
 }
 
@@ -398,11 +395,9 @@ getOptPathCol = function(op, names) {
 #' @export
 #' @family optpath
 setOptPathElDOB = function(op, index, dob) {
-  checkArg(op, "OptPath")
-  index = convertIntegers(index)
-  checkArg(index, "integer", na.ok = FALSE)
-  dob = convertIntegers(dob)
-  checkArg(dob, "integer")
+  assertClass(op, "OptPath")
+  index = asInteger(index)
+  dob = asInteger(dob)
   op$env$dob[index] = dob
   invisible(NULL)
 }
@@ -419,11 +414,9 @@ setOptPathElDOB = function(op, index, dob) {
 #' @export
 #' @family optpath
 setOptPathElEOL = function(op, index, eol) {
-  checkArg(op, "OptPath")
-  index = convertIntegers(index)
-  checkArg(index, "integer", na.ok = FALSE)
-  eol = convertIntegers(eol)
-  checkArg(eol, "integer")
+  assertClass(op, "OptPath")
+  index = asInteger(index)
+  eol = asInteger(eol)
   op$env$eol[index] = eol
   invisible(NULL)
 }

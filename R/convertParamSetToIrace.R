@@ -14,10 +14,9 @@
 #' @return [\code{\link{list}}].
 #' @export
 convertParamSetToIrace = function(par.set, digits = 4, as.chars = FALSE) {
-  checkArg(par.set, "ParamSet")
-  digits = convertInteger(digits)
-  checkArg(digits, "integer", len = 1L, na.ok = FALSE, lower = 1L)
-  checkArg(as.chars, "logical", len = 1L, na.ok = FALSE)
+  assertClass(par.set, "ParamSet")
+  digits = asInt(digits, lower = 1L)
+  assertFlag(as.chars)
   if (!is.null(par.set$forbidden))
     stopf("Operation not allowed for param set with forbidden region currently!")
   requirePackages("irace", "convertParamSetToIrace")
