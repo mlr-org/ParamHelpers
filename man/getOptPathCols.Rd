@@ -3,7 +3,7 @@
 \alias{getOptPathCols}
 \title{Get columns from the optimization path.}
 \usage{
-getOptPathCols(op, names)
+getOptPathCols(op, names, row.names = NULL, discretes.as.factor = FALSE)
 }
 \arguments{
 \item{op}{[\code{\link{OptPath}}]\cr
@@ -11,6 +11,14 @@ Optimization path.}
 
 \item{names}{[\code{character}]\cr
 Names of the columns.}
+
+\item{row.names}{[\code{character}]\cr
+Row names for result.
+Default is none.}
+
+\item{discretes.as.factor}{[\code{logical(1)}]\cr
+Represent discrete param columns as factors (or characters)?
+Default is \code{FALSE}.}
 }
 \value{
 [\code{data.frame}].

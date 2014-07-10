@@ -5,7 +5,7 @@
 #' @param row.names [\code{character}]\cr
 #'   Row names for result.
 #'   Default is none.
-#' @param optional \cr
+#' @param optional [any]\cr
 #'   Currently ignored.
 #' @param discretes.as.factor [\code{logical(1)}]\cr
 #'   Represent discrete param columns as factors (or characters)?
@@ -19,6 +19,8 @@
 #' @param include.rest [\code{logical(1)}]\cr
 #'   Include all other columns?
 #'   Default is \code{TRUE}.
+#' @param ... [any] \cr
+#'   Currently ignored.
 #' @return [\code{data.frame}].
 #' @export
 as.data.frame.OptPathDF = function(x, row.names = NULL, optional = FALSE,
