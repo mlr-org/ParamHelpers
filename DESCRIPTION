@@ -21,4 +21,4 @@ Suggests:
     soobench
 LazyData: yes
 ByteCompile: yes
-Version: 1.2
+Version: 1.3
