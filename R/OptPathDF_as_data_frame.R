@@ -57,6 +57,7 @@ as.data.frame.OptPathDF = function(x, row.names = NULL, optional = FALSE,
       res = cbind(res, df[, -y.cols, drop = FALSE])
     if (include.y)
       res = cbind(res, df[, y.cols, drop = FALSE])
+    res = convertDataFrameCols(res, chars.as.factor = TRUE)
   }
   if (include.rest) {
     res = cbind(res, dob = x$env$dob, eol = x$env$eol)
