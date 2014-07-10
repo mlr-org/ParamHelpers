@@ -28,7 +28,7 @@ test_that("trafo opt.path", {
   df = as.data.frame(op2)
   expect_equal(df$x, c(1/4, 4))
   expect_error(trafoOptPath(op2), "Cannot further trafo")
-  
+
   ps = makeParamSet(
     makeIntegerParam("u", trafo=function(x) 2*x),
     makeNumericVectorParam("v", len = 2, trafo=function(x) x/sum(x)),
@@ -41,10 +41,10 @@ test_that("trafo opt.path", {
   df2 = as.data.frame(op2)
   df2b = rbind(
     data.frame(u = 6, v1 = 2/6, v2 = 4/6, w = "a", y = 0, dob = 1, eol = 1,
-      stringsAsFactors = FALSE),
+      stringsAsFactors = TRUE),
     data.frame(u = 8, v1 = 5/8, v2 = 3/8, w = "b", y = 2, dob = 5, eol = 7,
-      stringsAsFactors = FALSE)
+      stringsAsFactors = TRUE)
   )
   expect_equal(df2, df2b)
 })
-  
+
