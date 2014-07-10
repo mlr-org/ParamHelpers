@@ -1,4 +1,25 @@
-#FIXME: document with args
+#' Convert optimization path to data.frame.
+#'
+#' @param x [\code{\link{OptPath}}]\cr
+#'   Optimization path.
+#' @param row.names [\code{character}]\cr
+#'   Row names for result.
+#'   Default is none.
+#' @param optional \cr
+#'   Currently ignored.
+#' @param discretes.as.factor [\code{logical(1)}]\cr
+#'   Represent discrete param columns as factors (or characters)?
+#'   Default is \code{FALSE}.
+#' @param include.x [\code{logical(1)}]\cr
+#'   Include all input params?
+#'   Default is \code{TRUE}.
+#' @param include.y [\code{logical(1)}]\cr
+#'   Include all y-columns?
+#'   Default is \code{TRUE}.
+#' @param include.rest [\code{logical(1)}]\cr
+#'   Include all other columns?
+#'   Default is \code{TRUE}.
+#' @return [\code{data.frame}].
 #' @export
 as.data.frame.OptPathDF = function(x, row.names = NULL, optional = FALSE,
   discretes.as.factor = FALSE, include.x = TRUE, include.y = TRUE, include.rest = TRUE, ...) {
@@ -30,6 +51,10 @@ as.data.frame.OptPathDF = function(x, row.names = NULL, optional = FALSE,
       res$exec.time = x$env$exec.time
     if (!is.null(x$env$extra))
       res = cbind(res, convertListOfRowsToDataFrame(x$env$extra))
+  }
+  if (!is.null(row.names)) {
+    assertCharacter(row.names, len = nrow(res), any.missing = FALSE)
+    rownames(res) = row.names
   }
   return(res)
 }

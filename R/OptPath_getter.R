@@ -105,10 +105,11 @@ getOptPathCol = function(op, name) {
 #' @template arg_op
 #' @param names [\code{character}]\cr
 #'   Names of the columns.
+#' @inheritParams as.data.frame.OptPathDF
 #' @return [\code{data.frame}].
 #' @export
 #' @family optpath
-getOptPathCols = function(op, names) {
+getOptPathCols = function(op, names, row.names = NULL, discretes.as.factor = FALSE) {
   UseMethod("getOptPathCols")
 }
 
