@@ -23,6 +23,8 @@ the \code{forbidden} expression, if \code{par} is a \code{\link{ParamSet}}.
 If \code{requires} is not satisfied,
 the parameter value must be set to scalar \code{NA} to be still feasible, a single scalar even in a
 case of a vector parameter.
+
+If the parameter has \code{cnames}, these are also checked.
 }
 \examples{
 p = makeNumericParam("x", lower = -1, upper = 1)

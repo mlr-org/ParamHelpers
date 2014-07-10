@@ -31,6 +31,7 @@ dfRowsToList = function(df, par.set) {
   assertClass(par.set, "ParamSet")
 
   lens = getParamLengths(par.set)
+  cnames = extractSubList(par.set$pars, "cnames", simplify = FALSE)
   int.type = convertTypesToCInts(getParamTypes(par.set, df.cols = TRUE))
 
   # factors to chars, so we can evaluate requires
@@ -39,7 +40,7 @@ dfRowsToList = function(df, par.set) {
   ints.as.double = mapply(function(type, col) type == 2L && is.double(col), type = int.type, col = df)
   df[ints.as.double] = lapply(df[ints.as.double], as.integer)
 
-  .Call("c_dfRowsToList", df, par.set$pars, int.type, names(par.set$pars), lens, PACKAGE = "ParamHelpers")
+  .Call("c_dfRowsToList", df, par.set$pars, int.type, names(par.set$pars), lens, cnames, PACKAGE = "ParamHelpers")
 }
 
 #' @export

@@ -1,11 +1,14 @@
-#' Check if parameter value is valid.
+#' @title Check if parameter value is valid.
 #'
+#' @description
 #' Check if a parameter value satisfies the constraints of the
 #' parameter description. This includes the \code{requires} expressions and
 #' the \code{forbidden} expression, if \code{par} is a \code{\link{ParamSet}}.
 #' If \code{requires} is not satisfied,
 #' the parameter value must be set to scalar \code{NA} to be still feasible, a single scalar even in a
 #' case of a vector parameter.
+#'
+#' If the parameter has \code{cnames}, these are also checked.
 #'
 #' @template arg_par_or_set
 #' @param x [any] \cr
@@ -79,7 +82,7 @@ constraintsOkParam = function(par, x) {
   if (type == "untyped")
     return(TRUE)
   inValues = function(v) any(sapply(par$values, function(w) isTRUE(all.equal(w, v))))
-  if (type == "numeric")
+  ok = if (type == "numeric")
     is.numeric(x) && length(x) == 1 && is.finite(x) && x >= par$lower && x <= par$upper
   else if (type == "integer")
     is.numeric(x) && length(x) == 1 && is.finite(x) && x >= par$lower && x <= par$upper && x == as.integer(x)
@@ -97,6 +100,12 @@ constraintsOkParam = function(par, x) {
     is.logical(x) && length(x) == par$len && !any(is.na(x))
   else if (type == "function")
     is.function(x)
+
+  # if we have cnames, check them
+  if (!is.null(par$cnames))
+    ok = ok && !is.null(names(x)) && all(names(x) == par$cnames)
+
+  return(ok)
 }
 
 constraintsOkLearnerParam = function(par, x) {

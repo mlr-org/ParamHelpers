@@ -65,6 +65,9 @@ sampleValue.Param = function(par, discrete.names = FALSE, trafo = FALSE) {
   }
   if (trafo && !is.null(par$trafo))
     x = par$trafo(x)
+  # if the components have names, set them
+  if (!is.null(par$cnames))
+    names(x) = par$cnames
   return(x)
 }
 

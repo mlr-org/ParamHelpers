@@ -32,6 +32,10 @@
 #'   which are used as discrete choices. If you do the latter,
 #'   the elements must be uniquely named, so that the names can be used
 #'   as internal represenatations for the choice.
+#' @param cnames [\code{character}]\cr
+#'   Component names for vector params (except discrete).
+#'   Every function in this package that creates vector values for such a param, will name
+#'   that vector with \code{cnames}.
 #' @param default [any]\cr
 #'   Default value used in learner.
 #'   If this argument is missing, it means no default value is available.
@@ -54,7 +58,7 @@
 #' makeDiscreteParam("y", values = c("a","b"))
 NULL
 
-makeParam = function(id, type, len, lower, upper, values, default, trafo = NULL, requires = NULL) {
+makeParam = function(id, type, len, lower, upper, values, cnames, default, trafo = NULL, requires = NULL) {
   #We cannot check default} for NULL or NA as this could be the default value!
   if (missing(default)) {
     has.default = FALSE
@@ -72,6 +76,7 @@ makeParam = function(id, type, len, lower, upper, values, default, trafo = NULL,
     lower = lower,
     upper = upper,
     values = values,
+    cnames = cnames,
     has.default = has.default,
     default = default,
     trafo = trafo,

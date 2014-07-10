@@ -10,12 +10,12 @@ makeNumericParam = function(id, lower = -Inf, upper = Inf, default, trafo = NULL
     assert(checkClass(requires, "call"), checkClass(requires, "expression"))
   if (upper < lower)
     stop("No possible value!")
-  makeParam(id, "numeric", 1L, lower, upper, NULL, default, trafo, requires)
+  makeParam(id, "numeric", 1L, lower, upper, NULL, NULL, default, trafo, requires)
 }
 
 #' @rdname Param
 #' @export
-makeNumericVectorParam = function(id, len, lower = -Inf, upper = Inf, default, trafo = NULL, requires = NULL) {
+makeNumericVectorParam = function(id, len, lower = -Inf, upper = Inf, cnames = NULL, default, trafo = NULL, requires = NULL) {
   assertString(id)
   len = asInt(len)
   if (is.numeric(lower) && length(lower) == 1)
@@ -24,13 +24,15 @@ makeNumericVectorParam = function(id, len, lower = -Inf, upper = Inf, default, t
     upper = rep(upper, len)
   assertNumeric(lower, min.len = 1L, any.missing = FALSE)
   assertNumeric(upper, min.len = 1L, any.missing = FALSE)
+  if (!is.null(cnames))
+    assertCharacter(cnames, len = len, any.missing = FALSE)
   if (!is.null(trafo))
     assertFunction(trafo)
   if (!is.null(requires))
     assert(checkClass(requires, "call"), checkClass(requires, "expression"))
   if (any(upper < lower))
     stop("No possible value!")
-  makeParam(id, "numericvector", len, lower, upper, NULL, default, trafo, requires)
+  makeParam(id, "numericvector", len, lower, upper, NULL, cnames, default, trafo, requires)
 }
 
 #' @rdname Param
@@ -45,12 +47,12 @@ makeIntegerParam = function(id, lower = -Inf, upper = Inf, default, trafo = NULL
     assert(checkClass(requires, "call"), checkClass(requires, "expression"))
   if (upper < lower)
     stop("No possible value!")
-  makeParam(id, "integer", 1L,  lower, upper, NULL, default, trafo, requires)
+  makeParam(id, "integer", 1L,  lower, upper, NULL, NULL, default, trafo, requires)
 }
 
 #' @rdname Param
 #' @export
-makeIntegerVectorParam = function(id, len, lower = -Inf, upper = Inf, default, trafo = NULL, requires = NULL) {
+makeIntegerVectorParam = function(id, len, lower = -Inf, upper = Inf, cnames = NULL, default, trafo = NULL, requires = NULL) {
   assertString(id)
   len = asInt(len)
   if (is.numeric(lower) && length(lower) == 1)
@@ -59,13 +61,15 @@ makeIntegerVectorParam = function(id, len, lower = -Inf, upper = Inf, default, t
     upper = rep(upper, len)
   assertNumeric(lower, min.len = 1L, any.missing = FALSE)
   assertNumeric(upper, min.len = 1L, any.missing = FALSE)
+  if (!is.null(cnames))
+    assertCharacter(cnames, len = len, any.missing = FALSE)
   if (!is.null(trafo))
     assertFunction(trafo)
   if (!is.null(requires))
     assert(checkClass(requires, "call"), checkClass(requires, "expression"))
   if (any(upper < lower))
     stop("No possible value!")
-  makeParam(id, "integervector", len,  lower, upper, NULL, default, trafo, requires)
+  makeParam(id, "integervector", len,  lower, upper, NULL, cnames, default, trafo, requires)
 }
 
 #' @rdname Param
@@ -76,19 +80,21 @@ makeLogicalParam = function(id, default, requires = NULL) {
     assert(checkClass(requires, "call"), checkClass(requires, "expression"))
   values = list(TRUE, FALSE)
   names(values) = c("TRUE", "FALSE")
-  makeParam(id, "logical", 1L, NULL, NULL, values, default = default, requires = requires)
+  makeParam(id, "logical", 1L, NULL, NULL, values, NULL, default = default, requires = requires)
 }
 
 #' @rdname Param
 #' @export
-makeLogicalVectorParam = function(id, len, default, requires = NULL) {
+makeLogicalVectorParam = function(id, len, cnames = NULL, default, requires = NULL) {
   assertString(id)
   len = asInt(len)
+  if (!is.null(cnames))
+    assertCharacter(cnames, len = len, any.missing = FALSE)
   if (!is.null(requires))
     assert(checkClass(requires, "call"), checkClass(requires, "expression"))
   values = list(TRUE, FALSE)
   names(values) = c("TRUE", "FALSE")
-  makeParam(id, "logicalvector", len, NULL, NULL, values, default = default, requires = requires)
+  makeParam(id, "logicalvector", len, NULL, NULL, values, cnames, default = default, requires = requires)
 }
 
 #' @rdname Param
@@ -98,7 +104,7 @@ makeDiscreteParam = function(id, values, trafo = NULL, default, requires = NULL)
   if (!is.null(requires))
     assert(checkClass(requires, "call"), checkClass(requires, "expression"))
   values = checkValuesForDiscreteParam(id, values)
-  makeParam(id, "discrete", 1L, NULL, NULL, values, default, trafo, requires)
+  makeParam(id, "discrete", 1L, NULL, NULL, values, NULL, default, trafo, requires)
 }
 
 #' @rdname Param
@@ -109,7 +115,7 @@ makeDiscreteVectorParam = function(id, len, values, default, requires = NULL) {
   if (!is.null(requires))
     assert(checkClass(requires, "call"), checkClass(requires, "expression"))
   values = checkValuesForDiscreteParam(id, values)
-  makeParam(id, "discretevector", len, NULL, NULL, values, default = default, requires = requires)
+  makeParam(id, "discretevector", len, NULL, NULL, values, NULL, default = default, requires = requires)
 }
 
 #' @rdname Param
@@ -118,10 +124,10 @@ makeFunctionParam = function(id, default = default, requires = NULL) {
   assertString(id)
   if (!is.null(requires))
     assert(checkClass(requires, "call"), checkClass(requires, "expression"))
-  makeParam(id, "function", 1L, NULL, NULL, NULL, default = default, requires = requires)
+  makeParam(id, "function", 1L, NULL, NULL, NULL, NULL, default = default, requires = requires)
 }
 
-#FIXME what happens if NA is later used for untyped params? because we might interpret this as
+#FIXME: what happens if NA is later used for untyped params? because we might interpret this as
 # missing value wrt. dependent params
 #' @rdname Param
 #' @export
@@ -129,7 +135,7 @@ makeUntypedParam = function(id, default, requires = NULL) {
   assertString(id)
   if (!is.null(requires))
     assert(checkClass(requires, "call"), checkClass(requires, "expression"))
-  makeParam(id, "untyped", 1L, NULL, NULL, NULL, default = default, requires = requires)
+  makeParam(id, "untyped", 1L, NULL, NULL, NULL, NULL, default = default, requires = requires)
 }
 
 

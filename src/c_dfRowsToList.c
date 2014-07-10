@@ -2,7 +2,7 @@
 #include <Rinternals.h>
 #include <Rdefines.h>
 
-SEXP c_dfRowsToList(SEXP s_df, SEXP s_pars, SEXP s_types, SEXP s_parnames, SEXP s_lens) {
+SEXP c_dfRowsToList(SEXP s_df, SEXP s_pars, SEXP s_types, SEXP s_parnames, SEXP s_lens, SEXP s_cnames) {
   int *types = INTEGER(s_types);
   int npars = LENGTH(s_lens);
   int *lens = INTEGER(s_lens);
@@ -55,19 +55,22 @@ SEXP c_dfRowsToList(SEXP s_df, SEXP s_pars, SEXP s_types, SEXP s_parnames, SEXP 
             all_missing = FALSE;
         }
       }
-      
+
       /* are all entries in s_parval NA ? */
-      if (all_missing) 
+      if (all_missing)
         s_parval = ScalarLogical(NA_LOGICAL);
 
-      /* convert discrete names to values */ 
+      /* convert discrete names to values */
       if (!all_missing && type == 3) {
         SETCADR(s_call, VECTOR_ELT(s_pars, par));
         SETCADDR(s_call, s_parval);
-        s_parval = PROTECT(eval(s_call, R_GlobalEnv)); 
+        s_parval = PROTECT(eval(s_call, R_GlobalEnv));
         UNPROTECT(1); /* eval */
       }
-     
+      /* only support for cnames for num, int and log vecs currently */
+      if (type == 1 || type == 2 || type == 4)
+        SET_NAMES(s_parval, VECTOR_ELT(s_cnames, par));
+
       SET_VECTOR_ELT(s_rowlist, par, s_parval);
       SET_NAMES(s_rowlist, s_parnames);
       colcount += parlen;

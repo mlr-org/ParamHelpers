@@ -16,18 +16,18 @@
 makeNumericParam(id, lower = -Inf, upper = Inf, default, trafo = NULL,
   requires = NULL)
 
-makeNumericVectorParam(id, len, lower = -Inf, upper = Inf, default,
-  trafo = NULL, requires = NULL)
+makeNumericVectorParam(id, len, lower = -Inf, upper = Inf, cnames = NULL,
+  default, trafo = NULL, requires = NULL)
 
 makeIntegerParam(id, lower = -Inf, upper = Inf, default, trafo = NULL,
   requires = NULL)
 
-makeIntegerVectorParam(id, len, lower = -Inf, upper = Inf, default,
-  trafo = NULL, requires = NULL)
+makeIntegerVectorParam(id, len, lower = -Inf, upper = Inf, cnames = NULL,
+  default, trafo = NULL, requires = NULL)
 
 makeLogicalParam(id, default, requires = NULL)
 
-makeLogicalVectorParam(id, len, default, requires = NULL)
+makeLogicalVectorParam(id, len, cnames = NULL, default, requires = NULL)
 
 makeDiscreteParam(id, values, trafo = NULL, default, requires = NULL)
 
@@ -60,6 +60,11 @@ you are also allowed to pass a list of quite \dQuote{complex} R objects,
 which are used as discrete choices. If you do the latter,
 the elements must be uniquely named, so that the names can be used
 as internal represenatations for the choice.}
+
+\item{cnames}{[\code{character}]\cr
+Component names for vector params (except discrete).
+Every function in this package that creates vector values for such a param, will name
+that vector with \code{cnames}.}
 
 \item{default}{[any]\cr
 Default value used in learner.
