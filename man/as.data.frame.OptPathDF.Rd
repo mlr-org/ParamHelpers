@@ -4,8 +4,7 @@
 \title{Convert optimization path to data.frame.}
 \usage{
 \method{as.data.frame}{OptPathDF}(x, row.names = NULL, optional = FALSE,
-  discretes.as.factor = FALSE, include.x = TRUE, include.y = TRUE,
-  include.rest = TRUE, ...)
+  include.x = TRUE, include.y = TRUE, include.rest = TRUE, ...)
 }
 \arguments{
 \item{x}{[\code{\link{OptPath}}]\cr
@@ -17,10 +16,6 @@ Default is none.}
 
 \item{optional}{[any]\cr
 Currently ignored.}
-
-\item{discretes.as.factor}{[\code{logical(1)}]\cr
-Represent discrete param columns as factors (or characters)?
-Default is \code{FALSE}.}
 
 \item{include.x}{[\code{logical(1)}]\cr
 Include all input params?
@@ -41,6 +36,21 @@ Currently ignored.}
 [\code{data.frame}].
 }
 \description{
-Convert optimization path to data.frame.
+The following types of columns are created:
+\tabular{ll}{
+ x-numeric(vector)   \tab  \code{numeric}  \cr
+ x-integer(vector)   \tab  \code{integer}  \cr
+ x-discrete(vector)  \tab  \code{factor} (names of values = levels) \cr
+ x-logical(vector)   \tab  \code{logical} \cr
+ y-columns           \tab  \code{numeric}  \cr
+ dob                 \tab  \code{integer}  \cr
+ eol                 \tab  \code{integer}  \cr
+ error.message       \tab  \code{character} \cr
+ exec.time           \tab  \code{numeric}  \cr
+ extra-columns       \tab  any \cr
+}
+If you want to convert these, look at \code{\link[BBmisc]{convertDataFrameCols}}.
+Dependent parameters whose constraints are unsatisfied generate \code{NA} entries in their
+respective columns.
 }
 

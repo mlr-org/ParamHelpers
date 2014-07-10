@@ -80,9 +80,9 @@ getOptPathCol.OptPathDF = function(op, name) {
 }
 
 #' @export
-getOptPathCols.OptPathDF = function(op, names, row.names = NULL, discretes.as.factor = FALSE) {
+getOptPathCols.OptPathDF = function(op, names, row.names = NULL) {
   assertCharacter(names, any.missing = FALSE)
-  d = as.data.frame(op, row.names = row.names, discretes.as.factor = discretes.as.factor)
+  d = as.data.frame(op, row.names = row.names)
   d[, names, drop = FALSE]
 }
 

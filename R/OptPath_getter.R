@@ -109,7 +109,7 @@ getOptPathCol = function(op, name) {
 #' @return [\code{data.frame}].
 #' @export
 #' @family optpath
-getOptPathCols = function(op, names, row.names = NULL, discretes.as.factor = FALSE) {
+getOptPathCols = function(op, names, row.names = NULL) {
   UseMethod("getOptPathCols")
 }
 
