@@ -10,10 +10,10 @@ getOptPathCol(op, name)
 Optimization path.}
 
 \item{name}{[\code{character(1)}]\cr
-Names of the column}
+Name of the column.}
 }
 \value{
-[\code{data.frame}].
+Single column as a vector.
 }
 \description{
 Get column from the optimization path.
@@ -23,6 +23,7 @@ Other optpath: \code{\link{OptPath}},
   \code{\link{OptPathDF}}, \code{\link{makeOptPathDF}};
   \code{\link{addOptPathEl}};
   \code{\link{getOptPathBestIndex}};
+  \code{\link{getOptPathCols}};
   \code{\link{getOptPathDOB}}; \code{\link{getOptPathEOL}};
   \code{\link{getOptPathEl}};
   \code{\link{getOptPathErrorMessages}};

@@ -51,8 +51,7 @@ Changes the argument in-place.
 Note that when adding parameters that have associated tranformations, it is probably
 best to add the untransformed values to the path. Otherwise you have to switch off the
 feasibility check, as constraints might now not hold anymore.
-}
-\details{
+
 Dependent parameters whose requirements are not satisfied must be represented by a scalar
 NA in the input.
 }
@@ -70,6 +69,7 @@ as.data.frame(op)
 Other optpath: \code{\link{OptPath}},
   \code{\link{OptPathDF}}, \code{\link{makeOptPathDF}};
   \code{\link{getOptPathBestIndex}};
+  \code{\link{getOptPathCols}};
   \code{\link{getOptPathCol}}; \code{\link{getOptPathDOB}};
   \code{\link{getOptPathEOL}}; \code{\link{getOptPathEl}};
   \code{\link{getOptPathErrorMessages}};
