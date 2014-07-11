@@ -1,8 +1,7 @@
 #' Return ids of parameters in parameter set.
 #'
 #' Useful if vectors are included.
-#' @param par.set [\code{\link{ParamSet}}]\cr
-#'   Parameter set.
+#' @template arg_parset
 #' @param repeated [\code{logical(1)}]\cr
 #'   Should ids be repeated length-times if parameter is a vector?
 #'   Default is \code{FALSE}.

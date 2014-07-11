@@ -2,8 +2,7 @@
 #'
 #' Either number of parameters or sum over parameter lengths.
 #'
-#' @param par.set [\code{\link{ParamSet}}]\cr
-#'   Parameter set.
+#' @template arg_parset
 #' @param devectorize [\code{logical(1)}]\cr
 #'   Sum over length of vector parameters?
 #'   Default is code{FALSE}.
