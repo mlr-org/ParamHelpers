@@ -4,10 +4,11 @@ Title: Helpers for parameters in black-box optimization, tuning and
 Description: A small package containing useful functions for parameter
     descriptions and operations in black-box optimization, tuning
     and machine learning.
-Author: Bernd Bischl <bernd_bischl@gmx.net>,
-    Michel Lang <lang@statistik.tu-dortmund.de>,
-    Daniel Horn <daniel.horn@tu-dortmund.de>
-Maintainer: Bernd Bischl <bernd_bischl@gmx.net>
+Authors@R: c(person("Bernd", "Bischl", email = "bernd_bischl@gmx.net", role =
+    c("aut", "cre")), person("Michel", "Lang", email =
+    "lang@statistik.tu-dortmund.de", role = "aut"), person("Jakob", "Bossek",
+    email = "jakob.bossek@tu-dortmund.de", role = "aut"), person("Daniel",
+    "Horn", email = "daniel.horn@tu-dortmund.de", role = "aut"))
 License: BSD_3_clause + file LICENSE
 Roxygen: list(wrap = FALSE)
 Imports:
