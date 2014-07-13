@@ -25,3 +25,14 @@ test_that("cnames work with different operations", {
 
 })
 
+test_that("cnames work with dep params", {
+  ps = makeParamSet(
+    makeDiscreteParam("x", values = c("a", "b")),
+    makeNumericVectorParam("y", lower = 1, upper = 2, len = 2L,
+      requires = quote(x == "a"), cnames = c("xxx", "yyy"))
+  )
+  x = setValueCNames(ps, list(x = "a", y = c(1,2)))
+  expect_equal(x, list(x = "a", y = c(xxx = 1, yyy = 2)))
+  x = setValueCNames(ps, list(x = "b", y = NA_real_))
+  expect_equal(x, list(x = "b", y = NA_real_))
+})

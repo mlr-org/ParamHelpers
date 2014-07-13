@@ -16,13 +16,16 @@ setValueCNames = function(par, x) {
 
 #' @export
 setValueCNames.Param = function(par, x) {
-  if (par$type %in% c("numericvector", "integervector", "logicalvector"))
+  # do not set names for missing / req.params
+  if (par$type %in% c("numericvector", "integervector", "logicalvector") && !isScalarNA(x))
     names(x) = par$cnames
   return(x)
 }
 
 #' @export
 setValueCNames.ParamSet = function(par, x) {
+  assertList(x) # FIXME: we have to wait for checkmate 1.2 on cran for the better check
+  # assertList(x, len = length(par$pars))
   Map(setValueCNames.Param, par$pars, x)
 }
 
