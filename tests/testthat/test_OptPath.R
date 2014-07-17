@@ -277,7 +277,7 @@ test_that("as.data.frame flags and getCols works", {
 })
 
 
-test_that("opt.path printing works") {
+test_that("opt.path printing works", {
   ps = makeParamSet(
     makeNumericParam("x"),
     makeDiscreteParam("y", values = c("a", "b"))
