@@ -110,7 +110,18 @@ print.OptPath = function(x, ...) {
   catf("  Add x values transformed: %s", x$add.transformed.x)
   s = if (is.null(em)) ""  else sprintf(" Errors: %i / %i.", sum(!is.na(em)), n)
   catf("  Error messages: %s.%s", !is.null(em), s)
-  s = if (is.null(et)) ""  else sprintf(" Range: %g - %g.", min(et, na.rm = TRUE), max(et, na.rm = TRUE))
+  s = if (is.null(et)) {
+    s = ""
+  } else {
+    if (length(et) == 0) {
+      et1 = 0
+      et2 = 0
+     } else {
+      et1 = min(et, na.rm = TRUE)
+      et2 = max(et, na.rm = TRUE)
+    }
+    s = sprintf(" Range: %g - %g.", et1, et2)
+  }
   catf("  Exec times: %s.%s", !is.null(et), s)
   if (!is.null(ex))
   catf("  Extras: %i columns", ifelse(length(ex) > 0L, length(ex[[1]]), NA))
