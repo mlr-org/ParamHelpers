@@ -100,7 +100,8 @@ getParPrintData = function(x, trafo = TRUE, used = TRUE) {
     len = ifelse(isVector(x), x$len, "-"),
     Def = if (x$has.default) paramValueToString(x, x$default) else "-",
     Constr = constr,
-    Req = ifelse(is.null(x$requires), "-", "Y")
+    Req = ifelse(is.null(x$requires), "-", "Y"),
+    stringsAsFactors = FALSE
   )
   if (trafo)
     d$Trafo = ifelse(is.null(x$trafo), "-", "Y")

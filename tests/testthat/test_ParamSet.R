@@ -147,3 +147,13 @@ test_that("requires works", {
   expect_false(isFeasible(ps, list(x = "b", y = 1, z = c(2,2))))
   expect_true(isFeasible(ps, list(x = "b", y = NA, z = c(2,2))))
 })
+
+test_that("print works", {
+  ps = makeParamSet(
+    makeIntegerParam("ntree", lower = 10, upper = 50),
+    makeNumericVectorParam("cutoff", len = 3, lower = 0.001, upper = 1, trafo = function(x) 0.9*x/sum(x))
+  )
+  expect_output(print(ps), "numericvector")
+  expect_output(print(ps), "3")
+})
+
