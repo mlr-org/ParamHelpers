@@ -4,8 +4,7 @@ addOptPathEl.OptPathDF = function(op, x, y, dob = getOptPathLength(op)+1L, eol =
   check.feasible = !op$add.transformed.x) {
 
   env = op$env
-  assertList(x) # FIXME: we have to wait for checkmate 1.2 on cran for the better check
-  # assertList(x, len = length(op$par.set$pars))
+  assertList(x, len = length(op$par.set$pars))
   assertNumeric(y, len = length(op$y.names))
   dob = asInt(dob, na.ok = TRUE)
   eol = asInt(eol, na.ok = TRUE)

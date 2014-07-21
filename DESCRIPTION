@@ -13,7 +13,7 @@ License: BSD_3_clause + file LICENSE
 Roxygen: list(wrap = FALSE)
 Imports:
     BBmisc (>= 1.7),
-    checkmate (>= 1.1)
+    checkmate (>= 1.2)
 Suggests:
     emoa,
     lhs,

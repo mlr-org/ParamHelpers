@@ -24,8 +24,6 @@ setValueCNames.Param = function(par, x) {
 
 #' @export
 setValueCNames.ParamSet = function(par, x) {
-  assertList(x) # FIXME: we have to wait for checkmate 1.2 on cran for the better check
-  # assertList(x, len = length(par$pars))
+  assertList(x, len = length(par$pars))
   Map(setValueCNames.Param, par$pars, x)
 }
-
