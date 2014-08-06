@@ -184,6 +184,8 @@ test_that("pareto front", {
   ps = makeParamSet(makeNumericParam("x"))
   op = makeOptPathDF(par.set = ps, y.names = c("y1", "y2"), minimize = c(TRUE, TRUE))
   addOptPathEl(op, x = list(x = 3), y = c(9, 4))
+  f = getOptPathParetoFront(op, index = FALSE)
+  expect_equal(f, matrix(c(9, 4), nrow = 1L, dimnames = list(1, c("y1", "y2"))))
   addOptPathEl(op, x = list(x = 4), y = c(4, 9))
   addOptPathEl(op, x = list(x = 1), y = c(5, 3))
   addOptPathEl(op, x = list(x = 2), y = c(2, 4))

@@ -215,14 +215,20 @@ getOptPathParetoFront = function(op, y.names = op$y.names, dob = op$env$dob, eol
   life.inds = which(op$env$dob %in% dob & op$env$eol %in% eol)
   if (length(life.inds) == 0)
     stop("No element found which matches dob and eol restrictions!")
-  y = getOptPathY(op, y.names, drop = FALSE)[life.inds, ]
+  y = getOptPathY(op, y.names, drop = FALSE)[life.inds, , drop = FALSE]
   # multiply columns with -1 if maximize
   k = ifelse(op$minimize, 1, -1)
   y2 = t(y) * k
-  nondom = which(!is_dominated(y2))
+  # is_dominated has kind of buggy behavoiur if y2 is a row
+  # (it hinks, we have a 1-dimensional optimization prob und returns the min index)
+  # so we have to treat this case manually
+  if (nrow(y2) == 1)
+    nondom = 1
+  else
+    nondom = which(!is_dominated(y2))
   if (index)
     return(life.inds[nondom])
   else
-    y[nondom,]
+    y[nondom, , drop = FALSE]
 }
 
