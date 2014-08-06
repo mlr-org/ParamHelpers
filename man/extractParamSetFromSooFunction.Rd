@@ -10,8 +10,7 @@ extractParamSetFromSooFunction(fn)
 Source function.}
 }
 \value{
-[\code{\link[ParamHelpers]{ParamSet}}]
-  Parameter set of type \code{\link[ParamHelpers]{ParamSet}}.
+[\code{\link{ParamSet}}]
 }
 \description{
 Extracts ParamSet from soobench function.

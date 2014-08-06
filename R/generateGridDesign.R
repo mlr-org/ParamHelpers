@@ -22,8 +22,7 @@
 #'    grid design, but the way parameter dependencies are handled make this possible.}
 #' }
 #'
-#' @param par.set [\code{\link{ParamSet}}]\cr
-#'   Parameter set.
+#' @template arg_parset
 #' @param resolution [\code{integer}]\cr
 #'   Resolution of the grid for each numeric/integer parameter in \code{par.set}.
 #'   For vector parameters, it is the resolution per dimension.

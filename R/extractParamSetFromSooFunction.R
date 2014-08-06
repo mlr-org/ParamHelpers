@@ -2,8 +2,7 @@
 #'
 #' @param fn [\code{\link[soobench]{soo_function}}]\cr
 #'   Source function.
-#' @return [\code{\link[ParamHelpers]{ParamSet}}]
-#'   Parameter set of type \code{\link[ParamHelpers]{ParamSet}}.
+#' @return [\code{\link{ParamSet}}]
 #' @export
 
 # FIXME: example disabled because of annying soobench interface change

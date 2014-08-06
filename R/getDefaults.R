@@ -1,7 +1,6 @@
 #' Return defaults of parameters in parameter set.
 #'
-#' @param par.set [\code{\link{ParamSet}}]\cr
-#'   Parameter set.
+#' @template arg_parset
 #' @return [named \code{list}]. Named and in same order as \code{par.set}.
 #'   Parameters without defaults are not present in the list.
 #' @export

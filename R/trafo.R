@@ -1,8 +1,7 @@
 #' Transform a value.
 #'
 #' Transform a value with associated transformation function(s).
-#' @param par [\code{\link{Param}} | \code{\link{ParamSet}}]\cr
-#'   Parameter or parameter set.
+#' @template arg_par_or_set
 #' @param x [any] \cr
 #'   Single value to check.
 #'   For a parameter set this must be a list in the correct order.

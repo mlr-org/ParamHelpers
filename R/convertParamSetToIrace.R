@@ -2,8 +2,7 @@
 #'
 #' Converts to a textual description used in irace and then potentially calls \link[irace]{readParameters}.
 #'
-#' @param par.set [\code{\link{ParamSet}}]\cr
-#'   Parameter set.
+#' @template arg_parset
 #' @param digits [\code{integer(1)}]\cr
 #'   Number of digits used in transformation to irace textual description,
 #'   code\link{formatC} is used here internally.

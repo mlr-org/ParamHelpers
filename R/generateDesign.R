@@ -46,8 +46,7 @@
 #' @param n [\code{integer(1)}]\cr
 #'   Number of samples in design.
 #'   Default is 10.
-#' @param par.set [\code{\link{ParamSet}}]\cr
-#'   Parameter set.
+#' @template arg_parset
 #' @param fun [\code{function}]\cr
 #'   Function from package lhs.
 #'   Possible are: \code{\link[lhs]{maximinLHS}}, \code{\link[lhs]{randomLHS}},

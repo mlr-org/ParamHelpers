@@ -5,8 +5,7 @@
 #'
 #' Parameters for which such bound make no sense - due to their type - are not present in the result.
 #'
-#' @param par.set [\code{\link{ParamSet}}]\cr
-#'   Parameter set.
+#' @template arg_parset
 #' @param with.nr [\code{logical(1)}]\cr
 #'   Should number from 1 to length be appended to names of vector params?
 #'   Default is \code{FALSE}.

@@ -1,8 +1,7 @@
 #' Checks if a parameter or each parameter of a parameter set has ONLY
 #' finite lower and upper bounds.
 #'
-#' @param par [\code{\link{Param}} | \code{\link{ParamSet}}]\cr
-#'   Parameter or parameter set.
+#' @template arg_par_or_set
 #' @return [\code{logical(1)}]
 #' @export
 hasFiniteBoxConstraints = function(par) {

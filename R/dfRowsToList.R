@@ -18,8 +18,7 @@
 #' @param df [\code{data.frame}]\cr
 #'   Data.frame, potentially from \code{\link{OptPathDF}}.
 #'   Columns are assumed to be in the same order as par.set.
-#' @param par.set [\code{\link{ParamSet}}]\cr
-#'   Parameter set.
+#' @template arg_parset
 #' @param i [\code{integer(1)}]\cr
 #'   Row index.
 #' @return [\code{list}]. Named by parameter ids.

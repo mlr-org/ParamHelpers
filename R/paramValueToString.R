@@ -3,8 +3,7 @@
 #' Useful helper for logging.
 #' For discrete parameter values always the name of the discrete value is used.
 #'
-#' @param par [\code{\link{Param}} | \code{\link{ParamSet}}]\cr
-#'   Parameter or parameter set.
+#' @template arg_par_or_set
 #' @param x [any]\cr
 #'   Value for parameter or value for parameter set. In the latter case it must be named list.
 #'   For discrete parameters their values must be used, not their names.
