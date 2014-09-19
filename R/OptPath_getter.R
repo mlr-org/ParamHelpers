@@ -206,7 +206,7 @@ getOptPathBestIndex = function(op, y.name = op$y.names[1], dob = op$env$dob, eol
 #' getOptPathParetoFront(op, index = TRUE)
 getOptPathParetoFront = function(op, y.names = op$y.names, dob = op$env$dob, eol = op$env$eol, index = FALSE) {
   assertClass(op, "OptPath")
-  assertCharacter(y.names, len = 2L)
+  assertCharacter(y.names)
   assertSubset(y.names, op$y.names, empty.ok = FALSE)
   dob = asInteger(dob, any.missing = TRUE)
   eol = asInteger(eol, any.missing = TRUE)
