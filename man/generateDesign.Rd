@@ -38,7 +38,7 @@ and the smaller design is returned.
 Default is 20.}
 }
 \value{
-The created design is a data.frame. Columns are named by the ids of the parameters.
+[\code{data.frame}]. Columns are named by the ids of the parameters.
   If the \code{par.set} argument contains a vector parameter, its corresponding column names
   in the design are the parameter id concatenated with 1 to dimension of the vector.
   The result will have an \code{logical(1)} attribute \dQuote{trafo},

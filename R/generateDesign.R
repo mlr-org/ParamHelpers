@@ -43,9 +43,7 @@
 #' with complicated dependences and forbidden regions, if one wants to ensure that points actually
 #' get added... But we are working on it,
 #'
-#' @param n [\code{integer(1)}]\cr
-#'   Number of samples in design.
-#'   Default is 10.
+#' @template arg_gendes_n
 #' @template arg_parset
 #' @param fun [\code{function}]\cr
 #'   Function from package lhs.
@@ -64,11 +62,7 @@
 #'   If the the design is of size less than \code{n} after all tries, a warning is issued
 #'   and the smaller design is returned.
 #'   Default is 20.
-#' @return The created design is a data.frame. Columns are named by the ids of the parameters.
-#'   If the \code{par.set} argument contains a vector parameter, its corresponding column names
-#'   in the design are the parameter id concatenated with 1 to dimension of the vector.
-#'   The result will have an \code{logical(1)} attribute \dQuote{trafo},
-#'   which is set to the value of argument \code{trafo}.
+#' @template ret_gendes_df
 #' @export
 #' @useDynLib ParamHelpers c_generateDesign c_trafo_and_set_dep_to_na
 #' @examples
