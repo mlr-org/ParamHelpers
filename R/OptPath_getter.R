@@ -31,6 +31,15 @@ getOptPathEl = function(op, index) {
   UseMethod("getOptPathEl")
 }
 
+#' Get data.frame of input points (X-space) referring to the param set from the optimization path.
+#'
+#' @template arg_op
+#' @return [\code{data.frame}].
+#' @export
+#' @family optpath
+getOptPathX = function(op) {
+  UseMethod("getOptPathX")
+}
 
 #' Get y-vector or y-matrix from the optimization path.
 #'

@@ -27,6 +27,11 @@ getOptPathEl.OptPathDF = function(op, index) {
 }
 
 #' @export
+getOptPathX.OptPathDF = function(op) {
+  as.data.frame(op, include.x = TRUE, include.y = FALSE, include.rest = FALSE)
+}
+
+#' @export
 getOptPathY.OptPathDF = function(op, names, drop = TRUE) {
   if (missing(names))
     names = op$y.names

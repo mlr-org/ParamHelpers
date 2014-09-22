@@ -13,6 +13,8 @@ test_that("OptPath", {
   expect_equal(op$env$eol[2], 8)
 
   # test getters
+  expect_equal(getOptPathX(op), data.frame(x = 1:2, y = "a"))
+
   expect_equal(getOptPathY(op, "z1"), c(1,3))
   expect_equal(getOptPathY(op, "z2"), c(4,2))
   expect_equal(getOptPathY(op), matrix(c(1, 3, 4, 2), nrow = 2L, dimnames = list(1:2, c("z1", "z2"))))

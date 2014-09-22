@@ -5,6 +5,7 @@ ParamHelpers_1.3:
   The user can also call setValueCNames in his own code.
 - new functions
 -- getOptPathCols
+-- getOptPathX
 -- setValueCNames
 -- repairPoint
 
