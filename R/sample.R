@@ -48,13 +48,13 @@ sampleValue.Param = function(par, discrete.names = FALSE, trafo = FALSE) {
     x = as.integer(round(runif(1, min = par$lower-0.5, max = par$upper+0.5)))
   } else if (type == "integervector") {
     x = as.integer(round(runif(par$len, min = par$lower-0.5, max = par$upper+0.5)))
-  } else if (type %in% c("discrete", "discretevector", "logical", "logicalvector")) {
+  } else if (type %in% c("logical", "logicalvector")) {
+    x = sample(c(TRUE, FALSE), par$len, replace = TRUE)
+  } else if (type %in% c("discrete", "discretevector")) {
     x = sample(names(par$values), par$len, replace = TRUE)
     if (!discrete.names) {
       x = if (type  == "discretevector")
         par$values[x]
-      else if (type  == "logicalvector")
-        as.logical(x)
       else
         par$values[[x]]
     }

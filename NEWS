@@ -1,4 +1,6 @@
 ParamHelpers_1.3:
+- sampleValue(s): 'discrete.names' now only affects discrtete params and not logicals anymore.
+  logical params always result in R data type 'logical'
 - Vector params (num, int and log) can now have component names
   Functions that produce such vector values (e.g. sampleValue or dfRowsToList)
   will name the components of this vector automatically. 
