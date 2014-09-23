@@ -30,7 +30,7 @@ Default is \code{FALSE}.}
 
 \item{with.nr}{[\code{logical(1)}]\cr
 Should number from 1 to length be appended to name?
-Only used if \code{use.name} and are \code{TRUE}.
+Only used if \code{use.name} and \code{df.cols} are \code{TRUE}.
 Default is \code{TRUE}.}
 }
 \value{
