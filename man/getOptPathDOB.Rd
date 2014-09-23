@@ -3,11 +3,21 @@
 \alias{getOptPathDOB}
 \title{Get date-of-birth vector from the optimization path.}
 \usage{
-getOptPathDOB(op)
+getOptPathDOB(op, dob, eol)
 }
 \arguments{
 \item{op}{[\code{\link{OptPath}}]\cr
 Optimization path.}
+
+\item{dob}{[\code{integer}]\cr
+Vector of date-of-birth values to further subset the result.
+Only elements with a date-of-birth included in \code{dob} are selected.
+Default is all.}
+
+\item{eol}{[\code{integer}]\cr
+Vector of end-of-life values to further subset the result.
+Only elements with an end-of-life included in \code{eol} are selected.
+Default is all.}
 }
 \value{
 [\code{integer}].

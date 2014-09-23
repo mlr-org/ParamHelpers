@@ -34,10 +34,12 @@ getOptPathEl = function(op, index) {
 #' Get data.frame of input points (X-space) referring to the param set from the optimization path.
 #'
 #' @template arg_op
+#' @template arg_opgetter_dob
+#' @template arg_opgetter_eol
 #' @return [\code{data.frame}].
 #' @export
 #' @family optpath
-getOptPathX = function(op) {
+getOptPathX = function(op, dob, eol) {
   UseMethod("getOptPathX")
 }
 
@@ -47,53 +49,63 @@ getOptPathX = function(op) {
 #' @param names [\code{character}]\cr
 #'   Names of performance measure.
 #'   Default is all performance measures in path.
+#' @template arg_opgetter_dob
+#' @template arg_opgetter_eol
 #' @param drop [\code{logical(1)}]\cr
 #'   Return vector instead of matrix when only one y-column was selected?
 #'   Default is \code{TRUE}.
 #' @return [\code{numeric} | \code{matrix}]. The columns of the matrix are always named.
 #' @export
 #' @family optpath
-getOptPathY = function(op, names, drop = TRUE) {
+getOptPathY = function(op, names, dob, eol, drop = TRUE) {
   UseMethod("getOptPathY")
 }
 
 #' Get date-of-birth vector from the optimization path.
 #'
 #' @template arg_op
+#' @template arg_opgetter_dob
+#' @template arg_opgetter_eol
 #' @return [\code{integer}].
 #' @export
 #' @family optpath
-getOptPathDOB = function(op) {
+getOptPathDOB = function(op, dob, eol) {
   UseMethod("getOptPathDOB")
 }
 
 #' Get end-of-life vector from the optimization path.
 #'
 #' @template arg_op
+#' @template arg_opgetter_dob
+#' @template arg_opgetter_eol
 #' @return [\code{integer}].
 #' @export
 #' @family optpath
-getOptPathEOL = function(op) {
+getOptPathEOL = function(op, dob, eol) {
   UseMethod("getOptPathEOL")
 }
 
 #' Get error-message vector from the optimization path.
 #'
 #' @template arg_op
+#' @template arg_opgetter_dob
+#' @template arg_opgetter_eol
 #' @return [\code{character}].
 #' @export
 #' @family optpath
-getOptPathErrorMessages = function(op) {
+getOptPathErrorMessages = function(op, dob, eol) {
   UseMethod("getOptPathErrorMessages")
 }
 
 #' Get exec-time vector from the optimization path.
 #'
 #' @template arg_op
+#' @template arg_opgetter_dob
+#' @template arg_opgetter_eol
 #' @return [\code{numeric}].
 #' @export
 #' @family optpath
-getOptPathExecTimes = function(op) {
+getOptPathExecTimes = function(op, dob, eol) {
   UseMethod("getOptPathExecTimes")
 }
 
@@ -102,10 +114,12 @@ getOptPathExecTimes = function(op) {
 #' @template arg_op
 #' @param name [\code{character(1)}]\cr
 #'   Name of the column.
+#' @template arg_opgetter_dob
+#' @template arg_opgetter_eol
 #' @return Single column as a vector.
 #' @export
 #' @family optpath
-getOptPathCol = function(op, name) {
+getOptPathCol = function(op, name, dob, eol) {
   UseMethod("getOptPathCol")
 }
 
@@ -114,11 +128,13 @@ getOptPathCol = function(op, name) {
 #' @template arg_op
 #' @param names [\code{character}]\cr
 #'   Names of the columns.
+#' @template arg_opgetter_dob
+#' @template arg_opgetter_eol
 #' @inheritParams as.data.frame.OptPathDF
 #' @return [\code{data.frame}].
 #' @export
 #' @family optpath
-getOptPathCols = function(op, names, row.names = NULL) {
+getOptPathCols = function(op, names, dob, eol, row.names = NULL) {
   UseMethod("getOptPathCols")
 }
 
@@ -128,10 +144,8 @@ getOptPathCols = function(op, names, row.names = NULL) {
 #' @param y.name [\code{character(1)}]\cr
 #'   Name of target value to decide which element is best.
 #'   Default is \code{y.names[1]}.
-#' @param dob [\code{integer}]\cr
-#'   Possible dates of birth to select best element from. Defaults to all.
-#' @param eol [\code{integer}]\cr
-#'   Possible end of life to select best element from. Defaults to all.
+#' @template arg_opgetter_dob
+#' @template arg_opgetter_eol
 #' @param ties [\code{character(1)}]\cr
 #'   How should ties be broken when more than one optimal element is found?
 #'   \dQuote{all}: return all indices,
@@ -192,10 +206,8 @@ getOptPathBestIndex = function(op, y.name = op$y.names[1], dob = op$env$dob, eol
 #' @param y.names [\code{character}]\cr
 #'   Names of performance measures to construct pareto front for.
 #'   Default is all performance measures.
-#' @param dob [\code{integer}]\cr
-#'   Possible dates of birth to select elements from. Defaults to all.
-#' @param eol [\code{integer}]\cr
-#'   Possible end of life to select elements from. Defaults to all.
+#' @template arg_opgetter_dob
+#' @template arg_opgetter_eol
 #' @param index [\code{logical(1)}]\cr
 #'   Return indices into path of front or y-matrix of nondominated points?
 #'   Default is \code{FALSE}.

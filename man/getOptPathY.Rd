@@ -3,7 +3,7 @@
 \alias{getOptPathY}
 \title{Get y-vector or y-matrix from the optimization path.}
 \usage{
-getOptPathY(op, names, drop = TRUE)
+getOptPathY(op, names, dob, eol, drop = TRUE)
 }
 \arguments{
 \item{op}{[\code{\link{OptPath}}]\cr
@@ -12,6 +12,16 @@ Optimization path.}
 \item{names}{[\code{character}]\cr
 Names of performance measure.
 Default is all performance measures in path.}
+
+\item{dob}{[\code{integer}]\cr
+Vector of date-of-birth values to further subset the result.
+Only elements with a date-of-birth included in \code{dob} are selected.
+Default is all.}
+
+\item{eol}{[\code{integer}]\cr
+Vector of end-of-life values to further subset the result.
+Only elements with an end-of-life included in \code{eol} are selected.
+Default is all.}
 
 \item{drop}{[\code{logical(1)}]\cr
 Return vector instead of matrix when only one y-column was selected?

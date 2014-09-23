@@ -14,6 +14,7 @@ test_that("OptPath", {
 
   # test getters
   expect_equal(getOptPathX(op), data.frame(x = 1:2, y = "a"))
+  expect_equal(getOptPathX(op, dob = 2), data.frame(x = 2, y = "a"))
 
   expect_equal(getOptPathY(op, "z1"), c(1,3))
   expect_equal(getOptPathY(op, "z2"), c(4,2))
@@ -21,6 +22,7 @@ test_that("OptPath", {
   expect_equal(getOptPathY(op, "z2", drop = FALSE), matrix(c(4, 2), nrow = 2L, dimnames = list(1:2, c("z2"))))
   expect_equal(getOptPathY(op, "z2", drop = TRUE), c(4, 2))
   expect_equal(getOptPathY(op, "z2"), c(4,2))
+  expect_equal(getOptPathY(op, eol = 8), matrix(c(3, 2), nrow = 1L, dimnames = list(2, c("z1", "z2"))))
   expect_equal(getOptPathDOB(op), c(1,2))
   expect_equal(getOptPathEOL(op), c(NA,8))
 
@@ -251,15 +253,19 @@ test_that("as.data.frame flags and getCols works", {
   df1 = as.data.frame(op, include.rest = FALSE, discretes.as.factor = TRUE)
   df2 = as.data.frame(op, include.rest = FALSE, include.x = FALSE, discretes.as.factor = TRUE)
   df3 = as.data.frame(op, include.y = FALSE, include.x = FALSE, discretes.as.factor = TRUE)
+  df4 = as.data.frame(op, include.y = TRUE, include.x = TRUE, include.rest = TRUE, dob = 2L)
   expect_equal(nrow(df1), 2)
   expect_equal(nrow(df2), 2)
   expect_equal(nrow(df3), 2)
-  expect_equal(ncol(df1), 4)
+  expect_equal(nrow(df4), 1)
   expect_equal(ncol(df2), 2)
   expect_equal(ncol(df3), 3)
+  expect_equal(ncol(df4), 7)
   expect_equal(sapply(df1, class), c(x = "numeric", y = "factor", z1 = "numeric", z2 = "numeric"))
   expect_equal(sapply(df2, class), c(z1 = "numeric", z2 = "numeric"))
   expect_equal(sapply(df3, class), c(dob = "integer", eol = "integer", ee = "numeric"))
+  expect_equal(sapply(df4, class), c(x = "numeric", y = "factor", z1 = "numeric", z2 = "numeric",
+    dob = "integer", eol = "integer", ee = "numeric"))
   expect_error(getOptPathCol(op,"bla"), "not present")
   expect_equal(getOptPathCol(op, "dob"), c(1, 2))
   expect_equal(getOptPathCol(op, "eol"), c(NA_integer_, NA_integer_))

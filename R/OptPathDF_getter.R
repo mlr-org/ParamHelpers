@@ -1,3 +1,9 @@
+# return logical index for selection via dob and / or eol
+getOptPathDobAndEolIndex = function(op, dob = op$env$dob, eol = op$env$eol) {
+  op$env$dob %in% dob & op$env$eol %in% eol
+}
+
+
 #' @export
 getOptPathLength.OptPathDF = function(op) {
   nrow(op$env$path)
@@ -27,67 +33,67 @@ getOptPathEl.OptPathDF = function(op, index) {
 }
 
 #' @export
-getOptPathX.OptPathDF = function(op) {
-  as.data.frame(op, include.x = TRUE, include.y = FALSE, include.rest = FALSE)
+getOptPathX.OptPathDF = function(op, dob = op$env$dob, eol = op$env$eol) {
+  as.data.frame(op, include.x = TRUE, include.y = FALSE, include.rest = FALSE, dob = dob, eol = eol)
 }
 
 #' @export
-getOptPathY.OptPathDF = function(op, names, drop = TRUE) {
+getOptPathY.OptPathDF = function(op, names, dob = op$env$dob, eol = op$env$eol, drop = TRUE) {
   if (missing(names))
     names = op$y.names
   else
-c(names, subset = op$y.names)
+    c(names, subset = op$y.names)
   assertFlag(drop)
-  y = as.matrix(op$env$path[, names, drop = FALSE])
+  y = as.matrix(op$env$path[getOptPathDobAndEolIndex(op, dob, eol), names, drop = FALSE])
   if (drop && length(names) == 1L)
     y = as.numeric(y)
   return(y)
 }
 
 #' @export
-getOptPathDOB.OptPathDF = function(op) {
-  op$env$dob
+getOptPathDOB.OptPathDF = function(op, dob = op$env$dob, eol = op$env$eol) {
+  op$env$dob[getOptPathDobAndEolIndex(op, dob, eol)]
 }
 
 #' @export
-getOptPathEOL.OptPathDF = function(op) {
-  op$env$eol
+getOptPathEOL.OptPathDF = function(op, dob = op$env$dob, eol = op$env$eol) {
+  op$env$eol[getOptPathDobAndEolIndex(op, dob, eol)]
 }
 
 #' @export
-getOptPathErrorMessages.OptPathDF = function(op) {
-  op$env$error.message
+getOptPathErrorMessages.OptPathDF = function(op, dob = op$env$dob, eol = op$env$eol) {
+  op$env$error.message[getOptPathDobAndEolIndex(op, dob, eol)]
 }
 
 #' @export
-getOptPathExecTimes.OptPathDF = function(op) {
-  op$env$exec.time
+getOptPathExecTimes.OptPathDF = function(op, dob = op$env$dob, eol = op$env$eol) {
+  op$env$exec.time[getOptPathDobAndEolIndex(op, dob, eol)]
 }
 
 #' @export
-getOptPathCol.OptPathDF = function(op, name) {
+getOptPathCol.OptPathDF = function(op, name, dob = op$env$dob, eol = op$env$eol) {
   assertString(name)
   if (getOptPathLength(op) == 0L)
     stopf("Trying to return a col from an empty opt.path")
   if (name %in% colnames(op$env$path))
-    return(op$env$path[, name])
+    return(op$env$path[getOptPathDobAndEolIndex(op, dob, eol), name])
   if (name == "dob")
-    return(getOptPathDOB(op))
+    return(getOptPathDOB(op, dob, eol))
   if (name == "eol")
-    return(getOptPathEOL(op))
+    return(getOptPathEOL(op, dob, eol))
   if (name == "exec.time")
-    return(getOptPathExecTimes(op))
+    return(getOptPathExecTimes(op, dob, eol))
   if (name == "error.message")
-    return(getOptPathErrorMessages(op))
+    return(getOptPathErrorMessages(op, dob, eol))
   if (name %in% names(op$env$extra[[1]]))
-    return(extractSubList(op$env$extra, name))
+    return(extractSubList(op$env$extra[getOptPathDobAndEolIndex(op, dob, eol)], name))
   stop("The column you specified is not present in the opt.path.")
 }
 
 #' @export
-getOptPathCols.OptPathDF = function(op, names, row.names = NULL) {
+getOptPathCols.OptPathDF = function(op, names, dob = op$env$dob, eol = op$env$eol, row.names = NULL) {
   assertCharacter(names, any.missing = FALSE)
-  d = as.data.frame(op, row.names = row.names)
+  d = as.data.frame(op, dob = dob, eol = eol, row.names = row.names)
   d[, names, drop = FALSE]
 }
 

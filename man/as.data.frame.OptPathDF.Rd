@@ -4,7 +4,8 @@
 \title{Convert optimization path to data.frame.}
 \usage{
 \method{as.data.frame}{OptPathDF}(x, row.names = NULL, optional = FALSE,
-  include.x = TRUE, include.y = TRUE, include.rest = TRUE, ...)
+  include.x = TRUE, include.y = TRUE, include.rest = TRUE,
+  dob = x$env$dob, eol = x$env$eol, ...)
 }
 \arguments{
 \item{x}{[\code{\link{OptPath}}]\cr
@@ -28,6 +29,16 @@ Default is \code{TRUE}.}
 \item{include.rest}{[\code{logical(1)}]\cr
 Include all other columns?
 Default is \code{TRUE}.}
+
+\item{dob}{[\code{integer}]\cr
+Vector of date-of-birth values to further subset the result.
+Only elements with a date-of-birth included in \code{dob} are selected.
+Default is all.}
+
+\item{eol}{[\code{integer}]\cr
+Vector of end-of-life values to further subset the result.
+Only elements with an end-of-life included in \code{eol} are selected.
+Default is all.}
 
 \item{...}{[any] \cr
 Currently ignored.}

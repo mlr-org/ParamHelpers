@@ -5,6 +5,7 @@ ParamHelpers_1.3:
   Functions that produce such vector values (e.g. sampleValue or dfRowsToList)
   will name the components of this vector automatically. 
   The user can also call setValueCNames in his own code.
+- many more OptPath getter methods allow the selection option 'dob' and 'eol' to subset the result
 - new functions
 -- getOptPathCols
 -- getOptPathX

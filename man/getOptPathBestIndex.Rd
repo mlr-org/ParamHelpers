@@ -15,10 +15,14 @@ Name of target value to decide which element is best.
 Default is \code{y.names[1]}.}
 
 \item{dob}{[\code{integer}]\cr
-Possible dates of birth to select best element from. Defaults to all.}
+Vector of date-of-birth values to further subset the result.
+Only elements with a date-of-birth included in \code{dob} are selected.
+Default is all.}
 
 \item{eol}{[\code{integer}]\cr
-Possible end of life to select best element from. Defaults to all.}
+Vector of end-of-life values to further subset the result.
+Only elements with an end-of-life included in \code{eol} are selected.
+Default is all.}
 
 \item{ties}{[\code{character(1)}]\cr
 How should ties be broken when more than one optimal element is found?
