@@ -298,7 +298,9 @@ test_that("opt.path printing works", {
   expect_output(print(op), "Optimization path")
 
   op = makeOptPathDF(par.set = ps, y.names = "z1", minimize = TRUE, include.exec.time = TRUE)
-  expect_output(print(op), "Exec times: TRUE. Range: 0 - 0")
+  expect_output(print(op), "Exec times: TRUE. Range: 0 - 0. 0 NAs")
+  addOptPathEl(op, x = list(x = 1, y = "a"), y = c(z1 = 1))
+  expect_output(print(op), "Exec times: TRUE. Range: 0 - 0. 1 NAs")
   addOptPathEl(op, x = list(x = 1, y = "a"), y = c(z1 = 1), exec.time = 3)
-  expect_output(print(op), "Exec times: TRUE. Range: 3 - 3")
+  expect_output(print(op), "Exec times: TRUE. Range: 3 - 3. 1 NAs.")
 })

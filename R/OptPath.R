@@ -113,14 +113,17 @@ print.OptPath = function(x, ...) {
   s = if (is.null(et)) {
     s = ""
   } else {
-    if (length(et) == 0) {
+    ntimes = sum(!is.na(et))
+    ntime.nas = sum(is.na(et))
+    # no non-na exec times in path
+    if (ntimes == 0L) {
       et1 = 0
       et2 = 0
      } else {
       et1 = min(et, na.rm = TRUE)
       et2 = max(et, na.rm = TRUE)
     }
-    s = sprintf(" Range: %g - %g.", et1, et2)
+    s = sprintf(" Range: %g - %g. %i NAs.", et1, et2, ntime.nas)
   }
   catf("  Exec times: %s.%s", !is.null(et), s)
   if (!is.null(ex))
