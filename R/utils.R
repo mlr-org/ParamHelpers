@@ -27,3 +27,19 @@ doBasicGenDesignChecks = function(par.set) {
   return(list(lower = lower, upper = upper))
 }
 
+
+getParamNA = function(par, repeated = FALSE) {
+  v = switch(par$type,
+    numeric = NA_real_,
+    numericvector = NA_real_,
+    integer = NA_integer_,
+    integervector = NA_integer_,
+    discrete = NA_character_,
+    discretevector = NA_character_,
+    logical = NA,
+    logicalvector = NA
+  )
+  if (repeated)
+    v = rep(v, par$len)
+  return(v)
+}
