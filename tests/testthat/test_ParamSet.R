@@ -155,5 +155,11 @@ test_that("print works", {
   )
   expect_output(print(ps), "numericvector")
   expect_output(print(ps), "3")
+
+  ps = makeParamSet(
+    makeIntegerLearnerParam(id = "x", default = 50L, lower = 1L),
+    makeNumericVectorLearnerParam(id = "v", default = 1:2, len = 2L)
+  )
+  expect_output(print(ps, trafo = FALSE, used = FALSE), "numericvector")
 })
 
