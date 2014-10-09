@@ -59,6 +59,6 @@ convertParamSetToIrace = function(par.set, digits = 4, as.chars = FALSE) {
     return(lines)
   } else {
     lines = collapse(lines, "\n")
-    return(readParameters(text = lines))
+    return(irace::readParameters(text = lines))
   }
 }
