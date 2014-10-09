@@ -246,7 +246,7 @@ getOptPathParetoFront = function(op, y.names = op$y.names, dob = op$env$dob, eol
   if (nrow(y2) == 1)
     nondom = 1
   else
-    nondom = which(!is_dominated(y2))
+    nondom = which(!emoa::is_dominated(y2))
   if (index)
     return(life.inds[nondom])
   else
