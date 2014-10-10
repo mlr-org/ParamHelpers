@@ -131,7 +131,7 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
     newdes = if (nmissing == n)
       do.call(fun, insert(list(n = nmissing, k = k), fun.args))
     else
-      randomLHS(nmissing, k = k)
+      lhs::randomLHS(nmissing, k = k)
     # preallocate result for C
     newres = makeDataFrame(nmissing, k, col.types = types.df)
     newres = .Call(c_generateDesign, newdes, newres, types.int, lower2, upper2, values2)

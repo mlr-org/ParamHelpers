@@ -14,10 +14,10 @@
 extractParamSetFromSooFunction = function(fn) {
   assertClass(fn, "soo_function")
   makeNumericParamSet(
-    len = number_of_parameters(fn),
+    len = soobench::number_of_parameters(fn),
     id = "x",
-    lower = lower_bounds(fn),
-    upper = upper_bounds(fn),
+    lower = soobench::lower_bounds(fn),
+    upper = soobench::upper_bounds(fn),
     vector = FALSE
   )
 }
