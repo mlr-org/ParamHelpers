@@ -87,12 +87,12 @@ makeParam = function(id, type, len, lower, upper, values, cnames, default, trafo
   return(p)
 }
 
-getParPrintData = function(x, trafo = TRUE, used = TRUE) {
+getParPrintData = function(x, trafo = TRUE, used = TRUE, constr.clip = 40L) {
   g = function(n) collapse(sprintf("%.3g", n))
   if (isNumeric(x, include.int = TRUE))
     constr = sprintf("%s to %s", g(x$lower), g(x$upper))
   else if (isDiscrete(x, include.logical = FALSE))
-    constr = collapse(names(x$values))
+    constr = clipString(collapse(names(x$values)), constr.clip)
   else
     constr = "-"
   d = data.frame(

@@ -49,17 +49,17 @@ makeParamSet = function(..., params, forbidden = NULL) {
   makeS3Obj("ParamSet", pars = pars, forbidden = forbidden)
 }
 
-getParSetPrintData = function(x, trafo = TRUE, used = TRUE) {
-  d = lapply(x$pars, getParPrintData, trafo = trafo, used = used)
+getParSetPrintData = function(x, trafo = TRUE, used = TRUE, constr.clip = 40L) {
+  d = lapply(x$pars, getParPrintData, trafo = trafo, used = used, constr.clip = constr.clip)
   do.call(rbind, d)
 }
 
 #' @export
-print.ParamSet = function(x, ..., trafo = TRUE, used = TRUE) {
+print.ParamSet = function(x, ..., trafo = TRUE, used = TRUE, constr.clip = 40L) {
   if (isEmpty(x)) {
     print("Empty parameter set.")
   } else  {
-    print(getParSetPrintData(x, trafo = trafo, used = used))
+    print(getParSetPrintData(x, trafo = trafo, used = used, constr.clip = constr.clip))
   }
   if (hasForbidden(x))
     catf("Forbidden region specified.")
