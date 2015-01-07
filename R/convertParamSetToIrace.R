@@ -18,7 +18,7 @@ convertParamSetToIrace = function(par.set, digits = 4, as.chars = FALSE) {
   assertFlag(as.chars)
   if (!is.null(par.set$forbidden))
     stopf("Operation not allowed for param set with forbidden region currently!")
-  requirePackages("irace", "convertParamSetToIrace")
+  requirePackages("irace", why = "convertParamSetToIrace")
   lines = character(0)
   fnum = function(x) formatC(x, format = "f", digits = digits)
   count = 1

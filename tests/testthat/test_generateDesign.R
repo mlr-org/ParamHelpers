@@ -2,33 +2,35 @@ context("generateDesign")
 
 
 test_that("simple num design", {
+  requirePackages("lhs")
   ps1 = makeParamSet(
     makeNumericParam("x1", lower = -2, upper = 1)
   )
-  des = generateDesign(13, ps1, randomLHS)
+  des = generateDesign(13, ps1, lhs::randomLHS)
   expect_equal(nrow(des), 13)
   expect_equal(ncol(des), 1)
   expect_true(is.numeric(des[,1]))
   expect_true(des[,1] >= -2 && des[,1] <= 1)
-  des = generateDesign(13, ps1, maximinLHS)
+  des = generateDesign(13, ps1, lhs::maximinLHS)
   expect_equal(nrow(des), 13)
   expect_equal(ncol(des), 1)
   expect_true(des[,1] >= -2 && des[,1] <= 1)
 })
 
 test_that("simple num/int design", {
+  requirePackages("lhs")
   ps2 = makeParamSet(
     makeNumericParam("x1", lower = -2, upper = 1),
     makeIntegerParam("x2", lower = 10, upper = 20)
   )
-  des = generateDesign(13, ps2, randomLHS)
+  des = generateDesign(13, ps2, lhs::randomLHS)
   expect_equal(nrow(des), 13)
   expect_equal(ncol(des), 2)
   expect_true(is.numeric(des[,1]))
   expect_true(des[,1] >= -2 && des[,1] <= 1)
   expect_true(is.integer(des[,2]))
   expect_true(des[,2] >= 10 && des[,2] <= 20)
-  des = generateDesign(13, ps2, maximinLHS)
+  des = generateDesign(13, ps2, lhs::maximinLHS)
   expect_equal(nrow(des), 13)
   expect_equal(ncol(des), 2)
   expect_true(is.numeric(des[,1]))
@@ -58,7 +60,6 @@ test_that("simple num/int/discrete/log design", {
   expect_true(all(tab > 140 & tab < 180))
   tab = as.numeric(table(des[,4]))
   expect_true(all(tab > 200 & tab < 300))
-
 })
 
 test_that("num/int/disc vec design", {
