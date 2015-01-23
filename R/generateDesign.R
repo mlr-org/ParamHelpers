@@ -85,7 +85,7 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
   z = doBasicGenDesignChecks(par.set)
   lower = z$lower; upper = z$upper
 
-  requirePackages("lhs", why = "generateDesign")
+  requirePackages("lhs", why = "generateDesign", default.method = "load")
   if (missing(fun))
     fun = lhs::randomLHS
   else

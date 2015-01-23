@@ -2,7 +2,7 @@ context("generateDesign")
 
 
 test_that("simple num design", {
-  requirePackages("lhs")
+  requirePackages("_lhs")
   ps1 = makeParamSet(
     makeNumericParam("x1", lower = -2, upper = 1)
   )
@@ -18,7 +18,7 @@ test_that("simple num design", {
 })
 
 test_that("simple num/int design", {
-  requirePackages("lhs")
+  requirePackages("_lhs")
   ps2 = makeParamSet(
     makeNumericParam("x1", lower = -2, upper = 1),
     makeIntegerParam("x2", lower = 10, upper = 20)

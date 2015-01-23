@@ -232,7 +232,7 @@ getOptPathParetoFront = function(op, y.names = op$y.names, dob = op$env$dob, eol
   dob = asInteger(dob, any.missing = TRUE)
   eol = asInteger(eol, any.missing = TRUE)
   assertFlag(index, na.ok = TRUE)
-  requirePackages("emoa")
+  requirePackages("emoa", default.method = "load")
   life.inds = which(op$env$dob %in% dob & op$env$eol %in% eol)
   if (length(life.inds) == 0)
     stop("No element found which matches dob and eol restrictions!")
