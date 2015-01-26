@@ -1,5 +1,7 @@
 ParamHelpers_1.5:
 - added constr.clip to print.ParamSet and related internal functions to make prints more readable
+- new functions
+-- getParamDefaultVals
 
 ParamHelpers_1.4:
 - sampleValue(s): 'discrete.names' now only affects discrtete params and not logicals anymore.
