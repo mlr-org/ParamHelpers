@@ -44,3 +44,11 @@ test_that("convertParamSetToIrace", {
   }
   runIrace(ps, hook.run, max.exps = 300)
 })
+
+test_that("convertParamSetToIrace checks box constraints", {
+  ps = makeParamSet(
+    makeIntegerLearnerParam(id = "i", lower = 1L)
+  )
+
+  expect_error(convertParamSetToIrace(ps), "finite box")
+})
