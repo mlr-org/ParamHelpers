@@ -24,8 +24,6 @@ convertParamSetToIrace = function(par.set, digits = 4, as.chars = FALSE) {
   lines = character(0)
   fnum = function(x) formatC(x, format = "f", digits = digits)
   count = 1
-  low = getLower(par.set)
-  upp = getUpper(par.set)
   for (i in seq_along(par.set$pars)) {
     p = par.set$pars[[i]]
     type = switch(
@@ -43,9 +41,9 @@ convertParamSetToIrace = function(par.set, digits = 4, as.chars = FALSE) {
     for (j in 1:p$len) {
       id = if(p$len == 1) p$id else paste(p$id, j, sep = "")
       if (p$type %in% c("numeric", "numericvector"))
-        line = sprintf('%s "" %s (%s, %s)', id, type, fnum(low[j]), fnum(upp[j]))
+        line = sprintf('%s "" %s (%s, %s)', id, type, fnum(p$lower[j]), fnum(p$upper[j]))
       else if (p$type %in% c("integer", "integervector"))
-        line = sprintf('%s "" %s (%i, %i)', id, type, low[j], upp[j])
+        line = sprintf('%s "" %s (%i, %i)', id, type, p$lower[j], p$upper[j])
       else if (p$type %in% c("discrete", "discretevector", "logical", "logicalvector")) {
         v = paste("\"", names(p$values), "\"", sep = "")
         line = sprintf('%s "" %s (%s)', id, type, collapse(v))
