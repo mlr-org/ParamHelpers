@@ -14,7 +14,7 @@ BugReports: https://github.com/berndbischl/ParamHelpers/issues
 License: BSD_3_clause + file LICENSE
 Roxygen: list(wrap = FALSE)
 Imports:
-    BBmisc (>= 1.9),
+    BBmisc (>= 1.8),
     checkmate (>= 1.5.1)
 Suggests:
     emoa,
