@@ -1,7 +1,7 @@
 # ParamHelpers
 
 [![Build Status](https://travis-ci.org/berndbischl/ParamHelpers.png)](https://travis-ci.org/berndbischl/ParamHelpers)
-[![Build status](https://ci.appveyor.com/api/projects/status/8jvldge8r1k2qnlh/branch/master?svg=true)](https://ci.appveyor.com/project/mllg/paramhelpers/branch/master)
+[![Build status](https://ci.appveyor.com/api/projects/status/ut6eomd8jnajkfun?svg=true)](https://ci.appveyor.com/project/mllg/paramhelpers-18o86)
 [![Coverage Status](https://coveralls.io/repos/berndbischl/ParamHelpers/badge.svg)](https://coveralls.io/r/berndbischl/ParamHelpers)
 
 Helpers for parameters in black-box optimization, tuning and machine learning.
@@ -18,3 +18,4 @@ Helpers for parameters in black-box optimization, tuning and machine learning.
   ```
 
 * [Further installation instructions](https://github.com/tudo-r/PackagesInfo/wiki/Installation-Information)
+
