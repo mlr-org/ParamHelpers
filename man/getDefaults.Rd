@@ -4,11 +4,17 @@
 \alias{getDefaults}
 \title{Return defaults of parameters in parameter set.}
 \usage{
-getDefaults(par.set)
+getDefaults(par.set, include.null = FALSE)
 }
 \arguments{
 \item{par.set}{[\code{\link{ParamSet}}]\cr
 Parameter set.}
+
+\item{include.null}{[\code{logical(1)}]\cr
+Include \code{NULL} entries for parameters without default values in the result list?
+Note that this can be slightly dangerous as \code{NULL} might be used as default value
+for other parameters.
+Default is \code{FALSE}.}
 }
 \value{
 [named \code{list}]. Named and in same order as \code{par.set}.

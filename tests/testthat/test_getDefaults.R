@@ -15,5 +15,20 @@ test_that("getDefaults", {
     makeIntegerParam("v")
   )
   expect_equal(getDefaults(ps), list())
+
+  # test include.null
+  ps = makeParamSet(
+    makeDiscreteParam("x", values = c("a", "b"), default = "a"),
+    makeNumericVectorParam("y", len=2),
+    makeIntegerParam("z", default = 99)
+  )
+  expect_equal(
+    getDefaults(ps, include.null = TRUE),
+    list(x = "a", y = NULL, z = 99)
+  )
+  expect_equal(
+    getDefaults(ps, include.null = FALSE),
+    list(x = "a", z = 99)
+  )
 })
 

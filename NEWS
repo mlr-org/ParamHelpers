@@ -1,7 +1,6 @@
 ParamHelpers_1.5:
 - added constr.clip to print.ParamSet and related internal functions to make prints more readable
-- new functions
--- getParamDefaultVals
+- getDefaults: new option include.null
 
 ParamHelpers_1.4:
 - sampleValue(s): 'discrete.names' now only affects discrtete params and not logicals anymore.
@@ -17,7 +16,7 @@ ParamHelpers_1.3:
   logical params always result in R data type 'logical'
 - Vector params (num, int and log) can now have component names
   Functions that produce such vector values (e.g. sampleValue or dfRowsToList)
-  will name the components of this vector automatically. 
+  will name the components of this vector automatically.
   The user can also call setValueCNames in his own code.
 - new functions
 -- getOptPathCols
