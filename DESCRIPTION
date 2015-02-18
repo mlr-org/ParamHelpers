@@ -21,7 +21,9 @@ Suggests:
     lhs,
     irace,
     testthat,
-    soobench
+    soobench,
+    GGally,
+    gridExtra
 LazyData: yes
 ByteCompile: yes
 Version: 1.5
