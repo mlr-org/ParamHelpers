@@ -43,3 +43,26 @@ getParamNA = function(par, repeated = FALSE) {
     v = rep(v, par$len)
   return(v)
 }
+
+# If lim is NULL, lim is checked to be a list of same length as number of cols
+# in op, and each element numeric vector of length 2.
+# Otherwise lim is determined as min and max for each dimension of op, and
+# increased by scale * range of dimension.
+getOptPathLims <- function(lim, op, scale) {
+  assertNumeric(scale, len = 1L, lower = 0, finite = TRUE, any.missing = FALSE)
+  dim = ncol(op)
+  if(is.null(lim)) {
+    .min = apply(op, 2, min)
+    .max = apply(op, 2, max)
+    .min = .min - scale * (.max - .min)
+    .max = .max + scale * (.max - .min)
+    lim = lapply(1:dim, function(i) c(.min[i], .max[i]))
+  } else {
+    assertList(lim, len = dim, any.missing = FALSE)
+    for (i in 1:dim)
+      assertNumeric(lim[[i]], len = 2L)
+  }
+  lim
+}
+
+

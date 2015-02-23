@@ -14,8 +14,8 @@ test_that("renderOptPathPlot", {
       y = X[ i * 2 - 1],
       dob = dob[i])
   }
-  pl <- renderOptPathPlot(op0, iters = 0:2)
-  
+  pl <- renderOptPathPlot(op0, iter = 0)
+  plotOptPath(op0, iters = 0:2, pause = FALSE)
   
   # 2D-2D
   ps1 = makeParamSet(
@@ -31,7 +31,8 @@ test_that("renderOptPathPlot", {
       y = c(y1 = X[ i * 4 - 1], y2 = X[i * 4]),
       dob = dob[i])
   }
-  pl <- renderOptPathPlot(op1, iters = 0:2)
+  pl <- renderOptPathPlot(op1, iter = 0)
+  plotOptPath(op1, iters = 0:2, pause = FALSE)
   
   
   
@@ -43,7 +44,8 @@ test_that("renderOptPathPlot", {
     addOptPathEl(op2, x = list(x = X[i * 5 - 4], z = X[i * 5 - 3]),
       y = c(y1 = X[i * 5 - 2], y2 = X[i * 5 - 1], y3 = X[i * 5]), dob = dob[i])
   }
-  pl <- renderOptPathPlot(op2, iters = 0:2)
+  pl <- renderOptPathPlot(op2, iter = 0)
+  plotOptPath(op2, iters = 0:2, pause = FALSE)
   
   # 3D-3D
   ps3 = makeParamSet(
@@ -58,7 +60,8 @@ test_that("renderOptPathPlot", {
     addOptPathEl(op3, x = list(x = X[i * 6 - 5], z = X[i * 6 - 4], z2 = X[i * 6 - 3]) , 
       y = c(y1 = X[i * 6 - 2], y2 = X[i * 6 - 1], y3 = X[i * 6]), dob = dob[i])
   }
-  pl <- renderOptPathPlot(op3, iters = 0:1)
+  pl <- renderOptPathPlot(op3, iter = 0)
+  plotOptPath(op3, iters = 0:2, pause = FALSE)
   
   # 3D-1D
   ps4 = makeParamSet(
@@ -73,7 +76,8 @@ test_that("renderOptPathPlot", {
     addOptPathEl(op4, x = list(x = X[i * 4 - 3], z = X[i * 4 - 2], z2 = X[i * 4 - 1]), 
                  y = c(y1 = X[i * 4]), dob = dob[i])
   }
-  pl <- renderOptPathPlot(op4, iters = 0:2)
+  pl <- renderOptPathPlot(op4, iter = 0)
+  plotOptPath(op4, iters = 0:2, pause = FALSE)
   
 })
   
