@@ -58,7 +58,7 @@ plotOptPath = function(op, iters, pause = TRUE, alpha = TRUE, lim.x = NULL, lim.
   # Helper to arragne plot via gridExtra and pause process
   arrangePlots = function(plots) {
     plots = Filter(Negate(isScalarNA), plots)
-    do.call(grid.arrange, c(plots, nrow = 1L))
+    do.call(gridExtra::grid.arrange, c(plots, nrow = 1L))
     if (pause)
       pause()
   }
