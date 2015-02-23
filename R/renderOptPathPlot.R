@@ -120,7 +120,7 @@ plot1D = function(op, dob, names, space, iter, alpha = TRUE, lim) {
   pl = ggplot(op, aes_string(x = names[1]))
   pl = pl + geom_density(colour = "black")
   pl = pl + title
-  pl = pl + geom_rug(aes(colour = type, alpha = .alpha), sides = "b", size = 2,
+  pl = pl + geom_rug(aes_string(colour = "type", alpha = ".alpha"), sides = "b", size = 2,
     data = op)
   pl = pl + xlim(lim[1, ])
   pl = pl + guides(alpha = FALSE)
@@ -164,6 +164,7 @@ plot2D = function(op, dob, names, space, iter, alpha = TRUE, lim) {
   pl = pl + geom_point(size = 3)
   pl = pl + title
   pl = pl + x.lab + y.lab
+  pl = pl + guides(alpha = FALSE)
   pl = pl + xlim(lim[1, ]) + ylim(lim[2,])
   pl = pl + scale_colour_manual(values = c("red","green", "blue"))
   pl = pl + scale_alpha_continuous(range = c(1 / (iter + 1), 1))
