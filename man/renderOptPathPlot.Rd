@@ -4,7 +4,7 @@
 \alias{renderOptPathPlot}
 \title{Functions for plotting optimization paths.}
 \usage{
-renderOptPathPlot(op, iter, alpha = TRUE, lim.x = NULL, lim.y = NULL)
+renderOptPathPlot(op, iter, alpha = TRUE, lim.x = list(), lim.y = list())
 }
 \arguments{
 \item{op}{[\code{OptPath}]\cr
@@ -16,17 +16,15 @@ Selected iteration of \code{x} to render plots for.}
 \item{alpha}{[\code{logical(1)}]\cr
 Activates or deactivates the alpha fading for the parallel X-space plot. Default is \code{TRUE}.}
 
-\item{lim.x}{[\code{list} | NULL]\cr
-Length of list equals dimensionality of X-Space. Not used, if the dimension
-is higher than 2. Each element is a \code{numeric(2)}, determining
-the x limits for the plots. Default is NULL, in this case min and max
-values of the data will be used.}
+\item{lim.x}{[\code{list}],}
 
-\item{lim.y}{[\code{list} | NULL]\cr
-Length of list equals dimensionality of X-Space. Not used, if the dimension
-is higher than 2. Each element is a \code{numeric(2)}, determining
-the y limits for the plots. Default is NULL, in this case min and max
-values of the data will be used.}
+\item{lim.y}{[\code{list}]\cr
+Axis limits for the plots. Must be a named list, so you can specify the
+axis limits for every plot. Every element of the list must be a numeric
+vector of length 2. Available names for elements are:
+XSpace - limits for the X-Space plot
+YSpace - limits for the Y-Space plot
+Default is an empty list - in this case limits are automatically set.}
 }
 \value{
 List of plots. If both X and Y space are 1D, list has length 1,

@@ -44,25 +44,44 @@ getParamNA = function(par, repeated = FALSE) {
   return(v)
 }
 
-# If lim is NULL, lim is checked to be a list of same length as number of cols
-# in op, and each element numeric vector of length 2.
-# Otherwise lim is determined as min and max for each dimension of op, and
-# increased by scale * range of dimension.
-getOptPathLims <- function(lim, op, scale) {
+# Check the given X and Y limit list. Each list can have 2 elements:
+# XSpace and YSpace. If the element is NULL, it is set, otherwise it is
+# checked. The dimenionality of X and Y space is greater than 2, the limits
+# are set to NULL. We don't need limits in this case. 
+# if it is 1 for X or Y Space, for this space the lim.y is NULL
+getOptPathLims <- function(lim.x, lim.y, op, iters, scale) {
   assertNumeric(scale, len = 1L, lower = 0, finite = TRUE, any.missing = FALSE)
-  dim = ncol(op)
-  if(is.null(lim)) {
-    .min = apply(op, 2, min)
-    .max = apply(op, 2, max)
-    .min = .min - scale * (.max - .min)
-    .max = .max + scale * (.max - .min)
-    lim = lapply(1:dim, function(i) c(.min[i], .max[i]))
-  } else {
-    assertList(lim, len = dim, any.missing = FALSE)
-    for (i in 1:dim)
-      assertNumeric(lim[[i]], len = 2L)
+
+  assertList(lim.x)
+  assertList(lim.y)
+  iters.max = max(getOptPathDOB(op))
+  for (space in c("XSpace", "YSpace")) {
+    op.frame = as.data.frame(op, include.x = (space == "XSpace"), include.y = space == "YSpace",
+      include.rest = FALSE, dob = 0:max(iters), eol = c(min(iters):iters.max, NA))
+    dim = ncol(op.frame)
+    if (dim > 2L) {
+      lim.x[[space]] = NULL
+      lim.y[[space]] = NULL
+      next
+    }
+    
+    if (is.null(lim.x[[space]])) {
+      lim.x[[space]] = range(op.frame[, 1])
+      lim.x[[space]] = c(-1, 1) * scale * abs(diff(lim.x[[space]])) + lim.x[[space]]
+    } else {
+      assertNumeric(lim.x[[space]], len = 2L, any.missing = FALSE)
+    }
+    
+    if (dim == 2L) {
+      if (is.null(lim.y[[space]])) {
+        lim.y[[space]] = range(op.frame[, 2])
+        lim.y[[space]] = c(-1, 1) * scale * abs(diff(lim.y[[space]])) + lim.y[[space]]
+      } else {
+        assertNumeric(lim.y[[space]], len = 2L, any.missing = FALSE)
+      }
+    } else {
+      lim.y[[space]] = NULL
+    }
   }
-  lim
+  return(list(lim.x = lim.x, lim.y = lim.y))
 }
-
-

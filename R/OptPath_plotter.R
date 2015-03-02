@@ -12,19 +12,16 @@
 #' @param alpha [\code{logical(1)}]\cr
 #'   Activates or deactivates the alpha fading for the parallel X-space plot. Default is \code{TRUE}.
 #' @return List of plots, one for each iteration.
-#' @param lim.x [\code{list} | NULL]\cr
-#'   Length of list equals dimensionality of X-Space. Not used, if the dimension
-#'   is higher than 2. Each element is a \code{numeric(2)}, determining
-#'   the x limits for the plots. Default is NULL, in this case min and max
-#'   values of the data will be used.
-#' @param lim.y [\code{list} | NULL]\cr
-#'   Length of list equals dimensionality of X-Space. Not used, if the dimension
-#'   is higher than 2. Each element is a \code{numeric(2)}, determining
-#'   the y limits for the plots. Default is NULL, in this case min and max
-#'   values of the data will be used.
+#' @param lim.x [\code{list}], @param lim.y [\code{list}]\cr
+#'   Axis limits for the plots. Must be a named list, so you can specify the
+#'   axis limits for every plot. Every element of the list must be a numeric
+#'   vector of length 2. Available names for elements are:
+#'   XSpace - limits for the X-Space plot
+#'   YSpace - limits for the Y-Space plot
+#'   Default is an empty list - in this case limits are automatically set. 
 #' @export
 #' 
-plotOptPath = function(op, iters, pause = TRUE, alpha = TRUE, lim.x = NULL, lim.y = NULL) {
+plotOptPath = function(op, iters, pause = TRUE, alpha = TRUE, lim.x = list(), lim.y = list()) {
   requirePackages("gridExtra", why = "plotOptPath")
   
   iters.max = max(getOptPathDOB(op))
@@ -42,18 +39,10 @@ plotOptPath = function(op, iters, pause = TRUE, alpha = TRUE, lim.x = NULL, lim.
   
   # Set and check x and y lims, if needed
   # consider only points alive during at least 1 plotted iteration
-  if (dim.x <= 2) {
-    op.x = as.data.frame(op, include.y = FALSE, include.rest = FALSE,
-      dob = 0:max(iters), eol = c(min(iters):iters.max, NA)) 
-    lim.x = getOptPathLims(lim.x, op.x, 0.05)
-    
-  }
-  
-  if (dim.y <= 2) {
-    op.y = as.data.frame(op, include.x = FALSE, include.rest = FALSE,
-      dob = 0:max(iters), eol = c(min(iters):iters.max, NA))  
-    lim.y = getOptPathLims(lim.y, op.y, 0.05)
-  }
+  # Set and check x and y lims, if needed
+  tmp = getOptPathLims(lim.x, lim.y, op, iters, 0.05)
+  lim.x = tmp$lim.x
+  lim.y = tmp$lim.y
   
   # Helper to arragne plot via gridExtra and pause process
   arrangePlots = function(plots) {

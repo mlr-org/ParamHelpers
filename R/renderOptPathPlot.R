@@ -6,26 +6,24 @@
 #'   Selected iteration of \code{x} to render plots for.
 #' @param alpha [\code{logical(1)}]\cr
 #'   Activates or deactivates the alpha fading for the parallel X-space plot. Default is \code{TRUE}.
-#' @param lim.x [\code{list} | NULL]\cr
-#'   Length of list equals dimensionality of X-Space. Not used, if the dimension
-#'   is higher than 2. Each element is a \code{numeric(2)}, determining
-#'   the x limits for the plots. Default is NULL, in this case min and max
-#'   values of the data will be used.
-#' @param lim.y [\code{list} | NULL]\cr
-#'   Length of list equals dimensionality of X-Space. Not used, if the dimension
-#'   is higher than 2. Each element is a \code{numeric(2)}, determining
-#'   the y limits for the plots. Default is NULL, in this case min and max
-#'   values of the data will be used.
+#' @param lim.x [\code{list}], @param lim.y [\code{list}]\cr
+#'   Axis limits for the plots. Must be a named list, so you can specify the
+#'   axis limits for every plot. Every element of the list must be a numeric
+#'   vector of length 2. Available names for elements are:
+#'   XSpace - limits for the X-Space plot
+#'   YSpace - limits for the Y-Space plot
+#'   Default is an empty list - in this case limits are automatically set.  
 #' @return List of plots. If both X and Y space are 1D, list has length 1,
 #'   otherwise length 2 with one plot for X and Y space respectivly.
 #' @export
-renderOptPathPlot = function(op, iter, alpha = TRUE, lim.x = NULL, lim.y = NULL) {
+renderOptPathPlot = function(op, iter, alpha = TRUE, lim.x = list(), lim.y = list()) {
   requirePackages("GGally", why = "renderOptPathPlot")
   requirePackages("ggplot2", why = "renderOptPathPlot")
   
   iters.max = max(getOptPathDOB(op))
   assertIntegerish(iter, len = 1L, lower = 0L, upper = iters.max, any.missing = FALSE)
   
+  # FIXME: Is there any better way to get these 2 informations?
   x.names = colnames(getOptPathX(op))
   y.names = op$y.names
   dim.x = length(x.names)
@@ -39,11 +37,9 @@ renderOptPathPlot = function(op, iter, alpha = TRUE, lim.x = NULL, lim.y = NULL)
   dob = getOptPathDOB(op, dob = 0:iter, eol = c((iter + 1):iters.max, NA))
   
   # Set and check x and y lims, if needed
-  if (dim.x <= 2) 
-    lim.x = getOptPathLims(lim.x, op.x, 0.05)
-  
-  if (dim.y <= 2) 
-    lim.y = getOptPathLims(lim.y, op.y, 0.05)
+  tmp = getOptPathLims(lim.x, lim.y, op, iter, 0.05)
+  lim.x = tmp$lim.x
+  lim.y = tmp$lim.y
   
   # Set alpha and type values
   .alpha = if(alpha && iter > 0)
@@ -53,16 +49,19 @@ renderOptPathPlot = function(op, iter, alpha = TRUE, lim.x = NULL, lim.y = NULL)
   # Special case: X and Y are 1D
   if(dim.x == 1L && dim.y == 1L) {
     pl = plot2D(cbind(x = op.x, y = op.y), .alpha, .type,
-      names = c(x.names, y.names), space = "both", iter = iter, lim = rbind(lim.x, lim.y))
+      names = c(x.names, y.names), space = "both", iter = iter, 
+      lim.x = lim.x[["XSpace"]], lim.y = lim.x[["YSpace"]])
     return(list(plot = pl))
   }
   
   # plot 1: x-space
   if (dim.x == 1) {
-    pl1 = plot1D(op.x, .alpha, .type, x.names, space = "x", iter = iter,lim = lim.x)
+    pl1 = plot1D(op.x, .alpha, .type, x.names, space = "x", iter = iter,
+      lim.x = lim.x[["XSpace"]])
   }
   if (dim.x == 2) {
-    pl1 = plot2D(op.x, .alpha, .type, x.names, space = "x", iter = iter, lim = lim.x)
+    pl1 = plot2D(op.x, .alpha, .type, x.names, space = "x", iter = iter, 
+      lim.x = lim.x[["XSpace"]], lim.y = lim.y[["XSpace"]])
   } 
   if (dim.x > 2) {
     pl1 = plotMultiD(op.x, .alpha, .type, x.names, space = "x", iter = iter, alpha = alpha)
@@ -70,10 +69,12 @@ renderOptPathPlot = function(op, iter, alpha = TRUE, lim.x = NULL, lim.y = NULL)
   
   # plot 2: y-space
   if (dim.y == 1) {
-    pl2 = plot1D(op.y, .alpha, .type, y.names, space = "y", iter = iter, lim = lim.y)
+    pl2 = plot1D(op.y, .alpha, .type, y.names, space = "y", iter = iter, ,
+      lim.x = lim.x[["YSpace"]])
   }
   if (dim.y == 2) {
-    pl2 = plot2D(op.y, .alpha, .type, y.names, space = "y", iter = iter, lim = lim.y)
+    pl2 = plot2D(op.y, .alpha, .type, y.names, space = "y", iter = iter, , 
+      lim.x = lim.x[["YSpace"]], lim.y = lim.y[["YSpace"]])
   } 
   if (dim.y > 2) {
     pl2 = plotMultiD(op.y, .alpha, .type, y.names, space = "y", iter = iter, alpha = alpha)
@@ -95,12 +96,13 @@ renderOptPathPlot = function(op, iter, alpha = TRUE, lim.x = NULL, lim.y = NULL)
 #   If the X-Space is plotted, space = "x" and if the Y-Space is plotted, space = "y".
 # @param iter [\code{integer(1)}]\cr
 #   Current iteration.
-# @param lim [\code{matrix}]\cr
-#  Matrix with 1 row and 2 cols. Axis limits for the density plot.
+# @param lim.x [\code{numeric(2)}]\cr
+#  limits for the plots
 # @return A ggplot object.
-plot1D = function(op, .alpha, .type, names, space, iter, alpha = TRUE, lim) {
+plot1D = function(op, .alpha, .type, names, space, iter, alpha = TRUE, lim.x) {
   op$.alpha = .alpha
   op$type = .type
+  
   
   if (space == "x") {  
     title = ggplot2::ggtitle("X-Space")    
@@ -114,7 +116,7 @@ plot1D = function(op, .alpha, .type, names, space, iter, alpha = TRUE, lim) {
   pl = pl + title
   pl = pl + ggplot2::geom_rug(ggplot2::aes_string(colour = "type", alpha = ".alpha"), sides = "b", size = 2,
     data = op)
-  pl = pl + ggplot2::xlim(lim[[1]])
+  pl = pl + ggplot2::xlim(lim.x)
   pl = pl + ggplot2::guides(alpha = FALSE)
   pl = pl + ggplot2::scale_colour_manual(values = c("red","green", "blue"))
   pl = pl + ggplot2::scale_alpha_continuous(range = c(1 / (iter + 1), 1))
@@ -128,7 +130,7 @@ return(pl)
 #  Matrix with two columns. Each row contains the lower and upper limit for the 
 #  x- and y- axes of the two-dimensional plot.
 # @return A ggplot object.
-plot2D = function(op, .alpha, .type, names, space, iter, alpha = TRUE, lim) {
+plot2D = function(op, .alpha, .type, names, space, iter, alpha = TRUE, lim.x, lim.y) {
   op$.alpha = .alpha
   op$type = .type
   
@@ -154,7 +156,7 @@ plot2D = function(op, .alpha, .type, names, space, iter, alpha = TRUE, lim) {
   pl = pl + title
   pl = pl + x.lab + y.lab
   pl = pl + ggplot2::guides(alpha = FALSE)
-  pl = pl + ggplot2::xlim(lim[[1]]) + ggplot2::ylim(lim[[2]])
+  pl = pl + ggplot2::xlim(lim.x) + ggplot2::ylim(lim.y)
   pl = pl + ggplot2::scale_colour_manual(values = c("red","green", "blue"))
   pl = pl + ggplot2::scale_alpha_continuous(range = c(1 / (iter + 1), 1))
   pl = pl + ggplot2::theme(legend.position = "top")

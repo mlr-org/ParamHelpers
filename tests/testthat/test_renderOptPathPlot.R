@@ -33,8 +33,10 @@ test_that("renderOptPathPlot", {
   }
   pl <- renderOptPathPlot(op1, iter = 0)
   plotOptPath(op1, iters = 0:2, pause = FALSE)
-  
-  
+  plotOptPath(op1, iters = 0:2, pause = FALSE,
+    lim.x = list(XSpace = c(-10, 10), YSpace = c(-10, 10)),
+    lim.y = list(XSpace = c(-10, 10), YSpace = c(-10, 10))
+      )
   
   # 2D-3D
   op2 = makeOptPathDF(par.set = ps1, y.names = c("y1", "y2", "y3"), minimize = c(TRUE, FALSE, TRUE))
