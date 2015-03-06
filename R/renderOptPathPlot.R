@@ -198,11 +198,13 @@ plot2D = function(op, .alpha, .type, names, space, iter, alpha = TRUE, lim.x, li
   pl = pl + x.lab + y.lab
   pl = pl + ggplot2::guides(alpha = FALSE)
   pl = pl + ggplot2::xlim(lim.x) + ggplot2::ylim(lim.y)
-  pl = pl + ggplot2::scale_colour_manual(values = c("red","green", "blue"))
+  pl = pl + ggplot2::scale_colour_manual(values = c(init = "red", seq = "blue", prop = "green"))
+  pl = pl + ggplot2::scale_shape_manual(values=c(init = 15, seq = 16, prop = 17))
   pl = pl + ggplot2::scale_alpha_continuous(range = c(1 / (iter + 1), 1))
   pl = pl + ggplot2::theme(legend.position = "top")
   return(pl)
 }
+
 
 # Plot method for a multi-dimensional X- or Y-Space
 # @return A ggplot object.
@@ -226,7 +228,7 @@ plotMultiD = function(op, .alpha, .type, names, space = "x", iter, alpha = TRUE)
   pl = pl + ggplot2::ylab ("value divided by standard deviation")
   pl = pl + title
   pl = pl + ggplot2::guides(alpha = FALSE)
-  pl = pl + ggplot2::scale_colour_manual(values = c("red","green", "blue"))
+  pl = pl + ggplot2::scale_colour_manual(values = c(init = "red", seq = "blue", prop = "green"))
   pl = pl + ggplot2::theme(legend.position = "top", legend.margin = grid::unit(0.05, "cm"))
   return(pl)
 }
