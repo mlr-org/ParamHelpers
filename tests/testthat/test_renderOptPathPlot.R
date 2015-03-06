@@ -81,5 +81,21 @@ test_that("renderOptPathPlot", {
   pl <- renderOptPathPlot(op4, iter = 0)
   plotOptPath(op4, iters = 0:2, pause = FALSE)
   
+  # 1D(discrete)-1D
+  ps5 = makeParamSet(
+    makeDiscreteParam("x", values = list("a", "b"))
+  )
+  op5 = makeOptPathDF(par.set = ps5, y.names = c("y"), minimize = TRUE)
+  X = rep(c("a", "b"), 4)
+  Y = rnorm(7)
+  dob = c(rep(0, 5), 1:2)
+  for (i in 1:7) {
+    addOptPathEl(op5, x = list(
+      x = X[i]),
+      y = Y[i],
+      dob = dob[i])
+  }
+  pl <- renderOptPathPlot(op5, iter = 0)
+  plotOptPath(op5, iters = 0:2, pause = FALSE)
 })
   

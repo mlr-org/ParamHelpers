@@ -36,6 +36,10 @@ renderOptPathPlot = function(op, iter, alpha = TRUE, lim.x = list(), lim.y = lis
     dob = 0:iter, eol = c(iter:iters.max, NA))
   dob = getOptPathDOB(op, dob = 0:iter, eol = c((iter + 1):iters.max, NA))
   
+  # get classes of Params (numeric or factor)
+  classes.x = BBmisc::vcapply(op.x, function(x) class(x))
+  classes.y = BBmisc::vcapply(op.y, function(x) class(x))
+  
   # Set and check x and y lims, if needed
   tmp = getOptPathLims(lim.x, lim.y, op, iter, 0.05)
   lim.x = tmp$lim.x
@@ -47,7 +51,7 @@ renderOptPathPlot = function(op, iter, alpha = TRUE, lim.x = list(), lim.y = lis
   .type = as.factor(ifelse(dob == 0, "init", ifelse(dob == iter, "prop", "seq")))
   
   # Special case: X and Y are 1D
-  if(dim.x == 1L && dim.y == 1L) {
+  if(dim.x == 1L && dim.y == 1L && classes.x == "numeric" && classes.y == "numeric") {
     pl = plot2D(cbind(x = op.x, y = op.y), .alpha, .type,
       names = c(x.names, y.names), space = "both", iter = iter, 
       lim.x = lim.x[["XSpace"]], lim.y = lim.x[["YSpace"]])
@@ -55,28 +59,32 @@ renderOptPathPlot = function(op, iter, alpha = TRUE, lim.x = list(), lim.y = lis
   }
   
   # plot 1: x-space
-  if (dim.x == 1) {
-    pl1 = plot1D(op.x, .alpha, .type, x.names, space = "x", iter = iter,
+  if (dim.x == 1L && classes.x == "numeric") {
+    pl1 = plot1DNum(op.x, .alpha, .type, x.names, space = "x", iter = iter,
       lim.x = lim.x[["XSpace"]])
   }
-  if (dim.x == 2) {
+  if (dim.x == 1L && classes.x == "factor") {
+    pl1 = plot1DDisc(op.x, .alpha, .type, x.names, space = "x", iter = iter, 
+      lim.y = lim.y[["XSpace"]])
+  }
+  if (dim.x == 2L) {
     pl1 = plot2D(op.x, .alpha, .type, x.names, space = "x", iter = iter, 
       lim.x = lim.x[["XSpace"]], lim.y = lim.y[["XSpace"]])
   } 
-  if (dim.x > 2) {
+  if (dim.x > 2L) {
     pl1 = plotMultiD(op.x, .alpha, .type, x.names, space = "x", iter = iter, alpha = alpha)
   }
   
   # plot 2: y-space
-  if (dim.y == 1) {
-    pl2 = plot1D(op.y, .alpha, .type, y.names, space = "y", iter = iter, ,
+  if (dim.y == 1L) {
+    pl2 = plot1DNum(op.y, .alpha, .type, y.names, space = "y", iter = iter, ,
       lim.x = lim.x[["YSpace"]])
   }
-  if (dim.y == 2) {
+  if (dim.y == 2L) {
     pl2 = plot2D(op.y, .alpha, .type, y.names, space = "y", iter = iter, , 
       lim.x = lim.x[["YSpace"]], lim.y = lim.y[["YSpace"]])
   } 
-  if (dim.y > 2) {
+  if (dim.y > 2L) {
     pl2 = plotMultiD(op.y, .alpha, .type, y.names, space = "y", iter = iter, alpha = alpha)
   }
   
@@ -84,7 +92,7 @@ renderOptPathPlot = function(op, iter, alpha = TRUE, lim.x = list(), lim.y = lis
 }
 
 
-# Plot method for a one-dimensional X- or Y-Space
+# Plot method for a one-dimensional numeric X- or Y-Space
 #
 # @param .alpha [\code{numeric}]\cr
 #   Vector of alpha values for the points in the plots
@@ -99,10 +107,10 @@ renderOptPathPlot = function(op, iter, alpha = TRUE, lim.x = list(), lim.y = lis
 # @param lim.x [\code{numeric(2)}]\cr
 #  limits for the plots
 # @return A ggplot object.
-plot1D = function(op, .alpha, .type, names, space, iter, alpha = TRUE, lim.x) {
+plot1DNum = function(op, .alpha, .type, names, space, iter, alpha = TRUE, lim.x) {
   op$.alpha = .alpha
   op$type = .type
-  
+  op$type = factor(op$type, levels = c("init", "seq", "prop"))
   
   if (space == "x") {  
     title = ggplot2::ggtitle("X-Space")    
@@ -114,15 +122,47 @@ plot1D = function(op, .alpha, .type, names, space, iter, alpha = TRUE, lim.x) {
   pl = ggplot2::ggplot(op, ggplot2::aes_string(x = names[1]))
   pl = pl + ggplot2::geom_density(colour = "black")
   pl = pl + title
-  pl = pl + ggplot2::geom_rug(ggplot2::aes_string(colour = "type", alpha = ".alpha"), sides = "b", size = 2,
+  pl = pl + ggplot2::geom_rug(ggplot2::aes_string(alpha = ".alpha", colour = "type"), sides = "b", size = 2,
     data = op)
   pl = pl + ggplot2::xlim(lim.x)
   pl = pl + ggplot2::guides(alpha = FALSE)
-  pl = pl + ggplot2::scale_colour_manual(values = c("red","green", "blue"))
   pl = pl + ggplot2::scale_alpha_continuous(range = c(1 / (iter + 1), 1))
+  pl = pl + ggplot2::scale_colour_manual(values = c(init = "red", seq = "blue", prop = "green"))
   pl = pl + ggplot2::theme(legend.position = "top")
 return(pl)
 }
+
+
+# Plot method for a one-dimensional discrete X- or Y-Space
+#
+# @param lim.y [\code{numeric(2)}]\cr
+#  limits for the plots
+# @return A ggplot object.
+plot1DDisc = function(op, .alpha, .type, names, space, iter, alpha = TRUE, lim.y) {
+  op$.alpha = as.factor(.alpha)
+  op$type = .type
+  op$type = factor(op$type, levels = c("init", "seq", "prop"))
+  
+  if (space == "x") {  
+    title = ggplot2::ggtitle("X-Space")    
+  } 
+  if (space == "y") {    
+    title = ggplot2::ggtitle("Y-Space")    
+  }
+
+  pl = ggplot2::ggplot(op, ggplot2::aes_string(x = names[1], fill = "type", alpha = ".alpha"))
+  pl = pl + ggplot2::geom_bar()
+  pl = pl + title
+  pl = pl + ggplot2::ylim(lim.y)
+  pl = pl + ggplot2::scale_alpha_discrete(range = c(1 / (iter + 1), 1))
+  pl = pl + ggplot2::scale_fill_manual(values = c(init = "red", seq = "blue", prop = "green"))
+  pl = pl + ggplot2::theme(legend.position = "top")
+  pl = pl + ggplot2::guides(alpha = FALSE)
+
+  return(pl)
+}
+
+
 
 # Plot method for a two-dimensional X- or Y-Space
 #
@@ -133,6 +173,7 @@ return(pl)
 plot2D = function(op, .alpha, .type, names, space, iter, alpha = TRUE, lim.x, lim.y) {
   op$.alpha = .alpha
   op$type = .type
+  op$type = factor(op$type, levels = c("init", "seq", "prop"))
   
   if (space == "x") {
     title = ggplot2::ggtitle("X-Space")
@@ -169,6 +210,7 @@ plotMultiD = function(op, .alpha, .type, names, space = "x", iter, alpha = TRUE)
   args = list(columns = seq_along(names))
   op$.alpha = .alpha
   op$type = .type
+  op$type = factor(op$type, levels = c("init", "seq", "prop"))
   args$data = op
   args$alphaLines = ".alpha"
   args$groupColumn = ncol(op)

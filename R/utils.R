@@ -46,7 +46,7 @@ getParamNA = function(par, repeated = FALSE) {
 
 # Check the given X and Y limit list. Each list can have 2 elements:
 # XSpace and YSpace. If the element is NULL, it is set, otherwise it is
-# checked. The dimenionality of X and Y space is greater than 2, the limits
+# checked. If the dimensionality of X and Y space is greater than 2, the limits
 # are set to NULL. We don't need limits in this case. 
 # if it is 1 for X or Y Space, for this space the lim.y is NULL
 getOptPathLims <- function(lim.x, lim.y, op, iters, scale) {
@@ -56,20 +56,33 @@ getOptPathLims <- function(lim.x, lim.y, op, iters, scale) {
   assertList(lim.y)
   iters.max = max(getOptPathDOB(op))
   for (space in c("XSpace", "YSpace")) {
-    op.frame = as.data.frame(op, include.x = (space == "XSpace"), include.y = space == "YSpace",
+    op.frame = as.data.frame(op, include.x = (space == "XSpace"), include.y = (space == "YSpace"),
       include.rest = FALSE, dob = 0:max(iters), eol = c(min(iters):iters.max, NA))
     dim = ncol(op.frame)
+    classes = BBmisc::vcapply(op.frame, function(x) class(x))
     if (dim > 2L) {
       lim.x[[space]] = NULL
       lim.y[[space]] = NULL
       next
     }
     
-    if (is.null(lim.x[[space]])) {
-      lim.x[[space]] = range(op.frame[, 1])
-      lim.x[[space]] = c(-1, 1) * scale * abs(diff(lim.x[[space]])) + lim.x[[space]]
-    } else {
-      assertNumeric(lim.x[[space]], len = 2L, any.missing = FALSE)
+    if (all(classes == "numeric")) {
+      if (is.null(lim.x[[space]])) {
+        lim.x[[space]] = range(op.frame[, 1])
+        lim.x[[space]] = c(-1, 1) * scale * abs(diff(lim.x[[space]])) + lim.x[[space]]
+      } else {
+        assertNumeric(lim.x[[space]], len = 2L, any.missing = FALSE)
+      }
+    }
+    
+    # limits for barplot (1D discrete case)
+    if (dim == 1L && classes == "factor") {
+      lim.x[[space]] = NULL
+      if (is.null(lim.y[[space]])) {
+        lim.y[[space]] = c(0, max(table(op.frame)))
+      } else {
+        assertNumeric(lim.y[[space]], len = 2L, any.missing = FALSE)
+      }
     }
     
     if (dim == 2L) {
@@ -79,8 +92,6 @@ getOptPathLims <- function(lim.x, lim.y, op, iters, scale) {
       } else {
         assertNumeric(lim.y[[space]], len = 2L, any.missing = FALSE)
       }
-    } else {
-      lim.y[[space]] = NULL
     }
   }
   return(list(lim.x = lim.x, lim.y = lim.y))
