@@ -36,7 +36,7 @@ test_that("renderOptPathPlot", {
   plotOptPath(op1, iters = 0:2, pause = FALSE,
     lim.x = list(XSpace = c(-10, 10), YSpace = c(-10, 10)),
     lim.y = list(XSpace = c(-10, 10), YSpace = c(-10, 10))
-      )
+  )
   
   # 2D-3D
   op2 = makeOptPathDF(par.set = ps1, y.names = c("y1", "y2", "y3"), minimize = c(TRUE, FALSE, TRUE))
@@ -97,5 +97,44 @@ test_that("renderOptPathPlot", {
   }
   pl <- renderOptPathPlot(op5, iter = 0)
   plotOptPath(op5, iters = 0:2, pause = FALSE)
+  
+  # 2D(mixed)-1D
+  ps6 = makeParamSet(
+    makeNumericParam("x"),
+    makeDiscreteParam("z", values = list("a", "b"))
+  )
+  op6 = makeOptPathDF(par.set = ps6, y.names = c("y1"), minimize = c(TRUE))
+  X = rep(c("a", "b"), 4)
+  Y = rnorm(14)
+  dob = c(rep(0, 5), 1:2)
+  for (i in 1:6) {
+    addOptPathEl(op6, x = list(x = Y[i], z = X[i]), 
+      y = c(y1 = Y[i + 7]), dob = dob[i])
+  }
+  addOptPathEl(op6, x = list(x = Y[6] + 0.05, z = X[6]), 
+      y = c(y1 = Y[6]), dob = dob[7])
+  pl <- renderOptPathPlot(op6, iter = 0)
+  plotOptPath(op6, iters = 0:2, pause = FALSE)
+  
+  
+  # 2D(discrete)-1D
+  ps7 = makeParamSet(
+    makeDiscreteParam("x", values = list("a", "b")),
+    makeDiscreteParam("z", values = list("c", "d"))
+  )
+  op7 = makeOptPathDF(par.set = ps7, y.names = c("y1"), minimize = c(TRUE))
+  X1 = rep(c("a", "b"), 4)
+  X2 = rep(c("c", "d"), each = 4)
+  Y = rnorm(7)
+  dob = c(rep(0, 5), 1:2)
+  for (i in 1:6) {
+    addOptPathEl(op7, x = list(x = X1[i], z = X2[i]), 
+      y = c(y1 = Y[i]), dob = dob[i])
+  }
+  addOptPathEl(op7, x = list(x = X1[6], z = X2[6]), 
+    y = c(y1 = Y[7]), dob = dob[7])
+  pl <- renderOptPathPlot(op7, iter = 0)
+  plotOptPath(op7, iters = 0:2, pause = FALSE)
+  
 })
   

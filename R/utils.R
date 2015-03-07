@@ -47,8 +47,9 @@ getParamNA = function(par, repeated = FALSE) {
 # Check the given X and Y limit list. Each list can have 2 elements:
 # XSpace and YSpace. If the element is NULL, it is set, otherwise it is
 # checked. If the dimensionality of X and Y space is greater than 2, the limits
-# are set to NULL. We don't need limits in this case. 
-# if it is 1 for X or Y Space, for this space the lim.y is NULL
+# are set to NULL. The same happens if there are 2 variables and both are discrete.
+# We don't need limits in this cases. 
+# If the dimensionality is 1 for X or Y Space, for this space the lim.y is NULL.
 getOptPathLims <- function(lim.x, lim.y, op, iters, scale) {
   assertNumeric(scale, len = 1L, lower = 0, finite = TRUE, any.missing = FALSE)
 
@@ -61,6 +62,11 @@ getOptPathLims <- function(lim.x, lim.y, op, iters, scale) {
     dim = ncol(op.frame)
     classes = BBmisc::vcapply(op.frame, function(x) class(x))
     if (dim > 2L) {
+      lim.x[[space]] = NULL
+      lim.y[[space]] = NULL
+      next
+    }
+    if (dim == 2L && all(classes == "factor")) {
       lim.x[[space]] = NULL
       lim.y[[space]] = NULL
       next
@@ -87,12 +93,20 @@ getOptPathLims <- function(lim.x, lim.y, op, iters, scale) {
     
     if (dim == 2L) {
       if (is.null(lim.y[[space]])) {
-        lim.y[[space]] = range(op.frame[, 2])
+        # if the second variable is discrete, it will be plotted on the x-axis
+        # in plot2DDisc and the y-axis limit is the limit of the first variable
+        if (classes[2] == "factor") {
+          lim.y[[space]] = range(op.frame[, 1])
+        } else {
+          lim.y[[space]] = range(op.frame[, 2])
+        }
         lim.y[[space]] = c(-1, 1) * scale * abs(diff(lim.y[[space]])) + lim.y[[space]]
       } else {
         assertNumeric(lim.y[[space]], len = 2L, any.missing = FALSE)
       }
     }
+    
+    
   }
   return(list(lim.x = lim.x, lim.y = lim.y))
 }

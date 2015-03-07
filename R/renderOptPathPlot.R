@@ -54,7 +54,7 @@ renderOptPathPlot = function(op, iter, alpha = TRUE, lim.x = list(), lim.y = lis
   if(dim.x == 1L && dim.y == 1L && classes.x == "numeric" && classes.y == "numeric") {
     pl = plot2D(cbind(x = op.x, y = op.y), .alpha, .type,
       names = c(x.names, y.names), space = "both", iter = iter, 
-      lim.x = lim.x[["XSpace"]], lim.y = lim.x[["YSpace"]])
+      lim.x = lim.x[["XSpace"]], lim.y = lim.x[["YSpace"]], classes = c(classes.x, classes.y))
     return(list(plot = pl))
   }
   
@@ -67,9 +67,16 @@ renderOptPathPlot = function(op, iter, alpha = TRUE, lim.x = list(), lim.y = lis
     pl1 = plot1DDisc(op.x, .alpha, .type, x.names, space = "x", iter = iter, 
       lim.y = lim.y[["XSpace"]])
   }
+    
   if (dim.x == 2L) {
-    pl1 = plot2D(op.x, .alpha, .type, x.names, space = "x", iter = iter, 
-      lim.x = lim.x[["XSpace"]], lim.y = lim.y[["XSpace"]])
+    if (all(classes.x == "numeric") || all(classes.x == "factor")) {
+      pl1 = plot2D(op.x, .alpha, .type, x.names, space = "x", iter = iter, 
+        lim.x = lim.x[["XSpace"]], lim.y = lim.y[["XSpace"]], classes = classes.x)
+      
+    } else {
+      pl1 = plot2DMixed(op.x, .alpha, .type, x.names, space = "x", iter = iter, 
+        lim.y = lim.y[["XSpace"]], classes = classes.x)
+    }
   } 
   if (dim.x > 2L) {
     pl1 = plotMultiD(op.x, .alpha, .type, x.names, space = "x", iter = iter, alpha = alpha)
@@ -82,7 +89,7 @@ renderOptPathPlot = function(op, iter, alpha = TRUE, lim.x = list(), lim.y = lis
   }
   if (dim.y == 2L) {
     pl2 = plot2D(op.y, .alpha, .type, y.names, space = "y", iter = iter, , 
-      lim.x = lim.x[["YSpace"]], lim.y = lim.y[["YSpace"]])
+      lim.x = lim.x[["YSpace"]], lim.y = lim.y[["YSpace"]], classes = classes.y)
   } 
   if (dim.y > 2L) {
     pl2 = plotMultiD(op.y, .alpha, .type, y.names, space = "y", iter = iter, alpha = alpha)
@@ -164,13 +171,13 @@ plot1DDisc = function(op, .alpha, .type, names, space, iter, alpha = TRUE, lim.y
 
 
 
-# Plot method for a two-dimensional X- or Y-Space
+# Plot method for a two-dimensional X- or Y-Space when both variables are
+# numeric or both are discrete
 #
-# @param lim [\code{matrix}]\cr
-#  Matrix with two columns. Each row contains the lower and upper limit for the 
-#  x- and y- axes of the two-dimensional plot.
+# @param classes [\code{character(2)}]\cr
+#  Classes of the two variables (numeric or factor)
 # @return A ggplot object.
-plot2D = function(op, .alpha, .type, names, space, iter, alpha = TRUE, lim.x, lim.y) {
+plot2D = function(op, .alpha, .type, names, space, iter, alpha = TRUE, lim.x, lim.y, classes) {
   op$.alpha = .alpha
   op$type = .type
   op$type = factor(op$type, levels = c("init", "seq", "prop"))
@@ -193,15 +200,63 @@ plot2D = function(op, .alpha, .type, names, space, iter, alpha = TRUE, lim.x, li
   
   pl = ggplot2::ggplot(op, ggplot2::aes_string(
     x = names[1], y = names[2], shape = "type", colour = "type", alpha = ".alpha"))
-  pl = pl + ggplot2::geom_point(size = 3)
+  pl = pl + ggplot2::geom_point(size = 3, position = position_jitter(w = 0.1, h = 0.1))
   pl = pl + title
   pl = pl + x.lab + y.lab
   pl = pl + ggplot2::guides(alpha = FALSE)
-  pl = pl + ggplot2::xlim(lim.x) + ggplot2::ylim(lim.y)
   pl = pl + ggplot2::scale_colour_manual(values = c(init = "red", seq = "blue", prop = "green"))
   pl = pl + ggplot2::scale_shape_manual(values=c(init = 15, seq = 16, prop = 17))
   pl = pl + ggplot2::scale_alpha_continuous(range = c(1 / (iter + 1), 1))
   pl = pl + ggplot2::theme(legend.position = "top")
+  if (all(classes == "numeric")) {
+    pl = pl + ggplot2::xlim(lim.x) + ggplot2::ylim(lim.y)
+  }
+#   if (all(classes == "factor")) {
+#     pl = pl + ggplot2::geom_jitter(width = 0.1)
+#   }
+  return(pl)
+}
+
+# Plot method for a two-dimensional X- or Y-Space when one variable is discrete 
+# and the other is numeric
+# @param classes [\code{character(2)}]\cr
+#  Classes of the two variables (numeric or factor)
+# @return A ggplot object.
+plot2DMixed = function(op, .alpha, .type, names, space, iter, alpha = TRUE, lim.y, classes) {
+  op$.alpha = .alpha
+  op$type = .type
+  op$type = factor(op$type, levels = c("init", "seq", "prop"))
+  
+  if (space == "x") {
+    title = ggplot2::ggtitle("X-Space")
+  } 
+  if (space == "y") {
+    title = ggplot2::ggtitle("Y-Space")
+  }
+
+  # always plot the numeric variable on y-axis
+  if (classes[1] != classes[2]) {
+    name.x = names[classes == "factor"]
+    name.y = names[classes == "numeric"]
+  } else {
+    name.x = names[1]
+    name.y = names[2]
+  }
+    
+  pl = ggplot2::ggplot(op, ggplot2::aes_string(
+    x = name.x, y = name.y, fill = "type", colour = "type", alpha = ".alpha"))
+  pl = pl + geom_dotplot(binaxis = "y", stackdir = "center", dotsize = 2, 
+    stackgroups = TRUE, binpositions = "all", binwidth = diff(lim.y)/30)
+  pl = pl + title
+  pl = pl + ggplot2::guides(alpha = FALSE)
+  pl = pl + ggplot2::scale_fill_manual(values = c(init = "red", seq = "blue", prop = "green"))
+  pl = pl + ggplot2::scale_colour_manual(values = c(init = "red", seq = "blue", prop = "green"))
+  pl = pl + ggplot2::scale_alpha_continuous(range = c(1 / (iter + 1), 1))
+  pl = pl + ggplot2::theme(legend.position = "top")
+  # ylim only needed, if one param is numeric
+  if (any(classes == "numeric")) {
+    pl = pl + ggplot2::ylim(lim.y)
+  }
   return(pl)
 }
 
