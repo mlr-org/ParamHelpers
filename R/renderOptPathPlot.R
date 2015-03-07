@@ -211,9 +211,6 @@ plot2D = function(op, .alpha, .type, names, space, iter, alpha = TRUE, lim.x, li
   if (all(classes == "numeric")) {
     pl = pl + ggplot2::xlim(lim.x) + ggplot2::ylim(lim.y)
   }
-#   if (all(classes == "factor")) {
-#     pl = pl + ggplot2::geom_jitter(width = 0.1)
-#   }
   return(pl)
 }
 
