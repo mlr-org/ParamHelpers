@@ -265,6 +265,10 @@ plot2DMixed = function(op, .alpha, .type, names, space, iter, alpha = TRUE, lim.
 # @return A ggplot object.
 plotMultiD = function(op, .alpha, .type, names, space = "x", iter, alpha = TRUE) {
   args = list(columns = seq_along(names))
+  for (i in seq_along(ncol(op))) {
+    op[, i] = as.numeric(op[, i])
+  }
+  
   op$.alpha = .alpha
   op$type = .type
   op$type = factor(op$type, levels = c("init", "seq", "prop"))
