@@ -1,7 +1,7 @@
 context("renderOptPathPlot")
 
 test_that("renderOptPathPlot", {
-  # 1D-1D
+  # Test 1D-1D + title
   ps0 = makeParamSet(
     makeNumericParam("x")
   )
@@ -15,9 +15,9 @@ test_that("renderOptPathPlot", {
       dob = dob[i])
   }
   pl <- renderOptPathPlot(op0, iter = 0)
-  plotOptPath(op0, iters = 0:2, pause = FALSE)
+  plotOptPath(op0, iters = 0:2, pause = FALSE, title = "Optimization Path")
   
-  # 2D-2D
+  # Test 2D-2D + title
   ps1 = makeParamSet(
     makeNumericParam("x"),
     makeNumericParam("z")
@@ -32,13 +32,13 @@ test_that("renderOptPathPlot", {
       dob = dob[i])
   }
   pl <- renderOptPathPlot(op1, iter = 0)
-  plotOptPath(op1, iters = 0:2, pause = FALSE)
+  plotOptPath(op1, iters = 0:2, pause = FALSE, title = "Optimization Path")
   plotOptPath(op1, iters = 0:2, pause = FALSE,
     lim.x = list(XSpace = c(-10, 10), YSpace = c(-10, 10)),
     lim.y = list(XSpace = c(-10, 10), YSpace = c(-10, 10))
   )
   
-  # 2D-3D
+  # Test 2D-3D
   op2 = makeOptPathDF(par.set = ps1, y.names = c("y1", "y2", "y3"), minimize = c(TRUE, FALSE, TRUE))
   X = rnorm(35)
   dob = c(rep(0, 5), 1:2)
@@ -49,7 +49,7 @@ test_that("renderOptPathPlot", {
   pl <- renderOptPathPlot(op2, iter = 0)
   plotOptPath(op2, iters = 0:2, pause = FALSE)
   
-  # 3D-3D
+  # Test 3D-3D
   ps3 = makeParamSet(
     makeNumericParam("x"),
     makeNumericParam("z"), 
@@ -65,7 +65,7 @@ test_that("renderOptPathPlot", {
   pl <- renderOptPathPlot(op3, iter = 0)
   plotOptPath(op3, iters = 0:2, pause = FALSE)
   
-  # 3D-1D
+  # Test 3D-1D
   ps4 = makeParamSet(
     makeNumericParam("x"),
     makeNumericParam("z"), 
@@ -81,7 +81,7 @@ test_that("renderOptPathPlot", {
   pl <- renderOptPathPlot(op4, iter = 0)
   plotOptPath(op4, iters = 0:2, pause = FALSE)
   
-  # 1D(discrete)-1D
+  # Test 1D(discrete)-1D
   ps5 = makeParamSet(
     makeDiscreteParam("x", values = list("a", "b"))
   )
@@ -98,7 +98,7 @@ test_that("renderOptPathPlot", {
   pl <- renderOptPathPlot(op5, iter = 0)
   plotOptPath(op5, iters = 0:2, pause = FALSE)
   
-  # 2D(mixed)-1D
+  # Test 2D(mixed)-1D
   ps6 = makeParamSet(
     makeNumericParam("x"),
     makeDiscreteParam("z", values = list("a", "b"))
@@ -117,7 +117,7 @@ test_that("renderOptPathPlot", {
   plotOptPath(op6, iters = 0:2, pause = FALSE)
   
   
-  # 2D(discrete)-1D
+  # Test 2D(discrete)-1D
   ps7 = makeParamSet(
     makeDiscreteParam("x", values = list("a", "b")),
     makeDiscreteParam("z", values = list("c", "d"))
@@ -136,7 +136,7 @@ test_that("renderOptPathPlot", {
   pl <- renderOptPathPlot(op7, iter = 0)
   plotOptPath(op7, iters = 0:2, pause = FALSE)
   
-  # 3D(mixed)-1D
+  # Test 3D(mixed)-1D
   ps8 = makeParamSet(
     makeNumericParam("x"),
     makeNumericParam("y"),

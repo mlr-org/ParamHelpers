@@ -18,10 +18,14 @@
 #'   XSpace - limits for the X-Space plot
 #'   YSpace - limits for the Y-Space plot
 #'   Default is an empty list - in this case limits are automatically set. 
+#' @param title [\code{character} | NULL]\cr
+#'   Main title for the arranged plots. If \code{NULL} (default) there is no title.   
 #' @return List of plots, one for each iteration.
 #' @export
 #' 
-plotOptPath = function(op, iters, pause = TRUE, alpha = TRUE, lim.x = list(), lim.y = list()) {
+plotOptPath = function(op, iters, pause = TRUE, alpha = TRUE, lim.x = list(), 
+  lim.y = list(), title = NULL) {
+  
   requirePackages("gridExtra", why = "plotOptPath")
   
   iters.max = max(getOptPathDOB(op))
@@ -47,7 +51,7 @@ plotOptPath = function(op, iters, pause = TRUE, alpha = TRUE, lim.x = list(), li
   # Helper to arragne plot via gridExtra and pause process
   arrangePlots = function(plots) {
     plots = Filter(Negate(isScalarNA), plots)
-    do.call(gridExtra::grid.arrange, c(plots, nrow = 1L))
+    do.call(gridExtra::grid.arrange, c(plots, nrow = 1L, main = title))
     if (pause)
       pause()
   }

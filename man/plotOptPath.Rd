@@ -5,7 +5,7 @@
 \title{Plot method for optimization paths.}
 \usage{
 plotOptPath(op, iters, pause = TRUE, alpha = TRUE, lim.x = list(),
-  lim.y = list())
+  lim.y = list(), title = NULL)
 }
 \arguments{
 \item{op}{[\code{OptPath}]\cr
@@ -32,6 +32,9 @@ vector of length 2. Available names for elements are:
 XSpace - limits for the X-Space plot
 YSpace - limits for the Y-Space plot
 Default is an empty list - in this case limits are automatically set.}
+
+\item{title}{[\code{character} | NULL]\cr
+Main title for the arranged plots. If \code{NULL} (default) there is no title.}
 }
 \value{
 List of plots, one for each iteration.
