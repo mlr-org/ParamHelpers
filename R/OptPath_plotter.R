@@ -5,13 +5,12 @@
 #' @param iters [\code{integer} | NULL]\cr
 #'   Vector of iteration which should be plotted one after another. If \code{NULL},
 #'   which is the default, all iterations are plotted. Iteration 0 plots
-#'   all elements with dob = 0
+#'   all elements with dob = 0.
 #' @param pause [\code{logical(1)}]\cr
 #'   Should the process be paused after each iteration?
 #'   Default is \code{TRUE}.
 #' @param alpha [\code{logical(1)}]\cr
-#'   Activates or deactivates the alpha fading for the parallel X-space plot. Default is \code{TRUE}.
-#' @return List of plots, one for each iteration.
+#'   Activates or deactivates the alpha fading for the plots. Default is \code{TRUE}.
 #' @param lim.x [\code{list}], @param lim.y [\code{list}]\cr
 #'   Axis limits for the plots. Must be a named list, so you can specify the
 #'   axis limits for every plot. Every element of the list must be a numeric
@@ -19,6 +18,7 @@
 #'   XSpace - limits for the X-Space plot
 #'   YSpace - limits for the Y-Space plot
 #'   Default is an empty list - in this case limits are automatically set. 
+#' @return List of plots, one for each iteration.
 #' @export
 #' 
 plotOptPath = function(op, iters, pause = TRUE, alpha = TRUE, lim.x = list(), lim.y = list()) {

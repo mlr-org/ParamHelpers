@@ -14,14 +14,14 @@ Optimization path.}
 \item{iters}{[\code{integer} | NULL]\cr
 Vector of iteration which should be plotted one after another. If \code{NULL},
 which is the default, all iterations are plotted. Iteration 0 plots
-all elements with dob = 0}
+all elements with dob = 0.}
 
 \item{pause}{[\code{logical(1)}]\cr
 Should the process be paused after each iteration?
 Default is \code{TRUE}.}
 
 \item{alpha}{[\code{logical(1)}]\cr
-Activates or deactivates the alpha fading for the parallel X-space plot. Default is \code{TRUE}.}
+Activates or deactivates the alpha fading for the plots. Default is \code{TRUE}.}
 
 \item{lim.x}{[\code{list}],}
 

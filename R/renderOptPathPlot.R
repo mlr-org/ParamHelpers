@@ -5,7 +5,7 @@
 #' @param iter [\code{integer(1)} | NULL]\cr
 #'   Selected iteration of \code{x} to render plots for.
 #' @param alpha [\code{logical(1)}]\cr
-#'   Activates or deactivates the alpha fading for the parallel X-space plot. Default is \code{TRUE}.
+#'   Activates or deactivates the alpha fading for the plots. Default is \code{TRUE}.
 #' @param lim.x [\code{list}], @param lim.y [\code{list}]\cr
 #'   Axis limits for the plots. Must be a named list, so you can specify the
 #'   axis limits for every plot. Every element of the list must be a numeric
@@ -40,12 +40,12 @@ renderOptPathPlot = function(op, iter, alpha = TRUE, lim.x = list(), lim.y = lis
   classes.x = BBmisc::vcapply(op.x, function(x) class(x))
   classes.y = BBmisc::vcapply(op.y, function(x) class(x))
   
-  # Set and check x and y lims, if needed
+  # set and check x and y lims, if needed
   tmp = getOptPathLims(lim.x, lim.y, op, iter, 0.05)
   lim.x = tmp$lim.x
   lim.y = tmp$lim.y
   
-  # Set alpha and type values
+  # set alpha and type values
   .alpha = if(alpha && iter > 0)
      normalize(dob, "range", range = c(1 / (iter + 1), 1)) else rep(1, length(dob))
   .type = as.factor(ifelse(dob == 0, "init", ifelse(dob == iter, "prop", "seq")))
@@ -83,13 +83,24 @@ renderOptPathPlot = function(op, iter, alpha = TRUE, lim.x = list(), lim.y = lis
   }
   
   # plot 2: y-space
-  if (dim.y == 1L) {
-    pl2 = plot1DNum(op.y, .alpha, .type, y.names, space = "y", iter = iter, ,
+  if (dim.y == 1L && classes.y == "numeric") {
+    pl2 = plot1DNum(op.y, .alpha, .type, y.names, space = "y", iter = iter,
       lim.x = lim.x[["YSpace"]])
   }
+  if (dim.y == 1L && classes.y == "factor") {
+    pl2 = plot1DDisc(op.y, .alpha, .type, y.names, space = "y", iter = iter, 
+      lim.y = lim.y[["YSpace"]])
+  }
+  
   if (dim.y == 2L) {
-    pl2 = plot2D(op.y, .alpha, .type, y.names, space = "y", iter = iter, , 
-      lim.x = lim.x[["YSpace"]], lim.y = lim.y[["YSpace"]], classes = classes.y)
+    if (all(classes.y == "numeric") || all(classes.y == "factor")) {
+      pl2 = plot2D(op.y, .alpha, .type, y.names, space = "y", iter = iter, 
+        lim.x = lim.x[["YSpace"]], lim.y = lim.y[["YSpace"]], classes = classes.y)
+      
+    } else {
+      pl2 = plot2DMixed(op.y, .alpha, .type, y.names, space = "y", iter = iter, 
+        lim.y = lim.y[["YSpace"]], classes = classes.y)
+    }
   } 
   if (dim.y > 2L) {
     pl2 = plotMultiD(op.y, .alpha, .type, y.names, space = "y", iter = iter, alpha = alpha)

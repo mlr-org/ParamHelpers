@@ -14,7 +14,7 @@ Optimization path.}
 Selected iteration of \code{x} to render plots for.}
 
 \item{alpha}{[\code{logical(1)}]\cr
-Activates or deactivates the alpha fading for the parallel X-space plot. Default is \code{TRUE}.}
+Activates or deactivates the alpha fading for the plots. Default is \code{TRUE}.}
 
 \item{lim.x}{[\code{list}],}
 
