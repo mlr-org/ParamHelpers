@@ -47,7 +47,7 @@ getParamNA = function(par, repeated = FALSE) {
 # Check the given X and Y limit list. Each list can have 2 elements:
 # XSpace and YSpace. If the element is NULL, it is set, otherwise it is
 # checked. If the dimensionality of X and Y space is greater than 2, the limits
-# are set to NULL. The same happens if there are 2 variables and both are discrete.
+# are set to NULL. The same happens if there is a discrete variable in the 2D case.
 # We don't need limits in this cases. 
 # If the dimensionality is 1 for X or Y Space, for this space the lim.y is NULL.
 getOptPathLims <- function(lim.x, lim.y, op, iters, scale) {
@@ -62,11 +62,6 @@ getOptPathLims <- function(lim.x, lim.y, op, iters, scale) {
     dim = ncol(op.frame)
     classes = BBmisc::vcapply(op.frame, function(x) class(x))
     if (dim > 2L) {
-      lim.x[[space]] = NULL
-      lim.y[[space]] = NULL
-      next
-    }
-    if (dim == 2L && all(classes == "factor")) {
       lim.x[[space]] = NULL
       lim.y[[space]] = NULL
       next
@@ -92,18 +87,28 @@ getOptPathLims <- function(lim.x, lim.y, op, iters, scale) {
     }
     
     if (dim == 2L) {
-      if (is.null(lim.y[[space]])) {
-        # if the second variable is discrete, it will be plotted on the x-axis
-        # in plot2DDisc and the y-axis limit is the limit of the first variable
-        if (classes[2] == "factor") {
-          lim.y[[space]] = range(op.frame[, 1])
+      if (classes[1] == "numeric") {
+        if (is.null(lim.x[[space]])) {
+          lim.x[[space]] = range(op.frame[, 1])
+          lim.x[[space]] = c(-1, 1) * scale * abs(diff(lim.x[[space]])) + lim.x[[space]]
         } else {
-          lim.y[[space]] = range(op.frame[, 2])
+          assertNumeric(lim.x[[space]], len = 2L, any.missing = FALSE)
         }
-        lim.y[[space]] = c(-1, 1) * scale * abs(diff(lim.y[[space]])) + lim.y[[space]]
       } else {
-        assertNumeric(lim.y[[space]], len = 2L, any.missing = FALSE)
+        lim.x[[space]] = NULL
       }
+      
+      if (classes[2] == "numeric") {
+        if (is.null(lim.y[[space]])) {
+          lim.y[[space]] = range(op.frame[, 2])
+          lim.y[[space]] = c(-1, 1) * scale * abs(diff(lim.y[[space]])) + lim.y[[space]]
+        } else {
+          assertNumeric(lim.y[[space]], len = 2L, any.missing = FALSE)
+        }
+      } else {
+        lim.y[[space]] = NULL
+      }
+      
     }
     
     

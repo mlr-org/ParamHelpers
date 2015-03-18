@@ -38,7 +38,7 @@ test_that("renderOptPathPlot", {
     lim.y = list(XSpace = c(-10, 10), YSpace = c(-10, 10))
   )
   
-  # Test 2D-3D
+  # Test 2D-3D + size
   op2 = makeOptPathDF(par.set = ps1, y.names = c("y1", "y2", "y3"), minimize = c(TRUE, FALSE, TRUE))
   X = rnorm(35)
   dob = c(rep(0, 5), 1:2)
@@ -47,7 +47,7 @@ test_that("renderOptPathPlot", {
       y = c(y1 = X[i * 5 - 2], y2 = X[i * 5 - 1], y3 = X[i * 5]), dob = dob[i])
   }
   pl <- renderOptPathPlot(op2, iter = 0)
-  plotOptPath(op2, iters = 0:2, pause = FALSE)
+  plotOptPath(op2, iters = 0:2, pause = FALSE, size = c(5, 3))
   
   # Test 3D-3D
   ps3 = makeParamSet(
@@ -144,7 +144,7 @@ test_that("renderOptPathPlot", {
   )
   op8 = makeOptPathDF(par.set = ps8, y.names = c("y1"), minimize = c(TRUE))
   X1 = rnorm(14)
-  X2 = rep(c("a", "b", "c"), 3)
+  X2 = rep(c("a", "b", "c"), 5)
   Y = rnorm(7)
   dob = c(rep(0, 5), 1:2)
   for (i in 1:7) {

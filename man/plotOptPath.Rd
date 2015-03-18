@@ -5,7 +5,8 @@
 \title{Plot method for optimization paths.}
 \usage{
 plotOptPath(op, iters, pause = TRUE, alpha = TRUE, lim.x = list(),
-  lim.y = list(), title = NULL, colours = c("red", "blue", "green"))
+  lim.y = list(), title = NULL, colours = c("red", "blue", "green"),
+  size = NULL)
 }
 \arguments{
 \item{op}{[\code{OptPath}]\cr
@@ -38,6 +39,11 @@ Main title for the arranged plots. If \code{NULL} (default) there is no title.}
 
 \item{colours}{[\code{character(3)}]\cr
 Colours of the points/lines for the three point types init, seq and prob.}
+
+\item{size}{[\code{numeric(2)} | NULL]\cr
+Size of points or lines for X and Y space. In the 1D-1D case only the
+first entry of \code{size} is used. If \code{NULL} \code{size = 3} for points and
+\code{lwd = 1.5} for lines is used.}
 }
 \value{
 List of plots, one for each iteration.

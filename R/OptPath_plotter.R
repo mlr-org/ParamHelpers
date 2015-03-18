@@ -22,11 +22,15 @@
 #'   Main title for the arranged plots. If \code{NULL} (default) there is no title. 
 #' @param colours [\code{character(3)}]\cr
 #'   Colours of the points/lines for the three point types init, seq and prob.  
+#' @param size [\code{numeric(2)} | NULL]\cr
+#'   Size of points or lines for X and Y space. In the 1D-1D case only the
+#'   first entry of \code{size} is used. If \code{NULL} \code{size = 3} for points and
+#'   \code{lwd = 1.5} for lines is used.
 #' @return List of plots, one for each iteration.
 #' @export
 #' 
 plotOptPath = function(op, iters, pause = TRUE, alpha = TRUE, lim.x = list(), 
-  lim.y = list(), title = NULL, colours = c("red", "blue", "green")) {
+  lim.y = list(), title = NULL, colours = c("red", "blue", "green"), size = NULL) {
   
   requirePackages("gridExtra", why = "plotOptPath")
   
@@ -61,7 +65,7 @@ plotOptPath = function(op, iters, pause = TRUE, alpha = TRUE, lim.x = list(),
   for (iter in iters) {
     # get rendered plot data
     plots = renderOptPathPlot(op, iter = iter, lim.x = lim.x, lim.y = lim.y,
-      alpha = alpha, colours = colours)
+      alpha = alpha, colours = colours, size = size)
     arrangePlots(plots)
   }
   
