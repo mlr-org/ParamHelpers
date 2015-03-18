@@ -136,7 +136,7 @@ test_that("renderOptPathPlot", {
   pl <- renderOptPathPlot(op7, iter = 0)
   plotOptPath(op7, iters = 0:2, pause = FALSE)
   
-  # Test 3D(mixed)-1D
+  # Test 3D(mixed)-1D + colours
   ps8 = makeParamSet(
     makeNumericParam("x"),
     makeNumericParam("y"),
@@ -152,7 +152,7 @@ test_that("renderOptPathPlot", {
       y = c(y1 = Y[i]), dob = dob[i])
   }
   pl <- renderOptPathPlot(op8, iter = 0)
-  plotOptPath(op8, iters = 0:2, pause = FALSE)
+  plotOptPath(op8, iters = 0:2, pause = FALSE, colours = c("black", "yellow", "orange"))
   
 })
   

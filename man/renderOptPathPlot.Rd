@@ -4,7 +4,8 @@
 \alias{renderOptPathPlot}
 \title{Functions for plotting optimization paths.}
 \usage{
-renderOptPathPlot(op, iter, alpha = TRUE, lim.x = list(), lim.y = list())
+renderOptPathPlot(op, iter, lim.x = list(), lim.y = list(), alpha = TRUE,
+  colours = c("red", "blue", "green"))
 }
 \arguments{
 \item{op}{[\code{OptPath}]\cr
@@ -12,9 +13,6 @@ Optimization path.}
 
 \item{iter}{[\code{integer(1)} | NULL]\cr
 Selected iteration of \code{x} to render plots for.}
-
-\item{alpha}{[\code{logical(1)}]\cr
-Activates or deactivates the alpha fading for the plots. Default is \code{TRUE}.}
 
 \item{lim.x}{[\code{list}],}
 
@@ -25,6 +23,12 @@ vector of length 2. Available names for elements are:
 XSpace - limits for the X-Space plot
 YSpace - limits for the Y-Space plot
 Default is an empty list - in this case limits are automatically set.}
+
+\item{alpha}{[\code{logical(1)}]\cr
+Activates or deactivates the alpha fading for the plots. Default is \code{TRUE}.}
+
+\item{colours}{[\code{character(3)}]\cr
+Colours of the points/lines for the three point types init, seq and prob.}
 }
 \value{
 List of plots. If both X and Y space are 1D, list has length 1,

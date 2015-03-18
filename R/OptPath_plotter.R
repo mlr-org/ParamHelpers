@@ -19,12 +19,14 @@
 #'   YSpace - limits for the Y-Space plot
 #'   Default is an empty list - in this case limits are automatically set. 
 #' @param title [\code{character} | NULL]\cr
-#'   Main title for the arranged plots. If \code{NULL} (default) there is no title.   
+#'   Main title for the arranged plots. If \code{NULL} (default) there is no title. 
+#' @param colours [\code{character(3)}]\cr
+#'   Colours of the points/lines for the three point types init, seq and prob.  
 #' @return List of plots, one for each iteration.
 #' @export
 #' 
 plotOptPath = function(op, iters, pause = TRUE, alpha = TRUE, lim.x = list(), 
-  lim.y = list(), title = NULL) {
+  lim.y = list(), title = NULL, colours = c("red", "blue", "green")) {
   
   requirePackages("gridExtra", why = "plotOptPath")
   
@@ -59,7 +61,7 @@ plotOptPath = function(op, iters, pause = TRUE, alpha = TRUE, lim.x = list(),
   for (iter in iters) {
     # get rendered plot data
     plots = renderOptPathPlot(op, iter = iter, lim.x = lim.x, lim.y = lim.y,
-      alpha = alpha)
+      alpha = alpha, colours = colours)
     arrangePlots(plots)
   }
   
