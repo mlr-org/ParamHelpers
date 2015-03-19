@@ -19,11 +19,16 @@
 #'   Size of points or lines for X and Y space. In the 1D-1D case only the
 #'   first entry of \code{size} is used. If \code{NULL} \code{size = 3} for points and
 #'   \code{lwd = 1.5} for lines is used.
+#' @param impute.scale [\code{numeric(1)}]\cr
+#'   Numeric missing values will be replaced by \code{max + impute.scale * (max - min)}.
+#' @param impute.value [\code{character(1)}]\cr
+#'   Factor missing values will be replaced by \code{impute.value}.    
 #' @return List of plots. If both X and Y space are 1D, list has length 1,
 #'   otherwise length 2 with one plot for X and Y space respectivly.
 #' @export
 renderOptPathPlot = function(op, iter, lim.x = list(), lim.y = list(), alpha = TRUE, 
-    colours = c("red", "blue", "green"), size = NULL) {
+    colours = c("red", "blue", "green"), size = NULL, impute.scale = 1, 
+    impute.value = "missing") {
   
   requirePackages("GGally", why = "renderOptPathPlot")
   requirePackages("ggplot2", why = "renderOptPathPlot")
@@ -44,6 +49,14 @@ renderOptPathPlot = function(op, iter, lim.x = list(), lim.y = list(), alpha = T
     dob = 0:iter, eol = c(iter:iters.max, NA))
   dob = getOptPathDOB(op, dob = 0:iter, eol = c((iter + 1):iters.max, NA))
   
+  # impute missing values
+  for (i in seq_len(ncol(op.x))) {
+    op.x[, i] = imputeMissingValues(op.x[,i], impute.scale, impute.value)
+  }
+  for (i in seq_len(ncol(op.y))) {
+    op.y[, i] = imputeMissingValues(op.y[,i], impute.scale, impute.value)
+  }
+  
   # get classes of Params (numeric or factor)
   classes.x = BBmisc::vcapply(op.x, function(x) class(x))
   classes.y = BBmisc::vcapply(op.y, function(x) class(x))
@@ -59,7 +72,7 @@ renderOptPathPlot = function(op, iter, lim.x = list(), lim.y = list(), alpha = T
   .type = as.factor(ifelse(dob == 0, "init", ifelse(dob == iter, "prop", "seq")))
   
   # Special case: X and Y are 1D
-  if(dim.x == 1L && dim.y == 1L && classes.x == "numeric" && classes.y == "numeric") {
+  if(dim.x == 1L && dim.y == 1L) {
     pl = plot2D(cbind(x = op.x, y = op.y), .alpha, .type, names = c(x.names, y.names), 
       space = "both", iter = iter, classes = c(classes.x, classes.y), 
       lim.x = lim.x[["XSpace"]], lim.y = lim.x[["YSpace"]], colours = colours, 

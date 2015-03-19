@@ -115,3 +115,18 @@ getOptPathLims <- function(lim.x, lim.y, op, iters, scale) {
   }
   return(list(lim.x = lim.x, lim.y = lim.y))
 }
+
+# Function to impute missing values. 
+imputeMissingValues = function(x, impute.scale, impute.value) {
+ na.index = which(is.na(x))
+  if (length(na.index) > 0) {
+    if (class(x) == "numeric") {
+      x[na.index] = max(x, na.rm = TRUE) + impute.scale * (diff(range(x, na.rm = TRUE)))
+    } 
+    if (class(x) == "factor") {
+      levels(x) = c(levels(x), impute.value)
+      x[na.index] = impute.value
+    }
+  }
+  return(x)
+}

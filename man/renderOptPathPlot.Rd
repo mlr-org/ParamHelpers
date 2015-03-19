@@ -5,7 +5,8 @@
 \title{Functions for plotting optimization paths.}
 \usage{
 renderOptPathPlot(op, iter, lim.x = list(), lim.y = list(), alpha = TRUE,
-  colours = c("red", "blue", "green"), size = NULL)
+  colours = c("red", "blue", "green"), size = NULL, impute.scale = 1,
+  impute.value = "missing")
 }
 \arguments{
 \item{op}{[\code{OptPath}]\cr
@@ -34,6 +35,12 @@ Colours of the points/lines for the three point types init, seq and prob.}
 Size of points or lines for X and Y space. In the 1D-1D case only the
 first entry of \code{size} is used. If \code{NULL} \code{size = 3} for points and
 \code{lwd = 1.5} for lines is used.}
+
+\item{impute.scale}{[\code{numeric(1)}]\cr
+Numeric missing values will be replaced by \code{max + impute.scale * (max - min)}.}
+
+\item{impute.value}{[\code{character(1)}]\cr
+Factor missing values will be replaced by \code{impute.value}.}
 }
 \value{
 List of plots. If both X and Y space are 1D, list has length 1,
