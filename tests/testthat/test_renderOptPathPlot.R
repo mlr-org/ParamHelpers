@@ -14,8 +14,8 @@ test_that("renderOptPathPlot", {
       y = X[ i * 2 - 1],
       dob = dob[i])
   }
-  pl <- renderOptPathPlot(op0, iter = 0)
-  plotOptPath(op0, iters = 0:2, pause = FALSE, title = "Optimization Path")
+  pl = renderOptPathPlot(op0, iter = 0)
+  pl = plotOptPath(op0, iters = 0:2, pause = FALSE, title = "Optimization Path")
   
   # Test 2D-2D + title
   ps1 = makeParamSet(
@@ -31,9 +31,9 @@ test_that("renderOptPathPlot", {
       y = c(y1 = X[ i * 4 - 1], y2 = X[i * 4]),
       dob = dob[i])
   }
-  pl <- renderOptPathPlot(op1, iter = 0)
-  plotOptPath(op1, iters = 0:2, pause = FALSE, title = "Optimization Path")
-  plotOptPath(op1, iters = 0:2, pause = FALSE,
+  pl = renderOptPathPlot(op1, iter = 0)
+  pl = plotOptPath(op1, iters = 0:2, pause = FALSE, title = "Optimization Path")
+  pl = plotOptPath(op1, iters = 0:2, pause = FALSE,
     lim.x = list(XSpace = c(-10, 10), YSpace = c(-10, 10)),
     lim.y = list(XSpace = c(-10, 10), YSpace = c(-10, 10))
   )
@@ -46,8 +46,8 @@ test_that("renderOptPathPlot", {
     addOptPathEl(op2, x = list(x = X[i * 5 - 4], z = X[i * 5 - 3]),
       y = c(y1 = X[i * 5 - 2], y2 = X[i * 5 - 1], y3 = X[i * 5]), dob = dob[i])
   }
-  pl <- renderOptPathPlot(op2, iter = 0)
-  plotOptPath(op2, iters = 0:2, pause = FALSE, size = c(5, 3))
+  pl = renderOptPathPlot(op2, iter = 0)
+  pl = plotOptPath(op2, iters = 0:2, pause = FALSE, size = c(5, 3))
   
   # Test 3D-3D
   ps3 = makeParamSet(
@@ -62,8 +62,8 @@ test_that("renderOptPathPlot", {
     addOptPathEl(op3, x = list(x = X[i * 6 - 5], z = X[i * 6 - 4], z2 = X[i * 6 - 3]) , 
       y = c(y1 = X[i * 6 - 2], y2 = X[i * 6 - 1], y3 = X[i * 6]), dob = dob[i])
   }
-  pl <- renderOptPathPlot(op3, iter = 0)
-  plotOptPath(op3, iters = 0:2, pause = FALSE)
+  pl = renderOptPathPlot(op3, iter = 0)
+  pl = plotOptPath(op3, iters = 0:2, pause = FALSE)
   
   # Test 3D-1D + scale
   ps4 = makeParamSet(
@@ -78,9 +78,9 @@ test_that("renderOptPathPlot", {
     addOptPathEl(op4, x = list(x = X[i * 4 - 3], z = X[i * 4 - 2], z2 = X[i * 4 - 1]), 
                  y = c(y1 = X[i * 4]), dob = dob[i])
   }
-  pl <- renderOptPathPlot(op4, iter = 0)
-  plotOptPath(op4, iters = 0:2, pause = FALSE)
-  plotOptPath(op4, iters = 0:2, pause = FALSE, scale = "robust")
+  pl = renderOptPathPlot(op4, iter = 0)
+  pl = plotOptPath(op4, iters = 0:2, pause = FALSE)
+  pl = plotOptPath(op4, iters = 0:2, pause = FALSE, scale = "robust")
   
   # Test 1D(discrete)-2D
   ps5 = makeParamSet(
@@ -96,10 +96,10 @@ test_that("renderOptPathPlot", {
       y = c(y1 = Y[i], y2 = Y[7 + i]),
       dob = dob[i])
   }
-  pl <- renderOptPathPlot(op5, iter = 0)
-  plotOptPath(op5, iters = 0:2, pause = FALSE)
+  pl = renderOptPathPlot(op5, iter = 0)
+  pl = plotOptPath(op5, iters = 0:2, pause = FALSE)
   
-  # Test 2D(mixed)-1D
+  # Test 2D(mixed)-1D + ggplot.theme
   ps6 = makeParamSet(
     makeNumericParam("x"),
     makeDiscreteParam("z", values = list("a", "b"))
@@ -114,9 +114,10 @@ test_that("renderOptPathPlot", {
   }
   addOptPathEl(op6, x = list(x = Y[6] + 0.05, z = X[6]), 
       y = c(y1 = Y[6]), dob = dob[7])
-  pl <- renderOptPathPlot(op6, iter = 0)
-  plotOptPath(op6, iters = 0:2, pause = FALSE)
-  
+  pl = renderOptPathPlot(op6, iter = 0)
+  pl = plotOptPath(op6, iters = 0:2, pause = FALSE)
+  pl = plotOptPath(op6, iters = 0:2, pause = FALSE, ggplot.theme = ggplot2::theme_bw())
+  pl = plotOptPath(op6, iters = 0:2, pause = FALSE, ggplot.theme = ggplot2::theme(legend.position = "bottom"))
   
   # Test 2D(discrete)-1D
   ps7 = makeParamSet(
@@ -134,8 +135,8 @@ test_that("renderOptPathPlot", {
   }
   addOptPathEl(op7, x = list(x = X1[6], z = X2[6]), 
     y = c(y1 = Y[7]), dob = dob[7])
-  pl <- renderOptPathPlot(op7, iter = 0)
-  plotOptPath(op7, iters = 0:2, pause = FALSE)
+  pl = renderOptPathPlot(op7, iter = 0)
+  pl = plotOptPath(op7, iters = 0:2, pause = FALSE)
   
   # Test 3D(mixed)-1D + colours + missing values
   ps8 = makeParamSet(
@@ -155,8 +156,8 @@ test_that("renderOptPathPlot", {
     addOptPathEl(op8, x = list(x = X1[i], y = X2[i], z = Z[i]), 
       y = c(y1 = Y[i]), dob = dob[i])
   }
-  pl <- renderOptPathPlot(op8, iter = 0)
-  plotOptPath(op8, iters = 0:2, pause = FALSE, colours = c("black", "yellow", "orange"))
+  pl = renderOptPathPlot(op8, iter = 0)
+  pl = plotOptPath(op8, iters = 0:2, pause = FALSE, colours = c("black", "yellow", "orange"))
   
 })
   
