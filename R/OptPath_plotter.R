@@ -28,14 +28,18 @@
 #'   \code{lwd = 1.5} for lines is used.
 #' @param impute.scale [\code{numeric(1)}]\cr
 #'   Numeric missing values will be replaced by \code{max + impute.scale * (max - min)}.
+#'   Default is \code{1}.
 #' @param impute.value [\code{character(1)}]\cr
-#'   Factor missing values will be replaced by \code{impute.value}.    
+#'   Factor missing values will be replaced by \code{impute.value}. Default is \code{missing}.
+#' @param scale [\code{character(1)}]\cr
+#'   Parameter \code{scale} from the function GGally::ggparcoord which is used for 
+#'    the multiD-case. Default is \code{std}.      
 #' @return List of plots, one for each iteration.
 #' @export
 #' 
 plotOptPath = function(op, iters, pause = TRUE, alpha = TRUE, lim.x = list(), 
   lim.y = list(), title = NULL, colours = c("red", "blue", "green"), size = NULL, 
-  impute.scale = 1, impute.value = "missing") {
+  impute.scale = 1, impute.value = "missing", scale = "std") {
   
   requirePackages("gridExtra", why = "plotOptPath")
   
@@ -70,7 +74,8 @@ plotOptPath = function(op, iters, pause = TRUE, alpha = TRUE, lim.x = list(),
   for (iter in iters) {
     # get rendered plot data
     plots = renderOptPathPlot(op, iter = iter, lim.x = lim.x, lim.y = lim.y,
-      alpha = alpha, colours = colours, size = size)
+      alpha = alpha, colours = colours, size = size, impute.scale, impute.value, 
+      scale = scale)
     arrangePlots(plots)
   }
   

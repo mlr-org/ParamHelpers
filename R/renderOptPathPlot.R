@@ -21,14 +21,19 @@
 #'   \code{lwd = 1.5} for lines is used.
 #' @param impute.scale [\code{numeric(1)}]\cr
 #'   Numeric missing values will be replaced by \code{max + impute.scale * (max - min)}.
+#'   Default is \code{1}.
 #' @param impute.value [\code{character(1)}]\cr
-#'   Factor missing values will be replaced by \code{impute.value}.    
+#'   Factor missing values will be replaced by \code{impute.value}. Default is \code{missing}. 
+#' @param scale [\code{character(1)}]\cr
+#'   Parameter \code{scale} from the function GGally::ggparcoord which is used for 
+#'    the multiD-case. Default is \code{std}.   
 #' @return List of plots. If both X and Y space are 1D, list has length 1,
 #'   otherwise length 2 with one plot for X and Y space respectivly.
+
 #' @export
 renderOptPathPlot = function(op, iter, lim.x = list(), lim.y = list(), alpha = TRUE, 
     colours = c("red", "blue", "green"), size = NULL, impute.scale = 1, 
-    impute.value = "missing") {
+    impute.value = "missing", scale = "std") {
   
   requirePackages("GGally", why = "renderOptPathPlot")
   requirePackages("ggplot2", why = "renderOptPathPlot")
@@ -97,7 +102,7 @@ renderOptPathPlot = function(op, iter, lim.x = list(), lim.y = list(), alpha = T
   } 
   if (dim.x > 2L) {
     pl1 = plotMultiD(op.x, .alpha, .type, names = x.names, space = "x", iter = iter, 
-      colours = colours, size = size[2])
+      colours = colours, size = size[2], scale = scale)
   }
   
   # plot 2: y-space
@@ -117,7 +122,7 @@ renderOptPathPlot = function(op, iter, lim.x = list(), lim.y = list(), alpha = T
   } 
   if (dim.y > 2L) {
     pl2 = plotMultiD(op.y, .alpha, .type, y.names, space = "y", iter = iter, 
-      colours = colours, size = size[2])
+      colours = colours, size = size[2], scale = scale)
   }
   
   return(list(plot.x = pl1, plot.y = pl2))
@@ -296,7 +301,8 @@ plot2D = function(op, .alpha, .type, names, space, iter, classes, lim.x, lim.y,
 
 
 # Plot method for a multi-dimensional X- or Y-Space
-plotMultiD = function(op, .alpha, .type, names, space = "x", iter, colours, size) {
+plotMultiD = function(op, .alpha, .type, names, space = "x", iter, colours, size, 
+    scale) {
   args = list(columns = seq_along(names))
   for (i in seq_along(ncol(op))) {
     op[, i] = as.numeric(op[, i])
@@ -308,9 +314,11 @@ plotMultiD = function(op, .alpha, .type, names, space = "x", iter, colours, size
   args$data = op
   args$alphaLines = ".alpha"
   args$groupColumn = ncol(op)
+  args$scale = scale
   # FIXME: aes searches for size in the global environment
   size <<- ifelse(is.null(size), 1.5, size)
   args$mapping = ggplot2::aes(lwd = size)
+  
   
   if (space == "x") {
     title = ggplot2::ggtitle("X-Space")

@@ -65,7 +65,7 @@ test_that("renderOptPathPlot", {
   pl <- renderOptPathPlot(op3, iter = 0)
   plotOptPath(op3, iters = 0:2, pause = FALSE)
   
-  # Test 3D-1D
+  # Test 3D-1D + scale
   ps4 = makeParamSet(
     makeNumericParam("x"),
     makeNumericParam("z"), 
@@ -80,6 +80,7 @@ test_that("renderOptPathPlot", {
   }
   pl <- renderOptPathPlot(op4, iter = 0)
   plotOptPath(op4, iters = 0:2, pause = FALSE)
+  plotOptPath(op4, iters = 0:2, pause = FALSE, scale = "robust")
   
   # Test 1D(discrete)-2D
   ps5 = makeParamSet(
