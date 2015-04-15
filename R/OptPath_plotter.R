@@ -19,13 +19,12 @@
 #'   YSpace - limits for the Y-Space plot
 #'   Default is an empty list - in this case limits are automatically set. 
 #' @param title [\code{character} | NULL]\cr
-#'   Main title for the arranged plots. If \code{NULL} (default) there is no title. 
+#'   Main title for the arranged plots. 
 #' @param colours [\code{character(3)}]\cr
 #'   Colours of the points/lines for the three point types init, seq and prob.  
 #' @param size [\code{numeric(2)} | NULL]\cr
-#'   Size of points or lines for X and Y space. In the 1D-1D case only the
-#'   first entry of \code{size} is used. If \code{NULL} \code{size = 3} for points and
-#'   \code{lwd = 1.5} for lines is used.
+#'   Size of points (1st entry of \code{size}) or lines (2nd entry of \code{size}).
+#'   The default is \code{c(3, 1.5)}. 
 #' @param impute.scale [\code{numeric(1)}]\cr
 #'   Numeric missing values will be replaced by \code{max + impute.scale * (max - min)}.
 #'   Default is \code{1}.
@@ -41,7 +40,7 @@
 #' @export
 #' 
 plotOptPath = function(op, iters, pause = TRUE, alpha = TRUE, lim.x = list(), 
-  lim.y = list(), title = NULL, colours = c("red", "blue", "green"), size = NULL, 
+  lim.y = list(), title = "", colours = c("red", "blue", "green"), size = c(3, 1.5), 
   impute.scale = 1, impute.value = "missing", scale = "std", 
   ggplot.theme = ggplot2::theme(legend.position = "top")) {
   
@@ -54,7 +53,18 @@ plotOptPath = function(op, iters, pause = TRUE, alpha = TRUE, lim.x = list(),
   
   assertIntegerish(iters, lower = 0L, upper = iters.max, any.missing = FALSE)
   assertFlag(pause)
+  assertList(lim.x)
+  assertList(lim.y)
+  assertCharacter(title, len = 1)
+  assertFlag(alpha)
+  assertCharacter(colours, len = 3)
+  assertNumeric(size, len = 2)
+  assertNumeric(impute.scale, len = 1)
+  assertCharacter(impute.value, len = 1)
+  assertCharacter(scale, len = 1)
   assertClass(ggplot.theme, classes = c("theme", "gg"))
+  
+
   
   x.names = colnames(getOptPathX(op))
   y.names = op$y.names

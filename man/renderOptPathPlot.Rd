@@ -5,7 +5,7 @@
 \title{Functions for plotting optimization paths.}
 \usage{
 renderOptPathPlot(op, iter, lim.x = list(), lim.y = list(), alpha = TRUE,
-  colours = c("red", "blue", "green"), size = NULL, impute.scale = 1,
+  colours = c("red", "blue", "green"), size = c(3, 1.5), impute.scale = 1,
   impute.value = "missing", scale = "std",
   ggplot.theme = ggplot2::theme(legend.position = "top"))
 }
@@ -33,9 +33,8 @@ Activates or deactivates the alpha fading for the plots. Default is \code{TRUE}.
 Colours of the points/lines for the three point types init, seq and prob.}
 
 \item{size}{[\code{numeric(2)} | NULL]\cr
-Size of points or lines for X and Y space. In the 1D-1D case only the
-first entry of \code{size} is used. If \code{NULL} \code{size = 3} for points and
-\code{lwd = 1.5} for lines is used.}
+Size of points (1st entry of \code{size}) or lines (2nd entry of \code{size}).
+The default is \code{c(3, 1.5)}.}
 
 \item{impute.scale}{[\code{numeric(1)}]\cr
 Numeric missing values will be replaced by \code{max + impute.scale * (max - min)}.

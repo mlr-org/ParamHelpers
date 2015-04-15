@@ -16,9 +16,8 @@
 #' @param colours [\code{character(3)}]\cr
 #'   Colours of the points/lines for the three point types init, seq and prob.
 #' @param size [\code{numeric(2)} | NULL]\cr
-#'   Size of points or lines for X and Y space. In the 1D-1D case only the
-#'   first entry of \code{size} is used. If \code{NULL} \code{size = 3} for points and
-#'   \code{lwd = 1.5} for lines is used.
+#'   Size of points (1st entry of \code{size}) or lines (2nd entry of \code{size}).
+#'   The default is \code{c(3, 1.5)}. 
 #' @param impute.scale [\code{numeric(1)}]\cr
 #'   Numeric missing values will be replaced by \code{max + impute.scale * (max - min)}.
 #'   Default is \code{1}.
@@ -35,7 +34,7 @@
 
 #' @export
 renderOptPathPlot = function(op, iter, lim.x = list(), lim.y = list(), alpha = TRUE, 
-    colours = c("red", "blue", "green"), size = NULL, impute.scale = 1, 
+    colours = c("red", "blue", "green"), size = c(3, 1.5), impute.scale = 1, 
     impute.value = "missing", scale = "std", ggplot.theme = ggplot2::theme(legend.position = "top")) {
   
   requirePackages("GGally", why = "renderOptPathPlot")
@@ -43,6 +42,14 @@ renderOptPathPlot = function(op, iter, lim.x = list(), lim.y = list(), alpha = T
   
   iters.max = max(getOptPathDOB(op))
   assertIntegerish(iter, len = 1L, lower = 0L, upper = iters.max, any.missing = FALSE)
+  assertList(lim.x)
+  assertList(lim.y)
+  assertFlag(alpha)
+  assertCharacter(colours, len = 3)
+  assertNumeric(size, len = 2)
+  assertNumeric(impute.scale, len = 1)
+  assertCharacter(impute.value, len = 1)
+  assertCharacter(scale, len = 1)
   assertClass(ggplot.theme, classes = c("theme", "gg"))
   
   # FIXME: Is there any better way to get these 2 informations?
@@ -122,7 +129,7 @@ renderOptPathPlot = function(op, iter, lim.x = list(), lim.y = list(), alpha = T
   if (dim.y == 2L) {
     pl2 = plot2D(op.y, .alpha, .type, names = y.names, space = "y", iter = iter,
       classes = classes.y, lim.x = lim.x[["YSpace"]], lim.y = lim.y[["YSpace"]], 
-      colours = colours, size = size[2], ggplot.theme = ggplot.theme)
+      colours = colours, size = size[1], ggplot.theme = ggplot.theme)
   } 
   if (dim.y > 2L) {
     pl2 = plotMultiD(op.y, .alpha, .type, y.names, space = "y", iter = iter, 
@@ -244,8 +251,6 @@ plot2D = function(op, .alpha, .type, names, space, iter, classes, lim.x, lim.y,
     pos = "identity"
   }
   
-  size = ifelse(is.null(size), 3, size)
-
   pl = ggplot2::ggplot(op, ggplot2::aes_string(
     x = names[1], y = names[2], shape = "type", colour = "type", alpha = ".alpha"))
   pl = pl + ggplot2::geom_point(size = size, position = pos)
@@ -322,7 +327,7 @@ plotMultiD = function(op, .alpha, .type, names, space = "x", iter, colours, size
   args$groupColumn = ncol(op)
   args$scale = scale
   # FIXME: aes searches for size in the global environment
-  size <<- ifelse(is.null(size), 1.5, size)
+  size <<- size
   args$mapping = ggplot2::aes(lwd = size)
   
   
