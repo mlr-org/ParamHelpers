@@ -182,7 +182,7 @@ plot1DNum = function(op, .alpha, .type, names, space, iter, lim.x, colours, ggpl
   pl = pl + title
   pl = pl + ggplot2::geom_rug(ggplot2::aes_string(alpha = ".alpha", colour = "type"), 
     sides = "b", size = 2, data = op)
-  pl = pl + ggplot2::xlim(lim.x)
+  pl = pl + ggplot2::coord_cartesian(xlim = lim.x) 
   pl = pl + ggplot2::guides(alpha = FALSE)
   pl = pl + ggplot2::scale_alpha_continuous(range = c(1 / (iter + 1), 1))
   pl = pl + ggplot2::scale_colour_manual(values = c(init = colours[1], seq = colours[2], prop = colours[3]))

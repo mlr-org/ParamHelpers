@@ -79,6 +79,7 @@ test_that("renderOptPathPlot", {
                  y = c(y1 = X[i * 4]), dob = dob[i])
   }
   pl = renderOptPathPlot(op4, iter = 0)
+  pl = renderOptPathPlot(op4, iter = 0, lim.x = list(YSpace = c(-0.5, 0.5)))
   pl = plotOptPath(op4, iters = 0:2, pause = FALSE)
   pl = plotOptPath(op4, iters = 0:2, pause = FALSE, scale = "robust")
   
@@ -161,3 +162,5 @@ test_that("renderOptPathPlot", {
   
 })
   
+
+
