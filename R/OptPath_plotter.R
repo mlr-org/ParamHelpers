@@ -78,12 +78,13 @@ plotOptPath = function(op, iters, pause = TRUE, alpha = TRUE, lim.x = list(),
   lim.x = tmp$lim.x
   lim.y = tmp$lim.y
   
-  # Helper to arragne plot via gridExtra and pause process
-  arrangePlots = function(plots) {
+  # Helper to arrange plot via gridExtra and pause process
+  arrangePlots = function(plots, iter, iters) {
     plots = Filter(Negate(isScalarNA), plots)
     do.call(gridExtra::grid.arrange, c(plots, nrow = 1L, main = title))
-    if (pause)
+    if (pause && iter != getLast(iters)) {
       pause()
+    }
   }
   
   for (iter in iters) {
@@ -91,7 +92,7 @@ plotOptPath = function(op, iters, pause = TRUE, alpha = TRUE, lim.x = list(),
     plots = renderOptPathPlot(op, iter = iter, lim.x = lim.x, lim.y = lim.y,
       alpha = alpha, colours = colours, size = size, impute.scale = impute.scale,
       impute.value = impute.value, scale = scale, ggplot.theme = ggplot.theme)
-    arrangePlots(plots)
+    arrangePlots(plots, iter, iters)
   }
   
 }
