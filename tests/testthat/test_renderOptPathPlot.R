@@ -56,14 +56,14 @@ test_that("renderOptPathPlot", {
     makeNumericParam("z2")
   )
   op3 = makeOptPathDF(par.set = ps3, y.names = c("y1", "y2", "y3"), minimize = c(TRUE, FALSE, TRUE))
-  X = rnorm(42)
-  dob = c(rep(0, 5), 1:2)
-  for (i in 1:7) {
+  X = rnorm(150)
+  dob = c(rep(0, 5), 1:20)
+  for (i in 1:25) {
     addOptPathEl(op3, x = list(x = X[i * 6 - 5], z = X[i * 6 - 4], z2 = X[i * 6 - 3]) , 
       y = c(y1 = X[i * 6 - 2], y2 = X[i * 6 - 1], y3 = X[i * 6]), dob = dob[i])
   }
   pl = renderOptPathPlot(op3, iter = 0)
-  pl = plotOptPath(op3, iters = 0:2, pause = FALSE)
+  pl = plotOptPath(op3, iters = c(0:2, 20), pause = FALSE)
   
   # Test 3D-1D + scale
   ps4 = makeParamSet(
@@ -162,5 +162,3 @@ test_that("renderOptPathPlot", {
   
 })
   
-
-

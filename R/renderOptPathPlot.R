@@ -184,7 +184,7 @@ plot1DNum = function(op, .alpha, .type, names, space, iter, lim.x, colours, ggpl
     sides = "b", size = 2, data = op)
   pl = pl + ggplot2::coord_cartesian(xlim = lim.x) 
   pl = pl + ggplot2::guides(alpha = FALSE)
-  pl = pl + ggplot2::scale_alpha_continuous(range = c(1 / (iter + 1), 1))
+  pl = pl + ggplot2::scale_alpha_continuous(range = c(max(1 / (iter + 1), 0.1), 1))
   pl = pl + ggplot2::scale_colour_manual(values = c(init = colours[1], seq = colours[2], prop = colours[3]))
   pl = pl + ggplot.theme
 
@@ -211,7 +211,7 @@ plot1DDisc = function(op, .alpha, .type, names, space, iter, lim.y, colours,
   pl = pl + ggplot2::geom_bar()
   pl = pl + title
   pl = pl + ggplot2::ylim(lim.y)
-  pl = pl + ggplot2::scale_alpha_discrete(range = c(1 / (iter + 1), 1))
+  pl = pl + ggplot2::scale_alpha_discrete(range = c(max(1 / (iter + 1), 0.1), 1))
   pl = pl + ggplot2::scale_fill_manual(values = c(init = colours[1], seq = colours[2], prop = colours[3]))
   pl = pl + ggplot.theme
   pl = pl + ggplot2::guides(alpha = FALSE)
@@ -259,7 +259,7 @@ plot2D = function(op, .alpha, .type, names, space, iter, classes, lim.x, lim.y,
   pl = pl + ggplot2::guides(alpha = FALSE)
   pl = pl + ggplot2::scale_colour_manual(values = c(init = colours[1], seq = colours[2], prop = colours[3]))
   pl = pl + ggplot2::scale_shape_manual(values = c(init = 15, seq = 16, prop = 17))
-  pl = pl + ggplot2::scale_alpha_continuous(range = c(1 / (iter + 1), 1))
+  pl = pl + ggplot2::scale_alpha_continuous(range = c(max(1 / (iter + 1), 0.1), 1))
   pl = pl + ggplot.theme
   if (classes[1] == "numeric") {
     pl = pl + ggplot2::xlim(lim.x)
@@ -320,6 +320,8 @@ plotMultiD = function(op, .alpha, .type, names, space = "x", iter, colours, size
   }
   
   op$.alpha = .alpha
+  # minimal alpha value:
+  op$.alpha = pmax(op$.alpha, 0.1)
   op$type = .type
   op$type = factor(op$type, levels = c("init", "seq", "prop"))
   args$data = op
