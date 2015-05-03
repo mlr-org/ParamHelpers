@@ -64,6 +64,7 @@ test_that("renderOptPathPlot", {
   }
   pl = renderOptPathPlot(op3, iter = 0)
   pl = plotOptPath(op3, iters = c(0:2, 20), pause = FALSE)
+  pl = plotOptPath(op3, iters = c(0:2, 20), pause = FALSE, marked = c(4, 10, 18))
   
   # Test 3D-1D + scale
   ps4 = makeParamSet(
@@ -98,7 +99,7 @@ test_that("renderOptPathPlot", {
       dob = dob[i])
   }
   pl = renderOptPathPlot(op5, iter = 0)
-  pl = plotOptPath(op5, iters = 0:2, pause = FALSE)
+  pl = plotOptPath(op5, iters = 0:2, pause = FALSE, marked = c(3))
   
   # Test 2D(mixed)-1D + ggplot.theme
   ps6 = makeParamSet(
@@ -142,23 +143,24 @@ test_that("renderOptPathPlot", {
   # Test 3D(mixed)-1D + colours + missing values
   ps8 = makeParamSet(
     makeNumericParam("x"),
-    makeNumericParam("y", requires = quote(x < 0)),
+    makeNumericParam("y", requires = quote(x < 0.5)),
     makeDiscreteParam("z", values = list("a", "b", "c"), requires = quote(x > -0.5))
   )
   op8 = makeOptPathDF(par.set = ps8, y.names = c("y1"), minimize = c(TRUE))
-  X1 = rnorm(7)
+  X = rnorm(7)
   X2 = rnorm(7)
-  X2[X1 >= 0] = NA
-  Z = rep(c("a", "b", "c"), 5)
-  Z[X1 <= -0.5] = NA
   Y = rnorm(7)
+  X2[X >= 0.5] = NA
+  X3 = rep(c("a", "b", "c"), 5)
+  X3[X <= -0.5] = NA
   dob = c(rep(0, 5), 1:2)
   for (i in 1:7) {
-    addOptPathEl(op8, x = list(x = X1[i], y = X2[i], z = Z[i]), 
+    addOptPathEl(op8, x = list(x = X[i], y = X2[i], z = X3[i]), 
       y = c(y1 = Y[i]), dob = dob[i])
   }
   pl = renderOptPathPlot(op8, iter = 0)
-  pl = plotOptPath(op8, iters = 0:2, pause = FALSE, colours = c("black", "yellow", "orange"))
+  pl = plotOptPath(op8, iters = 0:2, pause = FALSE, 
+    colours = c("black", "yellow", "orange", "green"))
   
 })
   
