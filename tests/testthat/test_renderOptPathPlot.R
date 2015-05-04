@@ -116,8 +116,8 @@ test_that("renderOptPathPlot", {
   }
   addOptPathEl(op6, x = list(x = Y[6] + 0.05, z = X[6]), 
       y = c(y1 = Y[6]), dob = dob[7])
-  pl = renderOptPathPlot(op6, iter = 0)
-  pl = plotOptPath(op6, iters = 0:2, pause = FALSE)
+  pl = renderOptPathPlot(op6, iter = 0, marked = "min")
+  pl = plotOptPath(op6, iters = 0:2, pause = FALSE, marked = "max")
   pl = plotOptPath(op6, iters = 0:2, pause = FALSE, ggplot.theme = ggplot2::theme_bw())
   pl = plotOptPath(op6, iters = 0:2, pause = FALSE, ggplot.theme = ggplot2::theme(legend.position = "bottom"))
   
