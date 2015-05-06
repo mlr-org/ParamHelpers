@@ -60,8 +60,6 @@ renderOptPathPlot = function(op, iter, lim.x = list(), lim.y = list(), alpha = T
   
   iters.max = max(getOptPathDOB(op))
   assertIntegerish(iter, len = 1L, lower = 0L, upper = iters.max, any.missing = FALSE)
-  assertList(lim.x)
-  assertList(lim.y)
   assertFlag(alpha)
   assertCharacter(colours, len = 4)
   assertNumeric(size, len = 2)
@@ -69,6 +67,7 @@ renderOptPathPlot = function(op, iter, lim.x = list(), lim.y = list(), alpha = T
   assertCharacter(impute.value, len = 1)
   assertChoice(scale, choices = c("std", "robust", "uniminmax", "globalminmax", "center", "centerObs"))
   assertClass(ggplot.theme, classes = c("theme", "gg"))
+  
   if (!is.null(marked)) {
     if (is.character(marked)) {
       assertChoice(marked, choices = c("best"))
@@ -76,7 +75,6 @@ renderOptPathPlot = function(op, iter, lim.x = list(), lim.y = list(), alpha = T
       marked = asInteger(marked)
     }
   }
-
   
   x.names = colnames(getOptPathX(op))
   if (missing(short.x.names)) {
@@ -94,46 +92,16 @@ renderOptPathPlot = function(op, iter, lim.x = list(), lim.y = list(), alpha = T
   }
   dim.y = length(y.names)
   
-  # consider only points alive at iteration iter
-  op.x = as.data.frame(op, include.y = FALSE, include.rest = FALSE,
-    dob = 0:iter, eol = c(iter:iters.max, NA))
-  op.y = as.data.frame(op, include.x = FALSE, include.rest = FALSE,
-    dob = 0:iter, eol = c(iter:iters.max, NA))
-  dob = getOptPathDOB(op, dob = 0:iter, eol = c((iter + 1):iters.max, NA))
-  
-  # mark best point / pareto front if marked = "best"
-  if (is.character(marked)) {
-    if(length(y.names) == 1) {
-      marked = getOptPathBestIndex(op)
-    } else {
-      marked = getOptPathParetoFront(op, index = TRUE)
-    }
-  }
-  
-  # make sure that only points are marked that are alive at this iteration
-  marked = marked[marked <= nrow(op.x)]
-  
-  # set alpha and type values
-  .alpha = if(alpha && iter > 0)
-    normalize(dob, "range", range = c(1 / (iter + 1), 1)) else rep(1, length(dob))
-  .type = as.factor(ifelse(dob == 0, "init", ifelse(dob == iter, "prop", "seq")))
-  .type = factor(.type, levels = c("init", "seq", "prop", "marked"))
-  if (!is.null(marked)) {
-    .type[marked] = "marked"
-  }
-  .alpha = pmax(0.1, .alpha)
-  
-  # Subset dataset
-  tmp = getSubsettedOptPathDataFrame(op, iter, subset.obs, subset.vars, subset.targets)
-  op.x = tmp$op.x
-  op.y = tmp$op.y
-  dob = dob[tmp$subset.obs]
-  .alpha = .alpha[tmp$subset.obs]
-  .type = .type[tmp$subset.obs]
-  dim.x = length(tmp$subset.vars)
-  dim.y = length(tmp$subset.targets)
-  
-  print(op.x)
+  # Get Plotting Data
+  data = getAndSubsetPlotData(op, iter, subset.obs, subset.vars, subset.targets,
+    marked, alpha)
+  op.x = data$op.x
+  op.y = data$op.y
+  dob = data$dob
+  .alpha = data$.alpha
+  .type = data$.type
+  dim.x = length(data$subset.vars)
+  dim.y = length(data$subset.targets)
   
   # impute missing values
   # FIXME: Use apply here
@@ -149,11 +117,9 @@ renderOptPathPlot = function(op, iter, lim.x = list(), lim.y = list(), alpha = T
   classes.y = BBmisc::vcapply(op.y, function(x) class(x))
   
   # set and check x and y lims, if needed
-  tmp = getOptPathLims(lim.x, lim.y, op.x, op.y, iter, 0.05)
-  lim.x = tmp$lim.x
-  lim.y = tmp$lim.y
-  
-
+  lims = getOptPathLims(lim.x, lim.y, op.x, op.y, iter, 0.05)
+  lim.x = lims$lim.x
+  lim.y = lims$lim.y
   
   # Special case: X and Y are 1D
   if(dim.x == 1L && dim.y == 1L) {

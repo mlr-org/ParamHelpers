@@ -129,7 +129,8 @@ imputeMissingValues = function(x, impute.scale, impute.value) {
 
 # subset rows and cols of the opt.path and return list with data.frames for
 # x and y space and the subsets.
-getSubsettedOptPathDataFrame = function(op, iters, subset.obs, subset.vars, subset.targets) {
+getAndSubsetPlotData = function(op, iters, subset.obs, subset.vars, subset.targets,
+  marked = NULL, alpha = TRUE, ...) {
   
   x.names = colnames(getOptPathX(op))
   y.names = op$y.names
@@ -141,7 +142,31 @@ getSubsettedOptPathDataFrame = function(op, iters, subset.obs, subset.vars, subs
     include.rest = FALSE, dob = 0:max(iters), eol = c(min(iters):iters.max, NA))
   op.y = as.data.frame(op, include.x = FALSE, include.y = TRUE,
     include.rest = FALSE, dob = 0:max(iters), eol = c(min(iters):iters.max, NA))
+  dob = getOptPathDOB(op, dob = 0:max(iters), eol = c((max(iters) + 1):iters.max, NA))
   
+  # mark best point / pareto front if marked = "best"
+  if (is.character(marked)) {
+    if(length(y.names) == 1) {
+      marked = getOptPathBestIndex(op)
+    } else {
+      marked = getOptPathParetoFront(op, index = TRUE)
+    }
+  }
+  
+  # make sure that only points are marked that are alive at this iteration
+  marked = marked[marked <= nrow(op.x)]
+  
+  # set alpha and type values
+  .alpha = if(alpha && max(iters) > 0)
+    normalize(dob, "range", range = c(1 / (max(iters) + 1), 1)) else rep(1, length(dob))
+  .type = as.factor(ifelse(dob == 0, "init", ifelse(dob == max(iters), "prop", "seq")))
+  .type = factor(.type, levels = c("init", "seq", "prop", "marked"))
+  if (!is.null(marked)) {
+    .type[marked] = "marked"
+  }
+  .alpha = pmax(0.1, .alpha)
+  
+  # And now subset everything
   if (missing(subset.obs))
     subset.obs = 1:nrow(op.x)
   assertIntegerish(subset.obs, lower = 1, upper = getOptPathLength(op), unique = TRUE, 
@@ -166,16 +191,20 @@ getSubsettedOptPathDataFrame = function(op, iters, subset.obs, subset.vars, subs
   
   op.x = op.x[subset.obs, subset.vars, drop = FALSE]
   op.y = op.y[subset.obs, subset.targets, drop = FALSE]
+  dob = dob[subset.obs]
+  .alpha = .alpha[subset.obs]
+  .type = .type[subset.obs]
   
   return(
     list(
       op.x = op.x,
       op.y = op.y,
+      dob = dob,
+      .alpha = .alpha,
+      .type = .type,
       subset.obs = subset.obs,
       subset.vars = subset.vars,
       subset.targets = subset.targets
     )
   )
 }
-
-

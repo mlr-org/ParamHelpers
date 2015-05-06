@@ -29,28 +29,20 @@ plotOptPath = function(op, iters, pause = TRUE, lim.x = list(), lim.y = list(),
   requirePackages("gridExtra", why = "plotOptPath")
   
   iters.max = max(getOptPathDOB(op))
-  if (missing(iters)) {
+  if (missing(iters))
     iters = 0:iters.max
-  }
   
   assertIntegerish(iters, lower = 0L, upper = iters.max, any.missing = FALSE)
   assertFlag(pause)
-  assertList(lim.x)
-  assertList(lim.y)
   assertCharacter(title, len = 1)
-  
-  x.names = colnames(getOptPathX(op))
-  y.names = op$y.names
-  dim.x = length(x.names)
-  dim.y = length(y.names)
   
   # Set and check x and y lims, if needed
   # consider only points alive during at least 1 plotted iteration
   # Set and check x and y lims, if needed
-  tmp = getSubsettedOptPathDataFrame(op, iters, ...)
-  tmp = getOptPathLims(lim.x, lim.y, tmp$op.x, tmp$op.y, iters, 0.05)
-  lim.x = tmp$lim.x
-  lim.y = tmp$lim.y
+  data = getAndSubsetPlotData(op, iters, ...)
+  lims = getOptPathLims(lim.x, lim.y, data$op.x, data$op.y, iters, 0.05)
+  lim.x = lims$lim.x
+  lim.y = lims$lim.y
   
   # Helper to arrange plot via gridExtra and pause process
   arrangePlots = function(plots, iter, iters) {
@@ -67,4 +59,5 @@ plotOptPath = function(op, iters, pause = TRUE, lim.x = list(), lim.y = list(),
     arrangePlots(plots, iter, iters)
   }
   
+  return(invisble(NULL))
 }
