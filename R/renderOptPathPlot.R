@@ -109,6 +109,7 @@ renderOptPathPlot = function(op, iter, lim.x = list(), lim.y = list(), alpha = T
   if (!is.null(marked)) {
     .type[marked] = "marked"
   }
+  .alpha = pmax(0.1, .alpha)
   
   # Subset dataset
   if (missing(subset.obs))
@@ -396,15 +397,12 @@ plotMultiD = function(op, .alpha, .type, names, space = "x", iter, colours, size
   
   op$.alpha = .alpha
   # minimal alpha value:
-  op$.alpha = pmax(op$.alpha, 0.1)
   op$type = .type
   args$data = op
   args$alphaLines = ".alpha"
   args$groupColumn = ncol(op)
   args$scale = scale
-  # FIXME: aes searches for size in the global environment
-  size <<- size
-  args$mapping = ggplot2::aes(lwd = size)
+  args$mapping = ggplot2::aes_q(lwd = size)
   
   
   if (space == "x") {
@@ -412,7 +410,6 @@ plotMultiD = function(op, .alpha, .type, names, space = "x", iter, colours, size
   } else {
     title = ggplot2::ggtitle("Y-Space")
   }
-  args3 <<- args
   pl = do.call(GGally::ggparcoord, args)
   pl = pl + ggplot2::ylab ("value divided by standard deviation")
   pl = pl + title
