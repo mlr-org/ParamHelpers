@@ -48,7 +48,6 @@
 #'   Short names for x or y variables that are used as axis labels.
 #' @return List of plots. If both X and Y space are 1D, list has length 1,
 #'   otherwise length 2 with one plot for X and Y space respectivly.
-
 #' @export
 renderOptPathPlot = function(op, iter, lim.x = list(), lim.y = list(), alpha = TRUE, 
     colours = c("red", "blue", "green", "orange"), size = c(3, 1.5), impute.scale = 1, 
@@ -104,15 +103,10 @@ renderOptPathPlot = function(op, iter, lim.x = list(), lim.y = list(), alpha = T
   dim.y = length(data$subset.targets)
   
   # impute missing values
-  # FIXME: Use apply here
-  for (i in seq_len(ncol(op.x))) {
-    op.x[, i] = imputeMissingValues(op.x[, i], impute.scale, impute.value)
-  }
-  for (i in seq_len(ncol(op.y))) {
-    op.y[, i] = imputeMissingValues(op.y[, i], impute.scale, impute.value)
-  }
-  
-  # get classes of Params (numeric or factor)
+  op.x = BBmisc::dapply(op.x, fun = imputeMissingValues, impute.scale = impute.scale, impute.value = impute.value)
+  op.y = BBmisc::dapply(op.y, fun = imputeMissingValues, impute.scale = impute.scale, impute.value = impute.value)
+
+  # get classes of params (numeric or factor)
   classes.x = BBmisc::vcapply(op.x, function(x) class(x))
   classes.y = BBmisc::vcapply(op.y, function(x) class(x))
   
