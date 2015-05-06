@@ -1,7 +1,7 @@
 context("renderOptPathPlot")
 
 test_that("renderOptPathPlot", {
-  # Test 1D-1D + title
+  # Test 1D-1D + title + short names
   ps0 = makeParamSet(
     makeNumericParam("x")
   )
@@ -15,9 +15,10 @@ test_that("renderOptPathPlot", {
       dob = dob[i])
   }
   pl = renderOptPathPlot(op0, iter = 0)
-  pl = plotOptPath(op0, iters = 0:2, pause = FALSE, title = "Optimization Path")
+  pl = plotOptPath(op0, iters = 0:2, pause = FALSE, title = "Optimization Path", 
+    short.x.names = "e", short.y.names = "f")
   
-  # Test 2D-2D + title
+  # Test 2D-2D + title + marked
   ps1 = makeParamSet(
     makeNumericParam("x"),
     makeNumericParam("z")
@@ -32,13 +33,14 @@ test_that("renderOptPathPlot", {
       dob = dob[i])
   }
   pl = renderOptPathPlot(op1, iter = 0)
-  pl = plotOptPath(op1, iters = 0:2, pause = FALSE, title = "Optimization Path")
+  pl = plotOptPath(op1, iters = 0:2, pause = FALSE, title = "Optimization Path", 
+    marked = "best")
   pl = plotOptPath(op1, iters = 0:2, pause = FALSE,
     lim.x = list(XSpace = c(-10, 10), YSpace = c(-10, 10)),
     lim.y = list(XSpace = c(-10, 10), YSpace = c(-10, 10))
   )
   
-  # Test 2D-3D + size
+  # Test 2D-3D + size + short names
   op2 = makeOptPathDF(par.set = ps1, y.names = c("y1", "y2", "y3"), minimize = c(TRUE, FALSE, TRUE))
   X = rnorm(35)
   dob = c(rep(0, 5), 1:2)
@@ -47,9 +49,10 @@ test_that("renderOptPathPlot", {
       y = c(y1 = X[i * 5 - 2], y2 = X[i * 5 - 1], y3 = X[i * 5]), dob = dob[i])
   }
   pl = renderOptPathPlot(op2, iter = 0)
-  pl = plotOptPath(op2, iters = 0:2, pause = FALSE, size = c(5, 3))
+  pl = plotOptPath(op2, iters = 0:2, pause = FALSE, size = c(5, 3), 
+    short.y.names = c("a", "b", "c"))
   
-  # Test 3D-3D
+  # Test 3D-3D + marked
   ps3 = makeParamSet(
     makeNumericParam("x"),
     makeNumericParam("z"), 
@@ -63,10 +66,10 @@ test_that("renderOptPathPlot", {
       y = c(y1 = X[i * 6 - 2], y2 = X[i * 6 - 1], y3 = X[i * 6]), dob = dob[i])
   }
   pl = renderOptPathPlot(op3, iter = 0)
-  pl = plotOptPath(op3, iters = c(0:2, 20), pause = FALSE)
+  pl = plotOptPath(op3, iters = c(0:2, 20), pause = FALSE, marked = "best")
   pl = plotOptPath(op3, iters = c(0:2, 20), pause = FALSE, marked = c(4, 10, 18))
   
-  # Test 3D-1D + scale
+  # Test 3D-1D + scale + short names
   ps4 = makeParamSet(
     makeNumericParam("x"),
     makeNumericParam("z"), 
@@ -82,9 +85,10 @@ test_that("renderOptPathPlot", {
   pl = renderOptPathPlot(op4, iter = 0)
   pl = renderOptPathPlot(op4, iter = 0, lim.x = list(YSpace = c(-0.5, 0.5)))
   pl = plotOptPath(op4, iters = 0:2, pause = FALSE)
-  pl = plotOptPath(op4, iters = 0:2, pause = FALSE, scale = "robust")
+  pl = plotOptPath(op4, iters = 0:2, pause = FALSE, scale = "robust", 
+    short.y.names = "y")
   
-  # Test 1D(discrete)-2D
+  # Test 1D(discrete)-2D + marked
   ps5 = makeParamSet(
     makeDiscreteParam("x", values = list("a", "b"))
   )
@@ -101,7 +105,7 @@ test_that("renderOptPathPlot", {
   pl = renderOptPathPlot(op5, iter = 0)
   pl = plotOptPath(op5, iters = 0:2, pause = FALSE, marked = c(3))
   
-  # Test 2D(mixed)-1D + ggplot.theme
+  # Test 2D(mixed)-1D + ggplot.theme + marked
   ps6 = makeParamSet(
     makeNumericParam("x"),
     makeDiscreteParam("z", values = list("a", "b"))
@@ -116,8 +120,8 @@ test_that("renderOptPathPlot", {
   }
   addOptPathEl(op6, x = list(x = Y[6] + 0.05, z = X[6]), 
       y = c(y1 = Y[6]), dob = dob[7])
-  pl = renderOptPathPlot(op6, iter = 0, marked = "min")
-  pl = plotOptPath(op6, iters = 0:2, pause = FALSE, marked = "max")
+  pl = renderOptPathPlot(op6, iter = 0, marked = "best")
+  pl = plotOptPath(op6, iters = 0:2, pause = FALSE, marked = "best")
   pl = plotOptPath(op6, iters = 0:2, pause = FALSE, ggplot.theme = ggplot2::theme_bw())
   pl = plotOptPath(op6, iters = 0:2, pause = FALSE, ggplot.theme = ggplot2::theme(legend.position = "bottom"))
   
