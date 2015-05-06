@@ -50,15 +50,13 @@ getParamNA = function(par, repeated = FALSE) {
 # are set to NULL. The same happens if there is a discrete variable in the 2D case.
 # We don't need limits in this cases. 
 # If the dimensionality is 1 for X or Y Space, for this space the lim.y is NULL.
-getOptPathLims <- function(lim.x, lim.y, op, iters, scale) {
+getOptPathLims <- function(lim.x, lim.y, op.x, op.y, iters, scale) {
   assertNumeric(scale, len = 1L, lower = 0, finite = TRUE, any.missing = FALSE)
-
+  
   assertList(lim.x)
   assertList(lim.y)
-  iters.max = max(getOptPathDOB(op))
   for (space in c("XSpace", "YSpace")) {
-    op.frame = as.data.frame(op, include.x = (space == "XSpace"), include.y = (space == "YSpace"),
-      include.rest = FALSE, dob = 0:max(iters), eol = c(min(iters):iters.max, NA))
+    op.frame = if (space == "XSpace") op.x else op.y
     dim = ncol(op.frame)
     classes = BBmisc::vcapply(op.frame, function(x) class(x))
     if (dim > 2L) {
@@ -107,10 +105,8 @@ getOptPathLims <- function(lim.x, lim.y, op, iters, scale) {
         }
       } else {
         lim.y[[space]] = NULL
-      }
-      
+      } 
     }
-    
     
   }
   return(list(lim.x = lim.x, lim.y = lim.y))
@@ -130,3 +126,56 @@ imputeMissingValues = function(x, impute.scale, impute.value) {
   }
   return(x)
 }
+
+# subset rows and cols of the opt.path and return list with data.frames for
+# x and y space and the subsets.
+getSubsettedOptPathDataFrame = function(op, iters, subset.obs, subset.vars, subset.targets) {
+  
+  x.names = colnames(getOptPathX(op))
+  y.names = op$y.names
+  dim.x = length(x.names)
+  dim.y = length(y.names)
+  iters.max = max(getOptPathDOB(op))
+  
+  op.x = as.data.frame(op, include.x = TRUE, include.y = FALSE,
+    include.rest = FALSE, dob = 0:max(iters), eol = c(min(iters):iters.max, NA))
+  op.y = as.data.frame(op, include.x = FALSE, include.y = TRUE,
+    include.rest = FALSE, dob = 0:max(iters), eol = c(min(iters):iters.max, NA))
+  
+  if (missing(subset.obs))
+    subset.obs = 1:nrow(op.x)
+  assertIntegerish(subset.obs, lower = 1, upper = getOptPathLength(op), unique = TRUE, 
+    any.missing = FALSE)
+  # use only indices avaible in the current iterations
+  subset.obs = subset.obs[subset.obs <= nrow(op.x)]
+  
+  if (missing(subset.vars))
+    subset.vars = x.names
+  if (is.numeric(subset.vars))
+    assertIntegerish(subset.vars, lower = 1, upper = dim.x, unique = TRUE, any.missing = FALSE)
+  else 
+    assertSubset(subset.vars, x.names)
+  
+  if (missing(subset.targets))
+    subset.targets = y.names
+  if (is.numeric(subset.targets))
+    assertIntegerish(subset.targets, lower = 1, upper = getOptPathLength(op), unique = TRUE, 
+      any.missing = FALSE)
+  else
+    assertSubset(subset.targets, y.names)
+  
+  op.x = op.x[subset.obs, subset.vars, drop = FALSE]
+  op.y = op.y[subset.obs, subset.targets, drop = FALSE]
+  
+  return(
+    list(
+      op.x = op.x,
+      op.y = op.y,
+      subset.obs = subset.obs,
+      subset.vars = subset.vars,
+      subset.targets = subset.targets
+    )
+  )
+}
+
+

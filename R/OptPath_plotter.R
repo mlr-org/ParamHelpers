@@ -47,7 +47,8 @@ plotOptPath = function(op, iters, pause = TRUE, lim.x = list(), lim.y = list(),
   # Set and check x and y lims, if needed
   # consider only points alive during at least 1 plotted iteration
   # Set and check x and y lims, if needed
-  tmp = getOptPathLims(lim.x, lim.y, op, iters, 0.05)
+  tmp = getSubsettedOptPathDataFrame(op, iters, ...)
+  tmp = getOptPathLims(lim.x, lim.y, tmp$op.x, tmp$op.y, iters, 0.05)
   lim.x = tmp$lim.x
   lim.y = tmp$lim.y
   

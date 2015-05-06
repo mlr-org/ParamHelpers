@@ -162,5 +162,10 @@ test_that("renderOptPathPlot", {
   pl = plotOptPath(op8, iters = 0:2, pause = FALSE, 
     colours = c("black", "yellow", "orange", "green"))
   
+  
+  # Test subsetting
+  pl = renderOptPathPlot(op8, iter = 0, subset.obs = 1:3)
+  pl = renderOptPathPlot(op8, iter = 0, subset.vars = 1:2)
+  
 })
   

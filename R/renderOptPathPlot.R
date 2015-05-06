@@ -73,7 +73,6 @@ renderOptPathPlot = function(op, iter, lim.x = list(), lim.y = list(), alpha = T
     }
   }
   
-  # FIXME: Is there any better way to get these 2 informations?
   x.names = colnames(getOptPathX(op))
   y.names = op$y.names
   dim.x = length(x.names)
@@ -112,34 +111,16 @@ renderOptPathPlot = function(op, iter, lim.x = list(), lim.y = list(), alpha = T
   .alpha = pmax(0.1, .alpha)
   
   # Subset dataset
-  if (missing(subset.obs))
-    subset.obs = 1:nrow(op.x)
-  assertIntegerish(subset.obs, lower = 1, upper = getOptPathLength(op), unique = TRUE, 
-    any.missing = FALSE)
-  # use only indices avaible in the current iterations
-  subset.obs = subset.obs[subset.obs <= nrow(op.x)]
+  tmp = getSubsettedOptPathDataFrame(op, iter, subset.obs, subset.vars, subset.targets)
+  op.x = tmp$op.x
+  op.y = tmp$op.y
+  dob = dob[tmp$subset.obs]
+  .alpha = .alpha[tmp$subset.obs]
+  .type = .type[tmp$subset.obs]
+  dim.x = length(tmp$subset.vars)
+  dim.y = length(tmp$subset.targets)
   
-  if (missing(subset.vars))
-    subset.vars = x.names
-  if (is.numeric(subset.vars))
-    assertIntegerish(subset.vars, lower = 1, upper = dim.x, unique = TRUE, any.missing = FALSE)
-  else 
-    assertSubset(subset.vars, x.names)
-  
-  if (missing(subset.targets))
-    subset.targets = y.names
-  if (is.numeric(subset.targets))
-    assertIntegerish(subset.targets, lower = 1, upper = getOptPathLength(op), unique = TRUE, 
-      any.missing = FALSE)
-  else
-    assertSubset(subset.targets, y.names)
-  
-  op.x = op.x[subset.obs, subset.vars, drop = FALSE]
-  op.y = op.y[subset.obs, subset.targets, drop = FALSE]
-  dob = dob[subset.obs]
-  .alpha = .alpha[subset.obs]
-  .type = .type[subset.obs]
-  
+  print(op.x)
   
   # impute missing values
   # FIXME: Use apply here
@@ -155,7 +136,7 @@ renderOptPathPlot = function(op, iter, lim.x = list(), lim.y = list(), alpha = T
   classes.y = BBmisc::vcapply(op.y, function(x) class(x))
   
   # set and check x and y lims, if needed
-  tmp = getOptPathLims(lim.x, lim.y, op, iter, 0.05)
+  tmp = getOptPathLims(lim.x, lim.y, op.x, op.y, iter, 0.05)
   lim.x = tmp$lim.x
   lim.y = tmp$lim.y
   
