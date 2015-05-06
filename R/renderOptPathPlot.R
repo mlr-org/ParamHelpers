@@ -32,6 +32,16 @@
 #' @param marked [\code{integer} | \code{character(1)} | NULL]\cr
 #'    "min" or "max" or indices of points that should be marked in the plots. 
 #'    Default is \code{NULL} (no points are marked).
+#' @param subset.obs [\code{integer}]
+#'   Vector of indices to subset of observations to be plotted, default is all observations.
+#'   All indices must be available in the opt.path, but not in the current iteration.
+#'   Indices not available in the current iteration will be ignored.
+#' @param subset.vars [\code{integer} | \code{character}]
+#'   Subset of variables (x-variables) to be plotted. Either vector of indices or names. 
+#'   Default is all variables
+#' @param subset.targets [\code{integer} | \code{character}]
+#'   Subset of target variables (y-variables) to be plotted. Either vector of indices or names. 
+#'   Default is all variables
 #' @return List of plots. If both X and Y space are 1D, list has length 1,
 #'   otherwise length 2 with one plot for X and Y space respectivly.
 
@@ -39,7 +49,7 @@
 renderOptPathPlot = function(op, iter, lim.x = list(), lim.y = list(), alpha = TRUE, 
     colours = c("red", "blue", "green", "orange"), size = c(3, 1.5), impute.scale = 1, 
     impute.value = "missing", scale = "std", ggplot.theme = ggplot2::theme(legend.position = "top"), 
-    marked = NULL) {
+    marked = NULL, subset.obs, subset.vars, subset.targets) {
   
   requirePackages("GGally", why = "renderOptPathPlot")
   requirePackages("ggplot2", why = "renderOptPathPlot")
@@ -53,13 +63,13 @@ renderOptPathPlot = function(op, iter, lim.x = list(), lim.y = list(), alpha = T
   assertNumeric(size, len = 2)
   assertNumeric(impute.scale, len = 1)
   assertCharacter(impute.value, len = 1)
-  assertCharacter(scale, len = 1)
+  assertChoice(scale, choices = c("std", "robust", "uniminmax", "globalminmax", "center", "centerObs"))
   assertClass(ggplot.theme, classes = c("theme", "gg"))
   if (!is.null(marked)) {
     if (is.character(marked)) {
-      assertCharacter(marked, len = 1)
+      assertChoice(marked, choices = c("min", "max"))
     } else {
-      asInteger(marked)
+      marked = asInteger(marked)
     }
   }
   
@@ -75,23 +85,6 @@ renderOptPathPlot = function(op, iter, lim.x = list(), lim.y = list(), alpha = T
   op.y = as.data.frame(op, include.x = FALSE, include.rest = FALSE,
     dob = 0:iter, eol = c(iter:iters.max, NA))
   dob = getOptPathDOB(op, dob = 0:iter, eol = c((iter + 1):iters.max, NA))
-  
-  # impute missing values
-  for (i in seq_len(ncol(op.x))) {
-    op.x[, i] = imputeMissingValues(op.x[,i], impute.scale, impute.value)
-  }
-  for (i in seq_len(ncol(op.y))) {
-    op.y[, i] = imputeMissingValues(op.y[,i], impute.scale, impute.value)
-  }
-  
-  # get classes of Params (numeric or factor)
-  classes.x = BBmisc::vcapply(op.x, function(x) class(x))
-  classes.y = BBmisc::vcapply(op.y, function(x) class(x))
-  
-  # set and check x and y lims, if needed
-  tmp = getOptPathLims(lim.x, lim.y, op, iter, 0.05)
-  lim.x = tmp$lim.x
-  lim.y = tmp$lim.y
   
   # mark minimum or maximum if marked = "min" or marked = "max"
   if (is.character(marked)) {
@@ -110,12 +103,62 @@ renderOptPathPlot = function(op, iter, lim.x = list(), lim.y = list(), alpha = T
   
   # set alpha and type values
   .alpha = if(alpha && iter > 0)
-     normalize(dob, "range", range = c(1 / (iter + 1), 1)) else rep(1, length(dob))
+    normalize(dob, "range", range = c(1 / (iter + 1), 1)) else rep(1, length(dob))
   .type = as.factor(ifelse(dob == 0, "init", ifelse(dob == iter, "prop", "seq")))
   .type = factor(.type, levels = c("init", "seq", "prop", "marked"))
   if (!is.null(marked)) {
     .type[marked] = "marked"
   }
+  
+  # Subset dataset
+  if (missing(subset.obs))
+    subset.obs = 1:nrow(op.x)
+  assertIntegerish(subset.obs, lower = 1, upper = getOptPathLength(op), unique = TRUE, 
+    any.missing = FALSE)
+  # use only indices avaible in the current iterations
+  subset.obs = subset.obs[subset.obs <= nrow(op.x)]
+  
+  if (missing(subset.vars))
+    subset.vars = x.names
+  if (is.numeric(subset.vars))
+    assertIntegerish(subset.vars, lower = 1, upper = dim.x, unique = TRUE, any.missing = FALSE)
+  else 
+    assertSubset(subset.vars, x.names)
+  
+  if (missing(subset.targets))
+    subset.targets = y.names
+  if (is.numeric(subset.targets))
+    assertIntegerish(subset.targets, lower = 1, upper = getOptPathLength(op), unique = TRUE, 
+      any.missing = FALSE)
+  else
+    assertSubset(subset.targets, y.names)
+  
+  op.x = op.x[subset.obs, subset.vars, drop = FALSE]
+  op.y = op.y[subset.obs, subset.targets, drop = FALSE]
+  dob = dob[subset.obs]
+  .alpha = .alpha[subset.obs]
+  .type = .type[subset.obs]
+  
+  
+  # impute missing values
+  # FIXME: Use apply here
+  for (i in seq_len(ncol(op.x))) {
+    op.x[, i] = imputeMissingValues(op.x[, i], impute.scale, impute.value)
+  }
+  for (i in seq_len(ncol(op.y))) {
+    op.y[, i] = imputeMissingValues(op.y[, i], impute.scale, impute.value)
+  }
+  
+  # get classes of Params (numeric or factor)
+  classes.x = BBmisc::vcapply(op.x, function(x) class(x))
+  classes.y = BBmisc::vcapply(op.y, function(x) class(x))
+  
+  # set and check x and y lims, if needed
+  tmp = getOptPathLims(lim.x, lim.y, op, iter, 0.05)
+  lim.x = tmp$lim.x
+  lim.y = tmp$lim.y
+  
+
   
   # Special case: X and Y are 1D
   if(dim.x == 1L && dim.y == 1L) {
@@ -369,8 +412,7 @@ plotMultiD = function(op, .alpha, .type, names, space = "x", iter, colours, size
   } else {
     title = ggplot2::ggtitle("Y-Space")
   }
-  
-
+  args3 <<- args
   pl = do.call(GGally::ggparcoord, args)
   pl = pl + ggplot2::ylab ("value divided by standard deviation")
   pl = pl + title
