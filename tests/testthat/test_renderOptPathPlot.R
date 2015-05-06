@@ -1,7 +1,7 @@
 context("renderOptPathPlot")
 
 test_that("renderOptPathPlot", {
-  # Test 1D-1D + title
+  # Test 1D-1D + title + short names
   ps0 = makeParamSet(
     makeNumericParam("x")
   )
@@ -15,7 +15,8 @@ test_that("renderOptPathPlot", {
       dob = dob[i])
   }
   pl = renderOptPathPlot(op0, iter = 0)
-  pl = plotOptPath(op0, iters = 0:2, pause = FALSE, title = "Optimization Path")
+  pl = plotOptPath(op0, iters = 0:2, pause = FALSE, title = "Optimization Path", 
+    short.x.names = "e", short.y.names = "f")
   
   # Test 2D-2D + title + marked
   ps1 = makeParamSet(
@@ -39,7 +40,7 @@ test_that("renderOptPathPlot", {
     lim.y = list(XSpace = c(-10, 10), YSpace = c(-10, 10))
   )
   
-  # Test 2D-3D + size
+  # Test 2D-3D + size + short names
   op2 = makeOptPathDF(par.set = ps1, y.names = c("y1", "y2", "y3"), minimize = c(TRUE, FALSE, TRUE))
   X = rnorm(35)
   dob = c(rep(0, 5), 1:2)
@@ -48,7 +49,8 @@ test_that("renderOptPathPlot", {
       y = c(y1 = X[i * 5 - 2], y2 = X[i * 5 - 1], y3 = X[i * 5]), dob = dob[i])
   }
   pl = renderOptPathPlot(op2, iter = 0)
-  pl = plotOptPath(op2, iters = 0:2, pause = FALSE, size = c(5, 3))
+  pl = plotOptPath(op2, iters = 0:2, pause = FALSE, size = c(5, 3), 
+    short.y.names = c("a", "b", "c"))
   
   # Test 3D-3D + marked
   ps3 = makeParamSet(
@@ -67,7 +69,7 @@ test_that("renderOptPathPlot", {
   pl = plotOptPath(op3, iters = c(0:2, 20), pause = FALSE, marked = "best")
   pl = plotOptPath(op3, iters = c(0:2, 20), pause = FALSE, marked = c(4, 10, 18))
   
-  # Test 3D-1D + scale
+  # Test 3D-1D + scale + short names
   ps4 = makeParamSet(
     makeNumericParam("x"),
     makeNumericParam("z"), 
@@ -83,7 +85,8 @@ test_that("renderOptPathPlot", {
   pl = renderOptPathPlot(op4, iter = 0)
   pl = renderOptPathPlot(op4, iter = 0, lim.x = list(YSpace = c(-0.5, 0.5)))
   pl = plotOptPath(op4, iters = 0:2, pause = FALSE)
-  pl = plotOptPath(op4, iters = 0:2, pause = FALSE, scale = "robust")
+  pl = plotOptPath(op4, iters = 0:2, pause = FALSE, scale = "robust", 
+    short.y.names = "y")
   
   # Test 1D(discrete)-2D + marked
   ps5 = makeParamSet(

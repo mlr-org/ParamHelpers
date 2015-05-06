@@ -8,7 +8,7 @@ renderOptPathPlot(op, iter, lim.x = list(), lim.y = list(), alpha = TRUE,
   colours = c("red", "blue", "green", "orange"), size = c(3, 1.5),
   impute.scale = 1, impute.value = "missing", scale = "std",
   ggplot.theme = ggplot2::theme(legend.position = "top"), marked = NULL,
-  subset.obs, subset.vars, subset.targets)
+  subset.obs, subset.vars, subset.targets, short.x.names, short.y.names)
 }
 \arguments{
 \item{op}{[\code{OptPath}]\cr
@@ -52,7 +52,9 @@ Parameter \code{scale} from the function \code{GGally::ggparcoord} which is used
 \code{ggplot2::theme(legend.position = "top")}.}
 
 \item{marked}{[\code{integer} | \code{character(1)} | NULL]\cr
-"min" or "max" or indices of points that should be marked in the plots.
+"best" or indices of points that should be marked in the plots.
+If \code{marked = "best"} the best point for single crit optimization
+respectively the pareto front for multi crit optimization is marked.
 Default is \code{NULL} (no points are marked).}
 
 \item{subset.obs}{[\code{integer}]\cr
@@ -67,6 +69,11 @@ Default is all variables}
 \item{subset.targets}{[\code{integer} | \code{character}]\cr
 Subset of target variables (y-variables) to be plotted. Either vector of indices or names.
 Default is all variables}
+
+\item{short.x.names}{[\code{character}],}
+
+\item{short.y.names}{[\code{character}]\cr
+Short names for x or y variables that are used as axis labels.}
 }
 \value{
 List of plots. If both X and Y space are 1D, list has length 1,

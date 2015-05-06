@@ -44,6 +44,8 @@
 #' @param subset.targets [\code{integer} | \code{character}]\cr
 #'   Subset of target variables (y-variables) to be plotted. Either vector of indices or names. 
 #'   Default is all variables
+#' @param short.x.names [\code{character}], @param short.y.names [\code{character}]\cr
+#'   Short names for x or y variables that are used as axis labels.
 #' @return List of plots. If both X and Y space are 1D, list has length 1,
 #'   otherwise length 2 with one plot for X and Y space respectivly.
 
@@ -51,7 +53,7 @@
 renderOptPathPlot = function(op, iter, lim.x = list(), lim.y = list(), alpha = TRUE, 
     colours = c("red", "blue", "green", "orange"), size = c(3, 1.5), impute.scale = 1, 
     impute.value = "missing", scale = "std", ggplot.theme = ggplot2::theme(legend.position = "top"), 
-    marked = NULL, subset.obs, subset.vars, subset.targets) {
+    marked = NULL, subset.obs, subset.vars, subset.targets, short.x.names, short.y.names) {
   
   requirePackages("GGally", why = "renderOptPathPlot")
   requirePackages("ggplot2", why = "renderOptPathPlot")
@@ -74,11 +76,23 @@ renderOptPathPlot = function(op, iter, lim.x = list(), lim.y = list(), alpha = T
       marked = asInteger(marked)
     }
   }
+
   
   # FIXME: Is there any better way to get these 2 informations?
   x.names = colnames(getOptPathX(op))
-  y.names = op$y.names
+  if (missing(short.x.names)) {
+    short.x.names = x.names
+  } else {
+    assertCharacter(short.x.names, len = length(x.names))
+  }
   dim.x = length(x.names)
+
+  y.names = op$y.names
+  if (missing(short.y.names)) {
+    short.y.names = y.names
+  } else {
+    assertCharacter(short.y.names, len = length(y.names))
+  }
   dim.y = length(y.names)
   
   # consider only points alive at iteration iter
@@ -163,50 +177,56 @@ renderOptPathPlot = function(op, iter, lim.x = list(), lim.y = list(), alpha = T
   # Special case: X and Y are 1D
   if(dim.x == 1L && dim.y == 1L) {
     pl = plot2D(cbind(x = op.x, y = op.y), .alpha, .type, names = c(x.names, y.names), 
-      space = "both", iter = iter, classes = c(classes.x, classes.y), 
-      lim.x = lim.x[["XSpace"]], lim.y = lim.x[["YSpace"]], colours = colours, 
-      size = size[1], ggplot.theme = ggplot.theme)
+      short.names = c(short.x.names, short.y.names), space = "both", iter = iter, 
+      classes = c(classes.x, classes.y), lim.x = lim.x[["XSpace"]], lim.y = lim.x[["YSpace"]], 
+      colours = colours, size = size[1], ggplot.theme = ggplot.theme)
     return(list(plot = pl))
   }
   
   # plot 1: x-space
   if (dim.x == 1L && classes.x == "numeric") {
-    pl1 = plot1DNum(op.x, .alpha, .type, names = x.names, space = "x", iter = iter, 
-      lim.x = lim.x[["XSpace"]], colours = colours, ggplot.theme = ggplot.theme)
+    pl1 = plot1DNum(op.x, .alpha, .type, names = x.names, short.names = short.x.names, 
+      space = "x", iter = iter, lim.x = lim.x[["XSpace"]], colours = colours, 
+      ggplot.theme = ggplot.theme)
   }
   if (dim.x == 1L && classes.x == "factor") {
-    pl1 = plot1DDisc(op.x, .alpha, .type, names = x.names, space = "x", iter = iter, 
-      lim.y = lim.y[["XSpace"]], colours = colours, ggplot.theme = ggplot.theme)
+    pl1 = plot1DDisc(op.x, .alpha, .type, names = x.names, short.names = short.x.names, 
+      space = "x", iter = iter, lim.y = lim.y[["XSpace"]], colours = colours, 
+      ggplot.theme = ggplot.theme)
   }
     
   if (dim.x == 2L) {
-    pl1 = plot2D(op.x, .alpha, .type, names = x.names, space = "x", iter = iter,
-      classes = classes.x, lim.x = lim.x[["XSpace"]], lim.y = lim.y[["XSpace"]], 
-      colours = colours, size = size[1], ggplot.theme = ggplot.theme)
+    pl1 = plot2D(op.x, .alpha, .type, names = x.names, short.names = short.x.names, 
+      space = "x", iter = iter, classes = classes.x, lim.x = lim.x[["XSpace"]], 
+      lim.y = lim.y[["XSpace"]], colours = colours, size = size[1], ggplot.theme = ggplot.theme)
   } 
   if (dim.x > 2L) {
-    pl1 = plotMultiD(op.x, .alpha, .type, names = x.names, space = "x", iter = iter, 
-      colours = colours, size = size[2], scale = scale, ggplot.theme = ggplot.theme)
+    pl1 = plotMultiD(op.x, .alpha, .type, names = x.names, short.names = short.x.names, 
+      space = "x", iter = iter, colours = colours, size = size[2], scale = scale, 
+      ggplot.theme = ggplot.theme)
   }
   
   # plot 2: y-space
   if (dim.y == 1L && classes.y == "numeric") {
-    pl2 = plot1DNum(op.y, .alpha, .type, names = y.names, space = "y", iter = iter,
-      lim.x = lim.x[["YSpace"]], colours = colours, ggplot.theme = ggplot.theme)
+    pl2 = plot1DNum(op.y, .alpha, .type, names = y.names, short.names = short.y.names, 
+      space = "y", iter = iter, lim.x = lim.x[["YSpace"]], colours = colours, 
+      ggplot.theme = ggplot.theme)
   }
   if (dim.y == 1L && classes.y == "factor") {
-    pl2 = plot1DDisc(op.y, .alpha, .type, names = y.names, space = "y", iter = iter, 
-      lim.y = lim.y[["YSpace"]], colours = colours, ggplot.theme = ggplot.theme)
+    pl2 = plot1DDisc(op.y, .alpha, .type, names = y.names, short.names = short.y.names, 
+      space = "y", iter = iter, lim.y = lim.y[["YSpace"]], colours = colours, 
+      ggplot.theme = ggplot.theme)
   }
   
   if (dim.y == 2L) {
-    pl2 = plot2D(op.y, .alpha, .type, names = y.names, space = "y", iter = iter,
-      classes = classes.y, lim.x = lim.x[["YSpace"]], lim.y = lim.y[["YSpace"]], 
-      colours = colours, size = size[1], ggplot.theme = ggplot.theme)
+    pl2 = plot2D(op.y, .alpha, .type, names = y.names, short.names = short.y.names, 
+      space = "y", iter = iter, classes = classes.y, lim.x = lim.x[["YSpace"]], 
+      lim.y = lim.y[["YSpace"]], colours = colours, size = size[1], ggplot.theme = ggplot.theme)
   } 
   if (dim.y > 2L) {
-    pl2 = plotMultiD(op.y, .alpha, .type, y.names, space = "y", iter = iter, 
-      colours = colours, size = size[2], scale = scale, ggplot.theme = ggplot.theme)
+    pl2 = plotMultiD(op.y, .alpha, .type, names = y.names, short.names = short.y.names, 
+      space = "y", iter = iter, colours = colours, size = size[2], scale = scale, 
+      ggplot.theme = ggplot.theme)
   }
   
   return(list(plot.x = pl1, plot.y = pl2))
@@ -221,6 +241,8 @@ renderOptPathPlot = function(op, iter, lim.x = list(), lim.y = list(), alpha = T
 #   Vector of types of the points, factor levels are init, seq, prob and marked.
 # @param names [\code{character}]\cr
 #   Vector of the names of the variables.
+# @param short.names [\code{character}]\cr
+#   Vector of the short names of the variables.
 # @param space[\code{character}]
 #   If the X-Space is plotted, space = "x" and if the Y-Space is plotted, space = "y".
 # @param iter [\code{integer(1)}]\cr
@@ -237,7 +259,7 @@ renderOptPathPlot = function(op, iter, lim.x = list(), lim.y = list(), alpha = T
 
 
 # Plot method for a one-dimensional numeric X- or Y-Space
-plot1DNum = function(op, .alpha, .type, names, space, iter, lim.x, colours, ggplot.theme) {
+plot1DNum = function(op, .alpha, .type, names, short.names, space, iter, lim.x, colours, ggplot.theme) {
   
   op$.alpha = .alpha
   op$type = .type
@@ -252,6 +274,7 @@ plot1DNum = function(op, .alpha, .type, names, space, iter, lim.x, colours, ggpl
   pl = ggplot2::ggplot(op, ggplot2::aes_string(x = names[1]))
   pl = pl + ggplot2::geom_density(colour = "black")
   pl = pl + title
+  pl = pl + ggplot2::xlab(short.names)
   pl = pl + ggplot2::geom_rug(ggplot2::aes_string(alpha = ".alpha", colour = "type"), 
     sides = "b", size = 2, data = op)
   pl = pl + ggplot2::coord_cartesian(xlim = lim.x) 
@@ -266,8 +289,8 @@ plot1DNum = function(op, .alpha, .type, names, space, iter, lim.x, colours, ggpl
 
 
 # Plot method for a one-dimensional discrete X- or Y-Space
-plot1DDisc = function(op, .alpha, .type, names, space, iter, lim.y, colours, 
-    ggplot.theme) {
+plot1DDisc = function(op, .alpha, .type, names, short.names, space, iter, lim.y, 
+    colours, ggplot.theme) {
   
   op$.alpha = as.factor(.alpha)
   op$type = .type
@@ -282,6 +305,7 @@ plot1DDisc = function(op, .alpha, .type, names, space, iter, lim.y, colours,
   pl = ggplot2::ggplot(op, ggplot2::aes_string(x = names[1], fill = "type", alpha = ".alpha"))
   pl = pl + ggplot2::geom_bar()
   pl = pl + title
+  pl = pl + ggplot2::xlab(short.names)
   pl = pl + ggplot2::ylim(lim.y)
   pl = pl + ggplot2::scale_alpha_discrete(range = c(max(1 / (iter + 1), 0.1), 1))
   pl = pl + ggplot2::scale_fill_manual(
@@ -296,7 +320,7 @@ plot1DDisc = function(op, .alpha, .type, names, space, iter, lim.y, colours,
 
 # Plot method for a two-dimensional X- or Y-Space
 
-plot2D = function(op, .alpha, .type, names, space, iter, classes, lim.x, lim.y, 
+plot2D = function(op, .alpha, .type, names, short.names, space, iter, classes, lim.x, lim.y, 
   colours, size, ggplot.theme) {
   
   op$.alpha = .alpha
@@ -304,18 +328,12 @@ plot2D = function(op, .alpha, .type, names, space, iter, classes, lim.x, lim.y,
   
   if (space == "x") {
     title = ggplot2::ggtitle("X-Space")
-    x.lab = ggplot2::xlab(expression(x[1]))
-    y.lab = ggplot2::ylab(expression(x[2]))
   } 
   if (space == "y") {
     title = ggplot2::ggtitle("Y-Space")
-    x.lab = ggplot2::xlab(expression(y[1]))
-    y.lab = ggplot2::ylab(expression(y[2]))
   }
   if (space == "both") {
     title = ggplot2::ggtitle("X- and Y-Space")
-    x.lab = ggplot2::xlab(expression(x[1]))
-    y.lab = ggplot2::ylab(expression(y[1]))
   }
   
   if (any(classes == "factor")) {
@@ -328,7 +346,7 @@ plot2D = function(op, .alpha, .type, names, space, iter, classes, lim.x, lim.y,
     x = names[1], y = names[2], shape = "type", colour = "type", alpha = ".alpha"))
   pl = pl + ggplot2::geom_point(size = size, position = pos)
   pl = pl + title
-  pl = pl + x.lab + y.lab
+  pl = pl + ggplot2::xlab(short.names[1]) + ggplot2::ylab(short.names[2])
   pl = pl + ggplot2::guides(alpha = FALSE)
   pl = pl + ggplot2::scale_colour_manual(name = "type",
     values = c(init = colours[1], seq = colours[2], prop = colours[3], marked = colours[4]))
@@ -387,7 +405,7 @@ plot2D = function(op, .alpha, .type, names, space, iter, classes, lim.x, lim.y,
 
 
 # Plot method for a multi-dimensional X- or Y-Space
-plotMultiD = function(op, .alpha, .type, names, space = "x", iter, colours, size, 
+plotMultiD = function(op, .alpha, .type, names, short.names, space, iter, colours, size, 
     scale, ggplot.theme) {
   args = list(columns = seq_along(names))
   for (i in seq_along(ncol(op))) {
@@ -411,6 +429,7 @@ plotMultiD = function(op, .alpha, .type, names, space = "x", iter, colours, size
   }
   pl = do.call(GGally::ggparcoord, args)
   pl = pl + ggplot2::ylab ("value divided by standard deviation")
+  pl = pl + ggplot2::scale_x_discrete(labels = short.names)
   pl = pl + title
   pl = pl + ggplot2::guides(alpha = FALSE, size = FALSE)
   pl = pl + ggplot2::scale_colour_manual(
