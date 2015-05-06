@@ -59,5 +59,5 @@ plotOptPath = function(op, iters, pause = TRUE, lim.x = list(), lim.y = list(),
     arrangePlots(plots, iter, iters)
   }
   
-  return(invisble(NULL))
+  return(invisible(NULL))
 }
