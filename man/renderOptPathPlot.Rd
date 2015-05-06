@@ -7,7 +7,8 @@
 renderOptPathPlot(op, iter, lim.x = list(), lim.y = list(), alpha = TRUE,
   colours = c("red", "blue", "green", "orange"), size = c(3, 1.5),
   impute.scale = 1, impute.value = "missing", scale = "std",
-  ggplot.theme = ggplot2::theme(legend.position = "top"), marked = NULL)
+  ggplot.theme = ggplot2::theme(legend.position = "top"), marked = NULL,
+  subset.obs, subset.vars, subset.targets)
 }
 \arguments{
 \item{op}{[\code{OptPath}]\cr
@@ -53,6 +54,19 @@ Parameter \code{scale} from the function \code{GGally::ggparcoord} which is used
 \item{marked}{[\code{integer} | \code{character(1)} | NULL]\cr
 "min" or "max" or indices of points that should be marked in the plots.
 Default is \code{NULL} (no points are marked).}
+
+\item{subset.obs}{[\code{integer}]\cr
+Vector of indices to subset of observations to be plotted, default is all observations.
+All indices must be available in the opt.path, but not in the current iteration.
+Indices not available in the current iteration will be ignored.}
+
+\item{subset.vars}{[\code{integer} | \code{character}]\cr
+Subset of variables (x-variables) to be plotted. Either vector of indices or names.
+Default is all variables}
+
+\item{subset.targets}{[\code{integer} | \code{character}]\cr
+Subset of target variables (y-variables) to be plotted. Either vector of indices or names.
+Default is all variables}
 }
 \value{
 List of plots. If both X and Y space are 1D, list has length 1,
