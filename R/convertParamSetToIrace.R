@@ -1,5 +1,6 @@
-#' Converts a ParamSet object to a parameter object of the irace package.
+#' @title Converts a ParamSet object to a parameter object of the irace package.
 #'
+#' @description
 #' Converts to a textual description used in irace and then potentially calls \link[irace]{readParameters}.
 #'
 #' @template arg_parset
