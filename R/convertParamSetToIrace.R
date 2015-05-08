@@ -38,8 +38,8 @@ convertParamSetToIrace = function(par.set, digits = 4, as.chars = FALSE) {
       logicalvector = "c",
       ordered = "o"
     )
-    for (j in 1:p$len) {
-      id = if(p$len == 1) p$id else paste(p$id, j, sep = "")
+    for (j in seq_len(p$len)) {
+      id = if (p$len == 1) p$id else paste(p$id, j, sep = "")
       if (p$type %in% c("numeric", "numericvector"))
         line = sprintf('%s "" %s (%s, %s)', id, type, fnum(p$lower[j]), fnum(p$upper[j]))
       else if (p$type %in% c("integer", "integervector"))
@@ -61,6 +61,6 @@ convertParamSetToIrace = function(par.set, digits = 4, as.chars = FALSE) {
     return(lines)
   } else {
     lines = collapse(lines, "\n")
-    return(irace::readParameters(text = lines))
+    return(irace::readParameters(text = lines, digits = digits))
   }
 }
