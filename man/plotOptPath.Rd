@@ -12,7 +12,7 @@ plotOptPath(op, iters, pause = TRUE, lim.x = list(), lim.y = list(),
 Optimization path.}
 
 \item{iters}{[\code{integer} | NULL]\cr
-Vector of iteration which should be plotted one after another. If \code{NULL},
+Vector of iterations which should be plotted one after another. If \code{NULL},
 which is the default, all iterations are plotted. Iteration 0 plots
 all elements with dob = 0.}
 
@@ -30,7 +30,7 @@ XSpace - limits for the X-Space plot
 YSpace - limits for the Y-Space plot
 Default is an empty list - in this case limits are automatically set.}
 
-\item{title}{[\code{character} | NULL]\cr
+\item{title}{[\code{character(1)} | NULL]\cr
 Main title for the arranged plots.}
 
 \item{...}{Additional parameters for \code{\link{renderOptPathPlot}}.}
