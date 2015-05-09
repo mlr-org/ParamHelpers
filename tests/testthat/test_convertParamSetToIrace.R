@@ -52,3 +52,18 @@ test_that("convertParamSetToIrace checks box constraints", {
 
   expect_error(convertParamSetToIrace(ps), "finite box")
 })
+
+test_that("convertParamSetToIrace uses correct boundaries", {
+  ps = makeParamSet(
+    makeDiscreteParam("kernel", values = c("vanilladot", "rbfdot")),
+    makeNumericParam("sigma", lower = 4e-9, upper = 2.123456724252662),
+    makeIntegerParam("myInt", lower = 3, upper = 20),
+    makeLogicalParam("Binar", default = TRUE)
+  )
+  ips = convertParamSetToIrace(ps)
+  
+  expect_identical(vcapply(ips$boundary, function(x) class(x)), 
+    c(kernel = "character", sigma = "numeric", myInt = "integer", Binar = "character"))
+  expect_identical(ips$boundary$sigma, as.numeric(unlist(ps$pars$sigma[c("lower", "upper")])))
+  expect_identical(ips$boundary$myInt, as.integer(unlist(ps$pars$myInt[c("lower", "upper")])))
+})
