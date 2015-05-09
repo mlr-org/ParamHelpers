@@ -56,7 +56,7 @@ test_that("convertParamSetToIrace checks box constraints", {
 test_that("convertParamSetToIrace uses correct boundaries", {
   ps = makeParamSet(
     makeDiscreteParam("kernel", values = c("vanilladot", "rbfdot")),
-    makeNumericParam("sigma", lower = 4e-9, upper = 2),
+    makeNumericParam("sigma", lower = 4e-9, upper = 2.123456724252662),
     makeIntegerParam("myInt", lower = 3, upper = 20),
     makeLogicalParam("Binar", default = TRUE)
   )

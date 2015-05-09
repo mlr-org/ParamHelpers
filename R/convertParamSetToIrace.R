@@ -56,7 +56,7 @@ convertParamSetToIrace = function(par.set, as.chars = FALSE) {
     return(lines)
   } else {
     lines = collapse(lines, "\n")
-    params = irace::readParameters(text = lines)
+    params = irace::readParameters(text = lines, digits = .Machine$integer.max)
     # assert that the boundaries have the correct class and values
     for (i in seq_along(par.set$pars)) {
       if (par.set$pars[[i]]$type %in% c("numeric", "numericvector"))
