@@ -4,22 +4,23 @@
 \alias{renderOptPathPlot}
 \title{Functions for plotting optimization paths.}
 \usage{
-renderOptPathPlot(op, iter, lim.x = list(), lim.y = list(), alpha = TRUE,
-  colours = c("red", "blue", "green", "orange"), size = c(3, 1.5),
-  impute.scale = 1, impute.value = "missing", scale = "std",
-  ggplot.theme = ggplot2::theme(legend.position = "top"), marked = NULL,
-  subset.obs, subset.vars, subset.targets, short.x.names, short.y.names)
+renderOptPathPlot(op, iter, xlim = list(), ylim = list(), alpha = TRUE,
+  colours = c("red", "blue", "green", "orange"), size.points = 3,
+  size.lines = 1.5, impute.scale = 1, impute.value = "missing",
+  scale = "std", ggplot.theme = ggplot2::theme(legend.position = "top"),
+  marked = NULL, subset.obs, subset.vars, subset.targets, short.x.names,
+  short.y.names)
 }
 \arguments{
 \item{op}{[\code{OptPath}]\cr
 Optimization path.}
 
-\item{iter}{[\code{integer(1)} | NULL]\cr
+\item{iter}{[\code{integer(1)}]\cr
 Selected iteration of \code{x} to render plots for.}
 
-\item{lim.x}{[\code{list}],}
+\item{xlim}{[\code{list}]}
 
-\item{lim.y}{[\code{list}]\cr
+\item{ylim}{[\code{list}], \cr
 Axis limits for the plots. Must be a named list, so you can specify the
 axis limits for every plot. Every element of the list must be a numeric
 vector of length 2. Available names for elements are:
@@ -31,11 +32,14 @@ Default is an empty list - in this case limits are automatically set.}
 Activates or deactivates the alpha fading for the plots. Default is \code{TRUE}.}
 
 \item{colours}{[\code{character(4)}]\cr
-Colours of the points/lines for the three point types init, seq, prob and marked.}
+Colours of the points/lines for the four point types init, seq, prob and marked.
+Default is red for init, blue for seq, green for prob and orange for marked.}
 
-\item{size}{[\code{numeric(2)} | NULL]\cr
-Size of points (1st entry of \code{size}) or lines (2nd entry of \code{size}).
-The default is \code{c(3, 1.5)}.}
+\item{size.points}{[\code{numeric(4)} | NULL]\cr
+Size of points in the plot, default is 3.}
+
+\item{size.lines}{[\code{numeric(4)} | NULL]\cr
+Size of lines in the plots, default is 1.5.}
 
 \item{impute.scale}{[\code{numeric(1)}]\cr
 Numeric missing values will be replaced by \code{max + impute.scale * (max - min)}.
@@ -59,8 +63,9 @@ Default is \code{NULL} (no points are marked).}
 
 \item{subset.obs}{[\code{integer}]\cr
 Vector of indices to subset of observations to be plotted, default is all observations.
-All indices must be available in the opt.path, but not in the current iteration.
-Indices not available in the current iteration will be ignored.}
+All indices must be available in the opt.path. But, to enable subsetting over multiple
+iterations, not all indices must be available in the current iteration.
+Indices not available in the current iteration will be ignored. Default is all observations.}
 
 \item{subset.vars}{[\code{integer} | \code{character}]\cr
 Subset of variables (x-variables) to be plotted. Either vector of indices or names.

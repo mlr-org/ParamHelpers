@@ -3,67 +3,68 @@
 # checked. If the dimensionality of X and Y space is greater than 2, the limits
 # are set to NULL. The same happens if there is a discrete variable in the 2D case.
 # We don't need limits in this cases. 
-# If the dimensionality is 1 for X or Y Space, for this space the lim.y is NULL.
-getOptPathLims <- function(lim.x, lim.y, op.x, op.y, iters, scale) {
-  assertNumeric(scale, len = 1L, lower = 0, finite = TRUE, any.missing = FALSE)
+# If the dimensionality is 1 for X or Y Space, for this space the ylim is NULL.
+getOptPathLims = function(xlim, ylim, op.x, op.y, iters, scale) {
   
-  assertList(lim.x)
-  assertList(lim.y)
+  assertNumeric(scale, len = 1L, lower = 0L, finite = TRUE, any.missing = FALSE)
+  
+  assertList(xlim)
+  assertList(ylim)
   for (space in c("XSpace", "YSpace")) {
     op.frame = if (space == "XSpace") op.x else op.y
     dim = ncol(op.frame)
     classes = BBmisc::vcapply(op.frame, function(x) class(x))
     if (dim > 2L) {
-      lim.x[[space]] = NULL
-      lim.y[[space]] = NULL
+      xlim[[space]] = NULL
+      ylim[[space]] = NULL
       next
     }
     
     if (all(classes == "numeric")) {
-      if (is.null(lim.x[[space]])) {
-        lim.x[[space]] = range(op.frame[, 1])
-        lim.x[[space]] = c(-1, 1) * scale * abs(diff(lim.x[[space]])) + lim.x[[space]]
+      if (is.null(xlim[[space]])) {
+        xlim[[space]] = range(op.frame[, 1L])
+        xlim[[space]] = c(-1, 1) * scale * abs(diff(xlim[[space]])) + xlim[[space]]
       } else {
-        assertNumeric(lim.x[[space]], len = 2L, any.missing = FALSE)
+        assertNumeric(xlim[[space]], len = 2L, any.missing = FALSE)
       }
     }
     
     # limits for barplot (1D discrete case)
     if (dim == 1L && classes == "factor") {
-      lim.x[[space]] = NULL
-      if (is.null(lim.y[[space]])) {
-        lim.y[[space]] = c(0, max(table(op.frame)))
+      xlim[[space]] = NULL
+      if (is.null(ylim[[space]])) {
+        ylim[[space]] = c(0, max(table(op.frame)))
       } else {
-        assertNumeric(lim.y[[space]], len = 2L, any.missing = FALSE)
+        assertNumeric(ylim[[space]], len = 2L, any.missing = FALSE)
       }
     }
     
     if (dim == 2L) {
-      if (classes[1] == "numeric") {
-        if (is.null(lim.x[[space]])) {
-          lim.x[[space]] = range(op.frame[, 1])
-          lim.x[[space]] = c(-1, 1) * scale * abs(diff(lim.x[[space]])) + lim.x[[space]]
+      if (classes[1L] == "numeric") {
+        if (is.null(xlim[[space]])) {
+          xlim[[space]] = range(op.frame[, 1L])
+          xlim[[space]] = c(-1, 1) * scale * abs(diff(xlim[[space]])) + xlim[[space]]
         } else {
-          assertNumeric(lim.x[[space]], len = 2L, any.missing = FALSE)
+          assertNumeric(xlim[[space]], len = 2L, any.missing = FALSE)
         }
       } else {
-        lim.x[[space]] = NULL
+        xlim[[space]] = NULL
       }
       
-      if (classes[2] == "numeric") {
-        if (is.null(lim.y[[space]])) {
-          lim.y[[space]] = range(op.frame[, 2])
-          lim.y[[space]] = c(-1, 1) * scale * abs(diff(lim.y[[space]])) + lim.y[[space]]
+      if (classes[2L] == "numeric") {
+        if (is.null(ylim[[space]])) {
+          ylim[[space]] = range(op.frame[, 2L])
+          ylim[[space]] = c(-1, 1) * scale * abs(diff(ylim[[space]])) + ylim[[space]]
         } else {
-          assertNumeric(lim.y[[space]], len = 2L, any.missing = FALSE)
+          assertNumeric(ylim[[space]], len = 2L, any.missing = FALSE)
         }
       } else {
-        lim.y[[space]] = NULL
+        ylim[[space]] = NULL
       } 
     }
     
   }
-  return(list(lim.x = lim.x, lim.y = lim.y))
+  return(list(xlim = xlim, ylim = ylim))
 }
 
 # Function to impute missing values. 

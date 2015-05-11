@@ -4,8 +4,8 @@
 \alias{plotOptPath}
 \title{Plot method for optimization paths.}
 \usage{
-plotOptPath(op, iters, pause = TRUE, lim.x = list(), lim.y = list(),
-  title = "", ...)
+plotOptPath(op, iters, pause = TRUE, xlim = list(), ylim = list(),
+  title = "Optimization Path Plots", ...)
 }
 \arguments{
 \item{op}{[\code{OptPath}]\cr
@@ -20,9 +20,9 @@ all elements with dob = 0.}
 Should the process be paused after each iteration?
 Default is \code{TRUE}.}
 
-\item{lim.x}{[\code{list}],}
+\item{xlim}{[\code{list}]}
 
-\item{lim.y}{[\code{list}]\cr
+\item{ylim}{[\code{list}], \cr
 Axis limits for the plots. Must be a named list, so you can specify the
 axis limits for every plot. Every element of the list must be a numeric
 vector of length 2. Available names for elements are:
@@ -30,8 +30,8 @@ XSpace - limits for the X-Space plot
 YSpace - limits for the Y-Space plot
 Default is an empty list - in this case limits are automatically set.}
 
-\item{title}{[\code{character} | NULL]\cr
-Main title for the arranged plots.}
+\item{title}{[\code{character}]\cr
+Main title for the arranged plots, default is Optimization Path Plots.}
 
 \item{...}{Additional parameters for \code{\link{renderOptPathPlot}}.}
 }

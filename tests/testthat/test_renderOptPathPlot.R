@@ -36,8 +36,8 @@ test_that("renderOptPathPlot", {
   pl = plotOptPath(op1, iters = 0:2, pause = FALSE, title = "Optimization Path", 
     marked = "best")
   pl = plotOptPath(op1, iters = 0:2, pause = FALSE,
-    lim.x = list(XSpace = c(-10, 10), YSpace = c(-10, 10)),
-    lim.y = list(XSpace = c(-10, 10), YSpace = c(-10, 10))
+    xlim = list(XSpace = c(-10, 10), YSpace = c(-10, 10)),
+    ylim = list(XSpace = c(-10, 10), YSpace = c(-10, 10))
   )
   
   # Test 2D-3D + size + short names
@@ -49,7 +49,7 @@ test_that("renderOptPathPlot", {
       y = c(y1 = X[i * 5 - 2], y2 = X[i * 5 - 1], y3 = X[i * 5]), dob = dob[i])
   }
   pl = renderOptPathPlot(op2, iter = 0)
-  pl = plotOptPath(op2, iters = 0:2, pause = FALSE, size = c(5, 3), 
+  pl = plotOptPath(op2, iters = 0:2, pause = FALSE, size.points = 5, size.lines = 3, 
     short.y.names = c("a", "b", "c"))
   
   # Test 3D-3D + marked
@@ -83,7 +83,7 @@ test_that("renderOptPathPlot", {
                  y = c(y1 = X[i * 4]), dob = dob[i])
   }
   pl = renderOptPathPlot(op4, iter = 0)
-  pl = renderOptPathPlot(op4, iter = 0, lim.x = list(YSpace = c(-0.5, 0.5)))
+  pl = renderOptPathPlot(op4, iter = 0, xlim = list(YSpace = c(-0.5, 0.5)))
   pl = plotOptPath(op4, iters = 0:2, pause = FALSE)
   pl = plotOptPath(op4, iters = 0:2, pause = FALSE, scale = "robust", 
     short.y.names = "y")
