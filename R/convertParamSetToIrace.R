@@ -1,20 +1,17 @@
-#' Converts a ParamSet object to a parameter object of the irace package.
+#' @title Converts a ParamSet object to a parameter object of the irace package.
 #'
+#' @description
 #' Converts to a textual description used in irace and then potentially calls \link[irace]{readParameters}.
 #'
 #' @template arg_parset
-#' @param digits [\code{integer(1)}]\cr
-#'   Number of digits used in transformation to irace textual description,
-#'   code\link{formatC} is used here internally.
 #' @param as.chars [\code{logical(1)}]\cr
 #'   Return results as character vector of lines \code{FALSE} or call
 #'   \code{\link[irace]{readParameters}} on it (\code{TRUE}).
 #'   Default is \code{FALSE}.
 #' @return [\code{\link{list}}].
 #' @export
-convertParamSetToIrace = function(par.set, digits = 4, as.chars = FALSE) {
+convertParamSetToIrace = function(par.set, as.chars = FALSE) {
   assertClass(par.set, "ParamSet")
-  digits = asInt(digits, lower = 1L)
   assertFlag(as.chars)
   if (!is.null(par.set$forbidden))
     stopf("Operation not allowed for param set with forbidden region currently!")
@@ -22,8 +19,7 @@ convertParamSetToIrace = function(par.set, digits = 4, as.chars = FALSE) {
     stop("convertParamSetToIrace requires finite box constraints for all numeric and integer params!")
   requirePackages("irace", why = "convertParamSetToIrace", default.method = "load")
   lines = character(0)
-  fnum = function(x) formatC(x, format = "f", digits = digits)
-  count = 1
+  count = 1L
   for (i in seq_along(par.set$pars)) {
     p = par.set$pars[[i]]
     type = switch(
@@ -38,10 +34,10 @@ convertParamSetToIrace = function(par.set, digits = 4, as.chars = FALSE) {
       logicalvector = "c",
       ordered = "o"
     )
-    for (j in 1:p$len) {
-      id = if(p$len == 1) p$id else paste(p$id, j, sep = "")
+    for (j in seq_len(p$len)) {
+      id = if (p$len == 1) p$id else paste(p$id, j, sep = "")
       if (p$type %in% c("numeric", "numericvector"))
-        line = sprintf('%s "" %s (%s, %s)', id, type, fnum(p$lower[j]), fnum(p$upper[j]))
+        line = sprintf('%s "" %s (%g, %g)', id, type, p$lower[j], p$upper[j])
       else if (p$type %in% c("integer", "integervector"))
         line = sprintf('%s "" %s (%i, %i)', id, type, p$lower[j], p$upper[j])
       else if (p$type %in% c("discrete", "discretevector", "logical", "logicalvector")) {
@@ -54,13 +50,21 @@ convertParamSetToIrace = function(par.set, digits = 4, as.chars = FALSE) {
         line = paste(line, capture.output(p$requires), sep = " | ")
       }
       lines[count] = line
-      count = count + 1
+      count = count + 1L
     }
   }
   if (as.chars) {
     return(lines)
   } else {
     lines = collapse(lines, "\n")
-    return(irace::readParameters(text = lines))
+    params = irace::readParameters(text = lines, digits = .Machine$integer.max)
+    # assert that the boundaries have the correct class and values
+    for (i in seq_along(par.set$pars)) {
+      if (par.set$pars[[i]]$type %in% c("numeric", "numericvector"))
+        params$boundary[[i]] = as.numeric(unlist(par.set$pars[[i]][c("lower", "upper")]))
+      else if (par.set$pars[[i]]$type %in% c("integer", "integervector"))
+        params$boundary[[i]] = as.integer(params$boundary[[i]])
+    }
+    return(params)
   }
 }

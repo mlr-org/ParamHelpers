@@ -84,7 +84,6 @@ plot1DDisc = function(op, .alpha, .type, names, short.names, space, iter, ylim,
 }
 
 
-
 # Plot method for a two-dimensional X- or Y-Space
 
 plot2D = function(op, .alpha, .type, names, short.names, space, iter, classes, xlim, ylim, 
@@ -129,47 +128,6 @@ plot2D = function(op, .alpha, .type, names, short.names, space, iter, classes, x
   }
   return(pl)
 }
-
-# # Plot method for a two-dimensional X- or Y-Space when one variable is discrete 
-# # and the other is numeric
-# plot2DMixed = function(op, .alpha, .type, names, space, iter, classes, ylim, colours) {
-#   op$.alpha = .alpha
-#   op$type = .type
-#   op$type = factor(op$type, levels = c("init", "seq", "prop"))
-#   
-#   if (space == "x") {
-#     title = ggplot2::ggtitle("X-Space")
-#   } 
-#   if (space == "y") {
-#     title = ggplot2::ggtitle("Y-Space")
-#   }
-# 
-#   # always plot the numeric variable on y-axis
-#   if (classes[1] != classes[2]) {
-#     name.x = names[classes == "factor"]
-#     name.y = names[classes == "numeric"]
-#   } else {
-#     name.x = names[1]
-#     name.y = names[2]
-#   }
-#     
-#   pl = ggplot2::ggplot(op, ggplot2::aes_string(
-#     x = name.x, y = name.y, fill = "type", colour = "type", alpha = ".alpha"))
-#   pl = pl + ggplot2::geom_dotplot(binaxis = "y", stackdir = "center", size = 3, 
-#     stackgroups = TRUE, binpositions = "all", binwidth = diff(ylim)/30)
-#   pl = pl + title
-#   pl = pl + ggplot2::guides(alpha = FALSE)
-#   pl = pl + ggplot2::scale_fill_manual(values = c(init = colours[1], seq = colours[2], prop = colours[3]))
-#   pl = pl + ggplot2::scale_colour_manual(values = c(init = colours[1], seq = colours[2], prop = colours[3]))
-#   pl = pl + ggplot2::scale_alpha_continuous(range = c(1 / (iter + 1), 1))
-#   pl = pl + ggplot2::theme(legend.position = "top")
-#   # ylim only needed, if one param is numeric
-#   if (any(classes == "numeric")) {
-#     pl = pl + ggplot2::ylim(ylim)
-#   }
-#   return(pl)
-# }
-
 
 # Plot method for a multi-dimensional X- or Y-Space
 plotMultiD = function(op, .alpha, .type, names, short.names, space, iter, colours, size, 
