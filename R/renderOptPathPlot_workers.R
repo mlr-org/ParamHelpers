@@ -161,3 +161,41 @@ plotMultiD = function(op, .alpha, .type, names, short.names, space, iter, colour
   pl = pl + ggplot.theme
   return(pl)
 }
+
+
+# Function to plot one or more numeric variables over time
+# names: all corresponding variables must be numeric
+# short.names: short names of the variables given by names
+plotVariablesOverTime = function(op, .alpha, .type, names, short.names, space, 
+  iter, lim.y, colours, ggplot.theme) {
+  
+  op2 = op[, c(names, "dob")]
+  op2$.alpha = .alpha
+  op2$type = .type
+  
+  # remove all point with dob = 0:
+  op2 = op2[op2$dob != 0, ]
+  
+  op2 = reshape(op2, ids = row.names(op2),
+                times = names, timevar = "variable",
+                varying = list(names), direction = "long", v.names = c("value"))
+  
+  
+  if (space == "x") {  
+    title = ggplot2::ggtitle("X-Space")    
+  } 
+  if (space == "y") {    
+    title = ggplot2::ggtitle("Y-Space")    
+  }
+  
+  pl = ggplot2::ggplot(op2, ggplot2::aes_string(x = "dob", y = "value", group = "variable", 
+                                                linetype = "variable"))
+  pl = pl + ggplot2::geom_point()
+  pl = pl + ggplot2::geom_line() 
+  pl = pl + ggplot2::scale_linetype_discrete(labels = short.names)
+  pl = pl + ggplot2::ylim(lim.y)
+  pl = pl + title
+  pl = pl + ggplot.theme
+  
+  return(pl)
+}
