@@ -4,15 +4,11 @@
 \alias{convertParamSetToIrace}
 \title{Converts a ParamSet object to a parameter object of the irace package.}
 \usage{
-convertParamSetToIrace(par.set, digits = 4, as.chars = FALSE)
+convertParamSetToIrace(par.set, as.chars = FALSE)
 }
 \arguments{
 \item{par.set}{[\code{\link{ParamSet}}]\cr
 Parameter set.}
-
-\item{digits}{[\code{integer(1)}]\cr
-Number of digits used in transformation to irace textual description,
-code\link{formatC} is used here internally.}
 
 \item{as.chars}{[\code{logical(1)}]\cr
 Return results as character vector of lines \code{FALSE} or call

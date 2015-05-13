@@ -2,22 +2,18 @@
 #'
 #' @param op [\code{OptPath}]\cr
 #'   Optimization path.
-#' @param iter [\code{integer(1)} | NULL]\cr
+#' @param iter [\code{integer(1)}]\cr
 #'   Selected iteration of \code{x} to render plots for.
-#' @param lim.x [\code{list}], @param lim.y [\code{list}]\cr
-#'   Axis limits for the plots. Must be a named list, so you can specify the
-#'   axis limits for every plot. Every element of the list must be a numeric
-#'   vector of length 2. Available names for elements are:
-#'   XSpace - limits for the X-Space plot
-#'   YSpace - limits for the Y-Space plot
-#'   Default is an empty list - in this case limits are automatically set.  
+#' @template arg_opplotter_lims
 #' @param alpha [\code{logical(1)}]\cr
 #'   Activates or deactivates the alpha fading for the plots. Default is \code{TRUE}.
 #' @param colours [\code{character(4)}]\cr
 #'   Colours of the points/lines for the four point types init, seq, prob and marked.
-#' @param size [\code{numeric(2)} | NULL]\cr
-#'   Size of points (1st entry of \code{size}) or lines (2nd entry of \code{size}).
-#'   The default is \code{c(3, 1.5)}. 
+#'   Default is red for init, blue for seq, green for prob and orange for marked.
+#' @param size.points [\code{numeric(4)} | NULL]\cr
+#'   Size of points in the plot, default is 3. 
+#' @param size.lines [\code{numeric(4)} | NULL]\cr
+#'   Size of lines in the plots, default is 1.5. 
 #' @param impute.scale [\code{numeric(1)}]\cr
 #'   Numeric missing values will be replaced by \code{max + impute.scale * (max - min)}.
 #'   Default is \code{1}.
@@ -36,8 +32,9 @@
 #'    Default is \code{NULL} (no points are marked).
 #' @param subset.obs [\code{integer}]\cr
 #'   Vector of indices to subset of observations to be plotted, default is all observations.
-#'   All indices must be available in the opt.path, but not in the current iteration.
-#'   Indices not available in the current iteration will be ignored.
+#'   All indices must be available in the opt.path. But, to enable subsetting over multiple
+#'   iterations, not all indices must be available in the current iteration.
+#'   Indices not available in the current iteration will be ignored. Default is all observations.
 #' @param subset.vars [\code{integer} | \code{character}]\cr
 #'   Subset of variables (x-variables) to be plotted. Either vector of indices or names. 
 #'   Default is all variables.
@@ -49,27 +46,28 @@
 #' @return List of plots. If both X and Y space are 1D, list has length 1,
 #'   otherwise length 2 with one plot for X and Y space respectivly.
 #' @export
-renderOptPathPlot = function(op, iter, lim.x = list(), lim.y = list(), alpha = TRUE, 
-    colours = c("red", "blue", "green", "orange"), size = c(3, 1.5), impute.scale = 1, 
+renderOptPathPlot = function(op, iter, xlim = list(), ylim = list(), alpha = TRUE, 
+    colours = c("red", "blue", "green", "orange"), size.points = 3, size.lines = 1.5, impute.scale = 1, 
     impute.value = "missing", scale = "std", ggplot.theme = ggplot2::theme(legend.position = "top"), 
     marked = NULL, subset.obs, subset.vars, subset.targets, short.x.names, short.y.names) {
   
-  requirePackages("GGally", why = "renderOptPathPlot")
-  requirePackages("ggplot2", why = "renderOptPathPlot")
+  requirePackages(c("GGally", "ggplot2"), why = "renderOptPathPlot")
   
   iters.max = max(getOptPathDOB(op))
-  assertIntegerish(iter, len = 1L, lower = 0L, upper = iters.max, any.missing = FALSE)
+  assertInt(iter, lower = 0L, upper = iters.max)
   assertFlag(alpha)
-  assertCharacter(colours, len = 4)
-  assertNumeric(size, len = 2)
-  assertNumeric(impute.scale, len = 1)
+  assertCharacter(colours, len = 4L)
+  assertNumber(size.points)
+  assertNumber(size.points)
+  assertNumber(impute.scale)
   assertCharacter(impute.value, len = 1)
   assertChoice(scale, choices = c("std", "robust", "uniminmax", "globalminmax", "center", "centerObs"))
   assertClass(ggplot.theme, classes = c("theme", "gg"))
   
   if (!is.null(marked)) {
     if (is.character(marked)) {
-      assertChoice(marked, choices = c("best"))
+      if (marked != "best")
+        stop("Marked must either be 'best' or an integerish vector.")
     } else {
       marked = asInteger(marked)
     }
@@ -81,7 +79,6 @@ renderOptPathPlot = function(op, iter, lim.x = list(), lim.y = list(), alpha = T
   } else {
     assertCharacter(short.x.names, len = length(x.names))
   }
-  dim.x = length(x.names)
 
   y.names = op$y.names
   if (missing(short.y.names)) {
@@ -89,7 +86,6 @@ renderOptPathPlot = function(op, iter, lim.x = list(), lim.y = list(), alpha = T
   } else {
     assertCharacter(short.y.names, len = length(y.names))
   }
-  dim.y = length(y.names)
   
   # Get Plotting Data
   data = getAndSubsetPlotData(op, iter, subset.obs, subset.vars, subset.targets,
@@ -103,70 +99,72 @@ renderOptPathPlot = function(op, iter, lim.x = list(), lim.y = list(), alpha = T
   dim.y = length(data$subset.targets)
   
   # impute missing values
-  op.x = BBmisc::dapply(op.x, fun = imputeMissingValues, impute.scale = impute.scale, impute.value = impute.value)
-  op.y = BBmisc::dapply(op.y, fun = imputeMissingValues, impute.scale = impute.scale, impute.value = impute.value)
+  op.x = BBmisc::dapply(op.x, fun = imputeMissingValues, impute.scale = impute.scale,
+    impute.value = impute.value)
+  op.y = BBmisc::dapply(op.y, fun = imputeMissingValues, impute.scale = impute.scale,
+    impute.value = impute.value)
 
   # get classes of params (numeric or factor)
   classes.x = BBmisc::vcapply(op.x, function(x) class(x))
   classes.y = BBmisc::vcapply(op.y, function(x) class(x))
   
   # set and check x and y lims, if needed
-  lims = getOptPathLims(lim.x, lim.y, op.x, op.y, iter, 0.05)
-  lim.x = lims$lim.x
-  lim.y = lims$lim.y
+  lims = getOptPathLims(xlim, ylim, op.x, op.y, iter, 0.05)
+  xlim = lims$xlim
+  ylim = lims$ylim
   
   # Special case: X and Y are 1D
   if(dim.x == 1L && dim.y == 1L) {
     pl = plot2D(cbind(x = op.x, y = op.y), .alpha, .type, names = c(x.names, y.names), 
       short.names = c(short.x.names, short.y.names), space = "both", iter = iter, 
-      classes = c(classes.x, classes.y), lim.x = lim.x[["XSpace"]], lim.y = lim.x[["YSpace"]], 
-      colours = colours, size = size[1], ggplot.theme = ggplot.theme)
+      classes = c(classes.x, classes.y), xlim = xlim[["XSpace"]], ylim = xlim[["YSpace"]], 
+      colours = colours, size = size.points, ggplot.theme = ggplot.theme)
     return(list(plot = pl))
   }
   
   # plot 1: x-space
   if (dim.x == 1L && classes.x == "numeric") {
     pl1 = plot1DNum(op.x, .alpha, .type, names = x.names, short.names = short.x.names, 
-      space = "x", iter = iter, lim.x = lim.x[["XSpace"]], colours = colours, 
+      space = "x", iter = iter, xlim = xlim[["XSpace"]], colours = colours, 
       ggplot.theme = ggplot.theme)
   }
   if (dim.x == 1L && classes.x == "factor") {
     pl1 = plot1DDisc(op.x, .alpha, .type, names = x.names, short.names = short.x.names, 
-      space = "x", iter = iter, lim.y = lim.y[["XSpace"]], colours = colours, 
+      space = "x", iter = iter, ylim = ylim[["XSpace"]], colours = colours, 
       ggplot.theme = ggplot.theme)
   }
     
   if (dim.x == 2L) {
     pl1 = plot2D(op.x, .alpha, .type, names = x.names, short.names = short.x.names, 
-      space = "x", iter = iter, classes = classes.x, lim.x = lim.x[["XSpace"]], 
-      lim.y = lim.y[["XSpace"]], colours = colours, size = size[1], ggplot.theme = ggplot.theme)
+      space = "x", iter = iter, classes = classes.x, xlim = xlim[["XSpace"]], 
+      ylim = ylim[["XSpace"]], colours = colours, size = size.points, ggplot.theme = ggplot.theme)
   } 
   if (dim.x > 2L) {
     pl1 = plotMultiD(op.x, .alpha, .type, names = x.names, short.names = short.x.names, 
-      space = "x", iter = iter, colours = colours, size = size[2], scale = scale, 
+      space = "x", iter = iter, colours = colours, size = size.lines, scale = scale, 
       ggplot.theme = ggplot.theme)
   }
   
   # plot 2: y-space
   if (dim.y == 1L && classes.y == "numeric") {
     pl2 = plot1DNum(op.y, .alpha, .type, names = y.names, short.names = short.y.names, 
-      space = "y", iter = iter, lim.x = lim.x[["YSpace"]], colours = colours, 
+      space = "y", iter = iter, xlim = xlim[["YSpace"]], colours = colours, 
       ggplot.theme = ggplot.theme)
   }
   if (dim.y == 1L && classes.y == "factor") {
     pl2 = plot1DDisc(op.y, .alpha, .type, names = y.names, short.names = short.y.names, 
-      space = "y", iter = iter, lim.y = lim.y[["YSpace"]], colours = colours, 
+      space = "y", iter = iter, ylim = ylim[["YSpace"]], colours = colours, 
       ggplot.theme = ggplot.theme)
   }
   
   if (dim.y == 2L) {
     pl2 = plot2D(op.y, .alpha, .type, names = y.names, short.names = short.y.names, 
-      space = "y", iter = iter, classes = classes.y, lim.x = lim.x[["YSpace"]], 
-      lim.y = lim.y[["YSpace"]], colours = colours, size = size[1], ggplot.theme = ggplot.theme)
+      space = "y", iter = iter, classes = classes.y, xlim = xlim[["YSpace"]], 
+      ylim = ylim[["YSpace"]], colours = colours, size = size.points, ggplot.theme = ggplot.theme)
   } 
   if (dim.y > 2L) {
     pl2 = plotMultiD(op.y, .alpha, .type, names = y.names, short.names = short.y.names, 
-      space = "y", iter = iter, colours = colours, size = size[2], scale = scale, 
+      space = "y", iter = iter, colours = colours, size = size.lines, scale = scale, 
       ggplot.theme = ggplot.theme)
   }
   
