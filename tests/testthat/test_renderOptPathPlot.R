@@ -32,10 +32,12 @@ test_that("renderOptPathPlot", {
     addOptPathEl(op1, x = list(x = X[i * 4 - 3], z = Z[i]),
       y = c(y1 = X[i * 4 - 2], y2 = X[i * 4 - 1], y3 = X[i * 4]), dob = dob[i])
   }
-  pl = renderOptPathPlot(op1, iter = 0)
+  pl = renderOptPathPlot(op1, iter = 3)
   pl = plotOptPath(op1, iters = c(0:2, 20), pause = FALSE, marked = "best",
     ggplot.theme = ggplot2::theme(legend.position = "bottom"))
-  pl = plotOptPath(op1, iters = c(0:2, 20), pause = FALSE, marked = c(4, 10, 18))
+  pl = plotOptPath(op1, iters = c(20), pause = FALSE, marked = c(4, 10, 18),
+    x.over.time = list(c("x"), c("z")))
+ 
   # Test 1D(discrete)-2D + marked + limits + short names
   ps2 = makeParamSet(
     makeDiscreteParam("x", values = list("a", "b"))

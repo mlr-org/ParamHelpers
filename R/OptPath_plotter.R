@@ -26,6 +26,7 @@ plotOptPath = function(op, iters, pause = TRUE, xlim = list(), ylim = list(),
   if (missing(iters))
     iters = 0:iters.max
   
+  assertClass(op, "OptPath")
   assertIntegerish(iters, lower = 0L, upper = iters.max, any.missing = FALSE)
   assertFlag(pause)
   assertCharacter(title, len = 1L)
@@ -40,8 +41,16 @@ plotOptPath = function(op, iters, pause = TRUE, xlim = list(), ylim = list(),
   
   # Helper to arrange plot via gridExtra and pause process
   arrangePlots = function(plots, iter, iters) {
+    if (!is.null(plots$plot.x.over.time))
+      plots$plot.x.over.time = do.call(gridExtra::arrangeGrob,
+        c(plots$plot.x.over.time, ncol = 1L, main = "XSpace over Time"))
+    
+    if (!is.null(plots$plot.y.over.time))
+      plots$plot.y.over.time = do.call(gridExtra::arrangeGrob,
+        c(plots$plot.y.over.time, ncol = 1L, main = "YSpace over Time"))
+    
     plots = Filter(Negate(isScalarNA), plots)
-    do.call(gridExtra::grid.arrange, c(plots, nrow = 1L, main = title))
+    do.call(gridExtra::grid.arrange, c(plots, nrow = (length(plots) + 1) %/% 2, main = title))
     if (pause && iter != getLast(iters)) {
       pause()
     }

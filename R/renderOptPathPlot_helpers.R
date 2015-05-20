@@ -84,8 +84,10 @@ imputeMissingValues = function(x, impute.scale, impute.value) {
 
 # subset rows and cols of the opt.path and return list with data.frames for
 # x and y space and the subsets.
+# returns list with dataframes for x and y space, vectors for dob, type and alpha
+# character vector for x and y names
 getAndSubsetPlotData = function(op, iters, subset.obs, subset.vars, subset.targets,
-  marked = NULL, alpha = TRUE, ...) {
+  marked = NULL, alpha = TRUE, impute.scale = 0.05, impute.value = "missing", ...) {
   
   x.names = colnames(getOptPathX(op))
   y.names = op$y.names
@@ -131,24 +133,34 @@ getAndSubsetPlotData = function(op, iters, subset.obs, subset.vars, subset.targe
   
   if (missing(subset.vars))
     subset.vars = x.names
-  if (is.numeric(subset.vars))
+  if (is.numeric(subset.vars)) {
     assertIntegerish(subset.vars, lower = 1, upper = dim.x, unique = TRUE, any.missing = FALSE)
+  }
   else 
     assertSubset(subset.vars, x.names)
   
   if (missing(subset.targets))
     subset.targets = y.names
-  if (is.numeric(subset.targets))
+  if (is.numeric(subset.targets)) {
     assertIntegerish(subset.targets, lower = 1, upper = getOptPathLength(op), unique = TRUE, 
       any.missing = FALSE)
+  }
   else
     assertSubset(subset.targets, y.names)
+  
+  # impute missing values
+  op.x = BBmisc::dapply(op.x, fun = imputeMissingValues, impute.scale = impute.scale,
+    impute.value = impute.value)
+  op.y = BBmisc::dapply(op.y, fun = imputeMissingValues, impute.scale = impute.scale,
+    impute.value = impute.value)
   
   op.x = op.x[subset.obs, subset.vars, drop = FALSE]
   op.y = op.y[subset.obs, subset.targets, drop = FALSE]
   dob = dob[subset.obs]
   .alpha = .alpha[subset.obs]
   .type = .type[subset.obs]
+  x.names = if (is.numeric(subset.vars)) x.names[subset.vars] else subset.vars
+  y.names = if (is.numeric(subset.targets)) x.names[subset.targets] else subset.targets
   
   return(
     list(
@@ -157,9 +169,8 @@ getAndSubsetPlotData = function(op, iters, subset.obs, subset.vars, subset.targe
       dob = dob,
       .alpha = .alpha,
       .type = .type,
-      subset.obs = subset.obs,
-      subset.vars = subset.vars,
-      subset.targets = subset.targets
+      x.names = x.names,
+      y.names = y.names
     )
   )
 }

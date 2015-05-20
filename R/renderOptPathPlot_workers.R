@@ -133,7 +133,7 @@ plot2D = function(op, .alpha, .type, names, short.names, space, iter, classes, x
 plotMultiD = function(op, .alpha, .type, names, short.names, space, iter, colours, size, 
   scale, ggplot.theme) {
   args = list(columns = seq_along(names))
-  for (i in seq_along(ncol(op))) {
+  for (i in seq_col(op)) {
     op[, i] = as.numeric(op[, i])
   }
   
@@ -167,36 +167,83 @@ plotMultiD = function(op, .alpha, .type, names, short.names, space, iter, colour
 # Function to plot one or more numeric variables over time
 # names: all corresponding variables must be numeric
 # short.names: short names of the variables given by names
-plotVariablesOverTime = function(op, .alpha, .type, names, short.names, space, 
+multiVariablesOverTime = function(op, .alpha, dob, names, short.names, space, 
   iter, lim.y, colours, ggplot.theme) {
   
-  op2 = op[, c(names, "dob")]
-  op2$.alpha = .alpha
-  op2$type = .type
-  
-  # remove all point with dob = 0:
-  op2 = op2[op2$dob != 0, ]
-  
-  op2 = reshape(op2, ids = row.names(op2),
-                times = names, timevar = "variable",
-                varying = list(names), direction = "long", v.names = c("value"))
-  
-  
-  if (space == "x") {  
-    title = ggplot2::ggtitle("X-Space")    
-  } 
-  if (space == "y") {    
-    title = ggplot2::ggtitle("Y-Space")    
+  # make factor to numerics
+  for (i in seq_col(op)) {
+    op[, i] = as.numeric(op[, i])
+    if (!is.numeric(op[, i]))
+      warning(paste("Converting variable ", names[i], "to numeric for over time plot."))
   }
   
+  op2 = op[, names]
+  op2$dob = dob
+  op2$.alpha = .alpha
+  
+  # mean over dob
+  op2 = aggregate(op2, list(op2$dob), mean)[, -1]
+  
+  # reshape into long format
+  op2 = reshape(op2, ids = row.names(op2),
+    times = names, timevar = "variable",
+    varying = list(names), direction = "long", v.names = c("value"))
+  
   pl = ggplot2::ggplot(op2, ggplot2::aes_string(x = "dob", y = "value", group = "variable", 
-                                                linetype = "variable"))
+    linetype = "variable"))
   pl = pl + ggplot2::geom_point()
   pl = pl + ggplot2::geom_line() 
   pl = pl + ggplot2::scale_linetype_discrete(labels = short.names)
   pl = pl + ggplot2::ylim(lim.y)
-  pl = pl + title
   pl = pl + ggplot.theme
   
   return(pl)
 }
+
+# Plots One variable versus the DOB. name is the name of the variable to be plotted
+oneVariableOverTime = function(op, .alpha, .type, dob, name, short.name, iter,
+  xlim, ylim, size.points, size.lines, colours, ggplot.theme) {
+  
+  # Some data  preproc. 2 Different datasets - one for init design, one for rest
+  
+  op = cbind(op, dob = dob, .alpha = .alpha, type = .type)
+  
+  init.des.inds = dob == 0
+  
+  op.init.des = op[init.des.inds, , drop = FALSE]
+  op.seq.opt = op[!init.des.inds, , drop = FALSE]
+  
+
+  
+  aes.points = ggplot2::aes_string(x = "dob", y = name, shape = "type",
+    colour = "type", alpha = ".alpha")
+  
+  pl = ggplot2::ggplot(op, ggplot2::aes_string(x = "dob", y = name))
+  # mean data for line plot for sequential data - only for numeric vars
+  if (is.numeric(op[, name])) {
+    op.seq.means = op.seq.opt[!duplicated(op.seq.opt$dob), ]
+    op.seq.means[, name] = tapply(op.seq.opt[, name], op.seq.opt[, "dob"], mean)
+    pl = pl + ggplot2::geom_line(data = op.seq.means, ggplot2::aes_string(x = "dob", y = name), alpha = 0.3)
+  }
+  pl = pl + ggplot2::geom_point(data = op.init.des, mapping = aes.points, size = size.points,
+    position = ggplot2::position_jitter(h = 0.1))
+  # Add jitter for discrete variable
+  if (is.numeric(op[, name]))
+    pl = pl + ggplot2::geom_point(data = op.seq.opt, mapping = aes.points, size = size.points)
+  else
+    pl = pl + ggplot2::geom_point(data = op.seq.opt, mapping = aes.points, size = size.points,
+      position = ggplot2::position_jitter(height = 0.1, width = 0.1))
+  pl = pl + ggplot2::geom_vline(xintercept = 0.5)
+  pl = pl + ggplot2::guides(alpha = FALSE)
+  pl = pl + ggplot2::ylab(short.name)
+  pl = pl + ggplot2::scale_colour_manual(
+    values = c(init = colours[1L], seq = colours[2L], prop = colours[3L], marked = colours[4L]))
+  pl = pl + ggplot2::scale_shape_manual(name = "type", 
+    values = c(init = 15L, seq = 16L, prop = 17L, marked = 18L))
+  pl = pl + ggplot2::scale_alpha_continuous(range = c(max(1 / (iter + 1), 0.1), 1L))
+
+  pl = pl + ggplot.theme
+  
+  return(pl)
+}
+
