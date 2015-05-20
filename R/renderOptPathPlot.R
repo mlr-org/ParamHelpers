@@ -1,12 +1,10 @@
 #' Function for plotting optimization paths.
 #'
-#' Lustige description
-#'
 #' @param op [\code{OptPath}]\cr
 #'   Optimization path.
 #' @param iter [\code{integer(1)}]\cr
 #'   Selected iteration of \code{x} to render plots for.
-#' @param x.over.time [\code(list) | NULL]
+#' @param x.over.time [\code{list} | NULL]
 #'   List of vectors of x-variables, either specified via name or id. Maximum
 #'   length for each vector is 5. For each list-element a line-plot iteration
 #'   versus variable is generated. If the vector has length > 2 only mean values
@@ -16,7 +14,7 @@
 #'   same vector with numerics. Moreover, if more than 1 point per iteration
 #'   exists, mean values are calculated. This is also done for factor variables!
 #'   We recommend you to specify  this argument in a useful way.
-#' @param y.over.time [\code(list)]
+#' @param y.over.time [\code{list} | NULL]
 #'   List of vectors of y-variables, either specified via name or id. Maximum
 #'   length for each vector is 5. For each list-element a line-plot iteration
 #'   versus variable is generated. If the vector has length > 2 only mean values
@@ -65,10 +63,10 @@
 #'   Default is all variables
 #' @param short.x.names [\code{character}]\cr
 #'   Short names for x variables that are used as axis labels. Note you can
-#'   only give shortnames for variables you are using in [\link{subset.vars}]
+#'   only give shortnames for variables you are using in \code{subset.vars}
 #' @param short.y.names [\code{character}]\cr
 #'   Short names for y variables that are used as axis labels. Note you can
-#'   only give shortnames for variables you are using in [\link{subset.targets}]
+#'   only give shortnames for variables you are using in \code{subset.targets}
 #' @return List of plots. If both X and Y space are 1D, list has length 1,
 #'   otherwise length 2 with one plot for X and Y space respectivly.
 #' @export
@@ -151,7 +149,7 @@ renderOptPathPlot = function(op, iter, x.over.time, y.over.time,
   } else {
     assertList(y.over.time)
     for (vec in y.over.time) {
-      if (is.character(x))
+      if (is.character(vec))
         assertSubset(x = vec, choices = y.names, empty.ok = FALSE)
       else
         assertNumeric(x = vec, lower = 1L, upper = dim.y, any.missing = FALSE, unique = TRUE)

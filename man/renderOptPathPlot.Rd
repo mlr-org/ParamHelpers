@@ -2,14 +2,14 @@
 % Please edit documentation in R/renderOptPathPlot.R
 \name{renderOptPathPlot}
 \alias{renderOptPathPlot}
-\title{Functions for plotting optimization paths.}
+\title{Function for plotting optimization paths.}
 \usage{
-renderOptPathPlot(op, iter, xlim = list(), ylim = list(), alpha = TRUE,
-  colours = c("red", "blue", "green", "orange"), size.points = 3,
-  size.lines = 1.5, impute.scale = 1, impute.value = "missing",
-  scale = "std", ggplot.theme = ggplot2::theme(legend.position = "top"),
-  marked = NULL, subset.obs, subset.vars, subset.targets, short.x.names,
-  short.y.names)
+renderOptPathPlot(op, iter, x.over.time, y.over.time, xlim = list(),
+  ylim = list(), alpha = TRUE, colours = c("red", "blue", "green",
+  "orange"), size.points = 3, size.lines = 1.5, impute.scale = 1,
+  impute.value = "missing", scale = "std",
+  ggplot.theme = ggplot2::theme(legend.position = "top"), marked = NULL,
+  subset.obs, subset.vars, subset.targets, short.x.names, short.y.names)
 }
 \arguments{
 \item{op}{[\code{OptPath}]\cr
@@ -17,6 +17,28 @@ Optimization path.}
 
 \item{iter}{[\code{integer(1)}]\cr
 Selected iteration of \code{x} to render plots for.}
+
+\item{x.over.time}{[\code{list} | NULL]
+List of vectors of x-variables, either specified via name or id. Maximum
+length for each vector is 5. For each list-element a line-plot iteration
+versus variable is generated. If the vector has length > 2 only mean values
+per iteration are plotted as lines, if vector has length 1 every point is
+plotted. Default is to plot all variables into as few plots as possible.
+Note that discrete variables are converted to numeric, if specified in the
+same vector with numerics. Moreover, if more than 1 point per iteration
+exists, mean values are calculated. This is also done for factor variables!
+We recommend you to specify  this argument in a useful way.}
+
+\item{y.over.time}{[\code{list} | NULL]
+List of vectors of y-variables, either specified via name or id. Maximum
+length for each vector is 5. For each list-element a line-plot iteration
+versus variable is generated. If the vector has length > 2 only mean values
+per iteration are plotted as lines, if vector has length 1 every point is
+plotted. Default is to plot all variables into as few plots as possible.
+Note that discrete variables are converted to numeric, if specified in the
+same vector with numerics. Moreover, if more than 1 point per iteration
+exists, mean values are calculated. This is also done for factor variables!
+We recommend you to specify  this argument in a useful way.}
 
 \item{xlim}{[\code{list}]}
 
@@ -75,16 +97,19 @@ Default is all variables.}
 Subset of target variables (y-variables) to be plotted. Either vector of indices or names.
 Default is all variables}
 
-\item{short.x.names}{[\code{character}],}
+\item{short.x.names}{[\code{character}]\cr
+Short names for x variables that are used as axis labels. Note you can
+only give shortnames for variables you are using in \code{subset.vars}}
 
 \item{short.y.names}{[\code{character}]\cr
-Short names for x or y variables that are used as axis labels.}
+Short names for y variables that are used as axis labels. Note you can
+only give shortnames for variables you are using in \code{subset.targets}}
 }
 \value{
 List of plots. If both X and Y space are 1D, list has length 1,
   otherwise length 2 with one plot for X and Y space respectivly.
 }
 \description{
-Functions for plotting optimization paths.
+Function for plotting optimization paths.
 }
 
