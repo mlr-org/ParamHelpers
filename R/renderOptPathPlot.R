@@ -1,9 +1,35 @@
-#' Functions for plotting optimization paths.
+#' Function for plotting optimization paths.
+#'
+#' Same as \code{\link{plotOptPath}}, but renders the plots for just 1 iteration
+#' and returns a list of plots insteat of printing the plot. Useful, if you want
+#' to extract single plots or to edit the ggplots by yourself.
 #'
 #' @param op [\code{OptPath}]\cr
 #'   Optimization path.
 #' @param iter [\code{integer(1)}]\cr
 #'   Selected iteration of \code{x} to render plots for.
+#' @param x.over.time [\code{list} | NULL]
+#'   List of vectors of x-variables, either specified via name or id. If specified
+#'   via names, also extra measurements from the opt.path can be selected. Maximum
+#'   length for each vector is 5. For each list-element a line-plot iteration
+#'   versus variable is generated. If the vector has length > 2 only mean values
+#'   per iteration are plotted as lines, if vector has length 1 every point is
+#'   plotted. Default is to plot all variables into as few plots as possible.
+#'   Note that discrete variables are converted to numeric, if specified in the
+#'   same vector with numerics. Moreover, if more than 1 point per iteration
+#'   exists, mean values are calculated. This is also done for factor variables!
+#'   We recommend you to specify  this argument in a useful way.
+#' @param y.over.time [\code{list} | NULL]
+#'   List of vectors of y-variables, either specified via name or id. If specified
+#'   via names, also extra measurements from the opt.path can be selected. Maximum
+#'   length for each vector is 5. For each list-element a line-plot iteration
+#'   versus variable is generated. If the vector has length > 2 only mean values
+#'   per iteration are plotted as lines, if vector has length 1 every point is
+#'   plotted. Default is to plot all variables into as few plots as possible.
+#'   Note that discrete variables are converted to numeric, if specified in the
+#'   same vector with numerics. Moreover, if more than 1 point per iteration
+#'   exists, mean values are calculated. This is also done for factor variables!
+#'   We recommend you to specify  this argument in a useful way.
 #' @template arg_opplotter_lims
 #' @param alpha [\code{logical(1)}]\cr
 #'   Activates or deactivates the alpha fading for the plots. Default is \code{TRUE}.
@@ -41,26 +67,39 @@
 #' @param subset.targets [\code{integer} | \code{character}]\cr
 #'   Subset of target variables (y-variables) to be plotted. Either vector of indices or names. 
 #'   Default is all variables
-#' @param short.x.names [\code{character}], @param short.y.names [\code{character}]\cr
-#'   Short names for x or y variables that are used as axis labels.
-#' @return List of plots. If both X and Y space are 1D, list has length 1,
-#'   otherwise length 2 with one plot for X and Y space respectivly.
+#' @param short.x.names [\code{character}]\cr
+#'   Short names for x variables that are used as axis labels. Note you can
+#'   only give shortnames for variables you are using in \code{subset.vars}
+#' @param short.y.names [\code{character}]\cr
+#'   Short names for y variables that are used as axis labels. Note you can
+#'   only give shortnames for variables you are using in \code{subset.targets}
+#' @param short.rest.names [\code{character}]\cr
+#'   Short names for rest variables that are used as axis labels. Note you can
+#'   only give shortnames for variables you are using in \code{x.over.time}
+#'   or \code{y.over.time}.
+#' @return List of plots. List has up to elements:
+#'   plot.x: Plot for XSpace. If both X and Y are 1D, Plot for both
+#'   plot.y: Plot for YSpace. If both X and Y are 1D, NULL
+#'   plot.x.over.time: List of plots for x over time
+#'   plot.y.over.time: List of plots for y over time.
 #' @export
-renderOptPathPlot = function(op, iter, xlim = list(), ylim = list(), alpha = TRUE, 
-    colours = c("red", "blue", "green", "orange"), size.points = 3, size.lines = 1.5, impute.scale = 1, 
-    impute.value = "missing", scale = "std", ggplot.theme = ggplot2::theme(legend.position = "top"), 
-    marked = NULL, subset.obs, subset.vars, subset.targets, short.x.names, short.y.names) {
+renderOptPathPlot = function(op, iter, x.over.time, y.over.time,
+  xlim = list(), ylim = list(), alpha = TRUE, 
+  colours = c("red", "blue", "green", "orange"), size.points = 3, size.lines = 1.5, impute.scale = 1, 
+  impute.value = "missing", scale = "std", ggplot.theme = ggplot2::theme(legend.position = "top"), 
+  marked = NULL, subset.obs, subset.vars, subset.targets, short.x.names, short.y.names, short.rest.names) {
   
   requirePackages(c("GGally", "ggplot2"), why = "renderOptPathPlot")
   
   iters.max = max(getOptPathDOB(op))
+  assertClass(op, "OptPath")
   assertInt(iter, lower = 0L, upper = iters.max)
   assertFlag(alpha)
   assertCharacter(colours, len = 4L)
   assertNumber(size.points)
   assertNumber(size.points)
   assertNumber(impute.scale)
-  assertCharacter(impute.value, len = 1)
+  assertCharacter(impute.value, len = 1L)
   assertChoice(scale, choices = c("std", "robust", "uniminmax", "globalminmax", "center", "centerObs"))
   assertClass(ggplot.theme, classes = c("theme", "gg"))
   
@@ -73,100 +112,189 @@ renderOptPathPlot = function(op, iter, xlim = list(), ylim = list(), alpha = TRU
     }
   }
   
-  x.names = colnames(getOptPathX(op))
-  if (missing(short.x.names)) {
-    short.x.names = x.names
-  } else {
-    assertCharacter(short.x.names, len = length(x.names))
-  }
-
-  y.names = op$y.names
-  if (missing(short.y.names)) {
-    short.y.names = y.names
-  } else {
-    assertCharacter(short.y.names, len = length(y.names))
-  }
-  
-  # Get Plotting Data
+  # Get Plotting Data and extract everything from the helper
   data = getAndSubsetPlotData(op, iter, subset.obs, subset.vars, subset.targets,
-    marked, alpha)
+    marked, alpha, impute.scale, impute.value)
   op.x = data$op.x
   op.y = data$op.y
+  op.rest = data$op.rest
   dob = data$dob
   .alpha = data$.alpha
   .type = data$.type
-  dim.x = length(data$subset.vars)
-  dim.y = length(data$subset.targets)
+  x.names = data$x.names
+  y.names = data$y.names
+  rest.names = data$rest.names
+  dim.x = length(data$x.names)
+  dim.y = length(data$y.names)
   
-  # impute missing values
-  op.x = BBmisc::dapply(op.x, fun = imputeMissingValues, impute.scale = impute.scale,
-    impute.value = impute.value)
-  op.y = BBmisc::dapply(op.y, fun = imputeMissingValues, impute.scale = impute.scale,
-    impute.value = impute.value)
-
-  # get classes of params (numeric or factor)
-  classes.x = BBmisc::vcapply(op.x, function(x) class(x))
-  classes.y = BBmisc::vcapply(op.y, function(x) class(x))
+  # set defaults for the short names in x, y and rest
+  if (missing(short.x.names)) {
+    short.x.names = x.names
+  } else {
+    assertCharacter(short.x.names, len = dim.x)
+  }
+  
+  if (missing(short.y.names)) {
+    short.y.names = y.names
+  } else {
+    assertCharacter(short.y.names, len = dim.y)
+  }
+  
+  if (missing(short.rest.names)) {
+    short.rest.names = rest.names
+  } else {
+    assertCharacter(short.rest.names, len = length(rest.names))
+  }
   
   # set and check x and y lims, if needed
   lims = getOptPathLims(xlim, ylim, op.x, op.y, iter, 0.05)
   xlim = lims$xlim
   ylim = lims$ylim
   
+  # Set defaults for the over time plots or check the given params
+  if (missing(x.over.time)) {
+    x.over.time = split(x.names, rep(1:ceiling(dim.x / 5), each = 5,
+      length.out = dim.x))
+  } else {
+    if (!is.list(x.over.time))
+      x.over.time = list(x.over.time)
+    assertList(x.over.time)
+    for (vec in x.over.time) {
+      if (is.character(vec))
+        assertSubset(x = vec, choices = c(x.names, rest.names), empty.ok = FALSE)
+      else
+        assertNumeric(x = vec, lower = 1L, upper = dim.x, any.missing = FALSE, unique = TRUE)
+    }
+  }
+  
+  if (missing(y.over.time)) {
+    y.over.time = split(y.names, rep(1:ceiling(dim.y / 5), each = 5,
+      length.out = dim.y))
+  } else {
+    if (!is.list(y.over.time))
+      y.over.time = list(y.over.time)
+    assertList(y.over.time)
+    for (vec in y.over.time) {
+      if (is.character(vec))
+        assertSubset(x = vec, choices = c(y.names, rest.names), empty.ok = FALSE)
+      else
+        assertNumeric(x = vec, lower = 1L, upper = dim.y, any.missing = FALSE, unique = TRUE)
+    }
+  }
+
+  # get classes of params (numeric or factor)
+  classes.x = BBmisc::vcapply(op.x, function(x) class(x))
+  classes.y = BBmisc::vcapply(op.y, function(x) class(x))
+  
+  # So much for the data and the input, now the plots
+  
   # Special case: X and Y are 1D
   if(dim.x == 1L && dim.y == 1L) {
-    pl = plot2D(cbind(x = op.x, y = op.y), .alpha, .type, names = c(x.names, y.names), 
+    pl1 = plot2D(cbind(x = op.x, y = op.y), .alpha, .type, names = c(x.names, y.names), 
       short.names = c(short.x.names, short.y.names), space = "both", iter = iter, 
       classes = c(classes.x, classes.y), xlim = xlim[["XSpace"]], ylim = xlim[["YSpace"]], 
       colours = colours, size = size.points, ggplot.theme = ggplot.theme)
-    return(list(plot = pl))
-  }
-  
-  # plot 1: x-space
-  if (dim.x == 1L && classes.x == "numeric") {
-    pl1 = plot1DNum(op.x, .alpha, .type, names = x.names, short.names = short.x.names, 
-      space = "x", iter = iter, xlim = xlim[["XSpace"]], colours = colours, 
-      ggplot.theme = ggplot.theme)
-  }
-  if (dim.x == 1L && classes.x == "factor") {
-    pl1 = plot1DDisc(op.x, .alpha, .type, names = x.names, short.names = short.x.names, 
-      space = "x", iter = iter, ylim = ylim[["XSpace"]], colours = colours, 
-      ggplot.theme = ggplot.theme)
-  }
+    pl2 = NULL
+  } else {
     
-  if (dim.x == 2L) {
-    pl1 = plot2D(op.x, .alpha, .type, names = x.names, short.names = short.x.names, 
-      space = "x", iter = iter, classes = classes.x, xlim = xlim[["XSpace"]], 
-      ylim = ylim[["XSpace"]], colours = colours, size = size.points, ggplot.theme = ggplot.theme)
-  } 
-  if (dim.x > 2L) {
-    pl1 = plotMultiD(op.x, .alpha, .type, names = x.names, short.names = short.x.names, 
-      space = "x", iter = iter, colours = colours, size = size.lines, scale = scale, 
-      ggplot.theme = ggplot.theme)
+    # plot 1: x-space
+    if (dim.x == 1L && classes.x == "numeric") {
+      pl1 = plot1DNum(op.x, .alpha, .type, names = x.names, short.names = short.x.names, 
+        space = "x", iter = iter, xlim = xlim[["XSpace"]], colours = colours, 
+        ggplot.theme = ggplot.theme)
+    }
+    if (dim.x == 1L && classes.x == "factor") {
+      pl1 = plot1DDisc(op.x, .alpha, .type, names = x.names, short.names = short.x.names, 
+        space = "x", iter = iter, ylim = ylim[["XSpace"]], colours = colours, 
+        ggplot.theme = ggplot.theme)
+    }
+    
+    if (dim.x == 2L) {
+      pl1 = plot2D(op.x, .alpha, .type, names = x.names, short.names = short.x.names, 
+        space = "x", iter = iter, classes = classes.x, xlim = xlim[["XSpace"]], 
+        ylim = ylim[["XSpace"]], colours = colours, size = size.points, ggplot.theme = ggplot.theme)
+    } 
+    if (dim.x > 2L) {
+      pl1 = plotMultiD(op.x, .alpha, .type, names = x.names, short.names = short.x.names, 
+        space = "x", iter = iter, colours = colours, size = size.lines, scale = scale, 
+        ggplot.theme = ggplot.theme)
+    }
+    
+    # plot 2: y-space
+    if (dim.y == 1L && classes.y == "numeric") {
+      pl2 = plot1DNum(op.y, .alpha, .type, names = y.names, short.names = short.y.names, 
+        space = "y", iter = iter, xlim = xlim[["YSpace"]], colours = colours, 
+        ggplot.theme = ggplot.theme)
+    }
+    if (dim.y == 1L && classes.y == "factor") {
+      pl2 = plot1DDisc(op.y, .alpha, .type, names = y.names, short.names = short.y.names, 
+        space = "y", iter = iter, ylim = ylim[["YSpace"]], colours = colours, 
+        ggplot.theme = ggplot.theme)
+    }
+    
+    if (dim.y == 2L) {
+      pl2 = plot2D(op.y, .alpha, .type, names = y.names, short.names = short.y.names, 
+        space = "y", iter = iter, classes = classes.y, xlim = xlim[["YSpace"]], 
+        ylim = ylim[["YSpace"]], colours = colours, size = size.points, ggplot.theme = ggplot.theme)
+    } 
+    if (dim.y > 2L) {
+      pl2 = plotMultiD(op.y, .alpha, .type, names = y.names, short.names = short.y.names, 
+        space = "y", iter = iter, colours = colours, size = size.lines, scale = scale, 
+        ggplot.theme = ggplot.theme)
+    }
   }
   
-  # plot 2: y-space
-  if (dim.y == 1L && classes.y == "numeric") {
-    pl2 = plot1DNum(op.y, .alpha, .type, names = y.names, short.names = short.y.names, 
-      space = "y", iter = iter, xlim = xlim[["YSpace"]], colours = colours, 
-      ggplot.theme = ggplot.theme)
-  }
-  if (dim.y == 1L && classes.y == "factor") {
-    pl2 = plot1DDisc(op.y, .alpha, .type, names = y.names, short.names = short.y.names, 
-      space = "y", iter = iter, ylim = ylim[["YSpace"]], colours = colours, 
-      ggplot.theme = ggplot.theme)
+  # plot 3: x space over time
+  pl3 = vector(mode = "list", length = length(x.over.time))
+  for (i in seq_along(x.over.time)) {
+    # extract variable information from over.time
+    vars = x.over.time[[i]]
+    # if specified via character vector, convert to numeric
+    if (is.character(vars))
+      var.inds = which(c(names(op.x), names(op.rest)) %in% vars)
+    names = c(x.names, rest.names)[var.inds]
+    short.names = c(short.x.names, short.rest.names)[var.inds]
+    
+    if (length(vars) == 1) {
+      pl3[[i]] = oneVariableOverTime(op = cbind(op.x, op.rest),
+        .alpha = .alpha, .type = .type, dob = dob,
+        name = names, short.name = names, iter = iter,
+        xlim = c(NA_real_, NA_real_), ylim = c(NA_real_, NA_real_),
+        colours = colours, size.points = size.points,
+        size.lines = size.lines, ggplot.theme = ggplot.theme)
+    } else {
+      pl3[[i]] = multiVariablesOverTime(op = cbind(op.x, op.rest), .alpha = .alpha, dob = dob,
+        names = names, short.names = names, space = "XSpace",
+        iter = iter, xlim = c(NA_real_, NA_real_), ylim = c(NA_real_, NA_real_),
+        colours = colours, ggplot.theme = ggplot.theme)
+    }
   }
   
-  if (dim.y == 2L) {
-    pl2 = plot2D(op.y, .alpha, .type, names = y.names, short.names = short.y.names, 
-      space = "y", iter = iter, classes = classes.y, xlim = xlim[["YSpace"]], 
-      ylim = ylim[["YSpace"]], colours = colours, size = size.points, ggplot.theme = ggplot.theme)
-  } 
-  if (dim.y > 2L) {
-    pl2 = plotMultiD(op.y, .alpha, .type, names = y.names, short.names = short.y.names, 
-      space = "y", iter = iter, colours = colours, size = size.lines, scale = scale, 
-      ggplot.theme = ggplot.theme)
+  # plot 4: y space over time
+  pl4 = vector(mode = "list", length = length(y.over.time))
+  for (i in seq_along(y.over.time)) {
+    # extract variable information from over.time
+    vars = y.over.time[[i]]
+    # if specified via character vector, convert to numeric
+    if (is.character(vars))
+      var.inds = which(c(names(op.y), names(op.rest)) %in% vars)
+    names = c(y.names, rest.names)[var.inds]
+    short.names = c(short.y.names, short.rest.names)[var.inds]
+    
+    if (length(vars) == 1) {
+      pl4[[i]] = oneVariableOverTime(op = cbind(op.y, op.rest),
+        .alpha = .alpha, .type = .type, dob = dob,
+        name = names, short.name = names, iter = iter,
+        xlim = c(NA_real_, NA_real_), ylim = c(NA_real_, NA_real_),
+        colours = colours, size.points = size.points,
+        size.lines = size.lines, ggplot.theme = ggplot.theme)
+    } else {
+      pl4[[i]] = multiVariablesOverTime(op = cbind(op.y, op.rest), .alpha = .alpha, dob = dob,
+        names = names, short.names = names, space = "YSpace",
+        iter = iter, xlim = c(NA_real_, NA_real_), ylim = c(NA_real_, NA_real_),
+        colours = colours, ggplot.theme = ggplot.theme)
+    }
   }
   
-  return(list(plot.x = pl1, plot.y = pl2))
+  return(list(plot.x = pl1, plot.y = pl2, plot.x.over.time = pl3, plot.y.over.time = pl4))
 }
