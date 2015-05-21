@@ -4,8 +4,8 @@
 # are set to NULL. The same happens if there is a discrete variable in the 2D case.
 # We don't need limits in this cases. 
 # If the dimensionality is 1 for X or Y Space, for this space the ylim is NULL.
-getOptPathLims = function(xlim, ylim, op.x, op.y, iters, scale, x.over.time, 
-  y.over.time) {
+getOptPathLims = function(xlim, ylim, op.x, op.y, iters, scale) {
+  # , x.over.time, y.over.time) {
   
   assertNumeric(scale, len = 1L, lower = 0L, finite = TRUE, any.missing = FALSE)
   
@@ -66,33 +66,31 @@ getOptPathLims = function(xlim, ylim, op.x, op.y, iters, scale, x.over.time,
     
   }
   
-  for (space in c("x.over.time", "y.over.time")) {
-
-    print(xlim[[space]])
-    
-    for (i in seq_along(get(space))) {
-      
-      op.frame = if (space == "x.over.time") op.x else op.y
-      var.names = if (space == "x.over.time") x.over.time[[i]] else y.over.time[[i]]
-      op.frame = op.frame[, var.names, drop = FALSE]
-      
-      # lim.x is iteration number here. If NULL, use ggplot defaults, else check.
-      if (is.null(xlim[[space]][[i]])) {
-        xlim[[space]][[i]] = c(NA_real_, NA_real_)
-      } else {
-        asInteger(xlim[[space]][[i]], len = 2)
-      }
-      
-      # lim.y as minimum and maximum of all plotted variables:
-      if (is.null(ylim[[space]][[i]])) {
-        ylim[[space]][[i]] = range(op.frame)
-        ylim[[space]][[i]] = c(-1, 1) * scale * abs(diff(ylim[[space]][[i]])) + ylim[[space]][[i]]
-      } else {
-        assertNumeric(ylim[[space]][[i]], len = 2L, any.missing = FALSE)
-      }
-      
-    }
-  }
+#   for (space in c("x.over.time", "y.over.time")) {
+# 
+#     for (i in seq_along(get(space))) {
+#       
+#       op.frame = if (space == "x.over.time") op.x else op.y
+#       var.names = if (space == "x.over.time") x.over.time[[i]] else y.over.time[[i]]
+#       op.frame = op.frame[, var.names, drop = FALSE]
+#       
+#       # lim.x is iteration number here. If NULL, use ggplot defaults, else check.
+#       if (is.null(xlim[[space]][[i]])) {
+#         xlim[[space]][[i]] = c(NA_real_, NA_real_)
+#       } else {
+#         asInteger(xlim[[space]][[i]], len = 2)
+#       }
+#       
+#       # lim.y as minimum and maximum of all plotted variables:
+#       if (is.null(ylim[[space]][[i]])) {
+#         ylim[[space]][[i]] = range(op.frame)
+#         ylim[[space]][[i]] = c(-1, 1) * scale * abs(diff(ylim[[space]][[i]])) + ylim[[space]][[i]]
+#       } else {
+#         assertNumeric(ylim[[space]][[i]], len = 2L, any.missing = FALSE)
+#       }
+#       
+#     }
+#   }
     
   return(list(xlim = xlim, ylim = ylim))
 }

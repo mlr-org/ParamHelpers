@@ -9,7 +9,8 @@ renderOptPathPlot(op, iter, x.over.time, y.over.time, xlim = list(),
   "orange"), size.points = 3, size.lines = 1.5, impute.scale = 1,
   impute.value = "missing", scale = "std",
   ggplot.theme = ggplot2::theme(legend.position = "top"), marked = NULL,
-  subset.obs, subset.vars, subset.targets, short.x.names, short.y.names)
+  subset.obs, subset.vars, subset.targets, short.x.names, short.y.names,
+  short.rest.names)
 }
 \arguments{
 \item{op}{[\code{OptPath}]\cr
@@ -19,7 +20,8 @@ Optimization path.}
 Selected iteration of \code{x} to render plots for.}
 
 \item{x.over.time}{[\code{list} | NULL]
-List of vectors of x-variables, either specified via name or id. Maximum
+List of vectors of x-variables, either specified via name or id. If specified
+via names, also extra measurements from the opt.path can be selected. Maximum
 length for each vector is 5. For each list-element a line-plot iteration
 versus variable is generated. If the vector has length > 2 only mean values
 per iteration are plotted as lines, if vector has length 1 every point is
@@ -30,7 +32,8 @@ exists, mean values are calculated. This is also done for factor variables!
 We recommend you to specify  this argument in a useful way.}
 
 \item{y.over.time}{[\code{list} | NULL]
-List of vectors of y-variables, either specified via name or id. Maximum
+List of vectors of y-variables, either specified via name or id. If specified
+via names, also extra measurements from the opt.path can be selected. Maximum
 length for each vector is 5. For each list-element a line-plot iteration
 versus variable is generated. If the vector has length > 2 only mean values
 per iteration are plotted as lines, if vector has length 1 every point is
@@ -48,6 +51,8 @@ axis limits for every plot. Every element of the list must be a numeric
 vector of length 2. Available names for elements are:
 XSpace - limits for the X-Space plot
 YSpace - limits for the Y-Space plot
+x.over.time
+y.over.time
 Default is an empty list - in this case limits are automatically set.}
 
 \item{alpha}{[\code{logical(1)}]\cr
@@ -104,12 +109,22 @@ only give shortnames for variables you are using in \code{subset.vars}}
 \item{short.y.names}{[\code{character}]\cr
 Short names for y variables that are used as axis labels. Note you can
 only give shortnames for variables you are using in \code{subset.targets}}
+
+\item{short.rest.names}{[\code{character}]\cr
+Short names for rest variables that are used as axis labels. Note you can
+only give shortnames for variables you are using in \code{x.over.time}
+or \code{y.over.time}.}
 }
 \value{
-List of plots. If both X and Y space are 1D, list has length 1,
-  otherwise length 2 with one plot for X and Y space respectivly.
+List of plots. List has up to elements:
+  plot.x: Plot for XSpace. If both X and Y are 1D, Plot for both
+  plot.y: Plot for YSpace. If both X and Y are 1D, NULL
+  plot.x.over.time: List of plots for x over time
+  plot.y.over.time: List of plots for y over time.
 }
 \description{
-Function for plotting optimization paths.
+Same as \code{\link{plotOptPath}}, but renders the plots for just 1 iteration
+and returns a list of plots insteat of printing the plot. Useful, if you want
+to extract single plots or to edit the ggplots by yourself.
 }
 

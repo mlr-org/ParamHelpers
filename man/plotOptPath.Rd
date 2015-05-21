@@ -28,6 +28,8 @@ axis limits for every plot. Every element of the list must be a numeric
 vector of length 2. Available names for elements are:
 XSpace - limits for the X-Space plot
 YSpace - limits for the Y-Space plot
+x.over.time
+y.over.time
 Default is an empty list - in this case limits are automatically set.}
 
 \item{title}{[\code{character(1)}]\cr
@@ -39,6 +41,6 @@ Main title for the arranged plots, default is Optimization Path Plots.}
 List of plots, one for each iteration.
 }
 \description{
-Plot method for optimization paths.
+Lustige Description
 }
 
