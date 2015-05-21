@@ -66,9 +66,9 @@ test_that("renderOptPathPlot", {
   X = rnorm(7)
   X2 = rnorm(7)
   Y = rnorm(7)
-  X2[X >= 0.5] = NA
+  X2[X >= 0.7] = NA
   X3 = rep(c("a", "b", "c"), 5)
-  X3[X <= -0.5] = NA
+  X3[X <= -0.7] = NA
   dob = c(rep(0, 5), 1:2)
   for (i in 1:7) {
     addOptPathEl(op3, x = list(x = X[i], y = X2[i], z = X3[i]),

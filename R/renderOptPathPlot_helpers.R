@@ -99,6 +99,8 @@ getAndSubsetPlotData = function(op, iters, subset.obs, subset.vars, subset.targe
     include.rest = FALSE, dob = 0:max(iters), eol = c(min(iters):iters.max, NA))
   op.y = as.data.frame(op, include.x = FALSE, include.y = TRUE,
     include.rest = FALSE, dob = 0:max(iters), eol = c(min(iters):iters.max, NA))
+  op.rest = as.data.frame(op, include.x = FALSE, include.y = FALSE,
+    include.rest = TRUE, dob = 0:max(iters), eol = c(min(iters):iters.max, NA))
   dob = getOptPathDOB(op, dob = 0:max(iters), eol = c((max(iters) + 1):iters.max, NA))
   
   # mark best point / pareto front if marked = "best"
@@ -148,7 +150,7 @@ getAndSubsetPlotData = function(op, iters, subset.obs, subset.vars, subset.targe
   else
     assertSubset(subset.targets, y.names)
   
-  # impute missing values
+  # impute missing values - don't impute in op.rest!
   op.x = BBmisc::dapply(op.x, fun = imputeMissingValues, impute.scale = impute.scale,
     impute.value = impute.value)
   op.y = BBmisc::dapply(op.y, fun = imputeMissingValues, impute.scale = impute.scale,
@@ -156,6 +158,7 @@ getAndSubsetPlotData = function(op, iters, subset.obs, subset.vars, subset.targe
   
   op.x = op.x[subset.obs, subset.vars, drop = FALSE]
   op.y = op.y[subset.obs, subset.targets, drop = FALSE]
+  op.rest = op.rest[subset.obs, , drop = FALSE]
   dob = dob[subset.obs]
   .alpha = .alpha[subset.obs]
   .type = .type[subset.obs]
@@ -166,11 +169,13 @@ getAndSubsetPlotData = function(op, iters, subset.obs, subset.vars, subset.targe
     list(
       op.x = op.x,
       op.y = op.y,
+      op.rest = op.rest,
       dob = dob,
       .alpha = .alpha,
       .type = .type,
       x.names = x.names,
-      y.names = y.names
+      y.names = y.names,
+      rest.names = names(op.rest)
     )
   )
 }

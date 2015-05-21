@@ -1,5 +1,7 @@
 #' Plot method for optimization paths.
 #'
+#' Lustige Description
+#'
 #' @param op [\code{OptPath}]\cr
 #'   Optimization path.
 #' @param iters [\code{integer} | NULL]\cr
@@ -49,7 +51,7 @@ plotOptPath = function(op, iters, pause = TRUE, xlim = list(), ylim = list(),
       plots$plot.y.over.time = do.call(gridExtra::arrangeGrob,
         c(plots$plot.y.over.time, ncol = 1L, main = "YSpace over Time"))
     
-    plots = Filter(Negate(isScalarNA), plots)
+    plots = Filter(Negate(is.null), plots)
     do.call(gridExtra::grid.arrange, c(plots, nrow = (length(plots) + 1) %/% 2, main = title))
     if (pause && iter != getLast(iters)) {
       pause()

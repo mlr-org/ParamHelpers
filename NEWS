@@ -2,6 +2,7 @@ ParamHelpers_1.5:
 - added constr.clip to print.ParamSet and related internal functions to make prints more readable
 - getDefaults: new option include.null
 - convertParamSetToIrace: removed argument 'digits' to keep maximum precision of boundaries
+- added renderOptPathPlot and plotOptPath for plotting of optimization paths.
 
 ParamHelpers_1.4:
 - sampleValue(s): 'discrete.names' now only affects discrtete params and not logicals anymore.
