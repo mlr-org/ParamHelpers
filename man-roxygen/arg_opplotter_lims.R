@@ -5,4 +5,6 @@
 #'   vector of length 2. Available names for elements are:
 #'   XSpace - limits for the X-Space plot
 #'   YSpace - limits for the Y-Space plot
+#'   x.over.time
+#'   y.over.time
 #'   Default is an empty list - in this case limits are automatically set.
