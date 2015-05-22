@@ -5,41 +5,66 @@
 # We don't need limits in this cases. 
 # If the dimensionality is 1 for X or Y Space, for this space the ylim is NULL.
 getOptPathLims = function(xlim, ylim, op.x, op.y, iters, scale) {
-  # , x.over.time, y.over.time) {
-  
-  assertNumeric(scale, len = 1L, lower = 0L, finite = TRUE, any.missing = FALSE)
   
   assertList(xlim)
   assertList(ylim)
+  
+  # First, we calculate for XSpace and YSpace plot the limits
+  # Nasty ifs, since this can be one of half a dozen plots, and for every
+  # plot we have different defaults
   for (space in c("XSpace", "YSpace")) {
     op.frame = if (space == "XSpace") op.x else op.y
     dim = ncol(op.frame)
     classes = BBmisc::vcapply(op.frame, function(x) class(x))
+    
+    # For Multi-D Plot, no limits are needed. Warn, if the user specified some
+    # and set to NULL
     if (dim > 2L) {
+      if (!is.null(xlim[[space]]))
+        warning(paste("You specified xlims for multi-D plot in",
+          space,"but xlims for this plots are not supported."))
+      if (!is.null(ylim[[space]]))
+        warning("You specified ylims for multi-D plot in",
+          space,"but ylims for this plots are not supported.")
       xlim[[space]] = NULL
       ylim[[space]] = NULL
       next
     }
     
-    if (all(classes == "numeric")) {
+    # For 1Dnumeric this is easy - either check user input
+    # or set to min - scale * range and max + scale * range 
+    if (dim == 1L && (classes == "numeric")) {
       if (is.null(xlim[[space]])) {
         xlim[[space]] = range(op.frame[, 1L])
         xlim[[space]] = c(-1, 1) * scale * abs(diff(xlim[[space]])) + xlim[[space]]
       } else {
         assertNumeric(xlim[[space]], len = 2L, any.missing = FALSE)
       }
+      if (!is.null(ylim[[space]]))
+        warning("You specified ylims for 1D numeric plot in",
+          space,"but ylims for this plots are not supported.")
+      ylim[[space]] = NULL
+      next
     }
     
     # limits for barplot (1D discrete case)
+    # Here, xlims are not meaningful, ylim is the modal value
     if (dim == 1L && classes == "factor") {
+      if (!is.null(xlim[[space]]))
+        warning(paste("You specified xlims for 1D barplot in",
+          space,"but xlims for this plots are not supported."))
       xlim[[space]] = NULL
+      
       if (is.null(ylim[[space]])) {
         ylim[[space]] = c(0, max(table(op.frame)))
       } else {
         assertNumeric(ylim[[space]], len = 2L, any.missing = FALSE)
       }
+      next
     }
     
+    # For dim = 2L we have to check for both variables, if they are discrete
+    # for discrete, we don't want limits, for factors they are not meaningful
     if (dim == 2L) {
       if (classes[1L] == "numeric") {
         if (is.null(xlim[[space]])) {
@@ -49,6 +74,9 @@ getOptPathLims = function(xlim, ylim, op.x, op.y, iters, scale) {
           assertNumeric(xlim[[space]], len = 2L, any.missing = FALSE)
         }
       } else {
+        if (!is.null(xlim[[space]]))
+          warning(paste("You specified xlims for 2D scatter plot in",
+            space,"but the variable is discrete here and therefor xlims are not supported."))
         xlim[[space]] = NULL
       }
       
@@ -60,14 +88,41 @@ getOptPathLims = function(xlim, ylim, op.x, op.y, iters, scale) {
           assertNumeric(ylim[[space]], len = 2L, any.missing = FALSE)
         }
       } else {
+        if (!is.null(ylim[[space]]))
+          warning(paste("You specified ylims for 2D scatter plot in",
+            space,"but the variable is discrete here and therefor ylims are not supported."))
         ylim[[space]] = NULL
       } 
     }
     
   }
   
+  # For now I say: The code for checking and limits for the over.time.plots
+  # is way to bad and very complicated. It's not worth the afford atm, since in
+  # 99% the defaults of ggplot are the way to go.
+  # the user can get the plots via render, he has to set the limits here
+  # for himself
+  # NOTE: This code is not finished!
+  
+#   # Now we need the limits for over.time plots. This is a bit complicated,
+#   # since we can have a list of over.time plots, so we also can get
+#   # a list of lims.
 #   for (space in c("x.over.time", "y.over.time")) {
-# 
+#     
+#     over.time.vars = 
+#     
+#     # First, ensure we have lists.
+#     if (!is.list(xlim[[space]]))
+#       xlim[[space]] = list(xlim[[space]])
+#     
+#     if (!is.list(ylim[[space]]))
+#       ylim[[space]] = list(ylim[[space]])
+#     
+#     # Here, you allways have to specify limits for every plot - if you specify
+#     # some limits.
+#     assertList(ylim[[space]], len = )
+#     assertList(ylim[[space]], 
+#     
 #     for (i in seq_along(get(space))) {
 #       
 #       op.frame = if (space == "x.over.time") op.x else op.y
@@ -117,6 +172,7 @@ imputeMissingValues = function(x, impute.scale, impute.value) {
 getAndSubsetPlotData = function(op, iters, subset.obs, subset.vars, subset.targets,
   marked = NULL, alpha = TRUE, impute.scale = 0.05, impute.value = "missing", ...) {
   
+  # extract initial information and the data from the opt.path
   x.names = colnames(getOptPathX(op))
   y.names = op$y.names
   dim.x = length(x.names)
@@ -153,7 +209,7 @@ getAndSubsetPlotData = function(op, iters, subset.obs, subset.vars, subset.targe
   }
   .alpha = pmax(0.1, .alpha)
   
-  # And now subset everything
+  # Check and calculate the subsets
   if (missing(subset.obs))
     subset.obs = 1:nrow(op.x)
   assertIntegerish(subset.obs, lower = 1, upper = getOptPathLength(op), unique = TRUE, 
@@ -184,6 +240,7 @@ getAndSubsetPlotData = function(op, iters, subset.obs, subset.vars, subset.targe
   op.y = BBmisc::dapply(op.y, fun = imputeMissingValues, impute.scale = impute.scale,
     impute.value = impute.value)
   
+  # now subset everything
   op.x = op.x[subset.obs, subset.vars, drop = FALSE]
   op.y = op.y[subset.obs, subset.targets, drop = FALSE]
   op.rest = op.rest[subset.obs, , drop = FALSE]

@@ -13,34 +13,49 @@ Optimization path.}
 
 \item{iters}{[\code{integer} | NULL]\cr
 Vector of iterations which should be plotted one after another. If \code{NULL},
-which is the default, all iterations are plotted. Iteration 0 plots
-all elements with dob = 0.}
+which is the default, only the last iteration is plotted. Iteration 0 plots
+all elements with dob = 0. Note that the plots for iteration i contains
+all observations alive in iteration i.}
 
 \item{pause}{[\code{logical(1)}]\cr
 Should the process be paused after each iteration?
 Default is \code{TRUE}.}
 
-\item{xlim}{[\code{list}]}
-
-\item{ylim}{[\code{list}], \cr
-Axis limits for the plots. Must be a named list, so you can specify the
+\item{xlim}{[\code{list}] \cr
+X axis limits for the plots. Must be a named list, so you can specify the
 axis limits for every plot. Every element of the list must be a numeric
 vector of length 2. Available names for elements are:
 XSpace - limits for the X-Space plot
 YSpace - limits for the Y-Space plot
-x.over.time
-y.over.time
-Default is an empty list - in this case limits are automatically set.}
+Default is an empty list - in this case limits are automatically set.
+Note: For some plots it is not meaningful to set limits, in this case the
+set limits are ignored.
+Note: We do not support setting lims for the over.time.plots. We think,
+in nearly every case the ggplot defaults are fine, and the very rare case
+you have to set them, you can you can extract the plots and add your own limits.}
+
+\item{ylim}{[\code{list}] \cr
+Y axis limits for the plots. Must be a named list, so you can specify the
+axis limits for every plot. Every element of the list must be a numeric
+vector of length 2. Available names for elements are:
+XSpace - limits for the X-Space plot
+YSpace - limits for the Y-Space plot
+Default is an empty list - in this case limits are automatically set.
+Note: For some plots it is not meaningful to set limits, in this case the
+set limits are ignored.
+Note: We do not support setting lims for the over.time.plots. We think,
+in nearly every case the ggplot defaults are fine, and the very rare case
+you have to set them, you can you can extract the plots and add your own limits.}
 
 \item{title}{[\code{character(1)}]\cr
 Main title for the arranged plots, default is Optimization Path Plots.}
 
 \item{...}{Additional parameters for \code{\link{renderOptPathPlot}}.}
 }
-\value{
-List of plots, one for each iteration.
-}
 \description{
-Lustige Description
+Plot method for every type of optimization path, containing any numbers and
+types of variables. For every iteration up to 4 types of plots can be generated:
+One plot for the distribution of points in X and Y space respectively and plots
+for the trend of specified X variables, Y variables and extra measures over the time.
 }
 

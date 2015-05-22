@@ -33,6 +33,9 @@
 #' @template arg_opplotter_lims
 #' @param alpha [\code{logical(1)}]\cr
 #'   Activates or deactivates the alpha fading for the plots. Default is \code{TRUE}.
+#' @param log [\code{character}]\cr
+#'   Vector of variable names. All of this variable logarithmized in every plot.
+#'   Default is an empty vector - no logarithm is applied.
 #' @param colours [\code{character(4)}]\cr
 #'   Colours of the points/lines for the four point types init, seq, prob and marked.
 #'   Default is red for init, blue for seq, green for prob and orange for marked.
@@ -84,7 +87,7 @@
 #'   plot.y.over.time: List of plots for y over time.
 #' @export
 renderOptPathPlot = function(op, iter, x.over.time, y.over.time,
-  xlim = list(), ylim = list(), alpha = TRUE, 
+  xlim = list(), ylim = list(), alpha = TRUE, log = c(),
   colours = c("red", "blue", "green", "orange"), size.points = 3, size.lines = 1.5, impute.scale = 1, 
   impute.value = "missing", scale = "std", ggplot.theme = ggplot2::theme(legend.position = "top"), 
   marked = NULL, subset.obs, subset.vars, subset.targets, short.x.names, short.y.names, short.rest.names) {
@@ -126,6 +129,9 @@ renderOptPathPlot = function(op, iter, x.over.time, y.over.time,
   rest.names = data$rest.names
   dim.x = length(data$x.names)
   dim.y = length(data$y.names)
+  
+  
+  assertSubset(log, choices = c(x.names, y.names, rest.names))
   
   # set defaults for the short names in x, y and rest
   if (missing(short.x.names)) {
@@ -190,7 +196,7 @@ renderOptPathPlot = function(op, iter, x.over.time, y.over.time,
   
   # Special case: X and Y are 1D
   if(dim.x == 1L && dim.y == 1L) {
-    pl1 = plot2D(cbind(x = op.x, y = op.y), .alpha, .type, names = c(x.names, y.names), 
+    pl1 = plot2D(cbind(x = op.x, y = op.y), .alpha, .type, log, names = c(x.names, y.names), 
       short.names = c(short.x.names, short.y.names), space = "both", iter = iter, 
       classes = c(classes.x, classes.y), xlim = xlim[["XSpace"]], ylim = xlim[["YSpace"]], 
       colours = colours, size = size.points, ggplot.theme = ggplot.theme)
@@ -199,46 +205,46 @@ renderOptPathPlot = function(op, iter, x.over.time, y.over.time,
     
     # plot 1: x-space
     if (dim.x == 1L && classes.x == "numeric") {
-      pl1 = plot1DNum(op.x, .alpha, .type, names = x.names, short.names = short.x.names, 
+      pl1 = plot1DNum(op.x, .alpha, .type, log, names = x.names, short.names = short.x.names, 
         space = "x", iter = iter, xlim = xlim[["XSpace"]], colours = colours, 
         ggplot.theme = ggplot.theme)
     }
     if (dim.x == 1L && classes.x == "factor") {
-      pl1 = plot1DDisc(op.x, .alpha, .type, names = x.names, short.names = short.x.names, 
+      pl1 = plot1DDisc(op.x, .alpha, .type, log, names = x.names, short.names = short.x.names, 
         space = "x", iter = iter, ylim = ylim[["XSpace"]], colours = colours, 
         ggplot.theme = ggplot.theme)
     }
     
     if (dim.x == 2L) {
-      pl1 = plot2D(op.x, .alpha, .type, names = x.names, short.names = short.x.names, 
+      pl1 = plot2D(op.x, .alpha, .type, log, names = x.names, short.names = short.x.names, 
         space = "x", iter = iter, classes = classes.x, xlim = xlim[["XSpace"]], 
         ylim = ylim[["XSpace"]], colours = colours, size = size.points, ggplot.theme = ggplot.theme)
     } 
     if (dim.x > 2L) {
-      pl1 = plotMultiD(op.x, .alpha, .type, names = x.names, short.names = short.x.names, 
+      pl1 = plotMultiD(op.x, .alpha, .type, log, names = x.names, short.names = short.x.names, 
         space = "x", iter = iter, colours = colours, size = size.lines, scale = scale, 
         ggplot.theme = ggplot.theme)
     }
     
     # plot 2: y-space
     if (dim.y == 1L && classes.y == "numeric") {
-      pl2 = plot1DNum(op.y, .alpha, .type, names = y.names, short.names = short.y.names, 
+      pl2 = plot1DNum(op.y, .alpha, .type, log, names = y.names, short.names = short.y.names, 
         space = "y", iter = iter, xlim = xlim[["YSpace"]], colours = colours, 
         ggplot.theme = ggplot.theme)
     }
     if (dim.y == 1L && classes.y == "factor") {
-      pl2 = plot1DDisc(op.y, .alpha, .type, names = y.names, short.names = short.y.names, 
+      pl2 = plot1DDisc(op.y, .alpha, .type, log, names = y.names, short.names = short.y.names, 
         space = "y", iter = iter, ylim = ylim[["YSpace"]], colours = colours, 
         ggplot.theme = ggplot.theme)
     }
     
     if (dim.y == 2L) {
-      pl2 = plot2D(op.y, .alpha, .type, names = y.names, short.names = short.y.names, 
+      pl2 = plot2D(op.y, .alpha, .type, log, names = y.names, short.names = short.y.names, 
         space = "y", iter = iter, classes = classes.y, xlim = xlim[["YSpace"]], 
         ylim = ylim[["YSpace"]], colours = colours, size = size.points, ggplot.theme = ggplot.theme)
     } 
     if (dim.y > 2L) {
-      pl2 = plotMultiD(op.y, .alpha, .type, names = y.names, short.names = short.y.names, 
+      pl2 = plotMultiD(op.y, .alpha, .type, log, names = y.names, short.names = short.y.names, 
         space = "y", iter = iter, colours = colours, size = size.lines, scale = scale, 
         ggplot.theme = ggplot.theme)
     }
@@ -257,16 +263,14 @@ renderOptPathPlot = function(op, iter, x.over.time, y.over.time,
     
     if (length(vars) == 1) {
       pl3[[i]] = oneVariableOverTime(op = cbind(op.x, op.rest),
-        .alpha = .alpha, .type = .type, dob = dob,
-        name = names, short.name = names, iter = iter,
-        xlim = c(NA_real_, NA_real_), ylim = c(NA_real_, NA_real_),
+        .alpha = .alpha, .type = .type, dob = dob, log = log,
+        names = names, short.names = names, iter = iter,
         colours = colours, size.points = size.points,
         size.lines = size.lines, ggplot.theme = ggplot.theme)
     } else {
-      pl3[[i]] = multiVariablesOverTime(op = cbind(op.x, op.rest), .alpha = .alpha, dob = dob,
-        names = names, short.names = names, space = "XSpace",
-        iter = iter, xlim = c(NA_real_, NA_real_), ylim = c(NA_real_, NA_real_),
-        colours = colours, ggplot.theme = ggplot.theme)
+      pl3[[i]] = multiVariablesOverTime(op = cbind(op.x, op.rest), .alpha = .alpha,
+        dob = dob, log = log, names = names, short.names = names, space = "XSpace",
+        iter = iter, colours = colours, ggplot.theme = ggplot.theme)
     }
   }
   
@@ -283,16 +287,14 @@ renderOptPathPlot = function(op, iter, x.over.time, y.over.time,
     
     if (length(vars) == 1) {
       pl4[[i]] = oneVariableOverTime(op = cbind(op.y, op.rest),
-        .alpha = .alpha, .type = .type, dob = dob,
-        name = names, short.name = names, iter = iter,
-        xlim = c(NA_real_, NA_real_), ylim = c(NA_real_, NA_real_),
+        .alpha = .alpha, .type = .type, dob = dob, log = log,
+        names = names, short.names = names, iter = iter,
         colours = colours, size.points = size.points,
         size.lines = size.lines, ggplot.theme = ggplot.theme)
     } else {
-      pl4[[i]] = multiVariablesOverTime(op = cbind(op.y, op.rest), .alpha = .alpha, dob = dob,
-        names = names, short.names = names, space = "YSpace",
-        iter = iter, xlim = c(NA_real_, NA_real_), ylim = c(NA_real_, NA_real_),
-        colours = colours, ggplot.theme = ggplot.theme)
+      pl4[[i]] = multiVariablesOverTime(op = cbind(op.y, op.rest), .alpha = .alpha,
+        dob = dob, log = log, names = names, short.names = names, space = "YSpace",
+        iter = iter, colours = colours, ggplot.theme = ggplot.theme)
     }
   }
   

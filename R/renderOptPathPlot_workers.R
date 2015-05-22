@@ -1,14 +1,21 @@
-# Plot methods
+# Plot methods for renderOptPathPlot. Nearly the same interface for all plot functions
+# Not all functions do have all arguments.
+
 # @param op 
 #   The optimization path
 # @param .alpha [\code{numeric}]\cr
 #   Vector of alpha values for the points in the plots.
 # @param .type [\code{factor}]\cr
 #   Vector of types of the points, factor levels are init, seq, prob and marked.
+# @param dob [\code{numeric}]\cr
+#   Vector of dobs
+# @param log[\code{character}]\cr
+#   Vector of variables to be logarithmized
 # @param names [\code{character}]\cr
 #   Vector of the names of the variables. Used to identify variables for the plot.
 # @param short.names [\code{character}]\cr
-#   Vector of the short names of the variables. This names will be printed in the plot!
+#   Vector of the short names of the variables. This names will be printed in the plot.
+#   Must be the same length as names
 # @param space[\code{character}]
 #   If the X-Space is plotted, space = "x", if the Y-Space is plotted, space = "y".
 #   Special case 1D -> 1D also "both" is possible.
@@ -26,10 +33,15 @@
 
 
 # Plot method for a one-dimensional numeric X- or Y-Space
-plot1DNum = function(op, .alpha, .type, names, short.names, space, iter, xlim, colours, ggplot.theme) {
+# Here we use geom_density and geom_rug
+# And we know both names and short.names have length 1
+plot1DNum = function(op, .alpha, .type, log, names, short.names,
+  space, iter, xlim, colours, ggplot.theme) {
+  
+  op <<- op
   
   op$.alpha = .alpha
-  op$type = .type
+  op$.type = .type
   
   if (space == "x") {  
     title = ggplot2::ggtitle("X-Space")    
@@ -38,16 +50,19 @@ plot1DNum = function(op, .alpha, .type, names, short.names, space, iter, xlim, c
     title = ggplot2::ggtitle("Y-Space")    
   }
   
-  pl = ggplot2::ggplot(op, ggplot2::aes_string(x = names[1]))
+  pl = ggplot2::ggplot(op, ggplot2::aes_string(x = names))
   pl = pl + ggplot2::geom_density(colour = "black")
   pl = pl + title
   pl = pl + ggplot2::xlab(short.names)
-  pl = pl + ggplot2::geom_rug(ggplot2::aes_string(alpha = ".alpha", colour = "type"), 
+  pl = pl + ggplot2::geom_rug(ggplot2::aes_string(alpha = ".alpha", colour = ".type"), 
     sides = "b", size = 2L, data = op)
-  pl = pl + ggplot2::coord_cartesian(xlim = xlim) 
+  if (names %in% log)
+    pl = pl + coord_trans(xtrans = "log10", limx = xlim)
+  else
+    pl = pl + ggplot2::coord_cartesian(xlim = xlim) 
   pl = pl + ggplot2::guides(alpha = FALSE)
   pl = pl + ggplot2::scale_alpha_continuous(range = c(max(1 / (iter + 1), 0.1), 1L))
-  pl = pl + ggplot2::scale_colour_manual(
+  pl = pl + ggplot2::scale_colour_manual(name = "type",
     values = c(init = colours[1L], seq = colours[2L], prop = colours[3L], marked = colours[4L]))
   pl = pl + ggplot.theme
   
@@ -56,11 +71,12 @@ plot1DNum = function(op, .alpha, .type, names, short.names, space, iter, xlim, c
 
 
 # Plot method for a one-dimensional discrete X- or Y-Space
-plot1DDisc = function(op, .alpha, .type, names, short.names, space, iter, ylim, 
-  colours, ggplot.theme) {
+# Here we use geom_bar
+plot1DDisc = function(op, .alpha, .type, log, names, short.names,
+  space, iter, ylim, colours, ggplot.theme) {
   
   op$.alpha = as.factor(.alpha)
-  op$type = .type
+  op$.type = .type
   
   if (space == "x") {  
     title = ggplot2::ggtitle("X-Space")    
@@ -69,13 +85,13 @@ plot1DDisc = function(op, .alpha, .type, names, short.names, space, iter, ylim,
     title = ggplot2::ggtitle("Y-Space")    
   }
   
-  pl = ggplot2::ggplot(op, ggplot2::aes_string(x = names[1L], fill = "type", alpha = ".alpha"))
+  pl = ggplot2::ggplot(op, ggplot2::aes_string(x = names[1L], fill = ".type", alpha = ".alpha"))
   pl = pl + ggplot2::geom_bar()
   pl = pl + title
   pl = pl + ggplot2::xlab(short.names)
   pl = pl + ggplot2::ylim(ylim)
   pl = pl + ggplot2::scale_alpha_discrete(range = c(max(1 / (iter + 1), 0.1), 1L))
-  pl = pl + ggplot2::scale_fill_manual(
+  pl = pl + ggplot2::scale_fill_manual(name = "type",
     values = c(init = colours[1L], seq = colours[2L], prop = colours[3L], marked = colours[4L]))
   pl = pl + ggplot.theme
   pl = pl + ggplot2::guides(alpha = FALSE)
@@ -85,12 +101,12 @@ plot1DDisc = function(op, .alpha, .type, names, short.names, space, iter, ylim,
 
 
 # Plot method for a two-dimensional X- or Y-Space
-
-plot2D = function(op, .alpha, .type, names, short.names, space, iter, classes, xlim, ylim, 
-  colours, size, ggplot.theme) {
+# We use geom_point and jitter for discrete variables
+plot2D = function(op, .alpha, .type, log, names, short.names,
+  space, iter, classes, xlim, ylim,  colours, size, ggplot.theme) {
   
   op$.alpha = .alpha
-  op$type = .type
+  op$.type = .type
   
   if (space == "x") {
     title = ggplot2::ggtitle("X-Space")
@@ -102,14 +118,17 @@ plot2D = function(op, .alpha, .type, names, short.names, space, iter, classes, x
     title = ggplot2::ggtitle("X- and Y-Space")
   }
   
-  if (any(classes == "factor")) {
-    pos = ggplot2::position_jitter(w = 0.1, h = 0.1)
+  factor.classes = classes == "factor"
+  if (any(factor.classes)) {
+    # Jitter only in the discrete directions
+    pos = ggplot2::position_jitter(w = 0.1 * factor.classes[1],
+      h = 0.1 * factor.classes[2])
   } else {
     pos = "identity"
   }
   
   pl = ggplot2::ggplot(op, ggplot2::aes_string(
-    x = names[1L], y = names[2L], shape = "type", colour = "type", alpha = ".alpha"))
+    x = names[1L], y = names[2L], shape = ".type", colour = ".type", alpha = ".alpha"))
   pl = pl + ggplot2::geom_point(size = size, position = pos)
   pl = pl + title
   pl = pl + ggplot2::xlab(short.names[1L]) + ggplot2::ylab(short.names[2L])
@@ -121,31 +140,44 @@ plot2D = function(op, .alpha, .type, names, short.names, space, iter, classes, x
   pl = pl + ggplot2::scale_alpha_continuous(range = c(max(1 / (iter + 1), 0.1), 1L))
   pl = pl + ggplot.theme
   if (classes[1L] == "numeric") {
-    pl = pl + ggplot2::xlim(xlim)
+    if (names[1L] %in% log)
+      pl = pl + scale_x_log10(limits = xlim)
+    else
+      pl = pl + ggplot2::xlim(xlim)
   }
   if (classes[2L] == "numeric") {
-    pl = pl + ggplot2::ylim(ylim)
-  }
+    if (names[2L] %in% log)
+      pl = pl + scale_y_log10(limits = ylim)
+    else
+      pl = pl + ggplot2::ylim(ylim)
+  }  
+
   return(pl)
 }
 
 # Plot method for a multi-dimensional X- or Y-Space
-plotMultiD = function(op, .alpha, .type, names, short.names, space, iter, colours, size, 
-  scale, ggplot.theme) {
+# Here we make a PCP using GGally::ggparcoord
+plotMultiD = function(op, .alpha, .type, log, names, short.names,
+  space, iter, colours, size, scale, ggplot.theme) {
   args = list(columns = seq_along(names))
-  for (i in seq_col(op)) {
-    op[, i] = as.numeric(op[, i])
+  
+  # make every variable numeric and check for a log trafo
+  for (var in names) {
+    op[, var] = as.numeric(op[, var])
+    if (var %in% log)
+      op[, var] = log10(op[, var])
   }
   
   op$.alpha = .alpha
   # minimal alpha value:
-  op$type = .type
+  op$.type = .type
   args$data = op
   args$alphaLines = ".alpha"
   args$groupColumn = ncol(op)
   args$scale = scale
   args$mapping = ggplot2::aes_q(lwd = size)
   
+
   
   if (space == "x") {
     title = ggplot2::ggtitle("X-Space")
@@ -153,11 +185,11 @@ plotMultiD = function(op, .alpha, .type, names, short.names, space, iter, colour
     title = ggplot2::ggtitle("Y-Space")
   }
   pl = do.call(GGally::ggparcoord, args)
-  pl = pl + ggplot2::ylab ("value divided by standard deviation")
+  pl = pl + ggplot2::ylab ("scaled values")
   pl = pl + ggplot2::scale_x_discrete(labels = short.names)
   pl = pl + title
   pl = pl + ggplot2::guides(alpha = FALSE, size = FALSE)
-  pl = pl + ggplot2::scale_colour_manual(
+  pl = pl + ggplot2::scale_colour_manual(name = "type",
     values = c(init = colours[1L], seq = colours[2L], prop = colours[3L], marked = colours[4L]))
   pl = pl + ggplot.theme
   return(pl)
@@ -167,14 +199,22 @@ plotMultiD = function(op, .alpha, .type, names, short.names, space, iter, colour
 # Function to plot one or more numeric variables over time
 # names: all corresponding variables must be numeric
 # short.names: short names of the variables given by names
-multiVariablesOverTime = function(op, .alpha, dob, names, short.names, space, 
-  iter, lim.y, colours, ggplot.theme) {
+multiVariablesOverTime = function(op, .alpha, dob, log, names, short.names,
+  space, iter, colours, ggplot.theme) {
   
-  # make factor to numerics
-  for (i in seq_col(op)) {
-    op[, i] = as.numeric(op[, i])
-    if (!is.numeric(op[, i]))
-      warning(paste("Converting variable ", names[i], "to numeric for over time plot."))
+  # For rest variables, we can get a NA data.frame here. In this case, no plot
+  if (all(is.na(op[, names])))
+    return(NULL)
+  
+  # allow only log trafo of all variables in this plot
+  log.var = names %in% log
+  if (any(log.var) && !all(log.var))
+    stop("If you want to apply a log trafo in an over.time.plot, you have to apply it to every variable.")
+  
+  for (var in names) {
+    if (!is.numeric(op[, var]))
+      warning(paste("Converting variable ", var, "to numeric for over time plot."))
+    op[, var] = as.numeric(op[, var])
   }
   
   op2 = op[, names]
@@ -194,54 +234,65 @@ multiVariablesOverTime = function(op, .alpha, dob, names, short.names, space,
   pl = pl + ggplot2::geom_point()
   pl = pl + ggplot2::geom_line() 
   pl = pl + ggplot2::scale_linetype_discrete(labels = short.names)
-  pl = pl + ggplot2::ylim(lim.y)
+  # For the x axis: only whole numbers as breaks
+  pl = pl + scale_x_continuous(breaks = function(x) pretty(x, n = min(5, iter + 1)))
+  if (all(log.var))
+    pl = pl + scale_y_log10()
   pl = pl + ggplot.theme
   
   return(pl)
 }
 
 # Plots One variable versus the DOB. name is the name of the variable to be plotted
-oneVariableOverTime = function(op, .alpha, .type, dob, name, short.name, iter,
-  xlim, ylim, size.points, size.lines, colours, ggplot.theme) {
+oneVariableOverTime = function(op, .alpha, .type, dob, log, names, short.names, iter,
+  size.points, size.lines, colours, ggplot.theme) {
+  
+  # For rest variables, we can get a NA data.frame here. In this case, no plot
+  if (all(is.na(op[, names])))
+    return(NULL)
   
   # Some data  preproc. 2 Different datasets - one for init design, one for rest
-  
-  op = cbind(op, dob = dob, .alpha = .alpha, type = .type)
+  op = cbind(op, dob = dob, .alpha = .alpha, .type = .type)
   
   init.des.inds = dob == 0
   
   op.init.des = op[init.des.inds, , drop = FALSE]
   op.seq.opt = op[!init.des.inds, , drop = FALSE]
   
-
   
-  aes.points = ggplot2::aes_string(x = "dob", y = name, shape = "type",
-    colour = "type", alpha = ".alpha")
+  aes.points = ggplot2::aes_string(x = "dob", y = names, shape = ".type",
+    colour = ".type", alpha = ".alpha")
   
-  pl = ggplot2::ggplot(op, ggplot2::aes_string(x = "dob", y = name))
+  pl = ggplot2::ggplot(op, ggplot2::aes_string(x = "dob", y = names))
   # mean data for line plot for sequential data - only for numeric vars
-  if (is.numeric(op[, name])) {
+  # Also ylims are only useful for numeric vars
+  if (is.numeric(op[, names])) {
     op.seq.means = op.seq.opt[!duplicated(op.seq.opt$dob), ]
-    op.seq.means[, name] = tapply(op.seq.opt[, name], op.seq.opt[, "dob"], mean)
-    pl = pl + ggplot2::geom_line(data = op.seq.means, ggplot2::aes_string(x = "dob", y = name), alpha = 0.3)
+    op.seq.means[, names] = tapply(op.seq.opt[, names], op.seq.opt[, "dob"], mean)
+    pl = pl + ggplot2::geom_line(data = op.seq.means, ggplot2::aes_string(x = "dob", y = names), alpha = 0.3)
+    if (names %in% log) {
+      pl = pl + scale_y_log10()
+    }
   }
   pl = pl + ggplot2::geom_point(data = op.init.des, mapping = aes.points, size = size.points,
     position = ggplot2::position_jitter(h = 0.1))
   # Add jitter for discrete variable
-  if (is.numeric(op[, name]))
+  if (is.numeric(op[, names]))
     pl = pl + ggplot2::geom_point(data = op.seq.opt, mapping = aes.points, size = size.points)
   else
     pl = pl + ggplot2::geom_point(data = op.seq.opt, mapping = aes.points, size = size.points,
       position = ggplot2::position_jitter(height = 0.1, width = 0.1))
   pl = pl + ggplot2::geom_vline(xintercept = 0.5)
   pl = pl + ggplot2::guides(alpha = FALSE)
-  pl = pl + ggplot2::ylab(short.name)
-  pl = pl + ggplot2::scale_colour_manual(
+  pl = pl + ggplot2::ylab(short.names)
+  pl = pl + ggplot2::scale_colour_manual(name = "type",
     values = c(init = colours[1L], seq = colours[2L], prop = colours[3L], marked = colours[4L]))
   pl = pl + ggplot2::scale_shape_manual(name = "type", 
     values = c(init = 15L, seq = 16L, prop = 17L, marked = 18L))
   pl = pl + ggplot2::scale_alpha_continuous(range = c(max(1 / (iter + 1), 0.1), 1L))
-
+  # For the x axis: only whole numbers as breaks
+  pl = pl + scale_x_continuous(breaks = function(x) pretty(x, n = min(5, iter + 1)))
+  
   pl = pl + ggplot.theme
   
   return(pl)

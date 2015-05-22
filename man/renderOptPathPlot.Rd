@@ -5,8 +5,8 @@
 \title{Function for plotting optimization paths.}
 \usage{
 renderOptPathPlot(op, iter, x.over.time, y.over.time, xlim = list(),
-  ylim = list(), alpha = TRUE, colours = c("red", "blue", "green",
-  "orange"), size.points = 3, size.lines = 1.5, impute.scale = 1,
+  ylim = list(), alpha = TRUE, log = c(), colours = c("red", "blue",
+  "green", "orange"), size.points = 3, size.lines = 1.5, impute.scale = 1,
   impute.value = "missing", scale = "std",
   ggplot.theme = ggplot2::theme(legend.position = "top"), marked = NULL,
   subset.obs, subset.vars, subset.targets, short.x.names, short.y.names,
@@ -43,20 +43,38 @@ same vector with numerics. Moreover, if more than 1 point per iteration
 exists, mean values are calculated. This is also done for factor variables!
 We recommend you to specify  this argument in a useful way.}
 
-\item{xlim}{[\code{list}]}
-
-\item{ylim}{[\code{list}], \cr
-Axis limits for the plots. Must be a named list, so you can specify the
+\item{xlim}{[\code{list}] \cr
+X axis limits for the plots. Must be a named list, so you can specify the
 axis limits for every plot. Every element of the list must be a numeric
 vector of length 2. Available names for elements are:
 XSpace - limits for the X-Space plot
 YSpace - limits for the Y-Space plot
-x.over.time
-y.over.time
-Default is an empty list - in this case limits are automatically set.}
+Default is an empty list - in this case limits are automatically set.
+Note: For some plots it is not meaningful to set limits, in this case the
+set limits are ignored.
+Note: We do not support setting lims for the over.time.plots. We think,
+in nearly every case the ggplot defaults are fine, and the very rare case
+you have to set them, you can you can extract the plots and add your own limits.}
+
+\item{ylim}{[\code{list}] \cr
+Y axis limits for the plots. Must be a named list, so you can specify the
+axis limits for every plot. Every element of the list must be a numeric
+vector of length 2. Available names for elements are:
+XSpace - limits for the X-Space plot
+YSpace - limits for the Y-Space plot
+Default is an empty list - in this case limits are automatically set.
+Note: For some plots it is not meaningful to set limits, in this case the
+set limits are ignored.
+Note: We do not support setting lims for the over.time.plots. We think,
+in nearly every case the ggplot defaults are fine, and the very rare case
+you have to set them, you can you can extract the plots and add your own limits.}
 
 \item{alpha}{[\code{logical(1)}]\cr
 Activates or deactivates the alpha fading for the plots. Default is \code{TRUE}.}
+
+\item{log}{[\code{character}]\cr
+Vector of variable names. All of this variable logarithmized in every plot.
+Default is an empty vector - no logarithm is applied.}
 
 \item{colours}{[\code{character(4)}]\cr
 Colours of the points/lines for the four point types init, seq, prob and marked.

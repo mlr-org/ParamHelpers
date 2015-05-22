@@ -1,13 +1,17 @@
 #' Plot method for optimization paths.
 #'
-#' Lustige Description
+#' Plot method for every type of optimization path, containing any numbers and
+#' types of variables. For every iteration up to 4 types of plots can be generated:
+#' One plot for the distribution of points in X and Y space respectively and plots
+#' for the trend of specified X variables, Y variables and extra measures over the time. 
 #'
 #' @param op [\code{OptPath}]\cr
 #'   Optimization path.
 #' @param iters [\code{integer} | NULL]\cr
 #'   Vector of iterations which should be plotted one after another. If \code{NULL},
-#'   which is the default, all iterations are plotted. Iteration 0 plots
-#'   all elements with dob = 0.
+#'   which is the default, only the last iteration is plotted. Iteration 0 plots
+#'   all elements with dob = 0. Note that the plots for iteration i contains
+#'   all observations alive in iteration i.
 #' @param pause [\code{logical(1)}]\cr
 #'   Should the process be paused after each iteration?
 #'   Default is \code{TRUE}.
@@ -16,7 +20,7 @@
 #'   Main title for the arranged plots, default is Optimization Path Plots. 
 #' @param ... 
 #'   Additional parameters for \code{\link{renderOptPathPlot}}.
-#' @return List of plots, one for each iteration.
+#' @return NULL
 #' @export
 #' 
 plotOptPath = function(op, iters, pause = TRUE, xlim = list(), ylim = list(), 
@@ -24,12 +28,11 @@ plotOptPath = function(op, iters, pause = TRUE, xlim = list(), ylim = list(),
   
   requirePackages("gridExtra", why = "plotOptPath")
   
-  iters.max = max(getOptPathDOB(op))
   if (missing(iters))
-    iters = 0:iters.max
+    iters = max(getOptPathDOB(op))
   
   assertClass(op, "OptPath")
-  assertIntegerish(iters, lower = 0L, upper = iters.max, any.missing = FALSE)
+  assertIntegerish(iters, lower = 0L, upper = max(getOptPathDOB(op)), any.missing = FALSE)
   assertFlag(pause)
   assertCharacter(title, len = 1L)
   
@@ -58,8 +61,8 @@ plotOptPath = function(op, iters, pause = TRUE, xlim = list(), ylim = list(),
     }
   }
   
+  # Get rendered data and plot it for every iteration
   for (iter in iters) {
-    # get rendered plot data
     plots = renderOptPathPlot(op, iter = iter, xlim = xlim, ylim = ylim, ...)
     arrangePlots(plots, iter, iters)
   }
