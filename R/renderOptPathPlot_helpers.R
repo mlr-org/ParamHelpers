@@ -22,10 +22,10 @@ getOptPathLims = function(xlim, ylim, op.x, op.y, iters, scale) {
     if (dim > 2L) {
       if (!is.null(xlim[[space]]))
         warning(paste("You specified xlims for multi-D plot in",
-          space,"but xlims for this plots are not supported."))
+          space, "but xlims for this plots are not supported."))
       if (!is.null(ylim[[space]]))
         warning("You specified ylims for multi-D plot in",
-          space,"but ylims for this plots are not supported.")
+          space, "but ylims for this plots are not supported.")
       xlim[[space]] = NULL
       ylim[[space]] = NULL
       next
@@ -42,7 +42,7 @@ getOptPathLims = function(xlim, ylim, op.x, op.y, iters, scale) {
       }
       if (!is.null(ylim[[space]]))
         warning("You specified ylims for 1D numeric plot in",
-          space,"but ylims for this plots are not supported.")
+          space, "but ylims for this plots are not supported.")
       ylim[[space]] = NULL
       next
     }
@@ -52,7 +52,7 @@ getOptPathLims = function(xlim, ylim, op.x, op.y, iters, scale) {
     if (dim == 1L && classes == "factor") {
       if (!is.null(xlim[[space]]))
         warning(paste("You specified xlims for 1D barplot in",
-          space,"but xlims for this plots are not supported."))
+          space, "but xlims for this plots are not supported."))
       xlim[[space]] = NULL
       
       if (is.null(ylim[[space]])) {
@@ -76,7 +76,7 @@ getOptPathLims = function(xlim, ylim, op.x, op.y, iters, scale) {
       } else {
         if (!is.null(xlim[[space]]))
           warning(paste("You specified xlims for 2D scatter plot in",
-            space,"but the variable is discrete here and therefor xlims are not supported."))
+            space, "but the variable is discrete here and therefor xlims are not supported."))
         xlim[[space]] = NULL
       }
       
@@ -90,7 +90,7 @@ getOptPathLims = function(xlim, ylim, op.x, op.y, iters, scale) {
       } else {
         if (!is.null(ylim[[space]]))
           warning(paste("You specified ylims for 2D scatter plot in",
-            space,"but the variable is discrete here and therefor ylims are not supported."))
+            space, "but the variable is discrete here and therefor ylims are not supported."))
         ylim[[space]] = NULL
       } 
     }
