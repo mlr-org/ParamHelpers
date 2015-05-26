@@ -285,10 +285,10 @@ oneVariableOverTime = function(op, .alpha, .type, dob, log, names, short.names, 
   if (length(na.omit(op.init.des[, names])) > 0L) {
     if (is.numeric(op[, names]))
       pl = pl + ggplot2::geom_point(data = op.init.des, mapping = aes.points, size = size.points,
-        position = ggplot2::position_jitter(h = 0.1))
+        position = ggplot2::position_jitter(height = 0.1))
     else
       pl = pl + ggplot2::geom_point(data = op.init.des, mapping = aes.points, size = size.points,
-        position = ggplot2::position_jitter(h = 0.1, v = 0.1))
+        position = ggplot2::position_jitter(height = 0.1, width = 0.1))
   }
   # add sequential points, if discrete with jitter in y-direction
   # Add jitter for discrete variable
