@@ -35,7 +35,9 @@
 #'   Activates or deactivates the alpha fading for the plots. Default is \code{TRUE}.
 #' @param log [\code{character}]\cr
 #'   Vector of variable names. All of this variable logarithmized in every plot.
-#'   Default is an empty vector - no logarithm is applied.
+#'   Default is an empty vector - no logarithm is applied. Note that, if an
+#'   variable has only negative value, it is multiplied with -1. For variables
+#'   with both positive and negative values you have to do your own data preprocessing.
 #' @param colours [\code{character(4)}]\cr
 #'   Colours of the points/lines for the four point types init, seq, prob and marked.
 #'   Default is red for init, blue for seq, green for prob and orange for marked.

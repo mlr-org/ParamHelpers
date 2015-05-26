@@ -259,6 +259,12 @@ oneVariableOverTime = function(op, .alpha, .type, dob, log, names, short.names, 
   op.init.des = op[init.des.inds, , drop = FALSE]
   op.seq.opt = op[!init.des.inds, , drop = FALSE]
   
+  # if we want to log and all values are negative, make them positive.
+  # this is special treatment for our ei.
+  if (names %in% log && all(na.omit(op[, names] <= 0))) {
+    op.init.des[, names] = -op.init.des[, names]
+    op.seq.opt[, names] = -op.seq.opt[, names]
+  }
   
   aes.points = ggplot2::aes_string(x = "dob", y = names, shape = ".type",
     colour = ".type", alpha = ".alpha")
@@ -274,14 +280,25 @@ oneVariableOverTime = function(op, .alpha, .type, dob, log, names, short.names, 
       pl = pl + scale_y_log10()
     }
   }
-  pl = pl + ggplot2::geom_point(data = op.init.des, mapping = aes.points, size = size.points,
-    position = ggplot2::position_jitter(h = 0.1))
+  # add initial design points allays with jitter in x-direction,
+  # if discrete also with jitter in y-direction
+  if (length(na.omit(op.init.des[, names])) > 0L) {
+    if (is.numeric(op[, names]))
+      pl = pl + ggplot2::geom_point(data = op.init.des, mapping = aes.points, size = size.points,
+        position = ggplot2::position_jitter(h = 0.1))
+    else
+      pl = pl + ggplot2::geom_point(data = op.init.des, mapping = aes.points, size = size.points,
+        position = ggplot2::position_jitter(h = 0.1, v = 0.1))
+  }
+  # add sequential points, if discrete with jitter in y-direction
   # Add jitter for discrete variable
-  if (is.numeric(op[, names]))
-    pl = pl + ggplot2::geom_point(data = op.seq.opt, mapping = aes.points, size = size.points)
-  else
-    pl = pl + ggplot2::geom_point(data = op.seq.opt, mapping = aes.points, size = size.points,
-      position = ggplot2::position_jitter(height = 0.1, width = 0.1))
+  if (length(na.omit(op.seq.opt[, names])) > 0L) {
+    if (is.numeric(op[, names]))
+      pl = pl + ggplot2::geom_point(data = op.seq.opt, mapping = aes.points, size = size.points)
+    else
+      pl = pl + ggplot2::geom_point(data = op.seq.opt, mapping = aes.points, size = size.points,
+        position = ggplot2::position_jitter(height = 0.1, width = 0.1))
+  }
   pl = pl + ggplot2::geom_vline(xintercept = 0.5)
   pl = pl + ggplot2::guides(alpha = FALSE)
   pl = pl + ggplot2::ylab(short.names)
