@@ -38,8 +38,6 @@
 plot1DNum = function(op, .alpha, .type, log, names, short.names,
   space, iter, xlim, colours, ggplot.theme) {
   
-  op <<- op
-  
   op$.alpha = .alpha
   op$.type = .type
   
@@ -102,7 +100,9 @@ plot1DDisc = function(op, .alpha, .type, log, names, short.names,
 
 # Plot method for a two-dimensional X- or Y-Space
 # We use geom_point and jitter for discrete variables
-plot2D = function(op, .alpha, .type, log, names, short.names,
+# y.name: we can plot contour-lines for a singel y-variable if both x-variables
+# are numeric. in this case, op.y is the data.frame containing the y.variable
+plot2D = function(op, .alpha, .type, log, names, short.names, y.name = NULL, op.y = NULL,
   space, iter, classes, xlim, ylim,  colours, size, ggplot.theme) {
   
   op$.alpha = .alpha
@@ -127,9 +127,22 @@ plot2D = function(op, .alpha, .type, log, names, short.names,
     pos = "identity"
   }
   
-  pl = ggplot2::ggplot(op, ggplot2::aes_string(
-    x = names[1L], y = names[2L], shape = ".type", colour = ".type", alpha = ".alpha"))
-  pl = pl + ggplot2::geom_point(size = size, position = pos)
+  # prepare contour plot
+  if (!is.null(y.name)) {
+    requirePackages(c("akima", "reshape2"), why = "renderOptPathPlot plot2D")
+    fld = with(cbind(op, op.y), akima::interp(x = get(names[1L]), y = get(names[2L]), z = get(y.name)))
+    df = reshape2::melt(fld$z, na.rm = TRUE)
+    names(df) = c(names, y.name)
+    df[[names[1L]]] = fld$x[df[[names[1L]]]]
+    df[[names[2L]]] = fld$y[df[[names[2L]]]]
+  }
+  
+  pl = ggplot2::ggplot()
+  pl = pl + ggplot2::geom_point(data = op, ggplot2::aes_string( x = names[1L], y = names[2L],
+    shape = ".type", colour = ".type", alpha = ".alpha"), size = size, position = pos)
+  # add contour
+  if (!is.null(y.name))
+    pl = pl + ggplot2::stat_contour(ggplot2::aes_string(x = names[1L], y = names[2L], z = y.name), data = df)
   pl = pl + title
   pl = pl + ggplot2::xlab(short.names[1L]) + ggplot2::ylab(short.names[2L])
   pl = pl + ggplot2::guides(alpha = FALSE)
@@ -150,8 +163,8 @@ plot2D = function(op, .alpha, .type, log, names, short.names,
       pl = pl + scale_y_log10(limits = ylim)
     else
       pl = pl + ggplot2::ylim(ylim)
-  }  
-
+  }
+  
   return(pl)
 }
 
@@ -270,16 +283,7 @@ oneVariableOverTime = function(op, .alpha, .type, dob, log, names, short.names, 
     colour = ".type", alpha = ".alpha")
   
   pl = ggplot2::ggplot(op, ggplot2::aes_string(x = "dob", y = names))
-  # mean data for line plot for sequential data - only for numeric vars
-  # Also ylims are only useful for numeric vars
-  if (is.numeric(op[, names])) {
-    op.seq.means = op.seq.opt[!duplicated(op.seq.opt$dob), ]
-    op.seq.means[, names] = tapply(op.seq.opt[, names], op.seq.opt[, "dob"], mean)
-    pl = pl + ggplot2::geom_line(data = op.seq.means, ggplot2::aes_string(x = "dob", y = names), alpha = 0.3)
-    if (names %in% log) {
-      pl = pl + scale_y_log10()
-    }
-  }
+
   # add initial design points allays with jitter in x-direction,
   # if discrete also with jitter in y-direction
   if (length(na.omit(op.init.des[, names])) > 0L) {
@@ -298,6 +302,17 @@ oneVariableOverTime = function(op, .alpha, .type, dob, log, names, short.names, 
     else
       pl = pl + ggplot2::geom_point(data = op.seq.opt, mapping = aes.points, size = size.points,
         position = ggplot2::position_jitter(height = 0.1, width = 0.1))
+    
+    # mean data for line plot for sequential data - only for numeric vars
+    # Also ylims are only useful for numeric vars
+    if (is.numeric(op[, names])) {
+      op.seq.means = op.seq.opt[!duplicated(op.seq.opt$dob), ]
+      op.seq.means[, names] = tapply(op.seq.opt[, names], op.seq.opt[, "dob"], mean)
+      pl = pl + ggplot2::geom_line(data = op.seq.means, ggplot2::aes_string(x = "dob", y = names), alpha = 0.3)
+      if (names %in% log) {
+        pl = pl + ggplot2::scale_y_log10()
+      }
+    }
   }
   pl = pl + ggplot2::geom_vline(xintercept = 0.5)
   pl = pl + ggplot2::guides(alpha = FALSE)
@@ -311,7 +326,6 @@ oneVariableOverTime = function(op, .alpha, .type, dob, log, names, short.names, 
   pl = pl + scale_x_continuous(breaks = function(x) pretty(x, n = min(5, iter + 1)))
   
   pl = pl + ggplot.theme
-  
   return(pl)
 }
 

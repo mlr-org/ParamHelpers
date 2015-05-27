@@ -84,11 +84,11 @@
 #'   or \code{y.over.time}.
 #' @return List of plots. List has up to elements:
 #'   plot.x: Plot for XSpace. If both X and Y are 1D, Plot for both
-#'   plot.y: Plot for YSpace. If both X and Y are 1D, NULL
-#'   plot.x.over.time: List of plots for x over time
-#'   plot.y.over.time: List of plots for y over time.
+#'   plot.y: Plot for YSpace. If both X and Y are 1D, NULL.
+#'   plot.x.over.time: List of plots for x over time. Can also be NULL.
+#'   plot.y.over.time: List of plots for y over time. Can also be NULL.
 #' @export
-renderOptPathPlot = function(op, iter, x.over.time, y.over.time,
+renderOptPathPlot = function(op, iter, x.over.time, y.over.time, contour.name = NULL,
   xlim = list(), ylim = list(), alpha = TRUE, log = c(),
   colours = c("red", "blue", "green", "orange"), size.points = 3, size.lines = 1.5, impute.scale = 1, 
   impute.value = "missing", scale = "std", ggplot.theme = ggplot2::theme(legend.position = "top"), 
@@ -189,6 +189,16 @@ renderOptPathPlot = function(op, iter, x.over.time, y.over.time,
         assertNumeric(x = vec, lower = 1L, upper = dim.y, any.missing = FALSE, unique = TRUE)
     }
   }
+  
+  if (!is.null(contour.name)) {
+    if (length(x.names) != 2 || any(apply(op.x, 2, class) != "numeric"))
+      stop("Contour lines can only be applied if there are exacr 2 numeric x variables. Consider subsetting your variables.")
+    assertChoice(contour.name, y.names)
+  } else {
+    if (length(x.names) == 2 && all(apply(op.x, 2, class) == "numeric"))
+      contour.name = y.names[1L]
+  }
+    
 
   # get classes of params (numeric or factor)
   classes.x = BBmisc::vcapply(op.x, function(x) class(x))
@@ -218,8 +228,8 @@ renderOptPathPlot = function(op, iter, x.over.time, y.over.time,
     }
     
     if (dim.x == 2L) {
-      pl1 = plot2D(op.x, .alpha, .type, log, names = x.names, short.names = short.x.names, 
-        space = "x", iter = iter, classes = classes.x, xlim = xlim[["XSpace"]], 
+      pl1 = plot2D(op.x, .alpha, .type, log, names = x.names, short.names = short.x.names,
+        y.name = contour.name, op.y = op.y, space = "x", iter = iter, classes = classes.x, xlim = xlim[["XSpace"]], 
         ylim = ylim[["XSpace"]], colours = colours, size = size.points, ggplot.theme = ggplot.theme)
     } 
     if (dim.x > 2L) {
