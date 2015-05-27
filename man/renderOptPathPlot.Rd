@@ -5,7 +5,7 @@
 \title{Function for plotting optimization paths.}
 \usage{
 renderOptPathPlot(op, iter, x.over.time, y.over.time, xlim = list(),
-  ylim = list(), alpha = TRUE, log = c(), colours = c("red", "blue",
+  ylim = list(), alpha = TRUE, log = NULL, colours = c("red", "blue",
   "green", "orange"), size.points = 3, size.lines = 1.5, impute.scale = 1,
   impute.value = "missing", scale = "std",
   ggplot.theme = ggplot2::theme(legend.position = "top"), marked = NULL,
@@ -74,7 +74,7 @@ Activates or deactivates the alpha fading for the plots. Default is \code{TRUE}.
 
 \item{log}{[\code{character}]\cr
 Vector of variable names. All of this variable logarithmized in every plot.
-Default is an empty vector - no logarithm is applied. Note that, if an
+Default is NULL - no logarithm is applied. Note that, if an
 variable has only negative value, it is multiplied with -1. For variables
 with both positive and negative values you have to do your own data preprocessing.}
 
@@ -132,7 +132,7 @@ only give shortnames for variables you are using in \code{subset.targets}}
 
 \item{short.rest.names}{[\code{character}]\cr
 Short names for rest variables that are used as axis labels. Note you can
-only give shortnames for variables you are using in \code{x.over.time}
+only give shortnames for variables you are used in \code{x.over.time}
 or \code{y.over.time}.}
 }
 \value{

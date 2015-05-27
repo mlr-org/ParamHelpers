@@ -35,7 +35,7 @@
 #'   Activates or deactivates the alpha fading for the plots. Default is \code{TRUE}.
 #' @param log [\code{character}]\cr
 #'   Vector of variable names. All of this variable logarithmized in every plot.
-#'   Default is an empty vector - no logarithm is applied. Note that, if an
+#'   Default is NULL - no logarithm is applied. Note that, if an
 #'   variable has only negative value, it is multiplied with -1. For variables
 #'   with both positive and negative values you have to do your own data preprocessing.
 #' @param colours [\code{character(4)}]\cr
@@ -80,7 +80,7 @@
 #'   only give shortnames for variables you are using in \code{subset.targets}
 #' @param short.rest.names [\code{character}]\cr
 #'   Short names for rest variables that are used as axis labels. Note you can
-#'   only give shortnames for variables you are using in \code{x.over.time}
+#'   only give shortnames for variables you are used in \code{x.over.time}
 #'   or \code{y.over.time}.
 #' @return List of plots. List has up to elements:
 #'   plot.x: Plot for XSpace. If both X and Y are 1D, Plot for both
@@ -89,7 +89,7 @@
 #'   plot.y.over.time: List of plots for y over time.
 #' @export
 renderOptPathPlot = function(op, iter, x.over.time, y.over.time,
-  xlim = list(), ylim = list(), alpha = TRUE, log = c(),
+  xlim = list(), ylim = list(), alpha = TRUE, log = NULL,
   colours = c("red", "blue", "green", "orange"), size.points = 3, size.lines = 1.5, impute.scale = 1, 
   impute.value = "missing", scale = "std", ggplot.theme = ggplot2::theme(legend.position = "top"), 
   marked = NULL, subset.obs, subset.vars, subset.targets, short.x.names, short.y.names, short.rest.names) {
@@ -164,14 +164,16 @@ renderOptPathPlot = function(op, iter, x.over.time, y.over.time,
     x.over.time = split(x.names, rep(1:ceiling(dim.x / 5), each = 5,
       length.out = dim.x))
   } else {
-    if (!is.list(x.over.time))
-      x.over.time = list(x.over.time)
-    assertList(x.over.time)
-    for (vec in x.over.time) {
-      if (is.character(vec))
-        assertSubset(x = vec, choices = c(x.names, rest.names), empty.ok = FALSE)
-      else
-        assertNumeric(x = vec, lower = 1L, upper = dim.x, any.missing = FALSE, unique = TRUE)
+    if (!is.null(x.over.time)) {
+      if (!is.list(x.over.time))
+        x.over.time = list(x.over.time)
+      assertList(x.over.time)
+      for (vec in x.over.time) {
+        if (is.character(vec))
+          assertSubset(x = vec, choices = c(x.names, rest.names), empty.ok = FALSE)
+        else
+          assertNumeric(x = vec, lower = 1L, upper = dim.x, any.missing = FALSE, unique = TRUE)
+      }
     }
   }
   
@@ -179,14 +181,16 @@ renderOptPathPlot = function(op, iter, x.over.time, y.over.time,
     y.over.time = split(y.names, rep(1:ceiling(dim.y / 5), each = 5,
       length.out = dim.y))
   } else {
-    if (!is.list(y.over.time))
-      y.over.time = list(y.over.time)
-    assertList(y.over.time)
-    for (vec in y.over.time) {
-      if (is.character(vec))
-        assertSubset(x = vec, choices = c(y.names, rest.names), empty.ok = FALSE)
-      else
-        assertNumeric(x = vec, lower = 1L, upper = dim.y, any.missing = FALSE, unique = TRUE)
+    if (!is.null(y.over.time)) {
+      if (!is.list(y.over.time))
+        y.over.time = list(y.over.time)
+      assertList(y.over.time)
+      for (vec in y.over.time) {
+        if (is.character(vec))
+          assertSubset(x = vec, choices = c(y.names, rest.names), empty.ok = FALSE)
+        else
+          assertNumeric(x = vec, lower = 1L, upper = dim.y, any.missing = FALSE, unique = TRUE)
+      }
     }
   }
 
@@ -275,6 +279,9 @@ renderOptPathPlot = function(op, iter, x.over.time, y.over.time,
         iter = iter, colours = colours, ggplot.theme = ggplot.theme)
     }
   }
+  if (length(pl3) == 0)
+    pl3 = NULL
+
   
   # plot 4: y space over time
   pl4 = vector(mode = "list", length = length(y.over.time))
@@ -299,6 +306,9 @@ renderOptPathPlot = function(op, iter, x.over.time, y.over.time,
         iter = iter, colours = colours, ggplot.theme = ggplot.theme)
     }
   }
+  
+  if (length(pl4) == 0)
+    pl4 = NULL
   
   return(list(plot.x = pl1, plot.y = pl2, plot.x.over.time = pl3, plot.y.over.time = pl4))
 }

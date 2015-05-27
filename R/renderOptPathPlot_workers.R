@@ -38,8 +38,6 @@
 plot1DNum = function(op, .alpha, .type, log, names, short.names,
   space, iter, xlim, colours, ggplot.theme) {
   
-  op <<- op
-  
   op$.alpha = .alpha
   op$.type = .type
   
@@ -57,7 +55,7 @@ plot1DNum = function(op, .alpha, .type, log, names, short.names,
   pl = pl + ggplot2::geom_rug(ggplot2::aes_string(alpha = ".alpha", colour = ".type"), 
     sides = "b", size = 2L, data = op)
   if (names %in% log)
-    pl = pl + coord_trans(xtrans = "log10", limx = xlim)
+    pl = pl + ggplot2::coord_trans(xtrans = "log10", limx = xlim)
   else
     pl = pl + ggplot2::coord_cartesian(xlim = xlim) 
   pl = pl + ggplot2::guides(alpha = FALSE)
@@ -141,13 +139,13 @@ plot2D = function(op, .alpha, .type, log, names, short.names,
   pl = pl + ggplot.theme
   if (classes[1L] == "numeric") {
     if (names[1L] %in% log)
-      pl = pl + scale_x_log10(limits = xlim)
+      pl = pl + ggplot2::scale_x_log10(limits = xlim)
     else
       pl = pl + ggplot2::xlim(xlim)
   }
   if (classes[2L] == "numeric") {
     if (names[2L] %in% log)
-      pl = pl + scale_y_log10(limits = ylim)
+      pl = pl + ggplot2::scale_y_log10(limits = ylim)
     else
       pl = pl + ggplot2::ylim(ylim)
   }  
@@ -235,9 +233,9 @@ multiVariablesOverTime = function(op, .alpha, dob, log, names, short.names,
   pl = pl + ggplot2::geom_line() 
   pl = pl + ggplot2::scale_linetype_discrete(labels = short.names)
   # For the x axis: only whole numbers as breaks
-  pl = pl + scale_x_continuous(breaks = function(x) pretty(x, n = min(5, iter + 1)))
+  pl = pl + ggplot2::scale_x_continuous(breaks = function(x) pretty(x, n = min(5, iter + 1)))
   if (all(log.var))
-    pl = pl + scale_y_log10()
+    pl = pl + ggplot2::scale_y_log10()
   pl = pl + ggplot.theme
   
   return(pl)
@@ -277,7 +275,7 @@ oneVariableOverTime = function(op, .alpha, .type, dob, log, names, short.names, 
     op.seq.means[, names] = tapply(op.seq.opt[, names], op.seq.opt[, "dob"], mean)
     pl = pl + ggplot2::geom_line(data = op.seq.means, ggplot2::aes_string(x = "dob", y = names), alpha = 0.3)
     if (names %in% log) {
-      pl = pl + scale_y_log10()
+      pl = pl + ggplot2::scale_y_log10()
     }
   }
   # add initial design points allays with jitter in x-direction,
@@ -308,7 +306,7 @@ oneVariableOverTime = function(op, .alpha, .type, dob, log, names, short.names, 
     values = c(init = 15L, seq = 16L, prop = 17L, marked = 18L))
   pl = pl + ggplot2::scale_alpha_continuous(range = c(max(1 / (iter + 1), 0.1), 1L))
   # For the x axis: only whole numbers as breaks
-  pl = pl + scale_x_continuous(breaks = function(x) pretty(x, n = min(5, iter + 1)))
+  pl = pl + ggplot2::scale_x_continuous(breaks = function(x) pretty(x, n = min(5, iter + 1)))
   
   pl = pl + ggplot.theme
   

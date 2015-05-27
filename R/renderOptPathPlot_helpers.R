@@ -243,12 +243,12 @@ getAndSubsetPlotData = function(op, iters, subset.obs, subset.vars, subset.targe
   # now subset everything
   op.x = op.x[subset.obs, subset.vars, drop = FALSE]
   op.y = op.y[subset.obs, subset.targets, drop = FALSE]
-  op.rest = op.rest[subset.obs, , drop = FALSE]
+  op.rest = op.rest[subset.obs, -(1:2), drop = FALSE]
   dob = dob[subset.obs]
   .alpha = .alpha[subset.obs]
   .type = .type[subset.obs]
   x.names = if (is.numeric(subset.vars)) x.names[subset.vars] else subset.vars
-  y.names = if (is.numeric(subset.targets)) x.names[subset.targets] else subset.targets
+  y.names = if (is.numeric(subset.targets)) y.names[subset.targets] else subset.targets
   
   return(
     list(
