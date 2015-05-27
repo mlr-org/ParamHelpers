@@ -44,18 +44,35 @@ plotOptPath = function(op, iters, pause = TRUE, xlim = list(), ylim = list(),
   xlim = lims$xlim
   ylim = lims$ylim
   
+
   # Helper to arrange plot via gridExtra and pause process
   arrangePlots = function(plots, iter, iters) {
+    
     if (!is.null(plots$plot.x.over.time))
       plots$plot.x.over.time = do.call(gridExtra::arrangeGrob,
-        c(plots$plot.x.over.time, ncol = 1L, main = "XSpace over Time"))
+        c(plots$plot.x.over.time, ncol = 1L))
     
     if (!is.null(plots$plot.y.over.time))
       plots$plot.y.over.time = do.call(gridExtra::arrangeGrob,
-        c(plots$plot.y.over.time, ncol = 1L, main = "YSpace over Time"))
+        c(plots$plot.y.over.time, ncol = 1L))
     
-    plots = Filter(Negate(is.null), plots)
-    do.call(gridExtra::grid.arrange, c(plots, nrow = (length(plots) + 1) %/% 2, main = title))
+
+    plot.top = Filter(Negate(is.null), list(plots$plot.x, plots$plot.y))
+    plot.top =  do.call(gridExtra::arrangeGrob, c(plot.top, nrow = 1L))
+    
+    plot.bottom = Filter(Negate(is.null), list(plots$plot.x.over.time, plots$plot.y.over.time))
+    
+    if (length(plot.bottom) > 0) {
+      plot.bottom =  do.call(gridExtra::arrangeGrob, c(plot.bottom, nrow = 1L))
+      plots = list(plot.top, plot.bottom)
+    } else {
+      plots = list(plot.top)
+    }
+    
+    
+
+    
+    do.call(gridExtra::grid.arrange, c(plots, ncol = 1L, main = title))
     if (pause && iter != getLast(iters)) {
       pause()
     }

@@ -4,13 +4,13 @@
 \alias{renderOptPathPlot}
 \title{Function for plotting optimization paths.}
 \usage{
-renderOptPathPlot(op, iter, x.over.time, y.over.time, xlim = list(),
-  ylim = list(), alpha = TRUE, log = c(), colours = c("red", "blue",
-  "green", "orange"), size.points = 3, size.lines = 1.5, impute.scale = 1,
-  impute.value = "missing", scale = "std",
-  ggplot.theme = ggplot2::theme(legend.position = "top"), marked = NULL,
-  subset.obs, subset.vars, subset.targets, short.x.names, short.y.names,
-  short.rest.names)
+renderOptPathPlot(op, iter, x.over.time, y.over.time, contour.name = NULL,
+  xlim = list(), ylim = list(), alpha = TRUE, log = NULL,
+  colours = c("red", "blue", "green", "orange"), size.points = 3,
+  size.lines = 1.5, impute.scale = 1, impute.value = "missing",
+  scale = "std", ggplot.theme = ggplot2::theme(legend.position = "top"),
+  marked = NULL, subset.obs, subset.vars, subset.targets, short.x.names,
+  short.y.names, short.rest.names)
 }
 \arguments{
 \item{op}{[\code{OptPath}]\cr
@@ -43,6 +43,13 @@ same vector with numerics. Moreover, if more than 1 point per iteration
 exists, mean values are calculated. This is also done for factor variables!
 We recommend you to specify  this argument in a useful way.}
 
+\item{contour.name}{[\code{character(1)} | NULL]
+It is possible to overlay the XSpace plot with an contour plot. This is only
+possible, if the XSpace has exact 2 numeric and 0 discrete variable. Consider
+subsetting your variables to use this feature! contour.name is the name of the
+target variable that will be used for the contour lines. Default is to use
+the first target variable, if it is possible to add contour lines.}
+
 \item{xlim}{[\code{list}] \cr
 X axis limits for the plots. Must be a named list, so you can specify the
 axis limits for every plot. Every element of the list must be a numeric
@@ -74,7 +81,7 @@ Activates or deactivates the alpha fading for the plots. Default is \code{TRUE}.
 
 \item{log}{[\code{character}]\cr
 Vector of variable names. All of this variable logarithmized in every plot.
-Default is an empty vector - no logarithm is applied. Note that, if an
+Default is NULL - no logarithm is applied. Note that, if an
 variable has only negative value, it is multiplied with -1. For variables
 with both positive and negative values you have to do your own data preprocessing.}
 
@@ -132,15 +139,15 @@ only give shortnames for variables you are using in \code{subset.targets}}
 
 \item{short.rest.names}{[\code{character}]\cr
 Short names for rest variables that are used as axis labels. Note you can
-only give shortnames for variables you are using in \code{x.over.time}
+only give shortnames for variables you are used in \code{x.over.time}
 or \code{y.over.time}.}
 }
 \value{
 List of plots. List has up to elements:
   plot.x: Plot for XSpace. If both X and Y are 1D, Plot for both
-  plot.y: Plot for YSpace. If both X and Y are 1D, NULL
-  plot.x.over.time: List of plots for x over time
-  plot.y.over.time: List of plots for y over time.
+  plot.y: Plot for YSpace. If both X and Y are 1D, NULL.
+  plot.x.over.time: List of plots for x over time. Can also be NULL.
+  plot.y.over.time: List of plots for y over time. Can also be NULL.
 }
 \description{
 Same as \code{\link{plotOptPath}}, but renders the plots for just 1 iteration
