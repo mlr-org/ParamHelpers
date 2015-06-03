@@ -282,16 +282,16 @@ renderOptPathPlot = function(op, iter, x.over.time, y.over.time, contour.name = 
       var.inds = which(c(names(op.x), names(op.rest)) %in% vars)
     names = c(x.names, rest.names)[var.inds]
     short.names = c(short.x.names, short.rest.names)[var.inds]
-    
+
     if (length(vars) == 1) {
       pl3[[i]] = oneVariableOverTime(op = cbind(op.x, op.rest),
         .alpha = .alpha, .type = .type, dob = dob, log = log,
-        names = names, short.names = names, iter = iter,
+        names = names, short.names = short.names, iter = iter,
         colours = colours, size.points = size.points,
         size.lines = size.lines, ggplot.theme = ggplot.theme)
     } else {
       pl3[[i]] = multiVariablesOverTime(op = cbind(op.x, op.rest), .alpha = .alpha,
-        dob = dob, log = log, names = names, short.names = names, space = "XSpace",
+        dob = dob, log = log, names = names, short.names = short.names, space = "XSpace",
         iter = iter, colours = colours, ggplot.theme = ggplot.theme)
     }
   }
@@ -313,12 +313,12 @@ renderOptPathPlot = function(op, iter, x.over.time, y.over.time, contour.name = 
     if (length(vars) == 1) {
       pl4[[i]] = oneVariableOverTime(op = cbind(op.y, op.rest),
         .alpha = .alpha, .type = .type, dob = dob, log = log,
-        names = names, short.names = names, iter = iter,
+        names = names, short.names = short.names, iter = iter,
         colours = colours, size.points = size.points,
         size.lines = size.lines, ggplot.theme = ggplot.theme)
     } else {
       pl4[[i]] = multiVariablesOverTime(op = cbind(op.y, op.rest), .alpha = .alpha,
-        dob = dob, log = log, names = names, short.names = names, space = "YSpace",
+        dob = dob, log = log, names = names, short.names = short.names, space = "YSpace",
         iter = iter, colours = colours, ggplot.theme = ggplot.theme)
     }
   }

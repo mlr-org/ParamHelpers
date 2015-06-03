@@ -249,8 +249,17 @@ multiVariablesOverTime = function(op, .alpha, dob, log, names, short.names,
   pl = pl + ggplot2::scale_linetype_discrete(labels = short.names)
   # For the x axis: only whole numbers as breaks
   pl = pl + ggplot2::scale_x_continuous(breaks = function(x) pretty(x, n = min(5, iter + 1)))
-  if (all(log.var))
-    pl = pl + ggplot2::scale_y_log10()
+  
+  # fixed number of decimals:
+  fmt <- function(){
+    function(x) format(x, nsmall = 3, scientific = FALSE)
+  }
+  
+  if (all(log.var)) {
+    pl = pl + ggplot2::scale_y_log10(labels = fmt())
+  } else {
+    pl = pl + ggplot2::scale_y_continuous(labels = fmt())
+  }
   pl = pl + ggplot.theme
   
   return(pl)
@@ -301,17 +310,25 @@ oneVariableOverTime = function(op, .alpha, .type, dob, log, names, short.names, 
     else
       pl = pl + ggplot2::geom_point(data = op.seq.opt, mapping = aes.points, size = size.points,
         position = ggplot2::position_jitter(height = 0.1, width = 0.1))
-    
+
     # mean data for line plot for sequential data - only for numeric vars
     # Also ylims are only useful for numeric vars
     if (is.numeric(op[, names])) {
       op.seq.means = op.seq.opt[!duplicated(op.seq.opt$dob), ]
       op.seq.means[, names] = tapply(op.seq.opt[, names], op.seq.opt[, "dob"], mean)
       pl = pl + ggplot2::geom_line(data = op.seq.means, ggplot2::aes_string(x = "dob", y = names), alpha = 0.3)
-      if (names %in% log) {
-        pl = pl + ggplot2::scale_y_log10()
-      }
     }
+  }
+  
+  # fixed number of decimals:
+  fmt <- function(){
+    function(x) format(x, nsmall = 3, scientific = FALSE)
+  }
+  
+  if (names %in% log) {
+    pl = pl + ggplot2::scale_y_log10(labels = fmt())
+  } else {
+    pl = pl + ggplot2::scale_y_continuous(labels = fmt())
   }
   pl = pl + ggplot2::geom_vline(xintercept = 0.5)
   pl = pl + ggplot2::guides(alpha = FALSE)
@@ -324,8 +341,10 @@ oneVariableOverTime = function(op, .alpha, .type, dob, log, names, short.names, 
   # For the x axis: only whole numbers as breaks
   pl = pl + ggplot2::scale_x_continuous(limits = c(-0.5, NA_real_),
     breaks = function(x) pretty(x, n = min(5, iter + 1)))
-  
   pl = pl + ggplot.theme
+  
+
+
   return(pl)
 }
 
