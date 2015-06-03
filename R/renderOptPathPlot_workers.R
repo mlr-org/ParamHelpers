@@ -322,7 +322,8 @@ oneVariableOverTime = function(op, .alpha, .type, dob, log, names, short.names, 
     values = c(init = 15L, seq = 16L, prop = 17L, marked = 18L))
   pl = pl + ggplot2::scale_alpha_continuous(range = c(max(1 / (iter + 1), 0.1), 1L))
   # For the x axis: only whole numbers as breaks
-  pl = pl + ggplot2::scale_x_continuous(breaks = function(x) pretty(x, n = min(5, iter + 1)))
+  pl = pl + ggplot2::scale_x_continuous(limits = c(-0.5, NA_real_),
+    breaks = function(x) pretty(x, n = min(5, iter + 1)))
   
   pl = pl + ggplot.theme
   return(pl)
