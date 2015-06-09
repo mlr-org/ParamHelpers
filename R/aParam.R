@@ -49,6 +49,9 @@
 #'   this parameter only makes sense if its requirements are satisfied (dependent parameter).
 #'   Only really useful if the parameter is included in a \code{\link{ParamSet}}.
 #'   Default is \code{NULL} which means no requirements.
+#' @param tunable [\code{logical(1)}]\cr
+#'   Is this parameter tunable?
+#'   Default is \code{TRUE} (except for \code{untyped} and \code{function}) which means it is tunable.
 #' @return [\code{\link{Param}}].
 #' @name Param
 #' @rdname Param
@@ -58,7 +61,9 @@
 #' makeDiscreteParam("y", values = c("a","b"))
 NULL
 
-makeParam = function(id, type, len, lower, upper, values, cnames, default, trafo = NULL, requires = NULL) {
+makeParam = function(id, type, len, lower, upper, values, cnames, default,
+  trafo = NULL, requires = NULL, tunable = TRUE) {
+
   #We cannot check default} for NULL or NA as this could be the default value!
   if (missing(default)) {
     has.default = FALSE
@@ -80,7 +85,8 @@ makeParam = function(id, type, len, lower, upper, values, cnames, default, trafo
     has.default = has.default,
     default = default,
     trafo = trafo,
-    requires = requires
+    requires = requires,
+    tunable = tunable
   )
   if (has.default && !isFeasible(p, default))
     stop(p$id, " : 'default' must be a feasible parameter setting.")
@@ -101,6 +107,7 @@ getParPrintData = function(x, trafo = TRUE, used = TRUE, constr.clip = 40L) {
     Def = if (x$has.default) paramValueToString(x, x$default) else "-",
     Constr = constr,
     Req = ifelse(is.null(x$requires), "-", "Y"),
+    Tunable = x$tunable,
     stringsAsFactors = FALSE
   )
   if (trafo)

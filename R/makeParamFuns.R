@@ -1,6 +1,8 @@
 #' @rdname Param
 #' @export
-makeNumericParam = function(id, lower = -Inf, upper = Inf, default, trafo = NULL, requires = NULL) {
+makeNumericParam = function(id, lower = -Inf, upper = Inf, default, trafo = NULL,
+  requires = NULL, tunable = TRUE) {
+
   assertString(id)
   assertNumber(lower)
   assertNumber(upper)
@@ -10,12 +12,17 @@ makeNumericParam = function(id, lower = -Inf, upper = Inf, default, trafo = NULL
     assert(checkClass(requires, "call"), checkClass(requires, "expression"))
   if (upper < lower)
     stop("No possible value!")
-  makeParam(id, "numeric", 1L, lower, upper, NULL, NULL, default, trafo, requires)
+  assertLogical(tunable, len = 1L)
+  makeParam(id = id, type = "numeric", len = 1L, lower = lower, upper = upper,
+    values = NULL, cnames = NULL, default = default, trafo = trafo,
+    requires = requires, tunable = tunable)
 }
 
 #' @rdname Param
 #' @export
-makeNumericVectorParam = function(id, len, lower = -Inf, upper = Inf, cnames = NULL, default, trafo = NULL, requires = NULL) {
+makeNumericVectorParam = function(id, len, lower = -Inf, upper = Inf, cnames = NULL,
+  default, trafo = NULL, requires = NULL, tunable = TRUE) {
+
   assertString(id)
   len = asInt(len)
   if (is.numeric(lower) && length(lower) == 1)
@@ -32,12 +39,17 @@ makeNumericVectorParam = function(id, len, lower = -Inf, upper = Inf, cnames = N
     assert(checkClass(requires, "call"), checkClass(requires, "expression"))
   if (any(upper < lower))
     stop("No possible value!")
-  makeParam(id, "numericvector", len, lower, upper, NULL, cnames, default, trafo, requires)
+  assertLogical(tunable, len = 1L)
+  makeParam(id = id, type = "numericvector", len = len, lower = lower, upper = upper,
+    values = NULL, cnames = cnames, default = default, trafo = trafo,
+    requires = requires, tunable = tunable)
 }
 
 #' @rdname Param
 #' @export
-makeIntegerParam = function(id, lower = -Inf, upper = Inf, default, trafo = NULL, requires = NULL) {
+makeIntegerParam = function(id, lower = -Inf, upper = Inf, default, trafo = NULL,
+  requires = NULL, tunable = TRUE) {
+
   assertString(id)
   assertNumber(lower)
   assertNumber(upper)
@@ -47,12 +59,17 @@ makeIntegerParam = function(id, lower = -Inf, upper = Inf, default, trafo = NULL
     assert(checkClass(requires, "call"), checkClass(requires, "expression"))
   if (upper < lower)
     stop("No possible value!")
-  makeParam(id, "integer", 1L,  lower, upper, NULL, NULL, default, trafo, requires)
+  assertLogical(tunable, len = 1L)
+  makeParam(id = id, type = "integer", len = 1L, lower = lower, upper = upper,
+    values = NULL, cnames = NULL, default = default, trafo = trafo,
+    requires = requires, tunable = tunable)
 }
 
 #' @rdname Param
 #' @export
-makeIntegerVectorParam = function(id, len, lower = -Inf, upper = Inf, cnames = NULL, default, trafo = NULL, requires = NULL) {
+makeIntegerVectorParam = function(id, len, lower = -Inf, upper = Inf, cnames = NULL,
+  default, trafo = NULL, requires = NULL, tunable = TRUE) {
+
   assertString(id)
   len = asInt(len)
   if (is.numeric(lower) && length(lower) == 1)
@@ -69,23 +86,29 @@ makeIntegerVectorParam = function(id, len, lower = -Inf, upper = Inf, cnames = N
     assert(checkClass(requires, "call"), checkClass(requires, "expression"))
   if (any(upper < lower))
     stop("No possible value!")
-  makeParam(id, "integervector", len,  lower, upper, NULL, cnames, default, trafo, requires)
+  assertLogical(tunable, len = 1L)
+  makeParam(id = id, type = "integervector", len = len, lower = lower, upper = upper,
+    values = NULL, cnames = cnames, default = default, trafo = trafo,
+    requires = requires, tunable = tunable)
 }
 
 #' @rdname Param
 #' @export
-makeLogicalParam = function(id, default, requires = NULL) {
+makeLogicalParam = function(id, default, requires = NULL, tunable = TRUE) {
   assertString(id)
   if (!is.null(requires))
     assert(checkClass(requires, "call"), checkClass(requires, "expression"))
   values = list(TRUE, FALSE)
   names(values) = c("TRUE", "FALSE")
-  makeParam(id, "logical", 1L, NULL, NULL, values, NULL, default = default, requires = requires)
+  assertLogical(tunable, len = 1L)
+  makeParam(id = id, type = "logical", len = 1L, lower = NULL, upper = NULL,
+    values = values, cnames = NULL, default = default, trafo = NULL,
+    requires = requires, tunable = tunable)
 }
 
 #' @rdname Param
 #' @export
-makeLogicalVectorParam = function(id, len, cnames = NULL, default, requires = NULL) {
+makeLogicalVectorParam = function(id, len, cnames = NULL, default, requires = NULL, tunable = TRUE) {
   assertString(id)
   len = asInt(len)
   if (!is.null(cnames))
@@ -94,28 +117,37 @@ makeLogicalVectorParam = function(id, len, cnames = NULL, default, requires = NU
     assert(checkClass(requires, "call"), checkClass(requires, "expression"))
   values = list(TRUE, FALSE)
   names(values) = c("TRUE", "FALSE")
-  makeParam(id, "logicalvector", len, NULL, NULL, values, cnames, default = default, requires = requires)
+  assertLogical(tunable, len = 1L)
+  makeParam(id = id, type = "logicalvector", len = len, lower = NULL, upper = NULL,
+    values = values, cnames = cnames, default = default, trafo = NULL,
+    requires = requires, tunable = tunable)
 }
 
 #' @rdname Param
 #' @export
-makeDiscreteParam = function(id, values, trafo = NULL, default, requires = NULL) {
+makeDiscreteParam = function(id, values, trafo = NULL, default, requires = NULL, tunable = TRUE) {
   assertString(id)
   if (!is.null(requires))
     assert(checkClass(requires, "call"), checkClass(requires, "expression"))
   values = checkValuesForDiscreteParam(id, values)
-  makeParam(id, "discrete", 1L, NULL, NULL, values, NULL, default, trafo, requires)
+  assertLogical(tunable, len = 1L)
+  makeParam(id = id, type = "discrete", len = 1L, lower = NULL, upper = NULL,
+    values = values, cnames = NULL, default = default, trafo = trafo,
+    requires = requires, tunable = tunable)
 }
 
 #' @rdname Param
 #' @export
-makeDiscreteVectorParam = function(id, len, values, default, requires = NULL) {
+makeDiscreteVectorParam = function(id, len, values, default, requires = NULL, tunable = TRUE) {
   assertString(id)
   len = asInt(len)
   if (!is.null(requires))
     assert(checkClass(requires, "call"), checkClass(requires, "expression"))
   values = checkValuesForDiscreteParam(id, values)
-  makeParam(id, "discretevector", len, NULL, NULL, values, NULL, default = default, requires = requires)
+  assertLogical(tunable, len = 1L)
+  makeParam(id = id, type = "discretevector", len = len, lower = NULL, upper = NULL,
+    values = values, cnames = NULL, default = default, trafo = NULL,
+    requires = requires, tunable = tunable)
 }
 
 #' @rdname Param
@@ -124,7 +156,9 @@ makeFunctionParam = function(id, default = default, requires = NULL) {
   assertString(id)
   if (!is.null(requires))
     assert(checkClass(requires, "call"), checkClass(requires, "expression"))
-  makeParam(id, "function", 1L, NULL, NULL, NULL, NULL, default = default, requires = requires)
+  makeParam(id = id, type = "function", len = 1L, lower = NULL, upper = NULL,
+    values = NULL, cnames = NULL, default = default, trafo = NULL,
+    requires = requires, tunable = FALSE)
 }
 
 #FIXME: what happens if NA is later used for untyped params? because we might interpret this as
@@ -135,7 +169,9 @@ makeUntypedParam = function(id, default, requires = NULL) {
   assertString(id)
   if (!is.null(requires))
     assert(checkClass(requires, "call"), checkClass(requires, "expression"))
-  makeParam(id, "untyped", 1L, NULL, NULL, NULL, NULL, default = default, requires = requires)
+  makeParam(id = id, type = "untyped", len = 1L, lower = NULL, upper = NULL,
+    values = NULL, cnames = NULL, default = default, trafo = NULL,
+    requires = requires, tunable = FALSE)
 }
 
 

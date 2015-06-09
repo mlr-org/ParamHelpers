@@ -27,6 +27,8 @@
 #'   See \code{\link{Param}}.
 #' @param default [any]\cr
 #'   See \code{\link{Param}}.
+#' @param tunable [\code{logical(1)}]\cr
+#'   See \code{\link{Param}}.
 #' @param when [\code{character(1)}]\cr
 #'   Specifies when parameter is used in the learner: \dQuote{train}, \dQuote{predict} or \dQuote{both}.
 #'   Default is \dQuote{train}.
