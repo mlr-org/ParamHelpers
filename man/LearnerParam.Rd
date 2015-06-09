@@ -15,27 +15,28 @@
 \title{Create a description object for a parameter of a machine learning algorithm.}
 \usage{
 makeNumericLearnerParam(id, lower = -Inf, upper = Inf, default,
-  when = "train", requires = NULL)
+  when = "train", requires = NULL, tunable = TRUE)
 
 makeNumericVectorLearnerParam(id, len = as.integer(NA), lower = -Inf,
-  upper = Inf, default, when = "train", requires = NULL)
+  upper = Inf, default, when = "train", requires = NULL, tunable = TRUE)
 
 makeIntegerLearnerParam(id, lower = -Inf, upper = Inf, default,
-  when = "train", requires = NULL)
+  when = "train", requires = NULL, tunable = TRUE)
 
 makeIntegerVectorLearnerParam(id, len = as.integer(NA), lower = -Inf,
-  upper = Inf, default, when = "train", requires = NULL)
+  upper = Inf, default, when = "train", requires = NULL, tunable = TRUE)
 
 makeDiscreteLearnerParam(id, values, default, when = "train",
-  requires = NULL)
+  requires = NULL, tunable = TRUE)
 
 makeDiscreteVectorLearnerParam(id, len = as.integer(NA), values, default,
-  when = "train", requires = NULL)
+  when = "train", requires = NULL, tunable = TRUE)
 
-makeLogicalLearnerParam(id, default, when = "train", requires = NULL)
+makeLogicalLearnerParam(id, default, when = "train", requires = NULL,
+  tunable = TRUE)
 
 makeLogicalVectorLearnerParam(id, len = as.integer(NA), default,
-  when = "train", requires = NULL)
+  when = "train", requires = NULL, tunable = TRUE)
 
 makeUntypedLearnerParam(id, default, when = "train", requires = NULL)
 
@@ -59,6 +60,9 @@ Specifies when parameter is used in the learner: \dQuote{train}, \dQuote{predict
 Default is \dQuote{train}.}
 
 \item{requires}{[\code{NULL} | R expression]\cr
+See \code{\link{Param}}.}
+
+\item{tunable}{[\code{logical(1)}]\cr
 See \code{\link{Param}}.}
 
 \item{len}{[\code{integer(1)}]\cr

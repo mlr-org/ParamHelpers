@@ -15,24 +15,27 @@
 \title{Create a description object for a parameter.}
 \usage{
 makeNumericParam(id, lower = -Inf, upper = Inf, default, trafo = NULL,
-  requires = NULL)
+  requires = NULL, tunable = TRUE)
 
 makeNumericVectorParam(id, len, lower = -Inf, upper = Inf, cnames = NULL,
-  default, trafo = NULL, requires = NULL)
+  default, trafo = NULL, requires = NULL, tunable = TRUE)
 
 makeIntegerParam(id, lower = -Inf, upper = Inf, default, trafo = NULL,
-  requires = NULL)
+  requires = NULL, tunable = TRUE)
 
 makeIntegerVectorParam(id, len, lower = -Inf, upper = Inf, cnames = NULL,
-  default, trafo = NULL, requires = NULL)
+  default, trafo = NULL, requires = NULL, tunable = TRUE)
 
-makeLogicalParam(id, default, requires = NULL)
+makeLogicalParam(id, default, requires = NULL, tunable = TRUE)
 
-makeLogicalVectorParam(id, len, cnames = NULL, default, requires = NULL)
+makeLogicalVectorParam(id, len, cnames = NULL, default, requires = NULL,
+  tunable = TRUE)
 
-makeDiscreteParam(id, values, trafo = NULL, default, requires = NULL)
+makeDiscreteParam(id, values, trafo = NULL, default, requires = NULL,
+  tunable = TRUE)
 
-makeDiscreteVectorParam(id, len, values, default, requires = NULL)
+makeDiscreteVectorParam(id, len, values, default, requires = NULL,
+  tunable = TRUE)
 
 makeFunctionParam(id, default = default, requires = NULL)
 
@@ -67,6 +70,10 @@ States requirements on other paramaters' values, so that setting
 this parameter only makes sense if its requirements are satisfied (dependent parameter).
 Only really useful if the parameter is included in a \code{\link{ParamSet}}.
 Default is \code{NULL} which means no requirements.}
+
+\item{tunable}{[\code{logical(1)}]\cr
+Is this parameter tunable?
+Default is \code{TRUE} (except for \code{untyped} and \code{function}) which means it is tunable.}
 
 \item{len}{[\code{integer(1)}]\cr
 Length of vector parameter.}
