@@ -31,7 +31,7 @@
 #'   you are also allowed to pass a list of quite \dQuote{complex} R objects,
 #'   which are used as discrete choices. If you do the latter,
 #'   the elements must be uniquely named, so that the names can be used
-#'   as internal represenatations for the choice.
+#'   as internal representations for the choice.
 #' @param cnames [\code{character}]\cr
 #'   Component names for vector params (except discrete).
 #'   Every function in this package that creates vector values for such a param, will name
@@ -51,6 +51,9 @@
 #'   Default is \code{NULL} which means no requirements.
 #' @param tunable [\code{logical(1)}]\cr
 #'   Is this parameter tunable?
+#'   Defining a parameter to be not-tunable allows to mark arguments like, e.g., \dQuote{verbose} or
+#'   other purely technical stuff, and allows them to be excluded from later automatic optimization
+#'   procedures that would try to consider all available parameters.
 #'   Default is \code{TRUE} (except for \code{untyped} and \code{function}) which means it is tunable.
 #' @return [\code{\link{Param}}].
 #' @name Param

@@ -73,6 +73,9 @@ Default is \code{NULL} which means no requirements.}
 
 \item{tunable}{[\code{logical(1)}]\cr
 Is this parameter tunable?
+Defining a parameter to be not-tunable allows to mark arguments like, e.g., \dQuote{verbose} or
+other purely technical stuff, and allows them to be excluded from later automatic optimization
+procedures that would try to consider all available parameters.
 Default is \code{TRUE} (except for \code{untyped} and \code{function}) which means it is tunable.}
 
 \item{len}{[\code{integer(1)}]\cr
@@ -88,7 +91,7 @@ Possible discrete values. Instead of using a vector of atomic values,
 you are also allowed to pass a list of quite \dQuote{complex} R objects,
 which are used as discrete choices. If you do the latter,
 the elements must be uniquely named, so that the names can be used
-as internal represenatations for the choice.}
+as internal representations for the choice.}
 }
 \value{
 [\code{\link{Param}}].
