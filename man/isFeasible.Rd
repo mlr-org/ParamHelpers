@@ -12,7 +12,7 @@ Parameter or parameter set.}
 
 \item{x}{[any] \cr
 Single value to check.
-For a parameter set this must be a list in the correct order.}
+For a parameter set this must be a list.}
 }
 \value{
 logical(1)

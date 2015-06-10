@@ -8,9 +8,9 @@
 #'   \dQuote{integervector}, \dQuote{discrete}, \dQuote{discretevector}, \dQuote{logical},
 #'   \dQuote{logicalvector}, \dQuote{function}, \dQuote{untyped}.
 #'   Setting \code{type = NULL} allows the consideration of all types.
-#' @param tunable [\code{NULL} | \code{logical}]\cr
-#'   Vector of allowed values for the property \code{tunable}. This argument accepts any of the
-#'   following values: \code{NULL}, \code{TRUE}, \code{FALSE} or \code{c(TRUE, FALSE)}.
+#' @param tunable [\code{logical}]\cr
+#'   Vector of allowed values for the property \code{tunable}. Accepted arguments are
+#'   \code{TRUE}, \code{FALSE} or \code{c(TRUE, FALSE)}.
 #'   The default is \code{c(TRUE, FALSE)}, i.e. none of the parameters will be removed.
 #' @return [\code{\link{ParamSet}}].
 #' @examples
