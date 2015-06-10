@@ -19,7 +19,7 @@ Setting \code{type = NULL} allows the consideration of all types.}
 \item{tunable}{[\code{logical}]\cr
 Vector of allowed values for the property \code{tunable}. Accepted arguments are
 \code{TRUE}, \code{FALSE} or \code{c(TRUE, FALSE)}.
-The default is \code{c(TRUE, FALSE)}, i.e. none of the parameters will be removed.}
+The default is \code{c(TRUE, FALSE)}, i.e. none of the parameters will be filtered out.}
 }
 \value{
 [\code{\link{ParamSet}}].

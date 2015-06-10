@@ -50,5 +50,4 @@ test_that("mix filtering of type and tunable", {
   expect_equal(getParamIds(filterParams(ps, NULL, FALSE)), c("v", "z"))
   expect_error(getParamIds(filterParams(ps, NULL, c(FALSE, FALSE))))
   expect_error(getParamIds(filterParams(ps, NULL, NULL)))
-  expect_output(filterParams(ps, NULL, vector(mode = "logical", length = 0L)), "Empty parameter set.")
 })

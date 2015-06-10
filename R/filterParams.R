@@ -11,7 +11,7 @@
 #' @param tunable [\code{logical}]\cr
 #'   Vector of allowed values for the property \code{tunable}. Accepted arguments are
 #'   \code{TRUE}, \code{FALSE} or \code{c(TRUE, FALSE)}.
-#'   The default is \code{c(TRUE, FALSE)}, i.e. none of the parameters will be removed.
+#'   The default is \code{c(TRUE, FALSE)}, i.e. none of the parameters will be filtered out.
 #' @return [\code{\link{ParamSet}}].
 #' @examples
 #' ps = makeParamSet(
@@ -33,7 +33,7 @@
 filterParams = function(par.set, type, tunable = c(TRUE, FALSE)) {
   assertSubset(type, c("numeric", "integer", "numericvector", "integervector", "discrete",
     "discretevector", "logical", "logicalvector", "function", "untyped"))
-  assertLogical(tunable, min.len = 0L, max.len = 2L, unique = TRUE)
+  assertLogical(tunable, min.len = 1L, max.len = 2L, unique = TRUE)
   if (!is.null(par.set$forbidden))
     stopf("Operation not allowed for param set with forbidden region currently!")
   if (!is.null(type))
