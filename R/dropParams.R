@@ -1,4 +1,4 @@
-#' Drop Params form ParamSet by ids.
+#' Drop Params from ParamSet by ids.
 #'
 #' @template arg_parset
 #' @param drop [\code{character}]\cr

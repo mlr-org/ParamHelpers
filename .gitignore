@@ -8,3 +8,4 @@ html
 *.swp
 src/*.so
 src/*.o
+tests/testthat/Rplots.pdf
