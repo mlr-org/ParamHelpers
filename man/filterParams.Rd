@@ -4,16 +4,22 @@
 \alias{filterParams}
 \title{Get parameter subset of only certain parameters.}
 \usage{
-filterParams(par.set, type)
+filterParams(par.set, type, tunable = c(TRUE, FALSE))
 }
 \arguments{
 \item{par.set}{[\code{\link{ParamSet}}]\cr
 Parameter set.}
 
-\item{type}{[\code{character}]\cr
+\item{type}{[\code{NULL} | \code{character}]\cr
 Vector of allowed types, subset of: \dQuote{numeric}, \dQuote{integer}, \dQuote{numericvector},
 \dQuote{integervector}, \dQuote{discrete}, \dQuote{discretevector}, \dQuote{logical},
-\dQuote{logicalvector}, \dQuote{function}, \dQuote{untyped}.}
+\dQuote{logicalvector}, \dQuote{function}, \dQuote{untyped}.
+Setting \code{type = NULL} allows the consideration of all types.}
+
+\item{tunable}{[\code{NULL} | \code{logical}]\cr
+Vector of allowed values for the property \code{tunable}. This argument accepts any of the
+following values: \code{NULL}, \code{TRUE}, \code{FALSE} or \code{c(TRUE, FALSE)}.
+The default is \code{c(TRUE, FALSE)}, i.e. none of the parameters will be removed.}
 }
 \value{
 [\code{\link{ParamSet}}].
@@ -27,11 +33,15 @@ ps = makeParamSet(
   makeIntegerParam("v", lower = 1, upper = 2),
   makeDiscreteParam("w", values = 1:2),
   makeLogicalParam("x"),
-  makeNumericParam("y")
+  makeNumericParam("y", tunable = FALSE)
 )
 # filter for numeric parameters
 filterParams(ps, "numeric")
 # filter for numeric and integer parameters
 filterParams(ps, c("integer","numeric"))
+# filter for tunable, numeric parameters
+filterParams(ps, "numeric", TRUE)
+# filter for all tunable parameters
+filterParams(ps, NULL, TRUE)
 }
 
