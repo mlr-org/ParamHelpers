@@ -2,7 +2,7 @@
 % Please edit documentation in R/dropParams.R
 \name{dropParams}
 \alias{dropParams}
-\title{Drop Params form ParamSet by ids.}
+\title{Drop Params from ParamSet by ids.}
 \usage{
 dropParams(par.set, drop)
 }
@@ -17,6 +17,6 @@ Parameter set.}
 [\code{\link{ParamSet}}].
 }
 \description{
-Drop Params form ParamSet by ids.
+Drop Params from ParamSet by ids.
 }
 

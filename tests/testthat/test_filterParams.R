@@ -34,3 +34,21 @@ test_that("filter mixed paramset", {
   expect_equal(getParamIds(filterParams(ps, c("integer","function"))),"v")
   expect_output(filterParams(ps, "function"), "Empty parameter set.")
 })
+
+test_that("mix filtering of type and tunable", {
+  ps = makeParamSet(
+    makeNumericParam("u", lower = 1),
+    makeNumericParam("v", lower = 1, tunable = FALSE),
+    makeDiscreteParam("w", values = 1:2),
+    makeIntegerParam("x", lower = 1, upper = 2),
+    makeLogicalVectorParam("y", len = 3),
+    makeUntypedParam("z")
+  )
+  expect_equal(getParamIds(filterParams(ps, "numeric")), c("u", "v"))
+  expect_equal(getParamIds(filterParams(ps, NULL)), c("u", "v", "w", "x", "y", "z"))
+  expect_equal(getParamIds(filterParams(ps, c("numeric", "integer"), TRUE)), c("u", "x"))
+  expect_equal(getParamIds(filterParams(ps, NULL, FALSE)), c("v", "z"))
+  expect_error(getParamIds(filterParams(ps, NULL, c(FALSE, FALSE))))
+  expect_error(getParamIds(filterParams(ps, NULL, NULL)))
+  expect_output(filterParams(ps, NULL, vector(mode = "logical", length = 0L)), "Empty parameter set.")
+})
