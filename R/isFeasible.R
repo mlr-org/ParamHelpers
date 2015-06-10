@@ -13,7 +13,7 @@
 #' @template arg_par_or_set
 #' @param x [any] \cr
 #'   Single value to check.
-#'   For a parameter set this must be a list in the correct order.
+#'   For a parameter set this must be a list.
 #' @return logical(1)
 #' @examples
 #' p = makeNumericParam("x", lower = -1, upper = 1)
@@ -46,10 +46,15 @@ isFeasible.LearnerParam = function(par, x) {
 
 #' @export
 isFeasible.ParamSet = function(par, x) {
-  if (!(is.list(x) && length(x) == length(par$pars) && all(names(x) == names(par$pars))))
+  named = testNamed(x)
+  if (!is.list(x) || !(!named || all(names(x) %in% names(par$pars)) || !(named || length(x) == length(par$pars))))
     return(FALSE)
   if (isForbidden(par, x))
     return(FALSE)
+  if (named) {
+    par = subsetParams(par, names(x))
+    x = x[names(par$pars)]  
+  }
   #FIXME: very slow
   for (i in seq_along(par$pars)) {
     p = par$pars[[i]]

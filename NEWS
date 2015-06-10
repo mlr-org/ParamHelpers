@@ -4,6 +4,9 @@ ParamHelpers_1.5:
 - convertParamSetToIrace: removed argument 'digits' to keep maximum precision of boundaries
 - added renderOptPathPlot and plotOptPath for plotting of optimization paths.
 - added property 'tunable' to make*Param
+- isFeasible supports named lists for unordered checks
+- new functions
+-- subsetParams
 
 ParamHelpers_1.4:
 - sampleValue(s): 'discrete.names' now only affects discrtete params and not logicals anymore.
