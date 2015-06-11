@@ -22,9 +22,9 @@ Vector of allowed values for the property \code{tunable}. Accepted arguments are
 The default is \code{c(TRUE, FALSE)}, i.e. none of the parameters will be filtered out.}
 
 \item{ids}{[\code{NULL} | \code{character}]\cr
-Vector with id strings containing the parameters of interest. Has to be a
-subset of the parameter names within the parameter set. Per default
-(\code{ids = NULL}) none of the \code{ids} will be filtered out.}
+Vector with id strings containing the parameters to select. Has to be a
+subset of the parameter names within the parameter set.
+Per default (\code{ids = NULL}) no filtering based on names is done.}
 }
 \value{
 [\code{\link{ParamSet}}].

@@ -52,8 +52,8 @@ isFeasible.ParamSet = function(par, x) {
   if (isForbidden(par, x))
     return(FALSE)
   if (named) {
-    par = subsetParams(par, names(x))
-    x = x[names(par$pars)]  
+    par = filterParams(par, ids = names(x))
+    x = x[names(par$pars)]
   }
   #FIXME: very slow
   for (i in seq_along(par$pars)) {

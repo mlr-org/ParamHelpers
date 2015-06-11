@@ -5,8 +5,7 @@ ParamHelpers_1.5:
 - added renderOptPathPlot and plotOptPath for plotting of optimization paths.
 - added property 'tunable' to make*Param
 - isFeasible supports named lists for unordered checks
-- new functions
--- subsetParams
+- filterParams can now filter based on 'ids' and 'tunable'
 
 ParamHelpers_1.4:
 - sampleValue(s): 'discrete.names' now only affects discrtete params and not logicals anymore.
