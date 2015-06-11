@@ -21,11 +21,13 @@
 #' @template arg_parset
 #' @param i [\code{integer(1)}]\cr
 #'   Row index.
+#' @param ... [any]\cr
+#'   Arguments passed to \code{\link[BBmisc]{convertDataFrameCols}}
 #' @return [\code{list}]. Named by parameter ids.
 #' @export
 #' @useDynLib ParamHelpers c_dfRowsToList
 #' @rdname dfRowsToList
-dfRowsToList = function(df, par.set) {
+dfRowsToList = function(df, par.set, ...) {
   assertClass(df, "data.frame")
   assertClass(par.set, "ParamSet")
 
@@ -34,7 +36,7 @@ dfRowsToList = function(df, par.set) {
   int.type = convertTypesToCInts(getParamTypes(par.set, df.cols = TRUE))
 
   # factors to chars, so we can evaluate requires
-  df = convertDataFrameCols(df, factors.as.char = TRUE)
+  df = convertDataFrameCols(df, factors.as.char = TRUE, ...)
   # ints might just be encoded as nums in df, convert before going to C
   ints.as.double = mapply(function(type, col) type == 2L && is.double(col), type = int.type, col = df)
   df[ints.as.double] = lapply(df[ints.as.double], as.integer)
