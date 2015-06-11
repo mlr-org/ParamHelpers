@@ -42,18 +42,19 @@
 #' # the parameters "u", "v" and "x"
 #' filterParams(ps, "numeric", ids = c("u", "v", "x"))
 #' @export
-filterParams = function(par.set, type, tunable = c(TRUE, FALSE), ids = NULL) {
-  assertSubset(type, c("numeric", "integer", "numericvector", "integervector", "discrete",
-    "discretevector", "logical", "logicalvector", "function", "untyped"))
-  assertLogical(tunable, min.len = 1L, max.len = 2L, unique = TRUE)
-  if (!is.null(ids))
-    assertSubset(ids, names(par.set$pars))
+filterParams = function(par.set, ids = NULL, type = NULL, tunable = c(TRUE, FALSE)) {
   if (!is.null(par.set$forbidden))
     stopf("Operation not allowed for param set with forbidden region currently!")
-  if (!is.null(type))
-    par.set$pars = Filter(function(p) p$type %in% type, par.set$pars)
-  par.set$pars = Filter(function(p) p$tunable %in% tunable, par.set$pars)
-  if (!is.null(ids))
+  if (!is.null(ids)) {
+    assertSubset(ids, names(par.set$pars))
     par.set$pars = Filter(function(p) p$id %in% ids, par.set$pars)
+  }
+  if (!is.null(type)) {
+    assertSubset(type, c("numeric", "integer", "numericvector", "integervector", "discrete",
+        "discretevector", "logical", "logicalvector", "function", "untyped"))
+    par.set$pars = Filter(function(p) p$type %in% type, par.set$pars)
+  }
+  assertLogical(tunable, min.len = 1L, max.len = 2L, unique = TRUE)
+  par.set$pars = Filter(function(p) p$tunable %in% tunable, par.set$pars)
   return(par.set)
 }
