@@ -3,6 +3,10 @@
 #' Parameter order is not changed.
 #'
 #' @template arg_parset
+#' @param ids [\code{NULL} | \code{character}]\cr
+#'   Vector with id strings containing the parameters to select. Has to be a
+#'   subset of the parameter names within the parameter set.
+#'   Per default (\code{ids = NULL}) no filtering based on names is done.
 #' @param type [\code{NULL} | \code{character}]\cr
 #'   Vector of allowed types, subset of: \dQuote{numeric}, \dQuote{integer}, \dQuote{numericvector},
 #'   \dQuote{integervector}, \dQuote{discrete}, \dQuote{discretevector}, \dQuote{logical},
@@ -12,10 +16,6 @@
 #'   Vector of allowed values for the property \code{tunable}. Accepted arguments are
 #'   \code{TRUE}, \code{FALSE} or \code{c(TRUE, FALSE)}.
 #'   The default is \code{c(TRUE, FALSE)}, i.e. none of the parameters will be filtered out.
-#' @param ids [\code{NULL} | \code{character}]\cr
-#'   Vector with id strings containing the parameters to select. Has to be a
-#'   subset of the parameter names within the parameter set.
-#'   Per default (\code{ids = NULL}) no filtering based on names is done.
 #' @return [\code{\link{ParamSet}}].
 #' @examples
 #' ps = makeParamSet(
