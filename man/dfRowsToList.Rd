@@ -5,7 +5,7 @@
 \alias{dfRowsToList}
 \title{Convert a data.frame row to list of parameter-value-lists.}
 \usage{
-dfRowsToList(df, par.set)
+dfRowsToList(df, par.set, ...)
 
 dfRowToList(df, par.set, i)
 }
@@ -16,6 +16,9 @@ Columns are assumed to be in the same order as par.set.}
 
 \item{par.set}{[\code{\link{ParamSet}}]\cr
 Parameter set.}
+
+\item{...}{[any]\cr
+Arguments passed to \code{\link[BBmisc]{convertDataFrameCols}}}
 
 \item{i}{[\code{integer(1)}]\cr
 Row index.}
