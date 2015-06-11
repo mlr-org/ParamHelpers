@@ -43,8 +43,10 @@
 #' filterParams(ps, "numeric", ids = c("u", "v", "x"))
 #' @export
 filterParams = function(par.set, ids = NULL, type = NULL, tunable = c(TRUE, FALSE)) {
-  if (!is.null(par.set$forbidden))
-    stopf("Operation not allowed for param set with forbidden region currently!")
+  # FIXME: how do we handle this, this also affects "requires" the same way?
+  # if we drop same params the expressions can become invalid?
+  # if (!is.null(par.set$forbidden))
+    # stopf("Operation not allowed for param set with forbidden region currently!")
   if (!is.null(ids)) {
     assertSubset(ids, names(par.set$pars))
     par.set$pars = Filter(function(p) p$id %in% ids, par.set$pars)
