@@ -26,21 +26,14 @@
 #'   makeNumericParam("y", tunable = FALSE)
 #' )
 #'
-#' # filter for numeric parameters
-#' filterParams(ps, "numeric")
-#'
 #' # filter for numeric and integer parameters
-#' filterParams(ps, c("integer","numeric"))
+#' filterParams(ps, type = c("integer", "numeric"))
 #'
 #' # filter for tunable, numeric parameters
-#' filterParams(ps, "numeric", TRUE)
+#' filterParams(ps, type = "numeric", tunable = TRUE)
 #'
-#' # filter for all tunable parameters
-#' filterParams(ps, NULL, TRUE)
-#'
-#' # filter for all numeric parameters among
-#' # the parameters "u", "v" and "x"
-#' filterParams(ps, "numeric", ids = c("u", "v", "x"))
+#' # filter for all numeric parameters among "u", "v" and "x"
+#' filterParams(ps, type = "numeric", ids = c("u", "v", "x"))
 #' @export
 filterParams = function(par.set, ids = NULL, type = NULL, tunable = c(TRUE, FALSE)) {
   # FIXME: how do we handle this, this also affects "requires" the same way?
