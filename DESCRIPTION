@@ -10,7 +10,8 @@ Authors@R: c(person("Bernd", "Bischl", email = "bernd_bischl@gmx.net", role =
     c("aut", "cre")), person("Michel", "Lang", email =
     "michellang@gmail.com", role = "aut"), person("Jakob", "Bossek",
     email = "jakob.bossek@tu-dortmund.de", role = "aut"), person("Daniel",
-    "Horn", email = "daniel.horn@tu-dortmund.de", role = "aut"))
+    "Horn", email = "daniel.horn@tu-dortmund.de", role = "aut"), person("Karin",
+    "Schork", email = "karin.schork@tu-dortmund.de", role = "aut"))
 URL: https://github.com/berndbischl/ParamHelpers
 BugReports: https://github.com/berndbischl/ParamHelpers/issues
 License: BSD_3_clause + file LICENSE
@@ -19,16 +20,17 @@ Imports:
     BBmisc (>= 1.9),
     checkmate (>= 1.5.1)
 Suggests:
-    emoa,
-    lhs,
-    irace,
-    testthat,
-    soobench,
-    GGally,
-    gridExtra,
-    ggplot2,
     akima,
-    reshape2
+    eaf,
+    emoa,
+    GGally,
+    ggplot2,
+    gridExtra,
+    irace,
+    lhs,
+    reshape2,
+    soobench,
+    testthat,
 LazyData: yes
 ByteCompile: yes
 Version: 1.5
