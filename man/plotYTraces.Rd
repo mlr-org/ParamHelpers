@@ -4,11 +4,16 @@
 \alias{plotYTraces}
 \title{Plots Y traces of multiple optimization paths}
 \usage{
-plotYTraces(opt.paths)
+plotYTraces(opt.paths, over.time = "dob")
 }
 \arguments{
 \item{opt.paths}{[\code{list}]\cr
-  List of \code{OptPath} objects}
+List of \code{OptPath} objects}
+
+\item{over.time}{[\code{character}]\cr
+  Should the traces be plotted versus the iteration number or the cumulated
+  execution time? For the later, the opt.path has to contain a extra coloum
+  names exec.time. Possible values are dob and exec.time, default is \code{dob}.}
 }
 \value{
 [\code{NULL}]

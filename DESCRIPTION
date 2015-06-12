@@ -28,6 +28,7 @@ Suggests:
     gridExtra,
     irace,
     lhs,
+    plyr,
     reshape2,
     soobench,
     testthat,

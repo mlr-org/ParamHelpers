@@ -264,3 +264,22 @@ getAndSubsetPlotData = function(op, iters, subset.obs, subset.vars, subset.targe
     )
   )
 }
+
+
+# Helper to get cumulated exec.time
+getOptPathColAtTimes = function(op, times) {
+  requirePackages("plyr")
+  if (!is.data.frame(op))
+    op = as.data.frame(op)
+  assertNumeric(op$exec.time)
+  op$exec.time.sum = cumsum(op$exec.time)
+  op$finished = c(rep(FALSE, times = nrow(op) - 1), TRUE)
+  plyr::adply(times, 1, getOptPathColAtTime, op = op)
+}
+
+getOptPathColAtTime = function(op.df, time) {
+  col = op.df[which.last(op.df$exec.time.sum <= time), ]
+  if (nrow(col) == 1) col$time = time
+  col
+}
+
