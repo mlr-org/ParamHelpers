@@ -19,12 +19,6 @@ The y limits (y1, y2) of the plot.}
 
 \item{...}{[any]\cr
 Passed on to \code{\link[eaf]{eafplot}}.}
-
-\item{col}{[\code{character}]\cr
-Vector of colors for the plot.}
-
-\item{lty}{[\code{character}]\cr
-Vector of linetypes for the plot.}
 }
 \value{
 [\code{data.frame}]

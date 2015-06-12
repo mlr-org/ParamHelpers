@@ -12,10 +12,6 @@
 #'   The x limits (x1, x2) of the plot.
 #' @param ylim [\code{numeric(2)}]\cr
 #'   The y limits (y1, y2) of the plot.
-#' @param col [\code{character}]\cr
-#'   Vector of colors for the plot.
-#' @param lty [\code{character}]\cr
-#'   Vector of linetypes for the plot.
 #' @param ... [any]\cr
 #'   Passed on to \code{\link[eaf]{eafplot}}.
 #' @note
