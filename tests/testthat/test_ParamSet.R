@@ -138,7 +138,7 @@ test_that("makeNumericParamset", {
 
 test_that("requires works", {
   ps = makeParamSet(
-    makeDiscreteParam("x", values = c("a", "b")),
+    makeDiscreteParam("x", values = c("a", "b"), default = "a"),
     makeNumericParam("y", requires = quote(x == "a")),
     makeIntegerVectorParam("z", len = 2, requires = quote(x == "b"))
   )
@@ -147,6 +147,11 @@ test_that("requires works", {
   expect_false(isFeasible(ps, list(x = "a", y = NA, z = c(NA, NA))))
   expect_false(isFeasible(ps, list(x = "b", y = 1, z = c(2,2))))
   expect_true(isFeasible(ps, list(x = "b", y = NA, z = c(2,2))))
+  expect_true(isRequiresOk(ps, list(x = "a")))
+  expect_true(isRequiresOk(ps, list(x = "c"))) #out of bound is supposed to be ignored
+  expect_true(isRequiresOk(ps, list(y = 1)))
+  expect_error(isRequiresOk(ps, list(y = 1), use.defaults = FALSE))
+  expect_error(isRequiresOk(ps, list(y = 1, x = "b")), 'x == "a"')
 })
 
 test_that("print works", {
