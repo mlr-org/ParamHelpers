@@ -22,10 +22,12 @@ isRequiresOk = function(par.set, par.vals, ids = names(par.vals), use.defaults =
     assertSubset(ids, choices = names(par.vals))
   assertFlag(use.defaults)
   if (use.defaults) {
-    par.vals = insert(getDefaults(par.set), par.vals)
+    par.vals.env = insert(getDefaults(par.set), par.vals)
+  } else {
+    par.vals.env = par.vals
   }
   requireOks = vlapply(names(par.vals), function(par.name) {
-    res = requiresOk(par.set, par.vals, par.name)
+    res = requiresOk(par.set, par.vals.env, par.name)
     is.null(res) || res
   })
   if (any(!requireOks)) {
