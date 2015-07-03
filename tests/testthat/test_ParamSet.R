@@ -162,6 +162,18 @@ test_that("requires works", {
   expect_error(isRequiresOk(ps, list(y = 1, x = "b")), 'x == "a"')
 })
 
+test_that("requires chains work", {
+  ps = makeParamSet(
+    makeLogicalLearnerParam("a", default = FALSE),
+    makeLogicalLearnerParam("b", default = FALSE, requires = quote(a == TRUE)),
+    makeLogicalLearnerParam("c", default = FALSE, requires = quote(b == TRUE))
+  )
+  expect_true(isFeasible(ps, list(a = FALSE, b = NA, c = NA)))
+  expect_true(isFeasible(ps, list(a = TRUE, b = FALSE, c = NA)))
+  expect_true(isFeasible(ps, list(a = TRUE, b = TRUE, c = FALSE)))
+  expect_true(isFeasible(ps, list(a = TRUE, b = TRUE, c = TRUE)))
+})
+
 test_that("print works", {
   ps = makeParamSet(
     makeIntegerParam("ntree", lower = 10, upper = 50),
