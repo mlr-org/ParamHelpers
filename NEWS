@@ -9,6 +9,9 @@ ParamHelpers_1.5:
 - filterParams can now filter based on 'ids' and 'tunable'
 - new functions
 -- isRequiresOk
+-- plotEAF
+-- plotYTraces
+-- renderOptPathPlot, plotOptPath
 
 ParamHelpers_1.4:
 - sampleValue(s): 'discrete.names' now only affects discrtete params and not logicals anymore.
