@@ -28,6 +28,9 @@ test_that("int vec", {
   expect_equal(p$upper, 2)
   expect_true(isFeasible(p, 1))
   expect_true(isFeasible(p, c(1,1)))
+  # defaults
+  p = makeIntegerVectorLearnerParam(id = "x", len = NA_integer_, default = 1L)
+  p = makeIntegerVectorLearnerParam(id = "x", len = NA_integer_, default = c(1L, 2L))
 })
 
 test_that("log vec", {
@@ -39,6 +42,9 @@ test_that("log vec", {
   p = makeLogicalVectorLearnerParam("x")
   expect_true(isFeasible(p, c(FALSE)))
   expect_true(isFeasible(p, c(TRUE,FALSE)))
+  # defaults
+  p = makeLogicalVectorLearnerParam(id = "x", len = NA_integer_, default = TRUE)
+  p = makeLogicalVectorLearnerParam(id = "x", len = NA_integer_, default = c(TRUE, FALSE))
 })
 
 test_that("disc vec", {
@@ -53,6 +59,9 @@ test_that("disc vec", {
   expect_true(isFeasible(p, list("a")))
   expect_true(isFeasible(p, list(m)))
   expect_true(isFeasible(p, list("a", m, m)))
+  # defaults
+  p = makeDiscreteVectorLearnerParam(id = "x", len = NA_integer_, values = list("a", "b"), default = list("a"))
+  p = makeDiscreteVectorLearnerParam(id = "x", len = NA_integer_, values = list("a", "b"), default = list("a", "b", "a"))
 })
 
 

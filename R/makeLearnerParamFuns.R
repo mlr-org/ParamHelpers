@@ -14,8 +14,8 @@ makeNumericVectorLearnerParam = function(id, len = as.integer(NA), lower = -Inf,
 
   len = asInt(len, na.ok = TRUE)
   if (is.na(len))
-    p = makeNumericVectorParam(id, len = 1, lower = lower, upper = upper, default = default,
-      requires = requires, tunable = tunable)
+    p = makeVectorParamNALength(makeNumericVectorParam, default = default,
+      id = id, lower = lower, upper = upper, requires = requires, tunable = tunable)
   else
     p = makeNumericVectorParam(id, len = len, lower = lower, upper = upper, default =  default,
       requires = requires, tunable = tunable)
@@ -41,8 +41,8 @@ makeIntegerVectorLearnerParam = function(id, len = as.integer(NA), lower = -Inf,
 
   len = asInt(len, na.ok = TRUE)
   if (is.na(len))
-    p = makeIntegerVectorParam(id, len = 1, lower = lower, upper = upper, default = default,
-      requires = requires, tunable = tunable)
+    p = makeVectorParamNALength(makeIntegerVectorParam, default = default,
+      id = id, lower = lower, upper = upper, requires = requires, tunable = tunable)
   else
     p = makeIntegerVectorParam(id, len = len, lower = lower, upper = upper, default = default,
       requires = requires, tunable = tunable)
@@ -67,8 +67,8 @@ makeDiscreteVectorLearnerParam = function(id, len = as.integer(NA), values, defa
 
   len = asInt(len, na.ok = TRUE)
   if (is.na(len))
-    p = makeDiscreteVectorParam(id, len = 1, values = values, default = default, requires = requires,
-      tunable = tunable)
+    p = makeVectorParamNALength(makeDiscreteVectorParam, default = default,
+      id = id, values = values, requires = requires, tunable = tunable)
   else
     p = makeDiscreteVectorParam(id, len = len, values = values, default = default, requires = requires,
       tunable = tunable)
@@ -92,7 +92,8 @@ makeLogicalVectorLearnerParam = function(id, len = as.integer(NA), default, when
 
   len = asInt(len, na.ok = TRUE)
   if (is.na(len))
-    p = makeLogicalVectorParam(id, len = 1, default = default, requires = requires, tunable = tunable)
+    p = makeVectorParamNALength(makeLogicalVectorParam, default = default,
+      id = id, requires = requires, tunable = tunable)
   else
     p = makeLogicalVectorParam(id, len = len, default = default, requires = requires, tunable = tunable)
   p = learnerParamFromParam(p, when)
@@ -118,3 +119,10 @@ learnerParamFromParam = function(p, when) {
   assertChoice(when, c("train", "predict", "both"))
   makeLearnerParam(p, when)
 }
+
+makeVectorParamNALength = function(fun, default, ...)  {
+  len = if (missing(default)) 1L else length(default)
+  fun(len = len, default = default, ...)
+}
+
+
