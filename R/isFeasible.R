@@ -82,17 +82,16 @@ isFeasible.ParamSet = function(par, x) {
 # are the contraints ok for value of a param (not considering requires)
 constraintsOkParam = function(par, x) {
   type = par$type
-
   # this should work in any! case.
   if (type == "untyped")
     return(TRUE)
   inValues = function(v) any(sapply(par$values, function(w) isTRUE(all.equal(w, v))))
   ok = if (type == "numeric")
-    is.numeric(x) && length(x) == 1 && is.finite(x) && x >= par$lower && x <= par$upper
+    is.numeric(x) && length(x) == 1 && (par$allow.inf || is.finite(x)) && x >= par$lower && x <= par$upper
   else if (type == "integer")
     is.numeric(x) && length(x) == 1 && is.finite(x) && x >= par$lower && x <= par$upper && x == as.integer(x)
   else if (type == "numericvector")
-    is.numeric(x) && length(x) == par$len && all(is.finite(x) & x >= par$lower & x <= par$upper)
+    is.numeric(x) && length(x) == par$len && all((par$allow.inf | is.finite(x)) & x >= par$lower & x <= par$upper)
   else if (type == "integervector")
     is.numeric(x) && length(x) == par$len && all(is.finite(x) & x >= par$lower & x <= par$upper & x == as.integer(x))
   else if (type == "discrete")

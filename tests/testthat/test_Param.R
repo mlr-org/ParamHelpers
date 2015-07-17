@@ -24,6 +24,10 @@ test_that("num param", {
 
   expect_equal(p$values, NULL)
 
+  # defaults
+  p = makeNumericParam(id = "x", allow.inf = TRUE, default = Inf)
+  expect_error(makeNumericParam(id = "x", allow.inf = FALSE, default = Inf), "feasible")
+
   ## Error conditions:
   expect_error(makeNumericParam(id = "x", lower = "bam", upper = 1))
   expect_error(makeNumericParam(id = "x", lower = NA, upper = 1))

@@ -14,11 +14,12 @@
 \alias{makeUntypedParam}
 \title{Create a description object for a parameter.}
 \usage{
-makeNumericParam(id, lower = -Inf, upper = Inf, default, trafo = NULL,
-  requires = NULL, tunable = TRUE)
-
-makeNumericVectorParam(id, len, lower = -Inf, upper = Inf, cnames = NULL,
+makeNumericParam(id, lower = -Inf, upper = Inf, allow.inf = FALSE,
   default, trafo = NULL, requires = NULL, tunable = TRUE)
+
+makeNumericVectorParam(id, len, lower = -Inf, upper = Inf,
+  allow.inf = FALSE, cnames = NULL, default, trafo = NULL,
+  requires = NULL, tunable = TRUE)
 
 makeIntegerParam(id, lower = -Inf, upper = Inf, default, trafo = NULL,
   requires = NULL, tunable = TRUE)
@@ -54,6 +55,10 @@ Default is \code{-Inf}.}
 Upper bounds.
 A singe value of length 1 is automatically replicated to \code{len} for vector parameters.
 Default is \code{Inf}.}
+
+\item{allow.inf}{[\code{logical(1)}]\cr
+Allow infinite values for numeric and numericvector params to be feasible settings.
+Default is \code{FALSE}.}
 
 \item{default}{[any]\cr
 Default value used in learner.

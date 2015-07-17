@@ -1,6 +1,6 @@
 #' @rdname Param
 #' @export
-makeNumericParam = function(id, lower = -Inf, upper = Inf, default, trafo = NULL,
+makeNumericParam = function(id, lower = -Inf, upper = Inf, allow.inf = FALSE, default, trafo = NULL,
   requires = NULL, tunable = TRUE) {
 
   assertString(id)
@@ -13,14 +13,14 @@ makeNumericParam = function(id, lower = -Inf, upper = Inf, default, trafo = NULL
   if (upper < lower)
     stop("No possible value!")
   assertLogical(tunable, len = 1L)
-  makeParam(id = id, type = "numeric", len = 1L, lower = lower, upper = upper,
+  makeParam(id = id, type = "numeric", len = 1L, lower = lower, upper = upper, allow.inf = allow.inf,
     values = NULL, cnames = NULL, default = default, trafo = trafo,
     requires = requires, tunable = tunable)
 }
 
 #' @rdname Param
 #' @export
-makeNumericVectorParam = function(id, len, lower = -Inf, upper = Inf, cnames = NULL,
+makeNumericVectorParam = function(id, len, lower = -Inf, upper = Inf, allow.inf = FALSE, cnames = NULL,
   default, trafo = NULL, requires = NULL, tunable = TRUE) {
 
   assertString(id)
@@ -40,7 +40,7 @@ makeNumericVectorParam = function(id, len, lower = -Inf, upper = Inf, cnames = N
   if (any(upper < lower))
     stop("No possible value!")
   assertLogical(tunable, len = 1L)
-  makeParam(id = id, type = "numericvector", len = len, lower = lower, upper = upper,
+  makeParam(id = id, type = "numericvector", len = len, lower = lower, upper = upper, allow.inf = allow.inf,
     values = NULL, cnames = cnames, default = default, trafo = trafo,
     requires = requires, tunable = tunable)
 }

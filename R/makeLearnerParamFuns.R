@@ -1,23 +1,23 @@
 #' @rdname LearnerParam
 #' @export
-makeNumericLearnerParam = function(id, lower = -Inf, upper = Inf, default,
+makeNumericLearnerParam = function(id, lower = -Inf, upper = Inf, allow.inf = FALSE, default,
   when = "train", requires = NULL, tunable = TRUE) {
 
-  p = makeNumericParam(id, lower, upper, default = default, requires = requires, tunable = tunable)
+  p = makeNumericParam(id, lower, upper, allow.inf = allow.inf, default = default, requires = requires, tunable = tunable)
   learnerParamFromParam(p, when)
 }
 
 #' @rdname LearnerParam
 #' @export
 makeNumericVectorLearnerParam = function(id, len = as.integer(NA), lower = -Inf,
-  upper = Inf, default, when = "train", requires = NULL, tunable = TRUE) {
+  upper = Inf, allow.inf = FALSE, default, when = "train", requires = NULL, tunable = TRUE) {
 
   len = asInt(len, na.ok = TRUE)
   if (is.na(len))
     p = makeVectorParamNALength(makeNumericVectorParam, default = default,
-      id = id, lower = lower, upper = upper, requires = requires, tunable = tunable)
+      id = id, lower = lower, upper = upper, allow.inf = allow.inf, requires = requires, tunable = tunable)
   else
-    p = makeNumericVectorParam(id, len = len, lower = lower, upper = upper, default =  default,
+    p = makeNumericVectorParam(id, len = len, lower = lower, upper = upper, allow.inf = allow.inf, default =  default,
       requires = requires, tunable = tunable)
   p = learnerParamFromParam(p, when)
   p$len = len

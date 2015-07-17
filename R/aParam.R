@@ -36,6 +36,9 @@
 #'   Component names for vector params (except discrete).
 #'   Every function in this package that creates vector values for such a param, will name
 #'   that vector with \code{cnames}.
+#' @param allow.inf [\code{logical(1)}]\cr
+#'   Allow infinite values for numeric and numericvector params to be feasible settings.
+#'   Default is \code{FALSE}.
 #' @param default [any]\cr
 #'   Default value used in learner.
 #'   If this argument is missing, it means no default value is available.
@@ -64,7 +67,7 @@
 #' makeDiscreteParam("y", values = c("a","b"))
 NULL
 
-makeParam = function(id, type, len, lower, upper, values, cnames, default,
+makeParam = function(id, type, len, lower, upper, values, cnames, allow.inf = FALSE, default,
   trafo = NULL, requires = NULL, tunable = TRUE) {
 
   #We cannot check default} for NULL or NA as this could be the default value!
@@ -85,6 +88,7 @@ makeParam = function(id, type, len, lower, upper, values, cnames, default,
     upper = upper,
     values = values,
     cnames = cnames,
+    allow.inf = allow.inf,
     has.default = has.default,
     default = default,
     trafo = trafo,

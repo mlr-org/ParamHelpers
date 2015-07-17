@@ -13,6 +13,9 @@ test_that("num vec", {
   expect_equal(p$upper, 2)
   expect_true(isFeasible(p, 1))
   expect_true(isFeasible(p, c(1,1)))
+  # defaults
+  p = makeNumericVectorLearnerParam(id = "x", allow.inf = TRUE, default = Inf)
+  expect_error(makeNumericVectorLearnerParam(id = "x", allow.inf = FALSE, default = Inf), "feasible")
 })
 
 test_that("int vec", {

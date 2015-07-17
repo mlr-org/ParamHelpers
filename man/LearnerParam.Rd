@@ -14,11 +14,12 @@
 \alias{makeUntypedLearnerParam}
 \title{Create a description object for a parameter of a machine learning algorithm.}
 \usage{
-makeNumericLearnerParam(id, lower = -Inf, upper = Inf, default,
-  when = "train", requires = NULL, tunable = TRUE)
+makeNumericLearnerParam(id, lower = -Inf, upper = Inf, allow.inf = FALSE,
+  default, when = "train", requires = NULL, tunable = TRUE)
 
 makeNumericVectorLearnerParam(id, len = as.integer(NA), lower = -Inf,
-  upper = Inf, default, when = "train", requires = NULL, tunable = TRUE)
+  upper = Inf, allow.inf = FALSE, default, when = "train",
+  requires = NULL, tunable = TRUE)
 
 makeIntegerLearnerParam(id, lower = -Inf, upper = Inf, default,
   when = "train", requires = NULL, tunable = TRUE)
@@ -50,6 +51,9 @@ See \code{\link{Param}}.}
 See \code{\link{Param}}.}
 
 \item{upper}{[\code{numeric}]\cr
+See \code{\link{Param}}.}
+
+\item{allow.inf}{[\code{logical(1)}]\cr
 See \code{\link{Param}}.}
 
 \item{default}{[any]\cr
