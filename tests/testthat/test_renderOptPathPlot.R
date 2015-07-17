@@ -17,9 +17,9 @@ test_that("renderOptPathPlot", {
   pl = sapply(c(0,2), FUN = function(x) {
     renderOptPathPlot(op0, iter = x, short.x.names = "e", short.y.names = "f")
   })
-  pl = plotOptPath(op0, iters = 0:2, pause = FALSE, title = "Optimization Path")  
-  
-  
+  pl = plotOptPath(op0, iters = 0:2, pause = FALSE, title = "Optimization Path")
+
+
   # Test 2D(mixed)-3D + marked + ggplot.theme + log + size
   ps1 = makeParamSet(
     makeNumericParam("x"),
@@ -37,29 +37,29 @@ test_that("renderOptPathPlot", {
   pl = renderOptPathPlot(op1, iter = 3)
   pl = sapply(c(0, 20), FUN = function(x) {
     renderOptPathPlot(op1, iter = x, marked = "best",
-      ggplot.theme = ggplot2::theme(legend.position = "bottom"), 
+      ggplot.theme = ggplot2::theme(legend.position = "bottom"),
       size.points = 1, size.lines = 3)
   })
   pl = sapply(c(0, 20), FUN = function(x) {
-    renderOptPathPlot(op1, iter = x, marked = c(4, 10, 18), x.over.time = list(c("x"), c("z")), 
+    renderOptPathPlot(op1, iter = x, marked = c(4, 10, 18), x.over.time = list(c("x"), c("z")),
       y.over.time = list(c("y1"), c("y2", "y3")), log = c("x", "y2", "y3"))
   })
 
-  
+
   # Test 1D(discrete)-2D + marked + limits + short names + rest variables
   ps2 = makeParamSet(
     makeDiscreteParam("x", values = list("a", "b"))
   )
-  op2 = makeOptPathDF(par.set = ps2, y.names = c("y1", "y2"), minimize = c(TRUE, TRUE), 
+  op2 = makeOptPathDF(par.set = ps2, y.names = c("y1", "y2"), minimize = c(TRUE, TRUE),
     include.extra = TRUE)
   X = rep(c("a", "b"), 4)
   Y = rnorm(14)
   dob = c(rep(0, 5), 1:2)
   for (i in 1:7) {
-    addOptPathEl(op2, x = list(x = X[i]), y = c(y1 = Y[i], y2 = Y[7 + i]), dob = dob[i], 
+    addOptPathEl(op2, x = list(x = X[i]), y = c(y1 = Y[i], y2 = Y[7 + i]), dob = dob[i],
       extra = list(extra.var = i))
   }
-  pl = renderOptPathPlot(op2, iter = 0, x.over.time = "extra.var", 
+  pl = renderOptPathPlot(op2, iter = 0, x.over.time = "extra.var",
     short.rest.names = c("extra"))
   pl = sapply(c(0,2), FUN = function(x) {
     renderOptPathPlot(op2, iter = x, marked = c(3),
@@ -67,9 +67,9 @@ test_that("renderOptPathPlot", {
       ylim = list(YSpace = c(-10, 10), XSpace = c(0, 10)),
       short.x.names = "variable1", short.y.names = c("y", "z"))
   })
-  
 
-  # Test 3D(mixed)-1D + colours + missing values + limits + short names + scale + 
+
+  # Test 3D(mixed)-1D + colours + missing values + limits + short names + scale +
   #                     impute.scale + impute.value
   ps3 = makeParamSet(
     makeNumericParam("x"),
@@ -88,18 +88,18 @@ test_that("renderOptPathPlot", {
     addOptPathEl(op3, x = list(x = X[i], y = X2[i], z = X3[i]),
       y = c(y1 = Y[i]), dob = dob[i])
   }
-  
+
   pl = sapply(c(0,2), FUN = function(x) {
-    renderOptPathPlot(op3, iter = x, scale = "globalminmax", impute.scale = 2, 
+    renderOptPathPlot(op3, iter = x, scale = "globalminmax", impute.scale = 2,
       impute.value = "miss")
   })
   pl = sapply(c(0,2), FUN = function(x) {
-    renderOptPathPlot(op3, iter = x, xlim = list(YSpace = c(-0.5, 0.5)), 
-      short.x.names = c("a", "b", "c"), colours = c("black", "yellow", "orange", "green"), 
+    renderOptPathPlot(op3, iter = x, xlim = list(YSpace = c(-0.5, 0.5)),
+      short.x.names = c("a", "b", "c"), colours = c("black", "yellow", "orange", "green"),
       scale = "globalminmax")
   })
-    
-  
+
+
   # Test subsetting
   pl = renderOptPathPlot(op1, iter = 2, subset.obs = c(1,2,6,7))
   pl = renderOptPathPlot(op1, iter = 0, subset.vars = 1)
