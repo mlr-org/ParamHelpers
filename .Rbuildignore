@@ -1,18 +1,11 @@
-attic
-makeR
 todo-files
 man-roxygen
-
 ^.*tar.gz$
 
 .gitignore
 .Rproj.user
 .travis.yml
 
-Makefile
 README.md
-test_all.R
-test_src.R
-todo.txt
 ^.editorconfig$
 ^appveyor\.yml$
