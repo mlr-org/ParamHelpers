@@ -18,7 +18,7 @@ License: BSD_3_clause + file LICENSE
 Roxygen: list(wrap = FALSE)
 Imports:
     BBmisc (>= 1.9),
-    checkmate (>= 1.5.1)
+    checkmate (>= 1.6.1)
 Suggests:
     akima,
     eaf,
@@ -31,7 +31,7 @@ Suggests:
     plyr,
     reshape2,
     soobench,
-    testthat,
+    testthat
 LazyData: yes
 ByteCompile: yes
 Version: 1.5
