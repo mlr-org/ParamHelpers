@@ -110,7 +110,7 @@ the multiD-case. Default is \code{std}.}
 \code{ggplot2::theme(legend.position = "top")}.}
 
 \item{marked}{[\code{integer} | \code{character(1)} | NULL]\cr
-"best" or indices of points that should be marked in the plots.
+\dQuote{best} or indices of points that should be marked in the plots.
 If \code{marked = "best"} the best point for single crit optimization
 respectively the pareto front for multi crit optimization is marked.
 Default is \code{NULL} (no points are marked).}

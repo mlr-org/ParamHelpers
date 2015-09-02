@@ -55,11 +55,15 @@ test_that("renderOptPathPlot", {
   X = rep(c("a", "b"), 4)
   Y = rnorm(14)
   dob = c(rep(0, 5), 1:2)
-  for (i in 1:7) {
+  for (i in 1:5) {
+    addOptPathEl(op2, x = list(x = X[i]), y = c(y1 = Y[i], y2 = Y[7 + i]), dob = dob[i],
+      extra = list(extra.var = NA))
+  }
+  for (i in 6:7) {
     addOptPathEl(op2, x = list(x = X[i]), y = c(y1 = Y[i], y2 = Y[7 + i]), dob = dob[i],
       extra = list(extra.var = i))
   }
-  pl = renderOptPathPlot(op2, iter = 0, x.over.time = "extra.var",
+  pl = renderOptPathPlot(op2, iter = 2, x.over.time = list(c("x"), c("extra.var")),
     short.rest.names = c("extra"))
   pl = sapply(c(0,2), FUN = function(x) {
     renderOptPathPlot(op2, iter = x, marked = c(3),

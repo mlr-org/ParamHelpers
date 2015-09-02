@@ -273,6 +273,11 @@ oneVariableOverTime = function(op, .alpha, .type, dob, log, names, short.names, 
   if (all(is.na(op[, names])))
     return(NULL)
   
+  # convert factor variables to numeric
+  if (!is.numeric(op[, names]))
+    warning(paste("Converting variable ", names, "to numeric for over time plot."))
+  op[, names] = as.numeric(op[, names])
+  
   # Some data  preproc. 2 Different datasets - one for init design, one for rest
   op = cbind(op, dob = dob, .alpha = .alpha, .type = .type)
   
@@ -337,13 +342,15 @@ oneVariableOverTime = function(op, .alpha, .type, dob, log, names, short.names, 
     values = c(init = colours[1L], seq = colours[2L], prop = colours[3L], marked = colours[4L]))
   pl = pl + ggplot2::scale_shape_manual(name = "type", 
     values = c(init = 15L, seq = 16L, prop = 17L, marked = 18L))
-  pl = pl + ggplot2::scale_alpha_continuous(range = c(max(1 / (iter + 1), 0.1), 1L))
+  
+  # set range for alpha scale, so that extra variables (that may not exist in 
+  # iteration 0) will have the same alpha values as all other variables.
+  range = c(max(min(op$.alpha[!is.na(op[, names])]), 0.1), 1L)
+  pl = pl + ggplot2::scale_alpha_continuous(range = range)
   # For the x axis: only whole numbers as breaks
   pl = pl + ggplot2::scale_x_continuous(limits = c(-0.5, NA_real_),
     breaks = function(x) pretty(x, n = min(5, iter + 1)))
   pl = pl + ggplot.theme
-  
-
 
   return(pl)
 }
