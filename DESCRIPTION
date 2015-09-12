@@ -26,7 +26,7 @@ Suggests:
     GGally,
     ggplot2,
     gridExtra,
-    irace,
+    irace (>= 1.0.7),
     lhs,
     plyr,
     reshape2,

@@ -28,7 +28,7 @@ test_that("convertParamSetToIrace", {
     makeIntegerVectorParam("y2", len = 2, lower = 0:1, upper = 4),
     makeDiscreteVectorParam("z2", len = 2, values = c("a", "b", "c"))
   )
-  hook.run = function(instance, candidate, extra.params = NULL, config = list()) 1
+  hook.run = function(experiment, config = list()) 1
   runIrace(ps, hook.run, max.exps = 300)
   ps = makeParamSet(
     makeDiscreteParam("x1", values = c("a", "b")),
@@ -36,8 +36,8 @@ test_that("convertParamSetToIrace", {
   )
   ips = convertParamSetToIrace(ps)
   expect_false(identical(ips$constraints$x2, expression(TRUE)))
-  hook.run = function(instance, candidate, extra.params = NULL, config = list()) {
-    v = candidate$values
+  hook.run = function(experiment, config = list()) {
+    v = experiment$candidate
     if ((v$x1 == "a" && is.na(v$x2)) || (v$x1 == "b" && !is.na(v$x2)))
       stop("foo")
     1
@@ -61,8 +61,8 @@ test_that("convertParamSetToIrace uses correct boundaries", {
     makeLogicalParam("Binar", default = TRUE)
   )
   ips = convertParamSetToIrace(ps)
-  
-  expect_identical(vcapply(ips$boundary, function(x) class(x)), 
+
+  expect_identical(vcapply(ips$boundary, function(x) class(x)),
     c(kernel = "character", sigma = "numeric", myInt = "integer", Binar = "character"))
   expect_identical(ips$boundary$sigma, as.numeric(unlist(ps$pars$sigma[c("lower", "upper")])))
   expect_identical(ips$boundary$myInt, as.integer(unlist(ps$pars$myInt[c("lower", "upper")])))
