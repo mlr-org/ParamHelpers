@@ -204,8 +204,8 @@ checkValuesForDiscreteParam = function(id, values) {
     }
   }
   names(values) = ns
-  if(!isProperlyNamed(values)) {
-    stop("Not all values for parameter %s were named and names could not be guessed!", id)
+  if (!isProperlyNamed(values)) {
+    stopf("Not all values for parameter '%s' were named and names could not be guessed!", id)
   }
 
   # check that NA does not occur in value names, see above
