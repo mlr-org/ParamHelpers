@@ -28,8 +28,7 @@ isRequiresOk = function(par.set, par.vals, ids = names(par.vals), use.defaults =
     par.vals.env = par.vals
   }
   requireOks = vlapply(names(par.vals), function(par.name) {
-    res = requiresOk(par.set, par.vals.env, par.name)
-    is.null(res) || res
+    requiresOk(par.set, par.vals.env, par.name)
   })
   if (any(!requireOks)) {
     #just constructing an informative error message

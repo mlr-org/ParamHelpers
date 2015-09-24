@@ -43,6 +43,8 @@
 #' with complicated dependences and forbidden regions, if one wants to ensure that points actually
 #' get added... But we are working on it,
 #'
+#' generateDesign will NOT work if there are dependencies over multiple levels of parameters and the dependency is only given with respect to the previous parameter.
+#'
 #' @template arg_gendes_n
 #' @template arg_parset
 #' @param fun [\code{function}]\cr

@@ -179,6 +179,20 @@ test_that("nested requires", {
   expect_true(all(oks))
 })
 
+test_that("requires chains work", {
+  ps8 = makeParamSet(
+    makeLogicalLearnerParam("a", default = FALSE),
+    makeLogicalLearnerParam("b", default = FALSE, requires = quote(a == TRUE)),
+    # FIXME: shouldn't need to make the chain explicit
+    makeLogicalLearnerParam("c", default = FALSE, requires = quote(b == TRUE && a == TRUE))
+  )
+  des = generateDesign(10, par.set = ps8)
+  vals = dfRowsToList(des, ps8)
+  oks = sapply(vals, isFeasible, par = ps8)
+  expect_true(all(oks))
+})
+
+
 test_that("we dont drop levels in factors", {
   ps = makeParamSet(
     makeDiscreteParam("x", values = letters[1:5])
