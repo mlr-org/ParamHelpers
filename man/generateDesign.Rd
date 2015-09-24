@@ -78,6 +78,8 @@ via new calls to \code{\link[lhs]{randomLHS}}, but do not add points so they are
 far away from the already present ones. The reason is that the latter is quite hard to achieve
 with complicated dependences and forbidden regions, if one wants to ensure that points actually
 get added... But we are working on it,
+
+generateDesign will NOT work if there are dependencies over multiple levels of parameters and the dependency is only given with respect to the previous parameter.
 }
 \examples{
 ps = makeParamSet(
