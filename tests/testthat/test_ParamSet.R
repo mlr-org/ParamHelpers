@@ -88,9 +88,17 @@ test_that("combination with c works", {
     makeDiscreteParam("w", values = 1:2),
     makeLogicalParam("x")
   )
+  # ps with "difficult" name
+  ps3 = makeParamSet(
+    makeNumericParam("params")
+  )
   ps = c(ps1, ps2)
   expect_equal(length(ps$pars), 4)
   expect_equal(getParamIds(ps), c(getParamIds(ps1), getParamIds(ps2)))
+
+  ps = c(ps1, ps3)
+  expect_equal(length(ps$pars), 3)
+  expect_equal(getParamIds(ps), c(getParamIds(ps1), getParamIds(ps3)))
 })
 
 

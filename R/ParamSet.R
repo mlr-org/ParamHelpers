@@ -32,11 +32,11 @@
 #'   makeLogicalParam("x"),
 #'   makeDiscreteVectorParam("y", len=2, values=c("a", "b"))
 #' )
-makeParamSet = function(..., params, forbidden = NULL) {
+makeParamSet = function(..., params = NULL, forbidden = NULL) {
   pars = list(...)
-  if (length(pars) > 0 && !missing(params))
+  if (length(pars) > 0 && !is.null(params))
     stop("You can only use one of ... or params!")
-  if (!missing(params)) {
+  if (!is.null(params)) {
     assertList(params, types = "Param")
     pars = params
   } else {
@@ -70,6 +70,9 @@ print.ParamSet = function(x, ..., trafo = TRUE, used = TRUE, constr.clip = 40L) 
 c.ParamSet = function(..., recursive=FALSE) {
   pss = list(...)
   pars = Reduce(c, lapply(pss, function(ps) ps$pars))
+  # remove the names here. if 'params' is a par name, this wont work in the contructor call
+  # but we are allowed to pass the list without names, as they are set again automatically later for pars
+  names(pars) = NULL
   do.call(makeParamSet, pars)
 }
 
