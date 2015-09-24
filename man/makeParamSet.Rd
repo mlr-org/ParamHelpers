@@ -6,7 +6,7 @@
 \alias{makeParamSet}
 \title{Construct a parameter set.}
 \usage{
-makeParamSet(..., params, forbidden = NULL)
+makeParamSet(..., params = NULL, forbidden = NULL)
 
 makeNumericParamSet(id = "x", len, lower = -Inf, upper = Inf,
   vector = TRUE)
