@@ -89,14 +89,15 @@ test_that("OptPath with vector and discrete params works", {
     makeDiscreteParam("x4", values = list(foo = identity, bar = list())),
     makeLogicalParam("x5"),
     makeDiscreteVectorParam("x6", len = 2, values = list(a = identity, b = 1)),
-    makeLogicalVectorParam("x7", len = 3)
+    makeLogicalVectorParam("x7", len = 3),
+    makeCharacterParam("x8")
   )
   op = makeOptPathDF(par.set = ps, y.names = "y", minimize = TRUE)
-  x = list(x0 = c(1L,3L), x1 = "a", x2 = 2L, x3 = 5, x4 = identity, x5 = FALSE,
-    x6 = list(b = 1, a = identity), x7 = c(TRUE,FALSE,TRUE))
+  x = list(x0 = c(1L, 3L), x1 = "a", x2 = 2L, x3 = 5, x4 = identity, x5 = FALSE,
+    x6 = list(b = 1, a = identity), x7 = c(TRUE, FALSE, TRUE), x8 = "PH")
   addOptPathEl(op, x = x, y = 0)
   d = as.data.frame(op)
-  expect_true(nrow(d) == 1 && ncol(d) == 3 + 7 + 1 + 2 + 2)
+  expect_true(nrow(d) == 1 && ncol(d) == 3 + 8 + 1 + 2 + 2)
   expect_true(is.integer(d$x01))
   expect_true(is.integer(d$x02))
   expect_true(is.factor(d$x1))
@@ -109,13 +110,15 @@ test_that("OptPath with vector and discrete params works", {
   expect_true(is.logical(d$x71))
   expect_true(is.logical(d$x72))
   expect_true(is.logical(d$x73))
+  expect_true(is.factor(d$x8)) # strings internally saved as factors?
   expect_true(
        d[1,1] == 1L && d[1,2] == 3L
     && d[1,3] == "a" && d[1,4] == "2" && d[1,5] == "5" && d[1,6] == "foo"
     && d[1,7] == FALSE && d[1,8] == "b" && d[1,9] == "a"
-    && d[1,10] == TRUE && d[1,11] == FALSE && d[1,12] == TRUE)
+    && d[1,10] == TRUE && d[1,11] == FALSE && d[1,12] == TRUE
+    && d[1,13] == "PH")
   d = as.data.frame(op, discretes.as.factor = TRUE)
-  expect_true(nrow(d) == 1 && ncol(d) == 3 + 7 + 1 + 2 + 2)
+  expect_true(nrow(d) == 1 && ncol(d) == 3 + 8 + 1 + 2 + 2)
   expect_true(is.integer(d$x01))
   expect_true(is.integer(d$x02))
   expect_true(is.factor(d$x1))
@@ -128,12 +131,14 @@ test_that("OptPath with vector and discrete params works", {
   expect_true(is.logical(d$x71))
   expect_true(is.logical(d$x72))
   expect_true(is.logical(d$x73))
+  expect_true(is.factor(d$x8)) # strings internally saved as factors?
   expect_true(
     d[1,1] == 1L && d[1,2] == 3L
     && d[1,3] == "a" && d[1,4] == "2" && d[1,5] == "5" && d[1,6] == "foo"
     && d[1,7] == FALSE && d[1,8] == "b" && d[1,9] == "a"
-    && d[1,10] == TRUE && d[1,11] == FALSE && d[1,12] == TRUE)
-  e = getOptPathEl(op, 1)
+    && d[1,10] == TRUE && d[1,11] == FALSE && d[1,12] == TRUE
+    && d[1,13] == "PH")
+  e = getOptPathEl(op, 1L)
   expect_equal(e$x, x)
 })
 

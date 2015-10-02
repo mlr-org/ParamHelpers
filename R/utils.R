@@ -6,7 +6,7 @@ stopIfLearnerParams = function(par.set) {
 
 stopIfFunOrUntypedParams = function(par.set) {
   types = getParamTypes(par.set)
-  not.ok = intersect(c("untyped", "function"), types)
+  not.ok = intersect(c("untyped", "function", "character"), types)
   if (length(not.ok) > 0L)
     stopf("Parameters of this type are not allowed, but were found: %s", collapse(not.ok))
 }

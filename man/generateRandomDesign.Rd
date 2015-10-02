@@ -38,5 +38,10 @@ Dependent parameters whose constraints are unsatisfied generate \code{NA} entrie
 respective columns.
 
 The algorithm simply calls \code{\link{sampleValues}} and arranges the result in a data.frame.
+
+\code{generateRandomDesign} will NOT work if there are dependencies over multiple levels of
+parameters and the dependency is only given with respect to the \dQuote{previous} parameter.
+A current workaround is to state all dependencies on all parameters involved.
+(We are working on it.)
 }
 

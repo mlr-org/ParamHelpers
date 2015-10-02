@@ -42,7 +42,6 @@ test_that("integer vector sampling", {
   }
 })
 
-
 test_that("logical sampling", {
   p = makeLogicalParam(id = "x")
   r = sampleValues(p, 13)

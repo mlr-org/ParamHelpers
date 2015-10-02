@@ -96,6 +96,3 @@ getOptPathCols.OptPathDF = function(op, names, dob = op$env$dob, eol = op$env$eo
   d = as.data.frame(op, dob = dob, eol = eol, row.names = row.names)
   d[, names, drop = FALSE]
 }
-
-
-

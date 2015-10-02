@@ -219,6 +219,17 @@ test_that("logic vec param", {
   expect_true(!isFeasible(p, NULL))
 })
 
+test_that("character param", {
+  p = makeCharacterParam(id = "s")
+  expect_equal("character", p$type)
+  expect_true(isFeasible(p, collapse(sample(letters, 5L))))
+
+  expect_true(!isFeasible(p, 1L))
+  expect_true(!isFeasible(p, 1))
+  expect_true(!isFeasible(p, NULL))
+  expect_true(!isFeasible(p, factor("bam")))
+})
+
 test_that("function param", {
   p = makeFunctionParam(id = "x")
   expect_equal("function", p$type)

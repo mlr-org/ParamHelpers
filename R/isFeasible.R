@@ -102,6 +102,8 @@ constraintsOkParam = function(par, x) {
     is.logical(x) && length(x) == 1 && !is.na(x)
   else if (type == "logicalvector")
     is.logical(x) && length(x) == par$len && !any(is.na(x))
+  else if (type == "character")
+    is.character(x) && length(x) == 1 && !is.na(x)
   else if (type == "function")
     is.function(x)
 

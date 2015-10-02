@@ -2,6 +2,7 @@
 % Please edit documentation in R/aParam.R, R/makeParamFuns.R
 \name{Param}
 \alias{Param}
+\alias{makeCharacterParam}
 \alias{makeDiscreteParam}
 \alias{makeDiscreteVectorParam}
 \alias{makeFunctionParam}
@@ -41,6 +42,8 @@ makeDiscreteVectorParam(id, len, values, default, requires = NULL,
 makeFunctionParam(id, default = default, requires = NULL)
 
 makeUntypedParam(id, default, requires = NULL)
+
+makeCharacterParam(id, default, requires = NULL)
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr

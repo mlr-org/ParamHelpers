@@ -54,6 +54,13 @@ SEXP c_dfRowsToList(SEXP s_df, SEXP s_pars, SEXP s_types, SEXP s_parnames, SEXP 
           if (LOGICAL(s_parval)[k] != NA_LOGICAL)
             all_missing = FALSE;
         }
+      } else if (type == 5) { /* character */
+        s_parval = PROTECT(NEW_CHARACTER(parlen));
+        for (k = 0; k < parlen; k++) {
+          SET_STRING_ELT(s_parval, k, STRING_ELT(VECTOR_ELT(s_df, colcount+k), row));
+          if (STRING_ELT(s_parval, k) != NA_STRING)
+            all_missing = FALSE;
+        }
       }
 
       /* are all entries in s_parval NA ? */
@@ -67,8 +74,8 @@ SEXP c_dfRowsToList(SEXP s_df, SEXP s_pars, SEXP s_types, SEXP s_parnames, SEXP 
         s_parval = PROTECT(eval(s_call, R_GlobalEnv));
         UNPROTECT(1); /* eval */
       }
-      /* only support for cnames for num, int and log vecs currently */
-      if (type == 1 || type == 2 || type == 4)
+      /* only support for cnames for num, int, log and char vecs currently */
+      if (type == 1 || type == 2 || type == 4 || type == 5)
         SET_NAMES(s_parval, VECTOR_ELT(s_cnames, par));
 
       SET_VECTOR_ELT(s_rowlist, par, s_parval);

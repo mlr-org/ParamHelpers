@@ -79,7 +79,10 @@ far away from the already present ones. The reason is that the latter is quite h
 with complicated dependences and forbidden regions, if one wants to ensure that points actually
 get added... But we are working on it,
 
-generateDesign will NOT work if there are dependencies over multiple levels of parameters and the dependency is only given with respect to the previous parameter.
+\code{generateDesign} will NOT work if there are dependencies over multiple levels of
+parameters and the dependency is only given with respect to the \dQuote{previous} parameter.
+A current workaround is to state all dependencies on all parameters involved.
+(We are working on it.)
 }
 \examples{
 ps = makeParamSet(

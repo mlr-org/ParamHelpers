@@ -47,6 +47,11 @@ The algorithm currently performs these steps:
   \item{Duplicated points are removed. Duplicated points are not generated in a
    grid design, but the way parameter dependencies are handled make this possible.}
 }
+
+\code{generateDesign} will NOT work if there are dependencies over multiple levels of
+parameters and the dependency is only given with respect to the \dQuote{previous} parameter.
+A current workaround is to state all dependencies on all parameters involved.
+(We are working on it.)
 }
 \examples{
 ps = makeParamSet(

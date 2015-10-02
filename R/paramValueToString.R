@@ -70,6 +70,8 @@ paramValueToString.Param = function(par, x, show.missing.values = FALSE, num.for
     discreteValueToName(par, x)
   else if (type == "discretevector")
     collapse(discreteValueToName(par, x))
+  else if (type == "character")
+    as.character(x)
   else if (type == "function")
     "<function>"
   else if (type == "untyped")

@@ -7,8 +7,9 @@ test_that("paramValueToString ", {
   x = makeLogicalParam("x")
   y = makeLogicalVectorParam("y", len=2)
   z = makeDiscreteVectorParam("z", len=2, values=list(a=1, b=list()))
+  s = makeCharacterParam("s")
 
-  ps = makeParamSet(u, v, w, x, y, z)
+  ps = makeParamSet(u, v, w, x, y, z, s)
   expect_equal(paramValueToString(u, 1), "1")
   expect_equal(paramValueToString(u, 1.2345), "1.23")
   expect_equal(paramValueToString(v, c(1, 2)), "1,2")
@@ -18,8 +19,10 @@ test_that("paramValueToString ", {
   expect_equal(paramValueToString(y, c(TRUE, FALSE)), "TRUE,FALSE")
   expect_equal(paramValueToString(z, list(1, 1)), "a,a")
   expect_equal(paramValueToString(z, list(1, list())), "a,b")
-  expect_equal(paramValueToString(ps, list(u=1, v=1:2, w=list(), x=FALSE, y=c(TRUE, FALSE), z=list(1,list()))),
-    "u=1; v=1,2; w=b; x=FALSE; y=TRUE,FALSE; z=a,b")
+  expect_equal(paramValueToString(s, "PH"), "PH")
+  expect_equal(paramValueToString(ps, list(u = 1, v = 1:2, w = list(), x = FALSE,
+    y = c(TRUE, FALSE), z = list(1, list()), s = "PH")),
+    "u=1; v=1,2; w=b; x=FALSE; y=TRUE,FALSE; z=a,b; s=PH")
 })
 
 test_that("requires works", {
