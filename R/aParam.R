@@ -65,6 +65,7 @@
 #' makeNumericParam("x",lower = -1, upper = 1)
 #' makeNumericVectorParam("x", len = 2)
 #' makeDiscreteParam("y", values = c("a","b"))
+#' makeCharacterParam("z")
 NULL
 
 makeParam = function(id, type, len, lower, upper, values, cnames, allow.inf = FALSE, default,

@@ -1,7 +1,7 @@
 #' @title Convert a data.frame row to list of parameter-value-lists.
 #'
 #' @description
-#' Please note that (naturally) the columns of \code{df} have to be of the correct type
+#' Please note that (naturally) the columns of \code{df} have to be of the correct
 #' type w.r.t. the corresponding parameter. The only exception are integer parameters
 #' where the corresponding columns in \code{df} are allowed to be numerics.
 #'

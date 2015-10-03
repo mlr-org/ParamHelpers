@@ -28,7 +28,8 @@ getParamIds = function(par.set, repeated = FALSE, with.nr = FALSE) {
 
 getParamIds2 = function(pars, repeated = FALSE, with.nr = FALSE) {
   ns = lapply(pars, function(x) {
-    if (repeated && x$type %in% c("numericvector", "integervector", "discretevector", "logicalvector")) {
+    if (repeated && x$type %in% c("numericvector", "integervector", "discretevector",
+      "logicalvector", "charactervector")) {
       n = x$len
       if (n > 1 && with.nr)
         paste(rep(x$id, n), 1:n, sep = "")

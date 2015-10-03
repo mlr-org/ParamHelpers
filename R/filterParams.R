@@ -23,6 +23,7 @@
 #'   makeIntegerParam("v", lower = 1, upper = 2),
 #'   makeDiscreteParam("w", values = 1:2),
 #'   makeLogicalParam("x"),
+#'   makeCharacterParam("s"),
 #'   makeNumericParam("y", tunable = FALSE)
 #' )
 #'
@@ -46,7 +47,8 @@ filterParams = function(par.set, ids = NULL, type = NULL, tunable = c(TRUE, FALS
   }
   if (!is.null(type)) {
     assertSubset(type, c("numeric", "integer", "numericvector", "integervector", "discrete",
-        "discretevector", "logical", "logicalvector", "character", "function", "untyped"))
+        "discretevector", "logical", "logicalvector", "character", "charactervector",
+        "function", "untyped"))
     par.set$pars = Filter(function(p) p$type %in% type, par.set$pars)
   }
   assertLogical(tunable, min.len = 1L, max.len = 2L, unique = TRUE)

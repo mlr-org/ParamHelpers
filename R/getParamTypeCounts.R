@@ -23,6 +23,7 @@ getSupportedParamTypes = function() {
       "integer", "integervector",
       "discrete", "discretevector",
       "logical", "logicalvector",
+      "character", "charactervector",
       "function",
       "untyped"))
 }

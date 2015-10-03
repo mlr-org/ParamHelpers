@@ -22,7 +22,7 @@ Default is \code{FALSE}.}
 
 \item{df.discretes.as.factor}{[\code{logical(1)}]\cr
 If \code{df.cols} is \code{TRUE}:
-Should type for discrete params be \code{facor} or \code{character}?
+Should type for discrete params be \code{factor} or \code{character}?
 Default is \code{TRUE}.}
 
 \item{use.names}{[\code{logical(1)}]\cr
@@ -31,7 +31,7 @@ Default is \code{FALSE}.}
 
 \item{with.nr}{[\code{logical(1)}]\cr
 Should number from 1 to length be appended to name?
-Only used if \code{use.name} and \code{df.cols} are \code{TRUE}.
+Only used if \code{use.names} and \code{df.cols} are \code{TRUE}.
 Default is \code{TRUE}.}
 }
 \value{

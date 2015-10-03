@@ -110,7 +110,7 @@ isEmpty.ParamSet = function(par.set) {
 #'   Default is \code{TRUE}.
 #' @rdname makeParamSet
 #' @export
-makeNumericParamSet = function(id="x", len, lower=-Inf, upper=Inf, vector=TRUE) {
+makeNumericParamSet = function(id = "x", len, lower = -Inf, upper = Inf, vector = TRUE) {
   assertString(id)
   if (missing(len)) {
     if (!missing(lower))
@@ -128,10 +128,10 @@ makeNumericParamSet = function(id="x", len, lower=-Inf, upper=Inf, vector=TRUE) 
     assertNumeric(upper, len = len)
     assertFlag(vector)
   if (vector) {
-    makeParamSet(makeNumericVectorParam(id=id, len=len, lower=lower, upper=upper))
+    makeParamSet(makeNumericVectorParam(id = id, len = len, lower = lower, upper = upper))
   } else {
-    makeParamSet(params=lapply(1:len, function(i)
-      makeNumericParam(id=paste(id, i, sep=""), lower=lower[i], upper=upper[i])))
+    makeParamSet(params = lapply(1:len, function(i)
+      makeNumericParam(id = paste(id, i, sep = ""), lower = lower[i], upper = upper[i])))
   }
 }
 

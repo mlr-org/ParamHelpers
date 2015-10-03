@@ -1,12 +1,12 @@
 stopIfLearnerParams = function(par.set) {
   if(any(sapply(par.set$pars, function(x) inherits(x, "LearnerParameter"))))
-    stop("No par.set parameter in 'generateDesign' can be of class 'LearnerParameter'! Use basic parameters instead to describe you region of interest!")
+    stop("No par.set parameter in 'generateDesign' can be of class 'LearnerParameter'!
+      Use basic parameters instead to describe you region of interest!")
 }
-
 
 stopIfFunOrUntypedParams = function(par.set) {
   types = getParamTypes(par.set)
-  not.ok = intersect(c("untyped", "function", "character"), types)
+  not.ok = intersect(c("untyped", "function", "character", "charactervector"), types)
   if (length(not.ok) > 0L)
     stopf("Parameters of this type are not allowed, but were found: %s", collapse(not.ok))
 }
@@ -37,7 +37,9 @@ getParamNA = function(par, repeated = FALSE) {
     discrete = NA_character_,
     discretevector = NA_character_,
     logical = NA,
-    logicalvector = NA
+    logicalvector = NA,
+    character = NA_character_,
+    charactervector = NA_character_
   )
   if (repeated)
     v = rep(v, par$len)

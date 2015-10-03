@@ -94,4 +94,18 @@ isLogical.Param = function(par) {
   return(par$type %in% c("logical", "logicalvector"))
 }
 
+#' @export
+#' @rdname isType
+isCharacter = function(par) {
+  assert(checkClass(par, "Param"), checkClass(par, "ParamSet"))
+  UseMethod("isCharacter")
+}
 
+#' @export
+isCharacter.ParamSet = function(par) {
+  return(hasAllParamsOfTypes(par, types = c("character", "charactervector")))
+}
+
+isCharacter.Param = function(par) {
+  return(par$type %in% c("character", "charactervector"))
+}

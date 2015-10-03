@@ -185,6 +185,18 @@ makeCharacterParam = function(id, default, requires = NULL) {
     requires = requires, tunable = FALSE)
 }
 
+#' @rdname Param
+#' @export
+makeCharacterVectorParam = function(id, len, default, requires = NULL) {
+  assertString(id)
+  len = asInt(len)
+  if (!is.null(requires))
+    assert(checkClass(requires, "call"), checkClass(requires, "expression"))
+  makeParam(id = id, type = "charactervector", len = len, lower = NULL, upper = NULL,
+    values = NULL, cnames = NULL, default = default, trafo = NULL,
+    requires = requires, tunable = FALSE)
+}
+
 ##### small helpers #####
 
 checkValuesForDiscreteParam = function(id, values) {

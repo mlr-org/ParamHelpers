@@ -3,8 +3,8 @@
 #  wrt to the "last" param. also see daniels unit test.
 #  it works as long all dependencies are stated, we need to at least document this
 
-#FIXME: it really makes no sense to calculate the distance for params that are NA when we do the
-# design and augment it right? think about what happens here
+#FIXME: it really makes no sense to calculate the distance for params that are NA
+# when we do the design and augment it right? think about what happens here
 
 
 #' @title Generates a statistical design for a parameter set.

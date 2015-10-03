@@ -35,6 +35,13 @@ hasLogical = function(par.set) {
 
 #' @export
 #' @rdname hasType
+hasCharacter = function(par.set) {
+  assertClass(par.set, "ParamSet")
+  return(hasSomeParamsOfTypes(par.set, types = c("character", "charactervector")))
+}
+
+#' @export
+#' @rdname hasType
 hasNumeric = function(par.set, include.int = TRUE) {
   assertClass(par.set, "ParamSet")
   types = if (include.int)

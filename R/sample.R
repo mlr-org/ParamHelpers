@@ -58,7 +58,7 @@ sampleValue.Param = function(par, discrete.names = FALSE, trafo = FALSE) {
       else
         par$values[[x]]
     }
-  } else if (type %in% c("function", "untyped", "character")) {
+  } else if (type %in% c("function", "untyped", "character", "charactervector")) {
     stopf("Cannot generate random value for %s variable!", type)
   }
   if (trafo && !is.null(par$trafo))

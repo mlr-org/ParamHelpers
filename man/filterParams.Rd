@@ -38,6 +38,7 @@ ps = makeParamSet(
   makeIntegerParam("v", lower = 1, upper = 2),
   makeDiscreteParam("w", values = 1:2),
   makeLogicalParam("x"),
+  makeCharacterParam("s"),
   makeNumericParam("y", tunable = FALSE)
 )
 

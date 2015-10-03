@@ -14,12 +14,14 @@ test_that("getParamTypeCounts", {
     makeNumericParam("numeric1", lower = 0L, upper = 10L),
     makeIntegerParam("integer1", lower = 0L, upper = 5L),
     makeIntegerParam("integer2", lower = 0L, upper = 5L),
-    makeDiscreteParam("discrete1", values = letters[1:5])
+    makeDiscreteParam("discrete1", values = letters[1:5]),
+    makeCharacterParam("character1")
   )
 
   or = getParamTypeCounts(par.set)
   expect_equal(or$numeric, 1L)
   expect_equal(or$integer, 2L)
   expect_equal(or$discrete, 1L)
+  expect_equal(or$character, 1L)
   checkNonOccuringTypes(or, par.set)
 })

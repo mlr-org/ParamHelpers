@@ -3,11 +3,11 @@ context("dfRowToList")
 
 test_that("dfRowToList", {
   ps = makeParamSet(
-    makeDiscreteParam("x", values = list(a=iris, b=123)),
-    makeNumericParam("y", lower=1, upper=2),
-    makeNumericVectorParam("z", len=2, lower=10, upper=20)
+    makeDiscreteParam("x", values = list(a = iris, b = 123)),
+    makeNumericParam("y", lower = 1, upper = 2),
+    makeNumericVectorParam("z", len = 2, lower = 10, upper = 20)
   )
-  des = generateDesign(10, par.set=ps)
+  des = generateDesign(10, par.set = ps)
   vals = dfRowsToList(des, ps)
   expect_true(is.list(vals) && length(vals) == nrow(des))
   for (i in seq_row(des)) {
@@ -22,11 +22,11 @@ test_that("dfRowToList", {
 test_that("requires works", {
   ps = makeParamSet(
     makeDiscreteParam("x", values = c("a", "b")),
-    makeNumericParam("y", lower=1, upper=2, requires = quote(x == "a")),
-    makeNumericVectorParam("z", len=2, lower=10, upper=20, requires = quote(x == "b"))
+    makeNumericParam("y", lower = 1, upper=2, requires = quote(x == "a")),
+    makeNumericVectorParam("z", len = 2, lower = 10, upper = 20, requires = quote(x == "b"))
   )
   des = generateDesign(10, par.set=ps)
-  
+
   mycheck = function(vals) {
     expect_true(is.list(vals) && length(vals) == nrow(des))
     for (i in seq_row(des)) {
@@ -40,20 +40,20 @@ test_that("requires works", {
         expect_true(isScalarNA(v$y))
         expect_true(is.numeric(v$z) && length(v$z) == 2 && all(v$z >= 10 & v$z <= 20))
       }
-    }    
+    }
   }
   vals = dfRowsToList(des, ps)
   mycheck(vals)
 })
 
 test_that("ints in data frame work", {
-  df = data.frame(x=1:3, y=as.numeric(1:3))
+  df = data.frame(x = 1:3, y = as.numeric(1:3))
   ps = makeParamSet(
     makeIntegerParam("x"),
     makeIntegerParam("y")
   )
   xs = dfRowsToList(df, ps)
-  expect_equal(xs[[1]], list(x=1L, y=1L))
+  expect_equal(xs[[1]], list(x = 1L, y = 1L))
 })
 
 

@@ -72,6 +72,8 @@ paramValueToString.Param = function(par, x, show.missing.values = FALSE, num.for
     collapse(discreteValueToName(par, x))
   else if (type == "character")
     as.character(x)
+  else if (type == "charactervector")
+    collapse(x)
   else if (type == "function")
     "<function>"
   else if (type == "untyped")

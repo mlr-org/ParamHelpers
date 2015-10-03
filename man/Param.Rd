@@ -3,6 +3,7 @@
 \name{Param}
 \alias{Param}
 \alias{makeCharacterParam}
+\alias{makeCharacterVectorParam}
 \alias{makeDiscreteParam}
 \alias{makeDiscreteVectorParam}
 \alias{makeFunctionParam}
@@ -44,6 +45,8 @@ makeFunctionParam(id, default = default, requires = NULL)
 makeUntypedParam(id, default, requires = NULL)
 
 makeCharacterParam(id, default, requires = NULL)
+
+makeCharacterVectorParam(id, len, default, requires = NULL)
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr
@@ -124,5 +127,6 @@ The S3 class is a list which stores these elements:
 makeNumericParam("x",lower = -1, upper = 1)
 makeNumericVectorParam("x", len = 2)
 makeDiscreteParam("y", values = c("a","b"))
+makeCharacterParam("z")
 }
 
