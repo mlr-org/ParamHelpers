@@ -5,5 +5,5 @@
 #' @return [\code{list}].
 #' @export
 removeMissingValues = function(x) {
-  Filter(Negate(isScalarNA), x)
+  return(Filter(Negate(isScalarNA), x))
 }

@@ -12,11 +12,11 @@ hasRequires = function(par) {
 
 #' @export
 hasRequires.Param = function(par) {
-  !is.null(par$requires)
+  return(!is.null(par$requires))
 }
 
 #' @export
 hasRequires.ParamSet = function(par) {
-  any(vapply(par$pars, hasRequires, logical(1L)))
+  return(any(vapply(par$pars, hasRequires, logical(1L))))
 }
 

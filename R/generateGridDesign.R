@@ -42,7 +42,6 @@
 #' )
 #' generateGridDesign(ps, resolution = c(x1 = 4, x2 = 5), trafo = TRUE)
 generateGridDesign = function(par.set, resolution, trafo = FALSE) {
-
   z = doBasicGenDesignChecks(par.set)
 
   ids = getParamIds(par.set)
@@ -137,5 +136,5 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE) {
 
   res = convertDataFrameCols(res, chars.as.factor = TRUE)
   attr(res, "trafo") = trafo
-  res
+  return(res)
 }

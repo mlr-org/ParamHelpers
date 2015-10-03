@@ -46,12 +46,12 @@ makeParamSet = function(..., params = NULL, forbidden = NULL) {
   if (any(duplicated(ns)))
     stop("All parameters must have unique names!")
   names(pars) = ns
-  makeS3Obj("ParamSet", pars = pars, forbidden = forbidden)
+  return(makeS3Obj("ParamSet", pars = pars, forbidden = forbidden))
 }
 
 getParSetPrintData = function(x, trafo = TRUE, used = TRUE, constr.clip = 40L) {
   d = lapply(x$pars, getParPrintData, trafo = trafo, used = used, constr.clip = constr.clip)
-  do.call(rbind, d)
+  return(do.call(rbind, d))
 }
 
 #' @export
@@ -63,17 +63,17 @@ print.ParamSet = function(x, ..., trafo = TRUE, used = TRUE, constr.clip = 40L) 
   }
   if (hasForbidden(x))
     catf("Forbidden region specified.")
-  invisible(NULL)
+  return(invisible(NULL))
 }
 
 #' @export
-c.ParamSet = function(..., recursive=FALSE) {
+c.ParamSet = function(..., recursive = FALSE) {
   pss = list(...)
   pars = Reduce(c, lapply(pss, function(ps) ps$pars))
   # remove the names here. if 'params' is a par name, this wont work in the contructor call
   # but we are allowed to pass the list without names, as they are set again automatically later for pars
   names(pars) = NULL
-  do.call(makeParamSet, pars)
+  return(do.call(makeParamSet, pars))
 }
 
 #' Check whether parameter set is empty.
@@ -89,7 +89,7 @@ isEmpty = function(par.set) {
 
 #' @export
 isEmpty.ParamSet = function(par.set) {
-  length(par.set$pars) == 0
+  return(length(par.set$pars) == 0)
 }
 
 #' \code{makeNumericParamSet}: Convenience function for numerics.
@@ -128,10 +128,11 @@ makeNumericParamSet = function(id = "x", len, lower = -Inf, upper = Inf, vector 
     assertNumeric(upper, len = len)
     assertFlag(vector)
   if (vector) {
-    makeParamSet(makeNumericVectorParam(id = id, len = len, lower = lower, upper = upper))
+    return(makeParamSet(makeNumericVectorParam(id = id, len = len, lower = lower, upper = upper)))
   } else {
-    makeParamSet(params = lapply(1:len, function(i)
-      makeNumericParam(id = paste(id, i, sep = ""), lower = lower[i], upper = upper[i])))
+    return(makeParamSet(params = lapply(1:len, function(i)
+      makeNumericParam(id = paste(id, i, sep = ""), lower = lower[i], upper = upper[i]))
+    ))
   }
 }
 

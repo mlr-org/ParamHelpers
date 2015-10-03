@@ -1,3 +1,3 @@
 isVector = function(x) {
-  grepl("vector", x$type)
+  return(grepl("vector", x$type))
 }

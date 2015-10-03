@@ -87,7 +87,8 @@ Is this parameter tunable?
 Defining a parameter to be not-tunable allows to mark arguments like, e.g., \dQuote{verbose} or
 other purely technical stuff, and allows them to be excluded from later automatic optimization
 procedures that would try to consider all available parameters.
-Default is \code{TRUE} (except for \code{untyped} and \code{function}) which means it is tunable.}
+Default is \code{TRUE} (except for \code{untyped}, \code{function}, \code{character} and
+\code{characterVector}) which means it is tunable.}
 
 \item{len}{[\code{integer(1)}]\cr
 Length of vector parameter.}

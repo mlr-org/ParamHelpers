@@ -25,7 +25,6 @@
 #' @template ret_gendes_df
 #' @export
 generateRandomDesign = function(n = 10L, par.set, trafo = FALSE) {
-
   z = doBasicGenDesignChecks(par.set)
   pids = getParamIds(par.set, repeated = TRUE, with.nr = TRUE)
 
@@ -44,7 +43,7 @@ generateRandomDesign = function(n = 10L, par.set, trafo = FALSE) {
   des = lapply(des, elementsToDf)
   des = lapply(des, do.call, what = cbind)
   des = do.call(rbind, des)
-  setColNames(des, pids)
+  return(setColNames(des, pids))
 }
 
 

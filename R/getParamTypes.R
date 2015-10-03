@@ -68,5 +68,5 @@ getParamTypes = function(par.set, df.cols = FALSE, df.discretes.as.factor = TRUE
     getParamIds(par.set, repeated = df.cols, with.nr = with.nr)
   else
     NULL
-  setNames(types, ns)
+  return(setNames(types, ns))
 }

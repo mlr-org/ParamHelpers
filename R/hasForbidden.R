@@ -5,7 +5,7 @@
 #' @export
 hasForbidden = function(par.set) {
   assertClass(par.set, "ParamSet")
-  !is.null(par.set$forbidden)
+  return(!is.null(par.set$forbidden))
 }
 
 

@@ -34,7 +34,7 @@ getOptPathEl.OptPathDF = function(op, index) {
 
 #' @export
 getOptPathX.OptPathDF = function(op, dob = op$env$dob, eol = op$env$eol) {
-  as.data.frame(op, include.x = TRUE, include.y = FALSE, include.rest = FALSE, dob = dob, eol = eol)
+  return(as.data.frame(op, include.x = TRUE, include.y = FALSE, include.rest = FALSE, dob = dob, eol = eol))
 }
 
 #' @export
@@ -52,22 +52,22 @@ getOptPathY.OptPathDF = function(op, names, dob = op$env$dob, eol = op$env$eol, 
 
 #' @export
 getOptPathDOB.OptPathDF = function(op, dob = op$env$dob, eol = op$env$eol) {
-  op$env$dob[getOptPathDobAndEolIndex(op, dob, eol)]
+  return(op$env$dob[getOptPathDobAndEolIndex(op, dob, eol)])
 }
 
 #' @export
 getOptPathEOL.OptPathDF = function(op, dob = op$env$dob, eol = op$env$eol) {
-  op$env$eol[getOptPathDobAndEolIndex(op, dob, eol)]
+  return(op$env$eol[getOptPathDobAndEolIndex(op, dob, eol)])
 }
 
 #' @export
 getOptPathErrorMessages.OptPathDF = function(op, dob = op$env$dob, eol = op$env$eol) {
-  op$env$error.message[getOptPathDobAndEolIndex(op, dob, eol)]
+  return(op$env$error.message[getOptPathDobAndEolIndex(op, dob, eol)])
 }
 
 #' @export
 getOptPathExecTimes.OptPathDF = function(op, dob = op$env$dob, eol = op$env$eol) {
-  op$env$exec.time[getOptPathDobAndEolIndex(op, dob, eol)]
+  return(op$env$exec.time[getOptPathDobAndEolIndex(op, dob, eol)])
 }
 
 #' @export
@@ -94,5 +94,5 @@ getOptPathCol.OptPathDF = function(op, name, dob = op$env$dob, eol = op$env$eol)
 getOptPathCols.OptPathDF = function(op, names, dob = op$env$dob, eol = op$env$eol, row.names = NULL) {
   assertCharacter(names, any.missing = FALSE)
   d = as.data.frame(op, dob = dob, eol = eol, row.names = row.names)
-  d[, names, drop = FALSE]
+  return(d[, names, drop = FALSE])
 }

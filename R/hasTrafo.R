@@ -12,11 +12,11 @@ hasTrafo = function(par) {
 
 #' @export
 hasTrafo.Param = function(par) {
-  !is.null(par$trafo)
+  return(!is.null(par$trafo))
 }
 
 #' @export
 hasTrafo.ParamSet = function(par) {
-  any(vapply(par$pars, hasTrafo, logical(1L)))
+  return(any(vapply(par$pars, hasTrafo, logical(1L))))
 }
 

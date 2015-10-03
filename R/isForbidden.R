@@ -13,6 +13,6 @@ isForbidden = function(par.set, x) {
   assertList(x)
   if (!hasForbidden(par.set))
     return(FALSE)
-  eval(par.set$forbidden, envir = x)
+  return(eval(par.set$forbidden, envir = x))
 }
 

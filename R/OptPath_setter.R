@@ -13,7 +13,7 @@ setOptPathElDOB = function(op, index, dob) {
   index = asInteger(index)
   dob = asInteger(dob)
   op$env$dob[index] = dob
-  invisible(NULL)
+  return(invisible(NULL))
 }
 
 
@@ -32,7 +32,7 @@ setOptPathElEOL = function(op, index, eol) {
   index = asInteger(index)
   eol = asInteger(eol)
   op$env$eol[index] = eol
-  invisible(NULL)
+  return(invisible(NULL))
 }
 
 #' @title Add a new element to an optimization path.

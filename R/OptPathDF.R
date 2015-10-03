@@ -19,7 +19,7 @@ makeOptPathDF = function(par.set, y.names, minimize, add.transformed.x = FALSE,
     col.types = c(getParamTypes(par.set, df.cols = TRUE, df.discretes.as.factor = FALSE), rep("numeric", n.y)),
     col.names = c(getParamIds(par.set, repeated = TRUE, with.nr = TRUE), y.names)
   )
-  addClasses(obj, "OptPathDF")
+  return(addClasses(obj, "OptPathDF"))
 }
 
 

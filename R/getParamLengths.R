@@ -18,7 +18,7 @@ getParamLengths = function(par.set) {
   assertClass(par.set, "ParamSet")
   # if we dont do this check we get an empty list
   if (isEmpty(par.set))
-    integer(0)
+    return(integer(0))
   else
-    extractSubList(par.set$pars, "len")
+    return(extractSubList(par.set$pars, "len"))
 }

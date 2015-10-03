@@ -18,8 +18,9 @@ Per default (\code{ids = NULL}) no filtering based on names is done.}
 \item{type}{[\code{NULL} | \code{character}]\cr
 Vector of allowed types, subset of: \dQuote{numeric}, \dQuote{integer}, \dQuote{numericvector},
 \dQuote{integervector}, \dQuote{discrete}, \dQuote{discretevector}, \dQuote{logical},
-\dQuote{logicalvector}, \dQuote{function}, \dQuote{untyped}.
-Setting \code{type = NULL} allows the consideration of all types.}
+\dQuote{logicalvector}, \dQuote{character}, \dQuote{charactervector},
+\dQuote{function}, \dQuote{untyped}.
+Setting \code{type = NULL}, which is the default, allows the consideration of all types.}
 
 \item{tunable}{[\code{logical}]\cr
 Vector of allowed values for the property \code{tunable}. Accepted arguments are

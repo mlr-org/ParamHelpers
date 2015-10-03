@@ -250,6 +250,6 @@ getOptPathParetoFront = function(op, y.names = op$y.names, dob = op$env$dob, eol
   if (index)
     return(life.inds[nondom])
   else
-    y[nondom, , drop = FALSE]
+    return(y[nondom, , drop = FALSE])
 }
 
