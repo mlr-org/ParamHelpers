@@ -1,5 +1,6 @@
 ParamHelpers_1.6:
-- added new parameter type CharacterParam
+- isCharacter, hasCharacter
+- added new parameter types character characterVector parameter
 - added property 'tunable' to make*Param
 - isFeasible supports named lists for unordered checks
 - numeric and numericvector Params and LearnerParams have a new arg 'allow.inf'
