@@ -101,13 +101,6 @@ makeLogicalVectorLearnerParam = function(id, len = as.integer(NA), default, when
   return(p)
 }
 
-# #' @rdname LearnerParam
-# #' @export
-# makeCharacterLearnerParam = function(id, default, when = "train", requires = NULL, tunable = TRUE) {
-#   p = makeCharacterParam(id, default = default, requires = requires, tunable = tunable)
-#   learnerParamFromParam(p, when)
-# }
-
 #' @rdname LearnerParam
 #' @export
 makeUntypedLearnerParam = function(id, default, when = "train", requires = NULL) {
@@ -131,5 +124,4 @@ makeVectorParamNALength = function(fun, default, ...)  {
   len = if (missing(default)) 1L else length(default)
   fun(len = len, default = default, ...)
 }
-
 
