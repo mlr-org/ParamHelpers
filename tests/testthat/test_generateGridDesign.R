@@ -108,5 +108,17 @@ test_that("nested requires", {
   expect_true(all(oks))
 })
 
+test_that("discrete works without resolution", {
+  ps8 = makeParamSet(
+    makeDiscreteParam("disc", values = c("a", "b", "c")),
+    makeDiscreteParam("discA", values = c("m", "w"), requires = quote(disc == "a")),
+    makeLogicalParam("logA")
+    )
+  des = generateGridDesign(par.set = ps8)
+  expect_true(nrow(des) == 8)
+  expect_true(all(is.na(des[des$disc == "c", "discA"])))
+  expect_true(all(is.na(des[des$disc == "b", "discA"])))
+})
+
 
 

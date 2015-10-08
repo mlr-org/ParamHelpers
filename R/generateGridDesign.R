@@ -52,17 +52,19 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE) {
   pids1 = getParamIds(par.set)
   pids2 = getParamIds(par.set, repeated = TRUE, with.nr = TRUE)
 
-  if (length(resolution) == 1L) {
-    resolution = setNames(rep(resolution, n), pids1)
+  if (!all(getParamTypes(par.set) %in% c("discrete", "logical"))) {
+    if (length(resolution) == 1L) {
+      resolution = setNames(rep(resolution, n), pids1)
+    }
+    #FIXME: cm removes namesm bug
+    ns = names(resolution)
+    resolution = asInteger(resolution, lower = 1L, len = n)
+    names(resolution) = ns
+    assertNamed(resolution, type = "named")
+    if (!all(names(resolution) == pids1))
+      stop("'resolution' must be named with parameter ids!")
+    resolution = resolution[pids1]
   }
-  #FIXME: cm removes namesm bug
-  ns = names(resolution)
-  resolution = asInteger(resolution, lower = 1L, len = n)
-  names(resolution) = ns
-  assertNamed(resolution, type = "named")
-  if (!all(names(resolution) == pids1))
-    stop("'resolution' must be named with parameter ids!")
-  resolution = resolution[pids1]
 
   assertFlag(trafo)
 
@@ -73,7 +75,6 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE) {
   for (i in 1:n) {
     p = pars[[i]]
     type = p$type
-    reso = resolution[[i]]
     if (isNumeric(p)) {
       lower = p$lower
       upper = p$upper
@@ -89,7 +90,7 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE) {
       } else if (isLogical(p)) {
         newvals = c(TRUE, FALSE)
       } else if (isNumeric(p, include.int = TRUE)) {
-        newvals = seq(from = lower[[j]], to = upper[[j]], length.out = reso)
+        newvals = seq(from = lower[[j]], to = upper[[j]], length.out = resolution[[i]])
         # round for integer
         if (isInteger(p)) {
           newvals = as.integer(unique(round(newvals)))
