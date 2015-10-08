@@ -44,10 +44,7 @@ hasCharacter = function(par.set) {
 #' @rdname hasType
 hasNumeric = function(par.set, include.int = TRUE) {
   assertClass(par.set, "ParamSet")
-  types = if (include.int)
-    c("numeric", "numericvector", "integer", "integervector")
-  else
-    c("numeric", "numericvector")
+  types = getNumericTypes(include.int = include.int)
   return(hasSomeParamsOfTypes(par.set, types = types))
 }
 
@@ -61,4 +58,12 @@ hasSomeParamsOfTypes = function(par.set, types) {
 # are all param types contained in 'types'
 hasAllParamsOfTypes = function(par.set, types) {
   return(all(getParamTypes(par.set, df.cols = FALSE, with.nr = FALSE , use.names = FALSE) %in% types))
+}
+
+# what types to consider numeric
+getNumericTypes = function(include.int = TRUE) {
+  if (include.int)
+    c("numeric", "numericvector", "integer", "integervector")
+  else
+    c("numeric", "numericvector")
 }

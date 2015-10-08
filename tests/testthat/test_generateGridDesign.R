@@ -43,7 +43,7 @@ test_that("generateGridDesign", {
     makeNumericParam("x", lower = 0, upper = 1),
     makeNumericParam("y", lower = 3, upper = 4, trafo = function(x) 2*x)
   )
-  d = generateGridDesign(ps, resolution = c(x = 2, y = 4), trafo = TRUE)
+  d = generateGridDesign(ps, resolution = c(y = 4, x = 2), trafo = TRUE)
   e = expand.grid(
     x = seq(0, 1, length.out = 2),
     y = 2*(seq(3, 4, length.out = 4)),
