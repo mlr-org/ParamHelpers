@@ -46,7 +46,7 @@ makeUntypedParam(id, default, requires = NULL)
 
 makeCharacterParam(id, default, requires = NULL)
 
-makeCharacterVectorParam(id, len, default, requires = NULL)
+makeCharacterVectorParam(id, len, cnames = NULL, default, requires = NULL)
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr
