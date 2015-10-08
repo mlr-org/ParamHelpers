@@ -12,19 +12,19 @@
 #' @return Nothing. The function produces a meaningful exception
 #'   if conditions are violated.
 #' @export
-checkParVals = function(ps, x) {
+checkParVals = function(par.set, x) {
   assertList(x)
-  named = testNamed(x)
-  ns1 = names(par$pars)
-  ns2 = names(x)
+
   # if we have names, check that they are ok
-  if (named)
-    d = setdiff(ns2, ns2)
+  if (testNamed(x)) {
+    d = setdiff(par.set$pars, names(x))
     if (length(d) > 0L)
-      stopf("'x' used invalid names which are not in param set 'ps': %s", collapse(d))
+      stopf("'x' used invalid names which are not in param set 'par.set': %s", collapse(d))
+  }
+
   # check length of x
-  if (length(x) != length(par$pars) {
-    stopf("Length of 'x' is %i, but must be equal to number
-      of params in 'ps': %i", length(x), length(par$pars))
+  if (length(x) != length(par.set$pars))
+    stopf("Length of 'x' is %i, but must be equal to number of params in 'ps': %i", length(x), length(par.set$pars))
+
   invisible(NULL)
 }
