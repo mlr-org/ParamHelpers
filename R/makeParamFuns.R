@@ -187,13 +187,13 @@ makeCharacterParam = function(id, default, requires = NULL) {
 
 #' @rdname Param
 #' @export
-makeCharacterVectorParam = function(id, len, default, requires = NULL) {
+makeCharacterVectorParam = function(id, len, cnames = NULL, default, requires = NULL) {
   assertString(id)
   len = asInt(len)
   if (!is.null(requires))
     assert(checkClass(requires, "call"), checkClass(requires, "expression"))
   makeParam(id = id, type = "charactervector", len = len, lower = NULL, upper = NULL,
-    values = NULL, cnames = NULL, default = default, trafo = NULL,
+    values = NULL, cnames = cnames, default = default, trafo = NULL,
     requires = requires, tunable = FALSE)
 }
 

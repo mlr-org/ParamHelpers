@@ -48,7 +48,6 @@ getParamTypes = function(par.set, df.cols = FALSE, df.discretes.as.factor = TRUE
         "discrete", "factor",
         "discretevector", "factor",
         "logicalvector", "logical",
-        "character", "character",
         "charactervector", "character"
       )
     } else {
@@ -58,7 +57,6 @@ getParamTypes = function(par.set, df.cols = FALSE, df.discretes.as.factor = TRUE
         "discrete", "character",
         "discretevector", "character",
         "logicalvector", "logical",
-        "character", "character",
         "charactervector", "character"
       )
     }

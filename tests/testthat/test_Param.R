@@ -230,6 +230,20 @@ test_that("character param", {
   expect_true(!isFeasible(p, factor("bam")))
 })
 
+test_that("character vec param", {
+  p = makeCharacterVectorParam(id = "x", len = 2)
+  expect_equal("charactervector", p$type)
+  expect_true(isFeasible(p, c("a", "b")))
+  expect_false(isFeasible(p, c(1, 1)))
+  expect_false(isFeasible(p, "a"))
+  expect_false(isFeasible(p, 1))
+
+  p = makeCharacterVectorParam(id = "x", len = 2, cnames = c("x1", "x2"))
+  expect_equal("charactervector", p$type)
+  expect_true(isFeasible(p, c(x1 = "a", x2 = "b")))
+  expect_false(isFeasible(p, c("a", "b")))
+})
+
 test_that("function param", {
   p = makeFunctionParam(id = "x")
   expect_equal("function", p$type)

@@ -31,4 +31,3 @@ test_that("getParamTypes", {
       s1 = "character", s2 = "character")
   )
 })
-
