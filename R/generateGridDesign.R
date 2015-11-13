@@ -51,18 +51,18 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE) {
   m = sum(lens)
   pids1 = getParamIds(par.set)
   pids2 = getParamIds(par.set, repeated = TRUE, with.nr = TRUE)
+  par.set.num = filterParams(par.set = par.set, type = getNumericTypes())
+  pids.num = getParamIds(par.set.num)
 
-  if (length(resolution) == 1L) {
-    resolution = setNames(rep(resolution, n), pids1)
+  if (hasNumeric(par.set, include.int = TRUE)) {
+    if (isScalarNumeric(resolution)) {
+      resolution = setNames(rep(resolution, length(pids.num)), pids.num)
+    }
+    resolution = asInteger(resolution, lower = 1L, len = length(pids.num))
+    assertNamed(resolution, type = "named")
+    if (!all(names(resolution) %in% pids.num))
+      stop("'resolution' must be named with parameter ids!")
   }
-  #FIXME: cm removes namesm bug
-  ns = names(resolution)
-  resolution = asInteger(resolution, lower = 1L, len = n)
-  names(resolution) = ns
-  assertNamed(resolution, type = "named")
-  if (!all(names(resolution) == pids1))
-    stop("'resolution' must be named with parameter ids!")
-  resolution = resolution[pids1]
 
   assertFlag(trafo)
 
@@ -73,7 +73,6 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE) {
   for (i in 1:n) {
     p = pars[[i]]
     type = p$type
-    reso = resolution[[i]]
     if (isNumeric(p)) {
       lower = p$lower
       upper = p$upper
@@ -89,7 +88,7 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE) {
       } else if (isLogical(p)) {
         newvals = c(TRUE, FALSE)
       } else if (isNumeric(p, include.int = TRUE)) {
-        newvals = seq(from = lower[[j]], to = upper[[j]], length.out = reso)
+        newvals = seq(from = lower[[j]], to = upper[[j]], length.out = resolution[[p$id]])
         # round for integer
         if (isInteger(p)) {
           newvals = as.integer(unique(round(newvals)))

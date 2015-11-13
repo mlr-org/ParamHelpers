@@ -43,7 +43,7 @@ test_that("generateGridDesign", {
     makeNumericParam("x", lower = 0, upper = 1),
     makeNumericParam("y", lower = 3, upper = 4, trafo = function(x) 2*x)
   )
-  d = generateGridDesign(ps, resolution = c(x = 2, y = 4), trafo = TRUE)
+  d = generateGridDesign(ps, resolution = c(y = 4, x = 2), trafo = TRUE)
   e = expand.grid(
     x = seq(0, 1, length.out = 2),
     y = 2*(seq(3, 4, length.out = 4)),
@@ -106,6 +106,18 @@ test_that("nested requires", {
   vals = dfRowsToList(des, ps7)
   oks = sapply(vals, isFeasible, par = ps7)
   expect_true(all(oks))
+})
+
+test_that("discrete works without resolution", {
+  ps8 = makeParamSet(
+    makeDiscreteParam("disc", values = c("a", "b", "c")),
+    makeDiscreteParam("discA", values = c("m", "w"), requires = quote(disc == "a")),
+    makeLogicalParam("logA")
+    )
+  des = generateGridDesign(par.set = ps8)
+  expect_true(nrow(des) == 8)
+  expect_true(all(is.na(des[des$disc == "c", "discA"])))
+  expect_true(all(is.na(des[des$disc == "b", "discA"])))
 })
 
 
