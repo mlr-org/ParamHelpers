@@ -1,5 +1,8 @@
 #' @title Return defaults of parameters in parameter set.
 #'
+#' @description
+#' Return defaults of parameters in parameter set.
+#'
 #' @template arg_parset
 #' @param include.null [\code{logical(1)}]\cr
 #'   Include \code{NULL} entries for parameters without default values in the result list?

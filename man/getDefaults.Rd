@@ -20,4 +20,7 @@ Default is \code{FALSE}.}
 [named \code{list}]. Named and in same order as \code{par.set}.
   Parameters without defaults are not present in the list.
 }
+\description{
+Return defaults of parameters in parameter set.
+}
 
