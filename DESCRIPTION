@@ -18,7 +18,8 @@ License: BSD_3_clause + file LICENSE
 Roxygen: list(wrap = FALSE)
 Imports:
     BBmisc (>= 1.9),
-    checkmate (>= 1.6.1)
+    checkmate (>= 1.6.1),
+    methods
 Suggests:
     akima,
     eaf,
