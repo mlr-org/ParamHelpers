@@ -1,3 +1,5 @@
+ParamHelpers_1.7:
+
 ParamHelpers_1.6:
 - added new character parameter types, see new functions below
 - added property 'tunable' to make*Param

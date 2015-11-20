@@ -35,5 +35,5 @@ Suggests:
     testthat
 LazyData: yes
 ByteCompile: yes
-Version: 1.6
+Version: 1.7
 RoxygenNote: 5.0.1
