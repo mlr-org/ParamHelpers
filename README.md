@@ -1,9 +1,9 @@
 # ParamHelpers
 
 [![Build Status](https://travis-ci.org/berndbischl/ParamHelpers.png)](https://travis-ci.org/berndbischl/ParamHelpers)
-[![Build status](https://ci.appveyor.com/api/projects/status/ut6eomd8jnajkfun?svg=true)](https://ci.appveyor.com/project/mllg/paramhelpers-18o86)
 [![CRAN Status Badge](http://www.r-pkg.org/badges/version/ParamHelpers)](http://cran.r-project.org/web/packages/ParamHelpers)
 [![Coverage Status](https://coveralls.io/repos/berndbischl/ParamHelpers/badge.svg)](https://coveralls.io/r/berndbischl/ParamHelpers)
+[![CRAN Downloads](http://cranlogs.r-pkg.org/badges/mlr)](http://cran.rstudio.com/web/packages/mlr/index.html)
 
 Helpers for parameters in black-box optimization, tuning and machine learning.
 
