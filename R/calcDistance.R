@@ -1,7 +1,9 @@
 #' name calcDistance
 #'
 #' @param par.set [list of \code{\link{ParamSet}} parameters]\cr
-#'        Set of parameter configurations.
+#'        Set of parameter configurations, can be a list of configurations
+#'        generated from a \code{\link{ParamSet}}, a \code{matrix} or a \code{data.frame}
+#'        containing the configurations.
 #' @param method [\code{character}]\cr
 #'        The metric to be used. Currently, one among \code{gower} and \code{randomForest}.
 #'        {gower} is the Gower distance, {randomForest} is based on the proximity value computed by a
@@ -11,7 +13,7 @@
 #' @param model\cr
 #'        A statistical model.\cr
 #'
-#' @return the distance matrix for [par.set].
+#' @return the distance matrix for \code{par.set}.
 #'
 #' @export
 calcDistance <- function(par.set,
@@ -19,6 +21,7 @@ calcDistance <- function(par.set,
                          data = NULL,
                          model = NULL) {
 
+  assert(testList(par.set), testDataFrame(par.set), testMatrix(par.set))
   assertChoice(method, c("gower","randomForest"))
 
   if (class(par.set) == "list") {

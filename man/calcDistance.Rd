@@ -8,7 +8,9 @@ calcDistance(par.set, method = "gower", data = NULL, model = NULL)
 }
 \arguments{
 \item{par.set}{[list of \code{\link{ParamSet}} parameters]\cr
-Set of parameter configurations.}
+Set of parameter configurations, can be a list of configurations
+generated from a \code{\link{ParamSet}}, a \code{matrix} or a \code{data.frame}
+containing the configurations.}
 
 \item{method}{[\code{character}]\cr
 The metric to be used. Currently, one among \code{gower} and \code{randomForest}.
@@ -20,7 +22,7 @@ random forest.\cr}
 \item{model\cr}{A statistical model.\cr}
 }
 \value{
-the distance matrix for [par.set].
+the distance matrix for \code{par.set}.
 }
 \description{
 name calcDistance
