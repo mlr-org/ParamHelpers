@@ -56,4 +56,17 @@ test_that("ints in data frame work", {
   expect_equal(xs[[1]], list(x = 1L, y = 1L))
 })
 
+test_that("enforce.col.types works", {
+  df = data.frame(u = c(NA, NA), x = 1:2, y = as.numeric(1:2), z = c("TRUE", "FALSE"))
+  ps = makeParamSet(
+    makeNumericParam("u"),
+    makeIntegerParam("x"),
+    makeIntegerParam("y"),
+    makeLogicalParam("z")
+  )
+  x = dfRowToList(df, ps, 1L, enforce.col.types = TRUE)
+  expect_equal(x, list(u = NA, x = 1L, y = 1L, z = TRUE))
+})
+
+
 
