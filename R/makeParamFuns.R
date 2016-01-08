@@ -165,13 +165,13 @@ makeFunctionParam = function(id, default = default, requires = NULL) {
 # missing value wrt. dependent params
 #' @rdname Param
 #' @export
-makeUntypedParam = function(id, default, requires = NULL) {
+makeUntypedParam = function(id, default, requires = NULL, tunable = TRUE) {
   assertString(id)
   if (!is.null(requires))
     assert(checkClass(requires, "call"), checkClass(requires, "expression"))
   makeParam(id = id, type = "untyped", len = 1L, lower = NULL, upper = NULL,
     values = NULL, cnames = NULL, default = default, trafo = NULL,
-    requires = requires, tunable = FALSE)
+    requires = requires, tunable = TRUE)
 }
 
 #' @rdname Param

@@ -51,7 +51,7 @@ test_that("mix filtering of type and tunable", {
   expect_equal(getParamIds(filterParams(ps, type = "numeric")), c("u", "v"))
   expect_equal(getParamIds(filterParams(ps, type = NULL)), c("u", "v", "w", "x", "y", "z"))
   expect_equal(getParamIds(filterParams(ps, type = c("numeric", "integer"), tunable = TRUE)), c("u", "x"))
-  expect_equal(getParamIds(filterParams(ps, type = NULL, tunable = FALSE)), c("v", "z"))
+  expect_equal(getParamIds(filterParams(ps, type = NULL, tunable = FALSE)), c("v"))
   expect_error(getParamIds(filterParams(ps, type = NULL, tunable = c(FALSE, FALSE))))
   expect_error(getParamIds(filterParams(ps, type = NULL, tunable = NULL)))
 })

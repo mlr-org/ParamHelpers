@@ -42,7 +42,7 @@ makeDiscreteVectorParam(id, len, values, default, requires = NULL,
 
 makeFunctionParam(id, default = default, requires = NULL)
 
-makeUntypedParam(id, default, requires = NULL)
+makeUntypedParam(id, default, requires = NULL, tunable = TRUE)
 
 makeCharacterParam(id, default, requires = NULL)
 

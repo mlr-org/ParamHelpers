@@ -39,7 +39,8 @@ makeLogicalLearnerParam(id, default, when = "train", requires = NULL,
 makeLogicalVectorLearnerParam(id, len = as.integer(NA), default,
   when = "train", requires = NULL, tunable = TRUE)
 
-makeUntypedLearnerParam(id, default, when = "train", requires = NULL)
+makeUntypedLearnerParam(id, default, when = "train", requires = NULL,
+  tunable = TRUE)
 
 makeFunctionLearnerParam(id, default, when = "train", requires = NULL)
 }
