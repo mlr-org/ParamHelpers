@@ -4,7 +4,8 @@
 \alias{filterParams}
 \title{Get parameter subset of only certain parameters.}
 \usage{
-filterParams(par.set, ids = NULL, type = NULL, tunable = c(TRUE, FALSE))
+filterParams(par.set, ids = NULL, type = NULL, tunable = c(TRUE, FALSE),
+  check.requires = FALSE)
 }
 \arguments{
 \item{par.set}{[\code{\link{ParamSet}}]\cr
@@ -26,6 +27,10 @@ Setting \code{type = NULL}, which is the default, allows the consideration of al
 Vector of allowed values for the property \code{tunable}. Accepted arguments are
 \code{TRUE}, \code{FALSE} or \code{c(TRUE, FALSE)}.
 The default is \code{c(TRUE, FALSE)}, i.e. none of the parameters will be filtered out.}
+
+\item{check.requires}{[\code{logical(1)}]
+Wether it should be checked that requirements in the ParamSet are not destroyed.
+Default is}
 }
 \value{
 [\code{\link{ParamSet}}].

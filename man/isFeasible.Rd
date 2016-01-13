@@ -4,7 +4,7 @@
 \alias{isFeasible}
 \title{Check if parameter value is valid.}
 \usage{
-isFeasible(par, x)
+isFeasible(par, x, use.defaults = FALSE, filter = FALSE)
 }
 \arguments{
 \item{par}{[\code{\link{Param}} | \code{\link{ParamSet}}]\cr
@@ -12,15 +12,17 @@ Parameter or parameter set.}
 
 \item{x}{[any] \cr
 Single value to check.
-For a parameter set this must be a list.
-If the list is named, it is possible to only pass a subset of parameters defined
-in the \code{\link{ParamSet}} \code{par}. In that case, only conditions regarding the passed
-parameters are checked.
-(Note that this might not work if one of the passed params has a \code{requires} setting
-which refers to an unpassed param.)}
+For a parameter set this must be a list.}
+
+\item{use.defaults}{[\code{logical(1)}]\cr
+Whether defaults of the Param / ParamSet should be used if no values are supplied.
+Default is \code{FALSE}.}
+
+\item{filter}{[\code{logical(1)}]\cr
+Whether the param.set should be reduced to the space of the given Param Values.}
 }
 \value{
-logical(1)
+[\code{logical(1)}]
 }
 \description{
 Check if a parameter value satisfies the constraints of the

@@ -18,6 +18,9 @@
 #'   Vector of allowed values for the property \code{tunable}. Accepted arguments are
 #'   \code{TRUE}, \code{FALSE} or \code{c(TRUE, FALSE)}.
 #'   The default is \code{c(TRUE, FALSE)}, i.e. none of the parameters will be filtered out.
+#' @param check.requires [\code{logical(1)}]
+#'   Wether it should be checked that requirements in the ParamSet are not destroyed.
+#'   Default is 
 #' @return [\code{\link{ParamSet}}].
 #' @examples
 #' ps = makeParamSet(
@@ -38,7 +41,7 @@
 #' # filter for all numeric parameters among "u", "v" and "x"
 #' filterParams(ps, type = "numeric", ids = c("u", "v", "x"))
 #' @export
-filterParams = function(par.set, ids = NULL, type = NULL, tunable = c(TRUE, FALSE)) {
+filterParams = function(par.set, ids = NULL, type = NULL, tunable = c(TRUE, FALSE), check.requires = FALSE) {
   # FIXME: how do we handle this, this also affects "requires" the same way?
   # if we drop same params the expressions can become invalid?
   # if (!is.null(par.set$forbidden))
@@ -55,5 +58,10 @@ filterParams = function(par.set, ids = NULL, type = NULL, tunable = c(TRUE, FALS
   }
   assertLogical(tunable, min.len = 1L, max.len = 2L, unique = TRUE)
   par.set$pars = Filter(function(p) p$tunable %in% tunable, par.set$pars)
+  if (check.requires) {
+    for (par in par.set$pars) {
+      
+    }
+  }
   return(par.set)
 }

@@ -19,7 +19,12 @@
 #'   parameters are checked.
 #'   (Note that this might not work if one of the passed params has a \code{requires} setting
 #'   which refers to an unpassed param.)
-#' @return logical(1)
+#' @param use.defaults [\code{logical(1)}]\cr
+#'   Whether defaults of the Param / ParamSet should be used if no values are supplied.
+#'   Default is \code{FALSE}.
+#' @param filter [\code{logical(1)}]\cr
+#'   Whether the param.set should be reduced to the space of the given Param Values.
+#' @return [\code{logical(1)}]
 #' @examples
 #' p = makeNumericParam("x", lower = -1, upper = 1)
 #' isFeasible(p, 0) # True
@@ -33,32 +38,40 @@
 #' isFeasible(ps, list(0, "a")) # True
 #' isFeasible(ps, list("a", 0)) # False, wrong order
 #' @export
-isFeasible = function(par, x) {
+isFeasible = function(par, x, use.defaults = FALSE, filter = FALSE) {
   UseMethod("isFeasible")
 }
 
 #' @export
-isFeasible.Param = function(par, x) {
+isFeasible.Param = function(par, x, use.defaults = FALSE, filter = FALSE) {
   # we dont have to consider requires here, it is not a param set
   constraintsOkParam(par, x)
 }
 
 #' @export
-isFeasible.LearnerParam = function(par, x) {
+isFeasible.LearnerParam = function(par, x, use.defaults = FALSE, filter = FALSE) {
   # we dont have to consider requires here, it is not a param set
   constraintsOkLearnerParam(par, x)
 }
 
 #' @export
-isFeasible.ParamSet = function(par, x) {
+isFeasible.ParamSet = function(par, x, use.defaults = FALSE, filter = FALSE) {
   named = testNamed(x)
-  if (!is.list(x) || !(!named || all(names(x) %in% names(par$pars)) || !(named || length(x) == length(par$pars))))
-    return(FALSE)
+  assertList(x)
+  if (named && use.defaults) {
+    insert(getDefaults(par), x)
+  }
+  if (!named && filter) {
+    stopf("filter = TRUE only works with named input")
+  }
+  if (named && any(names(x) %nin% names(par$pars)))
+    stopf("Following names of given values do not match with ParamSet: %s", collapse(setdiff(names(par$pars), names(x))))
   if (isForbidden(par, x))
     return(FALSE)
-  if (named) {
+  if (filter) {
     par = filterParams(par, ids = names(x))
-    x = x[names(par$pars)]
+  } else if (length(x) != length(par$pars)) {
+    stopf("param setting of length %i does not match ParamSet length %i", length(x), length(par$pars))
   }
   #FIXME: very slow
   for (i in seq_along(par$pars)) {
@@ -70,7 +83,7 @@ isFeasible.ParamSet = function(par, x) {
         return(FALSE)
     } else {
       # requires, is it ok?
-      if (!requiresOk(par, x, i)) {
+      if (!requiresOk(p, x)) {
         # if not, val must be NA
         if (!isScalarNA(v))
           return(FALSE)
@@ -139,10 +152,10 @@ constraintsOkLearnerParam = function(par, x) {
 
 # is the requires part of the ith param valid for value x (x[[i]] is value or ith param)
 # assumes that param actually has a requires part
-requiresOk = function(par.set, x, i) {
-  if (is.null(par.set$pars[[i]]$requires)) {
+requiresOk = function(par, x, i) {
+  if (is.null(par$requires)) {
     TRUE
   } else {
-    isTRUE(eval(par.set$pars[[i]]$requires, envir = x))
+    isTRUE(eval(par$requires, envir = x))
   }
 }
