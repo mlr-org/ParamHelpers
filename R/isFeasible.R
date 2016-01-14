@@ -153,7 +153,7 @@ constraintsOkLearnerParam = function(par, x) {
 
 # is the requires part of the ith param valid for value x (x[[i]] is value or ith param)
 # assumes that param actually has a requires part
-requiresOk = function(par, x, i) {
+requiresOk = function(par, x) {
   if (is.null(par$requires)) {
     TRUE
   } else {

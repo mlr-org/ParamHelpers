@@ -61,12 +61,14 @@ filterParams = function(par.set, ids = NULL, type = NULL, tunable = c(TRUE, FALS
   if (check.requires) {
     o = character()
     for (par in par.set$pars) {
-      a = try(requiresOk(par, x = b), silent = TRUE)
-      m = regexpr("(?<=').*(?=')", a[[1]], perl = TRUE)
-      o = union(o, regmatches(x = a, m = m)[[1]])
-    }
-    if (length(o)) {
-      stopf("Params %s filtered but needed for requirements", collapse(o))
+      a = try(requiresOk(par, x = sampleValue(par.set)), silent = TRUE)
+      if (inherits(a, "try-error")) {
+        m = regexpr("(?<=').*(?=')", a[[1]], perl = TRUE)
+        o = union(o, regmatches(x = a, m = m)[[1]])  
+        if (length(o)) {
+          stopf("Params %s filtered but needed for requirements", collapse(o))
+        }
+      } 
     }
   }
   return(par.set)
