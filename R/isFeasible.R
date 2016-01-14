@@ -64,12 +64,13 @@ isFeasible.ParamSet = function(par, x, use.defaults = FALSE, filter = FALSE) {
   if (!named && filter) {
     stopf("filter = TRUE only works with named input")
   }
-  if (named && any(names(x) %nin% names(par$pars)))
-    stopf("Following names of given values do not match with ParamSet: %s", collapse(setdiff(names(par$pars), names(x))))
+  if (named && any(names(x) %nin% getParamIds(par)))
+    stopf("Following names of given values do not match with ParamSet: %s", collapse(setdiff(getParamIds(par), names(x))))
   if (isForbidden(par, x))
     return(FALSE)
   if (filter) {
     par = filterParams(par, ids = names(x))
+    x = x[getParamIds(par)]
   } else if (length(x) != length(par$pars)) {
     stopf("param setting of length %i does not match ParamSet length %i", length(x), length(par$pars))
   }

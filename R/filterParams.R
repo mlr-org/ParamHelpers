@@ -59,8 +59,14 @@ filterParams = function(par.set, ids = NULL, type = NULL, tunable = c(TRUE, FALS
   assertLogical(tunable, min.len = 1L, max.len = 2L, unique = TRUE)
   par.set$pars = Filter(function(p) p$tunable %in% tunable, par.set$pars)
   if (check.requires) {
+    o = character()
     for (par in par.set$pars) {
-      
+      a = try(requiresOk(par, x = b), silent = TRUE)
+      m = regexpr("(?<=').*(?=')", a[[1]], perl = TRUE)
+      o = union(o, regmatches(x = a, m = m)[[1]])
+    }
+    if (length(o)) {
+      stopf("Params %s filtered but needed for requirements", collapse(o))
     }
   }
   return(par.set)
