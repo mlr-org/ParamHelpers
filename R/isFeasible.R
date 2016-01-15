@@ -58,8 +58,19 @@ isFeasible.LearnerParam = function(par, x, use.defaults = FALSE, filter = FALSE)
 isFeasible.ParamSet = function(par, x, use.defaults = FALSE, filter = FALSE) {
   named = testNamed(x)
   assertList(x)
+  # insert defaults if they comply with the requirements
   if (named && use.defaults) {
-    insert(getDefaults(par), x)
+    default.pars = getDefaults(par)
+    changed = TRUE
+    while (changed) {
+      changed = FALSE
+      for (pn in names(default.pars)) {
+        if (pn %nin% names(x) && requiresOk(par$pars[[pn]], x)) {
+          x[[pn]] = default.pars[[pn]]
+          changed = TRUE
+        }
+      }  
+    }
   }
   if (!named && filter) {
     stopf("filter = TRUE only works with named input")
@@ -79,20 +90,14 @@ isFeasible.ParamSet = function(par, x, use.defaults = FALSE, filter = FALSE) {
     p = par$pars[[i]]
     v = x[[i]]
     # no requires, just check constraints
-    if(is.null(p$requires)) {
-      if (!isFeasible(p, v))
+    if (!requiresOk(p, x)) {
+      # if not, val must be NA
+      if (!isScalarNA(v))
         return(FALSE)
     } else {
-      # requires, is it ok?
-      if (!requiresOk(p, x)) {
-        # if not, val must be NA
-        if (!isScalarNA(v))
-          return(FALSE)
-      } else {
-        # requires, ok, check constraints
-        if (!isFeasible(p, v))
-          return(FALSE)
-      }
+      # requires, ok, check constraints
+      if (!isFeasible(p, v))
+        return(FALSE)
     }
   }
   return(TRUE)
