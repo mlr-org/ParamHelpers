@@ -89,7 +89,7 @@ isFeasible.ParamSet = function(par, x, use.defaults = FALSE, filter = FALSE, war
     par = filterParams(par, ids = names(x))
     x = x[getParamIds(par)]
   } else if (length(x) != length(par$pars)) {
-    stopf("param setting of length %i does not match ParamSet length %i", length(x), length(par$pars))
+    stopf("Param setting of length %i does not match ParamSet length %i", length(x), length(par$pars))
   }
   #FIXME: very slow
   for (i in seq_along(par$pars)) {
@@ -99,7 +99,7 @@ isFeasible.ParamSet = function(par, x, use.defaults = FALSE, filter = FALSE, war
     if (!requiresOk(p, x)) {
       # if not, val must be NA
       if (!isScalarNA(v)) {
-        if (warn) warningf("The parameter setting %s=%s does not meet requirements %s", p$id, convertToShortString(v), deparse(p$requires))
+        if (warn) warningf("Param setting %s=%s does not meet requirements %s", p$id, convertToShortString(v), sQuote(collapse(deparse(p$requires), sep = "")))
         return(FALSE)
       }
     } else {
