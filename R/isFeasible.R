@@ -24,6 +24,9 @@
 #'   Default is \code{FALSE}.
 #' @param filter [\code{logical(1)}]\cr
 #'   Whether the param.set should be reduced to the space of the given Param Values.
+#' @param warn [\code{logical(1)}]\cr
+#'   Wheter a message should be shown why feasibilty is not reached. 
+#'   Default is \code{FALSE}.
 #' @return [\code{logical(1)}]
 #' @examples
 #' p = makeNumericParam("x", lower = -1, upper = 1)
@@ -38,38 +41,39 @@
 #' isFeasible(ps, list(0, "a")) # True
 #' isFeasible(ps, list("a", 0)) # False, wrong order
 #' @export
-isFeasible = function(par, x, use.defaults = FALSE, filter = FALSE) {
+isFeasible = function(par, x, use.defaults = FALSE, filter = FALSE, warn = FALSE) {
   UseMethod("isFeasible")
 }
 
 #' @export
-isFeasible.Param = function(par, x, use.defaults = FALSE, filter = FALSE) {
+isFeasible.Param = function(par, x, use.defaults = FALSE, filter = FALSE, warn = FALSE) {
   # we dont have to consider requires here, it is not a param set
   constraintsOkParam(par, x)
 }
 
 #' @export
-isFeasible.LearnerParam = function(par, x, use.defaults = FALSE, filter = FALSE) {
+isFeasible.LearnerParam = function(par, x, use.defaults = FALSE, filter = FALSE, warn = FALSE) {
   # we dont have to consider requires here, it is not a param set
   constraintsOkLearnerParam(par, x)
 }
 
 #' @export
-isFeasible.ParamSet = function(par, x, use.defaults = FALSE, filter = FALSE) {
+isFeasible.ParamSet = function(par, x, use.defaults = FALSE, filter = FALSE, warn = FALSE) {
   named = testNamed(x)
   assertList(x)
   # insert defaults if they comply with the requirements
   if (named && use.defaults) {
     default.pars = getDefaults(par)
-    changed = TRUE
-    while (changed) {
-      changed = FALSE
-      for (pn in names(default.pars)) {
-        if (pn %nin% names(x) && requiresOk(par$pars[[pn]], x)) {
-          x[[pn]] = default.pars[[pn]]
-          changed = TRUE
+    repeat {
+      # we repeat to include parameters which depend on each other by requirements
+      new.pars = setdiff(names(default.pars), names(x))
+      for (pn in new.pars) {
+        if (isTRUE(try(requiresOk(par$pars[[pn]], x), silent = TRUE))) {
+          x[pn] = default.pars[pn]
         }
-      }  
+      }
+      # bkreak if no changes were made
+      if (identical(new.pars, setdiff(names(default.pars), names(x)))) break
     }
   }
   if (!named && filter) {
@@ -77,8 +81,10 @@ isFeasible.ParamSet = function(par, x, use.defaults = FALSE, filter = FALSE) {
   }
   if (named && any(names(x) %nin% getParamIds(par)))
     stopf("Following names of given values do not match with ParamSet: %s", collapse(setdiff(getParamIds(par), names(x))))
-  if (isForbidden(par, x))
+  if (isForbidden(par, x)) {
+    if (warn) warningf("The given parameter setting has forbidden values.")
     return(FALSE)
+  }
   if (filter) {
     par = filterParams(par, ids = names(x))
     x = x[getParamIds(par)]
@@ -92,12 +98,16 @@ isFeasible.ParamSet = function(par, x, use.defaults = FALSE, filter = FALSE) {
     # no requires, just check constraints
     if (!requiresOk(p, x)) {
       # if not, val must be NA
-      if (!isScalarNA(v))
+      if (!isScalarNA(v)) {
+        if (warn) warningf("The parameter setting %s=%s does not meet requirements %s", p$id, convertToShortString(v), deparse(p$requires))
         return(FALSE)
+      }
     } else {
       # requires, ok, check constraints
-      if (!isFeasible(p, v))
+      if (!isFeasible(p, v)) {
+        if (warn) warningf("The parameter setting %s=%s does not meet constraints", p$id, convertToShortString(v))
         return(FALSE)
+      }
     }
   }
   return(TRUE)

@@ -4,7 +4,7 @@
 \alias{isFeasible}
 \title{Check if parameter value is valid.}
 \usage{
-isFeasible(par, x, use.defaults = FALSE, filter = FALSE)
+isFeasible(par, x, use.defaults = FALSE, filter = FALSE, warn = FALSE)
 }
 \arguments{
 \item{par}{[\code{\link{Param}} | \code{\link{ParamSet}}]\cr
@@ -20,6 +20,10 @@ Default is \code{FALSE}.}
 
 \item{filter}{[\code{logical(1)}]\cr
 Whether the param.set should be reduced to the space of the given Param Values.}
+
+\item{warn}{[\code{logical(1)}]\cr
+Wheter a message should be shown why feasibilty is not reached. 
+Default is \code{FALSE}.}
 }
 \value{
 [\code{logical(1)}]
