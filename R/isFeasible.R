@@ -63,18 +63,7 @@ isFeasible.ParamSet = function(par, x, use.defaults = FALSE, filter = FALSE, war
   assertList(x)
   # insert defaults if they comply with the requirements
   if (named && use.defaults) {
-    default.pars = getDefaults(par)
-    repeat {
-      # we repeat to include parameters which depend on each other by requirements
-      new.pars = setdiff(names(default.pars), names(x))
-      for (pn in new.pars) {
-        if (isTRUE(try(requiresOk(par$pars[[pn]], x), silent = TRUE))) {
-          x[pn] = default.pars[pn]
-        }
-      }
-      # bkreak if no changes were made
-      if (identical(new.pars, setdiff(names(default.pars), names(x)))) break
-    }
+    x = insertCompliant(old.par.vals = getDefaults(par), new.par.vals = x, par.set = par)
   }
   if (!named && filter) {
     stopf("filter = TRUE only works with named input")
