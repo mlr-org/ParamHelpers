@@ -54,6 +54,7 @@ test_that("simple num/int/discrete/log design", {
   expect_true(des[,2] >= 10 && des[,2] <= 20)
   expect_true(is.factor(des[,3]))
   expect_true(all(des[,3] %in% names(ps3$pars[[3]]$values)))
+  expect_equal(levels(des[,3]), names(ps3$pars[[3]]$values))
   expect_true(is.logical(des[,4]))
   tab = as.numeric(table(des[,3]))
   expect_true(all(tab > 140 & tab < 180))
@@ -88,6 +89,8 @@ test_that("num/int/disc vec design", {
   expect_true(des[,5] >= 10 && des[,5] <= 20)
   expect_true(all(des[,6] %in% c("a", "b")))
   expect_true(all(des[,7] %in% c("a", "b")))
+  expect_equal(levels(des[,6]), c("a", "b"))
+  expect_equal(levels(des[,7]), c("a", "b"))
 })
 
 test_that("num/int vec design with trafo", {
@@ -194,10 +197,10 @@ test_that("requires chains work", {
 
 test_that("we dont drop levels in factors", {
   ps = makeParamSet(
-    makeDiscreteParam("x", values = letters[1:5])
+    makeDiscreteParam("x", values = letters[5:1])
   )
   des = generateDesign(1, ps)
-  expect_true(is.factor(des$x) && levels(des$x) == letters[1:5])
+  expect_true(is.factor(des$x) && levels(des$x) == letters[5:1])
 })
 
 test_that("list of further arguments passed to lhs function produces no error", {

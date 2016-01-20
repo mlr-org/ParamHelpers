@@ -25,6 +25,8 @@ test_that("num/int/disc vec design", {
   expect_true(des[,4] >= 10 && des[,4] <= 20)
   expect_true(all(des[,5] %in% c("a", "b")))
   expect_true(all(des[,6] %in% c("a", "b")))
+  expect_equal(levels(des[,5]), c("a", "b"))
+  expect_equal(levels(des[,6]), c("a", "b"))
 })
 
 test_that("requires works", {
@@ -47,3 +49,10 @@ test_that("requires works", {
   expect_true(all(oks))
 })
 
+test_that("we dont drop levels in factors", {
+  ps = makeParamSet(
+    makeDiscreteParam("x", values = letters[5:1])
+  )
+  des = generateRandomDesign(1, ps)
+  expect_true(is.factor(des$x) && levels(des$x) == letters[5:1])
+})

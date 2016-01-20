@@ -20,6 +20,7 @@
 #' If you want to convert these, look at \code{\link[BBmisc]{convertDataFrameCols}}.
 #' Dependent parameters whose constraints are unsatisfied generate \code{NA} entries in their
 #' respective columns.
+#' For discrete vectors the levels and their order will be preserved, even if not all levels are present.
 #'
 #' Currently only lhs designs are supported.
 #'
@@ -104,17 +105,12 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
   pars = par.set$pars
   lens = getParamLengths(par.set)
   k = sum(lens)
-  pids1 = getParamIds(par.set, repeated = TRUE, with.nr = TRUE)
-  pids2 = getParamIds(par.set, repeated = TRUE, with.nr = FALSE)
-  lower2 = setNames(rep(NA_real_, k), pids1)
+  pids = getParamIds(par.set, repeated = TRUE, with.nr = TRUE)
+  lower2 = setNames(rep(NA_real_, k), pids)
   lower2 = insert(lower2, lower)
-  upper2 = setNames(rep(NA_real_, k), pids1)
+  upper2 = setNames(rep(NA_real_, k), pids)
   upper2 = insert(upper2, upper)
-  values1 = getValues(par.set)
-  values2 = vector("list", k)
-  nlevs = setNames(rep(NA_integer_, k), pids1)
-  for (i in seq_len(k))
-    values2[[i]] = names(values1[[pids2[i]]])
+  values = getParamSetValues(par.set)
   types.df = getParamTypes(par.set, df.cols = TRUE)
   types.int = convertTypesToCInts(types.df)
   types.df[types.df == "factor"] = "character"
@@ -140,8 +136,8 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
       lhs::randomLHS(nmissing, k = k)
     # preallocate result for C
     newres = makeDataFrame(nmissing, k, col.types = types.df)
-    newres = .Call(c_generateDesign, newdes, newres, types.int, lower2, upper2, values2)
-    colnames(newres) = pids1
+    newres = .Call(c_generateDesign, newdes, newres, types.int, lower2, upper2, values)
+    colnames(newres) = pids
     # check each row if forbidden, then remove
     if (hasForbidden(par.set)) {
       #FIXME: this is pretty slow, but correct
@@ -168,14 +164,8 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
   if (nrow(res) < n)
     warningf("generateDesign could only produce %i points instead of %i!", nrow(res), n)
 
-  colnames(res) = pids1
-
-  # convert to factor and set levels so we have all of them
-  for (i in seq_col(res)) {
-    if (types.int[i] == 3L) {
-      res[, i] = factor(res[, i], levels = values2[[i]])
-    }
-  }
+  colnames(res) = pids
+  res = fixDesignFactors(res, par.set)
   attr(res, "trafo") = trafo
   return(res)
 }

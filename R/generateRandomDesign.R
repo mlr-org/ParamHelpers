@@ -11,6 +11,7 @@
 #' If you want to convert these, look at \code{\link[BBmisc]{convertDataFrameCols}}.
 #' Dependent parameters whose constraints are unsatisfied generate \code{NA} entries in their
 #' respective columns.
+#' For discrete vectors the levels and their order will be preserved, even if not all levels are present.
 #'
 #' The algorithm simply calls \code{\link{sampleValues}} and arranges the result in a data.frame.
 #'
@@ -26,8 +27,6 @@
 #' @export
 generateRandomDesign = function(n = 10L, par.set, trafo = FALSE) {
   z = doBasicGenDesignChecks(par.set)
-  pids = getParamIds(par.set, repeated = TRUE, with.nr = TRUE)
-
   des = sampleValues(par.set, n, discrete.names = TRUE, trafo = trafo)
 
   # FIXME: all next lines are sloooow in R I guess. C?
@@ -43,7 +42,10 @@ generateRandomDesign = function(n = 10L, par.set, trafo = FALSE) {
   des = lapply(des, elementsToDf)
   des = lapply(des, do.call, what = cbind)
   des = do.call(rbind, des)
-  return(setColNames(des, pids))
+  colnames(des) = getParamIds(par.set, repeated = TRUE, with.nr = TRUE)
+  des  = fixDesignFactors(des, par.set)
+  attr(des, "trafo") = trafo
+  return(des)
 }
 
 
