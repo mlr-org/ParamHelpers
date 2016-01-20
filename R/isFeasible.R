@@ -14,6 +14,11 @@
 #' @param x [any] \cr
 #'   Single value to check.
 #'   For a parameter set this must be a list.
+#'   If the list is named, it is possible to only pass a subset of parameters defined
+#'   in the \code{\link{ParamSet}} \code{par}. In that case, only conditions regarding the passed
+#'   parameters are checked.
+#'   (Note that this might not work if one of the passed params has a \code{requires} setting
+#'   which refers to an unpassed param.)
 #' @return logical(1)
 #' @examples
 #' p = makeNumericParam("x", lower = -1, upper = 1)
