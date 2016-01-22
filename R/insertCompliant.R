@@ -10,6 +10,11 @@
 #' @template arg_parset
 #' @export
 insertCompliant = function(old.par.vals, new.par.vals, par.set) {
+  assertList(old.par.vals)
+  assertList(new.par.vals)
+  assertNamed(old.par.vals)
+  assertNamed(new.par.vals)
+  assertClass(par.set, "ParamSet")
   repeat {
     # we repeat to include parameters which depend on each other by requirements
     new.pars = setdiff(names(old.par.vals), names(new.par.vals))
