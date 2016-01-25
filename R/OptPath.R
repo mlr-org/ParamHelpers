@@ -60,7 +60,7 @@
 NULL
 
 makeOptPath = function(par.set, y.names, minimize, add.transformed.x = FALSE,
-  include.error.message = FALSE, include.exec.time = FALSE, include.extra = FALSE) {
+  include.error.message = FALSE, include.exec.time = FALSE, include.extra = FALSE, nrow = 500L) {
 
   n.y = length(y.names)
   ok = c("numeric", "integer", "numericvector", "integervector", "logical",
@@ -84,9 +84,9 @@ makeOptPath = function(par.set, y.names, minimize, add.transformed.x = FALSE,
   ee$dob = ee$eol = integer(0)
 
   # potentially init error.message and exec.time in env
-  ee$error.message = if (include.error.message) character(0L) else NULL
-  ee$exec.time = if (include.exec.time) numeric(0L) else NULL
-  ee$extra = if (include.extra) list() else NULL
+  ee$error.message = if (include.error.message) character(nrow) else NULL
+  ee$exec.time = if (include.exec.time) numeric(nrow) else NULL
+  ee$extra = if (include.extra) vector("list", nrow) else NULL
 
   makeS3Obj("OptPath",
     par.set = par.set,

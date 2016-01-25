@@ -1,12 +1,15 @@
 # return logical index for selection via dob and / or eol
 getOptPathDobAndEolIndex = function(op, dob = op$env$dob, eol = op$env$eol) {
-  op$env$dob %in% dob & op$env$eol %in% eol
+  res = rep(FALSE, nrow(op$env$path))
+  phead = seq_len(op$env$path.len)
+  res[phead] = op$env$dob[phead] %in% dob & op$env$eol[phead] %in% eol
+  return(res)
 }
 
 
 #' @export
 getOptPathLength.OptPathDF = function(op) {
-  nrow(op$env$path)
+  op$env$path.len
 }
 
 #' @export
@@ -16,7 +19,7 @@ getOptPathEl.OptPathDF = function(op, index) {
   if (!(index >= 1 && index <= n))
     stop("Index must be between 1 and ", n, "!")
   e = op$env
-  path = e$path
+  path = e$path[seq_len(op$env$path.len), , drop = FALSE]
   y = unlist(path[index, op$y.names, drop = FALSE])
   # remove y names from path, only consider x
   path = path[, setdiff(colnames(path), op$y.names), drop = FALSE]

@@ -1,4 +1,3 @@
-#' @export
 addOptPathEl.OptPathDF = function(op, x, y, dob = getOptPathLength(op)+1L, eol = NA_integer_,
   error.message = NA_character_, exec.time = NA_real_, extra = NULL,
   check.feasible = !op$add.transformed.x) {
@@ -10,6 +9,7 @@ addOptPathEl.OptPathDF = function(op, x, y, dob = getOptPathLength(op)+1L, eol =
   eol = asInt(eol, na.ok = TRUE)
   assertString(error.message, na.ok = TRUE)
   assertNumber(exec.time, lower = 0, na.ok = TRUE)
+
   if (!is.null(extra)) {
     if (is.null(env$extra))
       stopf("Trying to add extra info to opt path, without enabling that option!")
@@ -49,12 +49,24 @@ addOptPathEl.OptPathDF = function(op, x, y, dob = getOptPathLength(op)+1L, eol =
     }, ps$pars, x)
   }
 
-  # add x and y
+  # print(str(x))
   x = recode(op$par.set, x)
-  el = do.call(cbind, lapply(x, function(v) as.data.frame(t(v), stringsAsFactors = FALSE)))
-  el = cbind(el, as.data.frame(as.list(y), stringsAsFactors = FALSE))
-  colnames(el) = colnames(env$path)
-  env$path = rbind(env$path, el)
+  # print(str(x))
+
+  if (nrow(env$path) == env$path.len) {
+    env$path = rbind(env$path, env$path)
+    if (!is.null(error.message))
+      env$error.message = c(env$error.message, env$error.message)
+    if (!is.null(exec.time))
+      env$exec.time = c(env$exec.time, env$exec.time)
+    if (!is.null(env$extra))
+      env$extra = c(env$extra, env$extra)
+  }
+
+  .Call("c_addOptPathDF", env$path, env$path.len, x, y,
+    env$dob, dob, env$eol, eol, PACKAGE = "ParamHelpers")
+
+  env$path.len = env$path.len + 1L
 
   # add dob and eol
   k = length(env$dob) + 1
@@ -69,6 +81,8 @@ addOptPathEl.OptPathDF = function(op, x, y, dob = getOptPathLength(op)+1L, eol =
 
   return(invisible(NULL))
 }
+
+
 
 
 

@@ -182,14 +182,14 @@ test_that("requires works", {
   el = list(x = "b", y = NA, z = 1:2)
   addOptPathEl(op, x = el, y = 0)
   # check that correct NAs are present
-  expect_equal(op$env$path[, 2:4], data.frame(y = NA_real_, z1 = 1L, z2 = 2L))
+  expect_equal(as.data.frame(op)[,2:4], data.frame(y = NA_real_, z1 = 1L, z2 = 2L))
 
   op = makeOptPathDF(par.set = ps, y.names = "foo", minimize = TRUE)
   el = list(x = "a", y = 1, z = NA)
   addOptPathEl(op, x = el, y = 0)
   expect_equal(getOptPathEl(op, 1)$x, el)
   # check that correct NAs are present
-  expect_equal(op$env$path[, 2:4], data.frame(y = 1, z1 = NA_integer_, z2 = NA_integer_))
+  expect_equal(as.data.frame(op)[, 2:4], data.frame(y = 1, z1 = NA_integer_, z2 = NA_integer_))
   el = list(x = "b", y = NA, z = c(2, 3))
   addOptPathEl(op, x = el, y = 0)
   expect_equal(getOptPathEl(op, 2)$x, el)
