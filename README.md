@@ -1,6 +1,6 @@
 # ParamHelpers
 
-[![Build Status](https://travis-ci.org/berndbischl/ParamHelpers.png)](https://travis-ci.org/berndbischl/ParamHelpers)
+[![Build Status](https://travis-ci.org/berndbischl/ParamHelpers.svg?branch=master)](https://travis-ci.org/berndbischl/ParamHelpers)
 [![CRAN Status Badge](http://www.r-pkg.org/badges/version/ParamHelpers)](http://cran.r-project.org/web/packages/ParamHelpers)
 [![Coverage Status](https://coveralls.io/repos/berndbischl/ParamHelpers/badge.svg)](https://coveralls.io/r/berndbischl/ParamHelpers)
 [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/mlr)](http://cran.rstudio.com/web/packages/mlr/index.html)
