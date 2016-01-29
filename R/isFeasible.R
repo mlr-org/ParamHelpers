@@ -63,7 +63,7 @@ isFeasible.ParamSet = function(par, x, use.defaults = FALSE, filter = FALSE, war
   assertList(x)
   # insert defaults if they comply with the requirements
   if (named && use.defaults) {
-    x = insertCompliant(old.par.vals = getDefaults(par), new.par.vals = x, par.set = par)
+    x = insertCompliantValues(old.par.vals = getDefaults(par), new.par.vals = x, par.set = par)
   }
   if (!named && filter) {
     stopf("filter = TRUE only works with named input")
@@ -72,6 +72,7 @@ isFeasible.ParamSet = function(par, x, use.defaults = FALSE, filter = FALSE, war
     stopf("Following names of given values do not match with ParamSet: %s", collapse(setdiff(getParamIds(par), names(x))))
   if (isForbidden(par, x)) {
     if (warn) warningf("The given parameter setting has forbidden values.")
+    #FIXME put warning as attribut
     return(FALSE)
   }
   if (filter) {
@@ -89,12 +90,14 @@ isFeasible.ParamSet = function(par, x, use.defaults = FALSE, filter = FALSE, war
       # if not, val must be NA
       if (!isScalarNA(v)) {
         if (warn) warningf("Param setting %s=%s does not meet requirements %s", p$id, convertToShortString(v), sQuote(collapse(deparse(p$requires), sep = "")))
+          #FIXME put warning as attribut
         return(FALSE)
       }
     } else {
       # requires, ok, check constraints
       if (!isFeasible(p, v)) {
         if (warn) warningf("The parameter setting %s=%s does not meet constraints", p$id, convertToShortString(v))
+          #FIXME put warning as attribut
         return(FALSE)
       }
     }

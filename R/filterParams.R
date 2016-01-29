@@ -61,6 +61,7 @@ filterParams = function(par.set, ids = NULL, type = NULL, tunable = c(TRUE, FALS
   if (check.requires) {
     o = character()
     for (par in par.set$pars) {
+      #FIXME Do something with all.vars()
       a = try(requiresOk(par, x = sampleValue(par.set)), silent = TRUE)
       if (inherits(a, "try-error")) {
         m = regexpr("(?<=').*(?=')", a[[1]], perl = TRUE)
