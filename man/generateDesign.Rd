@@ -56,6 +56,7 @@ The following types of columns are created:
 If you want to convert these, look at \code{\link[BBmisc]{convertDataFrameCols}}.
 Dependent parameters whose constraints are unsatisfied generate \code{NA} entries in their
 respective columns.
+For discrete vectors the levels and their order will be preserved, even if not all levels are present.
 
 Currently only lhs designs are supported.
 

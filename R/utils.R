@@ -45,3 +45,23 @@ getParamNA = function(par, repeated = FALSE) {
     v = rep(v, par$len)
   return(v)
 }
+
+# Create a list with the values from getValues, but respect vector parameters and
+# create a single list item for each vector component named paramId.number
+getParamSetValues = function(par.set) {
+  pids1 = getParamIds(par.set, repeated = TRUE, with.nr = TRUE)
+  pids2 = getParamIds(par.set, repeated = TRUE, with.nr = FALSE)
+  values1 = getValues(par.set)
+  values2 = lapply(pids2, function(x) {names(values1[[x]])})
+  setNames(values2, pids1)
+}
+
+# Makes sure we keep all levels of a discrete vector and also keep them in order.
+fixDesignFactors = function(des, par.set) {
+  types.df = getParamTypes(par.set, df.cols = TRUE)
+  values = getParamSetValues(par.set)
+  for (i in which(types.df == "factor")) {
+    des[, i] = factor(des[, i], levels = values[[colnames(des)[i]]])
+  }
+  des
+}

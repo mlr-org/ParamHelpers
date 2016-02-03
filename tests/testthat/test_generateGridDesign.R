@@ -110,7 +110,7 @@ test_that("nested requires", {
 
 test_that("discrete works without resolution", {
   ps8 = makeParamSet(
-    makeDiscreteParam("disc", values = c("a", "b", "c")),
+    makeDiscreteParam("disc", values = c("c", "b", "a")),
     makeDiscreteParam("discA", values = c("m", "w"), requires = quote(disc == "a")),
     makeLogicalParam("logA")
     )
@@ -118,7 +118,6 @@ test_that("discrete works without resolution", {
   expect_true(nrow(des) == 8)
   expect_true(all(is.na(des[des$disc == "c", "discA"])))
   expect_true(all(is.na(des[des$disc == "b", "discA"])))
+  expect_equal(levels(des[,2]), c("m", "w"))
+  expect_equal(levels(des[,1]), c("c", "b", "a"))
 })
-
-
-
