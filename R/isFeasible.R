@@ -1,12 +1,9 @@
 #' @title Check if parameter value is valid.
 #'
 #' @description
-#' Check if a parameter value satisfies the constraints of the
-#' parameter description. This includes the \code{requires} expressions and
-#' the \code{forbidden} expression, if \code{par} is a \code{\link{ParamSet}}.
-#' If \code{requires} is not satisfied,
-#' the parameter value must be set to scalar \code{NA} to be still feasible, a single scalar even in a
-#' case of a vector parameter.
+#' Check if a parameter value satisfies the constraints of the parameter description. 
+#' This includes the \code{requires} expressions and the \code{forbidden} expression, if \code{par} is a \code{\link{ParamSet}}.
+#' If \code{requires} is not satisfied, the parameter value must be set to scalar \code{NA} to be still feasible, a single scalar even in a case of a vector parameter.
 #'
 #' If the parameter has \code{cnames}, these are also checked.
 #'
@@ -24,10 +21,10 @@
 #'   Default is \code{FALSE}.
 #' @param filter [\code{logical(1)}]\cr
 #'   Whether the param.set should be reduced to the space of the given Param Values.
-#' @param warn [\code{logical(1)}]\cr
-#'   Wheter a message should be shown why feasibilty is not reached. 
+#'   Note that in case of \code{use.defaults = TRUE} the filtering will be conducted after the insertion of the default values.
 #'   Default is \code{FALSE}.
-#' @return [\code{logical(1)}]
+#' @return [\code{logical(1)}]\cr
+#'   If the result is \code{FALSE} the attribute \code{"warning"} is attached which gives the reason for the negative result.
 #' @examples
 #' p = makeNumericParam("x", lower = -1, upper = 1)
 #' isFeasible(p, 0) # True
@@ -41,26 +38,27 @@
 #' isFeasible(ps, list(0, "a")) # True
 #' isFeasible(ps, list("a", 0)) # False, wrong order
 #' @export
-isFeasible = function(par, x, use.defaults = FALSE, filter = FALSE, warn = FALSE) {
+isFeasible = function(par, x, use.defaults = FALSE, filter = FALSE) {
   UseMethod("isFeasible")
 }
 
 #' @export
-isFeasible.Param = function(par, x, use.defaults = FALSE, filter = FALSE, warn = FALSE) {
+isFeasible.Param = function(par, x, use.defaults = FALSE, filter = FALSE) {
   # we dont have to consider requires here, it is not a param set
   constraintsOkParam(par, x)
 }
 
 #' @export
-isFeasible.LearnerParam = function(par, x, use.defaults = FALSE, filter = FALSE, warn = FALSE) {
+isFeasible.LearnerParam = function(par, x, use.defaults = FALSE, filter = FALSE) {
   # we dont have to consider requires here, it is not a param set
   constraintsOkLearnerParam(par, x)
 }
 
 #' @export
-isFeasible.ParamSet = function(par, x, use.defaults = FALSE, filter = FALSE, warn = FALSE) {
+isFeasible.ParamSet = function(par, x, use.defaults = FALSE, filter = FALSE) {
   named = testNamed(x)
   assertList(x)
+  res = FALSE
   # insert defaults if they comply with the requirements
   if (named && use.defaults) {
     x = insertCompliantValues(old.par.vals = getDefaults(par), new.par.vals = x, par.set = par)
@@ -69,17 +67,22 @@ isFeasible.ParamSet = function(par, x, use.defaults = FALSE, filter = FALSE, war
     stopf("filter = TRUE only works with named input")
   }
   if (named && any(names(x) %nin% getParamIds(par)))
-    stopf("Following names of given values do not match with ParamSet: %s", collapse(setdiff(getParamIds(par), names(x))))
+    stopf("Following names of given values do not match with ParamSet: %s", collapse(setdiff(names(x), getParamIds(par))))
   if (isForbidden(par, x)) {
-    if (warn) warningf("The given parameter setting has forbidden values.")
-    #FIXME put warning as attribut
-    return(FALSE)
+    attr(res, "warning") = "The given parameter setting has forbidden values."
+    return(res)
   }
   if (filter) {
     par = filterParams(par, ids = names(x))
     x = x[getParamIds(par)]
   } else if (length(x) != length(par$pars)) {
     stopf("Param setting of length %i does not match ParamSet length %i", length(x), length(par$pars))
+  }
+  if (!named) {
+    names(x) = getParamIds(par)
+  }
+  if (length((missing.reqs = getMissingRequiredParams(par, names(x)))) > 0) {
+    stopf("Following parameters are missing but needed for requirements: %s", collapse(missing.reqs))
   }
   #FIXME: very slow
   for (i in seq_along(par$pars)) {
@@ -89,16 +92,14 @@ isFeasible.ParamSet = function(par, x, use.defaults = FALSE, filter = FALSE, war
     if (!requiresOk(p, x)) {
       # if not, val must be NA
       if (!isScalarNA(v)) {
-        if (warn) warningf("Param setting %s=%s does not meet requirements %s", p$id, convertToShortString(v), sQuote(collapse(deparse(p$requires), sep = "")))
-          #FIXME put warning as attribut
-        return(FALSE)
+        attr(res, "warning") = sprintf("Param %s is set but does not meet requirements %s", convertToShortString(x[i]), sQuote(collapse(deparse(p$requires), sep = "")))
+        return(res)
       }
     } else {
       # requires, ok, check constraints
       if (!isFeasible(p, v)) {
-        if (warn) warningf("The parameter setting %s=%s does not meet constraints", p$id, convertToShortString(v))
-          #FIXME put warning as attribut
-        return(FALSE)
+        attr(res, "warning") = sprintf("The parameter setting %s does not meet constraints", convertToShortString(x[i]))
+        return(res)
       }
     }
   }
@@ -159,7 +160,7 @@ constraintsOkLearnerParam = function(par, x) {
 }
 
 # is the requires part of the ith param valid for value x (x[[i]] is value or ith param)
-# assumes that param actually has a requires part
+# We assumes that param actually has a requires part
 requiresOk = function(par, x) {
   if (is.null(par$requires)) {
     TRUE

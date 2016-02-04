@@ -4,7 +4,7 @@
 \alias{isFeasible}
 \title{Check if parameter value is valid.}
 \usage{
-isFeasible(par, x, use.defaults = FALSE, filter = FALSE, warn = FALSE)
+isFeasible(par, x, use.defaults = FALSE, filter = FALSE)
 }
 \arguments{
 \item{par}{[\code{\link{Param}} | \code{\link{ParamSet}}]\cr
@@ -19,22 +19,18 @@ Whether defaults of the Param / ParamSet should be used if no values are supplie
 Default is \code{FALSE}.}
 
 \item{filter}{[\code{logical(1)}]\cr
-Whether the param.set should be reduced to the space of the given Param Values.}
-
-\item{warn}{[\code{logical(1)}]\cr
-Wheter a message should be shown why feasibilty is not reached. 
+Whether the param.set should be reduced to the space of the given Param Values.
+Note that in case of \code{use.defaults = TRUE} the filtering will be conducted after the insertion of the default values.
 Default is \code{FALSE}.}
 }
 \value{
-[\code{logical(1)}]
+[\code{logical(1)}]\cr
+  If the result is \code{FALSE} the attribute \code{"warning"} is attached which gives the reason for the negative result.
 }
 \description{
-Check if a parameter value satisfies the constraints of the
-parameter description. This includes the \code{requires} expressions and
-the \code{forbidden} expression, if \code{par} is a \code{\link{ParamSet}}.
-If \code{requires} is not satisfied,
-the parameter value must be set to scalar \code{NA} to be still feasible, a single scalar even in a
-case of a vector parameter.
+Check if a parameter value satisfies the constraints of the parameter description. 
+This includes the \code{requires} expressions and the \code{forbidden} expression, if \code{par} is a \code{\link{ParamSet}}.
+If \code{requires} is not satisfied, the parameter value must be set to scalar \code{NA} to be still feasible, a single scalar even in a case of a vector parameter.
 
 If the parameter has \code{cnames}, these are also checked.
 }

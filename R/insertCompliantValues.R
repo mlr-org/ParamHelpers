@@ -22,11 +22,10 @@ insertCompliantValues = function(par.set, old.par.vals, new.par.vals, warn = FAL
     # we repeat to include parameters which depend on each other by requirements
     candidate.par.names = setdiff(names(old.par.vals), names(new.par.vals))
     for (pn in candidate.par.names) {
-      #FIXME: Precondition var.names(require) check to not have try()
-      if (isTRUE(try(requiresOk(par.set$pars[[pn]], new.par.vals), silent = TRUE))) {
+      if (!length(getMissingRequiredParams(par.set$pars[[pn]], names(new.par.vals))) && requiresOk(par.set$pars[[pn]], new.par.vals)) {
         new.par.vals[pn] = old.par.vals[pn]
-      } else {
-        warning("ParamSetting %s = %s was dropped.", pn, convertToShortString(old.par.vals[pn]))
+      } else if (warn){
+        warningf("ParamSetting %s was dropped.", convertToShortString(old.par.vals[pn]))
       }
     }
     # break if no changes were made
