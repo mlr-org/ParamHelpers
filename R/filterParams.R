@@ -18,7 +18,7 @@
 #'   Vector of allowed values for the property \code{tunable}. Accepted arguments are
 #'   \code{TRUE}, \code{FALSE} or \code{c(TRUE, FALSE)}.
 #'   The default is \code{c(TRUE, FALSE)}, i.e. none of the parameters will be filtered out.
-#' @param check.requires [\code{logical(1)}]
+#' @param check.requires [\code{logical(1)}]\cr
 #'   Wether it should be checked that requirements in the ParamSet are not destroyed. If \code{TRUE} an error is thrown.
 #'   Default is \code{FALSE}.
 #' @return [\code{\link{ParamSet}}].

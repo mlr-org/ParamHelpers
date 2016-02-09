@@ -21,7 +21,7 @@ Whether a warning should be shown, if a param setting from \code{old.par.vals} i
 Default is \code{FALSE}.}
 }
 \value{
-[\code{list}]
+[\code{list}].
 }
 \description{
 Update the values of a given parameter setting with a new parameter setting.

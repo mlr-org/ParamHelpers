@@ -24,13 +24,13 @@ Note that in case of \code{use.defaults = TRUE} the filtering will be conducted 
 Default is \code{FALSE}.}
 }
 \value{
-[\code{logical(1)}]\cr
-  If the result is \code{FALSE} the attribute \code{"warning"} is attached which gives the reason for the negative result.
+[\code{logical(1)}].
 }
 \description{
 Check if a parameter value satisfies the constraints of the parameter description. 
 This includes the \code{requires} expressions and the \code{forbidden} expression, if \code{par} is a \code{\link{ParamSet}}.
 If \code{requires} is not satisfied, the parameter value must be set to scalar \code{NA} to be still feasible, a single scalar even in a case of a vector parameter.
+If the result is \code{FALSE} the attribute \code{"warning"} is attached which gives the reason for the negative result.
 
 If the parameter has \code{cnames}, these are also checked.
 }

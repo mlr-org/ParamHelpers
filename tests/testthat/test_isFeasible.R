@@ -18,7 +18,7 @@ test_that("isFeasible ParamSet", {
   expect_match(attr(res, "warning"), "c=1 does not meet constraints")
   expect_error(isFeasible(ps, list(c = 2), filter = TRUE), "needed for requirements: a")
   expect_false((res = isFeasible(ps, list(a = 2, c = 2), filter = TRUE)))
-  expect_match(attr(res, "warning"), "Param c=2 is set but does not meet requirements ‘a == 1’")
+  expect_match(attr(res, "warning"), "Param c=2 is set but does not meet requirements")
   expect_true((res = isFeasible(ps, list(a = 2, c = NA), filter = TRUE)))
   expect_true(isFeasible(ps, list(c = 2), filter = TRUE, use.defaults = TRUE))
 })

@@ -2,6 +2,7 @@
 #' @description 
 #'   Update the values of a given parameter setting with a new parameter setting.
 #'   Settings that do not meet the requirements anymore will be deleted from the first given parameter setting.
+#'
 #' @template arg_parset
 #' @param old.par.vals [\code{list}]\cr
 #'   Param Values to be updated.
@@ -10,7 +11,7 @@
 #' @param warn [\code{logical}]\cr
 #'   Whether a warning should be shown, if a param setting from \code{old.par.vals} is dropped.
 #'   Default is \code{FALSE}.
-#' @return [\code{list}]
+#' @return [\code{list}].
 #' @export
 insertCompliantValues = function(par.set, old.par.vals, new.par.vals, warn = FALSE) {
   assertList(old.par.vals)

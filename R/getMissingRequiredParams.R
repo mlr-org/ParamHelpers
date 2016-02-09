@@ -15,5 +15,5 @@ getMissingRequiredParams.Param = function(par, par.val.names) {
 }
 
 getMissingRequiredParams.ParamSet = function(par, par.val.names) {
-  unlist(lapply(par$pars, getMissingRequiredParams, par.val.names = par.val.names))
+  unlist(lapply(par$pars, getMissingRequiredParams.Param, par.val.names = par.val.names))
 }
