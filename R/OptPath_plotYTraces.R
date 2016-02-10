@@ -5,7 +5,7 @@
 #' You can add your own ggplot layers to the resulting plot object.
 #'
 #' @param opt.paths [\code{list}]\cr
-#'   List of \code{OptPath} objects
+#'   \code{OptPath} or named List of \code{OptPath} objects
 #' @param over.time [\code{character}]\cr
 #'   Should the traces be plotted versus the iteration number or the cumulated
 #'   execution time? For the later, the opt.path has to contain a extra coloum
@@ -14,8 +14,10 @@
 #'   ggplot2 plot object
 
 renderYTraces = function(opt.paths, over.time = "dob") {
-  
+  if (inherits(opt.paths, "OptPath"))
+    opt.paths = list(opt.path = opt.paths)
   assertList(opt.paths, types = "OptPath", min.len = 1L)
+  assertNamed(opt.paths)
   assertChoice(over.time, choices = c("dob", "exec.time"))
   run.name = names(opt.paths)
   y.name = NULL
