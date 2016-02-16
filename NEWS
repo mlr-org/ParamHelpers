@@ -1,3 +1,6 @@
+ParamHelpers_1.8:
+- removed soobench from SUGGESTS and removed function extractParamSetFromSooFunction
+
 ParamHelpers_1.7:
 - dfRowsToList, dfRowToList: added arg enforce.col.types
 - UntypedParam also got the "tunable" flag

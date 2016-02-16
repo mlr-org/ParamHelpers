@@ -11,7 +11,7 @@ Authors@R: c(person("Bernd", "Bischl", email = "bernd_bischl@gmx.net", role =
     "michellang@gmail.com", role = "aut"), person("Jakob", "Bossek",
     email = "j.bossek@gmail.com", role = "aut"), person("Daniel",
     "Horn", email = "daniel.horn@tu-dortmund.de", role = "aut"), person("Karin",
-    "Schork", email = "karin.schork@tu-dortmund.de", role = "aut"), 
+    "Schork", email = "karin.schork@tu-dortmund.de", role = "aut"),
     person("Jakob", "Richter", email = "code@jakob-r.de", role = "aut"))
 URL: https://github.com/berndbischl/ParamHelpers
 BugReports: https://github.com/berndbischl/ParamHelpers/issues
@@ -36,5 +36,5 @@ Suggests:
     testthat
 LazyData: yes
 ByteCompile: yes
-Version: 1.7
+Version: 1.8
 RoxygenNote: 5.0.1
