@@ -17,7 +17,7 @@ For discrete parameters their values must be used, not their names.}
 
 \item{show.missing.values}{[\code{logical(1)}]\cr
 Display \dQuote{NA} for parameters, which have no setting, because their requirements are not
-satified (dependent parameters), instead of displaying nothing?
+satisfied (dependent parameters), instead of displaying nothing?
 Default is \code{FALSE}.}
 
 \item{num.format}{[\code{character(1)}]\cr

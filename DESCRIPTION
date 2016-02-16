@@ -32,7 +32,6 @@ Suggests:
     lhs,
     plyr,
     reshape2,
-    soobench,
     testthat
 LazyData: yes
 ByteCompile: yes

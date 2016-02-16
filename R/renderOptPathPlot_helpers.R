@@ -176,7 +176,6 @@ getAndSubsetPlotData = function(op, iters, subset.obs, subset.vars, subset.targe
   x.names = colnames(getOptPathX(op))
   y.names = op$y.names
   dim.x = length(x.names)
-  dim.y = length(y.names)
   iters.max = max(getOptPathDOB(op))
   
   op.x = as.data.frame(op, include.x = TRUE, include.y = FALSE,
