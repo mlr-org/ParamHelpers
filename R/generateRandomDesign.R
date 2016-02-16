@@ -26,7 +26,7 @@
 #' @template ret_gendes_df
 #' @export
 generateRandomDesign = function(n = 10L, par.set, trafo = FALSE) {
-  z = doBasicGenDesignChecks(par.set)
+  doBasicGenDesignChecks(par.set)
   des = sampleValues(par.set, n, discrete.names = TRUE, trafo = trafo)
 
   # FIXME: all next lines are sloooow in R I guess. C?

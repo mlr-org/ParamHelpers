@@ -1,4 +1,4 @@
-#' @title Plots Y traces of multiple optimization paths
+C#' @title Plots Y traces of multiple optimization paths
 #' 
 #' @description Can be used for only single-objective optimization paths.
 #' Useful to compare runs of different algorithms on the same optimization problem.
@@ -8,7 +8,7 @@
 #'   List of \code{OptPath} objects
 #' @param over.time [\code{character}]\cr
 #'   Should the traces be plotted versus the iteration number or the cumulated
-#'   execution time? For the later, the opt.path has to contain a extra coloum
+#'   execution time? For the later, the opt.path has to contain a extra column
 #'   names exec.time. Possible values are dob and exec.time, default is \code{dob}.
 #' @return 
 #'   ggplot2 plot object
@@ -76,7 +76,7 @@ renderYTraces = function(opt.paths, over.time = "dob") {
 #'   List of \code{OptPath} objects
 #' @param over.time [\code{character}]\cr
 #'   Should the traces be plotted versus the iteration number or the cumulated
-#'   execution time? For the later, the opt.path has to contain a extra coloum
+#'   execution time? For the later, the opt.path has to contain a extra column
 #'   names exec.time. Possible values are dob and exec.time, default is \code{dob}.
 #'
 #' @return [\code{NULL}]

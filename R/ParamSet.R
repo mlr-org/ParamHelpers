@@ -1,7 +1,7 @@
 #' @title Construct a parameter set.
 #'
 #' @description
-#' \code{makeParamSet}: Contruct from a bunch of parameters.
+#' \code{makeParamSet}: Construct from a bunch of parameters.
 #'
 #' Multiple sets can be concatenated with \code{c}.
 #'

@@ -39,7 +39,7 @@ setOptPathElEOL = function(op, index, eol) {
 #'
 #' @description
 #' Changes the argument in-place.
-#' Note that when adding parameters that have associated tranformations, it is probably
+#' Note that when adding parameters that have associated transformations, it is probably
 #' best to add the untransformed values to the path. Otherwise you have to switch off the
 #' feasibility check, as constraints might now not hold anymore.
 #'
