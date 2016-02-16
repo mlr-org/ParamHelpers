@@ -51,7 +51,7 @@ Default is \code{TRUE}.}
 [\code{\link{ParamSet}}].
 }
 \description{
-\code{makeParamSet}: Contruct from a bunch of parameters.
+\code{makeParamSet}: Construct from a bunch of parameters.
 
 Multiple sets can be concatenated with \code{c}.
 

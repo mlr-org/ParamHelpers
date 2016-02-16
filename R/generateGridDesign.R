@@ -43,15 +43,13 @@
 #' )
 #' generateGridDesign(ps, resolution = c(x1 = 4, x2 = 5), trafo = TRUE)
 generateGridDesign = function(par.set, resolution, trafo = FALSE) {
-  z = doBasicGenDesignChecks(par.set)
+  doBasicGenDesignChecks(par.set)
 
-  ids = getParamIds(par.set)
   pars = par.set$pars
   n = length(pars)
   lens = getParamLengths(par.set)
   m = sum(lens)
-  pids1 = getParamIds(par.set)
-  pids2 = getParamIds(par.set, repeated = TRUE, with.nr = TRUE)
+  pids = getParamIds(par.set, repeated = TRUE, with.nr = TRUE)
   par.set.num = filterParams(par.set = par.set, type = getNumericTypes())
   pids.num = getParamIds(par.set.num)
 
@@ -67,13 +65,12 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE) {
 
   assertFlag(trafo)
 
-  vals.list = setNames(vector("list", m), pids2)
+  vals.list = setNames(vector("list", m), pids)
   el.counter = 1L
 
   # iterate over all params and discretize them
   for (i in 1:n) {
     p = pars[[i]]
-    type = p$type
     if (isNumeric(p)) {
       lower = p$lower
       upper = p$upper
@@ -108,7 +105,7 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE) {
   # log(vec): logical
   # dis(vec): character
 
-  colnames(res) = pids2
+  colnames(res) = pids
 
   # check each row if forbidden, then remove
   if (hasForbidden(par.set)) {

@@ -12,7 +12,7 @@ List of \code{OptPath} objects}
 
 \item{over.time}{[\code{character}]\cr
 Should the traces be plotted versus the iteration number or the cumulated
-execution time? For the later, the opt.path has to contain a extra coloum
+execution time? For the later, the opt.path has to contain a extra column
 names exec.time. Possible values are dob and exec.time, default is \code{dob}.}
 }
 \value{

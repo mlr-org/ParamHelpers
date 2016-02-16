@@ -41,7 +41,7 @@
 #' Note that augmenting currently is somewhat experimental as we simply generate missing points
 #' via new calls to \code{\link[lhs]{randomLHS}}, but do not add points so they are maximally
 #' far away from the already present ones. The reason is that the latter is quite hard to achieve
-#' with complicated dependences and forbidden regions, if one wants to ensure that points actually
+#' with complicated dependencies and forbidden regions, if one wants to ensure that points actually
 #' get added... But we are working on it.
 #'
 #' \code{generateDesign} will NOT work if there are dependencies over multiple levels of
