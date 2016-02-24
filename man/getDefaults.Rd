@@ -4,7 +4,7 @@
 \alias{getDefaults}
 \title{Return defaults of parameters in parameter set.}
 \usage{
-getDefaults(par.set, include.null = FALSE)
+getDefaults(par.set, include.null = FALSE, envir = NULL)
 }
 \arguments{
 \item{par.set}{[\code{\link{ParamSet}}]\cr
@@ -15,6 +15,10 @@ Include \code{NULL} entries for parameters without default values in the result 
 Note that this can be slightly dangerous as \code{NULL} might be used as default value
 for other parameters.
 Default is \code{FALSE}.}
+
+\item{envir}{[\code{list} | \code{NULL}]\cr
+Environment, which will be used as "dictionary" for replacing the arguments
+of the expression. The default is \code{NULL}.}
 }
 \value{
 [named \code{list}]. Named and in same order as \code{par.set}.

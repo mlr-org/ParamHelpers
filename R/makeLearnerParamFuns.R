@@ -1,7 +1,11 @@
 #' @rdname LearnerParam
+#' @param envir [\code{list}]\cr
+#'   Environment, which will be used as "dictionary" to look whether the
+#'   arguments of an expression (e.g. within the bounds, defaults, etc.) are
+#'   feasible. The default is \code{NULL}.
 #' @export
 makeNumericLearnerParam = function(id, lower = -Inf, upper = Inf, allow.inf = FALSE, default,
-  when = "train", requires = NULL, tunable = TRUE) {
+  when = "train", requires = NULL, tunable = TRUE, envir = NULL) {
 
   p = makeNumericParam(id, lower, upper, allow.inf = allow.inf, default = default, requires = requires, tunable = tunable)
   learnerParamFromParam(p, when)
@@ -10,7 +14,8 @@ makeNumericLearnerParam = function(id, lower = -Inf, upper = Inf, allow.inf = FA
 #' @rdname LearnerParam
 #' @export
 makeNumericVectorLearnerParam = function(id, len = as.integer(NA), lower = -Inf,
-  upper = Inf, allow.inf = FALSE, default, when = "train", requires = NULL, tunable = TRUE) {
+  upper = Inf, allow.inf = FALSE, default, when = "train", requires = NULL,
+  tunable = TRUE, envir = NULL) {
 
   len = asInt(len, na.ok = TRUE)
   if (is.na(len))
@@ -28,7 +33,7 @@ makeNumericVectorLearnerParam = function(id, len = as.integer(NA), lower = -Inf,
 #' @rdname LearnerParam
 #' @export
 makeIntegerLearnerParam = function(id, lower = -Inf, upper = Inf,
-  default, when = "train", requires = NULL, tunable = TRUE) {
+  default, when = "train", requires = NULL, tunable = TRUE, envir = NULL) {
 
   p = makeIntegerParam(id, lower, upper, default = default, requires = requires, tunable = tunable)
   learnerParamFromParam(p, when)
@@ -37,7 +42,7 @@ makeIntegerLearnerParam = function(id, lower = -Inf, upper = Inf,
 #' @rdname LearnerParam
 #' @export
 makeIntegerVectorLearnerParam = function(id, len = as.integer(NA), lower = -Inf,
-  upper = Inf, default, when = "train", requires = NULL, tunable = TRUE) {
+  upper = Inf, default, when = "train", requires = NULL, tunable = TRUE, envir = NULL) {
 
   len = asInt(len, na.ok = TRUE)
   if (is.na(len))
@@ -54,7 +59,7 @@ makeIntegerVectorLearnerParam = function(id, len = as.integer(NA), lower = -Inf,
 #' @rdname LearnerParam
 #' @export
 makeDiscreteLearnerParam = function(id, values, default,
-  when = "train", requires = NULL, tunable = TRUE) {
+  when = "train", requires = NULL, tunable = TRUE, envir = NULL) {
 
   p = makeDiscreteParam(id, values, default = default, requires = requires, tunable = tunable)
   learnerParamFromParam(p, when)
@@ -63,7 +68,7 @@ makeDiscreteLearnerParam = function(id, values, default,
 #' @rdname LearnerParam
 #' @export
 makeDiscreteVectorLearnerParam = function(id, len = as.integer(NA), values, default,
-  when = "train", requires = NULL, tunable = TRUE) {
+  when = "train", requires = NULL, tunable = TRUE, envir = NULL) {
 
   len = asInt(len, na.ok = TRUE)
   if (is.na(len))
@@ -79,7 +84,8 @@ makeDiscreteVectorLearnerParam = function(id, len = as.integer(NA), values, defa
 
 #' @rdname LearnerParam
 #' @export
-makeLogicalLearnerParam = function(id, default, when = "train", requires = NULL, tunable = TRUE) {
+makeLogicalLearnerParam = function(id, default, when = "train", requires = NULL,
+  tunable = TRUE, envir = NULL) {
 
   p = makeLogicalParam(id, default = default, requires = requires, tunable = tunable)
   learnerParamFromParam(p, when)
@@ -88,7 +94,7 @@ makeLogicalLearnerParam = function(id, default, when = "train", requires = NULL,
 #' @rdname LearnerParam
 #' @export
 makeLogicalVectorLearnerParam = function(id, len = as.integer(NA), default, when = "train",
-  requires = NULL, tunable = TRUE) {
+  requires = NULL, tunable = TRUE, envir = NULL) {
 
   len = asInt(len, na.ok = TRUE)
   if (is.na(len))

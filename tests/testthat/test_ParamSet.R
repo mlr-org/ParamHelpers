@@ -189,3 +189,16 @@ test_that("print works", {
   expect_output(print(ps, trafo = FALSE, used = FALSE), "numericvector")
 })
 
+test_that("expression works", {
+  ee = list(n = NULL, b = NULL)
+  ps = makeParamSet(
+    makeNumericParam("u", lower = 2, upper = expression(n), envir = ee),
+    makeIntegerParam("v", lower = expression(floor(b / n)), upper = expression(n * 4), envir = ee),
+    makeNumericVectorParam("z", len = 3, default = expression(b * 3), envir = ee)
+  )
+  ee = list(n = 5, b = 13.4)
+  expect_equal(getParamLengths(ps), c(u = 1, v = 1, z = 3))
+  expect_equal(getLower(ps, envir = ee), c(u = 2, v = 2, z = -Inf, z = -Inf, z = -Inf))
+  expect_equal(getUpper(ps, envir = ee), c(u = 5, v = 20, z = Inf, z = Inf, z = Inf))
+  expect_equal(getDefaults(ps, envir = ee), list(z = 13.4 * 3))
+})
