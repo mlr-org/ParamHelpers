@@ -21,18 +21,28 @@
 #'   If parameters have associated trafos, the forbidden region must always be specified on the original
 #'   scale and not the transformed one.
 #'   Default is \code{NULL} which means no forbidden region.
+#' @param dictionary [\code{character}]\cr
+#'   Character vector, which will be used as "dictionary" to look whether the
+#'   arguments of an expression (e.g. within the bounds, defaults, etc.) are
+#'   feasible. The default is \code{NULL}.
 #' @return [\code{\link{ParamSet}}].
 #' @aliases ParamSet
 #' @export
 #' @examples
-#' makeParamSet(
+#' ps = makeParamSet(
 #'   makeNumericParam("u", lower=1),
 #'   makeIntegerParam("v", lower=1, upper=2),
 #'   makeDiscreteParam("w", values=1:2),
 #'   makeLogicalParam("x"),
 #'   makeDiscreteVectorParam("y", len=2, values=c("a", "b"))
 #' )
-makeParamSet = function(..., params = NULL, forbidden = NULL) {
+#'
+#' ps2 = makeParamSet(
+#'   makeNumericParam("u", lower = expression(ceiling(n))),
+#'   makeIntegerParam("v", lower = expression(floor(n)), upper = 2),
+#'   dictionary = c("p", "n")
+#' )
+makeParamSet = function(..., params = NULL, forbidden = NULL, dictionary = NULL) {
   pars = list(...)
   if (length(pars) > 0 && !is.null(params))
     stop("You can only use one of ... or params!")
@@ -46,7 +56,18 @@ makeParamSet = function(..., params = NULL, forbidden = NULL) {
   if (any(duplicated(ns)))
     stop("All parameters must have unique names!")
   names(pars) = ns
-  return(makeS3Obj("ParamSet", pars = pars, forbidden = forbidden))
+  par.set = makeS3Obj("ParamSet", pars = pars, forbidden = forbidden)
+  if (length(pars) == 0)
+    return(par.set)
+  is.learner.param = vapply(pars,
+    function(x) inherits(x = x, what = "LearnerParam"), logical(1L))
+  if (all(is.learner.param)) {
+    par.set = addClasses(par.set, classes = "LearnerParamSet")
+    dictionary = union(dictionary, c("task", "n", "p", "k", "type"))
+  }
+  if (!is.null(dictionary) & (hasExpression(par.set)))
+    checkExpressionFeasibility(par.set, dictionary = dictionary)
+  return(par.set)
 }
 
 getParSetPrintData = function(x, trafo = TRUE, used = TRUE, constr.clip = 40L) {
@@ -135,5 +156,3 @@ makeNumericParamSet = function(id = "x", len, lower = -Inf, upper = Inf, vector 
     ))
   }
 }
-
-

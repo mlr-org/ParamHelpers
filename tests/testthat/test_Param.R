@@ -268,5 +268,16 @@ test_that("param print works", {
   expect_output(print(p), "numeric")
 })
 
+test_that("expressions", {
+  p = makeNumericParam(id = "x", lower = expression(n), upper = 1L)
+  expect_equal("numeric", p$type)
+  expect_true(is.expression(p$lower))
+  expect_equal(1, p$upper)
 
+  p = makeDiscreteParam(id = "y", values = expression(floor(m / 3) : ceiling(m * 5)))
+  expect_equal("discrete", p$type)
+  expect_true(is.expression(p$values))
+  expect_output(p, "floor")
+  expect_output(p, "ceiling")
+})
 
