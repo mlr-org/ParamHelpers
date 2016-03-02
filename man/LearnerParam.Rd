@@ -15,31 +15,29 @@
 \title{Create a description object for a parameter of a machine learning algorithm.}
 \usage{
 makeNumericLearnerParam(id, lower = -Inf, upper = Inf, allow.inf = FALSE,
-  default, when = "train", requires = NULL, tunable = TRUE,
-  envir = NULL)
+  default, when = "train", requires = NULL, tunable = TRUE)
 
 makeNumericVectorLearnerParam(id, len = as.integer(NA), lower = -Inf,
   upper = Inf, allow.inf = FALSE, default, when = "train",
-  requires = NULL, tunable = TRUE, envir = NULL)
+  requires = NULL, tunable = TRUE)
 
 makeIntegerLearnerParam(id, lower = -Inf, upper = Inf, default,
-  when = "train", requires = NULL, tunable = TRUE, envir = NULL)
+  when = "train", requires = NULL, tunable = TRUE)
 
 makeIntegerVectorLearnerParam(id, len = as.integer(NA), lower = -Inf,
-  upper = Inf, default, when = "train", requires = NULL, tunable = TRUE,
-  envir = NULL)
+  upper = Inf, default, when = "train", requires = NULL, tunable = TRUE)
 
 makeDiscreteLearnerParam(id, values, default, when = "train",
-  requires = NULL, tunable = TRUE, envir = NULL)
+  requires = NULL, tunable = TRUE)
 
 makeDiscreteVectorLearnerParam(id, len = as.integer(NA), values, default,
-  when = "train", requires = NULL, tunable = TRUE, envir = NULL)
+  when = "train", requires = NULL, tunable = TRUE)
 
 makeLogicalLearnerParam(id, default, when = "train", requires = NULL,
-  tunable = TRUE, envir = NULL)
+  tunable = TRUE)
 
 makeLogicalVectorLearnerParam(id, len = as.integer(NA), default,
-  when = "train", requires = NULL, tunable = TRUE, envir = NULL)
+  when = "train", requires = NULL, tunable = TRUE)
 
 makeUntypedLearnerParam(id, default, when = "train", requires = NULL,
   tunable = TRUE)
@@ -71,11 +69,6 @@ See \code{\link{Param}}.}
 
 \item{tunable}{[\code{logical(1)}]\cr
 See \code{\link{Param}}.}
-
-\item{envir}{[\code{list}]\cr
-Environment, which will be used as "dictionary" to look whether the
-arguments of an expression (e.g. within the bounds, defaults, etc.) are
-feasible. The default is \code{NULL}.}
 
 \item{len}{[\code{integer(1)}]\cr
 See \code{\link{Param}}.}

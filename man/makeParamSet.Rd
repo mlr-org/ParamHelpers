@@ -6,7 +6,7 @@
 \alias{makeParamSet}
 \title{Construct a parameter set.}
 \usage{
-makeParamSet(..., params = NULL, forbidden = NULL)
+makeParamSet(..., params = NULL, forbidden = NULL, dictionary = NULL)
 
 makeNumericParamSet(id = "x", len, lower = -Inf, upper = Inf,
   vector = TRUE)
@@ -27,6 +27,11 @@ than through simple constraints or \code{requires}-conditions
 If parameters have associated trafos, the forbidden region must always be specified on the original
 scale and not the transformed one.
 Default is \code{NULL} which means no forbidden region.}
+
+\item{dictionary}{[\code{character}]\cr
+Character vector, which will be used as "dictionary" to look whether the
+arguments of an expression (e.g. within the bounds, defaults, etc.) are
+feasible. The default is \code{NULL}.}
 
 \item{id}{[\code{character(1)}]
 Name of parameter.}
@@ -61,12 +66,18 @@ The constructed S3 class is simply a list that contains the element \code{pars}.
 \code{makeNumericParamSet}: Convenience function for numerics.
 }
 \examples{
-makeParamSet(
+ps = makeParamSet(
   makeNumericParam("u", lower=1),
   makeIntegerParam("v", lower=1, upper=2),
   makeDiscreteParam("w", values=1:2),
   makeLogicalParam("x"),
   makeDiscreteVectorParam("y", len=2, values=c("a", "b"))
+)
+
+ps2 = makeParamSet(
+  makeNumericParam("u", lower = expression(ceiling(n))),
+  makeIntegerParam("v", lower = expression(floor(n)), upper = 2),
+  dictionary = c("p", "n")
 )
 }
 

@@ -17,29 +17,28 @@
 \title{Create a description object for a parameter.}
 \usage{
 makeNumericParam(id, lower = -Inf, upper = Inf, allow.inf = FALSE,
-  default, trafo = NULL, requires = NULL, tunable = TRUE, envir = NULL)
+  default, trafo = NULL, requires = NULL, tunable = TRUE)
 
 makeNumericVectorParam(id, len, lower = -Inf, upper = Inf,
   allow.inf = FALSE, cnames = NULL, default, trafo = NULL,
-  requires = NULL, tunable = TRUE, envir = NULL)
+  requires = NULL, tunable = TRUE)
 
 makeIntegerParam(id, lower = -Inf, upper = Inf, default, trafo = NULL,
-  requires = NULL, tunable = TRUE, envir = NULL)
+  requires = NULL, tunable = TRUE)
 
 makeIntegerVectorParam(id, len, lower = -Inf, upper = Inf, cnames = NULL,
-  default, trafo = NULL, requires = NULL, tunable = TRUE, envir = NULL)
+  default, trafo = NULL, requires = NULL, tunable = TRUE)
 
-makeLogicalParam(id, default, requires = NULL, tunable = TRUE,
-  envir = NULL)
+makeLogicalParam(id, default, requires = NULL, tunable = TRUE)
 
 makeLogicalVectorParam(id, len, cnames = NULL, default, requires = NULL,
-  tunable = TRUE, envir = NULL)
+  tunable = TRUE)
 
 makeDiscreteParam(id, values, trafo = NULL, default, requires = NULL,
-  tunable = TRUE, envir = NULL)
+  tunable = TRUE)
 
 makeDiscreteVectorParam(id, len, values, default, requires = NULL,
-  tunable = TRUE, envir = NULL)
+  tunable = TRUE)
 
 makeFunctionParam(id, default = default, requires = NULL)
 
@@ -92,11 +91,6 @@ other purely technical stuff, and allows them to be excluded from later automati
 procedures that would try to consider all available parameters.
 Default is \code{TRUE} (except for \code{untyped}, \code{function}, \code{character} and
 \code{characterVector}) which means it is tunable.}
-
-\item{envir}{[\code{list}]\cr
-Environment, which will be used as "dictionary" to look whether the
-arguments of an expression (e.g. within the bounds, defaults, etc.) are
-feasible. The default is \code{NULL}.}
 
 \item{len}{[\code{integer(1)}]\cr
 Length of vector parameter.}

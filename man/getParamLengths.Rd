@@ -4,11 +4,15 @@
 \alias{getParamLengths}
 \title{Return lengths of parameters in parameter set.}
 \usage{
-getParamLengths(par.set)
+getParamLengths(par.set, envir = NULL)
 }
 \arguments{
 \item{par.set}{[\code{\link{ParamSet}}]\cr
 Parameter set.}
+
+\item{envir}{[\code{list} | \code{NULL}]\cr
+Environment, which will be used for replacing the arguments
+of the expression within a parameter set. The default is \code{NULL}.}
 }
 \value{
 [\code{integer}]. Named and in same order as \code{par.set}.

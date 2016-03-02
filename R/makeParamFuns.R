@@ -1,11 +1,7 @@
 #' @rdname Param
-#' @param envir [\code{list}]\cr
-#'   Environment, which will be used as "dictionary" to look whether the
-#'   arguments of an expression (e.g. within the bounds, defaults, etc.) are
-#'   feasible. The default is \code{NULL}.
 #' @export
-makeNumericParam = function(id, lower = -Inf, upper = Inf, allow.inf = FALSE, default, trafo = NULL,
-  requires = NULL, tunable = TRUE, envir = NULL) {
+makeNumericParam = function(id, lower = -Inf, upper = Inf, allow.inf = FALSE,
+  default, trafo = NULL, requires = NULL, tunable = TRUE) {
 
   assertString(id)
   # replace all expressions in lower, upper or defaults with feasible values
@@ -13,21 +9,18 @@ makeNumericParam = function(id, lower = -Inf, upper = Inf, allow.inf = FALSE, de
   # original expressions)
   lower.expr = upper.expr = default.expr = NULL
   if (is.expression(lower)) {
-    checkExpressionFeasibility(id, lower, envir)
     lower.expr = lower
     lower = -Inf
   } else {
     assertNumber(lower)
   }
   if (is.expression(upper)) {
-    checkExpressionFeasibility(id, upper, envir)
     upper.expr = upper
     upper = Inf
   } else {
     assertNumber(upper)
   }
   if (!missing(default) && is.expression(default)) {
-    checkExpressionFeasibility(id, default, envir)
     default.expr = default
     if (is.infinite(lower) & is.infinite(upper))
       default = ifelse(lower == upper, lower, 0)
@@ -57,17 +50,21 @@ makeNumericParam = function(id, lower = -Inf, upper = Inf, allow.inf = FALSE, de
 
 #' @rdname Param
 #' @export
-makeNumericVectorParam = function(id, len, lower = -Inf, upper = Inf, allow.inf = FALSE, cnames = NULL,
-  default, trafo = NULL, requires = NULL, tunable = TRUE, envir = NULL) {
+makeNumericVectorParam = function(id, len, lower = -Inf, upper = Inf, allow.inf = FALSE,
+  cnames = NULL, default, trafo = NULL, requires = NULL, tunable = TRUE) {
 
   assertString(id)
-  len = asInt(len)
-  # replace all expressions in lower, upper or defaults with feasible values
-  # prior to generating the parameter (and afterwards re-substitute them by the
-  # original expressions)
-  lower.expr = upper.expr = default.expr = NULL
+  # replace all expressions in length, lower, upper or defaults with feasible
+  # values prior to generating the parameter (and afterwards re-substitute them
+  # by the original expressions)
+  len.expr = lower.expr = upper.expr = default.expr = NULL
+  if (is.expression(len)) {
+    len.expr = len
+    len = 1L
+  } else {
+    len = asInt(len)
+  }
   if (is.expression(lower)) {
-    checkExpressionFeasibility(id, lower, envir)
     lower.expr = lower
     lower = -Inf
   } else {
@@ -76,7 +73,6 @@ makeNumericVectorParam = function(id, len, lower = -Inf, upper = Inf, allow.inf 
     assertNumeric(lower, min.len = 1L, any.missing = FALSE)
   }
   if (is.expression(upper)) {
-    checkExpressionFeasibility(id, upper, envir)
     upper.expr = upper
     upper = Inf
   } else {
@@ -85,7 +81,6 @@ makeNumericVectorParam = function(id, len, lower = -Inf, upper = Inf, allow.inf 
     assertNumeric(upper, min.len = 1L, any.missing = FALSE)  
   }
   if (!missing(default) && is.expression(default)) {
-    checkExpressionFeasibility(id, default, envir)
     default.expr = default
     if (any(is.infinite(lower) & is.infinite(upper)))
       default = ifelse(lower == upper, lower, 0)
@@ -114,13 +109,15 @@ makeNumericVectorParam = function(id, len, lower = -Inf, upper = Inf, allow.inf 
     p$upper = upper.expr
   if (!is.null(default.expr))
     p$default = default.expr
+  if (!is.null(len.expr))
+    p$len = len.expr
   return(p)
 }
 
 #' @rdname Param
 #' @export
 makeIntegerParam = function(id, lower = -Inf, upper = Inf, default, trafo = NULL,
-  requires = NULL, tunable = TRUE, envir = NULL) {
+  requires = NULL, tunable = TRUE) {
 
   assertString(id)
   # replace all expressions in lower, upper or defaults with feasible values
@@ -128,21 +125,18 @@ makeIntegerParam = function(id, lower = -Inf, upper = Inf, default, trafo = NULL
   # original expressions)
   lower.expr = upper.expr = default.expr = NULL
   if (is.expression(lower)) {
-    checkExpressionFeasibility(id, lower, envir)
     lower.expr = lower
     lower = -Inf
   } else {
     assertNumber(lower)
   }
   if (is.expression(upper)) {
-    checkExpressionFeasibility(id, upper, envir)
     upper.expr = upper
     upper = Inf
   } else {
     assertNumber(upper)
   }
   if (!missing(default) && is.expression(default)) {
-    checkExpressionFeasibility(id, default, envir)
     default.expr = default
     if (is.infinite(lower) & is.infinite(upper))
       default = ifelse(lower == upper, lower, 0)
@@ -173,16 +167,20 @@ makeIntegerParam = function(id, lower = -Inf, upper = Inf, default, trafo = NULL
 #' @rdname Param
 #' @export
 makeIntegerVectorParam = function(id, len, lower = -Inf, upper = Inf, cnames = NULL,
-  default, trafo = NULL, requires = NULL, tunable = TRUE, envir = NULL) {
+  default, trafo = NULL, requires = NULL, tunable = TRUE) {
 
   assertString(id)
-  len = asInt(len)
-  # replace all expressions in lower, upper or defaults with feasible values
-  # prior to generating the parameter (and afterwards re-substitute them by the
-  # original expressions)
-  lower.expr = upper.expr = default.expr = NULL
+  # replace all expressions in length, lower, upper or defaults with feasible
+  # values prior to generating the parameter (and afterwards re-substitute them
+  # by the original expressions)
+  len.expr = lower.expr = upper.expr = default.expr = NULL
+  if (is.expression(len)) {
+    len.expr = len
+    len = 1L
+  } else {
+    len = asInt(len)
+  }
   if (is.expression(lower)) {
-    checkExpressionFeasibility(id, lower, envir)
     lower.expr = lower
     lower = -Inf
   } else {
@@ -191,7 +189,6 @@ makeIntegerVectorParam = function(id, len, lower = -Inf, upper = Inf, cnames = N
     assertNumeric(lower, min.len = 1L, any.missing = FALSE)
   }
   if (is.expression(upper)) {
-    checkExpressionFeasibility(id, upper, envir)
     upper.expr = upper
     upper = Inf
   } else {
@@ -200,7 +197,6 @@ makeIntegerVectorParam = function(id, len, lower = -Inf, upper = Inf, cnames = N
     assertNumeric(upper, min.len = 1L, any.missing = FALSE)
   }
   if (!missing(default) && is.expression(default)) {
-    checkExpressionFeasibility(id, default, envir)
     default.expr = default
     if (is.infinite(lower) & is.infinite(upper))
       default = ifelse(lower == upper, lower, 0)
@@ -229,12 +225,14 @@ makeIntegerVectorParam = function(id, len, lower = -Inf, upper = Inf, cnames = N
     p$upper = upper.expr
   if (!is.null(default.expr))
     p$default = default.expr
+  if (!is.null(len.expr))
+    p$len = len.expr
   return(p)
 }
 
 #' @rdname Param
 #' @export
-makeLogicalParam = function(id, default, requires = NULL, tunable = TRUE, envir = NULL) {
+makeLogicalParam = function(id, default, requires = NULL, tunable = TRUE) {
   assertString(id)
   if (!is.null(requires))
     assert(checkClass(requires, "call"), checkClass(requires, "expression"))
@@ -245,7 +243,6 @@ makeLogicalParam = function(id, default, requires = NULL, tunable = TRUE, envir 
   # the parameters (and then re-substituting them by the original expression)
   default.expr = NULL
   if (!missing(default) && is.expression(default)) {
-    checkExpressionFeasibility(id, default, envir)
     default.expr = default
     default = TRUE
   }
@@ -261,9 +258,15 @@ makeLogicalParam = function(id, default, requires = NULL, tunable = TRUE, envir 
 
 #' @rdname Param
 #' @export
-makeLogicalVectorParam = function(id, len, cnames = NULL, default, requires = NULL, tunable = TRUE, envir = NULL) {
+makeLogicalVectorParam = function(id, len, cnames = NULL, default, requires = NULL, tunable = TRUE) {
   assertString(id)
-  len = asInt(len)
+  len.expr = NULL
+  if (is.expression(len)) {
+    len.expr = len
+    len = 1L
+  } else {
+    len = asInt(len)
+  }
   if (!is.null(cnames))
     assertCharacter(cnames, len = len, any.missing = FALSE)
   if (!is.null(requires))
@@ -275,7 +278,6 @@ makeLogicalVectorParam = function(id, len, cnames = NULL, default, requires = NU
   # the parameters (and then re-substituting them by the original expression)
   default.expr = NULL
   if (!missing(default) && is.expression(default)) {
-    checkExpressionFeasibility(id, default, envir)
     default.expr = default
     default = rep(TRUE, len)
   }
@@ -286,31 +288,38 @@ makeLogicalVectorParam = function(id, len, cnames = NULL, default, requires = NU
   ## re-substitute the expression for default
   if (!is.null(default.expr))
     p$default = default.expr
+  if (!is.null(len.expr))
+    p$len = len.expr
   return(p)
 }
 
 #' @rdname Param
 #' @export
-makeDiscreteParam = function(id, values, trafo = NULL, default, requires = NULL, tunable = TRUE, envir = NULL) {
+makeDiscreteParam = function(id, values, trafo = NULL, default, requires = NULL, tunable = TRUE) {
   assertString(id)
   if (!is.null(requires))
     assert(checkClass(requires, "call"), checkClass(requires, "expression"))
-  # replace the expression in values with feasible values prior to generating
-  # the parameters (and then re-substituting them by the original expression)
-  values.expr = NULL
+  # replace the expression in values and defaults with feasible values prior to
+  # generating the params (and re-substituting them by the original expression)
+  default.expr = values.expr = NULL
   if (!missing(values) && is.expression(values)) {
-    checkExpressionFeasibility(id, values, envir)
     values.expr = values
-    values = list(TRUE)
+    values = c("a", "b")
   } else {
     values = checkValuesForDiscreteParam(id, values)
+  }
+  if (!missing(default) && is.expression(default)) {
+    default.expr = default
+    default = values[[1]]
   }
   assertLogical(tunable, len = 1L)
   p = makeParam(id = id, type = "discrete", len = 1L, lower = NULL, upper = NULL,
     values = values, cnames = NULL, default = default, trafo = trafo,
     requires = requires, tunable = tunable)
 
-  ## re-substitute the expression for default
+  ## re-substitute the expression for default and values
+  if (!is.null(default.expr))
+    p$default = default.expr
   if (!is.null(values.expr))
     p$values = values.expr
   return(p)
@@ -318,20 +327,29 @@ makeDiscreteParam = function(id, values, trafo = NULL, default, requires = NULL,
 
 #' @rdname Param
 #' @export
-makeDiscreteVectorParam = function(id, len, values, default, requires = NULL, tunable = TRUE, envir = NULL) {
+makeDiscreteVectorParam = function(id, len, values, default, requires = NULL, tunable = TRUE) {
   assertString(id)
-  len = asInt(len)
+  len.expr = NULL
+  if (is.expression(len)) {
+    len.expr = len
+    len = 1L
+  } else {
+    len = asInt(len)
+  }
   if (!is.null(requires))
     assert(checkClass(requires, "call"), checkClass(requires, "expression"))
-  # replace the expression in values with feasible values prior to generating
-  # the parameters (and then re-substituting them by the original expression)
-  values.expr = NULL
+  # replace the expression in values and defaults with feasible values prior to
+  # generating the params (and re-substituting them by the original expression)
+  default.expr = values.expr = NULL
   if (!missing(values) && is.expression(values)) {
-    checkExpressionFeasibility(id, values, envir)
     values.expr = values
-    values = list(TRUE)
+    values = c("a", "b")
   } else {
     values = checkValuesForDiscreteParam(id, values)
+  }
+  if (!missing(default) && is.expression(default)) {
+    default.expr = default
+    default = rep(values[[1]], len)
   }
   assertLogical(tunable, len = 1L)
   p = makeParam(id = id, type = "discretevector", len = len, lower = NULL, upper = NULL,
@@ -339,8 +357,12 @@ makeDiscreteVectorParam = function(id, len, values, default, requires = NULL, tu
     requires = requires, tunable = tunable)
 
   ## re-substitute the expression for default
+  if (!is.null(default.expr))
+    p$default = default.expr
   if (!is.null(values.expr))
     p$values = values.expr
+  if (!is.null(len.expr))
+    p$len = len.expr
   return(p)
 }
 
@@ -383,12 +405,21 @@ makeCharacterParam = function(id, default, requires = NULL) {
 #' @export
 makeCharacterVectorParam = function(id, len, cnames = NULL, default, requires = NULL) {
   assertString(id)
-  len = asInt(len)
+  len.expr = NULL
+  if (is.expression(len)) {
+    len.expr = len
+    len = 1L
+  } else {
+    len = asInt(len)
+  }
   if (!is.null(requires))
     assert(checkClass(requires, "call"), checkClass(requires, "expression"))
-  makeParam(id = id, type = "charactervector", len = len, lower = NULL, upper = NULL,
+  p = makeParam(id = id, type = "charactervector", len = len, lower = NULL, upper = NULL,
     values = NULL, cnames = cnames, default = default, trafo = NULL,
     requires = requires, tunable = FALSE)
+  if (!is.null(len.expr))
+    p$len = len.expr
+  return(p)
 }
 
 ##### small helpers #####
@@ -429,16 +460,4 @@ checkValuesForDiscreteParam = function(id, values) {
     stopf("NA is not allowed as a value name for discrete parameter %s.\nParamHelpers uses NA as a special value for dependent parameters.", id)
 
   return(values)
-}
-
-# check whether an expression is feasible
-checkExpressionFeasibility = function(id, expr, envir) {
-  missing.vars = all.vars(expr)[all.vars(expr) %nin% names(envir)]
-  if (length(missing.vars) > 0) {
-    res = sprintf("The %s '%s' %s to be defined in 'envir'.",
-      ifelse(length(missing.vars) == 1, "parameter", "parameters"),
-      paste(missing.vars, collapse = "', '"),
-      ifelse(length(missing.vars) == 1, "needs", "need"))
-    makeAssertion(id, res = res, collection = NULL)
-  }
 }

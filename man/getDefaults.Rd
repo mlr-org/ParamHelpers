@@ -17,8 +17,8 @@ for other parameters.
 Default is \code{FALSE}.}
 
 \item{envir}{[\code{list} | \code{NULL}]\cr
-Environment, which will be used as "dictionary" for replacing the arguments
-of the expression. The default is \code{NULL}.}
+Environment, which will be used for replacing the arguments
+of the expression within a parameter set. The default is \code{NULL}.}
 }
 \value{
 [named \code{list}]. Named and in same order as \code{par.set}.

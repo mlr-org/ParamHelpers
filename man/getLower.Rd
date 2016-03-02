@@ -21,9 +21,8 @@ Should number from 1 to length be appended to names of vector params?
 Default is \code{FALSE}.}
 
 \item{envir}{[\code{list} | \code{NULL}]\cr
-If a bound is given by an expression, this list will be used as a
-dictionary, in which the unknown arguments of the expression are defined.
-The default is \code{NULL}.}
+If a bound is given by an expression, this list will be used to replace
+the values within the expressions. The default is \code{NULL}.}
 }
 \value{
 [\code{vector} | \code{list}]. Named by parameter ids.
@@ -47,9 +46,10 @@ getUpper(ps)
 
 ps = makeParamSet(
   makeNumericParam("u"),
-  makeIntegerParam("v", lower = expression(ceiling(p / 3)), upper = 2, envir = list(p = NULL)),
+  makeIntegerParam("v", lower = expression(ceiling(p / 3)), upper = 2),
   makeDiscreteParam("w", values = 1:2),
-  makeNumericVectorParam("x", len = 2, lower = c(0, 10), upper = c(1, 11))
+  makeNumericVectorParam("x", len = 2, lower = c(0, 10), upper = c(1, 11)),
+  dictionary = "p"
 )
 getLower(ps, envir = list(p = 7))
 getUpper(ps)

@@ -107,6 +107,12 @@ makeParam = function(id, type, len, lower, upper, values, cnames, allow.inf = FA
 getParPrintData = function(x, trafo = TRUE, used = TRUE, constr.clip = 40L) {
   g = function(n) collapse(sprintf("%.3g", n))
   if (isNumeric(x, include.int = TRUE)) {
+    if (!is.expression(x$lower) && !is.expression(x$upper) &&
+      (length(unique(x$lower)) == 1) && (length(unique(x$upper)) == 1)) {
+
+      x$lower = unique(x$lower)
+      x$upper = unique(x$upper)
+    }
     low = ifelse(is.expression(x$lower), as.character(x$lower), g(x$lower))
     upp = ifelse(is.expression(x$upper), as.character(x$upper), g(x$upper))
     constr = sprintf("%s to %s", low, upp)
@@ -116,16 +122,26 @@ getParPrintData = function(x, trafo = TRUE, used = TRUE, constr.clip = 40L) {
   } else
     constr = "-"
   if (x$has.default) {
-    if (!is.expression(x$default))
-      def = paramValueToString(x, x$default)
-    else
+    if (!is.expression(x$default)) {
+      def = x$default
+      def = ifelse(length(unique(def)) == 1, unique(def), def)
+      def = paramValueToString(x, def)
+    } else
       def = as.character(x$default)
   } else {
     def = "-"
   }
+  if (isVector(x)) {
+    if (!is.expression(x$len))
+      len = x$len
+    else
+      len = as.character(x$len)
+  } else {
+    len = "-"
+  }
   d = data.frame(
     Type = x$type,
-    len = ifelse(isVector(x), x$len, "-"),
+    len = len,
     Def = def,
     Constr = constr,
     Req = ifelse(is.null(x$requires), "-", "Y"),
