@@ -9,6 +9,7 @@ test_that("empty paramset", {
   expect_equal(getValues(ps), list())
   expect_output(print(ps), "Empty parameter set.")
   expect_true(isEmpty(ps))
+  expect_equal(ps, getParamSet(ps))
 })
 
 

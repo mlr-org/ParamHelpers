@@ -6,6 +6,7 @@ test_that("OptPath", {
     makeDiscreteParam("y", values = c("a", "b"))
   )
   op = makeOptPathDF(par.set = ps, y.names = c("z1", "z2"), minimize = c(TRUE, FALSE))
+  expect_equal(ps, getParamSet(op))
   addOptPathEl(op, x = list(x = 1, y = "a"), y = c(z1 = 1, z2 = 4))
   addOptPathEl(op, x = list(x = 2, y = "a"), y = c(z1 = 3, z2 = 2))
   expect_equal(op$env$dob, 1:2)
