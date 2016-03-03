@@ -4,9 +4,6 @@
 #'  different objects, e.g. an \code{\link{OptPath}}.
 #'
 #' @param x [any]\cr
-#'  Object to retrieve the \code{\link{ParamSet}} from.
-#' @param ... [any]\cr
-#'  Additional arguments. Currently ignored.
 #' @return \code{\link{ParamSet}}
 #' @export
 getParamSet = function(x, ...) {
