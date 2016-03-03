@@ -7,7 +7,11 @@
 getParamSet(x, ...)
 }
 \arguments{
-\item{x}{[any]\cr}
+\item{x}{[any]\cr
+Object to retrieve the \code{\link{ParamSet}} from.}
+
+\item{...}{[any]\cr
+Additional arguments. Currently ignored.}
 }
 \value{
 \code{\link{ParamSet}}
