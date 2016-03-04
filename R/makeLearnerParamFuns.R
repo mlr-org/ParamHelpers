@@ -3,24 +3,37 @@
 makeNumericLearnerParam = function(id, lower = -Inf, upper = Inf, allow.inf = FALSE, default,
   when = "train", requires = NULL, tunable = TRUE) {
 
-  p = makeNumericParam(id, lower, upper, allow.inf = allow.inf, default = default, requires = requires, tunable = tunable)
+  p = makeNumericParam(id, lower, upper, allow.inf = allow.inf, default = default,
+    requires = requires, tunable = tunable)
   learnerParamFromParam(p, when)
 }
 
 #' @rdname LearnerParam
 #' @export
 makeNumericVectorLearnerParam = function(id, len = as.integer(NA), lower = -Inf,
-  upper = Inf, allow.inf = FALSE, default, when = "train", requires = NULL, tunable = TRUE) {
+  upper = Inf, allow.inf = FALSE, default, when = "train", requires = NULL,
+  tunable = TRUE) {
 
-  len = asInt(len, na.ok = TRUE)
+  len.expr = NULL
+  if (is.expression(len)) {
+    len.expr = len
+    len = 1L
+  } else {
+    len = asInt(len, na.ok = TRUE)
+  }
   if (is.na(len))
     p = makeVectorParamNALength(makeNumericVectorParam, default = default,
-      id = id, lower = lower, upper = upper, allow.inf = allow.inf, requires = requires, tunable = tunable)
+      id = id, lower = lower, upper = upper, allow.inf = allow.inf,
+      requires = requires, tunable = tunable)
   else
-    p = makeNumericVectorParam(id, len = len, lower = lower, upper = upper, allow.inf = allow.inf, default =  default,
+    p = makeNumericVectorParam(id, len = len, lower = lower, upper = upper,
+      allow.inf = allow.inf, default = default,
       requires = requires, tunable = tunable)
   p = learnerParamFromParam(p, when)
-  p$len = len
+  if (!is.null(len.expr))
+    p$len = len.expr
+  else
+    p$len = len
   return(p)
 }
 
@@ -30,7 +43,8 @@ makeNumericVectorLearnerParam = function(id, len = as.integer(NA), lower = -Inf,
 makeIntegerLearnerParam = function(id, lower = -Inf, upper = Inf,
   default, when = "train", requires = NULL, tunable = TRUE) {
 
-  p = makeIntegerParam(id, lower, upper, default = default, requires = requires, tunable = tunable)
+  p = makeIntegerParam(id, lower, upper, default = default, requires = requires,
+    tunable = tunable)
   learnerParamFromParam(p, when)
 }
 
@@ -39,15 +53,24 @@ makeIntegerLearnerParam = function(id, lower = -Inf, upper = Inf,
 makeIntegerVectorLearnerParam = function(id, len = as.integer(NA), lower = -Inf,
   upper = Inf, default, when = "train", requires = NULL, tunable = TRUE) {
 
-  len = asInt(len, na.ok = TRUE)
+  len.expr = NULL
+  if (is.expression(len)) {
+    len.expr = len
+    len = 1L
+  } else {
+    len = asInt(len, na.ok = TRUE)
+  }
   if (is.na(len))
     p = makeVectorParamNALength(makeIntegerVectorParam, default = default,
       id = id, lower = lower, upper = upper, requires = requires, tunable = tunable)
   else
-    p = makeIntegerVectorParam(id, len = len, lower = lower, upper = upper, default = default,
-      requires = requires, tunable = tunable)
+    p = makeIntegerVectorParam(id, len = len, lower = lower, upper = upper,
+      default = default, requires = requires, tunable = tunable)
   p = learnerParamFromParam(p, when)
-  p$len = len
+  if (!is.null(len.expr))
+    p$len = len.expr
+  else
+    p$len = len
   return(p)
 }
 
@@ -56,7 +79,8 @@ makeIntegerVectorLearnerParam = function(id, len = as.integer(NA), lower = -Inf,
 makeDiscreteLearnerParam = function(id, values, default,
   when = "train", requires = NULL, tunable = TRUE) {
 
-  p = makeDiscreteParam(id, values, default = default, requires = requires, tunable = tunable)
+  p = makeDiscreteParam(id, values, default = default, requires = requires,
+    tunable = tunable)
   learnerParamFromParam(p, when)
 }
 
@@ -65,23 +89,34 @@ makeDiscreteLearnerParam = function(id, values, default,
 makeDiscreteVectorLearnerParam = function(id, len = as.integer(NA), values, default,
   when = "train", requires = NULL, tunable = TRUE) {
 
-  len = asInt(len, na.ok = TRUE)
+  len.expr = NULL
+  if (is.expression(len)) {
+    len.expr = len
+    len = 1L
+  } else {
+    len = asInt(len, na.ok = TRUE)
+  }
   if (is.na(len))
     p = makeVectorParamNALength(makeDiscreteVectorParam, default = default,
       id = id, values = values, requires = requires, tunable = tunable)
   else
-    p = makeDiscreteVectorParam(id, len = len, values = values, default = default, requires = requires,
-      tunable = tunable)
+    p = makeDiscreteVectorParam(id, len = len, values = values, default = default,
+      requires = requires, tunable = tunable)
   p = learnerParamFromParam(p, when)
-  p$len = len
+  if (!is.null(len.expr))
+    p$len = len.expr
+  else
+    p$len = len
   return(p)
 }
 
 #' @rdname LearnerParam
 #' @export
-makeLogicalLearnerParam = function(id, default, when = "train", requires = NULL, tunable = TRUE) {
+makeLogicalLearnerParam = function(id, default, when = "train", requires = NULL,
+  tunable = TRUE) {
 
-  p = makeLogicalParam(id, default = default, requires = requires, tunable = tunable)
+  p = makeLogicalParam(id, default = default, requires = requires,
+    tunable = tunable)
   learnerParamFromParam(p, when)
 }
 
@@ -90,14 +125,24 @@ makeLogicalLearnerParam = function(id, default, when = "train", requires = NULL,
 makeLogicalVectorLearnerParam = function(id, len = as.integer(NA), default, when = "train",
   requires = NULL, tunable = TRUE) {
 
-  len = asInt(len, na.ok = TRUE)
+  len.expr = NULL
+  if (is.expression(len)) {
+    len.expr = len
+    len = 1L
+  } else {
+    len = asInt(len, na.ok = TRUE)
+  }
   if (is.na(len))
     p = makeVectorParamNALength(makeLogicalVectorParam, default = default,
       id = id, requires = requires, tunable = tunable)
   else
-    p = makeLogicalVectorParam(id, len = len, default = default, requires = requires, tunable = tunable)
+    p = makeLogicalVectorParam(id, len = len, default = default,
+      requires = requires, tunable = tunable)
   p = learnerParamFromParam(p, when)
-  p$len = len
+  if (!is.null(len.expr))
+    p$len = len.expr
+  else
+    p$len = len
   return(p)
 }
 

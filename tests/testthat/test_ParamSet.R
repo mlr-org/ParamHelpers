@@ -189,3 +189,51 @@ test_that("print works", {
   expect_output(print(ps, trafo = FALSE, used = FALSE), "numericvector")
 })
 
+test_that("expression works", {
+  ps = makeParamSet(
+    makeNumericParam("u", lower = 2, upper = expression(n)),
+    makeIntegerParam("v", lower = expression(floor(b / n)), upper = expression(n * 4)),
+    makeNumericVectorParam("z", len = 3, default = expression(b * 3)),
+    makeDiscreteParam("a", values = expression(n:b)),
+    makeDiscreteParam("b", values = expression(b)),
+    dictionary = c("n", "b")
+  )
+  ee = list(n = 5, b = 13.4)
+  expect_equal(getParamLengths(ps), c(u = 1, v = 1, z = 3, a = 1, b = 1))
+  expect_equal(getLower(ps, envir = ee), c(u = 2, v = 2, z = -Inf, z = -Inf, z = -Inf))
+  expect_equal(getUpper(ps, envir = ee), c(u = 5, v = 20, z = Inf, z = Inf, z = Inf))
+  expect_equal(getDefaults(ps, envir = ee), list(z = rep(13.4 * 3, 3)))
+  expect_equal(getValues(ps, envir = ee), list(a = 5:13, b = 13.4))
+
+  expect_error(makeParamSet(
+    makeNumericParam("u", lower = 2, upper = expression(n)),
+    makeIntegerParam("v", lower = expression(floor(b / n)), upper = expression(n * 4)),
+    dictionary = c("n", "a")
+  ))
+  expect_error(makeParamSet(
+    makeNumericParam("u", lower = 2, upper = expression(n)),
+    makeIntegerParam("v", lower = expression(floor(b / n)), upper = expression(n * 4)),
+    dictionary = c("b")
+  ))
+})
+
+test_that("expression works for LearnerParamSet", {
+  ps = makeParamSet(
+    makeNumericLearnerParam("u", lower = 2, upper = expression(n)),
+    makeIntegerLearnerParam("v", lower = expression(floor(p / n)), upper = expression(n * 4)),
+    makeNumericVectorLearnerParam("z", len = 3, default = expression(p * 3)),
+    makeDiscreteLearnerParam("a", values = expression(n:p)),
+    makeDiscreteLearnerParam("b", values = expression(p))
+  )
+  ee = list(n = 5, p = 13)
+  expect_equal(getParamLengths(ps), c(u = 1, v = 1, z = 3, a = 1, b = 1))
+  expect_equal(getLower(ps, envir = ee), c(u = 2, v = 2, z = -Inf, z = -Inf, z = -Inf))
+  expect_equal(getUpper(ps, envir = ee), c(u = 5, v = 20, z = Inf, z = Inf, z = Inf))
+  expect_equal(getDefaults(ps, envir = ee), list(z = rep(39, 3)))
+  expect_equal(getValues(ps, envir = ee), list(a = 5:13, b = 13))
+  
+  expect_error(makeParamSet(
+    makeNumericLearnerParam("u", lower = 2, upper = expression(n)),
+    makeIntegerLearnerParam("v", lower = expression(floor(b / n)), upper = expression(n * 4))
+  ))
+})
