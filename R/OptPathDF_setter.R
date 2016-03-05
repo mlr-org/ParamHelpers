@@ -19,8 +19,10 @@ addOptPathEl.OptPathDF = function(op, x, y, dob = getOptPathLength(op)+1L, eol =
     if (!all(sapply(extra, isScalarValue)))
       stopf("'extra' can currently only contain scalar values!")
     if (length(env$extra) > 0L) {
-      if (!all(names(extra) == names(env$extra[[1L]])))
-        stopf("Trying to add unknown extra(s): %s!", paste(symdiff(names(extra), names(env$extra[[1L]])), collapse = ","))
+      if (!all(names(extra) %in% names(env$extra[[1L]])))
+        stopf("Trying to add unknown extra(s): %s!", collapse(setdiff(names(extra), names(env$extra[[1L]]))))
+      if (!all(names(env$extra[[1L]]) %in% (names(extra))))
+        stopf("Trying to add extras but missing: %s!", collapse(setdiff(names(env$extra[[1L]]), names(extra))))
     }
     env$extra[[length(env$extra) + 1L]] = extra
   }
