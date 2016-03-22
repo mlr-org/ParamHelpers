@@ -13,8 +13,8 @@ test_that("OptPath", {
   expect_equal(op$env$eol[2], 8)
 
   # test getters
-  expect_equal(getOptPathX(op), data.frame(x = 1:2, y = "a"))
-  expect_equal(getOptPathX(op, dob = 2), data.frame(x = 2, y = "a"))
+  expect_equal(getOptPathX(op), data.frame(x = 1:2, y = factor("a", levels = c("a", "b"))))
+  expect_equal(getOptPathX(op, dob = 2), data.frame(x = 2, y = factor("a", levels = c("a", "b"))))
 
   expect_equal(getOptPathY(op, "z1"), c(1, 3))
   expect_equal(getOptPathY(op, "z2"), c(4, 2))
@@ -30,6 +30,7 @@ test_that("OptPath", {
   expect_true(is.data.frame(x))
   expect_equal(nrow(x), 2)
   expect_equal(ncol(x), 6)
+  expect_equal(levels(x$y), getParamSetValues(ps)$y)
 
   expect_output(print(op), "Optimization path")
 

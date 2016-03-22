@@ -40,9 +40,7 @@
 #'   Currently ignored.
 #' @return [\code{data.frame}].
 #' @export
-as.data.frame.OptPathDF = function(x, row.names = NULL, optional = FALSE,
-  include.x = TRUE, include.y = TRUE, include.rest = TRUE,
-  dob = x$env$dob, eol = x$env$eol, ...) {
+as.data.frame.OptPathDF = function(x, row.names = NULL, optional = FALSE, include.x = TRUE, include.y = TRUE, include.rest = TRUE, dob = x$env$dob, eol = x$env$eol, ...) {
 
   assertFlag(include.x)
   assertFlag(include.y)
@@ -62,10 +60,14 @@ as.data.frame.OptPathDF = function(x, row.names = NULL, optional = FALSE,
   if (include.x || include.y) {
     df = x$env$path[ind, , drop = FALSE]
     y.cols = which(colnames(df) %in% x$y.names)
-    if (include.x)
-      res = cbind(res, df[, -y.cols, drop = FALSE])
-    if (include.y)
+    if (include.x) {
+      x.df = df[, -y.cols, drop = FALSE]
+      x.df = fixDesignFactors(x.df, x$par.set)
+      res = cbind(res, x.df)
+    }
+    if (include.y) {
       res = cbind(res, df[, y.cols, drop = FALSE])
+    }
     res = convertDataFrameCols(res, chars.as.factor = TRUE)
   }
   if (include.rest) {
