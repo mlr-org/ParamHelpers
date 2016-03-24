@@ -23,6 +23,9 @@ addOptPathEl.OptPathDF = function(op, x, y, dob = getOptPathLength(op)+1L, eol =
         stopf("Trying to add unknown extra(s): %s!", paste(symdiff(names(extra), names(env$extra[[1L]])), collapse = ","))
     }
     env$extra[[length(env$extra) + 1L]] = extra
+  } else {
+    if (!is.null(env$extra))
+      stopf("Option `extra` is enabled, but no extras provided!")
   }
   if (!is.na(error.message) && is.null(env$error.message))
     stopf("Trying to add error.message to opt path, without enabling that option!")

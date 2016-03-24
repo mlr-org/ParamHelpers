@@ -39,7 +39,9 @@ Default is \code{NA}.}
 Possible list of extra values to store.
 The list must be fully named, can currently only contain scalar values and must always
 be in the same order of all calls of \code{addOptPathEl}.
-Default is \code{NULL}}
+Watch out: if \code{include.extra} was set to \code{TRUE} in \code{\link{makeOptPathDF}}
+the list of extras is mandatory.
+Default is \code{NULL}.}
 
 \item{check.feasible}{[\code{logical(1)}]\cr
 Should \code{x} be checked with \code{\link{isFeasible}}?
