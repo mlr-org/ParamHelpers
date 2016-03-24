@@ -3,12 +3,8 @@
 #' An empty param set is considered to be of all types.
 #'
 #' @template arg_par_or_set
-#' @param include.int [\code{logical(1)}]\cr
-#'   Are integers also considered to be numeric?
-#'   Default is \code{TRUE}.
-#' @param include.logical [\code{logical(1)}]\cr
-#'   Are logicals also considered to be discrete?
-#'   Default is \code{TRUE}.
+#' @template arg_include_int
+#' @template arg_include_logical
 #' @return [\code{logical(1)}].
 #' @name isType
 #' @rdname isType
@@ -28,11 +24,7 @@ isNumeric.ParamSet = function(par, include.int = TRUE) {
 
 #' @export
 isNumeric.Param = function(par, include.int = TRUE) {
-  types = if (include.int)
-    c("numeric", "numericvector", "integer", "integervector")
-  else
-    c("numeric", "numericvector")
-  return(par$type %in% types)
+  return(par$type %in% getNumericTypes(include.int))
 }
 
 #' @export
@@ -44,20 +36,12 @@ isDiscrete = function(par, include.logical = TRUE) {
 
 #' @export
 isDiscrete.ParamSet = function(par, include.logical = TRUE) {
-  types = if (include.logical)
-    c("discrete", "discretevector", "logical", "logicalvector")
-  else
-    c("discrete", "discretevector")
-  return(hasAllParamsOfTypes(par, types = types))
+  return(hasAllParamsOfTypes(par, types = getDiscreteTypes(include.logical)))
 }
 
 #' @export
 isDiscrete.Param = function(par, include.logical = TRUE) {
-  types = if (include.logical)
-    c("discrete", "discretevector", "logical", "logicalvector")
-  else
-    c("discrete", "discretevector")
-  return(par$type %in% types)
+  return(par$type %in% getDiscreteTypes(include.logical))
 }
 
 #' @export
