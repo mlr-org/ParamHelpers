@@ -32,7 +32,7 @@ generateDesignOversampling = function(
   # Calculate dist matrix. I know, we double the memory requirement here, 
   # but working with a matrix is much much easier ... we probably want to do
   # this in C on the long hand!
-  dists = daisy(x = design, metric = "gower")
+  dists = cluster::daisy(x = design, metric = "gower")
   dists = as.matrix(dists)
   diag(dists) = Inf
   
