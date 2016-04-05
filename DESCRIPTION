@@ -32,7 +32,8 @@ Suggests:
     lhs,
     plyr,
     reshape2,
-    testthat
+    testthat,
+    cluster
 LazyData: yes
 ByteCompile: yes
 Version: 1.8
