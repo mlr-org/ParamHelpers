@@ -251,6 +251,8 @@ test_that("logging extra works", {
   expect_equal(df, data.frame(v = 1, y = 5, dob = 1L, eol = NA_integer_, ee = 7))
   expect_equal(getOptPathEl(op, 1L), list(x = list(v = 1), y = c(y = 5), dob = 1L, eol = NA_integer_,
     extra = list(ee = 7)))
+  # fail on missing extras if 'include.extra' option is enabled
+  expect_error(addOptPathEl(op, x = list(v = 2), y = 6))
 })
 
 test_that("as.data.frame flags and getCols works", {

@@ -18,20 +18,20 @@ addOptPathEl.OptPathDF = function(op, x, y, dob = getOptPathLength(op)+1L, eol =
       stopf("'extra' must be properly named!")
     if (!all(sapply(extra, isScalarValue)))
       stopf("'extra' can currently only contain scalar values!")
-    if (length(env$extra) > 0L) {
-      if (!all(names(extra) == names(env$extra[[1L]])))
-        stopf("Trying to add unknown extra(s): %s!", paste(symdiff(names(extra), names(env$extra[[1L]])), collapse = ","))
+    if (length(env$extra) > 0L && !all(names(extra) == names(env$extra[[1L]]))) {
+      stopf("Trying to add unknown extra(s): %s!", paste(symdiff(names(extra), names(env$extra[[1L]])), collapse = ","))
     }
     env$extra[[length(env$extra) + 1L]] = extra
+  } else if (!is.null(env$extra)) {
+    stopf("Option `extra` is enabled, but no extras provided!")
   }
   if (!is.na(error.message) && is.null(env$error.message))
     stopf("Trying to add error.message to opt path, without enabling that option!")
   if (!is.na(exec.time) && is.null(env$exec.time))
     stopf("Trying to add exec.time to opt path, without enabling that option!")
 
-  if (check.feasible) {
-    if (!isFeasible(op$par.set, x))
-      stop("Trying to add infeasible x values to opt path: ", convertToShortString(x))
+  if (check.feasible && !isFeasible(op$par.set, x)) {
+    stop("Trying to add infeasible x values to opt path: ", convertToShortString(x))
   }
 
   # scalar_na -> single_NA, disc --> names, ints --> make sure int
