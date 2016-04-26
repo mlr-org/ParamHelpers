@@ -23,8 +23,6 @@
 #' @param row.names [\code{character}]\cr
 #'   Row names for result.
 #'   Default is none.
-#' @param optional [any]\cr
-#'   Currently ignored.
 #' @param include.x [\code{logical(1)}]\cr
 #'   Include all input params?
 #'   Default is \code{TRUE}.
@@ -40,8 +38,7 @@
 #'   Currently ignored.
 #' @return [\code{data.frame}].
 #' @export
-as.data.frame.OptPathDT = function(x, row.names = NULL, optional = FALSE,
-  include.x = TRUE, include.y = TRUE, include.rest = TRUE,
+as.data.frame.OptPathDT = function(x, row.names = NULL, include.x = TRUE, include.y = TRUE, include.rest = TRUE,
   dob = x$env$dob, eol = x$env$eol, ...) {
 
   assertFlag(include.x)
@@ -57,27 +54,15 @@ as.data.frame.OptPathDT = function(x, row.names = NULL, optional = FALSE,
   if (!any(ind))
     stopf("No elements where selected (via 'dob' and 'eol')!")
 
-  res = makeDataFrame(nrow = sum(ind), ncol = 0)
+  sel.cols = c("dob", "eol")
+  if (include.x)
+    sel.cols = c(sel.cols, getParSetNamesForTable(x$par.set))
+  if (include.y)
+    sel.cols = c(sel.cols, x$y.names)
+  if (include.rest)
+    sel.cols = c(sel.cols, getOptPathExtraNames(x))
 
-  if (include.x || include.y) {
-    df = x$env$path[ind, , drop = FALSE]
-    y.cols = which(colnames(df) %in% x$y.names)
-    if (include.x)
-      res = cbind(res, df[, -y.cols, drop = FALSE])
-    if (include.y)
-      res = cbind(res, df[, y.cols, drop = FALSE])
-    res = convertDataFrameCols(res, chars.as.factor = TRUE)
-  }
-  if (include.rest) {
-    res = cbind(res, dob = x$env$dob[ind], eol = x$env$eol[ind])
-    # if err message / exec time included, add it
-    if (!is.null(x$env$error.message))
-      res$error.message = x$env$error.message[ind]
-    if (!is.null(x$env$exec.time))
-      res$exec.time = x$env$exec.time[ind]
-    if (!is.null(x$env$extra))
-      res = cbind(res, convertListOfRowsToDataFrame(x$env$extra[ind]))
-  }
+  res = res[ind, sel.cols, drop = FALSE, with = FALSE]
   if (!is.null(row.names)) {
     assertCharacter(row.names, len = nrow(res), any.missing = FALSE)
     rownames(res) = row.names
