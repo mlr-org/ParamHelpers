@@ -251,7 +251,7 @@ test_that("logging extra works", {
   expect_equal(df, data.frame(v = 1, y = 5, dob = 1L, eol = NA_integer_, ee = 7))
   expect_equal(getOptPathEl(op, 1L), list(x = list(v = 1), y = c(y = 5), dob = 1L, eol = NA_integer_,
     extra = list(ee = 7)))
-  expect_error(addOptPathEl(op, x = list(v = 1), y = 5, extra = list(ee = 7, ff = 1)), "Trying to add unknown extra.*ff")
+  expect_error(addOptPathEl(op, x = list(v = 1), y = 5, extra = list(ee = 7, ff = 1)), "Trying to add unknown extra\\(s\\): ff")
   expect_error(addOptPathEl(op, x = list(v = 1), y = 5, extra = list()), "Trying to add extras but missing: ee")
 })
 
