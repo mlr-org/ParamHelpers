@@ -59,8 +59,7 @@
 #' @family optpath
 NULL
 
-makeOptPath = function(par.set, y.names, minimize, add.transformed.x = FALSE,
-  include.error.message = FALSE, include.exec.time = FALSE, include.extra = FALSE) {
+makeOptPath = function(par.set, y.names, minimize, add.transformed.x = FALSE) {
 
   n.y = length(y.names)
   ok = c("numeric", "integer", "numericvector", "integervector", "logical",
@@ -81,12 +80,6 @@ makeOptPath = function(par.set, y.names, minimize, add.transformed.x = FALSE,
   if (any(c("dob", "eol", "error.message") %in% (union(x.names, y.names))))
     stop("'dob', 'eol' and 'error.message' are not allowed in parameter names or 'y.names'!")
   ee = new.env()
-  ee$dob = ee$eol = integer(0)
-
-  # potentially init error.message and exec.time in env
-  ee$error.message = if (include.error.message) character(0L) else NULL
-  ee$exec.time = if (include.exec.time) numeric(0L) else NULL
-  ee$extra = if (include.extra) list() else NULL
 
   makeS3Obj("OptPath",
     par.set = par.set,
@@ -100,9 +93,9 @@ makeOptPath = function(par.set, y.names, minimize, add.transformed.x = FALSE,
 #' @export
 print.OptPath = function(x, ...) {
   n = getOptPathLength(x)
-  em = x$env$error.message
-  et = x$env$exec.time
-  ex = x$env$extra
+  em = x$dt$error.message
+  et = x$dt$exec.time
+  ex = x$dt[,getOptPathExtraNames(x), with = FALSE]
   catf("Optimization path")
   catf("  Dimensions: x = %i/%i, y = %i",
     length(x$par.set$pars), sum(getParamLengths(x$par.set)), length(x$y.names))
