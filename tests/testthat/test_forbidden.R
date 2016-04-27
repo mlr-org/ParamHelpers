@@ -24,7 +24,7 @@ test_that("forbidden", {
   d = generateGridDesign(ps, resolution = 10)
   expect_true(all(d$x <= 2))
 
-  d = generateDesign(1000, ps)
+  d = generateDesign(500, ps, augment = 100)
   expect_true(all(d$x <= 2))
 })
 
