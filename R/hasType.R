@@ -4,9 +4,8 @@
 #' Type x always subsumes x and x-vector.
 #'
 #' @template arg_parset
-#' @param include.int [\code{logical(1)}]\cr
-#'   Are integers also considered to be numeric?
-#'   Default is \code{TRUE}.
+#' @template arg_include_int
+#' @template arg_include_logical
 #' @return [\code{logical(1)}].
 #' @name hasType
 #' @rdname hasType
@@ -14,9 +13,9 @@ NULL
 
 #' @export
 #' @rdname hasType
-hasDiscrete = function(par.set) {
+hasDiscrete = function(par.set, include.logical = TRUE) {
   assertClass(par.set, "ParamSet")
-  return(hasSomeParamsOfTypes(par.set, types = c("discrete", "discretevector")))
+  return(hasSomeParamsOfTypes(par.set, types = getDiscreteTypes(include.logical)))
 }
 
 #' @export
@@ -66,4 +65,12 @@ getNumericTypes = function(include.int = TRUE) {
     c("numeric", "numericvector", "integer", "integervector")
   else
     c("numeric", "numericvector")
+}
+
+# what types to consider discrete
+getDiscreteTypes = function(include.logical = TRUE) {
+  if (include.logical)
+    c("discrete", "discretevector", "logical", "logicalvector")
+  else
+    c("discrete", "discretevector")
 }

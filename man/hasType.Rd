@@ -9,7 +9,7 @@
 \alias{hasType}
 \title{Check whether parameter set contains a certain type.}
 \usage{
-hasDiscrete(par.set)
+hasDiscrete(par.set, include.logical = TRUE)
 
 hasInteger(par.set)
 
@@ -22,6 +22,10 @@ hasNumeric(par.set, include.int = TRUE)
 \arguments{
 \item{par.set}{[\code{\link{ParamSet}}]\cr
 Parameter set.}
+
+\item{include.logical}{[\code{logical(1)}]\cr
+Are logicals also considered to be discrete?
+Default is \code{TRUE}.}
 
 \item{include.int}{[\code{logical(1)}]\cr
 Are integers also considered to be numeric?
