@@ -75,9 +75,10 @@ as.data.frame.OptPathDF = function(x, row.names = NULL, optional = FALSE,
       res$error.message = x$env$error.message[ind]
     if (!is.null(x$env$exec.time))
       res$exec.time = x$env$exec.time[ind]
-    if (!is.null(x$env$extra))
-      extraclean = lapply(x$env$extra[ind], removeDotEntries)
-      res = cbind(res, convertListOfRowsToDataFrame(extraclean))
+    if (!is.null(x$env$extra)) {
+      extra.clean = lapply(x$env$extra[ind], removeDotEntries)
+      res = cbind(res, convertListOfRowsToDataFrame(extra.clean))
+    }
   }
   if (!is.null(row.names)) {
     assertCharacter(row.names, len = nrow(res), any.missing = FALSE)
