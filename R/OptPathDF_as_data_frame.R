@@ -76,13 +76,20 @@ as.data.frame.OptPathDF = function(x, row.names = NULL, optional = FALSE,
     if (!is.null(x$env$exec.time))
       res$exec.time = x$env$exec.time[ind]
     if (!is.null(x$env$extra))
-      res = cbind(res, convertListOfRowsToDataFrame(x$env$extra[ind]))
+      extraclean = lapply(x$env$extra[ind], removeDotEntries)
+      res = cbind(res, convertListOfRowsToDataFrame(extraclean))
   }
   if (!is.null(row.names)) {
     assertCharacter(row.names, len = nrow(res), any.missing = FALSE)
     rownames(res) = row.names
   }
   return(res)
+}
+
+# remove all named entries that have a name starting with a dot
+removeDotEntries = function(l) {
+  l[grep("^\\.", names(l))] = NULL
+  l
 }
 
 
