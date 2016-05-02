@@ -304,6 +304,9 @@ test_that("as.data.frame flags and getCols works", {
   expect_equal(getOptPathCol(op, "y"), c("a", "a"))
   expect_equal(getOptPathCol(op, "z1"), c(1, 3))
   expect_equal(getOptPathCol(op, "ee"), c(7, 8))
+  expect_equal(getOptPathCol(op, ".ee"), list(8, NULL))
+  expect_equal(getOptPathCol(op, ".ff"), list(NULL, list(8, list())))
+  expect_equal(getOptPathCol(op, ".xx"), list(NULL, NULL))
 
   d = getOptPathCols(op, c("x", "y"))
   expect_equal(dim(d), c(2L, 2L))
