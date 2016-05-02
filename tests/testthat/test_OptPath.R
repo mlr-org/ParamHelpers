@@ -335,4 +335,9 @@ test_that("opt.path printing works", {
   expect_output(print(op), "Exec times: TRUE. Range: 0 - 0. 1 NAs")
   addOptPathEl(op, x = list(x = 1, y = "a"), y = c(z1 = 1), exec.time = 3)
   expect_output(print(op), "Exec times: TRUE. Range: 3 - 3. 1 NAs.")
+
+  op = makeOptPathDF(par.set = ps, y.names = c("z1", "z2"), minimize = c(TRUE, FALSE), include.extra = TRUE)
+  expect_output(print(op), "Extras: NA columns")
+  addOptPathEl(op, x = list(x = 1, y = "a"), y = c(z1 = 1, z2 = 4), extra = list(ee = 8, .ee = list(a = 1, b = 2)))
+  expect_output(print(op), "Extras: 1 columns")
 })
