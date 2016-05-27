@@ -6,7 +6,7 @@
        and removing "close" design points.}
 \usage{
 generateDesignOversampling(n = 10L, par.set, trafo = FALSE,
-  oversampling = 20L)
+  oversampling = 20L, start.design = generateDesign(1, par.set)[NULL, ])
 }
 \arguments{
 \item{n}{[\code{integer(1)}]\cr
@@ -22,6 +22,11 @@ Default is \code{FALSE}.}
 
 \item{oversampling}{[\code{double}]\cr
 Oversampling ratio. Must be greater than 1.}
+
+\item{start.design}{[\code{data.frame}]
+The start design will be extended until size \code{n} is reached.
+The first rows of the generated design will match the start.design.
+Default is an empty data.frame.}
 }
 \value{
 [\code{data.frame}]. Columns are named by the ids of the parameters.
