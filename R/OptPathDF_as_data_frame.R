@@ -17,6 +17,7 @@
 #' If you want to convert these, look at \code{\link[BBmisc]{convertDataFrameCols}}.
 #' Dependent parameters whose constraints are unsatisfied generate \code{NA} entries in their
 #' respective columns.
+#' Factor columns of discrete parameters always have their complete level set from the \code{param.set}.
 #'
 #' @param x [\code{\link{OptPath}}]\cr
 #'   Optimization path.
@@ -62,7 +63,7 @@ as.data.frame.OptPathDF = function(x, row.names = NULL, optional = FALSE, includ
     y.cols = which(colnames(df) %in% x$y.names)
     if (include.x) {
       x.df = df[, -y.cols, drop = FALSE]
-      x.df = fixDesignFactors(x.df, x$par.set)
+      x.df = fixDesignFactors(x.df, x$par.set) # keeps factor levels
       res = cbind(res, x.df)
     }
     if (include.y) {
