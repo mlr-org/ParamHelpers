@@ -10,6 +10,9 @@ r:
 r_github_packages:
     - jimhester/covr
 
+before_install:
+    - Rscript -e 'install.packages("grid", lib="/home/travis/R-bin/lib/R/library/")'
+
 after_success:
     - Rscript -e 'library(covr); coveralls()'
 
