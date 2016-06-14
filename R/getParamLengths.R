@@ -1,5 +1,6 @@
-#' Return lengths of parameters in parameter set.
+#' @title Return lengths of parameters in parameter set.
 #'
+#' @description
 #' Useful for vector parameters.
 #'
 #' @template arg_parset

@@ -1,5 +1,6 @@
-#' Check whether parameter set contains a certain type.
+#' @title Check whether parameter set contains a certain type.
 #'
+#' @description
 #' \code{TRUE} iff the parameter set contains at least one parameter of the mentioned type x.
 #' Type x always subsumes x and x-vector.
 #'

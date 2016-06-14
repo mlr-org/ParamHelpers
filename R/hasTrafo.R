@@ -1,5 +1,6 @@
-#' Check parameter / parameter set for trafos.
+#' @title Check parameter / parameter set for trafos.
 #'
+#' @description
 #' \code{TRUE} iff the parameter has any trafos or any parameter in the set has
 #' trafos.
 #'
@@ -17,6 +18,5 @@ hasTrafo.Param = function(par) {
 
 #' @export
 hasTrafo.ParamSet = function(par) {
-  return(any(vapply(par$pars, hasTrafo, logical(1L))))
+  return(any(vlapply(par$pars, hasTrafo)))
 }
-

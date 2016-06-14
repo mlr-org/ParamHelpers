@@ -1,5 +1,5 @@
 stopIfLearnerParams = function(par.set) {
-  if(any(sapply(par.set$pars, function(x) inherits(x, "LearnerParameter"))))
+  if(any(vlapply(par.set$pars, function(x) inherits(x, "LearnerParameter"))))
     stop("No par.set parameter in 'generateDesign' can be of class 'LearnerParameter'!
       Use basic parameters instead to describe you region of interest!")
 }

@@ -1,5 +1,4 @@
-#' Checks if a parameter or each parameter of a parameter set has ONLY
-#' finite lower and upper bounds.
+#' Checks if a parameter or each parameter of a parameter set has ONLY finite lower and upper bounds.
 #'
 #' @template arg_par_or_set
 #' @return [\code{logical(1)}]

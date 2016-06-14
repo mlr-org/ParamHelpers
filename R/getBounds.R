@@ -1,5 +1,6 @@
-#' Get lower / upper bounds and allowed discrete values for parameters.
+#' @title Get lower / upper bounds and allowed discrete values for parameters.
 #'
+#' @description
 #' \code{getLower} and \code{getUpper} return a numerical vector of lower and upper
 #' bounds, \code{getValues} returns a list of possible value sets for discrete parameters.
 #'

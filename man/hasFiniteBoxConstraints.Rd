@@ -2,8 +2,7 @@
 % Please edit documentation in R/hasFiniteBoxConstraints.R
 \name{hasFiniteBoxConstraints}
 \alias{hasFiniteBoxConstraints}
-\title{Checks if a parameter or each parameter of a parameter set has ONLY
-finite lower and upper bounds.}
+\title{Checks if a parameter or each parameter of a parameter set has ONLY finite lower and upper bounds.}
 \usage{
 hasFiniteBoxConstraints(par)
 }
@@ -15,7 +14,6 @@ Parameter or parameter set.}
 [\code{logical(1)}]
 }
 \description{
-Checks if a parameter or each parameter of a parameter set has ONLY
-finite lower and upper bounds.
+Checks if a parameter or each parameter of a parameter set has ONLY finite lower and upper bounds.
 }
 

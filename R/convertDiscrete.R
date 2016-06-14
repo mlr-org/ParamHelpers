@@ -1,5 +1,6 @@
-#' Convert encoding name(s) to discrete value(s).
+#' @title Convert encoding name(s) to discrete value(s).
 #'
+#' @description
 #' If the \code{name} is \code{NA}, indicating a missing parameter value due to unsatisfied requirements,
 #' \code{NA} is returned.
 #'
@@ -16,13 +17,13 @@
 #' @export
 discreteNameToValue = function(par, name) {
   # handle missing parameter values (requires)
-  if (isMissingName(name))
+  if (isScalarNA(name))
     return(NA)
   assertClass(par, "Param")
   assertChoice(par$type, c("discrete", "discretevector"))
-  assertCharacter(name, len = ifelse(par$type == "discrete", 1, par$len))
+  assertCharacter(name, len = ifelse(par$type == "discrete", 1L, par$len))
   d = setdiff(name, names(par$values))
-  if (length(d) > 0)
+  if (length(d) > 0L)
     stopf("Names not used in values for parameter %s: %s", par$id, collapse(d))
   if (par$type == "discrete")
     par$values[[name]]
@@ -30,8 +31,9 @@ discreteNameToValue = function(par, name) {
     par$values[name]
 }
 
-#' Convert discrete value(s) to encoding name(s).
+#' @title Convert discrete value(s) to encoding name(s).
 #'
+#' @description
 #' If the value \code{x} is \code{NA}, indicating a missing parameter value due to unsatisfied requirements,
 #' \code{NA} is returned.
 #'
@@ -47,16 +49,15 @@ discreteNameToValue = function(par, name) {
 #' @export
 discreteValueToName = function(par, x) {
   # handle missing parameter values (requires)
-  if (isMissingValue(x))
+  if (isScalarNA(x))
     return(NA_character_)
   assertClass(par, "Param")
   assertChoice(par$type, c("discrete", "discretevector"))
-  if (par$type == "discretevector")
-    if (length(x) != par$len)
-      stopf("Length of x must be %i!", par$len)
+  if (par$type == "discretevector" && length(x) != par$len)
+    stopf("Length of x must be %i!", par$len)
   ns = names(par$values)
   getIndex = function(values, v) {
-    j = which(sapply(values, function(w) isTRUE(all.equal(w, v))))
+    j = which(vlapply(values, function(w) isTRUE(all.equal(w, v))))
     if (length(j) == 0)
       stop("Value not found!")
     return(j)

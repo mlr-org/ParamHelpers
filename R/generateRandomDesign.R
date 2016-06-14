@@ -47,8 +47,3 @@ generateRandomDesign = function(n = 10L, par.set, trafo = FALSE) {
   attr(des, "trafo") = trafo
   return(des)
 }
-
-
-
-
-

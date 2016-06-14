@@ -1,5 +1,6 @@
-#' Get parameter subset of only certain parameters.
+#' @title Get parameter subset of only certain parameters.
 #'
+#' @description
 #' Parameter order is not changed.
 #'
 #' @template arg_parset

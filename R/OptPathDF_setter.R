@@ -6,8 +6,8 @@ addOptPathEl.OptPathDF = function(op, x, y, dob = getOptPathLength(op)+1L, eol =
   env = op$env
   assertList(x, len = length(op$par.set$pars))
   assertNumeric(y, len = length(op$y.names))
-  dob = asInt(dob, na.ok = TRUE)
   eol = asInt(eol, na.ok = TRUE)
+  dob = asInt(dob, na.ok = TRUE)
   assertString(error.message, na.ok = TRUE)
   assertNumber(exec.time, lower = 0, na.ok = TRUE)
   if (!is.null(extra)) {
@@ -17,7 +17,7 @@ addOptPathEl.OptPathDF = function(op, x, y, dob = getOptPathLength(op)+1L, eol =
     if (!isProperlyNamed(extra))
       stopf("'extra' must be properly named!")
     nondot.extra = removeDotEntries(extra)
-    if (!all(sapply(nondot.extra, isScalarValue)))
+    if (!all(vlapply(nondot.extra, isScalarValue)))
       stopf("'extra' can currently only contain scalar values!")
     if (length(env$extra) > 0L) {
       nondot.extra.precedent = removeDotEntries(env$extra[[1L]])
@@ -75,6 +75,3 @@ addOptPathEl.OptPathDF = function(op, x, y, dob = getOptPathLength(op)+1L, eol =
 
   return(invisible(NULL))
 }
-
-
-

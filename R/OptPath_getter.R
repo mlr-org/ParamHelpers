@@ -1,5 +1,6 @@
-#' Get the length of the optimization path.
+#' @title Get the length of the optimization path.
 #'
+#' @description
 #' Dependent parameters whose requirements are not satisfied are represented by a scalar
 #' NA in the output.
 #'
@@ -11,8 +12,9 @@ getOptPathLength = function(op) {
   UseMethod("getOptPathLength")
 }
 
-#' Get an element from the optimization path.
+#' @title Get an element from the optimization path.
 #'
+#' @description
 #' Dependent parameters whose requirements are not satisfied are represented by a scalar NA
 #' in the elements of \code{x} of the return value.
 #'
@@ -186,7 +188,7 @@ getOptPathBestIndex = function(op, y.name = op$y.names[1], dob = op$env$dob, eol
       best.inds = which(max(y, na.rm = TRUE) == y)
     best.inds = life.inds[best.inds]
   }
-  if (length(best.inds) > 1) {
+  if (length(best.inds) > 1L) {
     if (ties == "all")
       return(best.inds)
     else if (ties == "first")
@@ -194,7 +196,7 @@ getOptPathBestIndex = function(op, y.name = op$y.names[1], dob = op$env$dob, eol
     else if (ties == "last")
       return(best.inds[length(best.inds)])
     else if (ties == "random")
-      return(best.inds[sample(length(best.inds), 1)])
+      return(best.inds[sample(length(best.inds), 1L)])
   } else {
     return(best.inds)
   }
@@ -227,14 +229,14 @@ getOptPathBestIndex = function(op, y.name = op$y.names[1], dob = op$env$dob, eol
 #' getOptPathParetoFront(op, index = TRUE)
 getOptPathParetoFront = function(op, y.names = op$y.names, dob = op$env$dob, eol = op$env$eol, index = FALSE) {
   assertClass(op, "OptPath")
-  assertCharacter(y.names, min.len = 2)
+  assertCharacter(y.names, min.len = 2L)
   assertSubset(y.names, op$y.names, empty.ok = FALSE)
   dob = asInteger(dob, any.missing = TRUE)
   eol = asInteger(eol, any.missing = TRUE)
   assertFlag(index, na.ok = TRUE)
   requirePackages("emoa", default.method = "load")
   life.inds = which(op$env$dob %in% dob & op$env$eol %in% eol)
-  if (length(life.inds) == 0)
+  if (length(life.inds) == 0L)
     stop("No element found which matches dob and eol restrictions!")
   y = getOptPathY(op, y.names, drop = FALSE)[life.inds, , drop = FALSE]
   # multiply columns with -1 if maximize
@@ -243,8 +245,8 @@ getOptPathParetoFront = function(op, y.names = op$y.names, dob = op$env$dob, eol
   # is_dominated has kind of buggy behavoiur if y2 is a row
   # (it hinks, we have a 1-dimensional optimization prob und returns the min index)
   # so we have to treat this case manually
-  if (nrow(y2) == 1)
-    nondom = 1
+  if (nrow(y2) == 1L)
+    nondom = 1L
   else
     nondom = which(!emoa::is_dominated(y2))
   if (index)
@@ -252,4 +254,3 @@ getOptPathParetoFront = function(op, y.names = op$y.names, dob = op$env$dob, eol
   else
     return(y[nondom, , drop = FALSE])
 }
-

@@ -1,6 +1,8 @@
-#' Return ids of parameters in parameter set.
+#' @title Return ids of parameters in parameter set.
 #'
+#' @description
 #' Useful if vectors are included.
+#'
 #' @template arg_parset
 #' @param repeated [\code{logical(1)}]\cr
 #'   Should ids be repeated length-times if parameter is a vector?
@@ -42,4 +44,3 @@ getParamIds2 = function(pars, repeated = FALSE, with.nr = FALSE) {
   })
   as.character(do.call(c, ns))
 }
-

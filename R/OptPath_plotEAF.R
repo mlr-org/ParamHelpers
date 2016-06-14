@@ -23,17 +23,16 @@
 #'   Invisibly returns the data passed to \code{\link[eaf]{eafplot}}.
 #' @export
 plotEAF = function(opt.paths, xlim = NULL, ylim = NULL, ...) {
-  
   requirePackages("eaf", why = "plotEAF")
-  
+
   # we need a list of lists with optimization pathes
   assertList(opt.paths, min.len = 1L, types = "list", names = "unique")
-  
+
   if (!is.null(xlim))
     assertNumeric(xlim, len = 2L)
   if (!is.null(ylim))
     assertNumeric(ylim, len = 2L)
-  
+
   algos = names(opt.paths)
   y.names = NULL
   minimize = NULL
@@ -43,7 +42,7 @@ plotEAF = function(opt.paths, xlim = NULL, ylim = NULL, ...) {
     a = algos[i]
     runs = opt.paths[[i]]
     assertList(runs, types = "OptPath", min.len = 1L)
-    
+
     # combine all fronts for this algo + add algo / repl + do some sanity checks
     fronts = lapply(seq_along(runs), function(j) {
       run = runs[[j]]

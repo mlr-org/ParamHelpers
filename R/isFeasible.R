@@ -90,7 +90,7 @@ constraintsOkParam = function(par, x) {
   # this should work in any! case.
   if (type == "untyped")
     return(TRUE)
-  inValues = function(v) any(sapply(par$values, function(w) isTRUE(all.equal(w, v))))
+  inValues = function(v) any(vlapply(par$values, function(w) isTRUE(all.equal(w, v))))
   ok = if (type == "numeric")
     is.numeric(x) && length(x) == 1 && (par$allow.inf || is.finite(x)) && x >= par$lower && x <= par$upper
   else if (type == "integer")
@@ -102,15 +102,15 @@ constraintsOkParam = function(par, x) {
   else if (type == "discrete")
     inValues(x)
   else if (type == "discretevector")
-    is.list(x) && length(x) == par$len && all(sapply(x, inValues))
+    is.list(x) && length(x) == par$len && all(vlapply(x, inValues))
   else if (type == "logical")
     is.logical(x) && length(x) == 1 && !is.na(x)
   else if (type == "logicalvector")
-    is.logical(x) && length(x) == par$len && !any(is.na(x))
+    is.logical(x) && length(x) == par$len && !anyMissing(x)
   else if (type == "character")
     is.character(x) && length(x) == 1 && !is.na(x)
   else if (type == "charactervector")
-    is.character(x) && length(x) == par$len && !any(is.na(x))
+    is.character(x) && length(x) == par$len && !anyMissing(x)
   else if (type == "function")
     is.function(x)
 
@@ -122,7 +122,7 @@ constraintsOkParam = function(par, x) {
 }
 
 constraintsOkLearnerParam = function(par, x) {
-  inValues = function(v) any(sapply(par$values, function(w) isTRUE(all.equal(w, v))))
+  inValues = function(v) any(vlapply(par$values, function(w) isTRUE(all.equal(w, v))))
   type = par$type
   # extra case for unkown dim in vector
   if (type == "numericvector")
@@ -130,9 +130,9 @@ constraintsOkLearnerParam = function(par, x) {
   else if (type == "integervector")
     is.numeric(x) && (is.na(par$len) || length(x) == par$len) && all(is.finite(x) & x >= par$lower & x <= par$upper & x == as.integer(x))
   else if (type == "logicalvector")
-    is.logical(x) && (is.na(par$len) || length(x) == par$len) && !any(is.na(x))
+    is.logical(x) && (is.na(par$len) || length(x) == par$len) && !anyMissing(x)
   else if (type == "discretevector")
-    is.list(x) && (is.na(par$len) || length(x) == par$len) && all(sapply(x, inValues))
+    is.list(x) && (is.na(par$len) || length(x) == par$len) && all(vlapply(x, inValues))
   else
     constraintsOkParam(par, x)
 }

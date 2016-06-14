@@ -1,4 +1,4 @@
-#' Sample a random value from a parameter or a parameter set uniformly.
+#' @title Sample a random value from a parameter or a parameter set uniformly.
 #'
 #' @template desc_dep_pars_na
 #'
@@ -99,7 +99,7 @@ sampleValue.ParamSet = function(par, discrete.names = FALSE, trafo = FALSE) {
 }
 
 
-#' Sample n random values from a parameter or a parameter set uniformly.
+#' @title Sample n random values from a parameter or a parameter set uniformly.
 #'
 #' @template desc_dep_pars_na
 #'
@@ -132,4 +132,3 @@ sampleValues = function(par, n, discrete.names = FALSE, trafo = FALSE) {
   assertFlag(discrete.names)
   replicate(n, sampleValue(par, discrete.names = discrete.names, trafo = trafo), simplify = FALSE)
 }
-

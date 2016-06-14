@@ -209,7 +209,7 @@ checkValuesForDiscreteParam = function(id, values) {
 
   # check that NA does not occur in values, we use that for "missing state" for dependent params
   # make sure that this works for complex object too, cannot be done with simple is.na
-  if (any(sapply(values, isScalarNA)))
+  if (any(vlapply(values, isScalarNA)))
     stopf("NA is not allowed as a value for discrete parameter %s.\nParamHelpers uses NA as a special value for dependent parameters.", id)
 
   n = length(values)

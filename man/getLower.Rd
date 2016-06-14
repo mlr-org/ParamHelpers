@@ -26,8 +26,7 @@ Default is \code{FALSE}.}
 \description{
 \code{getLower} and \code{getUpper} return a numerical vector of lower and upper
 bounds, \code{getValues} returns a list of possible value sets for discrete parameters.
-}
-\details{
+
 Parameters for which such bound make no sense - due to their type - are not present in the result.
 }
 \examples{

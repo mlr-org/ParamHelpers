@@ -77,7 +77,7 @@ Function must accept a parameter value as the first argument and return a transf
 Default is \code{NULL} which means no transformation.}
 
 \item{requires}{[\code{NULL} | R expression]\cr
-States requirements on other paramaters' values, so that setting
+States requirements on other parameters' values, so that setting
 this parameter only makes sense if its requirements are satisfied (dependent parameter).
 Only really useful if the parameter is included in a \code{\link{ParamSet}}.
 Note that if your dependent parameter is a logical Boolean you need to verbosely write
@@ -112,18 +112,17 @@ as internal representations for the choice.}
 }
 \description{
 For each parameter type a special constructor function is available, see below.
-}
-\details{
+
 The S3 class is a list which stores these elements:
 \describe{
-\item{id [\code{character(1)}]}{See argument of same name.}
-\item{type [\code{character(1)}]}{Data type of parameter. Possible types are \dQuote{numeric}, \dQuote{numericvector}, \dQuote{integer}, \dQuote{integervector}, \dQuote{logical}, \dQuote{logicalvector}, \dQuote{discrete}, \dQuote{discretevector}, \dQuote{function}, \dQuote{untyped}.}
-\item{len [\code{integer(1)}]}{See argument of same name.}
-\item{lower [\code{numeric}]}{See argument of same name. Length of this vector is \code{len}.}
-\item{upper [\code{numeric}]}{See argument of same name. Length of this vector is \code{len}.}
-\item{values [\code{list}]}{Discrete values, always stored as a named list.}
-\item{trafo [\code{NULL} | \code{function(x)}]}{See argument of same name.}
-\item{requires [\code{NULL} | \code{expression}]}{See argument of same name.}
+  \item{id [\code{character(1)}]}{See argument of same name.}
+  \item{type [\code{character(1)}]}{Data type of parameter. Possible types are \dQuote{numeric}, \dQuote{numericvector}, \dQuote{integer}, \dQuote{integervector}, \dQuote{logical}, \dQuote{logicalvector}, \dQuote{discrete}, \dQuote{discretevector}, \dQuote{function}, \dQuote{untyped}.}
+  \item{len [\code{integer(1)}]}{See argument of same name.}
+  \item{lower [\code{numeric}]}{See argument of same name. Length of this vector is \code{len}.}
+  \item{upper [\code{numeric}]}{See argument of same name. Length of this vector is \code{len}.}
+  \item{values [\code{list}]}{Discrete values, always stored as a named list.}
+  \item{trafo [\code{NULL} | \code{function(x)}]}{See argument of same name.}
+  \item{requires [\code{NULL} | \code{expression}]}{See argument of same name.}
 }
 }
 \examples{
