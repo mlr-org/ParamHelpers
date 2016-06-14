@@ -32,7 +32,9 @@ test_that("convertParamSetToIrace", {
   runIrace(ps, hook.run, max.exps = 300)
   ps = makeParamSet(
     makeDiscreteParam("x1", values = c("a", "b")),
-    makeLogicalParam("x2", requires = quote(x1 == "a"))
+    makeLogicalParam("x2", requires = quote(x1 == "a")),
+    makeLogicalParam("x3", requires =
+      quote(x1 == "a" && x2 == "FALSE" && x1 == "a" && x2 == "FALSE" && x1 == "a" && x2 == "FALSE" && x1 == "a" && x2 == "FALSE" && x1 == "a" && x2 == "FALSE" && x1 == "a" && x2 == "FALSE" && x1 == "a" && x2 == "FALSE" && x1 == "a" && x2 == "FALSE" && x1 == "a" && x2 == "FALSE"))
   )
   ips = convertParamSetToIrace(ps)
   expect_false(identical(ips$constraints$x2, expression(TRUE)))
@@ -40,6 +42,8 @@ test_that("convertParamSetToIrace", {
     v = experiment$candidate
     if ((v$x1 == "a" && is.na(v$x2)) || (v$x1 == "b" && !is.na(v$x2)))
       stop("foo")
+    if ((v$x1 == "a" && v$x2 == "FALSE" && is.na(v$x3)) || (!(v$x1 == "a" && v$x2 == "FALSE") && !is.na(v$x3)))
+      stop("requires failed")
     1
   }
   runIrace(ps, hook.run, max.exps = 300)
