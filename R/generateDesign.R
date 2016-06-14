@@ -141,7 +141,9 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
     # check each row if forbidden, then remove
     if (hasForbidden(par.set)) {
       #FIXME: this is pretty slow, but correct
-      fb = rowSapply(newres, isForbidden, par.set = par.set)
+      fb = unlist(lapply(dfRowsToList(newres, par.set = par.set), function(x) {
+        isForbidden(x, par.set = par.set)
+      }))
       newres = newres[!fb, , drop = FALSE]
       newdes = newdes[!fb, , drop = FALSE]
     }

@@ -221,3 +221,18 @@ test_that("removing duplicates", {
   expect_warning(res <- generateDesign(7L, ps))
   expect_true(nrow(res) <= 6L)
 })
+
+test_that("vector params and forbidden regions", {
+  # here we have a parameter set with a vector parameters
+  ps = makeParamSet(
+    makeNumericVectorParam(id = "x", len = 2, lower = 0, upper = 1),
+    makeDiscreteParam(id = "disc", values = letters[1:2]),
+    forbidden = expression(sum(x) > 1)
+  )
+
+  # the expression in 'forbidden' should not throw an error anymore
+  # See https://github.com/berndbischl/ParamHelpers/issues/51
+  res = generateDesign(100L, ps)
+  expect_equal(nrow(res), 100L)
+  expect_numeric(rowSums(res[,c("x1","x2")]), lower = 0, upper = 1)
+})
