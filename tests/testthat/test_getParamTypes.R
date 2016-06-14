@@ -30,4 +30,9 @@ test_that("getParamTypes", {
     c(x = "factor", y1 = "numeric", y2 = "numeric", z = "integer",
       s1 = "character", s2 = "character")
   )
+
+  expect_equal(
+    getParamTypes(makeParamSet()),
+    character(0L)
+  )
 })
