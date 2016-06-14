@@ -126,8 +126,11 @@ print.OptPath = function(x, ...) {
     s = sprintf(" Range: %g - %g. %i NAs.", et1, et2, ntime.nas)
   }
   catf("  Exec times: %s.%s", !is.null(et), s)
-  if (!is.null(ex))
-  catf("  Extras: %i columns", ifelse(length(ex) > 0L, length(ex[[1]]), NA))
+  if (!is.null(ex)) {
+    nondot.extra.length = ifelse(length(ex) > 0L,
+        length(removeDotEntries(ex[[1]])), NA)
+    catf("  Extras: %i columns", nondot.extra.length)
+  }
 }
 
 

@@ -85,8 +85,9 @@ getOptPathCol.OptPathDF = function(op, name, dob = op$env$dob, eol = op$env$eol)
     return(getOptPathExecTimes(op, dob, eol))
   if (name == "error.message")
     return(getOptPathErrorMessages(op, dob, eol))
-  if (name %in% names(op$env$extra[[1]]))
-    return(extractSubList(op$env$extra[getOptPathDobAndEolIndex(op, dob, eol)], name))
+  if (name %in% names(op$env$extra[[1]]) || substr(name, 1, 1) == ".")
+    return(extractSubList(op$env$extra[getOptPathDobAndEolIndex(op, dob, eol)], name,
+            simplify = substr(name, 1, 1) != "."))
   stop("The column you specified is not present in the opt.path.")
 }
 

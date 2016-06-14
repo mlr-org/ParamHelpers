@@ -16,13 +16,17 @@ addOptPathEl.OptPathDF = function(op, x, y, dob = getOptPathLength(op)+1L, eol =
     assertList(extra)
     if (!isProperlyNamed(extra))
       stopf("'extra' must be properly named!")
-    if (!all(sapply(extra, isScalarValue)))
+    nondot.extra = removeDotEntries(extra)
+    if (!all(sapply(nondot.extra, isScalarValue)))
       stopf("'extra' can currently only contain scalar values!")
     if (length(env$extra) > 0L) {
-      if (!all(names(extra) %in% names(env$extra[[1L]])))
-        stopf("Trying to add unknown extra(s): %s!", collapse(setdiff(names(extra), names(env$extra[[1L]]))))
-      if (!all(names(env$extra[[1L]]) %in% (names(extra))))
-        stopf("Trying to add extras but missing: %s!", collapse(setdiff(names(env$extra[[1L]]), names(extra))))
+      nondot.extra.precedent = removeDotEntries(env$extra[[1L]])
+      unknown.extra = setdiff(names(nondot.extra), names(nondot.extra.precedent))
+      missing.extra = setdiff(names(nondot.extra.precedent), names(nondot.extra))
+      if (length(unknown.extra) > 0)
+        stopf("Trying to add unknown extra(s): %s!", collapse(unknown.extra))
+      if (length(missing.extra) > 0)
+        stopf("Trying to add extras but missing: %s!", collapse(missing.extra))
     }
     env$extra[[length(env$extra) + 1L]] = extra
   }

@@ -256,14 +256,27 @@ test_that("logging extra works", {
   expect_error(addOptPathEl(op, x = list(v = 1), y = 5, extra = list()), "Trying to add extras but missing: ee")
 })
 
+test_that("exta entries with dots may be nonscalar", {
+  ps = makeParamSet(makeNumericParam("v"))
+  op = makeOptPathDF(par.set = ps, y.names = "y", minimize = TRUE, include.extra = TRUE)
+  addOptPathEl(op, x = list(v = 1), y = 5, extra = list(ee = 7, .ee = list(1, list())))
+  df = setRowNames(as.data.frame(op), NULL)
+  expect_equal(df, data.frame(v = 1, y = 5, dob = 1L, eol = NA_integer_, ee = 7))
+  expect_equal(getOptPathEl(op, 1L), list(x = list(v = 1), y = c(y = 5), dob = 1L, eol = NA_integer_,
+    extra = list(ee = 7, .ee = list(1, list()))))
+  # adding dotted extras with different names should be allowed
+  addOptPathEl(op, x = list(v = 1), y = 5, extra = list(ee = 8, .ff = 1))
+  addOptPathEl(op, x = list(v = 1), y = 5, extra = list(ee = 9))
+})
+
 test_that("as.data.frame flags and getCols works", {
   ps = makeParamSet(
     makeNumericParam("x"),
     makeDiscreteParam("y", values = c("a", "b"))
   )
   op = makeOptPathDF(par.set = ps, y.names = c("z1", "z2"), minimize = c(TRUE, TRUE), include.extra = TRUE)
-  addOptPathEl(op, x = list(x = 1, y = "a"), y = c(z1 = 1, z2 = 4), extra = list(ee = 7))
-  addOptPathEl(op, x = list(x = 2, y = "a"), y = c(z1 = 3, z2 = 2), extra = list(ee = 8))
+  addOptPathEl(op, x = list(x = 1, y = "a"), y = c(z1 = 1, z2 = 4), extra = list(ee = 7, .ee = 8))
+  addOptPathEl(op, x = list(x = 2, y = "a"), y = c(z1 = 3, z2 = 2), extra = list(ee = 8, .ff = list(8, list())))
 
   expect_error(as.data.frame(op, include.x = FALSE, include.y = FALSE, include.rest = FALSE), "include something")
   df1 = as.data.frame(op, include.rest = FALSE, discretes.as.factor = TRUE)
@@ -280,6 +293,7 @@ test_that("as.data.frame flags and getCols works", {
   expect_equal(sapply(df1, class), c(x = "numeric", y = "factor", z1 = "numeric", z2 = "numeric"))
   expect_equal(sapply(df2, class), c(z1 = "numeric", z2 = "numeric"))
   expect_equal(sapply(df3, class), c(dob = "integer", eol = "integer", ee = "numeric"))
+  # the dotted entries are not present as columns.
   expect_equal(sapply(df4, class), c(x = "numeric", y = "factor", z1 = "numeric", z2 = "numeric",
     dob = "integer", eol = "integer", ee = "numeric"))
   expect_error(getOptPathCol(op,"bla"), "not present")
@@ -291,6 +305,9 @@ test_that("as.data.frame flags and getCols works", {
   expect_equal(getOptPathCol(op, "y"), c("a", "a"))
   expect_equal(getOptPathCol(op, "z1"), c(1, 3))
   expect_equal(getOptPathCol(op, "ee"), c(7, 8))
+  expect_equal(getOptPathCol(op, ".ee"), list(8, NULL))
+  expect_equal(getOptPathCol(op, ".ff"), list(NULL, list(8, list())))
+  expect_equal(getOptPathCol(op, ".xx"), list(NULL, NULL))
 
   d = getOptPathCols(op, c("x", "y"))
   expect_equal(dim(d), c(2L, 2L))
@@ -319,4 +336,9 @@ test_that("opt.path printing works", {
   expect_output(print(op), "Exec times: TRUE. Range: 0 - 0. 1 NAs")
   addOptPathEl(op, x = list(x = 1, y = "a"), y = c(z1 = 1), exec.time = 3)
   expect_output(print(op), "Exec times: TRUE. Range: 3 - 3. 1 NAs.")
+
+  op = makeOptPathDF(par.set = ps, y.names = c("z1", "z2"), minimize = c(TRUE, FALSE), include.extra = TRUE)
+  expect_output(print(op), "Extras: NA columns")
+  addOptPathEl(op, x = list(x = 1, y = "a"), y = c(z1 = 1, z2 = 4), extra = list(ee = 8, .ee = list(a = 1, b = 2)))
+  expect_output(print(op), "Extras: 1 columns")
 })
