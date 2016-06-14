@@ -64,5 +64,6 @@ The following types of columns are created:
 If you want to convert these, look at \code{\link[BBmisc]{convertDataFrameCols}}.
 Dependent parameters whose constraints are unsatisfied generate \code{NA} entries in their
 respective columns.
+Factor columns of discrete parameters always have their complete level set from the \code{param.set}.
 }
 
