@@ -12,14 +12,19 @@ Parameter or parameter set.}
 
 \item{x}{[any] \cr
 Single value to check.
-For a parameter set this must be a list.}
+For a parameter set this must be a list.
+If the list is named, it is possible to only pass a subset of parameters defined
+in the \code{\link{ParamSet}} \code{par}. In that case, only conditions regarding the passed
+parameters are checked.
+(Note that this might not work if one of the passed params has a \code{requires} setting
+which refers to an unpassed param.)}
 
 \item{use.defaults}{[\code{logical(1)}]\cr
-Whether defaults of the Param / ParamSet should be used if no values are supplied.
+Whether defaults of the \code{\link{Param}}/\code{\link{ParamSet}} should be used if no values are supplied.
 Default is \code{FALSE}.}
 
 \item{filter}{[\code{logical(1)}]\cr
-Whether the param.set should be reduced to the space of the given Param Values.
+Whether the \code{\link{ParamSet}} should be reduced to the space of the given Param Values.
 Note that in case of \code{use.defaults = TRUE} the filtering will be conducted after the insertion of the default values.
 Default is \code{FALSE}.}
 }
@@ -27,7 +32,7 @@ Default is \code{FALSE}.}
 [\code{logical(1)}].
 }
 \description{
-Check if a parameter value satisfies the constraints of the parameter description. 
+Check if a parameter value satisfies the constraints of the parameter description.
 This includes the \code{requires} expressions and the \code{forbidden} expression, if \code{par} is a \code{\link{ParamSet}}.
 If \code{requires} is not satisfied, the parameter value must be set to scalar \code{NA} to be still feasible, a single scalar even in a case of a vector parameter.
 If the result is \code{FALSE} the attribute \code{"warning"} is attached which gives the reason for the negative result.

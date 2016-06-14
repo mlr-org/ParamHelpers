@@ -29,8 +29,8 @@ Vector of allowed values for the property \code{tunable}. Accepted arguments are
 The default is \code{c(TRUE, FALSE)}, i.e. none of the parameters will be filtered out.}
 
 \item{check.requires}{[\code{logical(1)}]\cr
-Wether it should be checked that requirements in the ParamSet are not destroyed. If \code{TRUE} an error is thrown.
-Default is \code{FALSE}.}
+Toggle whether it should be checked that all requirements in the \code{\link{ParamSet}} are still valid after filtering
+or not. Default is \code{FALSE}.}
 }
 \value{
 [\code{\link{ParamSet}}].

@@ -1,5 +1,5 @@
 #' @title Insert par.vals to old ones with meeting requirements
-#' @description 
+#' @description
 #'   Update the values of a given parameter setting with a new parameter setting.
 #'   Settings that do not meet the requirements anymore will be deleted from the first given parameter setting.
 #'

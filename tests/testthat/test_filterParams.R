@@ -80,5 +80,4 @@ test_that("filtering with requirements", {
     makeNumericParam("y", requires = quote(x == "a"))
   )
   expect_error(filterParams(par.set = ps, type = "numeric", check.requires = TRUE), "Params x filtered")
-
 })
