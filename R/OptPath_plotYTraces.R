@@ -1,4 +1,4 @@
-C#' @title Plots Y traces of multiple optimization paths
+#' @title Plots Y traces of multiple optimization paths
 #'
 #' @description Can be used for only single-objective optimization paths.
 #' Useful to compare runs of different algorithms on the same optimization problem.
