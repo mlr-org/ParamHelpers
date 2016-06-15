@@ -69,7 +69,7 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE) {
   el.counter = 1L
 
   # iterate over all params and discretize them
-  for (i in 1:n) {
+  for (i in seq_len(n)) {
     p = pars[[i]]
     if (isNumeric(p)) {
       lower = p$lower
@@ -80,7 +80,7 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE) {
     }
 
     # iterate over vector elements and d
-    for (j in 1:p$len) {
+    for (j in seq_len(p$len)) {
       if (isDiscrete(p, include.logical = FALSE)) {
         newvals = names(discvals)
       } else if (isLogical(p)) {

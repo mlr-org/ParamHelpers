@@ -1,5 +1,6 @@
-#' Check parameter / parameter set for requirements / dependencies.
+#' @title Check parameter / parameter set for requirements / dependencies.
 #'
+#' @description
 #' \code{TRUE} iff the parameter has any requirements or any parameter in the set has
 #' requirements.
 #'
@@ -19,4 +20,3 @@ hasRequires.Param = function(par) {
 hasRequires.ParamSet = function(par) {
   return(any(vapply(par$pars, hasRequires, logical(1L))))
 }
-

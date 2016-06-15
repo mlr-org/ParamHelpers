@@ -12,7 +12,7 @@ isVector = function(par) {
 
 #' @export
 isVector.Param = function(par) {
-  return(grepl("vector", par$type))
+  return(grepl("vector", fixed = TRUE, par$type))
 }
 
 #' @export

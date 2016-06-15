@@ -1,5 +1,6 @@
-#' Return number of parameters in set.
+#' @title Return number of parameters in set.
 #'
+#' @description
 #' Either number of parameters or sum over parameter lengths.
 #'
 #' @template arg_parset

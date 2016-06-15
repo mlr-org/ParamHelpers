@@ -26,4 +26,3 @@ getDefaults = function(par.set, include.null = FALSE) {
   }
   return(defs)
 }
-

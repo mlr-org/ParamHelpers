@@ -1,5 +1,5 @@
-C#' @title Plots Y traces of multiple optimization paths
-#' 
+#' @title Plots Y traces of multiple optimization paths
+#'
 #' @description Can be used for only single-objective optimization paths.
 #' Useful to compare runs of different algorithms on the same optimization problem.
 #' You can add your own ggplot layers to the resulting plot object.
@@ -10,11 +10,8 @@ C#' @title Plots Y traces of multiple optimization paths
 #'   Should the traces be plotted versus the iteration number or the cumulated
 #'   execution time? For the later, the opt.path has to contain a extra column
 #'   names exec.time. Possible values are dob and exec.time, default is \code{dob}.
-#' @return 
-#'   ggplot2 plot object
-
+#' @return ggplot2 plot object
 renderYTraces = function(opt.paths, over.time = "dob") {
-  
   assertList(opt.paths, types = "OptPath", min.len = 1L)
   assertChoice(over.time, choices = c("dob", "exec.time"))
   run.name = names(opt.paths)
@@ -54,17 +51,17 @@ renderYTraces = function(opt.paths, over.time = "dob") {
     # add column for algorithm and replication
     cbind(df, .algo = run.name[j])
   })
-  
+
   data = do.call(rbind, fronts)
   mean.data = aggregate(data[[y.name]], by = list(data$time, data$.algo), FUN = mean)
   names(mean.data) = c("time", ".algo", y.name)
-  
-  pl = ggplot2::ggplot(data, ggplot2::aes_string(x = "time", y = y.name, group = ".algo", 
+
+  pl = ggplot2::ggplot(data, ggplot2::aes_string(x = "time", y = y.name, group = ".algo",
     linetype = ".algo", col = ".algo"))
   if (over.time == "dob")
     pl = pl + ggplot2::geom_point(size = 3)
-  pl = pl + ggplot2::geom_line(data = mean.data, size = 1) 
-  
+  pl = pl + ggplot2::geom_line(data = mean.data, size = 1)
+
   return(pl)
 }
 
@@ -82,9 +79,7 @@ renderYTraces = function(opt.paths, over.time = "dob") {
 #' @return [\code{NULL}]
 #'
 #' @export
-
 plotYTraces = function(opt.paths, over.time = "dob") {
   print(renderYTraces(opt.paths, over.time))
   return(invisible(NULL))
 }
-

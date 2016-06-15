@@ -1,6 +1,8 @@
-#' Transform a value.
+#' @title Transform a value.
 #'
+#' @description
 #' Transform a value with associated transformation function(s).
+#'
 #' @template arg_par_or_set
 #' @param x [any] \cr
 #'   Single value to check.

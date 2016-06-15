@@ -19,7 +19,7 @@ isNumeric = function(par, include.int = TRUE) {
 
 #' @export
 isNumeric.ParamSet = function(par, include.int = TRUE) {
-  all(sapply(par$pars, isNumeric.Param, include.int = include.int))
+  all(vlapply(par$pars, isNumeric.Param, include.int = include.int))
 }
 
 #' @export

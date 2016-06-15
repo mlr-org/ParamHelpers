@@ -3,7 +3,6 @@ getOptPathDobAndEolIndex = function(op, dob = op$env$dob, eol = op$env$eol) {
   op$env$dob %in% dob & op$env$eol %in% eol
 }
 
-
 #' @export
 getOptPathLength.OptPathDF = function(op) {
   nrow(op$env$path)

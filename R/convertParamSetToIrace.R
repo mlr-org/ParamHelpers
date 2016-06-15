@@ -18,7 +18,7 @@ convertParamSetToIrace = function(par.set, as.chars = FALSE) {
   if (!hasFiniteBoxConstraints(par.set))
     stop("convertParamSetToIrace requires finite box constraints for all numeric and integer params!")
   requirePackages("irace", why = "convertParamSetToIrace", default.method = "load")
-  lines = character(0)
+  lines = character(0L)
   count = 1L
   for (i in seq_along(par.set$pars)) {
     p = par.set$pars[[i]]
@@ -35,7 +35,7 @@ convertParamSetToIrace = function(par.set, as.chars = FALSE) {
       ordered = "o"
     )
     for (j in seq_len(p$len)) {
-      id = if (p$len == 1) p$id else paste(p$id, j, sep = "")
+      id = if (p$len == 1L) p$id else paste(p$id, j, sep = "")
       if (p$type %in% c("numeric", "numericvector"))
         line = sprintf('%s "" %s (%g, %g)', id, type, p$lower[j], p$upper[j])
       else if (p$type %in% c("integer", "integervector"))

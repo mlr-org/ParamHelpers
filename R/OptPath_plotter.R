@@ -1,5 +1,6 @@
-#' Plot method for optimization paths.
+#' @title Plot method for optimization paths.
 #'
+#' @description
 #' Plot method for every type of optimization path, containing any numbers and
 #' types of variables. For every iteration up to 4 types of plots can be generated:
 #' One plot for the distribution of points in X and Y space respectively and plots
@@ -25,7 +26,6 @@
 #'
 plotOptPath = function(op, iters, pause = TRUE, xlim = list(), ylim = list(),
   title = "Optimization Path Plots", ...) {
-
   requirePackages("gridExtra", why = "plotOptPath")
 
   if (missing(iters))
@@ -59,7 +59,7 @@ plotOptPath = function(op, iters, pause = TRUE, xlim = list(), ylim = list(),
 
     plot.bottom = Filter(Negate(is.null), list(plots$plot.x.over.time, plots$plot.y.over.time))
 
-    if (length(plot.bottom) > 0) {
+    if (length(plot.bottom) > 0L) {
       plot.bottom =  do.call(gridExtra::arrangeGrob, c(plot.bottom, nrow = 1L))
       plots = list(plot.top, plot.bottom)
     } else {

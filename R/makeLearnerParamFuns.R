@@ -124,4 +124,3 @@ makeVectorParamNALength = function(fun, default, ...)  {
   len = if (missing(default)) 1L else length(default)
   fun(len = len, default = default, ...)
 }
-

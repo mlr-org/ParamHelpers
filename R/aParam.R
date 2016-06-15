@@ -1,17 +1,18 @@
-#' Create a description object for a parameter.
+#' @title Create a description object for a parameter.
 #'
+#' @description
 #' For each parameter type a special constructor function is available, see below.
 #'
 #' The S3 class is a list which stores these elements:
 #' \describe{
-#' \item{id [\code{character(1)}]}{See argument of same name.}
-#' \item{type [\code{character(1)}]}{Data type of parameter. Possible types are \dQuote{numeric}, \dQuote{numericvector}, \dQuote{integer}, \dQuote{integervector}, \dQuote{logical}, \dQuote{logicalvector}, \dQuote{discrete}, \dQuote{discretevector}, \dQuote{function}, \dQuote{untyped}.}
-#' \item{len [\code{integer(1)}]}{See argument of same name.}
-#' \item{lower [\code{numeric}]}{See argument of same name. Length of this vector is \code{len}.}
-#' \item{upper [\code{numeric}]}{See argument of same name. Length of this vector is \code{len}.}
-#' \item{values [\code{list}]}{Discrete values, always stored as a named list.}
-#' \item{trafo [\code{NULL} | \code{function(x)}]}{See argument of same name.}
-#' \item{requires [\code{NULL} | \code{expression}]}{See argument of same name.}
+#'   \item{id [\code{character(1)}]}{See argument of same name.}
+#'   \item{type [\code{character(1)}]}{Data type of parameter. Possible types are \dQuote{numeric}, \dQuote{numericvector}, \dQuote{integer}, \dQuote{integervector}, \dQuote{logical}, \dQuote{logicalvector}, \dQuote{discrete}, \dQuote{discretevector}, \dQuote{function}, \dQuote{untyped}.}
+#'   \item{len [\code{integer(1)}]}{See argument of same name.}
+#'   \item{lower [\code{numeric}]}{See argument of same name. Length of this vector is \code{len}.}
+#'   \item{upper [\code{numeric}]}{See argument of same name. Length of this vector is \code{len}.}
+#'   \item{values [\code{list}]}{Discrete values, always stored as a named list.}
+#'   \item{trafo [\code{NULL} | \code{function(x)}]}{See argument of same name.}
+#'   \item{requires [\code{NULL} | \code{expression}]}{See argument of same name.}
 #' }
 #'
 #' @param id [\code{character(1)}]\cr
@@ -48,7 +49,7 @@
 #'   Function must accept a parameter value as the first argument and return a transformed one.
 #'   Default is \code{NULL} which means no transformation.
 #' @param requires [\code{NULL} | R expression]\cr
-#'   States requirements on other paramaters' values, so that setting
+#'   States requirements on other parameters' values, so that setting
 #'   this parameter only makes sense if its requirements are satisfied (dependent parameter).
 #'   Only really useful if the parameter is included in a \code{\link{ParamSet}}.
 #'   Note that if your dependent parameter is a logical Boolean you need to verbosely write
@@ -81,7 +82,7 @@ makeParam = function(id, type, len, lower, upper, values, cnames, allow.inf = FA
   } else {
     has.default = TRUE
   }
-  #FIXME: Do we need to check for NA here? hopefully not because this might occur in mlr?
+  # FIXME: Do we need to check for NA here? Hopefully not because this might occur in mlr?
   if (has.default && isScalarNA(default))
     warningf("NA used as a default value for learner parameter %s.\nParamHelpers uses NA as a special value for dependent parameters.", id)
   p = makeS3Obj("Param",
@@ -106,12 +107,13 @@ makeParam = function(id, type, len, lower, upper, values, cnames, allow.inf = FA
 
 getParPrintData = function(x, trafo = TRUE, used = TRUE, constr.clip = 40L) {
   g = function(n) collapse(sprintf("%.3g", n))
-  if (isNumeric(x, include.int = TRUE))
+  if (isNumeric(x, include.int = TRUE)) {
     constr = sprintf("%s to %s", g(x$lower), g(x$upper))
-  else if (isDiscrete(x, include.logical = FALSE))
+  } else if (isDiscrete(x, include.logical = FALSE)) {
     constr = clipString(collapse(names(x$values)), constr.clip)
-  else
+  } else {
     constr = "-"
+  }
   d = data.frame(
     Type = x$type,
     len = ifelse(isVector(x), x$len, "-"),
@@ -126,9 +128,7 @@ getParPrintData = function(x, trafo = TRUE, used = TRUE, constr.clip = 40L) {
   return(d)
 }
 
-
 #' @export
 print.Param = function(x, ..., trafo = TRUE) {
   print(getParPrintData(x, trafo = trafo))
 }
-

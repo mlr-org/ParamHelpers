@@ -123,11 +123,10 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
 
 
   nmissing = n
-  iter = 0
   # result objects
   res = data.frame()
   des = matrix(nrow = 0, ncol = k)
-  repeat {
+  for (iter in seq_len(augment)) {
     ### get design, types converted, trafos, conditionals set to NA
     # create new design or augment if we already have some points
     newdes = if (nmissing == n)
@@ -157,9 +156,8 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
     res = res[!to.remove, , drop = FALSE]
     nmissing = n - nrow(res)
 
-    # enough points or augment tries? we are done!
-    iter = iter + 1L
-    if (nmissing == 0L || iter >= augment)
+    # Enough points? We are done!
+    if (nmissing == 0L)
       break
   }
 

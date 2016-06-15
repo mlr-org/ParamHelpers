@@ -91,5 +91,3 @@ addOptPathEl = function(op, x, y, dob = getOptPathLength(op)+1L, eol = as.intege
 
   UseMethod("addOptPathEl")
 }
-
-
