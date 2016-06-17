@@ -47,7 +47,7 @@ convertParamSetToIrace = function(par.set, as.chars = FALSE) {
         stopf("Unknown parameter type: %s", p$type)
       }
       if (!is.null(p$requires)) {
-        line = paste(line, collapse(capture.output(p$requires), sep=""), sep = " | ")
+        line = paste(line, collapse(deparse(p$requires, width.cutoff = 500L), sep=""), sep = " | ")
       }
       lines[count] = line
       count = count + 1L
