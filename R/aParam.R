@@ -74,7 +74,7 @@ NULL
 
 makeParam = function(id, type, len, lower, upper, values, cnames, allow.inf = FALSE, default,
   trafo = NULL, requires = NULL, tunable = TRUE) {
-
+  assertString(id)
   #We cannot check default} for NULL or NA as this could be the default value!
   if (missing(default)) {
     has.default = FALSE
@@ -85,6 +85,10 @@ makeParam = function(id, type, len, lower, upper, values, cnames, allow.inf = FA
   # FIXME: Do we need to check for NA here? Hopefully not because this might occur in mlr?
   if (has.default && isScalarNA(default))
     warningf("NA used as a default value for learner parameter %s.\nParamHelpers uses NA as a special value for dependent parameters.", id)
+  if (!is.null(trafo))
+    assertFunction(trafo)
+  if (!is.null(requires))
+    assertClass(requires, "call")
   p = makeS3Obj("Param",
     id = id,
     type = type,
