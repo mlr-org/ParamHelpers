@@ -5,7 +5,8 @@ ParamHelpers_1.8:
 - OptPath: it is possible to log non-scalar values under "extras" now by
   starting the extra-name with a dot. These elements wll not be contained is
   as.data.frame(opt.path) when converted.
-- new functions 
+- make*Param argument 'requires' now accepts expressions and quote'd expressions.
+- new functions
 -- getTypeStringsNumeric, getTypeStringsDiscrete
 
 ParamHelpers_1.7:
