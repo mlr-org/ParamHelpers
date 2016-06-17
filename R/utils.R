@@ -65,3 +65,15 @@ fixDesignFactors = function(des, par.set) {
   }
   des
 }
+
+# Convert Expressions to call (what we get from quote)
+convertExpressionToCall = function(req) {
+  if (is.expression(req)) {
+    if (length(req) == 1) {
+      return(req[[1]])
+    } else {
+      return(substitute(eval(x), list(x=req)))
+    }
+  }
+  req
+}
