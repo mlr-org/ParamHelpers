@@ -16,7 +16,7 @@ NULL
 #' @rdname hasType
 hasDiscrete = function(par.set, include.logical = TRUE) {
   assertClass(par.set, "ParamSet")
-  hasSomeParamsOfTypes(par.set, types = getTypeStringsDicrete(include.logical = include.logical))
+  hasSomeParamsOfTypes(par.set, types = getTypeStringsDiscrete(include.logical = include.logical))
 }
 
 #' @export

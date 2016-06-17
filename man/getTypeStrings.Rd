@@ -2,13 +2,13 @@
 % Please edit documentation in R/getTypeStrings.R
 \name{getTypeStrings}
 \alias{getTypeStrings}
-\alias{getTypeStringsDicrete}
+\alias{getTypeStringsDiscrete}
 \alias{getTypeStringsNumeric}
 \title{Get parameter type-strings.}
 \usage{
 getTypeStringsNumeric(include.int = TRUE)
 
-getTypeStringsDicrete(include.logical = TRUE)
+getTypeStringsDiscrete(include.logical = TRUE)
 }
 \arguments{
 \item{include.int}{[\code{logical(1)}]\cr

@@ -36,12 +36,12 @@ isDiscrete = function(par, include.logical = TRUE) {
 
 #' @export
 isDiscrete.ParamSet = function(par, include.logical = TRUE) {
-  hasAllParamsOfTypes(par, types = getTypeStringsDicrete(include.logical = include.logical))
+  hasAllParamsOfTypes(par, types = getTypeStringsDiscrete(include.logical = include.logical))
 }
 
 #' @export
 isDiscrete.Param = function(par, include.logical = TRUE) {
-  par$type %in% getTypeStringsDicrete(include.logical = include.logical)
+  par$type %in% getTypeStringsDiscrete(include.logical = include.logical)
 }
 
 #' @export

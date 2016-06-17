@@ -19,7 +19,7 @@ getTypeStringsNumeric = function(include.int = TRUE) {
 
 #' @export
 #' @rdname getTypeStrings
-getTypeStringsDicrete = function(include.logical = TRUE) {
+getTypeStringsDiscrete = function(include.logical = TRUE) {
   if (include.logical)
     c("discrete", "discretevector", "logical", "logicalvector")
   else
