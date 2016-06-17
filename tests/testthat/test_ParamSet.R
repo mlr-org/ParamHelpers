@@ -190,14 +190,19 @@ test_that("print works", {
 })
 
 test_that("expressions get converted", {
-  ps = makeParamSet(
+  ps1 = makeParamSet(
     makeLogicalLearnerParam("a", default = FALSE),
     makeLogicalLearnerParam("b", default = FALSE, requires = expression(a == TRUE))
   )
-  expect_is(ps$pars$b$requires, "call")
+  ps2 = makeParamSet(
+    makeLogicalLearnerParam("a", default = FALSE),
+    makeLogicalLearnerParam("b", default = FALSE, requires = quote(a == TRUE))
+  )
+  expect_is(ps1$pars$b$requires, "call")
+  expect_equal(ps1, ps2)
   expect_error({
     ps = makeParamSet(
       makeLogicalLearnerParam("a", default = FALSE),
       makeLogicalLearnerParam("b", default = FALSE, requires = "a == TRUE")
-    )}, "call")  
+    )}, "call")
 })
