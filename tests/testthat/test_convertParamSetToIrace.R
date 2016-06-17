@@ -34,7 +34,7 @@ test_that("convertParamSetToIrace", {
     makeDiscreteParam("x1", values = c("a", "b")),
     makeLogicalParam("x2", requires = quote(x1 == "a")),
     makeLogicalParam("x3", requires =
-      quote(x1 == "a" && x2 == "FALSE" && x1 == "a" && x2 == "FALSE" && x1 == "a" && x2 == "FALSE" && x1 == "a" && x2 == "FALSE" && x1 == "a" && x2 == "FALSE" && x1 == "a" && x2 == "FALSE" && x1 == "a" && x2 == "FALSE" && x1 == "a" && x2 == "FALSE" && x1 == "a" && x2 == "FALSE"))
+      quote(x1 == "a" && x2 == "FALSE" && x1 == "a" && x2 == "FALSE" && x1 == "a" && x2 == "FALSE" && x1 == "a" && x2 == "FALSE" && x1 == "a" && x2 == "FALSE" && x1 == "a" && x2 == "FALSE" && x1 == "a" && x2 == "FALSE" && x1 == "a" && x2 == "FALSE" && x1 == "a" && x2 == "FALSE" && x1 == "a" && x2 == "FALSE" && x1 == "a" && x2 == "FALSE" && x1 == "a" && x2 == "FALSE" && x1 == "a" && x2 == "FALSE" && x1 == "a" && x2 == "FALSE" && x1 == "a" && x2 == "FALSE" && x1 == "a" && x2 == "FALSE" && x1 == "a" && x2 == "FALSE" && x1 == "a" && x2 == "FALSE" && x1 == "a" && x2 == "FALSE" && x1 == "a" && x2 == "FALSE" && x1 == "a" && x2 == "FALSE"))
   )
   ips = convertParamSetToIrace(ps)
   expect_false(identical(ips$constraints$x2, expression(TRUE)))
