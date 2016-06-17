@@ -24,7 +24,7 @@ isNumeric.ParamSet = function(par, include.int = TRUE) {
 
 #' @export
 isNumeric.Param = function(par, include.int = TRUE) {
-  return(par$type %in% getNumericTypes(include.int))
+  par$type %in% getTypeStringsNumeric(include.int)
 }
 
 #' @export
@@ -36,12 +36,12 @@ isDiscrete = function(par, include.logical = TRUE) {
 
 #' @export
 isDiscrete.ParamSet = function(par, include.logical = TRUE) {
-  return(hasAllParamsOfTypes(par, types = getDiscreteTypes(include.logical)))
+  hasAllParamsOfTypes(par, types = getTypeStringsDicrete(include.logical = include.logical))
 }
 
 #' @export
 isDiscrete.Param = function(par, include.logical = TRUE) {
-  return(par$type %in% getDiscreteTypes(include.logical))
+  par$type %in% getTypeStringsDicrete(include.logical = include.logical)
 }
 
 #' @export
