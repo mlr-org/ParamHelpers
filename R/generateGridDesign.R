@@ -50,7 +50,7 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE) {
   lens = getParamLengths(par.set)
   m = sum(lens)
   pids = getParamIds(par.set, repeated = TRUE, with.nr = TRUE)
-  par.set.num = filterParams(par.set = par.set, type = getNumericTypes())
+  par.set.num = filterParams(par.set = par.set, type = getTypeStringsNumeric(include.int = TRUE))
   pids.num = getParamIds(par.set.num)
 
   if (hasNumeric(par.set, include.int = TRUE)) {
