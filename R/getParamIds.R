@@ -37,9 +37,7 @@ getParamIds.ParamSet = function(par, repeated = FALSE, with.nr = FALSE) {
 #' @export
 getParamIds.Param = function(par, repeated = FALSE, with.nr = FALSE) {
   pid = par$id
-  if (repeated && par$type %in% c(
-      "numericvector", "integervector", "discretevector",
-      "logicalvector", "charactervector")) {
+  if (repeated && isVector(par)) {
     n = par$len
     if (n > 1 && with.nr)
       paste(rep(pid, n), 1:n, sep = "")
