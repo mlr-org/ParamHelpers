@@ -8,7 +8,8 @@ ParamHelpers_1.8:
 - make*Param argument 'requires' now accepts expressions and quote'd expressions.
 -- getParamIds is now S3 and also callable on type "Param"
 - new functions
--- getTypeStringsNumeric, getTypeStringsDiscrete
+-- isNumericStrict
+-- getTypeStringsNumeric, getTypeStringsNumericStrict, getTypeStringsInteger, getTypeStringsDiscrete
 -- filterParamsNumeric, filterParamsDiscrete
 
 ParamHelpers_1.7:

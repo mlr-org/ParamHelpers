@@ -3,10 +3,16 @@
 \name{getTypeStrings}
 \alias{getTypeStrings}
 \alias{getTypeStringsDiscrete}
+\alias{getTypeStringsInteger}
 \alias{getTypeStringsNumeric}
+\alias{getTypeStringsNumericStrict}
 \title{Get parameter type-strings.}
 \usage{
 getTypeStringsNumeric(include.int = TRUE)
+
+getTypeStringsNumericStrict()
+
+getTypeStringsInteger()
 
 getTypeStringsDiscrete(include.logical = TRUE)
 }

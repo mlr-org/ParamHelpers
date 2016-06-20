@@ -71,3 +71,18 @@ test_that("convertParamSetToIrace uses correct boundaries", {
   expect_identical(ips$boundary$sigma, as.numeric(unlist(ps$pars$sigma[c("lower", "upper")])))
   expect_identical(ips$boundary$myInt, as.integer(unlist(ps$pars$myInt[c("lower", "upper")])))
 })
+
+test_that("convertParamSetToIrace work with vecparam", { # has issue here, see 85
+  ps = makeParamSet(
+    makeNumericVectorParam("a", len=2, -10, 10),
+    makeDiscreteParam("b", c("v", "w")),
+    makeNumericVectorParam("c", len=2, -10, 10)
+  )
+  i = convertParamSetToIrace(ps)
+  b = i$boundary
+  expect_equal(b$a1, c(-10, 10))
+  expect_equal(b$a2, c(-10, 10))
+  expect_equal(b$b, c("v", "w"))
+  expect_equal(b$c1, c(-10, 10))
+  expect_equal(b$c2, c(-10, 10))
+})
