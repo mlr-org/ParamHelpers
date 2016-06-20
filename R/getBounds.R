@@ -52,12 +52,11 @@ getValues = function(par.set) {
 # common functionality of getLower and getUpper
 getBounds = function(par.set, type.of.bounds, with.nr = FALSE) {
   assertClass(par.set, "ParamSet")
-  types = getParamTypes(par.set)
-  is.num = types %in% c("numeric", "integer", "numericvector", "integervector")
-  if (!any(is.num))
-    return(numeric(0))
-  bounds = lapply(par.set$pars[is.num], function(p) p[[type.of.bounds]])
+  if (!hasNumeric(par.set, include.int = TRUE))
+    return(numeric(0L))
+  psnum = filterParamsNumeric(par.set,  include.int = TRUE)
+  bounds = lapply(psnum$pars, function(p) p[[type.of.bounds]])
   bounds = do.call(c, bounds)
-  names(bounds) = getParamIds2(par.set$pars[is.num], repeated = TRUE, with.nr = with.nr)
+  names(bounds) = getParamIds(psnum, repeated = TRUE, with.nr = with.nr)
   return(bounds)
 }
