@@ -70,9 +70,11 @@ If this argument is missing, it means no default value is available.}
 Specifies when parameter is used in the learner: \dQuote{train}, \dQuote{predict} or \dQuote{both}.
 Default is \dQuote{train}.}
 
-\item{requires}{[\code{NULL} | R expression]\cr
+\item{requires}{[\code{NULL} | \code{call} | \code{expression}]\cr
 States requirements on other parameters' values, so that setting
 this parameter only makes sense if its requirements are satisfied (dependent parameter).
+Can be an object created either with \code{expression} or \code{quote},
+the former type is auto-converted into the later.
 Only really useful if the parameter is included in a \code{\link{ParamSet}}.
 Note that if your dependent parameter is a logical Boolean you need to verbosely write
 \code{requires = quote(a == TRUE)} and not \code{requires = quote(a)}.
