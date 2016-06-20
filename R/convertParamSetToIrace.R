@@ -58,15 +58,16 @@ convertParamSetToIrace = function(par.set, as.chars = FALSE) {
   } else {
     lines = collapse(lines, "\n")
     params = irace::readParameters(text = lines, digits = .Machine$integer.max)
-    #assert that the boundaries have the correct class and values
+    # fix numeric boundaries of irace, to make sure we dont lose num accuracy by write/read file IO
+    # somehow bad....
     for (p in par.set$pars) {
       if (isNumeric(p, include.int = TRUE)) {
-        pids = getParamIds(p)
+        pids = getParamIds(p, repeated = TRUE, with.nr = TRUE)
         for (j in seq_len(p$len)) {
           if (isNumericStrict(p))
-            params$boundary[[pids[j]]] = as.numeric(unlist(p[c("lower", "upper")]))
+            params$boundary[[pids[j]]] = c(p$lower[j], p$upper[j])
           if (isInteger(p))
-            params$boundary[[pids[j]]] = as.integer(unlist(p[c("lower", "upper")]))
+            params$boundary[[pids[j]]] = as.integer(c(p$lower[j], p$upper[j]))
         }
       }
     }
