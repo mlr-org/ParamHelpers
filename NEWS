@@ -8,6 +8,7 @@ ParamHelpers_1.8:
 - make*Param argument 'requires' now accepts expressions and quote'd expressions.
 - new functions
 -- getTypeStringsNumeric, getTypeStringsDiscrete
+-- filterParamsNumeric, filterParamsDiscrete
 
 ParamHelpers_1.7:
 - dfRowsToList, dfRowToList: added arg enforce.col.types
