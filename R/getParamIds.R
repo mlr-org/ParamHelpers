@@ -21,31 +21,26 @@
 #' getParamIds(ps)
 #' getParamIds(ps, repeated = TRUE)
 #' getParamIds(ps, repeated = TRUE, with.nr = TRUE)
-getParamIds = function(par, repeated = FALSE, with.nr = FALSE) {
+getParamIds = function(par.set, repeated = FALSE, with.nr = FALSE) {
+  assertClass(par.set, "ParamSet")
   assertFlag(repeated)
   assertFlag(with.nr)
-  UseMethod("getParamIds")
+  getParamIds2(par.set$pars, repeated, with.nr)
 }
 
-#' @export
-getParamIds.ParamSet = function(par, repeated = FALSE, with.nr = FALSE) {
-  if (isEmpty(par))
-    return(character(0L))
-  unlist(lapply(par$pars, getParamIds, repeated = repeated, with.nr = with.nr), use.names = FALSE)
-}
-
-#' @export
-getParamIds.Param = function(par, repeated = FALSE, with.nr = FALSE) {
-  pid = par$id
-  if (repeated && par$type %in% c(
+getParamIds2 = function(pars, repeated = FALSE, with.nr = FALSE) {
+  ns = lapply(pars, function(x) {
+    if (repeated && x$type %in% c(
       "numericvector", "integervector", "discretevector",
       "logicalvector", "charactervector")) {
-    n = par$len
-    if (n > 1 && with.nr)
-      paste(rep(pid, n), 1:n, sep = "")
-    else
-      rep(pid, n)
-  } else {
-    pid
-  }
+      n = x$len
+      if (n > 1 && with.nr)
+        paste(rep(x$id, n), 1:n, sep = "")
+      else
+        rep(x$id, n)
+    } else {
+      x$id
+    }
+  })
+  as.character(do.call(c, ns))
 }

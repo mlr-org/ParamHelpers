@@ -4,9 +4,12 @@
 \alias{getParamIds}
 \title{Return ids of parameters in parameter set.}
 \usage{
-getParamIds(par, repeated = FALSE, with.nr = FALSE)
+getParamIds(par.set, repeated = FALSE, with.nr = FALSE)
 }
 \arguments{
+\item{par.set}{[\code{\link{ParamSet}}]\cr
+Parameter set.}
+
 \item{repeated}{[\code{logical(1)}]\cr
 Should ids be repeated length-times if parameter is a vector?
 Default is \code{FALSE}.}
@@ -15,9 +18,6 @@ Default is \code{FALSE}.}
 Should number from 1 to length be appended to id if \code{repeated} is \code{TRUE}?
 Otherwise ignored.
 Default is \code{FALSE}.}
-
-\item{par.set}{[\code{\link{ParamSet}}]\cr
-Parameter set.}
 }
 \value{
 [\code{character}].
