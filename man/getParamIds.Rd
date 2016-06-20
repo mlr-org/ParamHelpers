@@ -4,11 +4,11 @@
 \alias{getParamIds}
 \title{Return ids of parameters in parameter set.}
 \usage{
-getParamIds(par.set, repeated = FALSE, with.nr = FALSE)
+getParamIds(par, repeated = FALSE, with.nr = FALSE)
 }
 \arguments{
-\item{par.set}{[\code{\link{ParamSet}}]\cr
-Parameter set.}
+\item{par}{[\code{\link{Param}} | \code{\link{ParamSet}}]\cr
+Parameter or parameter set.}
 
 \item{repeated}{[\code{logical(1)}]\cr
 Should ids be repeated length-times if parameter is a vector?
