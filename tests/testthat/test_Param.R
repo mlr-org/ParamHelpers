@@ -28,6 +28,14 @@ test_that("num param", {
   p = makeNumericParam(id = "x", allow.inf = TRUE, default = Inf)
   expect_error(makeNumericParam(id = "x", allow.inf = FALSE, default = Inf), "feasible")
 
+  ## Numeric parameter with expression defaults:
+  p = makeNumericParam(id = "x", default = expression(5 + 7))
+  expect_true(isFeasible(p, p$default))
+  expect_true(isFeasible(p, expression("a")))
+  expect_true(isFeasible(p, 5 + 7))
+  expect_true(!isFeasible(p, "5 + 7"))
+  expect_true(!isFeasible(p, "a"))
+
   ## Error conditions:
   expect_error(makeNumericParam(id = "x", lower = "bam", upper = 1))
   expect_error(makeNumericParam(id = "x", lower = NA, upper = 1))
@@ -205,6 +213,16 @@ test_that("logic param", {
   expect_true(!isFeasible(p, 1L))
   expect_true(!isFeasible(p, 1))
   expect_true(!isFeasible(p, NULL))
+
+  ## Logical parameter with expression defaults:
+  p = makeLogicalParam(id = "x", default = expression(TRUE))
+  expect_true(isFeasible(p, p$default))
+  expect_true(isFeasible(p, expression("a")))
+  expect_true(!isFeasible(p, 5 + 7))
+  expect_true(isFeasible(p, TRUE))
+  expect_true(isFeasible(p, FALSE))
+  expect_true(!isFeasible(p, "TRUE"))
+  expect_true(!isFeasible(p, "FALSE"))
 })
 
 test_that("logic vec param", {

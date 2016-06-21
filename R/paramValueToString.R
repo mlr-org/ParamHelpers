@@ -46,6 +46,10 @@ paramValueToString = function(par, x, show.missing.values = FALSE, num.format = 
 
 #' @export
 paramValueToString.Param = function(par, x, show.missing.values = FALSE, num.format = "%.3g") {
+  # output of expressions
+  if (is.expression(x))
+    return("expression")
+
   # handle missings
   if (isScalarNA(x)) {
     if (show.missing.values)

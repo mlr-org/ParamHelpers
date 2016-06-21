@@ -40,7 +40,10 @@ isFeasible = function(par, x) {
 #' @export
 isFeasible.Param = function(par, x) {
   # we dont have to consider requires here, it is not a param set
-  constraintsOkParam(par, x)
+  if (is.expression(x))
+    TRUE
+  else
+    constraintsOkParam(par, x)
 }
 
 #' @export
