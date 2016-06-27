@@ -16,7 +16,7 @@ NULL
 #' @rdname hasType
 hasDiscrete = function(par.set, include.logical = TRUE) {
   assertClass(par.set, "ParamSet")
-  return(hasSomeParamsOfTypes(par.set, types = getDiscreteTypes(include.logical)))
+  hasSomeParamsOfTypes(par.set, types = getTypeStringsDiscrete(include.logical = include.logical))
 }
 
 #' @export
@@ -44,8 +44,7 @@ hasCharacter = function(par.set) {
 #' @rdname hasType
 hasNumeric = function(par.set, include.int = TRUE) {
   assertClass(par.set, "ParamSet")
-  types = getNumericTypes(include.int = include.int)
-  return(hasSomeParamsOfTypes(par.set, types = types))
+  hasSomeParamsOfTypes(par.set, types = getTypeStringsNumeric(include.int = include.int))
 }
 
 ##### helpers
@@ -60,18 +59,3 @@ hasAllParamsOfTypes = function(par.set, types) {
   return(all(getParamTypes(par.set, df.cols = FALSE, with.nr = FALSE , use.names = FALSE) %in% types))
 }
 
-# what types to consider numeric
-getNumericTypes = function(include.int = TRUE) {
-  if (include.int)
-    c("numeric", "numericvector", "integer", "integervector")
-  else
-    c("numeric", "numericvector")
-}
-
-# what types to consider discrete
-getDiscreteTypes = function(include.logical = TRUE) {
-  if (include.logical)
-    c("discrete", "discretevector", "logical", "logicalvector")
-  else
-    c("discrete", "discretevector")
-}

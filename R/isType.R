@@ -24,7 +24,24 @@ isNumeric.ParamSet = function(par, include.int = TRUE) {
 
 #' @export
 isNumeric.Param = function(par, include.int = TRUE) {
-  return(par$type %in% getNumericTypes(include.int))
+  par$type %in% getTypeStringsNumeric(include.int)
+}
+
+#' @export
+#' @rdname isType
+isNumericStrict = function(par) {
+  assert(checkClass(par, "Param"), checkClass(par, "ParamSet"))
+  UseMethod("isNumericStrict")
+}
+
+#' @export
+isNumericStrict.ParamSet = function(par) {
+  all(vlapply(par$pars, isNumericStrict.Param))
+}
+
+#' @export
+isNumericStrict.Param = function(par) {
+  par$type %in% getTypeStringsNumericStrict()
 }
 
 #' @export
@@ -36,12 +53,12 @@ isDiscrete = function(par, include.logical = TRUE) {
 
 #' @export
 isDiscrete.ParamSet = function(par, include.logical = TRUE) {
-  return(hasAllParamsOfTypes(par, types = getDiscreteTypes(include.logical)))
+  hasAllParamsOfTypes(par, types = getTypeStringsDiscrete(include.logical = include.logical))
 }
 
 #' @export
 isDiscrete.Param = function(par, include.logical = TRUE) {
-  return(par$type %in% getDiscreteTypes(include.logical))
+  par$type %in% getTypeStringsDiscrete(include.logical = include.logical)
 }
 
 #' @export

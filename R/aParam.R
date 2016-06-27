@@ -48,9 +48,11 @@
 #'   before it is, e.g., passed to a corresponding objective function.
 #'   Function must accept a parameter value as the first argument and return a transformed one.
 #'   Default is \code{NULL} which means no transformation.
-#' @param requires [\code{NULL} | R expression]\cr
+#' @param requires [\code{NULL} | \code{call} | \code{expression}]\cr
 #'   States requirements on other parameters' values, so that setting
 #'   this parameter only makes sense if its requirements are satisfied (dependent parameter).
+#'   Can be an object created either with \code{expression} or \code{quote},
+#'   the former type is auto-converted into the later.
 #'   Only really useful if the parameter is included in a \code{\link{ParamSet}}.
 #'   Note that if your dependent parameter is a logical Boolean you need to verbosely write
 #'   \code{requires = quote(a == TRUE)} and not \code{requires = quote(a)}.
@@ -74,7 +76,7 @@ NULL
 
 makeParam = function(id, type, len, lower, upper, values, cnames, allow.inf = FALSE, default,
   trafo = NULL, requires = NULL, tunable = TRUE) {
-
+  assertString(id)
   #We cannot check default} for NULL or NA as this could be the default value!
   if (missing(default)) {
     has.default = FALSE
@@ -85,6 +87,12 @@ makeParam = function(id, type, len, lower, upper, values, cnames, allow.inf = FA
   # FIXME: Do we need to check for NA here? Hopefully not because this might occur in mlr?
   if (has.default && isScalarNA(default))
     warningf("NA used as a default value for learner parameter %s.\nParamHelpers uses NA as a special value for dependent parameters.", id)
+  if (!is.null(trafo))
+    assertFunction(trafo)
+  if (!is.null(requires)) {
+    requires = convertExpressionToCall(requires)
+    assertClass(requires, "call")
+  }
   p = makeS3Obj("Param",
     id = id,
     type = type,

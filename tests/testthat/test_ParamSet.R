@@ -189,3 +189,20 @@ test_that("print works", {
   expect_output(print(ps, trafo = FALSE, used = FALSE), "numericvector")
 })
 
+test_that("expressions get converted", {
+  ps1 = makeParamSet(
+    makeLogicalLearnerParam("a", default = FALSE),
+    makeLogicalLearnerParam("b", default = FALSE, requires = expression(a == TRUE))
+  )
+  ps2 = makeParamSet(
+    makeLogicalLearnerParam("a", default = FALSE),
+    makeLogicalLearnerParam("b", default = FALSE, requires = quote(a == TRUE))
+  )
+  expect_is(ps1$pars$b$requires, "call")
+  expect_equal(ps1, ps2)
+  expect_error({
+    ps = makeParamSet(
+      makeLogicalLearnerParam("a", default = FALSE),
+      makeLogicalLearnerParam("b", default = FALSE, requires = "a == TRUE")
+    )}, "call")
+})

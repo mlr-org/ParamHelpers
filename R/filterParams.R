@@ -64,3 +64,22 @@ filterParams = function(par.set, ids = NULL, type = NULL, tunable = c(TRUE, FALS
   }
   return(par.set)
 }
+
+
+#' @template arg_include_int
+#' @rdname filterParams
+#' @export
+filterParamsNumeric = function(par.set, ids = NULL, tunable = c(TRUE, FALSE), include.int = TRUE) {
+  filterParams(par.set, ids = ids, tunable = tunable,
+    type = getTypeStringsNumeric(include.int = include.int))
+}
+
+#' @template arg_include_logical
+#' @rdname filterParams
+#' @export
+filterParamsDiscrete = function(par.set, ids = NULL, tunable = c(TRUE, FALSE), include.logical = TRUE) {
+  filterParams(par.set, ids = ids, tunable = tunable,
+    type = getTypeStringsDiscrete(include.logical = include.logical))
+}
+
+
