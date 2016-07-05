@@ -61,7 +61,7 @@ isFeasible.ParamSet = function(par, x, use.defaults = FALSE, filter = FALSE) {
   res = FALSE
   # insert defaults if they comply with the requirements
   if (named && use.defaults) {
-    x = insertCompliantValues(old.par.vals = getDefaults(par), new.par.vals = x, par.set = par)
+    x = updateParVals(old.par.vals = getDefaults(par), new.par.vals = x, par.set = par)
   }
   if (!named && filter) {
     stopf("filter = TRUE only works with named input")
@@ -81,7 +81,7 @@ isFeasible.ParamSet = function(par, x, use.defaults = FALSE, filter = FALSE) {
   if (!named) {
     names(x) = getParamIds(par)
   }
-  missing.reqs = getMissingRequiredParams(par, names(x))
+  missing.reqs = setdiff(getRequiredParamNames(par), names(x))
   if (length(missing.reqs) > 0)
     stopf("Following parameters are missing but needed for requirements: %s", collapse(missing.reqs))
 

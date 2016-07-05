@@ -13,7 +13,7 @@
 #'   Default is \code{FALSE}.
 #' @return [\code{list}].
 #' @export
-insertCompliantValues = function(par.set, old.par.vals, new.par.vals, warn = FALSE) {
+updateParVals = function(par.set, old.par.vals, new.par.vals, warn = FALSE) {
   assertList(old.par.vals)
   assertList(new.par.vals)
   assertNamed(old.par.vals)
@@ -23,7 +23,7 @@ insertCompliantValues = function(par.set, old.par.vals, new.par.vals, warn = FAL
     # we repeat to include parameters which depend on each other by requirements
     candidate.par.names = setdiff(names(old.par.vals), names(new.par.vals))
     for (pn in candidate.par.names) {
-      if (!length(getMissingRequiredParams(par.set$pars[[pn]], names(new.par.vals))) && requiresOk(par.set$pars[[pn]], new.par.vals)) {
+      if (all(getRequiredParamNames(par.set$pars[[pn]]) %in% names(new.par.vals)) && requiresOk(par.set$pars[[pn]], new.par.vals)) {
         new.par.vals[pn] = old.par.vals[pn]
       } else if (warn){
         warningf("ParamSetting %s was dropped.", convertToShortString(old.par.vals[pn]))

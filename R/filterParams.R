@@ -19,8 +19,9 @@
 #'   \code{TRUE}, \code{FALSE} or \code{c(TRUE, FALSE)}.
 #'   The default is \code{c(TRUE, FALSE)}, i.e. none of the parameters will be filtered out.
 #' @param check.requires [\code{logical(1)}]\cr
-#'   Toggle whether it should be checked that all requirements in the \code{\link{ParamSet}} are still valid after filtering
-#'   or not. Default is \code{FALSE}.
+#'   Toggle whether it should be checked that all requirements in the \code{\link{ParamSet}} are still valid after filtering or not. 
+#'   This check is done after filtering and will throw an error if those Params are filtered which other Params need for their requirements.
+#'   Default is \code{FALSE}.
 #' @return [\code{\link{ParamSet}}].
 #' @examples
 #' ps = makeParamSet(
@@ -58,9 +59,9 @@ filterParams = function(par.set, ids = NULL, type = NULL, tunable = c(TRUE, FALS
   par.set$pars = Filter(function(p) p$tunable %in% tunable, par.set$pars)
   if (check.requires) {
     # find all vars which are in each params requirements which are not part of the param.set
-    missing.vars = getMissingRequiredParams(par = par.set, par.val.names = getParamIds(par.set))
-    if (length(missing.vars))
-      stopf("Params %s filtered but needed for requirements", collapse(missing.vars))
+    missing.vars = setdiff(getRequiredParamNames(par.set), getParamIds(par.set))
+    if (length(missing.vars) > 0)
+      stopf("Params %s filtered but needed for requirements of present Params", collapse(missing.vars))
   }
   return(par.set)
 }

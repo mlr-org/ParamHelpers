@@ -37,8 +37,9 @@ Vector of allowed values for the property \code{tunable}. Accepted arguments are
 The default is \code{c(TRUE, FALSE)}, i.e. none of the parameters will be filtered out.}
 
 \item{check.requires}{[\code{logical(1)}]\cr
-Toggle whether it should be checked that all requirements in the \code{\link{ParamSet}} are still valid after filtering
-or not. Default is \code{FALSE}.}
+Toggle whether it should be checked that all requirements in the \code{\link{ParamSet}} are still valid after filtering or not. 
+This check is done after filtering and will throw an error if those Params are filtered which other Params need for their requirements.
+Default is \code{FALSE}.}
 
 \item{include.int}{[\code{logical(1)}]\cr
 Are integers also considered to be numeric?
