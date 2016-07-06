@@ -13,5 +13,5 @@ getRequiredParamNames.Param = function(par) {
 getRequiredParamNames.ParamSet = function(par) {
   if (isEmpty(par))
     return(character(0L))
-  unique(unlist(lapply(par$pars, getRequiredParamNames), use.names = FALSE))
+  unique(unlist(lapply(par$pars, getRequiredParamNames.Param), use.names = FALSE))
 }
