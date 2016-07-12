@@ -19,7 +19,7 @@ BugReports: https://github.com/berndbischl/ParamHelpers/issues
 License: BSD_3_clause + file LICENSE
 Roxygen: list(wrap = FALSE)
 Imports:
-    BBmisc (>= 1.9),
+    BBmisc (>= 1.10),
     checkmate (>= 1.6.1),
     methods
 Suggests:
