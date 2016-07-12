@@ -41,7 +41,7 @@ test_that("mixed paramset 2", {
   expect_true(!isFeasible(ps, list(2,0,"char")))
   expect_equal(getLower(ps), c(x1 = -1, x2 = 0))
   expect_equal(getUpper(ps), c(x1= 1, x2 = Inf))
-  expect_true(isFeasible(ps, list(x3 = 2L, x1 = 0)))
+  expect_true(isFeasible(ps, list(x3 = 2L, x1 = 0), filter = TRUE))
 })
 
 test_that("cannot build param set from wrong stuff", {

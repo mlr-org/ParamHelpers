@@ -73,3 +73,11 @@ test_that("filtering of ids", {
   expect_equal(getParamIds(filterParams(ps, type = c("numeric", "integer"), tunable = TRUE, ids = c("w", "x", "y"))), "x")
   expect_true(isEmpty(filterParams(ps, type = "logical", ids = c("u", "v"))))
 })
+
+test_that("filtering with requirements", {
+  ps = makeParamSet(
+    makeDiscreteParam("x", values = c("a", "b"), default = "a"),
+    makeNumericParam("y", requires = quote(x == "a"))
+  )
+  expect_error(filterParams(par.set = ps, type = "numeric", check.requires = TRUE), "Params x filtered")
+})

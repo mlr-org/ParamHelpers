@@ -18,6 +18,10 @@
 #'   Vector of allowed values for the property \code{tunable}. Accepted arguments are
 #'   \code{TRUE}, \code{FALSE} or \code{c(TRUE, FALSE)}.
 #'   The default is \code{c(TRUE, FALSE)}, i.e. none of the parameters will be filtered out.
+#' @param check.requires [\code{logical(1)}]\cr
+#'   Toggle whether it should be checked that all requirements in the \code{\link{ParamSet}} are still valid after filtering or not. 
+#'   This check is done after filtering and will throw an error if those Params are filtered which other Params need for their requirements.
+#'   Default is \code{FALSE}.
 #' @return [\code{\link{ParamSet}}].
 #' @examples
 #' ps = makeParamSet(
@@ -38,9 +42,7 @@
 #' # filter for all numeric parameters among "u", "v" and "x"
 #' filterParams(ps, type = "numeric", ids = c("u", "v", "x"))
 #' @export
-filterParams = function(par.set, ids = NULL, type = NULL, tunable = c(TRUE, FALSE)) {
-  # FIXME: how do we handle this, this also affects "requires" the same way?
-  # if we drop same params the expressions can become invalid?
+filterParams = function(par.set, ids = NULL, type = NULL, tunable = c(TRUE, FALSE), check.requires = FALSE) {
   # if (!is.null(par.set$forbidden))
     # stopf("Operation not allowed for param set with forbidden region currently!")
   if (!is.null(ids)) {
@@ -55,6 +57,12 @@ filterParams = function(par.set, ids = NULL, type = NULL, tunable = c(TRUE, FALS
   }
   assertLogical(tunable, min.len = 1L, max.len = 2L, unique = TRUE)
   par.set$pars = Filter(function(p) p$tunable %in% tunable, par.set$pars)
+  if (check.requires) {
+    # find all vars which are in each params requirements which are not part of the param.set
+    missing.vars = setdiff(getRequiredParamNames(par.set), getParamIds(par.set))
+    if (length(missing.vars) > 0)
+      stopf("Params %s filtered but needed for requirements of present Params", collapse(missing.vars))
+  }
   return(par.set)
 }
 

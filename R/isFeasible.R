@@ -1,12 +1,10 @@
 #' @title Check if parameter value is valid.
 #'
 #' @description
-#' Check if a parameter value satisfies the constraints of the
-#' parameter description. This includes the \code{requires} expressions and
-#' the \code{forbidden} expression, if \code{par} is a \code{\link{ParamSet}}.
-#' If \code{requires} is not satisfied,
-#' the parameter value must be set to scalar \code{NA} to be still feasible, a single scalar even in a
-#' case of a vector parameter.
+#' Check if a parameter value satisfies the constraints of the parameter description.
+#' This includes the \code{requires} expressions and the \code{forbidden} expression, if \code{par} is a \code{\link{ParamSet}}.
+#' If \code{requires} is not satisfied, the parameter value must be set to scalar \code{NA} to be still feasible, a single scalar even in a case of a vector parameter.
+#' If the result is \code{FALSE} the attribute \code{"warning"} is attached which gives the reason for the negative result.
 #'
 #' If the parameter has \code{cnames}, these are also checked.
 #'
@@ -19,7 +17,14 @@
 #'   parameters are checked.
 #'   (Note that this might not work if one of the passed params has a \code{requires} setting
 #'   which refers to an unpassed param.)
-#' @return logical(1)
+#' @param use.defaults [\code{logical(1)}]\cr
+#'   Whether defaults of the \code{\link{Param}}/\code{\link{ParamSet}} should be used if no values are supplied.
+#'   Default is \code{FALSE}.
+#' @param filter [\code{logical(1)}]\cr
+#'   Whether the \code{\link{ParamSet}} should be reduced to the space of the given Param Values.
+#'   Note that in case of \code{use.defaults = TRUE} the filtering will be conducted after the insertion of the default values.
+#'   Default is \code{FALSE}.
+#' @return [\code{logical(1)}].
 #' @examples
 #' p = makeNumericParam("x", lower = -1, upper = 1)
 #' isFeasible(p, 0) # True
@@ -33,51 +38,69 @@
 #' isFeasible(ps, list(0, "a")) # True
 #' isFeasible(ps, list("a", 0)) # False, wrong order
 #' @export
-isFeasible = function(par, x) {
+isFeasible = function(par, x, use.defaults = FALSE, filter = FALSE) {
   UseMethod("isFeasible")
 }
 
 #' @export
-isFeasible.Param = function(par, x) {
-  # we dont have to consider requires here, it is not a param set
+isFeasible.Param = function(par, x, use.defaults = FALSE, filter = FALSE) {
+  # we don't have to consider requires here, it is not a param set
   constraintsOkParam(par, x)
 }
 
 #' @export
-isFeasible.LearnerParam = function(par, x) {
-  # we dont have to consider requires here, it is not a param set
+isFeasible.LearnerParam = function(par, x, use.defaults = FALSE, filter = FALSE) {
+  # we don't have to consider requires here, it is not a param set
   constraintsOkLearnerParam(par, x)
 }
 
 #' @export
-isFeasible.ParamSet = function(par, x) {
+isFeasible.ParamSet = function(par, x, use.defaults = FALSE, filter = FALSE) {
   named = testNamed(x)
-  if (!is.list(x) || !(!named || all(names(x) %in% names(par$pars)) || !(named || length(x) == length(par$pars))))
-    return(FALSE)
-  if (isForbidden(par, x))
-    return(FALSE)
-  if (named) {
-    par = filterParams(par, ids = names(x))
-    x = x[names(par$pars)]
+  assertList(x)
+  res = FALSE
+  # insert defaults if they comply with the requirements
+  if (named && use.defaults) {
+    x = updateParVals(old.par.vals = getDefaults(par), new.par.vals = x, par.set = par)
   }
+  if (!named && filter) {
+    stopf("filter = TRUE only works with named input")
+  }
+  if (named && any(names(x) %nin% getParamIds(par)))
+    stopf("Following names of given values do not match with ParamSet: %s", collapse(setdiff(names(x), getParamIds(par))))
+  if (isForbidden(par, x)) {
+    attr(res, "warning") = "The given parameter setting has forbidden values."
+    return(res)
+  }
+  if (filter) {
+    par = filterParams(par, ids = names(x))
+    x = x[getParamIds(par)]
+  } else if (length(x) != length(par$pars)) {
+    stopf("Param setting of length %i does not match ParamSet length %i", length(x), length(par$pars))
+  }
+  if (!named) {
+    names(x) = getParamIds(par)
+  }
+  missing.reqs = setdiff(getRequiredParamNames(par), names(x))
+  if (length(missing.reqs) > 0)
+    stopf("Following parameters are missing but needed for requirements: %s", collapse(missing.reqs))
+
   #FIXME: very slow
   for (i in seq_along(par$pars)) {
     p = par$pars[[i]]
     v = x[[i]]
     # no requires, just check constraints
-    if(is.null(p$requires)) {
-      if (!isFeasible(p, v))
-        return(FALSE)
+    if (!requiresOk(p, x)) {
+      # if not, val must be NA
+      if (!isScalarNA(v)) {
+        attr(res, "warning") = sprintf("Param %s is set but does not meet requirements %s", convertToShortString(x[i]), sQuote(collapse(deparse(p$requires), sep = "")))
+        return(res)
+      }
     } else {
-      # requires, is it ok?
-      if (!requiresOk(par, x, i)) {
-        # if not, val must be NA
-        if (!isScalarNA(v))
-          return(FALSE)
-      } else {
-        # requires, ok, check constraints
-        if (!isFeasible(p, v))
-          return(FALSE)
+      # requires, ok, check constraints
+      if (!isFeasible(p, v)) {
+        attr(res, "warning") = sprintf("The parameter setting %s does not meet constraints", convertToShortString(x[i]))
+        return(res)
       }
     }
   }
@@ -137,12 +160,11 @@ constraintsOkLearnerParam = function(par, x) {
     constraintsOkParam(par, x)
 }
 
-# is the requires part of the ith param valid for value x (x[[i]] is value or ith param)
-# assumes that param actually has a requires part
-requiresOk = function(par.set, x, i) {
-  if (is.null(par.set$pars[[i]]$requires)) {
+# checks if the requires part of the i-th param is valid for value x (x[[i]] is value or i-th param)
+requiresOk = function(par, x) {
+  if (is.null(par$requires)) {
     TRUE
   } else {
-    isTRUE(eval(par.set$pars[[i]]$requires, envir = x))
+    isTRUE(eval(par$requires, envir = x))
   }
 }
