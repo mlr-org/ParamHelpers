@@ -65,8 +65,8 @@ The algorithm currently iterates the following steps:
   \item{We create a space filling design for all parameters, disregarding \code{requires},
     a \code{trafo} or the forbidden region.}
   \item{Forbidden points are removed.}
-  \item{Parameters are trafoed (maybe); dependent parameters whose constraints are unsatisfied
-    are set to \code{NA} entries.}
+  \item{Parameters are trafoed (potentially, depending on the setting of argument \code{trafo});
+    dependent parameters whose constraints are unsatisfied are set to \code{NA} entries.}
   \item{Duplicated design points are removed. Duplicated points are not generated in a
    reasonable space-filling design, but the way discrete parameters and also parameter dependencies
    are handled make this possible.}
@@ -79,6 +79,11 @@ via new calls to \code{\link[lhs]{randomLHS}}, but do not add points so they are
 far away from the already present ones. The reason is that the latter is quite hard to achieve
 with complicated dependencies and forbidden regions, if one wants to ensure that points actually
 get added... But we are working on it.
+
+Note that if you have trafos attached to your params, the complete creation of the design
+(except for the detection of invalid parameters w.r.t to their \code{requires} setting)
+takes place on the UNTRANSFORMED scale. So this function creates, e.g., a maximin LHS
+design on the UNTRANSFORMED scale, but not necessarily the transformed scale.
 
 \code{generateDesign} will NOT work if there are dependencies over multiple levels of
 parameters and the dependency is only given with respect to the \dQuote{previous} parameter.

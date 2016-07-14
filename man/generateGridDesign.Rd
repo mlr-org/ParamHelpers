@@ -43,11 +43,16 @@ The algorithm currently performs these steps:
 \enumerate{
   \item{We create a grid. For numerics and integers we use the specfied resolution. For discretes all values will be taken.}
   \item{Forbidden points are removed.}
-  \item{Parameters are trafoed (maybe); dependent parameters whose constraints are unsatisfied
-    are set to \code{NA} entries.}
+  \item{Parameters are trafoed (potentially, depending on the setting of argument \code{trafo});
+  dependent parameters whose constraints are unsatisfied are set to \code{NA} entries.}
   \item{Duplicated points are removed. Duplicated points are not generated in a
    grid design, but the way parameter dependencies are handled make this possible.}
 }
+
+Note that if you have trafos attached to your params, the complete creation of the design
+(except for the detection of invalid parameters w.r.t to their \code{requires} setting)
+takes place on the UNTRANSFORMED scale. So this function creates a regular grid
+over the param space on the UNTRANSFORMED scale, but not necessarily the transformed scale.
 
 \code{generateDesign} will NOT work if there are dependencies over multiple levels of
 parameters and the dependency is only given with respect to the \dQuote{previous} parameter.
