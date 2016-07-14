@@ -18,7 +18,7 @@ addOptPathEl.OptPathDF = function(op, x, y, dob = getOptPathLength(op)+1L, eol =
       stopf("'extra' must be properly named!")
     nondot.extra = removeDotEntries(extra)
     if (!all(vlapply(nondot.extra, isScalarValue)))
-      stopf("'extra' can currently only contain scalar values!")
+      stopf("'nondot' components of 'extra' can only contain scalar values! use the 'dotted' components for more complex objects!")
     if (length(env$extra) > 0L) {
       nondot.extra.precedent = removeDotEntries(env$extra[[1L]])
       unknown.extra = setdiff(names(nondot.extra), names(nondot.extra.precedent))

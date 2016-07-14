@@ -21,8 +21,8 @@ test_that("trafo opt.path", {
     makeNumericParam("x", lower=-2, upper=2, trafo=function(x) 2^x)
   )
   op = makeOptPathDF(par.set = ps, y.names = "y", minimize = TRUE, add.transformed.x = FALSE)
-  addOptPathEl(op, x=list(x = -2), y = 0)
-  addOptPathEl(op, x=list(x = 2), y = 0)
+  addOptPathEl(op, x = list(x = -2), y = 0)
+  addOptPathEl(op, x = list(x = 2), y = 0)
   expect_error(addOptPathEl(op, x = list(x = 3), y = 0), "infeasible")
   op2 = trafoOptPath(op)
   df = as.data.frame(op2)
@@ -46,5 +46,21 @@ test_that("trafo opt.path", {
       stringsAsFactors = TRUE)
   )
   expect_equal(df2, df2b)
+})
+
+test_that("trafo opt.path does not drop errmsg, exectime or extras", {
+  ps = makeParamSet(
+    makeNumericParam("x", lower=-2, upper=2, trafo=function(x) 2^x)
+  )
+  op = makeOptPathDF(par.set = ps, y.names = "y", minimize = TRUE, add.transformed.x = FALSE,
+    include.error.message = TRUE, include.exec.time = TRUE, include.extra = TRUE)
+  addOptPathEl(op, x = list(x = -2), y = 0,
+    error.message = "foo", exec.time = 10, extra = list(e = 33, .f = iris))
+  op2 = trafoOptPath(op)
+  df = as.data.frame(op2, include.rest = TRUE)
+  expect_equal(df, data.frame(x = 1/4, y = 0, dob = 1, eol = NA_real_,
+    error.message = "foo", exec.time = 10, e = 33, stringsAsFactors = FALSE))
+  el = getOptPathEl(op2, 1L)
+  expect_equal(el$extra$.f, iris)
 })
 
