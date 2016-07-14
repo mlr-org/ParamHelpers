@@ -59,11 +59,19 @@ trafoOptPath = function(opt.path) {
     stop("Cannot further trafo opt.path, you already added transformed x values to it!")
   ps = opt.path$par.set
   # FIXME: this only works for the DF implementation!
-  op2 = makeOptPathDF(opt.path$par.set, opt.path$y.names, opt.path$minimize, add.transformed.x = TRUE)
+  op2 = makeOptPathDF(opt.path$par.set, opt.path$y.names, opt.path$minimize, add.transformed.x = TRUE,
+    include.error.message = !is.null(opt.path$env$error.message),
+    include.exec.time = !is.null(opt.path$env$exec.time),
+    include.extra = !is.null(opt.path$env$extra))
   lapply(1:getOptPathLength(opt.path), function(i) {
     z = getOptPathEl(opt.path, i)
     x = trafoValue(ps, z$x)
-    addOptPathEl(op2, x, z$y, z$dob, z$eol)
+    args = list(op = op2, x = x, y = z$y, dob = z$dob, eol = z$eol)
+    # the next components can possibly be NULL, will be only added to arg list, if they are "there"
+    args$error.message = z$error.message
+    args$exec.time = z$exec.time
+    args$extra = z$extra
+    do.call(addOptPathEl, args)
   })
   return(op2)
 }
