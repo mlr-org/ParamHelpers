@@ -6,7 +6,9 @@
 #' @template arg_par_or_set
 #' @param x [any] \cr
 #'   Single value to check.
-#'   For a parameter set this must be a list in the correct order.
+#'   For a parameter set this must be a list. If the list is unnamed (not recommended) it must be in
+#'   the same order as the param set. If it is named, its names must match the parameter names in the
+#'   param set.
 #' @return Transformed value.
 #' @export
 #' @examples
@@ -22,13 +24,25 @@
 #' # now the values of "u" and "v" are transformed:
 #' trafoValue(ps, list(3, c(2, 4), "a"))
 trafoValue = function(par, x) {
-  if (inherits(par, "ParamSet"))
+  if (inherits(par, "ParamSet")) {
+    assertList(x, len = getParamNr(par))
+    pids = getParamIds(par)
+    if (is.null(names(x))) {
+      # if we dont have names, assume list is in correct order and matches parset
+      names(x) = pids
+    } else {
+      # if we have names, they must match the names in parset, and we reorder to be "safe"
+      # and an later rely on the order
+      assertSetEqual(names(x), pids)
+      x = x[pids]
+    }
     Map(trafoValue, par$pars, x)
-  else
-    if(is.null(par$trafo))
+  } else {
+    if (is.null(par$trafo))
       x
     else
       par$trafo(x)
+  }
 }
 
 #' Transform optimization path.
