@@ -9,6 +9,7 @@ ParamHelpers_1.8:
 - getParamIds is now S3 and also callable on type "Param"
 - filterParams: has new arg "check.requires"
 - isFeasible: new args "use.defaults" and "filter"
+- trafoValue: slightly robustify arg handling
 - new functions
 -- isNumericStrict
 -- getTypeStringsNumeric, getTypeStringsNumericStrict, getTypeStringsInteger, getTypeStringsDiscrete
