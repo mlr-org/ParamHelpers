@@ -14,7 +14,7 @@ test_that("trafoValue with param set", {
   )
   expect_equal(trafoValue(ps, list(3, c(2, 4), "a")), list(u=6, v=c(2/6, 4/6), w="a"))
   # check if error is thrown when list has different names
-  expect_error(trafoValue(ps, list(a=1, b=1, c="b")), " Must be equal to set")
+  expect_error(trafoValue(ps, list(a=1, b=1, c="b")))
   # check if trafo function is applied on correct list-slots
   expect_equal(trafoValue(ps, list(w="b", v=1:2, u=1)), list(u = 2*1, v = 1:2/sum(1:2), w="b"))
 })
