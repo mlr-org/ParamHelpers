@@ -254,7 +254,8 @@ test_that("logging extra works", {
     extra = list(ee = 7)))
   expect_error(addOptPathEl(op, x = list(v = 1), y = 5, extra = list(ee = 7, ff = 1)), "Trying to add unknown extra\\(s\\): ff")
   expect_error(addOptPathEl(op, x = list(v = 1), y = 5, extra = list()), "Trying to add extras but missing: ee")
-})
+  expect_error(addOptPathEl(op, x = list(v = 2), y = 6), "You have to add extras to opt path if the option is enabled")
+  })
 
 test_that("exta entries with dots may be nonscalar", {
   ps = makeParamSet(makeNumericParam("v"))
