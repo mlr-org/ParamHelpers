@@ -11,7 +11,7 @@ addOptPathEl.OptPathDF = function(op, x, y, dob = getOptPathLength(op)+1L, eol =
   assertString(error.message, na.ok = TRUE)
   assertNumber(exec.time, lower = 0, na.ok = TRUE)
   if (!is.null(env$extra) & is.null(extra))
-    stopf(stopf("You have to add extras to opt path if the option is enabled"))
+    stopf("You have to add extras to opt path if the option is enabled")
   if (!is.null(extra)) {
     if (is.null(env$extra))
       stopf("Trying to add extra info to opt path, without enabling that option!")
