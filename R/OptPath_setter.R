@@ -69,7 +69,9 @@ setOptPathElEOL = function(op, index, eol) {
 #'   these nonscalar entries must have a name starting with a dot (\code{.}).
 #'   Other entries must be scalar, and must be in the same order of all calls of
 #'   \code{addOptPathEl}.
-#'   Default is \code{NULL}
+#'   Watch out: if \code{include.extra} was set to \code{TRUE} in \code{\link{makeOptPathDF}}
+#'   the list of extras is mandatory.
+#'   Default is \code{NULL}.
 #' @param check.feasible [\code{logical(1)}]\cr
 #'   Should \code{x} be checked with \code{\link{isFeasible}}?
 #'   Default is \code{TRUE}.
