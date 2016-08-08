@@ -277,7 +277,7 @@ test_that("expressions", {
   p = makeDiscreteParam(id = "y", values = expression(floor(m / 3) : ceiling(m * 5)))
   expect_equal("discrete", p$type)
   expect_true(is.expression(p$values))
-  expect_output(p, "floor")
-  expect_output(p, "ceiling")
+  expect_output(print(p), "floor")
+  expect_output(print(p), "ceiling")
 })
 
