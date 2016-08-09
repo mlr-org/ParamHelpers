@@ -8,15 +8,18 @@
 #' @return [\code{TRUE}].
 #' @export
 #' @examples
-#' # FIXME: example
+#' ps = makeParamSet(
+#'   makeNumericParam("x", lower = expression(p), upper = expression(ceiling(3 * p))),
+#'   makeIntegerParam("y", lower = 1, upper = 2)
+#' )
+#' evaluateParamSet(ps, dict = list(p = 3))
 evaluateParamSet = function(par.set, dict = NULL) {
   assertClass(par.set, "ParamSet")
   assertList(dict, names = "unique", null.ok = TRUE)
   if (!hasExpression(par.set))
     return(par.set)
   checkExpressionFeasibility(par.set = par.set, keys = names(dict))
-  # FIXME: vcapply?
-  ids = as.character(unlist(lapply(par.set$pars, function(x) x$id)))
+  ids = vcapply(par.set$pars, function(x) x$id)
   # replace expressions in length (needs to be done prior to computing
   # defaults, values and boundaries)
   lengths = getParamLengths(par.set = par.set, dict = dict)

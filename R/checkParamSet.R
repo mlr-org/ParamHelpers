@@ -61,12 +61,11 @@ checkExpressionFeasibility = function(par.set, keys) {
     lapply(expressions, function(expr) {
       missing.vars = all.vars(expr)[all.vars(expr) %nin% keys]
       if (length(missing.vars) > 0L) {
-        res = sprintf("The %s '%s' %s to be defined in 'keys'",
+        message = sprintf("The %s '%s' %s to be defined in 'keys'",
           ifelse(length(missing.vars) == 1L, "parameter", "parameters"),
             paste(missing.vars, collapse = "', '"),
             ifelse(length(missing.vars) == 1L, "needs", "need"))
-        # FIXME: makeAssertion?
-        makeAssertion(id, res = res, collection = NULL)
+        stop(message)
       }
     })
   })

@@ -21,6 +21,10 @@ of expressions within a parameter set. The default is \code{NULL}.}
 Evaluates the expressions of a parameter set for a given environment.
 }
 \examples{
-# FIXME: example
+ps = makeParamSet(
+  makeNumericParam("x", lower = expression(p), upper = expression(ceiling(3 * p))),
+  makeIntegerParam("y", lower = 1, upper = 2)
+)
+evaluateParamSet(ps, dict = list(p = 3))
 }
 

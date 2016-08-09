@@ -90,7 +90,7 @@ getBounds = function(par.set, type.of.bounds, with.nr = FALSE, dict = NULL) {
     bounds = lapply(bounds, eval, envir = dict)
   }
 
-  # FIXME: document this
+  # assure that the length of the bounds corresponds to the pre-defined length
   bounds = lapply(names(bounds), function(id) {
     len = par.set$pars[[id]]$len
     x = bounds[[id]]
