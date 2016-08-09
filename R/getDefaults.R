@@ -9,20 +9,31 @@
 #'   Note that this can be slightly dangerous as \code{NULL} might be used as default value
 #'   for other parameters.
 #'   Default is \code{FALSE}.
+#' @template arg_dict
 #' @return [named \code{list}]. Named and in same order as \code{par.set}.
 #'   Parameters without defaults are not present in the list.
 #' @export
-getDefaults = function(par.set, include.null = FALSE) {
+getDefaults = function(par.set, include.null = FALSE, dict = NULL) {
   assertClass(par.set, "ParamSet")
   assertFlag(include.null)
   if (isEmpty(par.set))
     return(list())
   defs = extractSubList(par.set$pars, "default", simplify = FALSE)
+  if (all(vlapply(defs, is.null)))
+    return(list())
   if (!include.null) {
     j = vlapply(par.set$pars, function(x) x$has.default)
     if (!any(j))
       return(list())
-    defs = defs[j]
+    ids = names(defs)[j]
+    defs = setNames(lapply(ids, function(id) {
+      def = defs[[id]]
+      if (is.expression(def))
+        def = eval(def, envir = dict)
+      if ((length(def) == 1L) && par.set$pars[[id]]$len > 1L)
+        def = rep(def, par.set$pars[[id]]$len)
+      return(def)
+    }), ids)
   }
   return(defs)
 }

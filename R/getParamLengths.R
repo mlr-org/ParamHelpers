@@ -4,6 +4,7 @@
 #' Useful for vector parameters.
 #'
 #' @template arg_parset
+#' @template arg_dict
 #' @return [\code{integer}]. Named and in same order as \code{par.set}.
 #' @examples
 #' ps = makeParamSet(
@@ -15,11 +16,13 @@
 #' getParamLengths(ps)
 #' # the length of the vector x is 2, for all other single value parameters the length is 1.
 #' @export
-getParamLengths = function(par.set) {
+getParamLengths = function(par.set, dict = NULL) {
   assertClass(par.set, "ParamSet")
-  # if we dont do this check we get an empty list
   if (isEmpty(par.set))
-    return(integer(0))
-  else
-    return(extractSubList(par.set$pars, "len"))
+    return(integer(0L))
+
+  lengths = extractSubList(par.set$pars, "len", simplify = FALSE)
+  j = vlapply(par.set$pars, function(x) is.expression(x$len))
+  lengths[j] = lapply(lengths[j], eval, envir = dict)
+  as.integer(lengths)
 }

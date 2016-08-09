@@ -116,16 +116,41 @@ makeParam = function(id, type, len, lower, upper, values, cnames, allow.inf = FA
 getParPrintData = function(x, trafo = TRUE, used = TRUE, constr.clip = 40L) {
   g = function(n) collapse(sprintf("%.3g", n))
   if (isNumeric(x, include.int = TRUE)) {
-    constr = sprintf("%s to %s", g(x$lower), g(x$upper))
+    if (!is.expression(x$lower) && !is.expression(x$upper) &&
+      (length(unique(x$lower)) == 1L) && (length(unique(x$upper)) == 1L)) {
+      x$lower = unique(x$lower)
+      x$upper = unique(x$upper)
+    }
+    low = if (is.expression(x$lower))  as.character(x$lower) else g(x$lower)
+    upp = if (is.expression(x$upper)) as.character(x$upper) else g(x$upper)
+    constr = sprintf("%s to %s", low, upp)
   } else if (isDiscrete(x, include.logical = FALSE)) {
-    constr = clipString(collapse(names(x$values)), constr.clip)
-  } else {
+    vals = if (is.expression(x$values)) as.character(x$values) else collapse(names(x$values))
+    constr = clipString(vals, constr.clip)
+  } else
     constr = "-"
+  if (x$has.default) {
+    if (!is.expression(x$default)) {
+      def = x$default
+      def = ifelse(length(unique(def)) == 1L, unique(def), def)
+      def = paramValueToString(x, def)
+    } else
+      def = as.character(x$default)
+  } else {
+    def = "-"
+  }
+  if (isVector(x)) {
+    if (!is.expression(x$len))
+      len = x$len
+    else
+      len = as.character(x$len)
+  } else {
+    len = "-"
   }
   d = data.frame(
     Type = x$type,
-    len = ifelse(isVector(x), x$len, "-"),
-    Def = if (x$has.default) paramValueToString(x, x$default) else "-",
+    len = len,
+    Def = def,
     Constr = constr,
     Req = ifelse(is.null(x$requires), "-", "Y"),
     Tunable = x$tunable,

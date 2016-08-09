@@ -6,7 +6,7 @@
 \alias{makeParamSet}
 \title{Construct a parameter set.}
 \usage{
-makeParamSet(..., params = NULL, forbidden = NULL)
+makeParamSet(..., params = NULL, forbidden = NULL, keys = NULL)
 
 makeNumericParamSet(id = "x", len, lower = -Inf, upper = Inf,
   vector = TRUE)
@@ -27,6 +27,10 @@ than through simple constraints or \code{requires}-conditions
 If parameters have associated trafos, the forbidden region must always be specified on the original
 scale and not the transformed one.
 Default is \code{NULL} which means no forbidden region.}
+
+\item{keys}{[\code{character}]\cr
+Character vector with keys (names) of feasible variable names which will be provided via a
+dictionary/hash later. Default is \code{NULL}.}
 
 \item{id}{[\code{character(1)}]
 Name of parameter.}
@@ -67,6 +71,11 @@ makeParamSet(
   makeDiscreteParam("w", values=1:2),
   makeLogicalParam("x"),
   makeDiscreteVectorParam("y", len=2, values=c("a", "b"))
+)
+makeParamSet(
+  makeNumericParam("u", lower = expression(ceiling(n))),
+  makeIntegerParam("v", lower = expression(floor(n)), upper = 2),
+  dictionary = c("p", "n")
 )
 }
 
