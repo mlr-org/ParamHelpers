@@ -26,7 +26,7 @@ checkParamSet = function(par.set, dict = NULL) {
   lower = getLower(par.set, dict = dict)
   upper = getUpper(par.set, dict = dict)
   default = getDefaults(par.set, dict = dict)
-  values = getValues(par.set, dict = envir)
+  values = getValues(par.set, dict = dict)
   failed.boundary.check = vlapply(seq_along(lower), function(i) {
     id = names(lower)[i]
     any(lower[[id]] > default[[id]]) || any(upper[[id]] < default[[id]])

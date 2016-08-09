@@ -68,7 +68,6 @@ getValues = function(par.set, dict = NULL) {
 # common functionality of getLower and getUpper
 getBounds = function(par.set, type.of.bounds, with.nr = FALSE, dict = NULL) {
   assertClass(par.set, "ParamSet")
-  types = getParamTypes(par.set)
   # if we dont have numerics, return empty vector
   if (!hasNumeric(par.set, include.int = TRUE))
     return(numeric(0L))

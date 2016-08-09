@@ -7,7 +7,7 @@ getRequiredParamNames = function(par) {
 }
 
 getRequiredParamNames.Param = function(par) {
-  res = all.vars(par$requires)
+  all.vars(par$requires)
 }
 
 getRequiredParamNames.ParamSet = function(par) {

@@ -17,7 +17,7 @@ evaluateParamSet = function(par.set, dict = NULL) {
   ids = as.character(unlist(lapply(par.set$pars, function(x) x$id)))
   # replace expressions in length (needs to be done prior to computing
   # defaults, values and boundaries)
-  lengths = getParamLengths(par.set = par.set, envir = envir)
+  lengths = getParamLengths(par.set = par.set, dict = dict)
   par.set$pars = lapply(ids, function(id) {
     par = par.set$pars[[id]]
     par$len = asInt(lengths[[id]])
@@ -30,13 +30,13 @@ evaluateParamSet = function(par.set, dict = NULL) {
     ps$pars = ps$pars[id]
     par = ps$pars[[id]]
     if (!is.null(par$lower))
-      par$lower = unname(getLower(par.set = ps, envir = envir))
+      par$lower = unname(getLower(par.set = ps, dict = dict))
     if (!is.null(par$upper))
-      par$upper = unname(getUpper(par.set = ps, envir = envir))
+      par$upper = unname(getUpper(par.set = ps, dict = dict))
     if (!is.null(par$default))
-      par$default = getDefaults(par.set = ps, envir = envir)[[id]]
+      par$default = getDefaults(par.set = ps, dict = dict)[[id]]
     if (!is.null(par$values))
-      par$values = getValues(par.set = ps, envir = envir)[[id]]
+      par$values = getValues(par.set = ps, dict = dict)[[id]]
     return(par)
   })
   names(par.set$pars) = ids
