@@ -25,5 +25,5 @@ getParamLengths = function(par.set, dict = NULL) {
   lengths = extractSubList(par.set$pars, "len", simplify = FALSE)
   j = vlapply(par.set$pars, function(x) is.expression(x$len))
   lengths[j] = lapply(lengths[j], eval, envir = dict)
-  as.integer(lengths)
+  setNames(as.integer(lengths), names(lengths))
 }
