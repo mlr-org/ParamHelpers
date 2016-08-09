@@ -64,6 +64,9 @@
 #'   procedures that would try to consider all available parameters.
 #'   Default is \code{TRUE} (except for \code{untyped}, \code{function}, \code{character} and
 #'   \code{characterVector}) which means it is tunable.
+#' @param special.vals [\code{list()}]\cr
+#'   A list of special values the parameter can except which are outside of the defined range.
+#'   Default is an empty list.
 #' @return [\code{\link{Param}}].
 #' @name Param
 #' @rdname Param
