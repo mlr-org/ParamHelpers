@@ -52,3 +52,15 @@ test_that("isFeasible LearnerParamSet", {
   # to pass a dictionary
   # expect_true(isFeasible(ps, list(c = 2), filter = TRUE, use.defaults = TRUE))
 })
+
+test_that("length of vectors", {
+  ps = makeParamSet(
+    makeIntegerVectorLearnerParam("a", default = 1L),
+    makeNumericVectorLearnerParam("b", len = expression(n)),
+    makeNumericVectorLearnerParam("c", len = 4L, lower = -1, upper = 5),
+    keys = "n"
+  )
+  
+  expect_true(isFeasible(ps, list(a = 1, b = 2, c = rep(3, 4))))
+  expect_false(isFeasible(ps, list(a = 1, b = 2, c = 3)))
+})
