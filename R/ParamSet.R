@@ -21,6 +21,9 @@
 #'   If parameters have associated trafos, the forbidden region must always be specified on the original
 #'   scale and not the transformed one.
 #'   Default is \code{NULL} which means no forbidden region.
+#' @param keys [\code{character}]\cr
+#'   Character vector with keys (names) of feasible variable names which will be provided via a
+#'   dictionary/hash later. Default is \code{NULL}.
 #' @return [\code{\link{ParamSet}}].
 #' @aliases ParamSet
 #' @export
@@ -32,7 +35,12 @@
 #'   makeLogicalParam("x"),
 #'   makeDiscreteVectorParam("y", len=2, values=c("a", "b"))
 #' )
-makeParamSet = function(..., params = NULL, forbidden = NULL) {
+#' makeParamSet(
+#'   makeNumericParam("u", lower = expression(ceiling(n))),
+#'   makeIntegerParam("v", lower = expression(floor(n)), upper = 2),
+#'   keys = c("p", "n")
+#' )
+makeParamSet = function(..., params = NULL, forbidden = NULL, keys = NULL) {
   pars = list(...)
   if (length(pars) > 0 && !is.null(params))
     stop("You can only use one of ... or params!")
@@ -46,7 +54,17 @@ makeParamSet = function(..., params = NULL, forbidden = NULL) {
   if (any(duplicated(ns)))
     stop("All parameters must have unique names!")
   names(pars) = ns
-  return(makeS3Obj("ParamSet", pars = pars, forbidden = forbidden))
+  par.set = makeS3Obj("ParamSet", pars = pars, forbidden = forbidden)
+
+  if (length(pars) > 0L) {
+    if (all(vlapply(pars, inherits, what = "LearnerParam"))) {
+      par.set = addClasses(par.set, classes = "LearnerParamSet")
+      keys = union(keys, c("task", "n", "p", "k", "type"))
+    }
+    if (!is.null(keys) && (hasExpression(par.set)))
+      checkExpressionFeasibility(par.set, keys = keys)
+  }
+  return(par.set)
 }
 
 getParSetPrintData = function(x, trafo = TRUE, used = TRUE, constr.clip = 40L) {

@@ -6,11 +6,11 @@
 \alias{getValues}
 \title{Get lower / upper bounds and allowed discrete values for parameters.}
 \usage{
-getLower(par.set, with.nr = FALSE)
+getLower(par.set, with.nr = FALSE, dict = NULL)
 
-getUpper(par.set, with.nr = FALSE)
+getUpper(par.set, with.nr = FALSE, dict = NULL)
 
-getValues(par.set)
+getValues(par.set, dict = NULL)
 }
 \arguments{
 \item{par.set}{[\code{\link{ParamSet}}]\cr
@@ -19,6 +19,10 @@ Parameter set.}
 \item{with.nr}{[\code{logical(1)}]\cr
 Should number from 1 to length be appended to names of vector params?
 Default is \code{FALSE}.}
+
+\item{dict}{[\code{environment} | \code{list} | \code{NULL}]\cr
+Environment or list which will be used for evaluating the variables
+of expressions within a parameter set. The default is \code{NULL}.}
 }
 \value{
 [\code{vector} | \code{list}]. Named by parameter ids.
@@ -42,6 +46,16 @@ getUpper(ps)
 ps = makeParamSet(
   makeNumericParam("u"),
   makeDiscreteParam("v", values = c("a", "b")),
+  makeIntegerParam("w", lower = expression(ceiling(p / 3)), upper = 2),
+  makeDiscreteParam("x", values = 1:2),
+  makeNumericVectorParam("y", len = 2, lower = c(0, 10), upper = c(1, 11)),
+  keys = "p"
+)
+getLower(ps, dict = list(p = 7))
+getUpper(ps)
+
+ps = makeParamSet(
+  makeNumericParam("u"),
   makeDiscreteParam("w", values = list(a = list(), b = NULL))
 )
 getValues(ps)
