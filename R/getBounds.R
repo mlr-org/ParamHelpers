@@ -35,7 +35,7 @@
 #' getUpper(ps)
 #'
 #' ps = makeParamSet(
-#'   makeNumericParam("u"),,
+#'   makeNumericParam("u"),
 #'   makeDiscreteParam("w", values = list(a = list(), b = NULL))
 #' )
 #' getValues(ps)
@@ -68,8 +68,8 @@ getValues = function(par.set, dict = NULL) {
   })
   if (any(parset.has.expression.value) && missing(dict))
     stop("You need to provide a task to get the values.")
-  lapply(par.set$pars[is.disc], function(p) { eval(p$values, envir = dict)})
-  lapply(par.set$pars[is.disc], function(p) p$values)
+  lapply(par.set$pars[is.disc], function(p) 
+    eval(p$values, envir = dict))
 }
 
 # common functionality of getLower and getUpper

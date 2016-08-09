@@ -55,7 +55,7 @@ getLower(ps, dict = list(p = 7))
 getUpper(ps)
 
 ps = makeParamSet(
-  makeNumericParam("u"),,
+  makeNumericParam("u"),
   makeDiscreteParam("w", values = list(a = list(), b = NULL))
 )
 getValues(ps)
