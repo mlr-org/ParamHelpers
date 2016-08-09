@@ -16,6 +16,7 @@
 getDefaults = function(par.set, include.null = FALSE, dict = NULL) {
   assertClass(par.set, "ParamSet")
   assertFlag(include.null)
+  assertList(dict, names = "unique", null.ok = TRUE)
   if (isEmpty(par.set))
     return(list())
   defs = extractSubList(par.set$pars, "default", simplify = FALSE)

@@ -39,18 +39,24 @@
 #' )
 #' getValues(ps)
 getLower = function(par.set, with.nr = FALSE, dict = NULL) {
+  assertClass(par.set, "ParamSet")
+  assertList(dict, names = "unique", null.ok = TRUE)
   return(getBounds(par.set, type.of.bounds = "lower", with.nr = with.nr, dict = dict))
 }
 
 #' @export
 #' @rdname getLower
 getUpper = function(par.set, with.nr = FALSE, dict = NULL) {
+  assertClass(par.set, "ParamSet")
+  assertList(dict, names = "unique", null.ok = TRUE)
   return(getBounds(par.set, type.of.bounds = "upper", with.nr = with.nr, dict = dict))
 }
 
 #' @export
 #' @rdname getLower
 getValues = function(par.set, dict = NULL) {
+  assertClass(par.set, "ParamSet")
+  assertList(dict, names = "unique", null.ok = TRUE)
   assertClass(par.set, "ParamSet")
   types = getParamTypes(par.set)
   is.disc = types %in% c("discrete", "discretevector", "logical", "logicalvector")
@@ -68,6 +74,7 @@ getValues = function(par.set, dict = NULL) {
 # common functionality of getLower and getUpper
 getBounds = function(par.set, type.of.bounds, with.nr = FALSE, dict = NULL) {
   assertClass(par.set, "ParamSet")
+  assertList(dict, names = "unique", null.ok = TRUE)
   # if we dont have numerics, return empty vector
   if (!hasNumeric(par.set, include.int = TRUE))
     return(numeric(0L))

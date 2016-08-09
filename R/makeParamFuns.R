@@ -49,8 +49,7 @@ makeIntegerParam = function(id, lower = -Inf, upper = Inf, default, trafo = NULL
 
 #' @rdname Param
 #' @export
-makeIntegerVectorParam = function(id, len, lower = -Inf, upper = Inf, cnames = NULL,
-  default, trafo = NULL, requires = NULL, tunable = TRUE) {
+makeIntegerVectorParam = function(id, len, lower = -Inf, upper = Inf, cnames = NULL, default, trafo = NULL, requires = NULL, tunable = TRUE) {
   len = asInt(len)
   if (is.numeric(lower) && length(lower) == 1)
     lower = rep(lower, len)

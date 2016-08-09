@@ -18,6 +18,7 @@
 #' @export
 getParamLengths = function(par.set, dict = NULL) {
   assertClass(par.set, "ParamSet")
+  assertList(dict, names = "unique", null.ok = TRUE)
   if (isEmpty(par.set))
     return(integer(0L))
 

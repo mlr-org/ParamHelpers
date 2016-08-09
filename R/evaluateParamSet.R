@@ -10,6 +10,8 @@
 #' @examples
 #' # FIXME: example
 evaluateParamSet = function(par.set, dict = NULL) {
+  assertClass(par.set, "ParamSet")
+  assertList(dict, names = "unique", null.ok = TRUE)
   if (!hasExpression(par.set))
     return(par.set)
   checkExpressionFeasibility(par.set = par.set, keys = names(dict))

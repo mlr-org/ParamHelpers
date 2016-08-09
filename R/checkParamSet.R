@@ -19,6 +19,8 @@
 #' )
 #' checkParamSet(ps, dict = list(p = 3, z = "b"))
 checkParamSet = function(par.set, dict = NULL) {
+  assertClass(par.set, "ParamSet")
+  assertList(dict, names = "unique", null.ok = TRUE)
   if (hasExpression(par.set) && is.null(dict))
     stop("At least one of the parameters contains expressions and therefore 'dict' has to be defined.")
   if (hasExpression(par.set))
