@@ -117,25 +117,25 @@ constraintsOkParam = function(par, x) {
     return(TRUE)
   inValues = function(v) any(vlapply(par$values, function(w) isTRUE(all.equal(w, v))))
   ok = if (type == "numeric")
-    is.numeric(x) && length(x) == 1 && (par$allow.inf || is.finite(x)) && x >= par$lower && x <= par$upper
+    is.numeric(x) && length(x) == 1 && (par$allow.inf || is.finite(x)) && checkBoundsOrExpr(par = par, x = x)
   else if (type == "integer")
-    is.numeric(x) && length(x) == 1 && is.finite(x) && (!is.expression(par$lower) || x >= par$lower) && (!is.expression(par$upper) || x <= par$upper) && x == as.integer(x)
+    is.numeric(x) && length(x) == 1 && is.finite(x) && checkBoundsOrExpr(par = par, x = x) && x == as.integer(x)
   else if (type == "numericvector")
-    is.numeric(x) && length(x) == par$len && all((par$allow.inf | is.finite(x)) & x >= par$lower & x <= par$upper)
+    is.numeric(x) && length(x) == par$len && all((par$allow.inf | is.finite(x)) & checkBoundsOrExprVec(par = par, x = x))
   else if (type == "integervector")
-    is.numeric(x) && length(x) == par$len && all(is.finite(x) & x >= par$lower & x <= par$upper & x == as.integer(x))
+    is.numeric(x) && length(x) == par$len && all(is.finite(x) & checkBoundsOrExprVec(par = par, x = x) & x == as.integer(x))
   else if (type == "discrete")
     inValues(x)
   else if (type == "discretevector")
-    is.list(x) && length(x) == par$len && all(vlapply(x, inValues))
+    is.list(x) && (is.na(par$len) || length(x) == par$len) && all(vlapply(x, inValues))
   else if (type == "logical")
     is.logical(x) && length(x) == 1 && !is.na(x)
   else if (type == "logicalvector")
-    is.logical(x) && length(x) == par$len && !anyMissing(x)
+    is.logical(x) && (is.na(par$len) || length(x) == par$len) && !anyMissing(x)
   else if (type == "character")
     is.character(x) && length(x) == 1 && !is.na(x)
   else if (type == "charactervector")
-    is.character(x) && length(x) == par$len && !anyMissing(x)
+    is.character(x) && (is.na(par$len) || length(x) == par$len) && !anyMissing(x)
   else if (type == "function")
     is.function(x)
 
@@ -153,9 +153,9 @@ constraintsOkLearnerParam = function(par, x) {
   type = par$type
   # extra case for unkown dim in vector
   if (type == "numericvector")
-    is.numeric(x) && (is.na(par$len) || length(x) == par$len) && all(is.finite(x) & x >= par$lower & x <= par$upper)
+    is.numeric(x) && (is.na(par$len) || length(x) == par$len) && all(is.finite(x) & checkBoundsOrExprVec(par = par, x = x))
   else if (type == "integervector")
-    is.numeric(x) && (is.na(par$len) || length(x) == par$len) && all(is.finite(x) & x >= par$lower & x <= par$upper & x == as.integer(x))
+    is.numeric(x) && (is.na(par$len) || length(x) == par$len) && all(is.finite(x) & checkBoundsOrExprVec(par = par, x = x) & x == as.integer(x))
   else if (type == "logicalvector")
     is.logical(x) && (is.na(par$len) || length(x) == par$len) && !anyMissing(x)
   else if (type == "discretevector")
@@ -177,3 +177,10 @@ requiresOk = function(par, x) {
 specialValsOk = function(par, x) {
   any(vlapply(par$special.vals, function(special.val) isTRUE(all.equal(x, special.val))))
 }
+
+# helper function which checks whether 'x' lies within the boundaries (unless they are expressions)
+checkBoundsOrExpr = function(par, x)
+  (is.expression(par$lower) || x >= par$lower) && (is.expression(par$upper) || x <= par$upper)
+
+checkBoundsOrExprVec = function(par, x)
+  (is.expression(par$lower) | x >= par$lower) & (is.expression(par$upper) | x <= par$upper)
