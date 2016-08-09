@@ -75,7 +75,7 @@ makeParamSet(
 makeParamSet(
   makeNumericParam("u", lower = expression(ceiling(n))),
   makeIntegerParam("v", lower = expression(floor(n)), upper = 2),
-  dictionary = c("p", "n")
+  keys = c("p", "n")
 )
 }
 

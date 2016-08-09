@@ -45,10 +45,11 @@ getUpper(ps)
 
 ps = makeParamSet(
   makeNumericParam("u"),
-  makeDiscreteParam("v", values = c("a", "b"))+#'   makeIntegerParam("v", lower = expression(ceiling(p / 3)), upper = 2),
+  makeDiscreteParam("v", values = c("a", "b")),
+  makeIntegerParam("v", lower = expression(ceiling(p / 3)), upper = 2),
   makeDiscreteParam("w", values = 1:2),
   makeNumericVectorParam("x", len = 2, lower = c(0, 10), upper = c(1, 11)),
-  dictionary = "p"
+  keys = "p"
 )
 getLower(ps, dict = list(p = 7))
 getUpper(ps)
