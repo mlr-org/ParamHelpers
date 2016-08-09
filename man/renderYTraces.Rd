@@ -7,8 +7,8 @@
 renderYTraces(opt.paths, over.time = "dob")
 }
 \arguments{
-\item{opt.paths}{[\code{list}]\cr
-List of \code{OptPath} objects}
+\item{opt.paths}{[\code{\link{OptPath}} | list of \code{\link{OptPath}}]\cr
+Object(s) to plot.}
 
 \item{over.time}{[\code{character}]\cr
 Should the traces be plotted versus the iteration number or the cumulated

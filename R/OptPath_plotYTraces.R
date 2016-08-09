@@ -1,18 +1,20 @@
 #' @title Plots Y traces of multiple optimization paths
 #'
-#' @description Can be used for only single-objective optimization paths.
+#' @description
+#' Can be used for only single-objective optimization paths.
 #' Useful to compare runs of different algorithms on the same optimization problem.
 #' You can add your own ggplot layers to the resulting plot object.
 #'
-#' @param opt.paths [\code{list}]\cr
-#'   List of \code{OptPath} objects
+#' @param opt.paths [\code{\link{OptPath}} | list of \code{\link{OptPath}}]\cr
+#'   Object(s) to plot.
 #' @param over.time [\code{character}]\cr
 #'   Should the traces be plotted versus the iteration number or the cumulated
 #'   execution time? For the later, the opt.path has to contain a extra column
 #'   names exec.time. Possible values are dob and exec.time, default is \code{dob}.
 #' @return ggplot2 plot object
 renderYTraces = function(opt.paths, over.time = "dob") {
-  assertList(opt.paths, types = "OptPath", min.len = 1L)
+  opt.paths = ensureVector(opt.paths, cl = "OptPath", n = 1L, names = "opt.path")
+  assertList(opt.paths, types = "OptPath", min.len = 1L, names = "unique")
   assertChoice(over.time, choices = c("dob", "exec.time"))
   run.name = names(opt.paths)
   y.name = NULL
