@@ -6,10 +6,7 @@
 #' checks whether the values are a subset of the parameter's possible values.
 #'
 #' @template arg_parset
-#' @param dict [\code{list} | \code{NULL}]\cr
-#'   If any of the parameters components is defined with an expression, this
-#'   list will be used to replace the values within the expressions.
-#'   The default is \code{NULL}.
+#' @template arg_dict
 #' @return [\code{TRUE}].
 #' @export
 #' @examples
@@ -18,11 +15,10 @@
 #'   makeIntegerParam("v", lower = 1, upper = expression(3 * p)),
 #'   makeDiscreteParam("w", default = expression(z), values = c("a", "b")),
 #'   makeDiscreteParam("x", default = "a", values = c("a", "b")),
-#'   dictionary = c("p", "z")
+#'   keys = c("p", "z")
 #' )
 #' checkParamSet(ps, dict = list(p = 3, z = "b"))
 checkParamSet = function(par.set, dict = NULL) {
-  # FIXME: dict or keys
   if (hasExpression(par.set) && is.null(dict))
     stop("At least one of the parameters contains expressions and therefore 'dict' has to be defined.")
   if (hasExpression(par.set))
