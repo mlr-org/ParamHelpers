@@ -15,34 +15,40 @@
 \title{Create a description object for a parameter of a machine learning algorithm.}
 \usage{
 makeNumericLearnerParam(id, lower = -Inf, upper = Inf, allow.inf = FALSE,
-  default, when = "train", requires = NULL, tunable = TRUE)
+  default, when = "train", requires = NULL, tunable = TRUE,
+  special.vals = list())
 
 makeNumericVectorLearnerParam(id, len = as.integer(NA), lower = -Inf,
   upper = Inf, allow.inf = FALSE, default, when = "train",
-  requires = NULL, tunable = TRUE)
+  requires = NULL, tunable = TRUE, special.vals = list())
 
 makeIntegerLearnerParam(id, lower = -Inf, upper = Inf, default,
-  when = "train", requires = NULL, tunable = TRUE)
+  when = "train", requires = NULL, tunable = TRUE,
+  special.vals = list())
 
 makeIntegerVectorLearnerParam(id, len = as.integer(NA), lower = -Inf,
-  upper = Inf, default, when = "train", requires = NULL, tunable = TRUE)
+  upper = Inf, default, when = "train", requires = NULL, tunable = TRUE,
+  special.vals = list())
 
 makeDiscreteLearnerParam(id, values, default, when = "train",
-  requires = NULL, tunable = TRUE)
+  requires = NULL, tunable = TRUE, special.vals = list())
 
 makeDiscreteVectorLearnerParam(id, len = as.integer(NA), values, default,
-  when = "train", requires = NULL, tunable = TRUE)
+  when = "train", requires = NULL, tunable = TRUE,
+  special.vals = list())
 
 makeLogicalLearnerParam(id, default, when = "train", requires = NULL,
-  tunable = TRUE)
+  tunable = TRUE, special.vals = list())
 
 makeLogicalVectorLearnerParam(id, len = as.integer(NA), default,
-  when = "train", requires = NULL, tunable = TRUE)
+  when = "train", requires = NULL, tunable = TRUE,
+  special.vals = list())
 
 makeUntypedLearnerParam(id, default, when = "train", requires = NULL,
-  tunable = TRUE)
+  tunable = TRUE, special.vals = list())
 
-makeFunctionLearnerParam(id, default, when = "train", requires = NULL)
+makeFunctionLearnerParam(id, default, when = "train", requires = NULL,
+  special.vals = list())
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr
@@ -87,6 +93,10 @@ other purely technical stuff, and allows them to be excluded from later automati
 procedures that would try to consider all available parameters.
 Default is \code{TRUE} (except for \code{untyped}, \code{function}, \code{character} and
 \code{characterVector}) which means it is tunable.}
+
+\item{special.vals}{[\code{list()}]\cr
+A list of special values the parameter can except which are outside of the defined range.
+Default is an empty list.}
 
 \item{len}{[\code{integer(1)}]\cr
 Length of vector parameter.}

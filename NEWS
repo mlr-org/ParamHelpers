@@ -1,6 +1,7 @@
 ParamHelpers_1.9:
 - Many parameters can now be expressions which can be evaluated later while
   providing a lookup dictionary.
+- make*Param now accepts special.vals which are always feasibile
 
 ParamHelpers_1.8:
 - removed soobench from SUGGESTS and removed function extractParamSetFromSooFunction

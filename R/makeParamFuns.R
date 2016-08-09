@@ -1,7 +1,7 @@
 #' @rdname Param
 #' @export
 makeNumericParam = function(id, lower = -Inf, upper = Inf, allow.inf = FALSE,
-  default, trafo = NULL, requires = NULL, tunable = TRUE) {
+  default, trafo = NULL, requires = NULL, tunable = TRUE, special.vals = list()) {
 
   ## Dirty hack! makeParam can not handle expressions, therefore we replace
   ## all expressions in lower, upper or defaults with feasible values prior
@@ -33,7 +33,7 @@ makeNumericParam = function(id, lower = -Inf, upper = Inf, allow.inf = FALSE,
   assertLogical(tunable, len = 1L)
   p = makeParam(id = id, type = "numeric", len = 1L, lower = lower,
     upper = upper, allow.inf = allow.inf, values = NULL, cnames = NULL,
-    default = default, trafo = trafo, requires = requires, tunable = tunable)
+    default = default, trafo = trafo, requires = requires, tunable = tunable, special.vals = special.vals)
 
   ## re-substitute the expression for lower, upper and/or default
   ## (if they existed in the first place)
@@ -50,7 +50,7 @@ makeNumericParam = function(id, lower = -Inf, upper = Inf, allow.inf = FALSE,
 #' @export
 makeNumericVectorParam = function(id, len, lower = -Inf, upper = Inf,
   allow.inf = FALSE, cnames = NULL, default, trafo = NULL, requires = NULL,
-  tunable = TRUE) {
+  tunable = TRUE, special.vals = list()) {
 
   ## replace all expressions in length, lower, upper or defaults with feasible
   ## values prior to generating the parameter (and afterwards re-substitute them
@@ -95,7 +95,7 @@ makeNumericVectorParam = function(id, len, lower = -Inf, upper = Inf,
   assertLogical(tunable, len = 1L)
   p = makeParam(id = id, type = "numericvector", len = len, lower = lower,
     upper = upper, allow.inf = allow.inf, values = NULL, cnames = cnames,
-    default = default, trafo = trafo, requires = requires, tunable = tunable)
+    default = default, trafo = trafo, requires = requires, tunable = tunable, special.vals = special.vals)
 
   ## re-substitute the expression for lower, upper and/or default
   if (!is.null(lower.expr))
@@ -112,7 +112,7 @@ makeNumericVectorParam = function(id, len, lower = -Inf, upper = Inf,
 #' @rdname Param
 #' @export
 makeIntegerParam = function(id, lower = -Inf, upper = Inf, default, trafo = NULL,
-  requires = NULL, tunable = TRUE) {
+  requires = NULL, tunable = TRUE, special.vals = list()) {
 
   ## replace all expressions in lower, upper or defaults with feasible values
   ## prior to generating the parameter (and afterwards re-substitute them by the
@@ -143,7 +143,7 @@ makeIntegerParam = function(id, lower = -Inf, upper = Inf, default, trafo = NULL
   assertLogical(tunable, len = 1L)
   p = makeParam(id = id, type = "integer", len = 1L, lower = lower,
     upper = upper, values = NULL, cnames = NULL, default = default,
-    trafo = trafo, requires = requires, tunable = tunable)
+    trafo = trafo, requires = requires, tunable = tunable, special.vals = special.vals)
 
   ## re-substitute the expression for lower, upper and/or default
   if (!is.null(lower.expr))
@@ -158,7 +158,7 @@ makeIntegerParam = function(id, lower = -Inf, upper = Inf, default, trafo = NULL
 #' @rdname Param
 #' @export
 makeIntegerVectorParam = function(id, len, lower = -Inf, upper = Inf, cnames = NULL,
-  default, trafo = NULL, requires = NULL, tunable = TRUE) {
+  default, trafo = NULL, requires = NULL, tunable = TRUE, special.vals = list()) {
 
   ## replace all expressions in length, lower, upper or defaults with feasible
   ## values prior to generating the parameter (and afterwards re-substitute them
@@ -204,7 +204,7 @@ makeIntegerVectorParam = function(id, len, lower = -Inf, upper = Inf, cnames = N
   assertLogical(tunable, len = 1L)
   p = makeParam(id = id, type = "integervector", len = len, lower = lower, upper = upper,
     values = NULL, cnames = cnames, default = default, trafo = trafo,
-    requires = requires, tunable = tunable)
+    requires = requires, tunable = tunable, special.vals = special.vals)
 
   ## re-substitute the expression for lower, upper and/or default
   if (!is.null(lower.expr))
@@ -220,7 +220,7 @@ makeIntegerVectorParam = function(id, len, lower = -Inf, upper = Inf, cnames = N
 
 #' @rdname Param
 #' @export
-makeLogicalParam = function(id, default, requires = NULL, tunable = TRUE) {
+makeLogicalParam = function(id, default, requires = NULL, tunable = TRUE, special.vals = list()) {
   values = list(TRUE, FALSE)
   names(values) = c("TRUE", "FALSE")
   assertLogical(tunable, len = 1L)
@@ -235,7 +235,7 @@ makeLogicalParam = function(id, default, requires = NULL, tunable = TRUE) {
 
   p = makeParam(id = id, type = "logical", len = 1L, lower = NULL,
     upper = NULL, values = values, cnames = NULL, default = default,
-    trafo = NULL, requires = requires, tunable = tunable)
+    trafo = NULL, requires = requires, tunable = tunable, special.vals = special.vals)
 
   ## re-substitute the expression for default
   if (!is.null(default.expr))
@@ -246,7 +246,7 @@ makeLogicalParam = function(id, default, requires = NULL, tunable = TRUE) {
 #' @rdname Param
 #' @export
 makeLogicalVectorParam = function(id, len, cnames = NULL, default,
-  requires = NULL, tunable = TRUE) {
+  requires = NULL, tunable = TRUE, special.vals = list()) {
 
   ## replace expressions in length by feasible value prior to
   ## param construction (and replace it afterwards)
@@ -274,7 +274,7 @@ makeLogicalVectorParam = function(id, len, cnames = NULL, default,
 
   p = makeParam(id = id, type = "logicalvector", len = len, lower = NULL,
     upper = NULL, values = values, cnames = cnames, default = default,
-    trafo = NULL, requires = requires, tunable = tunable)
+    trafo = NULL, requires = requires, tunable = tunable, special.vals = special.vals)
 
   ## re-substitute the expression for default
   if (!is.null(default.expr))
@@ -287,7 +287,7 @@ makeLogicalVectorParam = function(id, len, cnames = NULL, default,
 #' @rdname Param
 #' @export
 makeDiscreteParam = function(id, values, trafo = NULL, default,
-  requires = NULL, tunable = TRUE) {
+  requires = NULL, tunable = TRUE, special.vals = list()) {
 
   ## replace the expression in values and defaults with feasible values prior to
   ## generating the params (and re-substituting them by the original expression)
@@ -306,7 +306,7 @@ makeDiscreteParam = function(id, values, trafo = NULL, default,
   assertLogical(tunable, len = 1L)
   p = makeParam(id = id, type = "discrete", len = 1L, lower = NULL,
     upper = NULL, values = values, cnames = NULL, default = default,
-    trafo = trafo, requires = requires, tunable = tunable)
+    trafo = trafo, requires = requires, tunable = tunable, special.vals = special.vals)
 
   ## re-substitute the expression for default and values
   if (!is.null(default.expr))
@@ -319,7 +319,7 @@ makeDiscreteParam = function(id, values, trafo = NULL, default,
 #' @rdname Param
 #' @export
 makeDiscreteVectorParam = function(id, len, values, default, requires = NULL,
-  tunable = TRUE) {
+  tunable = TRUE, special.vals = list()) {
 
   ## replace the expressions in length with a feasible (1L) prior to generating
   ## the parameter (and afterwards re-substitute it by the original expression)
@@ -347,7 +347,7 @@ makeDiscreteVectorParam = function(id, len, values, default, requires = NULL,
   assertLogical(tunable, len = 1L)
   p = makeParam(id = id, type = "discretevector", len = len, lower = NULL,
     upper = NULL, values = values, cnames = NULL, default = default,
-    trafo = NULL, requires = requires, tunable = tunable)
+    trafo = NULL, requires = requires, tunable = tunable, special.vals = special.vals)
 
   ## re-substitute the expressions for default, values and length
   ## (if they existed in the first place)
@@ -362,34 +362,34 @@ makeDiscreteVectorParam = function(id, len, values, default, requires = NULL,
 
 #' @rdname Param
 #' @export
-makeFunctionParam = function(id, default = default, requires = NULL) {
+makeFunctionParam = function(id, default = default, requires = NULL, special.vals = list()) {
   makeParam(id = id, type = "function", len = 1L, lower = NULL, upper = NULL,
     values = NULL, cnames = NULL, default = default, trafo = NULL,
-    requires = requires, tunable = FALSE)
+    requires = requires, tunable = FALSE, special.vals = special.vals)
 }
 
 #FIXME: what happens if NA is later used for untyped params? because we might interpret this as
 # missing value wrt. dependent params
 #' @rdname Param
 #' @export
-makeUntypedParam = function(id, default, requires = NULL, tunable = TRUE) {
+makeUntypedParam = function(id, default, requires = NULL, tunable = TRUE, special.vals = list()) {
   makeParam(id = id, type = "untyped", len = 1L, lower = NULL, upper = NULL,
     values = NULL, cnames = NULL, default = default, trafo = NULL,
-    requires = requires, tunable = TRUE)
+    requires = requires, tunable = TRUE, special.vals = special.vals)
 }
 
 #' @rdname Param
 #' @export
-makeCharacterParam = function(id, default, requires = NULL) {
+makeCharacterParam = function(id, default, requires = NULL, special.vals = list()) {
   makeParam(id = id, type = "character", len = 1L, lower = NULL, upper = NULL,
     values = NULL, cnames = NULL, default = default, trafo = NULL,
-    requires = requires, tunable = FALSE)
+    requires = requires, tunable = FALSE, special.vals = special.vals)
 }
 
 #' @rdname Param
 #' @export
 makeCharacterVectorParam = function(id, len, cnames = NULL, default,
-  requires = NULL) {
+  requires = NULL, special.vals = list()) {
 
   ## replace the expressions in length with a feasible (1L) prior to generating
   ## the parameter (and afterwards re-substitute it by the original expression)
@@ -403,7 +403,7 @@ makeCharacterVectorParam = function(id, len, cnames = NULL, default,
 
   p = makeParam(id = id, type = "charactervector", len = len, lower = NULL,
     upper = NULL, values = NULL, cnames = cnames, default = default,
-    trafo = NULL, requires = requires, tunable = FALSE)
+    trafo = NULL, requires = requires, tunable = FALSE, special.vals = special.vals)
 
   ## re-substitute the length-expression (if it existed in the first place)
   if (!is.null(len.expr))
