@@ -173,6 +173,7 @@ requiresOk = function(par, x) {
   }
 }
 
+# check if x is one of the pre defined special.vals and return TRUE in case.
 specialValsOk = function(par, x) {
   any(vlapply(par$special.vals, function(special.val) isTRUE(all.equal(x, special.val))))
 }
