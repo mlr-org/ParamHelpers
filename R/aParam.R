@@ -75,7 +75,7 @@
 NULL
 
 makeParam = function(id, type, len, lower, upper, values, cnames, allow.inf = FALSE, default,
-  trafo = NULL, requires = NULL, tunable = TRUE) {
+  trafo = NULL, requires = NULL, tunable = TRUE, special.vals = list()) {
   assertString(id)
   #We cannot check default} for NULL or NA as this could be the default value!
   if (missing(default)) {
@@ -93,6 +93,7 @@ makeParam = function(id, type, len, lower, upper, values, cnames, allow.inf = FA
     requires = convertExpressionToCall(requires)
     assertClass(requires, "call")
   }
+  assertList(special.vals)
   p = makeS3Obj("Param",
     id = id,
     type = type,
@@ -106,7 +107,8 @@ makeParam = function(id, type, len, lower, upper, values, cnames, allow.inf = FA
     default = default,
     trafo = trafo,
     requires = requires,
-    tunable = tunable
+    tunable = tunable,
+    special.vals = special.vals
   )
   if (has.default && !isFeasible(p, default))
     stop(p$id, " : 'default' must be a feasible parameter setting.")

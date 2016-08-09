@@ -17,36 +17,42 @@
 \title{Create a description object for a parameter.}
 \usage{
 makeNumericParam(id, lower = -Inf, upper = Inf, allow.inf = FALSE,
-  default, trafo = NULL, requires = NULL, tunable = TRUE)
+  default, trafo = NULL, requires = NULL, tunable = TRUE,
+  special.vals = list())
 
 makeNumericVectorParam(id, len, lower = -Inf, upper = Inf,
   allow.inf = FALSE, cnames = NULL, default, trafo = NULL,
-  requires = NULL, tunable = TRUE)
+  requires = NULL, tunable = TRUE, special.vals = list())
 
 makeIntegerParam(id, lower = -Inf, upper = Inf, default, trafo = NULL,
-  requires = NULL, tunable = TRUE)
+  requires = NULL, tunable = TRUE, special.vals = list())
 
 makeIntegerVectorParam(id, len, lower = -Inf, upper = Inf, cnames = NULL,
-  default, trafo = NULL, requires = NULL, tunable = TRUE)
+  default, trafo = NULL, requires = NULL, tunable = TRUE,
+  special.vals = list())
 
-makeLogicalParam(id, default, requires = NULL, tunable = TRUE)
+makeLogicalParam(id, default, requires = NULL, tunable = TRUE,
+  special.vals = list())
 
 makeLogicalVectorParam(id, len, cnames = NULL, default, requires = NULL,
-  tunable = TRUE)
+  tunable = TRUE, special.vals = list())
 
 makeDiscreteParam(id, values, trafo = NULL, default, requires = NULL,
-  tunable = TRUE)
+  tunable = TRUE, special.vals = list())
 
 makeDiscreteVectorParam(id, len, values, default, requires = NULL,
-  tunable = TRUE)
+  tunable = TRUE, special.vals = list())
 
-makeFunctionParam(id, default = default, requires = NULL)
+makeFunctionParam(id, default = default, requires = NULL,
+  special.vals = list())
 
-makeUntypedParam(id, default, requires = NULL, tunable = TRUE)
+makeUntypedParam(id, default, requires = NULL, tunable = TRUE,
+  special.vals = list())
 
-makeCharacterParam(id, default, requires = NULL)
+makeCharacterParam(id, default, requires = NULL, special.vals = list())
 
-makeCharacterVectorParam(id, len, cnames = NULL, default, requires = NULL)
+makeCharacterVectorParam(id, len, cnames = NULL, default, requires = NULL,
+  special.vals = list())
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr
