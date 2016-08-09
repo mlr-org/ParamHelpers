@@ -104,8 +104,8 @@ test_that("expressions work", {
     makeNumericVectorLearnerParam("y", upper = expression(n)),
     keys = "n"
   )
-  expect_equal(getLower(ps), c(-Inf, -Inf))
-  expect_equal(getUpper(ps, dict = list(n = 100)), c(Inf, 100))
+  expect_equal(getLower(ps), c(x = -Inf, y = -Inf))
+  expect_equal(getUpper(ps, dict = list(n = 100)), c(x = Inf, y = 100))
   x = evaluateParamSet(ps, dict = list(n = 101))
   expect_equal(x$pars$x$upper, Inf)
   expect_equal(x$pars$y$upper, 101)

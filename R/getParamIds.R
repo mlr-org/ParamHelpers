@@ -44,6 +44,8 @@ getParamIds.Param = function(par, repeated = FALSE, with.nr = FALSE) {
         paste(rep(pid, n), seq_len(n), sep = "")
       else
         rep(pid, n)
+    } else {
+      pid
     }
   } else {
     pid
