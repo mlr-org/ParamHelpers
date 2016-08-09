@@ -10,10 +10,9 @@ checkParamSet(par.set, dict = NULL)
 \item{par.set}{[\code{\link{ParamSet}}]\cr
 Parameter set.}
 
-\item{dict}{[\code{list} | \code{NULL}]\cr
-If any of the parameters components is defined with an expression, this
-list will be used to replace the values within the expressions.
-The default is \code{NULL}.}
+\item{dict}{[\code{environment} | \code{list} | \code{NULL}]\cr
+Environment or list which will be used for evaluating the variables
+of expressions within a parameter set. The default is \code{NULL}.}
 }
 \value{
 [\code{TRUE}].
@@ -29,7 +28,7 @@ ps = makeParamSet(
   makeIntegerParam("v", lower = 1, upper = expression(3 * p)),
   makeDiscreteParam("w", default = expression(z), values = c("a", "b")),
   makeDiscreteParam("x", default = "a", values = c("a", "b")),
-  dictionary = c("p", "z")
+  keys = c("p", "z")
 )
 checkParamSet(ps, dict = list(p = 3, z = "b"))
 }
