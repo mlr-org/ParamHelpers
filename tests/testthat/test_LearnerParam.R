@@ -97,3 +97,16 @@ test_that("unknown length works", {
   expect_false(isFeasible(p, c(0, 0)))
   expect_error(sampleValue(p), "Cannot sample")
 })
+
+test_that("expressions work", {
+  ps = makeParamSet(
+    makeNumericVectorLearnerParam("x"),
+    makeNumericVectorLearnerParam("y", upper = expression(n)),
+    keys = "n"
+  )
+  expect_equal(getLower(ps), c(-Inf, -Inf))
+  expect_equal(getUpper(ps, dict = list(n = 100)), c(Inf, 100))
+  x = evaluateParamSet(ps, dict = list(n = 101))
+  expect_equal(x$pars$x$upper, Inf)
+  expect_equal(x$pars$y$upper, 101)
+})

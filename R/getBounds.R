@@ -68,7 +68,7 @@ getValues = function(par.set, dict = NULL) {
   })
   if (any(parset.has.expression.value) && missing(dict))
     stop("You need to provide a task to get the values.")
-  lapply(par.set$pars[is.disc], function(p) 
+  lapply(par.set$pars[is.disc], function(p)
     eval(p$values, envir = dict))
 }
 
@@ -94,7 +94,7 @@ getBounds = function(par.set, type.of.bounds, with.nr = FALSE, dict = NULL) {
   bounds = lapply(names(bounds), function(id) {
     len = par.set$pars[[id]]$len
     x = bounds[[id]]
-    if (length(x) == 1L && len > 1L)
+    if (length(x) == 1L && !is.na(len) && len > 1L)
       return(rep(x, len))
     return(x)
   })

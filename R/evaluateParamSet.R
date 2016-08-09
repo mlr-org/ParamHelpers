@@ -25,7 +25,7 @@ evaluateParamSet = function(par.set, dict = NULL) {
   lengths = getParamLengths(par.set = par.set, dict = dict)
   par.set$pars = lapply(ids, function(id) {
     par = par.set$pars[[id]]
-    par$len = asInt(lengths[[id]])
+    par$len = asInt(lengths[[id]], na.ok = TRUE)
     return(par)
   })
   names(par.set$pars) = ids
