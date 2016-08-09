@@ -117,7 +117,7 @@ constraintsOkParam = function(par, x) {
   ok = if (type == "numeric")
     is.numeric(x) && length(x) == 1 && (par$allow.inf || is.finite(x)) && x >= par$lower && x <= par$upper
   else if (type == "integer")
-    is.numeric(x) && length(x) == 1 && is.finite(x) && x >= par$lower && x <= par$upper && x == as.integer(x)
+    is.numeric(x) && length(x) == 1 && is.finite(x) && (!is.expression(par$lower) || x >= par$lower) && (!is.expression(par$upper) || x <= par$upper) && x == as.integer(x)
   else if (type == "numericvector")
     is.numeric(x) && length(x) == par$len && all((par$allow.inf | is.finite(x)) & x >= par$lower & x <= par$upper)
   else if (type == "integervector")

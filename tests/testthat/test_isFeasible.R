@@ -5,9 +5,37 @@ test_that("isFeasible ParamSet", {
     makeIntegerParam("a", default = 1L),
     makeDiscreteParam("b", values = list('0' = "NIL", '1' = "ONE", 'f' = function(x) x + 1)),
     makeIntegerParam("c", default = 1L, requires = quote(a == 1)),
-    makeIntegerParam("d", default = 1L, requires = quote(a == 2))
+    makeIntegerParam("d", default = 1L, requires = quote(a == 2)),
+    makeIntegerParam("e", default = expression(n = 99L)),
+    keys = "n"
   )
-  expect_true(isFeasible(ps, list(a = 1, b = function(x) x+1, c = 1, d = NA)))
+  expect_true(isFeasible(ps, list(a = 1, b = function(x) x+1, c = 1, d = NA, e = 12L)))
+  expect_true(isFeasible(ps, list(a = 1, b = function(x) x+1, c = 1), filter = TRUE))
+  expect_true(isFeasible(ps, list(a = 2, b = function(x) x+1, d = 1), filter = TRUE))
+  expect_error(isFeasible(ps, list(a = 1, c = 1)), "does not match ParamSet length")
+  expect_error(isFeasible(ps, list(1, 1)), "does not match ParamSet length")
+  expect_error(isFeasible(ps, list(1, 1), filter = TRUE), "only works with named input")
+  expect_error(isFeasible(ps, list(a = 1, zzz = 1), filter = TRUE), "zzz")
+  expect_false((res = isFeasible(ps, list(a = 1, c = "1"), filter = TRUE)))
+  expect_match(attr(res, "warning"), "c=1 does not meet constraints")
+  expect_error(isFeasible(ps, list(c = 2), filter = TRUE), "needed for requirements: a")
+  expect_false((res = isFeasible(ps, list(a = 2, c = 2), filter = TRUE)))
+  expect_match(attr(res, "warning"), "Param c=2 is set but does not meet requirements")
+  expect_true((res = isFeasible(ps, list(a = 2, c = NA), filter = TRUE)))
+  expect_true(isFeasible(ps, list(c = 2), filter = TRUE, use.defaults = TRUE))
+})
+
+test_that("isFeasible LearnerParamSet", {
+  ps = makeParamSet(
+    makeIntegerLearnerParam("a", default = 1L),
+    makeDiscreteLearnerParam("b", values = list('0' = "NIL", '1' = "ONE", 'f' = function(x) x + 1)),
+    makeIntegerLearnerParam("c", default = 1L, requires = quote(a == 1)),
+    makeIntegerLearnerParam("d", default = 1L, requires = quote(a == 2)),
+    makeIntegerLearnerParam("e", default = expression(n), upper = expression(2*n)),
+    keys = "n"
+  )
+
+  expect_true(isFeasible(ps, list(a = 1, b = function(x) x+1, c = 1, d = NA, e = 12L)))
   expect_true(isFeasible(ps, list(a = 1, b = function(x) x+1, c = 1), filter = TRUE))
   expect_true(isFeasible(ps, list(a = 2, b = function(x) x+1, d = 1), filter = TRUE))
   expect_error(isFeasible(ps, list(a = 1, c = 1)), "does not match ParamSet length")
