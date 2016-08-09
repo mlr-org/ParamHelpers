@@ -49,20 +49,21 @@ checkParamSet = function(par.set, dict = NULL) {
 }
 
 # check whether the expressions of a param set are feasible
-checkExpressionFeasibility = function(par.set, dictionary) {
-  expression.flag = vapply(par.set$pars, hasExpression, logical(1L))
+checkExpressionFeasibility = function(par.set, keys) {
+  expression.flag = vlapply(par.set$pars, hasExpression)
   if (sum(expression.flag) == 0L)
     return(TRUE)
   lapply(par.set$pars[expression.flag], function(par) {
     id = par$id
-    expressions = par[vapply(par, is.expression, logical(1L))]
+    expressions = par[vlapply(par, is.expression)]
     lapply(expressions, function(expr) {
-      missing.vars = all.vars(expr)[all.vars(expr) %nin% dictionary]
+      missing.vars = all.vars(expr)[all.vars(expr) %nin% keys]
       if (length(missing.vars) > 0L) {
-        res = sprintf("The %s '%s' %s to be defined in 'dictionary'.",
+        res = sprintf("The %s '%s' %s to be defined in 'keys'",
           ifelse(length(missing.vars) == 1L, "parameter", "parameters"),
             paste(missing.vars, collapse = "', '"),
             ifelse(length(missing.vars) == 1L, "needs", "need"))
+        # FIXME: makeAssertion?
         makeAssertion(id, res = res, collection = NULL)
       }
     })
