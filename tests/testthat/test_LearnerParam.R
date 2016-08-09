@@ -8,11 +8,12 @@ test_that("num vec", {
   expect_equal(p$when, "train")
   expect_true(!isFeasible(p, 1))
   expect_true(isFeasible(p, c(1,1)))
-  p = makeNumericVectorLearnerParam("x", lower = 0, upper = 2)
+  p = makeNumericVectorLearnerParam("x", lower = 0, upper = 2, special.vals = list(NA_integer_))
   expect_equal(p$lower, 0)
   expect_equal(p$upper, 2)
   expect_true(isFeasible(p, 1))
   expect_true(isFeasible(p, c(1,1)))
+  expect_true(isFeasible(p, NA_integer_))
   # defaults
   p = makeNumericVectorLearnerParam(id = "x", allow.inf = TRUE, default = Inf)
   expect_error(makeNumericVectorLearnerParam(id = "x", allow.inf = FALSE, default = Inf), "feasible")
