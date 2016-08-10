@@ -38,11 +38,12 @@ test_that("getDefaults for LearnerParams", {
     makeDiscreteLearnerParam(id = "a", default = "a1", values = c("a1", "a2")),
     makeNumericLearnerParam(id = "b",  default = 1, lower = 0, requires = quote(a=="a1")),
     makeNumericVectorLearnerParam("c", len = NA_integer_, lower = 0),
-    makeLogicalVectorLearnerParam(id = "d", default = c(TRUE), tunable = TRUE)
+    makeLogicalVectorLearnerParam(id = "d", default = c(TRUE), tunable = TRUE),
+    makeIntegerVectorLearnerParam(id = "e", default = 1:3)
   )
   expect_equal(
     getDefaults(par.set, include.null = TRUE),
-    list(a = "a1", b = 1, c = NULL, d = TRUE)
+    list(a = "a1", b = 1, c = NULL, d = TRUE, e = 1:3)
   )
 })
 
