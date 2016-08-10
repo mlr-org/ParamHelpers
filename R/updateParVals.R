@@ -14,18 +14,21 @@
 #' @return [\code{list}].
 #' @export
 updateParVals = function(par.set, old.par.vals, new.par.vals, warn = FALSE) {
-  assertList(old.par.vals)
-  assertList(new.par.vals)
-  assertNamed(old.par.vals)
-  assertNamed(new.par.vals)
+  assertList(old.par.vals, names = "named")
+  assertList(new.par.vals, names = "named")
   assertClass(par.set, "ParamSet")
   repeat {
     # we repeat to include parameters which depend on each other by requirements
+    # candidates are params of the old par.vals we might still need.
     candidate.par.names = setdiff(names(old.par.vals), names(new.par.vals))
     for (pn in candidate.par.names) {
+      # If all requirement parameters for the candidate are in the new.par.vals and if the requirements are met
       if (all(getRequiredParamNames(par.set$pars[[pn]]) %in% names(new.par.vals)) && requiresOk(par.set$pars[[pn]], new.par.vals)) {
-        new.par.vals[pn] = old.par.vals[pn]
+        new.par.vals[pn] = old.par.vals[pn] # keep old.par.val in new.par.vals as it meets the requirements
+      } else if (all(getRequiredParamNames(par.set$pars[[pn]]) %in% names(getDefaults(par.set))) && requiresOk(par.set$pars[[pn]], getDefaults(par.set))) {
+        new.par.vals[pn] = old.par.vals[pn] # keep old.par.val as it meets requirement via defaults
       } else if (warn){
+        # otherwise we can drop the old par.val because it does not meet the requirements.
         warningf("ParamSetting %s was dropped.", convertToShortString(old.par.vals[pn]))
       }
     }
