@@ -9,3 +9,5 @@ man-roxygen
 README.md
 ^.editorconfig$
 ^appveyor\.yml$
+^.*\.Rproj$
+^\.Rproj\.user$
