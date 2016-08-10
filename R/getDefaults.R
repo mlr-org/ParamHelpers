@@ -31,7 +31,7 @@ getDefaults = function(par.set, include.null = FALSE, dict = NULL) {
       def = defs[[id]]
       if (is.expression(def))
         def = eval(def, envir = dict)
-      if ((length(def) == 1L) && par.set$pars[[id]]$len > 1L)
+      if ((length(def) == 1L) && !is.na(par.set$pars[[id]]$len) && par.set$pars[[id]]$len > 1L)
         def = rep(def, par.set$pars[[id]]$len)
       return(def)
     }), ids)
