@@ -53,7 +53,6 @@ paramValueToString.Param = function(par, x, show.missing.values = FALSE, num.for
     else
       return("")
   }
-    
 
   # FIXME: switch
   type = par$type
