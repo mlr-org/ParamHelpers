@@ -23,6 +23,14 @@ test_that("isFeasible ParamSet", {
   expect_match(attr(res, "warning"), "Param c=2 is set but does not meet requirements")
   expect_true((res = isFeasible(ps, list(a = 2, c = NA), filter = TRUE)))
   expect_true(isFeasible(ps, list(c = 2), filter = TRUE, use.defaults = TRUE))
+  
+  #make sure we can ignore defaults if they contradict a new setting
+  ps = makeParamSet(
+    makeIntegerParam("a", default = 1L, requires = quote(b == 2)),
+    makeIntegerParam("b", default = 2L, requires = quote(c == TRUE)),
+    makeLogicalParam("c", default = TRUE))
+  expect_error(isFeasible(ps, list(b = 3), filter = TRUE), "needed for requirements: c")
+  expect_true(isFeasible(ps, list(b = 3), filter = TRUE, use.defaults = TRUE))
 })
 
 test_that("isFeasible LearnerParamSet", {

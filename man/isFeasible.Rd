@@ -21,6 +21,7 @@ which refers to an unpassed param.)}
 
 \item{use.defaults}{[\code{logical(1)}]\cr
 Whether defaults of the \code{\link{Param}}/\code{\link{ParamSet}} should be used if no values are supplied.
+If the defaults have requirements that are not met by \code{x} it will be feasible nonetheless.
 Default is \code{FALSE}.}
 
 \item{filter}{[\code{logical(1)}]\cr
