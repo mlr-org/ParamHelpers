@@ -56,7 +56,9 @@ paramValueToString.Param = function(par, x, show.missing.values = FALSE, num.for
 
   # FIXME: switch
   type = par$type
-  if (type == "numeric")
+  if (is.expression(x))
+    as.character(x)
+  else if (type == "numeric")
     sprintf(num.format, x)
   else if (type == "numericvector")
     paste(sprintf(num.format, x), collapse=",")
