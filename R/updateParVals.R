@@ -17,6 +17,10 @@ updateParVals = function(par.set, old.par.vals, new.par.vals, warn = FALSE) {
   assertList(old.par.vals, names = "named")
   assertList(new.par.vals, names = "named")
   assertClass(par.set, "ParamSet")
+  
+  #we might want to check requires with defaults that are not overwritten by new.par.vals
+  usable.defaults = getDefaults(par.set)
+  usable.defaults = usable.defaults[names(usable.defaults) %nin% names(new.par.vals)]
   repeat {
     # we repeat to include parameters which depend on each other by requirements
     # candidates are params of the old par.vals we might still need.
@@ -25,7 +29,7 @@ updateParVals = function(par.set, old.par.vals, new.par.vals, warn = FALSE) {
       # If all requirement parameters for the candidate are in the new.par.vals and if the requirements are met
       if (all(getRequiredParamNames(par.set$pars[[pn]]) %in% names(new.par.vals)) && requiresOk(par.set$pars[[pn]], new.par.vals)) {
         new.par.vals[pn] = old.par.vals[pn] # keep old.par.val in new.par.vals as it meets the requirements
-      } else if (all(getRequiredParamNames(par.set$pars[[pn]]) %in% names(getDefaults(par.set))) && requiresOk(par.set$pars[[pn]], getDefaults(par.set))) {
+      } else if (all(getRequiredParamNames(par.set$pars[[pn]]) %in% names(usable.defaults)) && requiresOk(par.set$pars[[pn]], usable.defaults)) {
         new.par.vals[pn] = old.par.vals[pn] # keep old.par.val as it meets requirement via defaults
       } else if (warn){
         # otherwise we can drop the old par.val because it does not meet the requirements.
