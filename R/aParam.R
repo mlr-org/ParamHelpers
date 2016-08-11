@@ -137,7 +137,6 @@ getParPrintData = function(x, trafo = TRUE, used = TRUE, constr.clip = 40L) {
   if (x$has.default) {
     if (!is.expression(x$default)) {
       def = x$default
-      def = ifelse(length(unique(def)) == 1L, unique(def), def)
       def = paramValueToString(x, def)
     } else
       def = as.character(x$default)
