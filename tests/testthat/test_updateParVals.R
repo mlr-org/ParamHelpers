@@ -44,4 +44,16 @@ test_that("updateParVals works", {
   pb = list(b = 3)
   pc = updateParVals(ps, pa, pb)
   expect_equal(pc, list(b = 3, c = TRUE))
+  
+  #more complicated stuff
+  ps = makeParamSet(
+    makeDiscreteLearnerParam(id = "a", default = "a2",
+                             values = c("a1", "a2",  "a3"),
+                             requires = quote(!a %in% c("a2") || b == TRUE)),
+    makeLogicalLearnerParam(id = "b", default = FALSE, tunable = FALSE)
+  )
+  pa = list(a = "a1")
+  pb = list()
+  pc = updateParVals(ps, pa, pb)
+  expect_equal(pc, pb)
 })
