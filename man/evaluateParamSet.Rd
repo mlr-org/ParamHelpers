@@ -26,5 +26,12 @@ ps = makeParamSet(
   makeIntegerParam("y", lower = 1, upper = 2)
 )
 evaluateParamSet(ps, dict = list(p = 3))
+
+ps = makeParamSet(
+  makeNumericParam("x", default = expression(sum(data$Species == "setosa"))),
+  makeIntegerParam("y", lower = 1, upper = 2),
+  keys = c("data", "Species")
+)
+evaluateParamSet(ps, dict = list(data = iris))
 }
 

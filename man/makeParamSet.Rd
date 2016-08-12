@@ -52,7 +52,7 @@ n \code{NumericParam} objects?
 Default is \code{TRUE}.}
 }
 \value{
-[\code{\link{ParamSet}}].
+[\code{\link{ParamSet}} | \code{LearnerParamSet}].
 }
 \description{
 \code{makeParamSet}: Construct from a bunch of parameters.
@@ -63,6 +63,13 @@ The constructed S3 class is simply a list that contains the element \code{pars}.
 \code{pars} is a list of the passed parameters, named by their ids.
 
 \code{makeNumericParamSet}: Convenience function for numerics.
+}
+\details{
+If all parameters of the \code{ParamSet} are learner parameters, the output
+will inherit the class \code{LearnerParamSet}.
+
+If \code{keys} are provided, it will automatically be checked, whether all expressions within the
+provided parameters only contain arguments that are a subset of keys.
 }
 \examples{
 makeParamSet(

@@ -13,12 +13,18 @@
 #'   makeIntegerParam("y", lower = 1, upper = 2)
 #' )
 #' evaluateParamSet(ps, dict = list(p = 3))
+#'
+#' ps = makeParamSet(
+#'   makeNumericParam("x", default = expression(sum(data$Species == "setosa"))),
+#'   makeIntegerParam("y", lower = 1, upper = 2),
+#'   keys = c("data", "Species")
+#' )
+#' evaluateParamSet(ps, dict = list(data = iris))
 evaluateParamSet = function(par.set, dict = NULL) {
   assertClass(par.set, "ParamSet")
   assertList(dict, names = "unique", null.ok = TRUE)
   if (!hasExpression(par.set))
     return(par.set)
-  checkExpressionFeasibility(par.set = par.set, keys = names(dict))
   ids = vcapply(par.set$pars, function(x) x$id)
   # replace expressions in length (needs to be done prior to computing
   # defaults, values and boundaries)

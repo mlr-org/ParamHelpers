@@ -15,8 +15,14 @@ test_that("hasExpression.ParamSet", {
   )
   ps2 = makeParamSet(
     makeNumericParam("x", lower = 1, upper = 2),
-    makeNumericParam("y", lower = 1, upper = expression(a))
+    makeNumericParam("y", lower = 1, upper = expression(a)),
+    keys = "a"
+  )
+  ps3 = makeParamSet(
+    makeNumericLearnerParam("x", lower = 1, upper = 2),
+    makeNumericLearnerParam("y", lower = 1, upper = expression(p))
   )
   expect_true(!hasExpression(ps1))
   expect_true(hasExpression(ps2))
+  expect_true(hasExpression(ps3))
 })
