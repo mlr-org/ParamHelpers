@@ -32,8 +32,8 @@ test_that("expressions", {
     makeDiscreteParam("w", default = "b", values = c("a", "b")),
     makeDiscreteParam("x", default = "a", values = c("a", "b"))
   )
-  ee = list(p = 3, z = "b")
-  expect_identical(evaluateParamSet(ps, dict = ee), ps2)
+  dict = list(p = 3, z = "b")
+  expect_identical(evaluateParamSet(ps, dict = dict), ps2)
   expect_error(evaluateParamSet(ps))
   expect_error(evaluateParamSet(ps, dict = list(p = 3)))
   expect_error(evaluateParamSet(ps, dict = list(z = "b")))

@@ -56,7 +56,9 @@ paramValueToString.Param = function(par, x, show.missing.values = FALSE, num.for
 
   # FIXME: switch
   type = par$type
-  if (type == "numeric")
+  if (is.expression(x))
+    as.character(x)
+  else if (type == "numeric")
     sprintf(num.format, x)
   else if (type == "numericvector")
     paste(sprintf(num.format, x), collapse=",")
@@ -78,8 +80,15 @@ paramValueToString.Param = function(par, x, show.missing.values = FALSE, num.for
     collapse(x)
   else if (type == "function")
     "<function>"
-  else if (type == "untyped")
-    sprintf("<%s>", class(x)[1])
+  else if (type == "untyped") {
+    # if untyped we at least produce strings from scalars
+    # FIXME: one might possibly also want this for vectors?
+    # i guess there should be a better helper function here, which simply acts on a type string
+    if (isScalarValue(x))
+      ifelse(is.numeric(x), sprintf(num.format, x), as.character(x))
+    else
+      sprintf("<%s>", class(x)[1])
+  }
 }
 
 #' @export

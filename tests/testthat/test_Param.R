@@ -270,6 +270,15 @@ test_that("untyped param", {
 test_that("param print works", {
   p = makeNumericParam(id = "x", lower = -1L, upper = 1)
   expect_output(print(p), "numeric")
+  p = makeUntypedParam(id = "x")
+  expect_output(print(p), "untyped")
+  p = makeUntypedParam(id = "x", default = NULL)
+  expect_output(print(p), "untyped")
+  p = makeUntypedParam(id = "x", default = 99)
+  expect_output(print(p), "untyped")
+  expect_output(print(p), "99")
+  p = makeUntypedParam(id = "x", default = c(99, 99))
+  expect_output(print(p), "untyped")
 })
 
 

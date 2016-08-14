@@ -19,6 +19,10 @@ test_that("updateParVals works", {
   pc2 = updateParVals(ps, pa, pb2)
   expect_equal(pc2, list(a = 0, f = FALSE, d = 4))
 
+  pb2 = list(a = 0, f = FALSE)
+  pc2 = updateParVals(ps, pa, pb2)
+  expect_equal(pc2, list(a = 0, f = FALSE, d = 4))
+
   #sanity
   expect_equal(updateParVals(ps, pa, list()), pa)
   expect_equal(updateParVals(ps, list(), pb), pb)

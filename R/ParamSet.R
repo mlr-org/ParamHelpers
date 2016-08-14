@@ -21,11 +21,14 @@
 #'   If parameters have associated trafos, the forbidden region must always be specified on the original
 #'   scale and not the transformed one.
 #'   Default is \code{NULL} which means no forbidden region.
-#' @param keys [\code{character}]\cr
-#'   Character vector with keys (names) of feasible variable names which will be provided via a
-#'   dictionary/hash later. Default is \code{NULL}.
-#' @return [\code{\link{ParamSet}}].
+#' @template arg_keys
+#' @return [\code{\link{ParamSet}} | \code{LearnerParamSet}].
 #' @aliases ParamSet
+#' @details If all parameters of the \code{ParamSet} are learner parameters, the output
+#' will inherit the class \code{LearnerParamSet}.
+#'
+#' If \code{keys} are provided, it will automatically be checked, whether all expressions within the
+#' provided parameters only contain arguments that are a subset of keys.
 #' @export
 #' @examples
 #' makeParamSet(
@@ -51,18 +54,21 @@ makeParamSet = function(..., params = NULL, forbidden = NULL, keys = NULL) {
     assertList(pars, types = "Param")
   }
   ns = extractSubList(pars, "id")
-  if (any(duplicated(ns)))
+  if (anyDuplicated(ns))
     stop("All parameters must have unique names!")
   names(pars) = ns
   par.set = makeS3Obj("ParamSet", pars = pars, forbidden = forbidden)
 
   if (length(pars) > 0L) {
+    # if all Params are LearnerParams, then the ParSet is considered
+    # to be a LearnerParSet and we automatically extend the keys by
+    # the default keys from mlr, i.e. task, n, p, k and type
     if (all(vlapply(pars, inherits, what = "LearnerParam"))) {
       par.set = addClasses(par.set, classes = "LearnerParamSet")
       keys = union(keys, c("task", "n", "p", "k", "type"))
     }
     if (!is.null(keys) && (hasExpression(par.set)))
-      checkExpressionFeasibility(par.set, keys = keys)
+      checkExpressionFeasibility(par.set = par.set, keys = keys)
   }
   return(par.set)
 }
