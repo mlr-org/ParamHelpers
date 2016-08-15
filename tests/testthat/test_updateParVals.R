@@ -60,4 +60,13 @@ test_that("updateParVals works", {
   pb = list()
   pc = updateParVals(ps, pa, pb)
   expect_equal(pc, pa)
+
+  ps = makeParamSet(
+    makeIntegerParam("a", default = 10L)
+  )
+  pa = list(a = 0L)
+  pb = list()
+  pc = updateParVals(ps, pa, pb)
+  expect_equal(pc, pa)
+
 })
