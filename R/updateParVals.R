@@ -25,10 +25,15 @@ updateParVals = function(par.set, old.par.vals, new.par.vals, warn = FALSE) {
   updated.old = attr(old.with.defaults, "updated")
   new.with.defaults = updateParVals2(par.set = par.set, old.par.vals = default.par.vals, new.par.vals = new.par.vals)
   updated.new = attr(new.with.defaults, "updated")
-  # updated in old but not present in new
-  respect.old.updated = setdiff(names(updated.old)[updated.old], names(new.par.vals))
-  # new.defaults that can be updated
-  new.candidates = setdiff(names(new.with.defaults), respect.old.updated)
+  # new.candidates are the par.vals we want to use from new.with.defaults.
+  # These exclude those values where the defaults got updated by the old.par.vals but the update is not present in the new.par.vals but still we want to keep this update.
+  #
+  # updated.old | updated.new | use
+  #           T |           T | new 
+  #           T |           F | old
+  #           F |           T | new
+  #           F |           F | new(default)
+  new.candidates = names(new.with.defaults) %nin% setdiff(names(updated.old)[updated.old], names(updated.new)[updated.new])
   updated.par.vals = updateParVals2(par.set = par.set, old.par.vals = old.with.defaults, new.par.vals = new.with.defaults[new.candidates])
   # Find out which parmam names were kept in both update processes
   # this indicates that this was a default and we don't need it, as it is still a valid default.

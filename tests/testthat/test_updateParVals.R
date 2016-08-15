@@ -68,5 +68,8 @@ test_that("updateParVals works", {
   pb = list()
   pc = updateParVals(ps, pa, pb)
   expect_equal(pc, pa)
+  pb2 = list(a = 5L)
+  pc2 = updateParVals(ps, pa, pb2)
+  expect_equal(pc2, pb2)
 
 })
