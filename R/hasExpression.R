@@ -1,29 +1,48 @@
 #' @title Check if parameter values contain expressions.
 #'
-#' @description Check if parameter values contain expressions.
-#' @template arg_par_or_set
+#' @description Checks if a parameter, parameter set or list of parameters contain expressions.
+#' @param obj [\code{\link{Param}} | \code{\link[ParamHelpers]{ParamSet}} | \code{list}]\cr
+#'   Parameter, parameter set or list of parameters.
 #' @return [\code{logical(1)}].
+#' @examples 
+#' ps1 = makeParamSet(
+#'   makeNumericParam("x", lower = 1, upper = 2),
+#'   makeNumericParam("y", lower = 1, upper = 10)
+#' )
+#'
+#' ps2 = makeParamSet(
+#'   makeNumericLearnerParam("x", lower = 1, upper = 2),
+#'   makeNumericLearnerParam("y", lower = 1, upper = expression(p))
+#' )
+#'
+#' hasExpression(ps1)
+#' hasExpression(ps2)
 #' @export
-hasExpression = function(par) {
+hasExpression = function(obj) {
   UseMethod("hasExpression")
 }
 
 #' @export
-hasExpression.Param = function(par) {
-  any(vlapply(par, is.expression))
+hasExpression.Param = function(obj) {
+  any(vlapply(obj, is.expression))
 }
 
 #' @export
-hasExpression.LearnerParam = function(par) {
-  any(vlapply(par, is.expression))
+hasExpression.LearnerParam = function(obj) {
+  any(vlapply(obj, is.expression))
 }
 
 #' @export
-hasExpression.ParamSet = function(par) {
-  any(vlapply(par$pars, hasExpression))
+hasExpression.ParamSet = function(obj) {
+  any(vlapply(obj$pars, hasExpression))
 }
 
 #' @export
-hasExpression.LearnerParamSet = function(par) {
-  any(vlapply(par$pars, hasExpression))
+hasExpression.LearnerParamSet = function(obj) {
+  any(vlapply(obj$pars, hasExpression))
+}
+
+#' @export
+hasExpression.list = function(obj) {
+  any(vlapply(obj, hasExpression))
 }
