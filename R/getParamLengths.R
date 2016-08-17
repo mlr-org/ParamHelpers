@@ -5,7 +5,7 @@
 #'
 #' @template arg_par_or_set
 #' @template arg_dict
-#' @return [\code{integer}]. Named (and in case of a \code{\link{ParamSet}}, in the same order).
+#' @return [\code{integer}]. Named and in the same order as the input for \code{\link{ParamSet}} input.
 #' @examples
 #' ps = makeParamSet(
 #'   makeNumericParam("u"),
@@ -27,13 +27,12 @@ getParamLengths = function(par, dict = NULL) {
 getParamLengths.Param = function(par, dict = NULL) {
   assertClass(par, "Param")
   assertList(dict, names = "unique", null.ok = TRUE)
-  if (length(par) == 0)
+  if (length(par) == 0L)
     return(integer(0L))
 
   length = par$len
   if (is.expression(length))
     length = eval(length, envir = dict)
-  # setNames(as.integer(length), par$id)
   as.integer(length)
 }
 

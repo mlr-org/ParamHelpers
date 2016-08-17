@@ -8,6 +8,9 @@
 #' The constructed S3 class is simply a list that contains the element \code{pars}.
 #' \code{pars} is a list of the passed parameters, named by their ids.
 #'
+#' If \code{keys} are provided it will automatically be checked whether all expressions within the
+#' provided parameters only contain arguments that are a subset of keys.
+#'
 #' @param ... [\code{\link{Param}}]\cr
 #'   Parameters.
 #' @param params [list of \code{\link{Param}}]\cr
@@ -23,12 +26,9 @@
 #'   Default is \code{NULL} which means no forbidden region.
 #' @template arg_keys
 #' @return [\code{\link{ParamSet}} | \code{LearnerParamSet}].
+#'   If all parameters of the \code{ParamSet} are learner parameters, the output
+#'   will inherit the class \code{LearnerParamSet}.
 #' @aliases ParamSet
-#' @details If all parameters of the \code{ParamSet} are learner parameters, the output
-#' will inherit the class \code{LearnerParamSet}.
-#'
-#' If \code{keys} are provided, it will automatically be checked, whether all expressions within the
-#' provided parameters only contain arguments that are a subset of keys.
 #' @export
 #' @examples
 #' makeParamSet(
@@ -67,8 +67,9 @@ makeParamSet = function(..., params = NULL, forbidden = NULL, keys = NULL) {
       par.set = addClasses(par.set, classes = "LearnerParamSet")
       keys = union(keys, c("task", "n", "p", "k", "type"))
     }
-    if (!is.null(keys) && (hasExpression(par.set)))
+    if (!is.null(keys) && hasExpression(par.set)) {
       checkExpressionFeasibility(par.set = par.set, keys = keys)
+    }
   }
   return(par.set)
 }

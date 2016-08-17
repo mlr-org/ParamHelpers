@@ -4,7 +4,7 @@
 #' @param obj [\code{\link{Param}} | \code{\link[ParamHelpers]{ParamSet}} | \code{list}]\cr
 #'   Parameter, parameter set or list of parameters.
 #' @return [\code{logical(1)}].
-#' @examples 
+#' @examples
 #' ps1 = makeParamSet(
 #'   makeNumericParam("x", lower = 1, upper = 2),
 #'   makeNumericParam("y", lower = 1, upper = 10)

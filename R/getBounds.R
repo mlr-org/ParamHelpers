@@ -6,10 +6,10 @@
 #'
 #' Parameters for which such bound make no sense - due to their type - are not present in the result.
 #'
-#' @param obj [\code{\link{Param}} | \code{\link[ParamHelpers]{ParamSet}} | \code{list}]\cr
+#' @param obj [\code{\link{Param}} | \code{\link{ParamSet}} | \code{list}]\cr
 #'   Parameter, parameter set or list of parameters, whose boundaries and/or
 #'   values should be extracted. In case the boundaries or values contain expressions,
-#'   they will be evaluated based on the provided dictionary (\code{dict}).
+#'   they will be evaluated based using the provided dictionary \code{dict}.
 #' @param with.nr [\code{logical(1)}]\cr
 #'   Should number from 1 to length be appended to names of vector params?
 #'   Default is \code{FALSE}.
@@ -33,7 +33,7 @@
 #'   makeDiscreteParam("w", values = list(a = list(), b = NULL))
 #' )
 #' getValues(ps)
-#' 
+#'
 #' par.vals = list(
 #'   u = makeNumericParam("u"),
 #'   v = makeIntegerParam("v", lower = 1, upper = 2),
@@ -63,13 +63,12 @@ getValues = function(obj, dict = NULL) {
 getValues.Param = function(obj, dict = NULL) {
   assertClass(obj, "Param")
   assertList(dict, names = "unique", null.ok = TRUE)
-  is.disc = obj$type %in% c("discrete", "discretevector", "logical", "logicalvector")
   # values are only possible for params of the types above
-  if (!is.disc)
+  if (!isDiscrete(obj))
     return(NULL)
   # error if dict is not defined, but values contains expression
-  if (is.null(dict) && any(vlapply(obj$values, is.expression)))
-    stop("You need to provide a task to get the values.")
+  if (is.null(dict) && hasExpression(obj))
+    stop("You need to provide a dictionary to get the values.")
   eval(obj$values, envir = dict)
 }
 
@@ -78,19 +77,14 @@ getValues.ParamSet = function(obj, dict = NULL) {
   assertClass(obj, "ParamSet")
   assertList(dict, names = "unique", null.ok = TRUE)
   types = getParamTypes(obj)
-  is.disc = types %in% c("discrete", "discretevector", "logical", "logicalvector")
+  is.disc = types %in% getTypeStringsDiscrete()
   # only consider params with one of the types from above
   if (!any(is.disc))
     return(list())
-  # logical, showing if values of (discrete/logical) parameters contain expressions
-  parset.has.expression.value = vlapply(obj$pars[is.disc], function(p) {
-    any(vlapply(p$values, is.expression))
-  })
   # error if dict is not defined, but at least one value contains an expression
-  if (missing(dict) && any(parset.has.expression.value))
-    stop("You need to provide a task to get the values.")
-  lapply(obj$pars[is.disc], function(p)
-    eval(p$values, envir = dict))
+  if (missing(dict) && any(vlapply(obj$pars[is.disc], hasExpression)))
+    stop("You need to provide a dictionary to get the values.")
+  lapply(obj$pars[is.disc], function(p) eval(p$values, envir = dict))
 }
 
 #' @export
@@ -110,7 +104,7 @@ getBounds = function(obj, type.of.bounds, with.nr = FALSE, dict = NULL) {
   UseMethod("getBounds")
 }
 
-# common functionality of getLower and getUpper (for Param)
+# workhorse for getLower and getUpper (for Param)
 getBounds.Param = function(obj, type.of.bounds, with.nr = FALSE, dict = NULL) {
   assertClass(obj, "Param")
   assertList(dict, names = "unique", null.ok = TRUE)
@@ -132,15 +126,14 @@ getBounds.Param = function(obj, type.of.bounds, with.nr = FALSE, dict = NULL) {
   if (length(bound) == 1L && !is.na(len) && len > 1L)
     bound = rep(bound, len)
 
-  names(bound) = getParamIds(obj, repeated = TRUE, with.nr = with.nr)
-  return(bound)
+  setNames(bound, getParamIds(obj, repeated = TRUE, with.nr = with.nr))
 }
 
-# common functionality of getLower and getUpper for ParamSet
+# workhorse for getLower and getUpper for ParamSet
 getBounds.ParamSet = function(obj, type.of.bounds, with.nr = FALSE, dict = NULL) {
   assertClass(obj, "ParamSet")
   assertList(dict, names = "unique", null.ok = TRUE)
-  # if we dont have numerics, return empty vector
+  # if we don't have numerics, return empty vector
   if (!hasNumeric(obj, include.int = TRUE))
     return(numeric(0L))
   # filter to numerics
@@ -149,12 +142,11 @@ getBounds.ParamSet = function(obj, type.of.bounds, with.nr = FALSE, dict = NULL)
   # get bounds of all numeric Params, flat-join and name them
   bounds = lapply(psnum$pars, function(p)
     getBounds(obj = p, type.of.bounds = type.of.bounds, with.nr = with.nr, dict = dict))
-  bounds = unlist(bounds)
-  names(bounds) = getParamIds(psnum, repeated = TRUE, with.nr = with.nr)
-  return(bounds)
+
+  setNames(unlist(bounds), getParamIds(psnum, repeated = TRUE, with.nr = with.nr))
 }
 
-# common functionality of getLower and getUpper for common lists
+# workhorse for of getLower and getUpper for regular lists
 getBounds.list = function(obj, type.of.bounds, with.nr = FALSE, dict = NULL) {
   assertClass(obj, "list")
   assertList(dict, names = "unique", null.ok = TRUE)

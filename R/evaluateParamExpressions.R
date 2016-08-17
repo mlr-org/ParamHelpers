@@ -24,7 +24,7 @@
 #'   keys = c("data", "Species")
 #' )
 #' evaluateParamExpressions(ps, dict = list(data = iris))
-#' 
+#'
 #' par.vals = list(
 #'   makeNumericVectorParam("x", len = expression(k), default = expression(n)),
 #'   makeIntegerParam("y", lower = 1, upper = 2)
@@ -75,8 +75,6 @@ evaluateParamExpressions.ParamSet = function(obj, dict = NULL) {
 #' @export
 evaluateParamExpressions.list = function(obj, dict = NULL) {
   assertClass(obj, "list")
-  if (!hasExpression(obj))
-    return(obj)
   assertList(dict, names = "unique", null.ok = TRUE)
   ids = names(obj$pars)
   # evaluate all parameters separately

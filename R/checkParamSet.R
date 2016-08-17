@@ -7,7 +7,7 @@
 #'
 #' @template arg_parset
 #' @template arg_dict
-#' @return [\code{TRUE}].
+#' @return [\code{TRUE}] on success. An exception is raised otherwise.
 #' @export
 #' @examples
 #' ps = makeParamSet(
@@ -21,53 +21,58 @@
 checkParamSet = function(par.set, dict = NULL) {
   assertClass(par.set, "ParamSet")
   assertList(dict, names = "unique", null.ok = TRUE)
-  # error if dict is not defined, but par.set contains expressions
-  if (hasExpression(par.set) && is.null(dict))
-    stop("At least one of the parameters contains expressions and therefore 'dict' has to be defined.")
+
   # evaluate expressions of par.set (in case it contains any)
-  if (hasExpression(par.set))
+  if (hasExpression(par.set)) {
+    if (is.null(dict)) # error if dict is not defined, but par.set contains expressions
+      stop("At least one of the parameters contains expressions and therefore 'dict' has to be defined.")
     par.set = evaluateParamExpressions(obj = par.set, dict = dict)
+  }
+
   # extract bounds, default and values (dict = NULL is sufficient) because
   # the par.set is already evaluated
   lower = getLower(par.set, dict = NULL)
   upper = getUpper(par.set, dict = NULL)
   default = getDefaults(par.set, dict = NULL)
   values = getValues(par.set, dict = NULL)
+
   # check if defaults are outside the bounds
-  failed.boundary.check = vlapply(seq_along(lower), function(i) {
+  failed.boundary.check = which(vlapply(seq_along(lower), function(i) {
     id = names(lower)[i]
     any(lower[[id]] > default[[id]]) || any(upper[[id]] < default[[id]])
-  })
-  # error message in case any of the boundary checks failed
-  if (any(failed.boundary.check)) {
+  }))
+  if (length(failed.boundary.check) > 0L) {
     stopf("The following %s failed the boundary check: %s",
-      ifelse(sum(failed.boundary.check) > 1, "parameters", "parameter"),
-      paste(names(which(failed.boundary.check)), collapse = ", "))
+      ifelse(length(failed.boundary.check) > 1L, "parameters", "parameter"),
+      paste(names(failed.boundary.check), collapse = ", "))
   }
+
   # check if defaults are outside the feasible values
-  failed.value.check = vlapply(seq_along(default), function(i) {
+  failed.value.check = which(vlapply(seq_along(default), function(i) {
     id = names(default)[i]
     !is.null(values[[id]]) && !is.null(default[[id]]) && !(default[[id]] %in% values[[id]])
-  })
-  # error message in case any of the value checks failed
-  if (any(failed.value.check)) {
+  }))
+  if (length(failed.value.check) > 0L) {
     stopf("The following %s 'defaults' that are not part of the possible 'values': %s",
-      ifelse(sum(failed.boundary.check) > 1L, "parameters have", "parameter has"),
-      paste(names(which(failed.boundary.check)), collapse = ", "))
+      ifelse(length(failed.boundary.check) > 1L, "parameters have", "parameter has"),
+      paste(names(failed.boundary.check), collapse = ", "))
   }
+
   return(TRUE)
 }
 
 # check whether the expressions of a param set are feasible
-# (internal function which is called in case 'keys' are provided at
-# the construction of the par.set)
+# (internal function which is called in case 'keys' are provided
+# at the construction of the par.set)
 checkExpressionFeasibility = function(par.set, keys) {
+  has.expression = vlapply(par.set$pars, hasExpression)
   # if par.set has no expressions, the expressions are feasible
-  if (!hasExpression(par.set))
+  if (!any(has.expression))
     return(TRUE)
+
   # for all params which have an expression, check whether its
   # arguments are listed in 'keys'
-  lapply(par.set$pars[vlapply(par.set$pars, hasExpression)], function(par) {
+  lapply(par.set$pars[has.expression], function(par) {
     # extract all parameter arguments that have expressions
     expressions = par[vlapply(par, is.expression)]
     lapply(expressions, function(expr) {
@@ -82,5 +87,6 @@ checkExpressionFeasibility = function(par.set, keys) {
       }
     })
   })
+
   return(TRUE)
 }

@@ -16,7 +16,7 @@ of expressions within a parameter, parameter set or list of parameters.
 The default is \code{NULL}.}
 }
 \value{
-[\code{integer}]. Named (and in case of a \code{\link{ParamSet}}, in the same order).
+[\code{integer}]. Named and in the same order as the input for \code{\link{ParamSet}} input.
 }
 \description{
 Useful for vector parameters.

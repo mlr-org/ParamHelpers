@@ -16,7 +16,7 @@ of expressions within a parameter, parameter set or list of parameters.
 The default is \code{NULL}.}
 }
 \value{
-[\code{TRUE}].
+[\code{TRUE}] on success. An exception is raised otherwise.
 }
 \description{
 Checks whether the default values of the numerical parameters are located

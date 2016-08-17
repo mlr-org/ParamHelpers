@@ -15,7 +15,7 @@
 #' @template arg_dict
 #' @return [named \code{list}]. Named (and in case of a \code{\link{ParamSet}}, in the same order).
 #'   Parameters without defaults are not present in the list.
-#' @examples 
+#' @examples
 #' ps1 = makeParamSet(
 #'   makeDiscreteParam("x", values = c("a", "b"), default = "a"),
 #'   makeNumericVectorParam("y", len = 2),
@@ -39,20 +39,25 @@ getDefaults.Param = function(obj, include.null = FALSE, dict = NULL) {
   assertClass(obj, "Param")
   assertFlag(include.null)
   assertList(dict, names = "unique", null.ok = TRUE)
+
   # no param = no default
-  if (length(obj) == 0)
+  if (length(obj) == 0L)
     return(NULL)
+
   def = obj$default
-  if (is.null(def) | !obj$has.default)
+  if (is.null(def) || !obj$has.default)
     return(NULL)
   if (is.expression(def))
     def = eval(def, envir = dict)
+
   # evaluate length in case it is defined with an expression
   if (is.expression(obj$len))
     obj$len = getParamLengths(par = obj, dict = dict)
+
   # replicate default according to length of param
   if ((length(def) == 1L) && !is.na(obj$len) && obj$len > 1L)
     def = rep(def, obj$len)
+
   return(def)
 }
 
@@ -61,9 +66,11 @@ getDefaults.ParamSet = function(obj, include.null = FALSE, dict = NULL) {
   assertClass(obj, "ParamSet")
   assertFlag(include.null)
   assertList(dict, names = "unique", null.ok = TRUE)
+
   # if the ParamSet is empty, there are no defaults
   if (isEmpty(obj))
     return(list())
+
   # extract list with defaults of all params
   defs = extractSubList(obj$pars, "default", simplify = FALSE)
   if (!include.null) {
@@ -79,11 +86,9 @@ getDefaults.ParamSet = function(obj, include.null = FALSE, dict = NULL) {
     # consider all params
     ids = names(defs)
   }
+
   # extract defaults of all considerable params
-  defs = setNames(
-    lapply(obj$pars[ids], getDefaults, include.null = include.null, dict = dict),
-    ids)
-  return(defs)
+  setNames(lapply(obj$pars[ids], getDefaults, include.null = include.null, dict = dict), ids)
 }
 
 #' @export
@@ -91,9 +96,11 @@ getDefaults.list = function(obj, include.null = FALSE, dict = NULL) {
   assertClass(obj, "list")
   assertFlag(include.null)
   assertList(dict, names = "unique", null.ok = TRUE)
+
   # if the list is empty, there are no defaults
-  if (length(obj) == 0)
+  if (length(obj) == 0L)
     return(list())
+
   # extract list with defaults of all params
   defs = extractSubList(obj, "default", simplify = FALSE)
   if (!include.null) {
@@ -109,9 +116,7 @@ getDefaults.list = function(obj, include.null = FALSE, dict = NULL) {
     # consider all params
     ids = names(defs)
   }
+
   # extract defaults of all considerable params
-  defs = setNames(
-    lapply(obj[j], getDefaults, include.null = include.null, dict = dict),
-    ids)
-  return(defs)
+  setNames(lapply(obj[j], getDefaults, include.null = include.null, dict = dict), ids)
 }
