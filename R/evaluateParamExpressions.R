@@ -76,7 +76,7 @@ evaluateParamExpressions.ParamSet = function(obj, dict = NULL) {
 evaluateParamExpressions.list = function(obj, dict = NULL) {
   assertClass(obj, "list")
   assertList(dict, names = "unique", null.ok = TRUE)
-  ids = names(obj$pars)
+  ids = names(obj)
   # evaluate all parameters separately
   obj = lapply(obj, function(par) {
     evaluateParamExpressions(obj = par, dict = dict)
