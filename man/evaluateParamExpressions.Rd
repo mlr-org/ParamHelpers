@@ -8,7 +8,7 @@ evaluateParamExpressions(obj, dict = NULL)
 }
 \arguments{
 \item{obj}{[\code{\link{Param}} | \code{\link[ParamHelpers]{ParamSet}} | \code{list}]\cr
-Parameter, parameter set or list of parameters. Expressions within \code{length},
+Parameter, parameter set or list of parameter values. Expressions within \code{length},
 \code{lower} or \code{upper} boundaries, \code{default} or \code{value} will be
 evaluated using the provided dictionary (\code{dict}).}
 
@@ -39,9 +39,9 @@ ps = makeParamSet(
 evaluateParamExpressions(ps, dict = list(data = iris))
 
 par.vals = list(
-  makeNumericVectorParam("x", len = expression(k), default = expression(n)),
-  makeIntegerParam("y", lower = 1, upper = 2)
+  x = expression(k),
+  y = 5
 )
-evaluateParamExpressions(par.vals, dict = list(k = 3, n = 10))
+evaluateParamExpressions(par.vals, dict = list(k = 3))
 }
 

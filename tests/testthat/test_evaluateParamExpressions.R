@@ -37,4 +37,6 @@ test_that("expressions", {
   expect_error(evaluateParamExpressions(ps))
   expect_error(evaluateParamExpressions(ps, dict = list(p = 3)))
   expect_error(evaluateParamExpressions(ps, dict = list(z = "b")))
+  pv = list(x = expression(k), y = 5)
+  expect_identical(evaluateParamExpressions(pv, dict = list(k = 3)), list(x = 3, y = 5))
 })

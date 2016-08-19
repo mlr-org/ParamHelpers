@@ -5,7 +5,7 @@
 #' a given dictionary.
 #'
 #' @param obj [\code{\link{Param}} | \code{\link[ParamHelpers]{ParamSet}} | \code{list}]\cr
-#'   Parameter, parameter set or list of parameters. Expressions within \code{length},
+#'   Parameter, parameter set or list of parameter values. Expressions within \code{length},
 #'   \code{lower} or \code{upper} boundaries, \code{default} or \code{value} will be
 #'   evaluated using the provided dictionary (\code{dict}).
 #' @template arg_dict
@@ -26,10 +26,10 @@
 #' evaluateParamExpressions(ps, dict = list(data = iris))
 #'
 #' par.vals = list(
-#'   makeNumericVectorParam("x", len = expression(k), default = expression(n)),
-#'   makeIntegerParam("y", lower = 1, upper = 2)
+#'   x = expression(k),
+#'   y = 5
 #' )
-#' evaluateParamExpressions(par.vals, dict = list(k = 3, n = 10))
+#' evaluateParamExpressions(par.vals, dict = list(k = 3))
 evaluateParamExpressions = function(obj, dict = NULL) {
   UseMethod("evaluateParamExpressions")
 }
@@ -77,10 +77,8 @@ evaluateParamExpressions.list = function(obj, dict = NULL) {
   assertClass(obj, "list")
   assertList(dict, names = "unique", null.ok = TRUE)
   ids = names(obj)
-  # evaluate all parameters separately
-  obj = lapply(obj, function(par) {
-    evaluateParamExpressions(obj = par, dict = dict)
-  })
-  names(obj) = ids
-  return(obj)
+  # evaluate all parameter values separately
+  setNames(lapply(obj, function(par) {
+    eval(expr = par, envir = dict)
+  }), ids)
 }
