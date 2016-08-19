@@ -7,7 +7,7 @@
 #' @param obj [\code{\link{Param}} | \code{\link[ParamHelpers]{ParamSet}} | \code{list}]\cr
 #'   Parameter, parameter set or list of parameters. Expressions within \code{length},
 #'   \code{lower} or \code{upper} boundaries, \code{default} or \code{value} will be
-#'   evaluated based on the provided dictionary (\code{dict}).
+#'   evaluated using the provided dictionary (\code{dict}).
 #' @template arg_dict
 #' @return [\code{\link{Param}} | \code{\link[ParamHelpers]{ParamSet}} | \code{list}].
 #' @export

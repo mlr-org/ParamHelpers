@@ -9,7 +9,7 @@
 #' @param obj [\code{\link{Param}} | \code{\link{ParamSet}} | \code{list}]\cr
 #'   Parameter, parameter set or list of parameters, whose boundaries and/or
 #'   values should be extracted. In case the boundaries or values contain expressions,
-#'   they will be evaluated based using the provided dictionary \code{dict}.
+#'   they will be evaluated using the provided dictionary \code{dict}.
 #' @param with.nr [\code{logical(1)}]\cr
 #'   Should number from 1 to length be appended to names of vector params?
 #'   Default is \code{FALSE}.

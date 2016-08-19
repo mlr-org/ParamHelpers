@@ -9,7 +9,7 @@ getDefaults(obj, include.null = FALSE, dict = NULL)
 \arguments{
 \item{obj}{[\code{\link{Param}} | \code{\link[ParamHelpers]{ParamSet}} | \code{list}]\cr
 Parameter, parameter set or list of parameters, whose defaults should be extracted.
-In case the default values contain expressions, they will be evaluated based on the
+In case the default values contain expressions, they will be evaluated using the
 provided dictionary (\code{dict}).}
 
 \item{include.null}{[\code{logical(1)}]\cr

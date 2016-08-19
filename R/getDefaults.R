@@ -5,7 +5,7 @@
 #'
 #' @param obj [\code{\link{Param}} | \code{\link[ParamHelpers]{ParamSet}} | \code{list}]\cr
 #'   Parameter, parameter set or list of parameters, whose defaults should be extracted.
-#'   In case the default values contain expressions, they will be evaluated based on the
+#'   In case the default values contain expressions, they will be evaluated using the
 #'   provided dictionary (\code{dict}).
 #' @param include.null [\code{logical(1)}]\cr
 #'   Include \code{NULL} entries for parameters without default values in the result list?
