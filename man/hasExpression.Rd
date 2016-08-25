@@ -4,16 +4,30 @@
 \alias{hasExpression}
 \title{Check if parameter values contain expressions.}
 \usage{
-hasExpression(par)
+hasExpression(obj)
 }
 \arguments{
-\item{par}{[\code{\link{Param}} | \code{\link{ParamSet}}]\cr
-Parameter or parameter set.}
+\item{obj}{[\code{\link{Param}} | \code{\link[ParamHelpers]{ParamSet}} | \code{list}]\cr
+Parameter, parameter set or list of parameters.}
 }
 \value{
 [\code{logical(1)}].
 }
 \description{
-Check if parameter values contain expressions.
+Checks if a parameter, parameter set or list of parameters contain expressions.
+}
+\examples{
+ps1 = makeParamSet(
+  makeNumericParam("x", lower = 1, upper = 2),
+  makeNumericParam("y", lower = 1, upper = 10)
+)
+
+ps2 = makeParamSet(
+  makeNumericLearnerParam("x", lower = 1, upper = 2),
+  makeNumericLearnerParam("y", lower = 1, upper = expression(p))
+)
+
+hasExpression(ps1)
+hasExpression(ps2)
 }
 

@@ -12,10 +12,11 @@ Parameter set.}
 
 \item{dict}{[\code{environment} | \code{list} | \code{NULL}]\cr
 Environment or list which will be used for evaluating the variables
-of expressions within a parameter set. The default is \code{NULL}.}
+of expressions within a parameter, parameter set or list of parameters.
+The default is \code{NULL}.}
 }
 \value{
-[\code{TRUE}].
+[\code{TRUE}] on success. An exception is raised otherwise.
 }
 \description{
 Checks whether the default values of the numerical parameters are located

@@ -8,6 +8,9 @@
 #' The constructed S3 class is simply a list that contains the element \code{pars}.
 #' \code{pars} is a list of the passed parameters, named by their ids.
 #'
+#' If \code{keys} are provided it will automatically be checked whether all expressions within the
+#' provided parameters only contain arguments that are a subset of keys.
+#'
 #' @param ... [\code{\link{Param}}]\cr
 #'   Parameters.
 #' @param params [list of \code{\link{Param}}]\cr
@@ -23,12 +26,9 @@
 #'   Default is \code{NULL} which means no forbidden region.
 #' @template arg_keys
 #' @return [\code{\link{ParamSet}} | \code{LearnerParamSet}].
+#'   If all parameters of the \code{ParamSet} are learner parameters, the output
+#'   will inherit the class \code{LearnerParamSet}.
 #' @aliases ParamSet
-#' @details If all parameters of the \code{ParamSet} are learner parameters, the output
-#' will inherit the class \code{LearnerParamSet}.
-#'
-#' If \code{keys} are provided, it will automatically be checked, whether all expressions within the
-#' provided parameters only contain arguments that are a subset of keys.
 #' @export
 #' @examples
 #' makeParamSet(

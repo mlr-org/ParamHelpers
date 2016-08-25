@@ -47,3 +47,29 @@ test_that("getDefaults for LearnerParams", {
   )
 })
 
+test_that("getDefaults for Parameters with Expressions", {
+  par.set = makeParamSet(
+    makeNumericLearnerParam(id = "b",  default = expression(k), lower = 0, requires = quote(a=="a1")),
+    makeNumericVectorLearnerParam("c", len = NA_integer_, lower = 0),
+    makeLogicalVectorLearnerParam(id = "d", len = expression(p), default = TRUE, tunable = TRUE)
+  )
+  expect_equal(
+    getDefaults(par.set, dict = list(k = 4L, p = 3L)),
+    list(b = 4L, d = rep(TRUE, 3L))
+  )
+  expect_equal(
+    getDefaults(par.set, dict = list(k = 4L, p = 3L), include.null = TRUE),
+    list(b = 4, c = NULL, d = rep(TRUE, 3L))
+  )
+  expect_equal(getDefaults(makeNumericParam(id = "b",  default = expression(k)),
+    dict = list(k = 4L)), 4L)
+  par.vals = list(
+    makeNumericLearnerParam(id = "b",  default = expression(k), requires = quote(a=="a1")),
+    makeNumericVectorLearnerParam("c", len = NA_integer_, lower = 0),
+    makeLogicalVectorLearnerParam(id = "d", len = expression(p), default = TRUE, tunable = TRUE)
+  )
+  expect_equal(
+    getDefaults(par.vals, dict = list(k = pi, p = 7L)),
+    list(pi, rep(TRUE, 7L))
+  )
+})

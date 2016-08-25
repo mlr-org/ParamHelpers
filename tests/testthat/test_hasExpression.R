@@ -1,10 +1,10 @@
 context("hasExpression")
 
 test_that("hasExpression.Param", {
-  expect_true(!hasExpression(par = makeDiscreteParam("u", values = 1:2)))
-  expect_true(hasExpression(par = makeDiscreteParam("v", values = expression(n * p))))
-  expect_true(!hasExpression(par = makeNumericParam("w", lower = -Inf)))
-  expect_true(hasExpression(par = makeNumericParam("x", lower = expression(ceiling(n)))))
+  expect_true(!hasExpression(obj = makeDiscreteParam("u", values = 1:2)))
+  expect_true(hasExpression(obj = makeDiscreteParam("v", values = expression(n * p))))
+  expect_true(!hasExpression(obj = makeNumericParam("w", lower = -Inf)))
+  expect_true(hasExpression(obj = makeNumericParam("x", lower = expression(ceiling(n)))))
 })
 
 
@@ -32,4 +32,12 @@ test_that("hasExpression.ParamSet", {
   expect_true(!hasExpression(ps1))
   expect_true(hasExpression(ps2))
   expect_true(hasExpression(ps3))
+})
+
+test_that("hasExpression.list", {
+  par.vals = list(
+    makeLogicalParam("x", default = expression(a == 3)),
+    makeNumericParam("y", lower = 1, upper = expression(a))
+  )
+  expect_true(hasExpression(par.vals))
 })

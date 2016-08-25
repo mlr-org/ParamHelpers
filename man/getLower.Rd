@@ -6,15 +6,17 @@
 \alias{getValues}
 \title{Get lower / upper bounds and allowed discrete values for parameters.}
 \usage{
-getLower(par.set, with.nr = FALSE, dict = NULL)
+getLower(obj, with.nr = FALSE, dict = NULL)
 
-getUpper(par.set, with.nr = FALSE, dict = NULL)
+getUpper(obj, with.nr = FALSE, dict = NULL)
 
-getValues(par.set, dict = NULL)
+getValues(obj, dict = NULL)
 }
 \arguments{
-\item{par.set}{[\code{\link{ParamSet}}]\cr
-Parameter set.}
+\item{obj}{[\code{\link{Param}} | \code{\link{ParamSet}} | \code{list}]\cr
+Parameter, parameter set or list of parameters, whose boundaries and/or
+values should be extracted. In case the boundaries or values contain expressions,
+they will be evaluated using the provided dictionary \code{dict}.}
 
 \item{with.nr}{[\code{logical(1)}]\cr
 Should number from 1 to length be appended to names of vector params?
@@ -22,7 +24,8 @@ Default is \code{FALSE}.}
 
 \item{dict}{[\code{environment} | \code{list} | \code{NULL}]\cr
 Environment or list which will be used for evaluating the variables
-of expressions within a parameter set. The default is \code{NULL}.}
+of expressions within a parameter, parameter set or list of parameters.
+The default is \code{NULL}.}
 }
 \value{
 [\code{vector} | \code{list}]. Named by parameter ids.
@@ -34,15 +37,6 @@ bounds, \code{getValues} returns a list of possible value sets for discrete para
 Parameters for which such bound make no sense - due to their type - are not present in the result.
 }
 \examples{
-ps = makeParamSet(
-  makeNumericParam("u"),
-  makeIntegerParam("v", lower = 1, upper = 2),
-  makeDiscreteParam("w", values = 1:2),
-  makeNumericVectorParam("x", len = 2, lower = c(0, 10), upper = c(1, 11))
-)
-getLower(ps)
-getUpper(ps)
-
 ps = makeParamSet(
   makeNumericParam("u"),
   makeDiscreteParam("v", values = c("a", "b")),
@@ -59,5 +53,14 @@ ps = makeParamSet(
   makeDiscreteParam("w", values = list(a = list(), b = NULL))
 )
 getValues(ps)
+
+par.vals = list(
+  u = makeNumericParam("u"),
+  v = makeIntegerParam("v", lower = 1, upper = 2),
+  w = makeDiscreteParam("w", values = 1:2),
+  x = makeNumericVectorParam("x", len = 2, lower = c(3, 1), upper = expression(n))
+)
+getLower(par.vals)
+getUpper(par.vals, dict = list(n = 12))
 }
 

@@ -1,11 +1,11 @@
-#' @title Return lengths of parameters in parameter set.
+#' @title Return lengths of single parameters or parameters in parameter set.
 #'
 #' @description
 #' Useful for vector parameters.
 #'
-#' @template arg_parset
+#' @template arg_par_or_set
 #' @template arg_dict
-#' @return [\code{integer}]. Named and in same order as \code{par.set}.
+#' @return [\code{integer}]. Named and in the same order as the input for \code{\link{ParamSet}} input.
 #' @examples
 #' ps = makeParamSet(
 #'   makeNumericParam("u"),
@@ -15,15 +15,36 @@
 #' )
 #' getParamLengths(ps)
 #' # the length of the vector x is 2, for all other single value parameters the length is 1.
+#'
+#' par = makeNumericVectorParam("x", len = expression(k), lower = 0)
+#' getParamLengths(par, dict = list(k = 4))
 #' @export
-getParamLengths = function(par.set, dict = NULL) {
-  assertClass(par.set, "ParamSet")
+getParamLengths = function(par, dict = NULL) {
+  UseMethod("getParamLengths")
+}
+
+#' @export
+getParamLengths.Param = function(par, dict = NULL) {
+  assertClass(par, "Param")
   assertList(dict, names = "unique", null.ok = TRUE)
-  if (isEmpty(par.set))
+  if (length(par) == 0L)
     return(integer(0L))
 
-  lengths = extractSubList(par.set$pars, "len", simplify = FALSE)
-  j = vlapply(par.set$pars, function(x) is.expression(x$len))
+  length = par$len
+  if (is.expression(length))
+    length = eval(length, envir = dict)
+  as.integer(length)
+}
+
+#' @export
+getParamLengths.ParamSet = function(par, dict = NULL) {
+  assertClass(par, "ParamSet")
+  assertList(dict, names = "unique", null.ok = TRUE)
+  if (isEmpty(par))
+    return(integer(0L))
+
+  lengths = extractSubList(par$pars, "len", simplify = FALSE)
+  j = vlapply(par$pars, function(x) is.expression(x$len))
   lengths[j] = lapply(lengths[j], eval, envir = dict)
   setNames(as.integer(lengths), names(lengths))
 }
