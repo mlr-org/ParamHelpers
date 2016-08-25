@@ -67,9 +67,8 @@ makeParamSet = function(..., params = NULL, forbidden = NULL, keys = NULL) {
       par.set = addClasses(par.set, classes = "LearnerParamSet")
       keys = union(keys, c("task", "n", "p", "k", "type"))
     }
-    if (!is.null(keys) && hasExpression(par.set)) {
+    if (!is.null(keys) && (hasExpression(par.set)))
       checkExpressionFeasibility(par.set = par.set, keys = keys)
-    }
   }
   return(par.set)
 }

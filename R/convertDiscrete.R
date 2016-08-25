@@ -57,7 +57,7 @@ discreteValueToName = function(par, x) {
     stopf("Length of x must be %i!", par$len)
   ns = names(par$values)
   getIndex = function(values, v) {
-    j = which(vlapply(values, function(w) isTRUE(all.equal(w, v))))
+    j = which(vlapply(values, function(w) isTRUE(all.equal(w, v, tolerance = .Machine$double.eps))))
     if (length(j) == 0)
       stop("Value not found!")
     return(j)
