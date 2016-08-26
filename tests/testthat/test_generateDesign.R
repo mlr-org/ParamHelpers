@@ -236,3 +236,26 @@ test_that("vector params and forbidden regions", {
   expect_equal(nrow(res), 100L)
   expect_numeric(rowSums(res[,c("x1","x2")]), lower = 0, upper = 1)
 })
+
+test_that("default param set values can be added", {
+  #basic setup with one numeric and one discrete parameter
+  ps = makeParamSet(
+    makeNumericParam("x", lower = -2, upper = 1, default = 0),
+    makeDiscreteParam(id = "disc", values = letters[1:2], default = letters[1])
+  )
+  
+  res = generateDesign(10L, ps, add.default = TRUE)
+  expect_equal(nrow(res), 10L)
+  expect_equivalent(res[1, ], data.frame(x = 0, disc = factor(letters[1], levels = letters[1:2])))
+  
+  #setup with vector parameter
+  ps = makeParamSet(
+    makeNumericParam("x", lower = -2, upper = 1, default = 0),
+    makeNumericVectorParam("y", len = 2, lower = 0, upper = 1, default = c(1,0), trafo = function(x) x/sum(x))
+  )
+  
+  res = generateDesign(10L, ps, add.default = TRUE)
+  expect_equal(nrow(res), 10)
+  expect_equivalent(res[1, ], data.frame(x = 0, y1 = 1, y2 = 0))
+})
+
