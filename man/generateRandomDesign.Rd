@@ -4,7 +4,7 @@
 \alias{generateRandomDesign}
 \title{Generates a random design for a parameter set.}
 \usage{
-generateRandomDesign(n = 10L, par.set, trafo = FALSE)
+generateRandomDesign(n = 10L, par.set, trafo = FALSE, add.default = FALSE)
 }
 \arguments{
 \item{n}{[\code{integer(1)}]\cr
@@ -16,6 +16,12 @@ Parameter set.}
 
 \item{trafo}{[\code{logical(1)}]\cr
 Transform all parameters by using theirs respective transformation functions.
+Default is \code{FALSE}.}
+
+\item{add.default}{[\code{logical(1)}]\cr
+Should one fixed design point be added at the default value of all parameters? If \code{TRUE}
+only \code{n-1} points are sampled and a design point at the default values is added as the first
+row to the result. This requires that all parameters in the param set actually have a default.
 Default is \code{FALSE}.}
 }
 \value{
