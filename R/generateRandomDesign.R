@@ -34,6 +34,8 @@
 #' @export
 generateRandomDesign = function(n = 10L, par.set, trafo = FALSE, add.default = FALSE) {
   doBasicGenDesignChecks(par.set)
+  assertFlag(trafo)
+  assertFlag(add.default)
   if (add.default) {
     n = n - 1L
     defaults = getDefaults(par.set)
