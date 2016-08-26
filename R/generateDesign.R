@@ -73,11 +73,7 @@
 #'   If the the design is of size less than \code{n} after all tries, a warning is issued
 #'   and the smaller design is returned.
 #'   Default is 20.
-#' @param add.default [\code{logical(1)}]\cr
-#'   Should one fixed design point be added at the default value of all parameters? If \code{TRUE}
-#'   only \code{n-1} oints are sampled and a design point at the default values is added. 
-#'   This requires that all parameters in the set actually have a default.
-#'   Default is \code{FALSE}.    
+#' @template arg_add.default 
 #' @template ret_gendes_df
 #' @export
 #' @useDynLib ParamHelpers c_generateDesign c_trafo_and_set_dep_to_na
@@ -184,9 +180,11 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
   
   colnames(res) = pids
   
-  if (add.default)
+  if (add.default) {
     defaults = data.frame(lapply(seq_along(defaults), function(x) t(unlist(defaults[x]))))
-    res = rbind(res, defaults)
+    res = rbind(defaults, res)
+  }
+
 
   res = fixDesignFactors(res, par.set)
   attr(res, "trafo") = trafo
