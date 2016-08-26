@@ -98,7 +98,7 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
   z = doBasicGenDesignChecks(par.set)
   lower = z$lower
   upper = z$upper
-  
+
   requirePackages("lhs", why = "generateDesign", default.method = "load")
   if (missing(fun))
     fun = lhs::randomLHS
@@ -113,7 +113,7 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
   pars = par.set$pars
   lens = getParamLengths(par.set)
   if (add.default) {
-    n = n - 1L
+    n = n - 1L  #one point less to sample because we add the default later
     defaults = getDefaults(par.set)
     diff = setdiff(names(pars), names(defaults))
     if (length(diff) > 0)
@@ -182,6 +182,7 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
   colnames(res) = pids
   
   if (add.default) {
+    #convert defaults to a data.frame with one row and identical column names as res
     defaults = data.frame(lapply(seq_along(defaults), function(x) t(unlist(defaults[x]))))
     res = rbind(defaults, res)
   }

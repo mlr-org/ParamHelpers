@@ -37,7 +37,7 @@ generateRandomDesign = function(n = 10L, par.set, trafo = FALSE, add.default = F
   assertFlag(trafo)
   assertFlag(add.default)
   if (add.default) {
-    n = n - 1L
+    n = n - 1L #one point less to sample because we add the default later
     defaults = getDefaults(par.set)
     diff = setdiff(names(par.set$pars), names(defaults))
     if (length(diff) > 0)
@@ -61,6 +61,7 @@ generateRandomDesign = function(n = 10L, par.set, trafo = FALSE, add.default = F
   colnames(des) = getParamIds(par.set, repeated = TRUE, with.nr = TRUE)
   
   if (add.default) {
+    #convert defaults to a data.frame with one row and identical column names as res
     defaults = data.frame(lapply(seq_along(defaults), function(x) t(unlist(defaults[x]))))
     des = rbind(defaults, des)
   }
