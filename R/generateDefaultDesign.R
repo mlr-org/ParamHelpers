@@ -30,12 +30,9 @@ generateDefaultDesign = function(par.set, trafo = FALSE) {
   
   # apply transformations to parameters
   if (trafo)
-    defaults = mapply(function(d, p) ifelse(is.null(p$trafo), d, p$trafo(d)), 
-      d = defaults, p = pars)
+    defaults = trafoValue(par.set, defaults)
   
-  
-  # convert list to data.frame with one column.
-  res = data.frame(lapply(seq_along(defaults), function(x) t(unlist(defaults[x]))))
+  res = listToDfOneRow(defaults)
   res = fixDesignFactors(res, par.set)
   attr(res, "trafo") = trafo
   return(res)
