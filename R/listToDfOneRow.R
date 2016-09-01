@@ -7,8 +7,7 @@
 #'
 #' @param l [\code{list}]\cr
 #'  of atomic values of vectors.
-#' @return [\code{data.frame}]\cr
-#'  with only one row, containing the list elements.
+#' @return [\code{data.frame}] with only one row, containing the list elements.
 #' @export
 listToDfOneRow = function(l) {
   assertList(l, min.len = 1)
