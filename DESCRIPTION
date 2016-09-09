@@ -20,7 +20,7 @@ License: BSD_2_clause + file LICENSE
 Roxygen: list(wrap = FALSE)
 Imports:
     BBmisc (>= 1.10),
-    checkmate (>= 1.6.1),
+    checkmate (>= 1.8.1),
     methods
 Suggests:
     akima,

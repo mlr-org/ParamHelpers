@@ -1,7 +1,11 @@
 ParamHelpers_1.9:
 - Many parameters can now be expressions which can be evaluated later while
   providing a lookup dictionary.
-- make*Param now accepts special.vals which are always feasibile
+- make*Param now accepts special.vals which are always feasible
+- getParamLengths, getLower, getUpper, getValues were made S3 to also work on normal Parameter objects
+- new functions
+-- evaluateParamExpressions
+-- hasExpression
 
 ParamHelpers_1.8:
 - removed soobench from SUGGESTS and removed function extractParamSetFromSooFunction
