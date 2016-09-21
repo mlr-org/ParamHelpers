@@ -49,4 +49,14 @@ test_that("generateDefaultDesign", {
     makeIntegerParam("y", lower = 2, upper= 6, default = 3)
   )
   expect_error(generateDefaultDesign(ps), regexp = "*No default parameter setting for x")
+  
+  # dependent parameter spaces
+  ps = makeParamSet(
+    makeNumericParam("x", lower = 1, upper = 3, default = 2),
+    makeNumericParam("y", lower = 1, upper = 3, default = 1, requires = quote(x > 2))
+  )
+  d = generateDefaultDesign(ps)
+  e = data.frame(x = 2, y = NA)
+  attr(e, "trafo") = FALSE
+  expect_equal(d, e)
 })

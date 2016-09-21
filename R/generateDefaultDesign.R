@@ -34,6 +34,11 @@ generateDefaultDesign = function(par.set, trafo = FALSE) {
   
   res = listToDfOneRow(defaults)
   res = fixDesignFactors(res, par.set)
+  
+  #check which parameters are currently not feasable and set them to NA
+  del = with(res, vapply(par.set$pars, function(p) isFALSE(eval(p$requires)), logical(1)))
+  res[, del] = NA
+  
   attr(res, "trafo") = trafo
   return(res)
   
