@@ -154,7 +154,7 @@ getParPrintData = function(x, trafo = TRUE, used = TRUE, constr.clip = 40L) {
   d = data.frame(
     Type = x$type,
     len = len,
-    Def = def,
+    Def = if (is.null(def)) "NULL" else def,
     Constr = constr,
     Req = ifelse(is.null(x$requires), "-", "Y"),
     Tunable = x$tunable,
