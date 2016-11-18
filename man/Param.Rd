@@ -17,36 +17,42 @@
 \title{Create a description object for a parameter.}
 \usage{
 makeNumericParam(id, lower = -Inf, upper = Inf, allow.inf = FALSE,
-  default, trafo = NULL, requires = NULL, tunable = TRUE)
+  default, trafo = NULL, requires = NULL, tunable = TRUE,
+  special.vals = list())
 
 makeNumericVectorParam(id, len, lower = -Inf, upper = Inf,
   allow.inf = FALSE, cnames = NULL, default, trafo = NULL,
-  requires = NULL, tunable = TRUE)
+  requires = NULL, tunable = TRUE, special.vals = list())
 
 makeIntegerParam(id, lower = -Inf, upper = Inf, default, trafo = NULL,
-  requires = NULL, tunable = TRUE)
+  requires = NULL, tunable = TRUE, special.vals = list())
 
 makeIntegerVectorParam(id, len, lower = -Inf, upper = Inf, cnames = NULL,
-  default, trafo = NULL, requires = NULL, tunable = TRUE)
+  default, trafo = NULL, requires = NULL, tunable = TRUE,
+  special.vals = list())
 
-makeLogicalParam(id, default, requires = NULL, tunable = TRUE)
+makeLogicalParam(id, default, requires = NULL, tunable = TRUE,
+  special.vals = list())
 
 makeLogicalVectorParam(id, len, cnames = NULL, default, requires = NULL,
-  tunable = TRUE)
+  tunable = TRUE, special.vals = list())
 
 makeDiscreteParam(id, values, trafo = NULL, default, requires = NULL,
-  tunable = TRUE)
+  tunable = TRUE, special.vals = list())
 
 makeDiscreteVectorParam(id, len, values, default, requires = NULL,
-  tunable = TRUE)
+  tunable = TRUE, special.vals = list())
 
-makeFunctionParam(id, default = default, requires = NULL)
+makeFunctionParam(id, default = default, requires = NULL,
+  special.vals = list())
 
-makeUntypedParam(id, default, requires = NULL, tunable = TRUE)
+makeUntypedParam(id, default, requires = NULL, tunable = TRUE,
+  special.vals = list())
 
-makeCharacterParam(id, default, requires = NULL)
+makeCharacterParam(id, default, requires = NULL, special.vals = list())
 
-makeCharacterVectorParam(id, len, cnames = NULL, default, requires = NULL)
+makeCharacterVectorParam(id, len, cnames = NULL, default, requires = NULL,
+  special.vals = list())
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr
@@ -76,9 +82,11 @@ before it is, e.g., passed to a corresponding objective function.
 Function must accept a parameter value as the first argument and return a transformed one.
 Default is \code{NULL} which means no transformation.}
 
-\item{requires}{[\code{NULL} | R expression]\cr
-States requirements on other paramaters' values, so that setting
+\item{requires}{[\code{NULL} | \code{call} | \code{expression}]\cr
+States requirements on other parameters' values, so that setting
 this parameter only makes sense if its requirements are satisfied (dependent parameter).
+Can be an object created either with \code{expression} or \code{quote},
+the former type is auto-converted into the later.
 Only really useful if the parameter is included in a \code{\link{ParamSet}}.
 Note that if your dependent parameter is a logical Boolean you need to verbosely write
 \code{requires = quote(a == TRUE)} and not \code{requires = quote(a)}.
@@ -91,6 +99,10 @@ other purely technical stuff, and allows them to be excluded from later automati
 procedures that would try to consider all available parameters.
 Default is \code{TRUE} (except for \code{untyped}, \code{function}, \code{character} and
 \code{characterVector}) which means it is tunable.}
+
+\item{special.vals}{[\code{list()}]\cr
+A list of special values the parameter can except which are outside of the defined range.
+Default is an empty list.}
 
 \item{len}{[\code{integer(1)}]\cr
 Length of vector parameter.}
@@ -112,18 +124,17 @@ as internal representations for the choice.}
 }
 \description{
 For each parameter type a special constructor function is available, see below.
-}
-\details{
+
 The S3 class is a list which stores these elements:
 \describe{
-\item{id [\code{character(1)}]}{See argument of same name.}
-\item{type [\code{character(1)}]}{Data type of parameter. Possible types are \dQuote{numeric}, \dQuote{numericvector}, \dQuote{integer}, \dQuote{integervector}, \dQuote{logical}, \dQuote{logicalvector}, \dQuote{discrete}, \dQuote{discretevector}, \dQuote{function}, \dQuote{untyped}.}
-\item{len [\code{integer(1)}]}{See argument of same name.}
-\item{lower [\code{numeric}]}{See argument of same name. Length of this vector is \code{len}.}
-\item{upper [\code{numeric}]}{See argument of same name. Length of this vector is \code{len}.}
-\item{values [\code{list}]}{Discrete values, always stored as a named list.}
-\item{trafo [\code{NULL} | \code{function(x)}]}{See argument of same name.}
-\item{requires [\code{NULL} | \code{expression}]}{See argument of same name.}
+  \item{id [\code{character(1)}]}{See argument of same name.}
+  \item{type [\code{character(1)}]}{Data type of parameter. Possible types are \dQuote{numeric}, \dQuote{numericvector}, \dQuote{integer}, \dQuote{integervector}, \dQuote{logical}, \dQuote{logicalvector}, \dQuote{discrete}, \dQuote{discretevector}, \dQuote{function}, \dQuote{untyped}.}
+  \item{len [\code{integer(1)}]}{See argument of same name.}
+  \item{lower [\code{numeric}]}{See argument of same name. Length of this vector is \code{len}.}
+  \item{upper [\code{numeric}]}{See argument of same name. Length of this vector is \code{len}.}
+  \item{values [\code{list}]}{Discrete values, always stored as a named list.}
+  \item{trafo [\code{NULL} | \code{function(x)}]}{See argument of same name.}
+  \item{requires [\code{NULL} | \code{expression}]}{See argument of same name.}
 }
 }
 \examples{

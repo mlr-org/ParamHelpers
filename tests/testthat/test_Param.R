@@ -16,11 +16,14 @@ test_that("num param", {
   expect_true(!isFeasible(p, NA))
   expect_true(!isFeasible(p, "bam"))
 
-  p = makeNumericParam(id = "x", lower = 0, upper = Inf)
+  p = makeNumericParam(id = "x", lower = 0, upper = Inf, special.vals = list(NA_real_, function(x) x + 1, matrix()))
   expect_true(isFeasible(p, 2))
   expect_true(!isFeasible(p, -2))
   expect_true(!isFeasible(p, -Inf))
   expect_true(!isFeasible(p, NULL))
+  expect_true(isFeasible(p, NA_real_))
+  expect_true(isFeasible(p, function(x) x + 1))
+  expect_true(isFeasible(p, matrix()))
 
   expect_equal(p$values, NULL)
 
@@ -57,11 +60,12 @@ test_that("num vec param", {
   expect_true(!isFeasible(p, NA))
   expect_true(!isFeasible(p, "bam"))
 
-  p = makeNumericVectorParam(id = "x", lower = 0, upper = Inf, len = 3)
+  p = makeNumericVectorParam(id = "x", lower = 0, upper = Inf, len = 3, special.vals = list(-Inf))
   expect_true(isFeasible(p, c(2,1,1)))
   expect_true(!isFeasible(p, c(-2,1,0)))
   expect_true(!isFeasible(p, c(-Inf, 1)))
   expect_true(!isFeasible(p, NULL))
+  expect_true(isFeasible(p, -Inf))
 
   ## Error conditions:
   expect_error(makeNumericVectorParam(id = "x", lower = "bam", upper = 1))
@@ -266,6 +270,15 @@ test_that("untyped param", {
 test_that("param print works", {
   p = makeNumericParam(id = "x", lower = -1L, upper = 1)
   expect_output(print(p), "numeric")
+  p = makeUntypedParam(id = "x")
+  expect_output(print(p), "untyped")
+  p = makeUntypedParam(id = "x", default = NULL)
+  expect_output(print(p), "untyped")
+  p = makeUntypedParam(id = "x", default = 99)
+  expect_output(print(p), "untyped")
+  expect_output(print(p), "99")
+  p = makeUntypedParam(id = "x", default = c(99, 99))
+  expect_output(print(p), "untyped")
 })
 
 

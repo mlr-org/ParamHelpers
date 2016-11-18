@@ -8,6 +8,9 @@
 #' The constructed S3 class is simply a list that contains the element \code{pars}.
 #' \code{pars} is a list of the passed parameters, named by their ids.
 #'
+#' If \code{keys} are provided it will automatically be checked whether all expressions within the
+#' provided parameters only contain arguments that are a subset of keys.
+#'
 #' @param ... [\code{\link{Param}}]\cr
 #'   Parameters.
 #' @param params [list of \code{\link{Param}}]\cr
@@ -21,7 +24,10 @@
 #'   If parameters have associated trafos, the forbidden region must always be specified on the original
 #'   scale and not the transformed one.
 #'   Default is \code{NULL} which means no forbidden region.
-#' @return [\code{\link{ParamSet}}].
+#' @template arg_keys
+#' @return [\code{\link{ParamSet}} | \code{LearnerParamSet}].
+#'   If all parameters of the \code{ParamSet} are learner parameters, the output
+#'   will inherit the class \code{LearnerParamSet}.
 #' @aliases ParamSet
 #' @export
 #' @examples
@@ -32,7 +38,12 @@
 #'   makeLogicalParam("x"),
 #'   makeDiscreteVectorParam("y", len=2, values=c("a", "b"))
 #' )
-makeParamSet = function(..., params = NULL, forbidden = NULL) {
+#' makeParamSet(
+#'   makeNumericParam("u", lower = expression(ceiling(n))),
+#'   makeIntegerParam("v", lower = expression(floor(n)), upper = 2),
+#'   keys = c("p", "n")
+#' )
+makeParamSet = function(..., params = NULL, forbidden = NULL, keys = NULL) {
   pars = list(...)
   if (length(pars) > 0 && !is.null(params))
     stop("You can only use one of ... or params!")
@@ -43,10 +54,23 @@ makeParamSet = function(..., params = NULL, forbidden = NULL) {
     assertList(pars, types = "Param")
   }
   ns = extractSubList(pars, "id")
-  if (any(duplicated(ns)))
+  if (anyDuplicated(ns))
     stop("All parameters must have unique names!")
   names(pars) = ns
-  return(makeS3Obj("ParamSet", pars = pars, forbidden = forbidden))
+  par.set = makeS3Obj("ParamSet", pars = pars, forbidden = forbidden)
+
+  if (length(pars) > 0L) {
+    # if all Params are LearnerParams, then the ParSet is considered
+    # to be a LearnerParSet and we automatically extend the keys by
+    # the default keys from mlr, i.e. task, n, p, k and type
+    if (all(vlapply(pars, inherits, what = "LearnerParam"))) {
+      par.set = addClasses(par.set, classes = "LearnerParamSet")
+      keys = union(keys, c("task", "n", "p", "k", "type"))
+    }
+    if (!is.null(keys) && (hasExpression(par.set)))
+      checkExpressionFeasibility(par.set = par.set, keys = keys)
+  }
+  return(par.set)
 }
 
 getParSetPrintData = function(x, trafo = TRUE, used = TRUE, constr.clip = 40L) {
@@ -120,9 +144,9 @@ makeNumericParamSet = function(id = "x", len, lower = -Inf, upper = Inf, vector 
   } else {
     len = asInt(len)
   }
-  if (is.numeric(lower) && length(lower) == 1)
+  if (is.numeric(lower) && length(lower) == 1L)
     lower = rep(lower, len)
-  if (is.numeric(upper) && length(upper) == 1)
+  if (is.numeric(upper) && length(upper) == 1L)
     upper = rep(upper, len)
     assertNumeric(lower, len = len)
     assertNumeric(upper, len = len)
@@ -135,5 +159,3 @@ makeNumericParamSet = function(id = "x", len, lower = -Inf, upper = Inf, vector 
     ))
   }
 }
-
-

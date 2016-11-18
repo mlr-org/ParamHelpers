@@ -4,23 +4,45 @@
 \alias{getDefaults}
 \title{Return defaults of parameters in parameter set.}
 \usage{
-getDefaults(par.set, include.null = FALSE)
+getDefaults(obj, include.null = FALSE, dict = NULL)
 }
 \arguments{
-\item{par.set}{[\code{\link{ParamSet}}]\cr
-Parameter set.}
+\item{obj}{[\code{\link{Param}} | \code{\link[ParamHelpers]{ParamSet}} | \code{list}]\cr
+Parameter, parameter set or list of parameters, whose defaults should be extracted.
+In case the default values contain expressions, they will be evaluated using the
+provided dictionary (\code{dict}).}
 
 \item{include.null}{[\code{logical(1)}]\cr
 Include \code{NULL} entries for parameters without default values in the result list?
 Note that this can be slightly dangerous as \code{NULL} might be used as default value
 for other parameters.
 Default is \code{FALSE}.}
+
+\item{dict}{[\code{environment} | \code{list} | \code{NULL}]\cr
+Environment or list which will be used for evaluating the variables
+of expressions within a parameter, parameter set or list of parameters.
+The default is \code{NULL}.}
 }
 \value{
-[named \code{list}]. Named and in same order as \code{par.set}.
+[named \code{list}]. Named (and in case of a \code{\link{ParamSet}}, in the same order).
   Parameters without defaults are not present in the list.
 }
 \description{
-Return defaults of parameters in parameter set.
+Return defaults of single parameters or parameters in a parameter set or a list of parameters.
+}
+\examples{
+ps1 = makeParamSet(
+  makeDiscreteParam("x", values = c("a", "b"), default = "a"),
+  makeNumericVectorParam("y", len = 2),
+  makeIntegerParam("z", default = 99)
+)
+getDefaults(ps1, include.null = TRUE)
+
+ps2 = makeParamSet(
+  makeNumericVectorParam("a", len = expression(k), default = expression(p)),
+  makeIntegerParam("b", default = 99),
+  makeLogicalParam("c")
+)
+getDefaults(ps2, dict = list(k = 3, p = 5.4))
 }
 

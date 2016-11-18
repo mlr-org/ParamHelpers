@@ -6,21 +6,29 @@ addOptPathEl.OptPathDF = function(op, x, y, dob = getOptPathLength(op)+1L, eol =
   env = op$env
   assertList(x, len = length(op$par.set$pars))
   assertNumeric(y, len = length(op$y.names))
-  dob = asInt(dob, na.ok = TRUE)
   eol = asInt(eol, na.ok = TRUE)
+  dob = asInt(dob, na.ok = TRUE)
   assertString(error.message, na.ok = TRUE)
   assertNumber(exec.time, lower = 0, na.ok = TRUE)
+  if (!is.null(env$extra) && (is.null(extra) || length(extra) == 0))
+    stopf("You have to add extras to opt path if the option is enabled.")
   if (!is.null(extra)) {
     if (is.null(env$extra))
       stopf("Trying to add extra info to opt path, without enabling that option!")
     assertList(extra)
     if (!isProperlyNamed(extra))
       stopf("'extra' must be properly named!")
-    if (!all(sapply(extra, isScalarValue)))
-      stopf("'extra' can currently only contain scalar values!")
+    nondot.extra = removeDotEntries(extra)
+    if (!all(vlapply(nondot.extra, isScalarValue)))
+      stopf("'nondot' components of 'extra' can only contain scalar values! use the 'dotted' components for more complex objects!")
     if (length(env$extra) > 0L) {
-      if (!all(names(extra) == names(env$extra[[1L]])))
-        stopf("Trying to add unknown extra(s): %s!", paste(symdiff(names(extra), names(env$extra[[1L]])), collapse = ","))
+      nondot.extra.precedent = removeDotEntries(env$extra[[1L]])
+      unknown.extra = setdiff(names(nondot.extra), names(nondot.extra.precedent))
+      missing.extra = setdiff(names(nondot.extra.precedent), names(nondot.extra))
+      if (length(unknown.extra) > 0)
+        stopf("Trying to add unknown extra(s): %s!", collapse(unknown.extra))
+      if (length(missing.extra) > 0)
+        stopf("Trying to add extras but missing: %s!", collapse(missing.extra))
     }
     env$extra[[length(env$extra) + 1L]] = extra
   }
@@ -69,6 +77,3 @@ addOptPathEl.OptPathDF = function(op, x, y, dob = getOptPathLength(op)+1L, eol =
 
   return(invisible(NULL))
 }
-
-
-

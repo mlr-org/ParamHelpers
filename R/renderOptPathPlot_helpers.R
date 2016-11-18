@@ -2,13 +2,12 @@
 # XSpace and YSpace. If the element is NULL, it is set, otherwise it is
 # checked. If the dimensionality of X and Y space is greater than 2, the limits
 # are set to NULL. The same happens if there is a discrete variable in the 2D case.
-# We don't need limits in this cases. 
+# We don't need limits in this cases.
 # If the dimensionality is 1 for X or Y Space, for this space the ylim is NULL.
 getOptPathLims = function(xlim, ylim, op.x, op.y, iters, scale) {
-  
   assertList(xlim)
   assertList(ylim)
-  
+
   # First, we calculate for XSpace and YSpace plot the limits
   # Nasty ifs, since this can be one of half a dozen plots, and for every
   # plot we have different defaults
@@ -16,7 +15,7 @@ getOptPathLims = function(xlim, ylim, op.x, op.y, iters, scale) {
     op.frame = if (space == "XSpace") op.x else op.y
     dim = ncol(op.frame)
     classes = BBmisc::vcapply(op.frame, function(x) class(x))
-    
+
     # For Multi-D Plot, no limits are needed. Warn, if the user specified some
     # and set to NULL
     if (dim > 2L) {
@@ -30,9 +29,9 @@ getOptPathLims = function(xlim, ylim, op.x, op.y, iters, scale) {
       ylim[[space]] = NULL
       next
     }
-    
+
     # For 1Dnumeric this is easy - either check user input
-    # or set to min - scale * range and max + scale * range 
+    # or set to min - scale * range and max + scale * range
     if (dim == 1L && (classes == "numeric")) {
       if (is.null(xlim[[space]])) {
         xlim[[space]] = range(op.frame[, 1L])
@@ -46,7 +45,7 @@ getOptPathLims = function(xlim, ylim, op.x, op.y, iters, scale) {
       ylim[[space]] = NULL
       next
     }
-    
+
     # limits for barplot (1D discrete case)
     # Here, xlims are not meaningful, ylim is the modal value
     if (dim == 1L && classes == "factor") {
@@ -54,7 +53,7 @@ getOptPathLims = function(xlim, ylim, op.x, op.y, iters, scale) {
         warning(paste("You specified xlims for 1D barplot in",
           space, "but xlims for this plots are not supported."))
       xlim[[space]] = NULL
-      
+
       if (is.null(ylim[[space]])) {
         ylim[[space]] = c(0, max(table(op.frame)))
       } else {
@@ -62,7 +61,7 @@ getOptPathLims = function(xlim, ylim, op.x, op.y, iters, scale) {
       }
       next
     }
-    
+
     # For dim = 2L we have to check for both variables, if they are discrete
     # for discrete, we don't want limits, for factors they are not meaningful
     if (dim == 2L) {
@@ -79,7 +78,7 @@ getOptPathLims = function(xlim, ylim, op.x, op.y, iters, scale) {
             space, "but the variable is discrete here and therefor xlims are not supported."))
         xlim[[space]] = NULL
       }
-      
+
       if (classes[2L] == "numeric") {
         if (is.null(ylim[[space]])) {
           ylim[[space]] = range(op.frame[, 2L])
@@ -92,50 +91,50 @@ getOptPathLims = function(xlim, ylim, op.x, op.y, iters, scale) {
           warning(paste("You specified ylims for 2D scatter plot in",
             space, "but the variable is discrete here and therefor ylims are not supported."))
         ylim[[space]] = NULL
-      } 
+      }
     }
-    
+
   }
-  
+
   # For now I say: The code for checking and limits for the over.time.plots
   # is way to bad and very complicated. It's not worth the afford atm, since in
   # 99% the defaults of ggplot are the way to go.
   # the user can get the plots via render, he has to set the limits here
   # for himself
   # NOTE: This code is not finished!
-  
+
 #   # Now we need the limits for over.time plots. This is a bit complicated,
 #   # since we can have a list of over.time plots, so we also can get
 #   # a list of lims.
 #   for (space in c("x.over.time", "y.over.time")) {
-#     
-#     over.time.vars = 
-#     
+#
+#     over.time.vars =
+#
 #     # First, ensure we have lists.
 #     if (!is.list(xlim[[space]]))
 #       xlim[[space]] = list(xlim[[space]])
-#     
+#
 #     if (!is.list(ylim[[space]]))
 #       ylim[[space]] = list(ylim[[space]])
-#     
+#
 #     # Here, you allways have to specify limits for every plot - if you specify
 #     # some limits.
 #     assertList(ylim[[space]], len = )
-#     assertList(ylim[[space]], 
-#     
+#     assertList(ylim[[space]],
+#
 #     for (i in seq_along(get(space))) {
-#       
+#
 #       op.frame = if (space == "x.over.time") op.x else op.y
 #       var.names = if (space == "x.over.time") x.over.time[[i]] else y.over.time[[i]]
 #       op.frame = op.frame[, var.names, drop = FALSE]
-#       
+#
 #       # lim.x is iteration number here. If NULL, use ggplot defaults, else check.
 #       if (is.null(xlim[[space]][[i]])) {
 #         xlim[[space]][[i]] = c(NA_real_, NA_real_)
 #       } else {
 #         asInteger(xlim[[space]][[i]], len = 2)
 #       }
-#       
+#
 #       # lim.y as minimum and maximum of all plotted variables:
 #       if (is.null(ylim[[space]][[i]])) {
 #         ylim[[space]][[i]] = range(op.frame)
@@ -143,20 +142,20 @@ getOptPathLims = function(xlim, ylim, op.x, op.y, iters, scale) {
 #       } else {
 #         assertNumeric(ylim[[space]][[i]], len = 2L, any.missing = FALSE)
 #       }
-#       
+#
 #     }
 #   }
-    
+
   return(list(xlim = xlim, ylim = ylim))
 }
 
-# Function to impute missing values. 
+# Function to impute missing values.
 imputeMissingValues = function(x, impute.scale, impute.value) {
   na.index = which(is.na(x))
   if (length(na.index) > 0) {
     if (class(x) == "numeric") {
       x[na.index] = max(x, na.rm = TRUE) + impute.scale * (diff(range(x, na.rm = TRUE)))
-    } 
+    }
     if (class(x) == "factor") {
       levels(x) = c(levels(x), impute.value)
       x[na.index] = impute.value
@@ -171,13 +170,13 @@ imputeMissingValues = function(x, impute.scale, impute.value) {
 # character vector for x and y names
 getAndSubsetPlotData = function(op, iters, subset.obs, subset.vars, subset.targets,
   marked = NULL, alpha = TRUE, impute.scale = 0.05, impute.value = "missing", ...) {
-  
+
   # extract initial information and the data from the opt.path
   x.names = colnames(getOptPathX(op))
   y.names = op$y.names
   dim.x = length(x.names)
   iters.max = max(getOptPathDOB(op))
-  
+
   op.x = as.data.frame(op, include.x = TRUE, include.y = FALSE,
     include.rest = FALSE, dob = 0:max(iters), eol = c(min(iters):iters.max, NA))
   op.y = as.data.frame(op, include.x = FALSE, include.y = TRUE,
@@ -185,7 +184,7 @@ getAndSubsetPlotData = function(op, iters, subset.obs, subset.vars, subset.targe
   op.rest = as.data.frame(op, include.x = FALSE, include.y = FALSE,
     include.rest = TRUE, dob = 0:max(iters), eol = c(min(iters):iters.max, NA))
   dob = getOptPathDOB(op, dob = 0:max(iters), eol = c((max(iters) + 1):iters.max, NA))
-  
+
   # mark best point / pareto front if marked = "best"
   if (is.character(marked)) {
     if(length(y.names) == 1) {
@@ -194,10 +193,10 @@ getAndSubsetPlotData = function(op, iters, subset.obs, subset.vars, subset.targe
       marked = getOptPathParetoFront(op, index = TRUE)
     }
   }
-  
+
   # make sure that only points are marked that are alive at this iteration
   marked = marked[marked <= nrow(op.x)]
-  
+
   # set alpha and type values
   .alpha = if(alpha && max(iters) > 0)
     normalize(dob, "range", range = c(1 / (max(iters) + 1), 1)) else rep(1, length(dob))
@@ -207,38 +206,38 @@ getAndSubsetPlotData = function(op, iters, subset.obs, subset.vars, subset.targe
     .type[marked] = "marked"
   }
   .alpha = pmax(0.1, .alpha)
-  
+
   # Check and calculate the subsets
   if (missing(subset.obs))
     subset.obs = 1:nrow(op.x)
-  assertIntegerish(subset.obs, lower = 1, upper = getOptPathLength(op), unique = TRUE, 
+  assertIntegerish(subset.obs, lower = 1, upper = getOptPathLength(op), unique = TRUE,
     any.missing = FALSE)
   # use only indices avaible in the current iterations
   subset.obs = subset.obs[subset.obs <= nrow(op.x)]
-  
+
   if (missing(subset.vars))
     subset.vars = x.names
   if (is.numeric(subset.vars)) {
     assertIntegerish(subset.vars, lower = 1, upper = dim.x, unique = TRUE, any.missing = FALSE)
   }
-  else 
+  else
     assertSubset(subset.vars, x.names)
-  
+
   if (missing(subset.targets))
     subset.targets = y.names
   if (is.numeric(subset.targets)) {
-    assertIntegerish(subset.targets, lower = 1, upper = getOptPathLength(op), unique = TRUE, 
+    assertIntegerish(subset.targets, lower = 1, upper = getOptPathLength(op), unique = TRUE,
       any.missing = FALSE)
   }
   else
     assertSubset(subset.targets, y.names)
-  
+
   # impute missing values - don't impute in op.rest!
   op.x = BBmisc::dapply(op.x, fun = imputeMissingValues, impute.scale = impute.scale,
     impute.value = impute.value)
   op.y = BBmisc::dapply(op.y, fun = imputeMissingValues, impute.scale = impute.scale,
     impute.value = impute.value)
-  
+
   # now subset everything
   op.x = op.x[subset.obs, subset.vars, drop = FALSE]
   op.y = op.y[subset.obs, subset.targets, drop = FALSE]
@@ -248,7 +247,7 @@ getAndSubsetPlotData = function(op, iters, subset.obs, subset.vars, subset.targe
   .type = .type[subset.obs]
   x.names = if (is.numeric(subset.vars)) x.names[subset.vars] else subset.vars
   y.names = if (is.numeric(subset.targets)) y.names[subset.targets] else subset.targets
-  
+
   return(
     list(
       op.x = op.x,
@@ -281,4 +280,3 @@ getOptPathColAtTime = function(op.df, time) {
   if (nrow(col) == 1) col$time = time
   col
 }
-

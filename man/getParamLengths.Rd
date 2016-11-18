@@ -2,16 +2,21 @@
 % Please edit documentation in R/getParamLengths.R
 \name{getParamLengths}
 \alias{getParamLengths}
-\title{Return lengths of parameters in parameter set.}
+\title{Return lengths of single parameters or parameters in parameter set.}
 \usage{
-getParamLengths(par.set)
+getParamLengths(par, dict = NULL)
 }
 \arguments{
-\item{par.set}{[\code{\link{ParamSet}}]\cr
-Parameter set.}
+\item{par}{[\code{\link{Param}} | \code{\link{ParamSet}}]\cr
+Parameter or parameter set.}
+
+\item{dict}{[\code{environment} | \code{list} | \code{NULL}]\cr
+Environment or list which will be used for evaluating the variables
+of expressions within a parameter, parameter set or list of parameters.
+The default is \code{NULL}.}
 }
 \value{
-[\code{integer}]. Named and in same order as \code{par.set}.
+[\code{integer}]. Named and in the same order as the input for \code{\link{ParamSet}} input.
 }
 \description{
 Useful for vector parameters.
@@ -25,5 +30,8 @@ ps = makeParamSet(
 )
 getParamLengths(ps)
 # the length of the vector x is 2, for all other single value parameters the length is 1.
+
+par = makeNumericVectorParam("x", len = expression(k), lower = 0)
+getParamLengths(par, dict = list(k = 4))
 }
 

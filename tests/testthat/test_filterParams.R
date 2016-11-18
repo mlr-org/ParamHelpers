@@ -2,18 +2,18 @@ context("FilterParams")
 
 test_that("filter empty paramset", {
   ps = makeParamSet()
-  expect_output(filterParams(ps, type = "numeric"), "Empty parameter set.")
-  expect_output(filterParams(ps, type = "integer"), "Empty parameter set.")
-  expect_output(filterParams(ps, type = "numericvector"), "Empty parameter set.")
-  expect_output(filterParams(ps, type = "integervector"), "Empty parameter set.")
-  expect_output(filterParams(ps, type = "discrete"), "Empty parameter set.")
-  expect_output(filterParams(ps, type = "discretevector"), "Empty parameter set.")
-  expect_output(filterParams(ps, type = "logical"), "Empty parameter set.")
-  expect_output(filterParams(ps, type = "logicalvector"), "Empty parameter set.")
-  expect_output(filterParams(ps, type = "character"), "Empty parameter set.")
-  expect_output(filterParams(ps, type = "character"), "Empty parameter set.")
-  expect_output(filterParams(ps, type = "function"), "Empty parameter set.")
-  expect_output(filterParams(ps, type = "untyped"), "Empty parameter set.")
+  expect_true(isEmpty(filterParams(ps, type = "numeric")))
+  expect_true(isEmpty(filterParams(ps, type = "integer")))
+  expect_true(isEmpty(filterParams(ps, type = "numericvector")))
+  expect_true(isEmpty(filterParams(ps, type = "integervector")))
+  expect_true(isEmpty(filterParams(ps, type = "discrete")))
+  expect_true(isEmpty(filterParams(ps, type = "discretevector")))
+  expect_true(isEmpty(filterParams(ps, type = "logical")))
+  expect_true(isEmpty(filterParams(ps, type = "logicalvector")))
+  expect_true(isEmpty(filterParams(ps, type = "character")))
+  expect_true(isEmpty(filterParams(ps, type = "character")))
+  expect_true(isEmpty(filterParams(ps, type = "function")))
+  expect_true(isEmpty(filterParams(ps, type = "untyped")))
 })
 
 test_that("filter mixed paramset", {
@@ -36,7 +36,7 @@ test_that("filter mixed paramset", {
   expect_equal(getParamIds(filterParams(ps, type = c("numeric","integer"))), c("u", "v"))
   expect_equal(getParamIds(filterParams(ps, type = c("integer","numeric"))), c("u", "v"))
   expect_equal(getParamIds(filterParams(ps, type = c("integer","function"))), "v")
-  expect_output(filterParams(ps, type = "function"), "Empty parameter set.")
+  expect_true(isEmpty(filterParams(ps, type = "function")))
 })
 
 test_that("mix filtering of type and tunable", {
@@ -71,5 +71,13 @@ test_that("filtering of ids", {
   expect_equal(getParamIds(filterParams(ps, type = "character", ids = c("u", "v", "w", "s"))), "s")
   expect_equal(getParamIds(filterParams(ps, type = NULL, ids = c("v", "w", "y"))), c("v", "w", "y"))
   expect_equal(getParamIds(filterParams(ps, type = c("numeric", "integer"), tunable = TRUE, ids = c("w", "x", "y"))), "x")
-  expect_output(filterParams(ps, type = "logical", ids = c("u", "v")), "Empty parameter set.")
+  expect_true(isEmpty(filterParams(ps, type = "logical", ids = c("u", "v"))))
+})
+
+test_that("filtering with requirements", {
+  ps = makeParamSet(
+    makeDiscreteParam("x", values = c("a", "b"), default = "a"),
+    makeNumericParam("y", requires = quote(x == "a"))
+  )
+  expect_error(filterParams(par.set = ps, type = "numeric", check.requires = TRUE), "Params x filtered")
 })

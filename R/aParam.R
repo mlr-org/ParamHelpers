@@ -1,17 +1,18 @@
-#' Create a description object for a parameter.
+#' @title Create a description object for a parameter.
 #'
+#' @description
 #' For each parameter type a special constructor function is available, see below.
 #'
 #' The S3 class is a list which stores these elements:
 #' \describe{
-#' \item{id [\code{character(1)}]}{See argument of same name.}
-#' \item{type [\code{character(1)}]}{Data type of parameter. Possible types are \dQuote{numeric}, \dQuote{numericvector}, \dQuote{integer}, \dQuote{integervector}, \dQuote{logical}, \dQuote{logicalvector}, \dQuote{discrete}, \dQuote{discretevector}, \dQuote{function}, \dQuote{untyped}.}
-#' \item{len [\code{integer(1)}]}{See argument of same name.}
-#' \item{lower [\code{numeric}]}{See argument of same name. Length of this vector is \code{len}.}
-#' \item{upper [\code{numeric}]}{See argument of same name. Length of this vector is \code{len}.}
-#' \item{values [\code{list}]}{Discrete values, always stored as a named list.}
-#' \item{trafo [\code{NULL} | \code{function(x)}]}{See argument of same name.}
-#' \item{requires [\code{NULL} | \code{expression}]}{See argument of same name.}
+#'   \item{id [\code{character(1)}]}{See argument of same name.}
+#'   \item{type [\code{character(1)}]}{Data type of parameter. Possible types are \dQuote{numeric}, \dQuote{numericvector}, \dQuote{integer}, \dQuote{integervector}, \dQuote{logical}, \dQuote{logicalvector}, \dQuote{discrete}, \dQuote{discretevector}, \dQuote{function}, \dQuote{untyped}.}
+#'   \item{len [\code{integer(1)}]}{See argument of same name.}
+#'   \item{lower [\code{numeric}]}{See argument of same name. Length of this vector is \code{len}.}
+#'   \item{upper [\code{numeric}]}{See argument of same name. Length of this vector is \code{len}.}
+#'   \item{values [\code{list}]}{Discrete values, always stored as a named list.}
+#'   \item{trafo [\code{NULL} | \code{function(x)}]}{See argument of same name.}
+#'   \item{requires [\code{NULL} | \code{expression}]}{See argument of same name.}
 #' }
 #'
 #' @param id [\code{character(1)}]\cr
@@ -47,9 +48,11 @@
 #'   before it is, e.g., passed to a corresponding objective function.
 #'   Function must accept a parameter value as the first argument and return a transformed one.
 #'   Default is \code{NULL} which means no transformation.
-#' @param requires [\code{NULL} | R expression]\cr
-#'   States requirements on other paramaters' values, so that setting
+#' @param requires [\code{NULL} | \code{call} | \code{expression}]\cr
+#'   States requirements on other parameters' values, so that setting
 #'   this parameter only makes sense if its requirements are satisfied (dependent parameter).
+#'   Can be an object created either with \code{expression} or \code{quote},
+#'   the former type is auto-converted into the later.
 #'   Only really useful if the parameter is included in a \code{\link{ParamSet}}.
 #'   Note that if your dependent parameter is a logical Boolean you need to verbosely write
 #'   \code{requires = quote(a == TRUE)} and not \code{requires = quote(a)}.
@@ -61,6 +64,9 @@
 #'   procedures that would try to consider all available parameters.
 #'   Default is \code{TRUE} (except for \code{untyped}, \code{function}, \code{character} and
 #'   \code{characterVector}) which means it is tunable.
+#' @param special.vals [\code{list()}]\cr
+#'   A list of special values the parameter can except which are outside of the defined range.
+#'   Default is an empty list.
 #' @return [\code{\link{Param}}].
 #' @name Param
 #' @rdname Param
@@ -72,8 +78,8 @@
 NULL
 
 makeParam = function(id, type, len, lower, upper, values, cnames, allow.inf = FALSE, default,
-  trafo = NULL, requires = NULL, tunable = TRUE) {
-
+  trafo = NULL, requires = NULL, tunable = TRUE, special.vals = list()) {
+  assertString(id)
   #We cannot check default} for NULL or NA as this could be the default value!
   if (missing(default)) {
     has.default = FALSE
@@ -81,9 +87,16 @@ makeParam = function(id, type, len, lower, upper, values, cnames, allow.inf = FA
   } else {
     has.default = TRUE
   }
-  #FIXME: Do we need to check for NA here? hopefully not because this might occur in mlr?
+  # FIXME: Do we need to check for NA here? Hopefully not because this might occur in mlr?
   if (has.default && isScalarNA(default))
     warningf("NA used as a default value for learner parameter %s.\nParamHelpers uses NA as a special value for dependent parameters.", id)
+  if (!is.null(trafo))
+    assertFunction(trafo)
+  if (!is.null(requires)) {
+    requires = convertExpressionToCall(requires)
+    assertClass(requires, "call")
+  }
+  assertList(special.vals)
   p = makeS3Obj("Param",
     id = id,
     type = type,
@@ -97,7 +110,8 @@ makeParam = function(id, type, len, lower, upper, values, cnames, allow.inf = FA
     default = default,
     trafo = trafo,
     requires = requires,
-    tunable = tunable
+    tunable = tunable,
+    special.vals = special.vals
   )
   if (has.default && !isFeasible(p, default))
     stop(p$id, " : 'default' must be a feasible parameter setting.")
@@ -106,16 +120,41 @@ makeParam = function(id, type, len, lower, upper, values, cnames, allow.inf = FA
 
 getParPrintData = function(x, trafo = TRUE, used = TRUE, constr.clip = 40L) {
   g = function(n) collapse(sprintf("%.3g", n))
-  if (isNumeric(x, include.int = TRUE))
-    constr = sprintf("%s to %s", g(x$lower), g(x$upper))
-  else if (isDiscrete(x, include.logical = FALSE))
-    constr = clipString(collapse(names(x$values)), constr.clip)
-  else
+  if (isNumeric(x, include.int = TRUE)) {
+    if (!is.expression(x$lower) && !is.expression(x$upper) &&
+      (length(unique(x$lower)) == 1L) && (length(unique(x$upper)) == 1L)) {
+      x$lower = unique(x$lower)
+      x$upper = unique(x$upper)
+    }
+    low = if (is.expression(x$lower))  as.character(x$lower) else g(x$lower)
+    upp = if (is.expression(x$upper)) as.character(x$upper) else g(x$upper)
+    constr = sprintf("%s to %s", low, upp)
+  } else if (isDiscrete(x, include.logical = FALSE)) {
+    vals = if (is.expression(x$values)) as.character(x$values) else collapse(names(x$values))
+    constr = clipString(vals, constr.clip)
+  } else
     constr = "-"
+  if (x$has.default) {
+    if (!is.expression(x$default)) {
+      def = x$default
+      def = paramValueToString(x, def)
+    } else
+      def = as.character(x$default)
+  } else {
+    def = "-"
+  }
+  if (isVector(x)) {
+    if (!is.expression(x$len))
+      len = x$len
+    else
+      len = as.character(x$len)
+  } else {
+    len = "-"
+  }
   d = data.frame(
     Type = x$type,
-    len = ifelse(isVector(x), x$len, "-"),
-    Def = if (x$has.default) paramValueToString(x, x$default) else "-",
+    len = len,
+    Def = def,
     Constr = constr,
     Req = ifelse(is.null(x$requires), "-", "Y"),
     Tunable = x$tunable,
@@ -126,9 +165,7 @@ getParPrintData = function(x, trafo = TRUE, used = TRUE, constr.clip = 40L) {
   return(d)
 }
 
-
 #' @export
 print.Param = function(x, ..., trafo = TRUE) {
   print(getParPrintData(x, trafo = trafo))
 }
-

@@ -18,7 +18,7 @@ convertParamSetToIrace = function(par.set, as.chars = FALSE) {
   if (!hasFiniteBoxConstraints(par.set))
     stop("convertParamSetToIrace requires finite box constraints for all numeric and integer params!")
   requirePackages("irace", why = "convertParamSetToIrace", default.method = "load")
-  lines = character(0)
+  lines = character(0L)
   count = 1L
   for (i in seq_along(par.set$pars)) {
     p = par.set$pars[[i]]
@@ -35,7 +35,7 @@ convertParamSetToIrace = function(par.set, as.chars = FALSE) {
       ordered = "o"
     )
     for (j in seq_len(p$len)) {
-      id = if (p$len == 1) p$id else paste(p$id, j, sep = "")
+      id = if (p$len == 1L) p$id else paste(p$id, j, sep = "")
       if (p$type %in% c("numeric", "numericvector"))
         line = sprintf('%s "" %s (%g, %g)', id, type, p$lower[j], p$upper[j])
       else if (p$type %in% c("integer", "integervector"))
@@ -47,7 +47,7 @@ convertParamSetToIrace = function(par.set, as.chars = FALSE) {
         stopf("Unknown parameter type: %s", p$type)
       }
       if (!is.null(p$requires)) {
-        line = paste(line, capture.output(p$requires), sep = " | ")
+        line = paste(line, collapse(deparse(p$requires, width.cutoff = 500L), sep=""), sep = " | ")
       }
       lines[count] = line
       count = count + 1L
@@ -58,13 +58,21 @@ convertParamSetToIrace = function(par.set, as.chars = FALSE) {
   } else {
     lines = collapse(lines, "\n")
     params = irace::readParameters(text = lines, digits = .Machine$integer.max)
-    # assert that the boundaries have the correct class and values
-    for (i in seq_along(par.set$pars)) {
-      if (par.set$pars[[i]]$type %in% c("numeric", "numericvector"))
-        params$boundary[[i]] = as.numeric(unlist(par.set$pars[[i]][c("lower", "upper")]))
-      else if (par.set$pars[[i]]$type %in% c("integer", "integervector"))
-        params$boundary[[i]] = as.integer(params$boundary[[i]])
+    # fix numeric boundaries of irace, to make sure we dont lose num accuracy by write/read file IO
+    # somehow bad....
+    for (p in par.set$pars) {
+      if (isNumeric(p, include.int = TRUE)) {
+        pids = getParamIds(p, repeated = TRUE, with.nr = TRUE)
+        for (j in seq_len(p$len)) {
+          if (isNumericStrict(p))
+            params$boundary[[pids[j]]] = c(p$lower[j], p$upper[j])
+          if (isInteger(p))
+            params$boundary[[pids[j]]] = as.integer(c(p$lower[j], p$upper[j]))
+        }
+      }
     }
     return(params)
   }
 }
+
+

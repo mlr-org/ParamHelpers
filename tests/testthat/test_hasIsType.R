@@ -24,10 +24,16 @@ test_that("is{Discrete, Integer, Numeric, Character} and has{Discrete, Integer, 
 
   par.set.character = makeParamSet(
     makeCharacterParam("char1"),
-    makeCharacterVectorParam("chars1", len = 2)
+    makeCharacterVectorParam("chars1", len = 2L)
+  )
+
+  par.set.logical = makeParamSet(
+    makeLogicalParam("logi1"),
+    makeLogicalVectorParam("logi2", len = 3L)
   )
 
   expect_true(isDiscrete(par.set.discrete))
+  expect_true(hasDiscrete(par.set.discrete))
   expect_false(isInteger(par.set.discrete))
   expect_false(isNumeric(par.set.discrete))
   expect_false(hasNumeric(par.set.discrete))
@@ -42,4 +48,13 @@ test_that("is{Discrete, Integer, Numeric, Character} and has{Discrete, Integer, 
   expect_true(hasNumeric(par.set.mixed))
   expect_true(hasInteger(par.set.mixed))
   expect_false(hasCharacter(par.set.mixed))
+  expect_true(hasLogical(par.set.mixed))
+
+  expect_true(isDiscrete(par.set.logical))
+  expect_false(isDiscrete(par.set.logical, include.logical = FALSE))
+  expect_true(hasDiscrete(par.set.logical))
+  expect_false(hasDiscrete(par.set.logical, include.logical = FALSE))
+  expect_false(isNumeric(par.set.logical))
+  expect_true(hasLogical(par.set.logical))
+  expect_true(isLogical(par.set.logical))
 })

@@ -43,7 +43,7 @@ dfRowsToList = function(df, par.set, enforce.col.types = FALSE, ...) {
 
   if (enforce.col.types) {
     types = getParamTypes(par.set, df.cols = TRUE)
-    for (i in 1:length(types)) {
+    for (i in seq_along(types)) {
       tt = types[i]
       if (tt == "factor")
         df[,i] = as.factor(df[, i])

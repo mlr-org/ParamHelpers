@@ -6,10 +6,13 @@
 \alias{isInteger}
 \alias{isLogical}
 \alias{isNumeric}
+\alias{isNumericStrict}
 \alias{isType}
 \title{Check parameter / parameter set contain ONLY a certain type.}
 \usage{
 isNumeric(par, include.int = TRUE)
+
+isNumericStrict(par)
 
 isDiscrete(par, include.logical = TRUE)
 

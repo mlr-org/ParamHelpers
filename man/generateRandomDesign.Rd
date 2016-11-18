@@ -34,15 +34,21 @@ The following types of columns are created:
  logical(vector)   \tab  \code{logical}
 }
 If you want to convert these, look at \code{\link[BBmisc]{convertDataFrameCols}}.
-Dependent parameters whose constraints are unsatisfied generate \code{NA} entries in their
-respective columns.
 For discrete vectors the levels and their order will be preserved, even if not all levels are present.
 
 The algorithm simply calls \code{\link{sampleValues}} and arranges the result in a data.frame.
+
+Parameters are trafoed (potentially, depending on the setting of argument \code{trafo});
+dependent parameters whose constraints are unsatisfied are set to \code{NA} entries.
 
 \code{generateRandomDesign} will NOT work if there are dependencies over multiple levels of
 parameters and the dependency is only given with respect to the \dQuote{previous} parameter.
 A current workaround is to state all dependencies on all parameters involved.
 (We are working on it.)
+
+Note that if you have trafos attached to your params, the complete creation of the design
+(except for the detection of invalid parameters w.r.t to their \code{requires} setting)
+takes place on the UNTRANSFORMED scale. So this function samples from a uniform density
+over the param space on the UNTRANSFORMED scale, but not necessarily the transformed scale.
 }
 

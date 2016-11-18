@@ -1,5 +1,6 @@
-#' Check whether parameter setting lies in forbidden region of parameter set.
+#' @title Check whether parameter setting lies in forbidden region of parameter set.
 #'
+#' @description
 #' Parameter sets without a forbidden region always return \code{FALSE}.
 #'
 #' @template arg_parset
@@ -15,4 +16,3 @@ isForbidden = function(par.set, x) {
     return(FALSE)
   return(eval(par.set$forbidden, envir = x))
 }
-

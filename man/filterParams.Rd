@@ -2,9 +2,18 @@
 % Please edit documentation in R/filterParams.R
 \name{filterParams}
 \alias{filterParams}
+\alias{filterParamsDiscrete}
+\alias{filterParamsNumeric}
 \title{Get parameter subset of only certain parameters.}
 \usage{
-filterParams(par.set, ids = NULL, type = NULL, tunable = c(TRUE, FALSE))
+filterParams(par.set, ids = NULL, type = NULL, tunable = c(TRUE, FALSE),
+  check.requires = FALSE)
+
+filterParamsNumeric(par.set, ids = NULL, tunable = c(TRUE, FALSE),
+  include.int = TRUE)
+
+filterParamsDiscrete(par.set, ids = NULL, tunable = c(TRUE, FALSE),
+  include.logical = TRUE)
 }
 \arguments{
 \item{par.set}{[\code{\link{ParamSet}}]\cr
@@ -26,6 +35,19 @@ Setting \code{type = NULL}, which is the default, allows the consideration of al
 Vector of allowed values for the property \code{tunable}. Accepted arguments are
 \code{TRUE}, \code{FALSE} or \code{c(TRUE, FALSE)}.
 The default is \code{c(TRUE, FALSE)}, i.e. none of the parameters will be filtered out.}
+
+\item{check.requires}{[\code{logical(1)}]\cr
+Toggle whether it should be checked that all requirements in the \code{\link{ParamSet}} are still valid after filtering or not. 
+This check is done after filtering and will throw an error if those Params are filtered which other Params need for their requirements.
+Default is \code{FALSE}.}
+
+\item{include.int}{[\code{logical(1)}]\cr
+Are integers also considered to be numeric?
+Default is \code{TRUE}.}
+
+\item{include.logical}{[\code{logical(1)}]\cr
+Are logicals also considered to be discrete?
+Default is \code{TRUE}.}
 }
 \value{
 [\code{\link{ParamSet}}].

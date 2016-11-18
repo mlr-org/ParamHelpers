@@ -1,12 +1,12 @@
-#' Check whether parameter set contains a certain type.
+#' @title Check whether parameter set contains a certain type.
 #'
+#' @description
 #' \code{TRUE} iff the parameter set contains at least one parameter of the mentioned type x.
 #' Type x always subsumes x and x-vector.
 #'
 #' @template arg_parset
-#' @param include.int [\code{logical(1)}]\cr
-#'   Are integers also considered to be numeric?
-#'   Default is \code{TRUE}.
+#' @template arg_include_int
+#' @template arg_include_logical
 #' @return [\code{logical(1)}].
 #' @name hasType
 #' @rdname hasType
@@ -14,9 +14,9 @@ NULL
 
 #' @export
 #' @rdname hasType
-hasDiscrete = function(par.set) {
+hasDiscrete = function(par.set, include.logical = TRUE) {
   assertClass(par.set, "ParamSet")
-  return(hasSomeParamsOfTypes(par.set, types = c("discrete", "discretevector")))
+  hasSomeParamsOfTypes(par.set, types = getTypeStringsDiscrete(include.logical = include.logical))
 }
 
 #' @export
@@ -44,8 +44,7 @@ hasCharacter = function(par.set) {
 #' @rdname hasType
 hasNumeric = function(par.set, include.int = TRUE) {
   assertClass(par.set, "ParamSet")
-  types = getNumericTypes(include.int = include.int)
-  return(hasSomeParamsOfTypes(par.set, types = types))
+  hasSomeParamsOfTypes(par.set, types = getTypeStringsNumeric(include.int = include.int))
 }
 
 ##### helpers
@@ -60,10 +59,3 @@ hasAllParamsOfTypes = function(par.set, types) {
   return(all(getParamTypes(par.set, df.cols = FALSE, with.nr = FALSE , use.names = FALSE) %in% types))
 }
 
-# what types to consider numeric
-getNumericTypes = function(include.int = TRUE) {
-  if (include.int)
-    c("numeric", "numericvector", "integer", "integervector")
-  else
-    c("numeric", "numericvector")
-}

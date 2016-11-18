@@ -1,4 +1,4 @@
-#' Sample a random value from a parameter or a parameter set uniformly.
+#' @title Sample a random value from a parameter or a parameter set uniformly.
 #'
 #' @template desc_dep_pars_na
 #'
@@ -79,7 +79,7 @@ sampleValue.ParamSet = function(par, discrete.names = FALSE, trafo = FALSE) {
   }
   # set conditional params to NA is condition not OK
   val = lapply(seq_along(val), function(i) {
-    if (!is.null(par$pars[[i]]$requires) && !requiresOk(par, val, i)) {
+    if (!is.null(par$pars[[i]]$requires) && !requiresOk(par$pars[[i]], val)) {
       type = par$pars[[i]]$type
       type = switch(type,
         numericvector = "numeric",
@@ -99,7 +99,7 @@ sampleValue.ParamSet = function(par, discrete.names = FALSE, trafo = FALSE) {
 }
 
 
-#' Sample n random values from a parameter or a parameter set uniformly.
+#' @title Sample n random values from a parameter or a parameter set uniformly.
 #'
 #' @template desc_dep_pars_na
 #'
@@ -132,4 +132,3 @@ sampleValues = function(par, n, discrete.names = FALSE, trafo = FALSE) {
   assertFlag(discrete.names)
   replicate(n, sampleValue(par, discrete.names = discrete.names, trafo = trafo), simplify = FALSE)
 }
-

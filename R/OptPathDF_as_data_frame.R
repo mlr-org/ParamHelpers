@@ -17,6 +17,7 @@
 #' If you want to convert these, look at \code{\link[BBmisc]{convertDataFrameCols}}.
 #' Dependent parameters whose constraints are unsatisfied generate \code{NA} entries in their
 #' respective columns.
+#' Factor columns of discrete parameters always have their complete level set from the \code{param.set}.
 #'
 #' @param x [\code{\link{OptPath}}]\cr
 #'   Optimization path.
@@ -40,9 +41,7 @@
 #'   Currently ignored.
 #' @return [\code{data.frame}].
 #' @export
-as.data.frame.OptPathDF = function(x, row.names = NULL, optional = FALSE,
-  include.x = TRUE, include.y = TRUE, include.rest = TRUE,
-  dob = x$env$dob, eol = x$env$eol, ...) {
+as.data.frame.OptPathDF = function(x, row.names = NULL, optional = FALSE, include.x = TRUE, include.y = TRUE, include.rest = TRUE, dob = x$env$dob, eol = x$env$eol, ...) {
 
   assertFlag(include.x)
   assertFlag(include.y)
@@ -62,10 +61,14 @@ as.data.frame.OptPathDF = function(x, row.names = NULL, optional = FALSE,
   if (include.x || include.y) {
     df = x$env$path[ind, , drop = FALSE]
     y.cols = which(colnames(df) %in% x$y.names)
-    if (include.x)
-      res = cbind(res, df[, -y.cols, drop = FALSE])
-    if (include.y)
+    if (include.x) {
+      x.df = df[, -y.cols, drop = FALSE]
+      x.df = fixDesignFactors(x.df, x$par.set) # keeps factor levels
+      res = cbind(res, x.df)
+    }
+    if (include.y) {
       res = cbind(res, df[, y.cols, drop = FALSE])
+    }
     res = convertDataFrameCols(res, chars.as.factor = TRUE)
   }
   if (include.rest) {
@@ -75,8 +78,10 @@ as.data.frame.OptPathDF = function(x, row.names = NULL, optional = FALSE,
       res$error.message = x$env$error.message[ind]
     if (!is.null(x$env$exec.time))
       res$exec.time = x$env$exec.time[ind]
-    if (!is.null(x$env$extra))
-      res = cbind(res, convertListOfRowsToDataFrame(x$env$extra[ind]))
+    if (!is.null(x$env$extra)) {
+      extra.clean = lapply(x$env$extra[ind], removeDotEntries)
+      res = cbind(res, convertListOfRowsToDataFrame(extra.clean))
+    }
   }
   if (!is.null(row.names)) {
     assertCharacter(row.names, len = nrow(res), any.missing = FALSE)
@@ -85,5 +90,7 @@ as.data.frame.OptPathDF = function(x, row.names = NULL, optional = FALSE,
   return(res)
 }
 
-
-
+# remove all named entries that have a name starting with a dot
+removeDotEntries = function(l) {
+  l[!grepl("^\\.", names(l))]
+}

@@ -21,5 +21,3 @@ makeOptPathDF = function(par.set, y.names, minimize, add.transformed.x = FALSE,
   )
   return(addClasses(obj, "OptPathDF"))
 }
-
-

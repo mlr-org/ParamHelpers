@@ -6,7 +6,7 @@
 \alias{makeParamSet}
 \title{Construct a parameter set.}
 \usage{
-makeParamSet(..., params = NULL, forbidden = NULL)
+makeParamSet(..., params = NULL, forbidden = NULL, keys = NULL)
 
 makeNumericParamSet(id = "x", len, lower = -Inf, upper = Inf,
   vector = TRUE)
@@ -28,6 +28,10 @@ If parameters have associated trafos, the forbidden region must always be specif
 scale and not the transformed one.
 Default is \code{NULL} which means no forbidden region.}
 
+\item{keys}{[\code{character}]\cr
+Character vector with keys (names) of feasible variable names which will be provided via a
+dictionary/hash later. Default is \code{NULL}.}
+
 \item{id}{[\code{character(1)}]
 Name of parameter.}
 
@@ -48,7 +52,9 @@ n \code{NumericParam} objects?
 Default is \code{TRUE}.}
 }
 \value{
-[\code{\link{ParamSet}}].
+[\code{\link{ParamSet}} | \code{LearnerParamSet}].
+  If all parameters of the \code{ParamSet} are learner parameters, the output
+  will inherit the class \code{LearnerParamSet}.
 }
 \description{
 \code{makeParamSet}: Construct from a bunch of parameters.
@@ -57,6 +63,9 @@ Multiple sets can be concatenated with \code{c}.
 
 The constructed S3 class is simply a list that contains the element \code{pars}.
 \code{pars} is a list of the passed parameters, named by their ids.
+
+If \code{keys} are provided it will automatically be checked whether all expressions within the
+provided parameters only contain arguments that are a subset of keys.
 
 \code{makeNumericParamSet}: Convenience function for numerics.
 }
@@ -67,6 +76,11 @@ makeParamSet(
   makeDiscreteParam("w", values=1:2),
   makeLogicalParam("x"),
   makeDiscreteVectorParam("y", len=2, values=c("a", "b"))
+)
+makeParamSet(
+  makeNumericParam("u", lower = expression(ceiling(n))),
+  makeIntegerParam("v", lower = expression(floor(n)), upper = 2),
+  keys = c("p", "n")
 )
 }
 

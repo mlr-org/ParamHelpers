@@ -8,5 +8,5 @@ test_that("dropParams", {
   )
   expect_equal(getParamIds(dropParams(ps, "u")), c("v", "w"))
   expect_equal(getParamIds(dropParams(ps, c("u","v"))), "w")
-  expect_output(dropParams(ps, c("u", "v", "w")), "Empty parameter set.")
+  expect_true(isEmpty(dropParams(ps, c("u", "v", "w"))))
 })

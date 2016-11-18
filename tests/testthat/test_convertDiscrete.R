@@ -10,6 +10,11 @@ test_that("discrete param NameToValue", {
   expect_error(discreteNameToValue(p, ""), "Names not used")
   p = makeIntegerParam(id = "y")
   expect_error(discreteNameToValue(p, "a"))
+
+  # check that the operation works with very small values, we had a bug here in mlr#1115
+  p = makeDiscreteParam("x", values = c(a = 1e-8, b = 1e-9))
+  expect_equal(discreteNameToValue(p, "a"), 1e-8)
+  expect_equal(discreteNameToValue(p, "b"), 1e-9)
 })
 
 test_that("discrete param ValueToName", {
@@ -23,6 +28,11 @@ test_that("discrete param ValueToName", {
   expect_error(discreteNameToValue(p, 2))
   p = makeIntegerParam(id = "y")
   expect_error(discreteNameToValue(p, "a"))
+
+  # check that the operation works with very small values, we had a bug here in mlr#1115
+  p = makeDiscreteParam("x", values = c(a = 1e-8, b = 1e-9))
+  expect_equal(discreteValueToName(p, 1e-8), "a")
+  expect_equal(discreteValueToName(p, 1e-9), "b")
 })
 
 

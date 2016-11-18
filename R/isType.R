@@ -3,12 +3,8 @@
 #' An empty param set is considered to be of all types.
 #'
 #' @template arg_par_or_set
-#' @param include.int [\code{logical(1)}]\cr
-#'   Are integers also considered to be numeric?
-#'   Default is \code{TRUE}.
-#' @param include.logical [\code{logical(1)}]\cr
-#'   Are logicals also considered to be discrete?
-#'   Default is \code{TRUE}.
+#' @template arg_include_int
+#' @template arg_include_logical
 #' @return [\code{logical(1)}].
 #' @name isType
 #' @rdname isType
@@ -23,16 +19,29 @@ isNumeric = function(par, include.int = TRUE) {
 
 #' @export
 isNumeric.ParamSet = function(par, include.int = TRUE) {
-  all(sapply(par$pars, isNumeric.Param, include.int = include.int))
+  all(vlapply(par$pars, isNumeric.Param, include.int = include.int))
 }
 
 #' @export
 isNumeric.Param = function(par, include.int = TRUE) {
-  types = if (include.int)
-    c("numeric", "numericvector", "integer", "integervector")
-  else
-    c("numeric", "numericvector")
-  return(par$type %in% types)
+  par$type %in% getTypeStringsNumeric(include.int)
+}
+
+#' @export
+#' @rdname isType
+isNumericStrict = function(par) {
+  assert(checkClass(par, "Param"), checkClass(par, "ParamSet"))
+  UseMethod("isNumericStrict")
+}
+
+#' @export
+isNumericStrict.ParamSet = function(par) {
+  all(vlapply(par$pars, isNumericStrict.Param))
+}
+
+#' @export
+isNumericStrict.Param = function(par) {
+  par$type %in% getTypeStringsNumericStrict()
 }
 
 #' @export
@@ -44,20 +53,12 @@ isDiscrete = function(par, include.logical = TRUE) {
 
 #' @export
 isDiscrete.ParamSet = function(par, include.logical = TRUE) {
-  types = if (include.logical)
-    c("discrete", "discretevector", "logical", "logicalvector")
-  else
-    c("discrete", "discretevector")
-  return(hasAllParamsOfTypes(par, types = types))
+  hasAllParamsOfTypes(par, types = getTypeStringsDiscrete(include.logical = include.logical))
 }
 
 #' @export
 isDiscrete.Param = function(par, include.logical = TRUE) {
-  types = if (include.logical)
-    c("discrete", "discretevector", "logical", "logicalvector")
-  else
-    c("discrete", "discretevector")
-  return(par$type %in% types)
+  par$type %in% getTypeStringsDiscrete(include.logical = include.logical)
 }
 
 #' @export

@@ -41,7 +41,7 @@ test_that("mixed paramset 2", {
   expect_true(!isFeasible(ps, list(2,0,"char")))
   expect_equal(getLower(ps), c(x1 = -1, x2 = 0))
   expect_equal(getUpper(ps), c(x1= 1, x2 = Inf))
-  expect_true(isFeasible(ps, list(x3 = 2L, x1 = 0)))
+  expect_true(isFeasible(ps, list(x3 = 2L, x1 = 0), filter = TRUE))
 })
 
 test_that("cannot build param set from wrong stuff", {
@@ -189,3 +189,20 @@ test_that("print works", {
   expect_output(print(ps, trafo = FALSE, used = FALSE), "numericvector")
 })
 
+test_that("expressions get converted", {
+  ps1 = makeParamSet(
+    makeLogicalLearnerParam("a", default = FALSE),
+    makeLogicalLearnerParam("b", default = FALSE, requires = expression(a == TRUE))
+  )
+  ps2 = makeParamSet(
+    makeLogicalLearnerParam("a", default = FALSE),
+    makeLogicalLearnerParam("b", default = FALSE, requires = quote(a == TRUE))
+  )
+  expect_is(ps1$pars$b$requires, "call")
+  expect_equal(ps1, ps2)
+  expect_error({
+    ps = makeParamSet(
+      makeLogicalLearnerParam("a", default = FALSE),
+      makeLogicalLearnerParam("b", default = FALSE, requires = "a == TRUE")
+    )}, "call")
+})

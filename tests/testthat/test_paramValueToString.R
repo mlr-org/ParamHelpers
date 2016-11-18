@@ -23,6 +23,8 @@ test_that("paramValueToString ", {
   expect_equal(paramValueToString(ps, list(u = 1, v = 1:2, w = list(), x = FALSE,
     y = c(TRUE, FALSE), z = list(1, list()), s = "PH")),
     "u=1; v=1,2; w=b; x=FALSE; y=TRUE,FALSE; z=a,b; s=PH")
+  expect_equal(paramValueToString(u, expression(ceiling(n / 3))),
+    "ceiling(n/3)")
 })
 
 test_that("requires works", {

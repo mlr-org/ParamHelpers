@@ -31,6 +31,9 @@ getParamTypes = function(par.set, df.cols = FALSE, df.discretes.as.factor = TRUE
   assertFlag(with.nr)
 
   types = extractSubList(par.set$pars, "type")
+  if (length(types) == 0L)
+    return(character(0L))
+
   recode = function(types, ...) {
     args = as.character(list(...))
     for (i in seq(1, length(args), 2)) {

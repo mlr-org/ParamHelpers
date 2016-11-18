@@ -1,5 +1,6 @@
-#' Convert a value to a string.
+#' @title Convert a value to a string.
 #'
+#' @description
 #' Useful helper for logging.
 #' For discrete parameter values always the name of the discrete value is used.
 #'
@@ -46,15 +47,18 @@ paramValueToString = function(par, x, show.missing.values = FALSE, num.format = 
 #' @export
 paramValueToString.Param = function(par, x, show.missing.values = FALSE, num.format = "%.3g") {
   # handle missings
-  if (isMissingValue(x)) {
+  if (isScalarNA(x)) {
     if (show.missing.values)
       return("NA")
     else
       return("")
   }
 
+  # FIXME: switch
   type = par$type
-  if (type == "numeric")
+  if (is.expression(x))
+    as.character(x)
+  else if (type == "numeric")
     sprintf(num.format, x)
   else if (type == "numericvector")
     paste(sprintf(num.format, x), collapse=",")
@@ -76,8 +80,15 @@ paramValueToString.Param = function(par, x, show.missing.values = FALSE, num.for
     collapse(x)
   else if (type == "function")
     "<function>"
-  else if (type == "untyped")
-    sprintf("<%s>", class(x)[1])
+  else if (type == "untyped") {
+    # if untyped we at least produce strings from scalars
+    # FIXME: one might possibly also want this for vectors?
+    # i guess there should be a better helper function here, which simply acts on a type string
+    if (isScalarValue(x))
+      ifelse(is.numeric(x), sprintf(num.format, x), as.character(x))
+    else
+      sprintf("<%s>", class(x)[1])
+  }
 }
 
 #' @export
@@ -88,11 +99,11 @@ paramValueToString.ParamSet = function(par, x, show.missing.values = FALSE, num.
   rest = setdiff(names(x), names(par$pars))
   if (length(rest) > 0L)
     stopf("Not all names of 'x' occur in par set 'par': %s", collapse(rest))
-  res = character(0)
+  res = character(0L)
   for (i in seq_along(x)) {
     pn = names(x)[i]
     val = x[[pn]]
-    if (show.missing.values || !isMissingValue(val))  {
+    if (show.missing.values || !isScalarNA(val))  {
       p = par$pars[[pn]]
       res[length(res)+1] = sprintf("%s=%s", pn, paramValueToString(p, val, show.missing.values, num.format))
     }

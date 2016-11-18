@@ -1,6 +1,35 @@
+ParamHelpers_1.10:
+- adapt to irace 2.1 API changes
+- new functions
+-- getRequirements
+
+ParamHelpers_1.9:
+- Many parameters can now be expressions which can be evaluated later while
+  providing a lookup dictionary.
+- make*Param now accepts special.vals which are always feasible
+- getParamLengths, getLower, getUpper, getValues were made S3 to also work on normal Parameter objects
+- new functions
+-- evaluateParamExpressions
+-- hasExpression
+
 ParamHelpers_1.8:
 - plots produced by renderOptPathPlot, plotOptPath are now always nicely aligned
 - removed soobench from SUGGESTS and removed function extractParamSetFromSooFunction
+- hasDiscrete: added arg "include.logical"
+- getParamSet has become a generic
+- OptPath: it is possible to log non-scalar values under "extras" now by
+  starting the extra-name with a dot. These elements wll not be contained is
+  as.data.frame(opt.path) when converted.
+- make*Param argument 'requires' now accepts expressions and quote'd expressions.
+- getParamIds is now S3 and also callable on type "Param"
+- filterParams: has new arg "check.requires"
+- isFeasible: new args "use.defaults" and "filter"
+- trafoValue: slightly robustify arg handling
+- new functions
+-- isNumericStrict
+-- getTypeStringsNumeric, getTypeStringsNumericStrict, getTypeStringsInteger, getTypeStringsDiscrete
+-- filterParamsNumeric, filterParamsDiscrete
+-- updateParVals
 
 ParamHelpers_1.7:
 - dfRowsToList, dfRowToList: added arg enforce.col.types
