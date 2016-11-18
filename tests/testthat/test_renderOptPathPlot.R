@@ -1,6 +1,7 @@
+context("renderOptPathPlot")
+
 muffle = function(x) expect_warning(x, "to numeric for over time plot")
 
-context("renderOptPathPlot")
 test_that("renderOptPathPlot", {
   # Test 1D-1D + short names + alpha + title
   ps0 = makeParamSet(
@@ -45,7 +46,7 @@ test_that("renderOptPathPlot", {
   pl = sapply(c(0, 20), FUN = function(x) {
     muffle(renderOptPathPlot(op1, iter = x, marked = c(4, 10, 18), x.over.time = list(c("x"), c("z")),
       y.over.time = list(c("y1"), c("y2", "y3")), log = c("x", "y2", "y3")))
-})
+  })
 
 
   # Test 1D(discrete)-2D + marked + limits + short names + rest variables
