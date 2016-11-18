@@ -1,3 +1,7 @@
+ParamHelpers_1.10:
+- new functions
+-- getRequirements
+
 ParamHelpers_1.9:
 - Many parameters can now be expressions which can be evaluated later while
   providing a lookup dictionary.
