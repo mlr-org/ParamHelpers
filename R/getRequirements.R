@@ -17,7 +17,6 @@ getRequirements = function(par.set, remove.null = TRUE) {
   assertFlag(remove.null)
   res = extractSubList(par.set$pars, "requires", simplify = FALSE, use.names = TRUE)
   if (remove.null)
-    res = Filter(Negate(is.null), res)
+    res = filterNull(res)
   return(res)
 }
-
