@@ -29,7 +29,7 @@ Suggests:
     GGally,
     ggplot2,
     gridExtra,
-    irace (>= 1.0.7),
+    irace (>= 2.1),
     lhs,
     plyr,
     reshape2,

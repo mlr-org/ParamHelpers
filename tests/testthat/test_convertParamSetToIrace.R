@@ -2,13 +2,13 @@ context("convertParamSetToIrace")
 
 test_that("convertParamSetToIrace", {
   requirePackages("_irace")
-  runIrace = function(ps, hook.run, max.exps = 10) {
+  runIrace = function(ps, target.runner, max.exps = 10) {
     ip = convertParamSetToIrace(ps)
     expect_equal(getParamIds(ps, repeated = TRUE, with.nr = TRUE), as.character(ip$names))
     res = capture.output(
       irace::irace(
-        tunerConfig = list(
-          hookRun = hook.run,
+        scenario = list(
+          targetRunner = target.runner,
           instances = 1:10,
           maxExperiments = max.exps,
           logFile = tempfile()
@@ -28,8 +28,8 @@ test_that("convertParamSetToIrace", {
     makeIntegerVectorParam("y2", len = 2, lower = 0:1, upper = 4),
     makeDiscreteVectorParam("z2", len = 2, values = c("a", "b", "c"))
   )
-  hook.run = function(experiment, config = list()) 1
-  runIrace(ps, hook.run, max.exps = 300)
+  target.runner = function(experiment, config = list()) list(cost = 1, time = NA)
+  runIrace(ps, target.runner, max.exps = 300)
   ps = makeParamSet(
     makeDiscreteParam("x1", values = c("a", "b")),
     makeLogicalParam("x2", requires = quote(x1 == "a")),
@@ -38,15 +38,15 @@ test_that("convertParamSetToIrace", {
   )
   ips = convertParamSetToIrace(ps)
   expect_false(identical(ips$constraints$x2, expression(TRUE)))
-  hook.run = function(experiment, config = list()) {
-    v = experiment$candidate
+  target.runner = function(experiment, config = list()) {
+    v = experiment$configuration
     if ((v$x1 == "a" && is.na(v$x2)) || (v$x1 == "b" && !is.na(v$x2)))
       stop("foo")
     if ((v$x1 == "a" && v$x2 == "FALSE" && is.na(v$x3)) || (!(v$x1 == "a" && v$x2 == "FALSE") && !is.na(v$x3)))
       stop("requires failed")
-    1
+    list(cost = 1, time = NA)
   }
-  runIrace(ps, hook.run, max.exps = 300)
+  runIrace(ps, target.runner, max.exps = 300)
 })
 
 test_that("convertParamSetToIrace checks box constraints", {
@@ -66,8 +66,8 @@ test_that("convertParamSetToIrace uses correct boundaries", {
   )
   ips = convertParamSetToIrace(ps)
 
-  expect_identical(vcapply(ips$boundary, function(x) class(x)),
-    c(kernel = "character", sigma = "numeric", myInt = "integer", Binar = "character"))
+  expect_identical(vcapply(ips$domain, function(x) class(x)),
+    c(kernel = "character", sigma = "numeric", myInt = "numeric", Binar = "character"))
   expect_identical(ips$boundary$sigma, as.numeric(unlist(ps$pars$sigma[c("lower", "upper")])))
   expect_identical(ips$boundary$myInt, as.integer(unlist(ps$pars$myInt[c("lower", "upper")])))
 })
@@ -79,7 +79,7 @@ test_that("convertParamSetToIrace work with vecparam", { # has issue here, see 8
     makeNumericVectorParam("c", len=2, -10, 10)
   )
   i = convertParamSetToIrace(ps)
-  b = i$boundary
+  b = i$domain
   expect_equal(b$a1, c(-10, 10))
   expect_equal(b$a2, c(-10, 10))
   expect_equal(b$b, c("v", "w"))
