@@ -4,15 +4,11 @@
 \alias{getRequirements}
 \title{Return all require-expressions of a param set.}
 \usage{
-getRequirements(par.set, ..., remove.null = TRUE)
+getRequirements(par.set, remove.null = TRUE)
 }
 \arguments{
 \item{par.set}{[\code{\link{ParamSet}}]\cr
 Parameter set.}
-
-\item{...}{[any]\cr
-Passed down to \code{\link{filterParams}},
-only selected params will create an entry in the returned list.}
 
 \item{remove.null}{[\code{logical(1)}]\cr
 If not set, params without a requires-setting will result in a \code{NULL} element in the returned list,
@@ -21,13 +17,10 @@ Default is code{TRUE}.}
 }
 \value{
 [named \code{list}].
-  Named list of require-expressions, lengths corresponds to number of filtered params (potentially
+  Named list of require-call-objects, lengths corresponds to number of params (potentially
   only the subset with requires-field), named with with param ids.
 }
 \description{
-Returns all require-expressions of a param set as a list.
-You can filter for certain param types as \code{\link{filterParams}} is called internally.
-And select whether params without a requires-setting result in a \code{NULL} element in the returned
-list or not.
+Returns all \code{require}s-objects of a param set as a list.
 }
 
