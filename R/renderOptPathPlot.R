@@ -101,7 +101,7 @@ renderOptPathPlot = function(op, iter, x.over.time, y.over.time, contour.name = 
   impute.value = "missing", scale = "std", ggplot.theme = ggplot2::theme(legend.position = "top"),
   marked = NULL, subset.obs, subset.vars, subset.targets, short.x.names, short.y.names, short.rest.names) {
 
-  requirePackages(c("GGally", "ggplot2"), why = "renderOptPathPlot")
+  requirePackages(c("GGally", "ggplot2"), why = "renderOptPathPlot", default.method = "load")
 
   iters.max = max(getOptPathDOB(op))
   assertClass(op, "OptPath")
