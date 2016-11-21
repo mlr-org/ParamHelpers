@@ -135,9 +135,13 @@ getParPrintData = function(x, trafo = TRUE, used = TRUE, constr.clip = 40L) {
   } else
     constr = "-"
   if (x$has.default) {
-    if (!is.expression(x$default)) {
+    if (is.null(x$default)) {
+      def = "NULL"
+    } else if (!is.expression(x$default)) {
       def = x$default
       def = paramValueToString(x, def)
+    } else if (is.null(x$default)) {
+      def = "NULL"
     } else
       def = as.character(x$default)
   } else {
@@ -154,7 +158,7 @@ getParPrintData = function(x, trafo = TRUE, used = TRUE, constr.clip = 40L) {
   d = data.frame(
     Type = x$type,
     len = len,
-    Def = if (is.null(def)) "NULL" else def,
+    Def = def,
     Constr = constr,
     Req = ifelse(is.null(x$requires), "-", "Y"),
     Tunable = x$tunable,
