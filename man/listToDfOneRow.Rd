@@ -11,8 +11,7 @@ listToDfOneRow(l)
 of atomic values of vectors.}
 }
 \value{
-[\code{data.frame}]\cr
- with only one row, containing the list elements.
+[\code{data.frame}] with only one row, containing the list elements.
 }
 \description{
 Convert a list of vectors or scalars to a \code{data.frame} with only one row. Names of the columns correspond to
