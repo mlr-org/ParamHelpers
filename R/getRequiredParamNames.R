@@ -1,7 +1,9 @@
-# @description
-#   Returns the names of all params which are required by the given Param or ParamSet.
-# @template arg_par_or_set
-# @return [\code{character}]: names of parameters which are required
+#' @title Return the names of all required parameters.
+#' @description
+#'   Returns the names of all params which are required by the given Param or ParamSet.
+#' @template arg_par_or_set
+#' @return [\code{character}]: names of parameters which are required
+#' @export
 getRequiredParamNames = function(par) {
   UseMethod("getRequiredParamNames")
 }
