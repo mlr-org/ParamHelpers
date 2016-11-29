@@ -1,11 +1,11 @@
 #' @title Convert encoding name(s) to discrete value(s).
 #'
 #' @description
+#' For a discrete parameter or discrete vector.
 #' If the \code{name} is \code{NA}, indicating a missing parameter value due to unsatisfied requirements,
 #' \code{NA} is returned.
 #'
-#' @param par [\code{\link{Param}}]\cr
-#'   Discrete parameter or discrete vector.
+#' @template arg_par
 #' @param name [\code{character}]\cr
 #'   Name (string) encoding the value for a discrete parameter,
 #'   or a character vector of names for a discrete vector.
@@ -34,11 +34,11 @@ discreteNameToValue = function(par, name) {
 #' @title Convert discrete value(s) to encoding name(s).
 #'
 #' @description
+#' For a discrete parameter or discrete vector.
 #' If the value \code{x} is \code{NA}, indicating a missing parameter value due to unsatisfied requirements,
 #' \code{NA} is returned.
 #'
-#' @param par [\code{\link{Param}}]\cr
-#'   Discrete parameter or discrete vector.
+#' @template arg_par
 #' @param x [any]\cr
 #'   Parameter value or a list of values for a discrete vector.
 #' @return [\code{character}]. Single name for a discrete parameter or a character vector of
