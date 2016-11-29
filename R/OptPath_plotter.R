@@ -26,7 +26,8 @@
 #'
 plotOptPath = function(op, iters, pause = TRUE, xlim = list(), ylim = list(),
   title = "Optimization Path Plots", ...) {
-  requirePackages("gridExtra", why = "plotOptPath")
+
+  requirePackages(c("grid", "gridExtra"), why = "plotOptPath")
 
   if (missing(iters))
     iters = max(getOptPathDOB(op))
@@ -44,9 +45,13 @@ plotOptPath = function(op, iters, pause = TRUE, xlim = list(), ylim = list(),
   xlim = lims$xlim
   ylim = lims$ylim
 
-
   # Helper to arrange plot via gridExtra and pause process
   arrangePlots = function(plots, iter, iters) {
+
+    # align plots
+    plots = toGTable(plots)
+    max.width = getMaxPlotWidth(plots)
+    plots = toAlignedGTable(plots, max.width)
 
     if (!is.null(plots$plot.x.over.time))
       plots$plot.x.over.time = gridExtra::arrangeGrob(grobs = plots$plot.x.over.time, ncol = 1L)
@@ -79,4 +84,68 @@ plotOptPath = function(op, iters, pause = TRUE, xlim = list(), ylim = list(),
   }
 
   return(invisible(NULL))
+}
+
+# Helper functions to ensure nice plot alignment.
+#
+# If plots are aligned in a grid via gridExtra::grid.arrange we are frequently
+# faced with the ugly cosmetic problem, that the plot areas are unaligned if
+# different plots have different y-axis scales.
+#
+# The following helper functions ensure nice alignment by doing three things:
+# 1) transform ggplot objects to gtable objects.
+# 2) extract the maximum left margin width of the gtables as a unit object.
+# 3) Assign the maximum left margin width determined in 2) to all gtable
+#
+# All three functions operate on lists of lists of ggplot objects and can
+# handle NULL objects.
+#
+# NOTE: the alignment procedure fails if there is at least one plot with facets!
+
+
+# Transform ggplot objects to gtable objects.
+#
+# @param pls [list of (lists of) ggplot object(s)]
+toGTable = function(pls) {
+  lapply(pls, function(pl) {
+    if (inherits(pl, "ggplot")) {
+      return(ggplot2::ggplot_gtable(ggplot2::ggplot_build(pl)))
+    }
+    if (inherits(pl, "gtable") || is.null(pl)) {
+      return(pl)
+    }
+    return(toGTable(pl))
+  })
+}
+
+# Determine maximal left margin width of gtables recursively.
+#
+# @param pls [list of (lists of) gtable object(s)]
+getMaxPlotWidth = function(pls) {
+  do.call(grid::unit.pmax, lapply(pls, function(pl) {
+    if (is.null(pl)) {
+      return(pl)
+    }
+    if (!inherits(pl, "gtable")) {
+      return(getMaxPlotWidth(pl))
+    }
+    return(pl$widths[2:3])
+  }))
+}
+
+# Set left margin width of gtables recursively.
+#
+# @param pls [list of (lists of) gtable object(s)]
+# @param pls [list of units]
+toAlignedGTable = function(pls, max.width) {
+  lapply(pls, function(pl) {
+    if (is.null(pl)) {
+      return(pl)
+    }
+    if (!inherits(pl, "gtable")) {
+      return(toAlignedGTable(pl, max.width))
+    }
+    pl$widths[2:3] = max.width
+    return(pl)
+  })
 }

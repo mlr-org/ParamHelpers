@@ -13,6 +13,7 @@ ParamHelpers_1.9:
 -- hasExpression
 
 ParamHelpers_1.8:
+- plots produced by renderOptPathPlot, plotOptPath are now always nicely aligned
 - removed soobench from SUGGESTS and removed function extractParamSetFromSooFunction
 - hasDiscrete: added arg "include.logical"
 - getParamSet has become a generic
