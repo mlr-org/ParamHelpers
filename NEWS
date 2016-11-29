@@ -2,6 +2,7 @@ ParamHelpers_1.10:
 - adapt to irace 2.1 API changes
 - new functions
 -- getRequirements
+-- isSpecialValue
 
 ParamHelpers_1.9:
 - Many parameters can now be expressions which can be evaluated later while

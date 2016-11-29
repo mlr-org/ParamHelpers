@@ -110,7 +110,7 @@ isFeasible.ParamSet = function(par, x, use.defaults = FALSE, filter = FALSE) {
 
 # are the contraints ok for value of a param (not considering requires)
 constraintsOkParam = function(par, x) {
-  if (specialValsOk(par, x))
+  if (isSpecialValue(par, x))
     return(TRUE)
   type = par$type
   # this should work in any! case.
@@ -148,7 +148,7 @@ constraintsOkParam = function(par, x) {
 }
 
 constraintsOkLearnerParam = function(par, x) {
-  if (specialValsOk(par, x))
+  if (isSpecialValue(par, x))
     return(TRUE)
   inValues = function(v) any(vlapply(par$values, function(w) isTRUE(all.equal(w, v))))
   type = par$type
@@ -174,10 +174,6 @@ requiresOk = function(par, x) {
   }
 }
 
-# check if x is one of the pre defined special.vals and return TRUE in case.
-specialValsOk = function(par, x) {
-  any(vlapply(par$special.vals, function(special.val) isTRUE(all.equal(x, special.val))))
-}
 
 # helper function which checks whether 'x' lies within the boundaries (unless they are expressions)
 checkBoundsOrExpr = function(par, x)
