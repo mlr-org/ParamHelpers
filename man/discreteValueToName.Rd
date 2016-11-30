@@ -8,7 +8,7 @@ discreteValueToName(par, x)
 }
 \arguments{
 \item{par}{[\code{\link{Param}}]\cr
-Discrete parameter or discrete vector.}
+Parameter.}
 
 \item{x}{[any]\cr
 Parameter value or a list of values for a discrete vector.}
@@ -18,6 +18,7 @@ Parameter value or a list of values for a discrete vector.}
   names for a discrete vector.
 }
 \description{
+For a discrete parameter or discrete vector.
 If the value \code{x} is \code{NA}, indicating a missing parameter value due to unsatisfied requirements,
 \code{NA} is returned.
 }
