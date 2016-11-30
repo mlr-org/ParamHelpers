@@ -4,16 +4,15 @@
 \alias{getRequirements}
 \title{Return all require-expressions of a param set.}
 \usage{
-getRequirements(par.set, remove.null = TRUE)
+getRequirements(par.set, no.conditions = "remove")
 }
 \arguments{
 \item{par.set}{[\code{\link{ParamSet}}]\cr
 Parameter set.}
 
-\item{remove.null}{[\code{logical(1)}]\cr
-If not set, params without a requires-setting will result in a \code{NULL} element in the returned list,
-otherwise they are removed.
-Default is code{TRUE}.}
+\item{no.conditions}{[any] \cr
+Params without a requires-setting will result in this value in the returned list.
+Default is \dQuote{remove} which means to remove them from the list.}
 }
 \value{
 [named \code{list}].

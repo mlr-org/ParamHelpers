@@ -4,9 +4,9 @@
 #' Returns all \code{require}s-objects of a param set as a list.
 #'
 #' @template arg_parset
-#' @param no.conditions [any]\cr
+#' @param no.conditions [any] \cr
 #'   Params without a requires-setting will result in this value in the returned list.
-#'   Default is \dQuote"remove} which means to remove them from the list.
+#'   Default is \dQuote{remove} which means to remove them from the list.
 #' @return [named \code{list}].
 #'   Named list of require-call-objects, lengths corresponds to number of params (potentially
 #'   only the subset with requires-field), named with with param ids.
