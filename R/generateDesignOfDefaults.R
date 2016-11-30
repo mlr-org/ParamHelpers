@@ -52,6 +52,8 @@ generateDesignOfDefaults = function(par.set, trafo = FALSE) {
   }
 
   res = fixDesignFactors(res, par.set)
+  res = fixDesignVarTypes(res, par.set)
+  
   attr(res, "trafo") = trafo
   return(res)
 }

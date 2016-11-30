@@ -59,4 +59,14 @@ test_that("generateDesignOfDefaults", {
   e = data.frame(x = 2, y = NA_real_)
   attr(e, "trafo") = FALSE
   expect_equal(d, e)
+  
+  # correct type
+    ps = makeParamSet(
+      makeIntegerParam("x", lower = 1L, upper = 3L, default = 2)
+    )
+    d = generateDesignOfDefaults(ps)
+    
+    e = data.frame(x = 2L)
+    attr(e, "trafo") = FALSE
+    expect_identical(class(d[,1]), class(e[,1]))
 })

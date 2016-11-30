@@ -66,6 +66,16 @@ fixDesignFactors = function(des, par.set) {
   des
 }
 
+# Ensure that the types of Design columns are always correct, 
+# e.g., columns that are always NA or integer if default in integer par is numeric 
+fixDesignVarTypes = function(des, par.set) {
+  types = getParamTypes(par.set, use.names = TRUE, df.cols = TRUE)
+  for(p in colnames(des)) {
+    des[, p] = as(des[, p], types[p])
+  }
+  des
+}
+
 # Convert Expressions to call (what we get from quote)
 convertExpressionToCall = function(req) {
   if (is.expression(req)) {
