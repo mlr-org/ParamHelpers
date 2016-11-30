@@ -61,12 +61,18 @@ test_that("generateDesignOfDefaults", {
   expect_equal(d, e)
   
   # correct type
-    ps = makeParamSet(
-      makeIntegerParam("x", lower = 1L, upper = 3L, default = 2)
-    )
-    d = generateDesignOfDefaults(ps)
-    
-    e = data.frame(x = 2L)
-    attr(e, "trafo") = FALSE
-    expect_identical(class(d[,1]), class(e[,1]))
+  ps = makeParamSet(
+    makeIntegerParam("x", lower = 1L, upper = 3L, default = 2)
+  )
+  d = generateDesignOfDefaults(ps)
+  e = data.frame(x = 2L)
+  attr(e, "trafo") = FALSE
+  expect_identical(class(d[,1]), class(e[,1]))
+  
+  # special vals
+  ps = makeParamSet(
+    makeNumericParam(id = "x1", lower = 0, upper = 2, default = "BLA", special.vals = list("BLA")),
+    makeNumericParam(id = "x2", lower = 0, upper = 2, default = iris, special.vals = list(iris))
+  )
+  expect_error(generateDesignOfDefaults(ps), regexp = "special.vals as default for Parameter(s): x1,x2", fixed = TRUE)
 })

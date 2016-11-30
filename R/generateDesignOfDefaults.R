@@ -29,6 +29,12 @@ generateDesignOfDefaults = function(par.set, trafo = FALSE) {
   diff = setdiff(names(pars), names(defaults))
   if (length(diff) > 0)
     stopf("No default parameter setting for: %s", collapse(diff))
+  
+  # check if one or more default values are special values
+  special.default = mapply(FUN = function(p, value) isSpecialValue(par.set$pars[[p]], value),
+    p = names(defaults), value = defaults, SIMPLIFY = TRUE)
+  if (any(special.default))
+    stopf("special.vals as default for Parameter(s): %s", collapse(names(defaults)[special.default]))
 
   res = listToDfOneRow(defaults)
 
