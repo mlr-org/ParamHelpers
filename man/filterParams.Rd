@@ -53,7 +53,9 @@ Default is \code{TRUE}.}
 [\code{\link{ParamSet}}].
 }
 \description{
-Parameter order is not changed.
+Parameter order is not changed. 
+It is possible to filter via multiple arguments, e.g., first filter based on id, then the type and lastly tunable.
+The order in which the filters are executed is always fixed (id > type > tunable).
 }
 \examples{
 ps = makeParamSet(

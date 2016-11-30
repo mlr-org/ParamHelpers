@@ -1,7 +1,9 @@
 #' @title Get parameter subset of only certain parameters.
 #'
 #' @description
-#' Parameter order is not changed.
+#' Parameter order is not changed. 
+#' It is possible to filter via multiple arguments, e.g., first filter based on id, then the type and lastly tunable.
+#' The order in which the filters are executed is always fixed (id > type > tunable).
 #'
 #' @template arg_parset
 #' @param ids [\code{NULL} | \code{character}]\cr
