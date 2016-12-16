@@ -99,7 +99,8 @@ A list of special values the parameter can except which are outside of the defin
 Default is an empty list.}
 
 \item{len}{[\code{integer(1)}]\cr
-Length of vector parameter.}
+Length of vector parameter.
+Can be set to \code{NA} to define a vector with unspecified length.}
 
 \item{values}{[\code{vector} | \code{list}]\cr
 Possible discrete values. Instead of using a vector of atomic values,
@@ -114,8 +115,8 @@ as internal representations for the choice.}
 \description{
 This specializes \code{\link{Param}} by adding a few more attributes,
 like a default value, whether it refers to a training or a predict function, etc.
-}
-\details{
+Note that you can set \code{length} to \code{NA}
+
 The S3 class is a \code{\link{Param}} which additionally stores these elements:
 \describe{
 \item{default [any]}{See argument of same name.}

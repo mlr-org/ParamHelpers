@@ -88,8 +88,6 @@ valueToString = function(x, num.format = "%.3g") {
     paste(as.character(x), collapse=",")
   else if (cl == "logical")
     paste(as.character(x), collapse=",")
-  else if (cl == "discrete")
-    collapse(discreteValueToName(par, x))
   else if (cl == "character")
     collapse(x)
   else if (cl == "function")
