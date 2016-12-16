@@ -8,6 +8,8 @@ test_that("paramValueToString ", {
   y = makeLogicalVectorParam("y", len=2)
   z = makeDiscreteVectorParam("z", len=2, values=list(a=1, b=list()))
   s = makeCharacterParam("s")
+  p1 = makeUntypedParam("w", default = iris)
+  p2 = makeLogicalParam("t", default = NULL, special.vals = list(NULL))
 
   ps = makeParamSet(u, v, w, x, y, z, s)
   expect_equal(paramValueToString(u, 1), "1")
@@ -25,6 +27,8 @@ test_that("paramValueToString ", {
     "u=1; v=1,2; w=b; x=FALSE; y=TRUE,FALSE; z=a,b; s=PH")
   expect_equal(paramValueToString(u, expression(ceiling(n / 3))),
     "ceiling(n/3)")
+  expect_equal(paramValueToString(p1, iris), "<data.frame>")
+  expect_equal(paramValueToString(p2, NULL), "<NULL>")
 })
 
 test_that("requires works", {
@@ -46,4 +50,5 @@ test_that("num.format works", {
   expect_equal(paramValueToString(x, 1), "1")
   expect_equal(paramValueToString(x, 1, num.format = "%.3f"), "1.000")
 })
+
 

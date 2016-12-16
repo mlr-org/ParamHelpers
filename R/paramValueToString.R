@@ -53,42 +53,9 @@ paramValueToString.Param = function(par, x, show.missing.values = FALSE, num.for
     else
       return("")
   }
-
-  # FIXME: switch
-  type = par$type
-  if (is.expression(x))
-    as.character(x)
-  else if (type == "numeric")
-    sprintf(num.format, x)
-  else if (type == "numericvector")
-    paste(sprintf(num.format, x), collapse=",")
-  else if (type == "integer")
-    as.character(x)
-  else if (type == "integervector")
-    paste(as.character(x), collapse=",")
-  else if (type == "logical")
-    as.character(x)
-  else if (type == "logicalvector")
-    paste(as.character(x), collapse=",")
-  else if (type == "discrete")
-    discreteValueToName(par, x)
-  else if (type == "discretevector")
-    collapse(discreteValueToName(par, x))
-  else if (type == "character")
-    as.character(x)
-  else if (type == "charactervector")
-    collapse(x)
-  else if (type == "function")
-    "<function>"
-  else if (type == "untyped") {
-    # if untyped we at least produce strings from scalars
-    # FIXME: one might possibly also want this for vectors?
-    # i guess there should be a better helper function here, which simply acts on a type string
-    if (isScalarValue(x))
-      ifelse(is.numeric(x), sprintf(num.format, x), as.character(x))
-    else
-      sprintf("<%s>", class(x)[1])
-  }
+  if (isDiscrete(par, include.logical = FALSE))
+    x = discreteValueToName(par, x)
+  s = valueToString(x, num.format = num.format)
 }
 
 #' @export
@@ -110,3 +77,27 @@ paramValueToString.ParamSet = function(par, x, show.missing.values = FALSE, num.
   }
   return(collapse(res, sep = "; "))
 }
+
+
+valueToString = function(x, num.format = "%.3g") {
+  cl = class(x)[1L]
+
+  if (cl == "numeric")
+    paste(sprintf(num.format, x), collapse=",")
+  else if (cl == "integer")
+    paste(as.character(x), collapse=",")
+  else if (cl == "logical")
+    paste(as.character(x), collapse=",")
+  else if (cl == "discrete")
+    collapse(discreteValueToName(par, x))
+  else if (cl == "character")
+    collapse(x)
+  else if (cl == "function")
+    "<function>"
+  else if (cl == "expression")
+    as.character(x)
+  else
+    sprintf("<%s>", cl)
+}
+
+
