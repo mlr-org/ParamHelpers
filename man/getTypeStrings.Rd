@@ -2,6 +2,7 @@
 % Please edit documentation in R/getTypeStrings.R
 \name{getTypeStrings}
 \alias{getTypeStrings}
+\alias{getTypeStringsAll}
 \alias{getTypeStringsDiscrete}
 \alias{getTypeStringsInteger}
 \alias{getTypeStringsNumeric}
@@ -15,6 +16,8 @@ getTypeStringsNumericStrict()
 getTypeStringsInteger()
 
 getTypeStringsDiscrete(include.logical = TRUE)
+
+getTypeStringsAll()
 }
 \arguments{
 \item{include.int}{[\code{logical(1)}]\cr

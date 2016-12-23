@@ -38,3 +38,12 @@ getTypeStringsDiscrete = function(include.logical = TRUE) {
     c("discrete", "discretevector")
 }
 
+
+#' @export
+#' @rdname getTypeStrings
+getTypeStringsAll = function() {
+  c("numeric", "integer", "numericvector", "integervector", "discrete",
+    "discretevector", "logical", "logicalvector", "character", "charactervector",
+    "function", "untyped")
+}
+
