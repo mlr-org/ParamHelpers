@@ -281,5 +281,13 @@ test_that("param print works", {
   expect_output(print(p), "untyped")
 })
 
+test_that("normal (not learner) vec param cannot have NA lengths", {
+  expect_error(makeNumericVectorParam("x", len = NA))
+  expect_error(makeIntegerVectorParam("x", len = NA))
+  expect_error(makeDiscreteVectorParam("x", values = 1:2, len = NA))
+})
+
+
+
 
 
