@@ -59,7 +59,7 @@ test_that("generateDesignOfDefaults", {
   e = data.frame(x = 2, y = NA_real_)
   attr(e, "trafo") = FALSE
   expect_equal(d, e)
-  
+
   # correct type
   ps = makeParamSet(
     makeIntegerParam("x", lower = 1L, upper = 3L, default = 2)
@@ -68,7 +68,7 @@ test_that("generateDesignOfDefaults", {
   e = data.frame(x = 2L)
   attr(e, "trafo") = FALSE
   expect_identical(class(d[,1]), class(e[,1]))
-  
+
   # special vals
   ps = makeParamSet(
     makeNumericParam(id = "x1", lower = 0, upper = 2, default = "BLA", special.vals = list("BLA")),
@@ -76,3 +76,31 @@ test_that("generateDesignOfDefaults", {
   )
   expect_error(generateDesignOfDefaults(ps), regexp = "special.vals as default for Parameter(s): x1,x2", fixed = TRUE)
 })
+
+
+
+test_that("generateDesignOfDefaults works with discrete params and complex values", {
+
+  ps = makeParamSet(
+    makeDiscreteParam("p", values = c("a", "b"), default = "b")
+  )
+  d = generateDesignOfDefaults(ps)
+  expect_equal(d, data.frame(p = factor("b", levels = c("a", "b"))), check.attributes = FALSE)
+
+  ps = makeParamSet(
+    makeDiscreteParam("p", values = c(ir = "ir", foo = "bar"), default = "ir")
+  )
+  d = generateDesignOfDefaults(ps)
+  expect_equal(d, data.frame(p = factor("ir", levels = c("ir", "foo"))), check.attributes = FALSE)
+
+  p = makeDiscreteParam("p", values = c(ir = "ir", foo = "bar"), default = "bar")
+  ps = makeParamSet(p)
+  d = generateDesignOfDefaults(ps)
+  expect_equal(d, data.frame(p = factor("foo", levels = c("ir", "foo"))), check.attributes = FALSE)
+
+  p = makeDiscreteParam("p", values = list(ir = "ir", foo = iris), default = iris)
+  ps = makeParamSet(p)
+  d = generateDesignOfDefaults(ps)
+  expect_equal(d, data.frame(p = factor("foo", levels = c("ir", "foo"))), check.attributes = FALSE)
+})
+

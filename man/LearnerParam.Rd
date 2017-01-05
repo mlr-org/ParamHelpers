@@ -70,6 +70,7 @@ Default is \code{FALSE}.}
 
 \item{default}{[any concrete value | \code{expression}]\cr
 Default value used in learner.
+Note: When this is a discrete parameter make sure to use a VALUE here, not the NAME of the value.
 If this argument is missing, it means no default value is available.}
 
 \item{when}{[\code{character(1)}]\cr
