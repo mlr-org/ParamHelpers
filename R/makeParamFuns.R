@@ -59,8 +59,6 @@ makeLogicalVectorParam = function(id, len, cnames = NULL, default,
 #' @export
 makeDiscreteParam = function(id, values, trafo = NULL, default,
   requires = NULL, tunable = TRUE, special.vals = list()) {
-
-  values = checkValuesForDiscreteParam(id, values)
   makeParam(id = id, type = "discrete", learner.param = FALSE,
     values = values, default = default,
     trafo = trafo, requires = requires, tunable = tunable, special.vals = special.vals)
@@ -71,7 +69,6 @@ makeDiscreteParam = function(id, values, trafo = NULL, default,
 makeDiscreteVectorParam = function(id, len, values, default, requires = NULL,
   tunable = TRUE, special.vals = list()) {
 
-  values = checkValuesForDiscreteParam(id, values)
   makeParam(id = id, type = "discretevector", learner.param = FALSE, len = len,
     values = values, default = default,
     trafo = NULL, requires = requires, tunable = tunable, special.vals = special.vals)
