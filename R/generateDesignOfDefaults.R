@@ -29,12 +29,18 @@ generateDesignOfDefaults = function(par.set, trafo = FALSE) {
   diff = setdiff(names(pars), names(defaults))
   if (length(diff) > 0)
     stopf("No default parameter setting for: %s", collapse(diff))
-  
+
   # check if one or more default values are special values
   special.default = mapply(FUN = function(p, value) isSpecialValue(par.set$pars[[p]], value),
     p = names(defaults), value = defaults, SIMPLIFY = TRUE)
   if (any(special.default))
     stopf("special.vals as default for Parameter(s): %s", collapse(names(defaults)[special.default]))
+
+  # convert discrete value here to names, to we can stuff them into a df
+  defaults = mapply(FUN = function(p, d) {
+    if (isDiscrete(p, include.logical = FALSE)) discreteValueToName(p, d) else d
+  }, par.set$pars, defaults, SIMPLIFY = FALSE)
+
 
   res = listToDfOneRow(defaults)
 
@@ -52,14 +58,14 @@ generateDesignOfDefaults = function(par.set, trafo = FALSE) {
       lapply(pars, function(p) p$trafo)
     else
       replicate(length(pars), NULL, simplify = FALSE)
-    par.requires = getRequirements(par.set, no.conditions = NULL)
+    par.requires = getRequirements(par.set, remove.null = FALSE)
     res = convertDataFrameCols(res, factors.as.char = TRUE)
     res = .Call(c_trafo_and_set_dep_to_na, res, types.int, names(pars), lens, trafos, par.requires, new.env())
   }
 
   res = fixDesignFactors(res, par.set)
   res = fixDesignVarTypes(res, par.set)
-  
+
   attr(res, "trafo") = trafo
   return(res)
 }

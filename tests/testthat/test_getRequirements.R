@@ -14,8 +14,7 @@ test_that("getRequirements", {
     makeNumericParam("c", default = 1L, requires = r2)
   )
 
-  expect_equal(getRequirements(ps, no.conditions = "remove"), list(b = r1, c = r2))
-  expect_equal(getRequirements(ps, no.conditions = NULL), list(a = NULL, b = r1, c = r2))
-  expect_equal(getRequirements(ps, no.conditions = TRUE), list(a = TRUE, b = r1, c = r2))
+  expect_equal(getRequirements(ps, remove.null = TRUE), list(b = r1, c = r2))
+  expect_equal(getRequirements(ps, remove.null = FALSE), list(a = NULL, b = r1, c = r2))
 })
 
