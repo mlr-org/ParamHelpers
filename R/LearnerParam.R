@@ -27,12 +27,6 @@ NULL
 makeLearnerParam = function(p, when) {
   assertChoice(when, c("train", "predict", "both"))
   p$when = when
-  if (isNumeric(p, include.int = TRUE) && isScalarNA(p$len)) {
-    if (!is.expression(p$lower) && length(p$lower) != 1L)
-      stopf("For learner vector param '%s' with unspecified length (NA), bound 'lower' can only be a scalar, but has length:", p$id, length(p$lower))
-    if (!is.expression(p$lupper) && length(p$upper) != 1L)
-      stopf("For learner vector param '%s' with unspecified length (NA), bound 'upper' can only be a scalar, but has length:", p$id, length(p$upper))
-  }
   class(p) = c("LearnerParam", "Param")
   return(p)
 }
