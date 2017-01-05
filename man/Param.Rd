@@ -61,11 +61,13 @@ Name of parameter.}
 \item{lower}{[\code{numeric} | \code{expression}]\cr
 Lower bounds.
 A singe value of length 1 is automatically replicated to \code{len} for vector parameters.
+If \code{len = NA} you can only pass length-1 scalars.
 Default is \code{-Inf}.}
 
 \item{upper}{[\code{numeric} | \code{expression}]\cr
 Upper bounds.
 A singe value of length 1 is automatically replicated to \code{len} for vector parameters.
+If \code{len = NA} you can only pass length-1 scalars.
 Default is \code{Inf}.}
 
 \item{allow.inf}{[\code{logical(1)}]\cr
