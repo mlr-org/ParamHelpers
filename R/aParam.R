@@ -3,7 +3,7 @@
 #' @description
 #' For each parameter type a special constructor function is available, see below.
 #'
-#' For the following arguments you can now pass an \code{expression} instead of a concrete value:
+#' For the following arguments you can also pass an \code{expression} instead of a concrete value:
 #' \code{default}, \code{len}, \code{lower}, \code{upper}, \code{values}.
 #' These expressions can depend on arbitrary symbols, which are later filled in / substituted from
 #' a dictionary, in order to produce a concrete valu, see \code{\link{evaluateParamExpressions}}.
