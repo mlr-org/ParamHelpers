@@ -288,6 +288,11 @@ test_that("normal (not learner) vec param cannot have NA lengths", {
 })
 
 
-
+test_that("for discrete: default setting cannot be the name but must the VALUE", {
+  # should run
+  p = makeDiscreteParam("p", values = c(foo = "bar"), default = "bar")
+  # should run
+  expect_error(makeDiscreteParam("p", values = c(foo = "bar"), default = "foo"), "feasible")
+})
 
 
