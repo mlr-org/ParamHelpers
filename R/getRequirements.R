@@ -4,26 +4,19 @@
 #' Returns all \code{require}s-objects of a param set as a list.
 #'
 #' @template arg_parset
-#' @param no.conditions [any] \cr
-#'   Params without a requires-setting will result in this value in the returned list.
-#'   Default is \dQuote{remove} which means to remove them from the list.
+#' @param remove.null [\code{logical(1)}]\cr
+#'   If not set, params without a requires-setting will result in a \code{NULL} element in the returned list,
+#'   otherwise they are removed.
+#'   Default is code{TRUE}.
 #' @return [named \code{list}].
 #'   Named list of require-call-objects, lengths corresponds to number of params (potentially
 #'   only the subset with requires-field), named with with param ids.
 #' @export
-getRequirements = function(par.set, no.conditions = "remove") {
+getRequirements = function(par.set, remove.null = TRUE) {
   assertClass(par.set, "ParamSet")
-  nocval = no.conditions
-  if (identical(no.conditions, "remove"))
-    nocval = NULL
-  res = lapply(par.set$pars, function(p) {
-    if (is.null(p$requires))
-      return(nocval)
-    else
-      return(p$requires)
-  })
-  names(res) = names(par.set$pars)
-  if (identical(no.conditions, "remove"))
+  assertFlag(remove.null)
+  res = extractSubList(par.set$pars, "requires", simplify = FALSE, use.names = TRUE)
+  if (remove.null)
     res = filterNull(res)
   return(res)
 }
