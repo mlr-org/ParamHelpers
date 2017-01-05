@@ -111,11 +111,11 @@ makeParam = function(id, type, learner.param, len = 1L, lower = NULL, upper = NU
     # the following check also ensures that if len=NA, the lower and upper must be scalars
     if (!is.expression(len) && !is.expression(lower)) {
       if (length(lower) %nin% c(1L, len))
-        stopf("For param '%s' length 'lower' must be either 1 or length of param, not:", id, length(lower))
+        stopf("For param '%s' length 'lower' must be either 1 or length of param, not: %i", id, length(lower))
     }
     if (!is.expression(len) && !is.expression(upper)) {
       if (length(upper) %nin% c(1L, len))
-        stopf("For param '%s' length 'upper' must be either 1 or length of param, not:", id, length(upper))
+        stopf("For param '%s' length 'upper' must be either 1 or length of param, not: %i", id, length(upper))
     }
   }
   if (isDiscreteTypeString(type)) {

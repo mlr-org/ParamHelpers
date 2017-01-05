@@ -17,6 +17,8 @@ test_that("num vec", {
   # defaults
   p = makeNumericVectorLearnerParam(id = "x", allow.inf = TRUE, default = Inf)
   expect_error(makeNumericVectorLearnerParam(id = "x", allow.inf = FALSE, default = Inf), "feasible")
+  expect_error(makeNumericVectorLearnerParam(id = "x", allow.inf = FALSE, default = c(0,0), lower = c(-1,-1)), "'lower' must be either 1 or length of param")
+  expect_error(makeNumericVectorLearnerParam(id = "x", allow.inf = FALSE, default = c(0,0), upper = c(1,1)), "'upper' must be either 1 or length of param")
 })
 
 test_that("int vec", {

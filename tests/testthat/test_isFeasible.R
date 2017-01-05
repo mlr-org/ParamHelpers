@@ -97,4 +97,5 @@ test_that("length of vectors", {
 test_that("isFeasible works when len=NA, and default is given (with other lengths than in isFeasible)", {
   p = makeIntegerVectorLearnerParam(id = "test", default = c(10,10), lower = 0)
   expect_true(isFeasible(p, c(10,10,10)))
+  expect_false(isFeasible(p, c(-1)))
 })
