@@ -5,15 +5,12 @@
 \alias{isDiscreteTypeString}
 \alias{isIntegerTypeString}
 \alias{isLogicalTypeString}
-\alias{isNumericStrictTypeString}
 \alias{isNumericTypeString}
 \alias{isTypeString}
 \alias{isVectorTypeString}
 \title{Check if type string is of certain type.}
 \usage{
 isNumericTypeString(type, include.int = TRUE)
-
-isNumericStrictTypeString(type)
 
 isIntegerTypeString(type)
 

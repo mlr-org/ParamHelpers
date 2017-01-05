@@ -21,12 +21,6 @@ isNumericTypeString = function(type, include.int = TRUE) {
 
 #' @export
 #' @rdname isTypeString
-isNumericStrictTypeString = function(type) {
-  type %in% getTypeStringsNumericStrict()
-}
-
-#' @export
-#' @rdname isTypeString
 isIntegerTypeString = function(type) {
   type %in% getTypeStringsInteger()
 }

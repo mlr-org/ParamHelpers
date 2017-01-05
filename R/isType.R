@@ -30,23 +30,6 @@ isNumeric.Param = function(par, include.int = TRUE) {
 
 #' @export
 #' @rdname isType
-isNumericStrict = function(par) {
-  assert(checkClass(par, "Param"), checkClass(par, "ParamSet"))
-  UseMethod("isNumericStrict")
-}
-
-#' @export
-isNumericStrict.ParamSet = function(par) {
-  hasAllParamsOfTypes(par, getTypeStringsNumericStrict())
-}
-
-#' @export
-isNumericStrict.Param = function(par) {
-  par$type %in% getTypeStringsNumericStrict()
-}
-
-#' @export
-#' @rdname isType
 isDiscrete = function(par, include.logical = TRUE) {
   assert(checkClass(par, "Param"), checkClass(par, "ParamSet"))
   UseMethod("isDiscrete")

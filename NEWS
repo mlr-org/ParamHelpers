@@ -4,7 +4,7 @@ ParamHelpers_1.10:
 -- getRequirements
 -- isSpecialValue
 -- getTypeStringsLogical, getTypeStringsCharacter, getTypeStringsAll
--- isNumericTypeString, isNumericStrictTypeString, isIntegerTypeString,
+-- isNumericTypeString, isIntegerTypeString,
    isDiscreteTypeString, isLogicalTypeString, isCharacterTypeString, isVectorTypeString
 
 ParamHelpers_1.9:

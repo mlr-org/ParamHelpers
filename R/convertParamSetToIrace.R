@@ -37,7 +37,7 @@ convertParamSetToIrace = function(par.set, as.chars = FALSE) {
     )
     for (j in seq_len(p$len)) {
       id = if (p$len == 1L) p$id else paste(p$id, j, sep = "")
-      if (isNumericStrictTypeString(ptype))
+      if (isNumericTypeString(ptype, include.int = FALSE))
         line = sprintf('%s "" %s (%g, %g)', id, type, p$lower[j], p$upper[j])
       else if (isIntegerTypeString(ptype))
         line = sprintf('%s "" %s (%i, %i)', id, type, p$lower[j], p$upper[j])
@@ -65,7 +65,7 @@ convertParamSetToIrace = function(par.set, as.chars = FALSE) {
       if (isNumeric(p, include.int = TRUE)) {
         pids = getParamIds(p, repeated = TRUE, with.nr = TRUE)
         for (j in seq_len(p$len)) {
-          if (isNumericStrict(p))
+          if (isNumeric(p, include.int = FALSE))
             params$boundary[[pids[j]]] = c(p$lower[j], p$upper[j])
           if (isInteger(p))
             params$boundary[[pids[j]]] = as.integer(c(p$lower[j], p$upper[j]))
