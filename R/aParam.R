@@ -77,9 +77,34 @@
 #' makeCharacterParam("z")
 NULL
 
-makeParam = function(id, type, len, lower, upper, values, cnames, allow.inf = FALSE, default,
-  trafo = NULL, requires = NULL, tunable = TRUE, special.vals = list()) {
+makeParam = function(id, type, learner.param, len = 1L, lower = NULL, upper = NULL, values = NULL, cnames = NULL, allow.inf = FALSE, default,
+  trafo = NULL, requires = NULL, tunable = TRUE, special.vals = list(), when) {
   assertString(id)
+  assert(
+    checkCount(len, na.ok = learner.param),
+    checkClass(len, "expression")
+  )
+  if (isNumericTypeString(type, include.int = TRUE)) {
+    assert(
+      checkNumeric(lower, any.missing = FALSE),
+      checkClass(lower, "expression")
+    )
+    assert(
+      checkNumeric(upper, any.missing = FALSE),
+      checkClass(upper, "expression")
+    )
+    if (!is.expression(len) && !is.expression(lower)) {
+      if (length(lower) %nin% c(1L, len))
+        stopf("For param '%s' length 'lower' must be either 1 or length of param, not:", id, length(lower))
+    }
+    if (!is.expression(len) && !is.expression(upper)) {
+      if (length(upper) %nin% c(1L, len))
+        stopf("For param '%s' length 'upper' must be either 1 or length of param, not:", id, length(upper))
+    }
+  }
+  if (isDiscreteTypeString(type)) {
+    values = checkValuesForDiscreteParam(id, values)
+  }
   #We cannot check default} for NULL or NA as this could be the default value!
   if (missing(default)) {
     has.default = FALSE
@@ -97,6 +122,19 @@ makeParam = function(id, type, len, lower, upper, values, cnames, allow.inf = FA
     assertClass(requires, "call")
   }
   assertList(special.vals)
+
+  if (isNumericTypeString(type, include.int = TRUE)) {
+    if (!is.expression(len) && !is.na(len) && len > 1L) {
+      if (isScalarNumeric(lower))
+        lower = rep(lower, len)
+      if (isScalarNumeric(upper))
+        upper = rep(upper, len)
+    }
+    if (!is.expression(lower) && !is.expression(upper)) {
+     if (any(upper < lower))
+        stopf("For param '%s' some component of 'upper' is smaller than the corresponding one in 'lower'", id)
+    }
+  }
   p = makeS3Obj("Param",
     id = id,
     type = type,
@@ -113,8 +151,12 @@ makeParam = function(id, type, len, lower, upper, values, cnames, allow.inf = FA
     tunable = tunable,
     special.vals = special.vals
   )
-  if (has.default && !isFeasible(p, default))
-    stop(p$id, " : 'default' must be a feasible parameter setting.")
+  if (learner.param)
+    p = makeLearnerParam(p, when)
+  if (has.default && !is.expression(default)) {
+    if (!isFeasible(p, default))
+      stop(p$id, " : 'default' must be a feasible parameter setting.")
+  }
   return(p)
 }
 
@@ -169,3 +211,46 @@ getParPrintData = function(x, trafo = TRUE, used = TRUE, constr.clip = 40L) {
 print.Param = function(x, ..., trafo = TRUE) {
   print(getParPrintData(x, trafo = trafo))
 }
+
+# helper function to perform sanity checks on values of disctrete param
+checkValuesForDiscreteParam = function(id, values) {
+  if (is.vector(values) && !is.expression(values))
+    values = as.list(values)
+  assert(
+    checkList(values),
+    checkClass(values, "expression")
+  )
+  if (!is.expression(values)) {
+    if (length(values) == 0L)
+      stopf("No possible value for discrete parameter %s!", id)
+
+    # check that NA does not occur in values, we use that for "missing state" for dependent params
+    # make sure that this works for complex object too, cannot be done with simple is.na
+    if (any(vlapply(values, isScalarNA)))
+      stopf("NA is not allowed as a value for discrete parameter %s.\nParamHelpers uses NA as a special value for dependent parameters.", id)
+
+    n = length(values)
+    ns = names(values)
+    # if names missing, set all to ""
+    if (is.null(ns))
+      ns = rep("", n)
+    # guess missing names
+    for (i in seq_len(n)) {
+      v = values[[i]]
+      if(is.na(ns[i]) || ns[i] == "") {
+        if (is.character(v) || is.numeric(v))
+          ns[i] = as.character(v)
+      }
+    }
+    names(values) = ns
+    if (!isProperlyNamed(values)) {
+      stopf("Not all values for parameter '%s' were named and names could not be guessed!", id)
+    }
+
+    # check that NA does not occur in value names, see above
+    if ("NA" %in% names(values))
+      stopf("NA is not allowed as a value name for discrete parameter %s.\nParamHelpers uses NA as a special value for dependent parameters.", id)
+  }
+  return(values)
+}
+

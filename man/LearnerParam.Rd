@@ -48,7 +48,7 @@ makeUntypedLearnerParam(id, default, when = "train", requires = NULL,
   tunable = TRUE, special.vals = list())
 
 makeFunctionLearnerParam(id, default, when = "train", requires = NULL,
-  special.vals = list())
+  tunable = TRUE, special.vals = list())
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr

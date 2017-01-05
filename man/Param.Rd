@@ -20,9 +20,9 @@ makeNumericParam(id, lower = -Inf, upper = Inf, allow.inf = FALSE,
   default, trafo = NULL, requires = NULL, tunable = TRUE,
   special.vals = list())
 
-makeNumericVectorParam(id, len, lower = -Inf, upper = Inf,
-  allow.inf = FALSE, cnames = NULL, default, trafo = NULL,
-  requires = NULL, tunable = TRUE, special.vals = list())
+makeNumericVectorParam(id, len, lower = -Inf, upper = Inf, cnames = NULL,
+  allow.inf = FALSE, default, trafo = NULL, requires = NULL,
+  tunable = TRUE, special.vals = list())
 
 makeIntegerParam(id, lower = -Inf, upper = Inf, default, trafo = NULL,
   requires = NULL, tunable = TRUE, special.vals = list())

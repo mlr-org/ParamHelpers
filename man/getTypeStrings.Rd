@@ -2,8 +2,10 @@
 % Please edit documentation in R/getTypeStrings.R
 \name{getTypeStrings}
 \alias{getTypeStrings}
+\alias{getTypeStringsCharacter}
 \alias{getTypeStringsDiscrete}
 \alias{getTypeStringsInteger}
+\alias{getTypeStringsLogical}
 \alias{getTypeStringsNumeric}
 \alias{getTypeStringsNumericStrict}
 \title{Get parameter type-strings.}
@@ -14,7 +16,11 @@ getTypeStringsNumericStrict()
 
 getTypeStringsInteger()
 
+getTypeStringsCharacter()
+
 getTypeStringsDiscrete(include.logical = TRUE)
+
+getTypeStringsLogical()
 }
 \arguments{
 \item{include.int}{[\code{logical(1)}]\cr

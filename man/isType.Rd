@@ -35,7 +35,7 @@ Are logicals also considered to be discrete?
 Default is \code{TRUE}.}
 }
 \value{
-[\code{logical(1)}].
+[\code{logical(1)}]
 }
 \description{
 An empty param set is considered to be of all types.
