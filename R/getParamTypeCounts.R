@@ -7,7 +7,7 @@
 #' @export
 getParamTypeCounts = function(par.set) {
   assertClass(par.set, "ParamSet")
-  supported.types = getSupportedParamTypes()
+  supported.types = getTypeStringsAll()
   par.types = getParamTypes(par.set)
   count = lapply(supported.types, function(type) {
     sum(par.types == type)
@@ -16,14 +16,3 @@ getParamTypeCounts = function(par.set) {
   return(count)
 }
 
-# Returns a vector of supported parameter types.
-getSupportedParamTypes = function() {
-  return(
-    c("numeric", "numericvector",
-      "integer", "integervector",
-      "discrete", "discretevector",
-      "logical", "logicalvector",
-      "character", "charactervector",
-      "function",
-      "untyped"))
-}

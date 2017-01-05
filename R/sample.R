@@ -35,7 +35,7 @@ sampleValue = function(par, discrete.names = FALSE, trafo = FALSE) {
 #' @export
 sampleValue.Param = function(par, discrete.names = FALSE, trafo = FALSE) {
   type = par$type
-  if (par$type %in% c("numeric", "numericvector", "integer", "integervector"))
+  if (isNumericTypeString(type, include.int = TRUE))
     if (any(is.infinite(c(par$lower, par$upper))))
       stop("Cannot sample with Inf bounds!")
   if (!is.null(par$len) && is.na(par$len))

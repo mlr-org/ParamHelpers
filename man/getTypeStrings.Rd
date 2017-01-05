@@ -2,6 +2,7 @@
 % Please edit documentation in R/getTypeStrings.R
 \name{getTypeStrings}
 \alias{getTypeStrings}
+\alias{getTypeStringsAll}
 \alias{getTypeStringsCharacter}
 \alias{getTypeStringsDiscrete}
 \alias{getTypeStringsInteger}
@@ -10,6 +11,8 @@
 \alias{getTypeStringsNumericStrict}
 \title{Get parameter type-strings.}
 \usage{
+getTypeStringsAll()
+
 getTypeStringsNumeric(include.int = TRUE)
 
 getTypeStringsNumericStrict()
