@@ -31,10 +31,22 @@ getTypeStringsInteger = function() {
 
 #' @export
 #' @rdname getTypeStrings
+getTypeStringsCharacter = function() {
+  c("character", "charactervector")
+}
+
+#' @export
+#' @rdname getTypeStrings
 getTypeStringsDiscrete = function(include.logical = TRUE) {
   if (include.logical)
     c("discrete", "discretevector", "logical", "logicalvector")
   else
     c("discrete", "discretevector")
+}
+
+#' @export
+#' @rdname getTypeStrings
+getTypeStringsLogical = function() {
+  c("logical", "logicalvector")
 }
 

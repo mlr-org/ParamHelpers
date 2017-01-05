@@ -1,5 +1,6 @@
-#' Check parameter / parameter set for vector params.
+#' @title Check parameter / parameter set for vector params.
 #'
+#' @description
 #' \code{TRUE} iff the parameter is a vector parameter or all parameters in the
 #' set are vector parameters.
 #'
@@ -12,11 +13,11 @@ isVector = function(par) {
 
 #' @export
 isVector.Param = function(par) {
-  return(grepl("vector", fixed = TRUE, par$type))
+  isVectorTypeString(par$type)
 }
 
 #' @export
 isVector.ParamSet = function(par) {
-  return(all(vapply(par$pars, isVector, logical(1L))))
+  all(vlapply(par$pars, isVector))
 }
 

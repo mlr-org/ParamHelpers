@@ -1,11 +1,12 @@
-#' Check parameter / parameter set contain ONLY a certain type.
+#' @title Check parameter / parameter set contain ONLY a certain type.
 #'
+#' @description
 #' An empty param set is considered to be of all types.
 #'
 #' @template arg_par_or_set
 #' @template arg_include_int
 #' @template arg_include_logical
-#' @return [\code{logical(1)}].
+#' @template ret_bool
 #' @name isType
 #' @rdname isType
 NULL
@@ -24,7 +25,7 @@ isNumeric.ParamSet = function(par, include.int = TRUE) {
 
 #' @export
 isNumeric.Param = function(par, include.int = TRUE) {
-  par$type %in% getTypeStringsNumeric(include.int)
+  isNumericTypeString(par$type, include.int)
 }
 
 #' @export
@@ -36,7 +37,7 @@ isNumericStrict = function(par) {
 
 #' @export
 isNumericStrict.ParamSet = function(par) {
-  all(vlapply(par$pars, isNumericStrict.Param))
+  hasAllParamsOfTypes(par, getTypeStringsNumericStrict())
 }
 
 #' @export
@@ -53,7 +54,7 @@ isDiscrete = function(par, include.logical = TRUE) {
 
 #' @export
 isDiscrete.ParamSet = function(par, include.logical = TRUE) {
-  hasAllParamsOfTypes(par, types = getTypeStringsDiscrete(include.logical = include.logical))
+  hasAllParamsOfTypes(par, getTypeStringsDiscrete(include.logical))
 }
 
 #' @export
@@ -70,7 +71,7 @@ isInteger = function(par) {
 
 #' @export
 isInteger.ParamSet = function(par) {
-  return(hasAllParamsOfTypes(par, types = c("integer", "integervector")))
+  return(hasAllParamsOfTypes(par, getTypeStringsInteger()))
 }
 
 #' @export
@@ -87,12 +88,12 @@ isLogical = function(par) {
 
 #' @export
 isLogical.ParamSet = function(par) {
-  return(hasAllParamsOfTypes(par, types = c("logical", "logicalvector")))
+  return(hasAllParamsOfTypes(par, getTypeStringsLogical()))
 }
 
 #' @export
 isLogical.Param = function(par) {
-  return(par$type %in% c("logical", "logicalvector"))
+  return(isLogicalTypeString(par$type))
 }
 
 #' @export
@@ -104,9 +105,10 @@ isCharacter = function(par) {
 
 #' @export
 isCharacter.ParamSet = function(par) {
-  return(hasAllParamsOfTypes(par, types = c("character", "charactervector")))
+  return(hasAllParamsOfTypes(par, getTypeStringsCharacter()))
 }
 
+#' @export
 isCharacter.Param = function(par) {
-  return(par$type %in% c("character", "charactervector"))
+  return(isCharacterTypeString(par$type))
 }
