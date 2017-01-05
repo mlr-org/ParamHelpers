@@ -8,8 +8,8 @@ evaluateParamExpressions(obj, dict = NULL)
 }
 \arguments{
 \item{obj}{[\code{\link{Param}} | \code{\link[ParamHelpers]{ParamSet}} | \code{list}]\cr
-Parameter, parameter set or list of parameter values. Expressions within \code{length},
-\code{lower} or \code{upper} boundaries, \code{default} or \code{value} will be
+Parameter, parameter set or list of parameter values. Expressions within \code{len},
+\code{lower} or \code{upper} boundaries, \code{default} or \code{values} will be
 evaluated using the provided dictionary (\code{dict}).}
 
 \item{dict}{[\code{environment} | \code{list} | \code{NULL}]\cr

@@ -3,31 +3,43 @@
 #' @description
 #' For each parameter type a special constructor function is available, see below.
 #'
+#' For the following arguments you can now pass an \code{expression} instead of a concrete value:
+#' \code{default}, \code{len}, \code{lower}, \code{upper}, \code{values}.
+#' These expressions can depend on arbitrary symbols, which are later filled in / substituted from
+#' a dictionary, in order to produce a concrete valu, see \code{\link{evaluateParamExpressions}}.
+#' So this enables data / context dependent settings, which is sometimes useful.
+#'
 #' The S3 class is a list which stores these elements:
 #' \describe{
 #'   \item{id [\code{character(1)}]}{See argument of same name.}
-#'   \item{type [\code{character(1)}]}{Data type of parameter. Possible types are \dQuote{numeric}, \dQuote{numericvector}, \dQuote{integer}, \dQuote{integervector}, \dQuote{logical}, \dQuote{logicalvector}, \dQuote{discrete}, \dQuote{discretevector}, \dQuote{function}, \dQuote{untyped}.}
-#'   \item{len [\code{integer(1)}]}{See argument of same name.}
-#'   \item{lower [\code{numeric}]}{See argument of same name. Length of this vector is \code{len}.}
-#'   \item{upper [\code{numeric}]}{See argument of same name. Length of this vector is \code{len}.}
-#'   \item{values [\code{list}]}{Discrete values, always stored as a named list.}
+#'   \item{type [\code{character(1)}]}{Data type of parameter. For all type string see \code{\link{getTypeStringsAll}}}
+#'   \item{len [\code{integer(1)} | \code{expression}]}{See argument of same name.}
+#'   \item{lower [\code{numeric} | \code{expression}]}{See argument of same name. Length of this vector is \code{len}.}
+#'   \item{upper [\code{numeric} | \code{expression}]}{See argument of same name. Length of this vector is \code{len}.}
+#'   \item{values [\code{list} | \code{expression}]}{Discrete values, always stored as a named list.}
+#'   \item{cnames [\code{character}}{See argument of same name.}
+#'   \item{allow.inf [\code{logical(1)}]}{See argument of same name.}
 #'   \item{trafo [\code{NULL} | \code{function(x)}]}{See argument of same name.}
 #'   \item{requires [\code{NULL} | \code{expression}]}{See argument of same name.}
+#'   \item{default [any concrete value | \code{expression}]}{See argument of same name.}
+#'   \item{has.default [\code{logical(1)}]}{Extra flag to really be able to check whether the user passed a default, to avoid troubles with \code{NULL} and \code{NA}.}
+#'   \item{tunable [\code{logical(1)}]}{See argument of same name.}
+#'   \item{special.vals [\code{list}]}{See argument of same name.}
 #' }
 #'
 #' @param id [\code{character(1)}]\cr
 #'   Name of parameter.
-#' @param len [\code{integer(1)}]\cr
+ #' @param len [\code{integer(1)} | \code{expression}]\cr
 #'   Length of vector parameter.
-#' @param lower [\code{numeric}]\cr
+#' @param lower [\code{numeric} | \code{expression}]\cr
 #'   Lower bounds.
 #'   A singe value of length 1 is automatically replicated to \code{len} for vector parameters.
 #'   Default is \code{-Inf}.
-#' @param upper [\code{numeric}]\cr
+#' @param upper [\code{numeric} | \code{expression}]\cr
 #'   Upper bounds.
 #'   A singe value of length 1 is automatically replicated to \code{len} for vector parameters.
 #'   Default is \code{Inf}.
-#' @param values [\code{vector} | \code{list}]\cr
+#' @param values [\code{vector} | \code{list} | \code{expression}]\cr
 #'   Possible discrete values. Instead of using a vector of atomic values,
 #'   you are also allowed to pass a list of quite \dQuote{complex} R objects,
 #'   which are used as discrete choices. If you do the latter,
@@ -40,7 +52,7 @@
 #' @param allow.inf [\code{logical(1)}]\cr
 #'   Allow infinite values for numeric and numericvector params to be feasible settings.
 #'   Default is \code{FALSE}.
-#' @param default [any]\cr
+#' @param default [any concrete value | \code{expression}]\cr
 #'   Default value used in learner.
 #'   If this argument is missing, it means no default value is available.
 #' @param trafo [\code{NULL} | \code{function(x)}]\cr

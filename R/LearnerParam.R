@@ -7,10 +7,10 @@
 #'
 #' The S3 class is a \code{\link{Param}} which additionally stores these elements:
 #' \describe{
-#' \item{default [any]}{See argument of same name.}
-#' \item{has.default [\code{logical(1)}]}{Was a default value provided?}
 #' \item{when [\code{character(1)}]}{See argument of same name.}
 #' }
+#'
+#' See the note in \code{\link{Param}} about being able to pass expressions to certain arguments.
 #'
 #' @inheritParams Param
 #' @param len [\code{integer(1)}]\cr
