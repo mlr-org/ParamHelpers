@@ -55,7 +55,7 @@ paramValueToString.Param = function(par, x, show.missing.values = FALSE, num.for
   }
   if (isDiscrete(par, include.logical = FALSE))
     x = discreteValueToName(par, x)
-  s = valueToString(x, num.format = num.format)
+  s = convertToShortString(x, num.format = num.format)
 }
 
 #' @export
@@ -77,25 +77,3 @@ paramValueToString.ParamSet = function(par, x, show.missing.values = FALSE, num.
   }
   return(collapse(res, sep = "; "))
 }
-
-
-valueToString = function(x, num.format = "%.3g") {
-  cl = class(x)[1L]
-
-  if (cl == "numeric")
-    paste(sprintf(num.format, x), collapse=",")
-  else if (cl == "integer")
-    paste(as.character(x), collapse=",")
-  else if (cl == "logical")
-    paste(as.character(x), collapse=",")
-  else if (cl == "character")
-    collapse(x)
-  else if (cl == "function")
-    "<function>"
-  else if (cl == "expression")
-    as.character(x)
-  else
-    sprintf("<%s>", cl)
-}
-
-
