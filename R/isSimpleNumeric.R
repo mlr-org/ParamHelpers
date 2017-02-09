@@ -1,12 +1,12 @@
-#' @title Check if a parameter set is numeric and without any requires.
+#' @title Check if a parameter set is fully numeric without conditional parameters.
 #' 
 #' @description 
-#' Checks if a par.set is fully numeric (with \code{\link{isNumeric}}) and has no requires
+#' Checks if a param set is fully numeric (with \code{\link{isNumeric}}) and has no requires
 #' (with \code{\link{hasRequires}})). 
 #' 
 #' @template arg_parset
 #' @template ret_bool
 #' @export
-isSimpleNumeric = function(par.set) {
-  isNumeric(par.set, include.int = TRUE) && !hasRequires(par.set)
+isNumericNoReq = function(par.set, include.int = TRUE) {
+  isNumeric(par.set, include.int = include.int) && !hasRequires(par.set)
 }
