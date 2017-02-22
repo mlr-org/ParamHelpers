@@ -47,10 +47,10 @@ addOptPathEl.OptPathDF = function(op, x, y, dob = getOptPathLength(op)+1L, eol =
     Map(function(p, v) {
       if (isScalarNA(v))
         v = getParamNA(p, repeated = TRUE)
-      else if (p$type %in% c("discrete", "discretevector"))
+      else if (p$type %fin% getTypeStringsDiscrete(FALSE))
         discreteValueToName(p, v)
       # we need to make sure cols in df do not get converted to num
-      else if (p$type %in% c("integer", "integervector"))
+      else if (p$type %fin% getTypeStringsInteger())
         as.integer(v)
       else
         v
