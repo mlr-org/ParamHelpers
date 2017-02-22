@@ -42,7 +42,7 @@ isDiscrete.ParamSet = function(par, include.logical = TRUE) {
 
 #' @export
 isDiscrete.Param = function(par, include.logical = TRUE) {
-  par$type %in% getTypeStringsDiscrete(include.logical = include.logical)
+  par$type %fin% getTypeStringsDiscrete(include.logical = include.logical)
 }
 
 #' @export
@@ -59,7 +59,7 @@ isInteger.ParamSet = function(par) {
 
 #' @export
 isInteger.Param = function(par) {
-  return(par$type %in% c("integer", "integervector"))
+  return(par$type %fin% c("integer", "integervector"))
 }
 
 #' @export
