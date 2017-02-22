@@ -92,5 +92,5 @@ as.data.frame.OptPathDF = function(x, row.names = NULL, optional = FALSE, includ
 
 # remove all named entries that have a name starting with a dot
 removeDotEntries = function(l) {
-  l[!grepl("^\\.", names(l))]
+  l[!startsWith(names(l), ".")]
 }
