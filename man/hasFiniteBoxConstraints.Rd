@@ -16,4 +16,3 @@ Parameter or parameter set.}
 \description{
 Checks if a parameter or each parameter of a parameter set has ONLY finite lower and upper bounds.
 }
-

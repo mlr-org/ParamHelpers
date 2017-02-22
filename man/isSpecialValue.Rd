@@ -19,4 +19,3 @@ Single value to check.}
 \description{
 See title.
 }
-

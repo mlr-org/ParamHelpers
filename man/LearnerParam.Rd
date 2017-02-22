@@ -2,16 +2,16 @@
 % Please edit documentation in R/LearnerParam.R, R/makeLearnerParamFuns.R
 \name{LearnerParam}
 \alias{LearnerParam}
-\alias{makeDiscreteLearnerParam}
-\alias{makeDiscreteVectorLearnerParam}
-\alias{makeFunctionLearnerParam}
-\alias{makeIntegerLearnerParam}
-\alias{makeIntegerVectorLearnerParam}
-\alias{makeLogicalLearnerParam}
-\alias{makeLogicalVectorLearnerParam}
 \alias{makeNumericLearnerParam}
 \alias{makeNumericVectorLearnerParam}
+\alias{makeIntegerLearnerParam}
+\alias{makeIntegerVectorLearnerParam}
+\alias{makeDiscreteLearnerParam}
+\alias{makeDiscreteVectorLearnerParam}
+\alias{makeLogicalLearnerParam}
+\alias{makeLogicalVectorLearnerParam}
 \alias{makeUntypedLearnerParam}
+\alias{makeFunctionLearnerParam}
 \title{Create a description object for a parameter of a machine learning algorithm.}
 \usage{
 makeNumericLearnerParam(id, lower = -Inf, upper = Inf, allow.inf = FALSE,
@@ -127,4 +127,3 @@ The S3 class is a \code{\link{Param}} which additionally stores these elements:
 
 See the note in \code{\link{Param}} about being able to pass expressions to certain arguments.
 }
-

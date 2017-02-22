@@ -16,4 +16,3 @@ List of paramter values.}
 \description{
 Removes all scalar NAs from a parameter setting list.
 }
-

@@ -34,35 +34,20 @@ getParamTypes = function(par.set, df.cols = FALSE, df.discretes.as.factor = TRUE
   if (length(types) == 0L)
     return(character(0L))
 
-  recode = function(types, ...) {
-    args = as.character(list(...))
-    for (i in seq(1, length(args), 2)) {
-      types[types == args[i]] = args[i + 1]
-    }
-    types = rep(types, getParamLengths(par.set))
-    return(types)
+  recode = function(types, from, to) {
+    i = fmatch(types, from, nomatch = 0L)
+    types[i > 0L] = to[i]
+    rep(types, getParamLengths(par.set))
   }
 
+
   if (df.cols) {
-    types = if (df.discretes.as.factor) {
-      recode(types,
-        "numericvector", "numeric",
-        "integervector", "integer",
-        "discrete", "factor",
-        "discretevector", "factor",
-        "logicalvector", "logical",
-        "charactervector", "character"
-      )
+    to = if (df.discretes.as.factor) {
+      c("numeric", "integer", "factor", "factor", "logical", "character")
     } else {
-      recode(types,
-        "numericvector", "numeric",
-        "integervector", "integer",
-        "discrete", "character",
-        "discretevector", "character",
-        "logicalvector", "logical",
-        "charactervector", "character"
-      )
+      c("numeric", "integer",  "character", "character", "logical","character")
     }
+    types = recode(types, ph$convert.param.types.from, to)
   }
 
   ns = if (use.names)

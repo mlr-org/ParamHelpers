@@ -37,4 +37,3 @@ a design.
 Parameters default values, whose conditions (\code{requires}) are not fulfilled will be set to \code{NA}
 in the result.
 }
-

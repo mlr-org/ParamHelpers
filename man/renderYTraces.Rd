@@ -23,4 +23,3 @@ Can be used for only single-objective optimization paths.
 Useful to compare runs of different algorithms on the same optimization problem.
 You can add your own ggplot layers to the resulting plot object.
 }
-

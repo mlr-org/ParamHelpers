@@ -26,4 +26,3 @@ Some requirements relay on default values of the \code{par.set}. Default is \cod
 Check if a parameter value satisfies the requirements of the
 parameter description. This only checks the \code{requires} expressions.
 }
-

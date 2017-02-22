@@ -44,4 +44,3 @@ par.vals = list(
 )
 evaluateParamExpressions(par.vals, dict = list(k = 3))
 }
-

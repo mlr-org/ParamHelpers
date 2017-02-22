@@ -26,4 +26,3 @@ If the value \code{x} is \code{NA}, indicating a missing parameter value due to 
 p = makeDiscreteParam("u", values=c(x1="a", x2="b", x3="c"))
 discreteValueToName(p, "b")
 }
-

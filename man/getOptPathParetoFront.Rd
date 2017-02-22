@@ -61,4 +61,3 @@ Other optpath: \code{\link{OptPath}},
   \code{\link{setOptPathElDOB}},
   \code{\link{setOptPathElEOL}}
 }
-

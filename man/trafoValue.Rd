@@ -35,4 +35,3 @@ ps = makeParamSet(
 # now the values of "u" and "v" are transformed:
 trafoValue(ps, list(3, c(2, 4), "a"))
 }
-

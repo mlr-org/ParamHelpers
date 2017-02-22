@@ -28,4 +28,3 @@ ps = makeParamSet(
 getParamNr(ps)
 getParamNr(ps, devectorize = TRUE)
 }
-

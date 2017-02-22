@@ -40,4 +40,3 @@ Default is \code{TRUE}.}
 \description{
 Returns type information for a parameter set.
 }
-

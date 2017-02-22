@@ -34,4 +34,3 @@ getParamLengths(ps)
 par = makeNumericVectorParam("x", len = expression(k), lower = 0)
 getParamLengths(par, dict = list(k = 4))
 }
-

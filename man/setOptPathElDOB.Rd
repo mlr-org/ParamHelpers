@@ -36,4 +36,3 @@ Other optpath: \code{\link{OptPath}},
   \code{\link{getOptPathX}}, \code{\link{getOptPathY}},
   \code{\link{setOptPathElEOL}}
 }
-

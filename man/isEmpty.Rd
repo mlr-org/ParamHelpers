@@ -16,4 +16,3 @@ Parameter set.}
 \description{
 Check whether parameter set is empty.
 }
-

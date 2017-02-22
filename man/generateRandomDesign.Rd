@@ -51,4 +51,3 @@ Note that if you have trafos attached to your params, the complete creation of t
 takes place on the UNTRANSFORMED scale. So this function samples from a uniform density
 over the param space on the UNTRANSFORMED scale, but not necessarily the transformed scale.
 }
-

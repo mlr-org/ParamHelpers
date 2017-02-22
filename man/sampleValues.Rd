@@ -44,4 +44,3 @@ ps = makeParamSet(
 )
 sampleValues(ps, 2)
 }
-

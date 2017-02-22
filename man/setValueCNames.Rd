@@ -21,4 +21,3 @@ For a parameter set this must be a list in the correct order.}
 If param has \code{cnames} set component names in a value.
 Otherwise \code{x} is left unchanged.
 }
-

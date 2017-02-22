@@ -25,4 +25,3 @@ Default is \code{FALSE}.}
 \description{
 Clips values outside of box constraints to bounds.
 }
-

@@ -2,8 +2,8 @@
 % Please edit documentation in R/OptPath.R, R/OptPathDF.R
 \name{OptPath}
 \alias{OptPath}
-\alias{OptPathDF}
 \alias{makeOptPathDF}
+\alias{OptPathDF}
 \title{Create optimization path.}
 \usage{
 makeOptPathDF(par.set, y.names, minimize, add.transformed.x = FALSE,
@@ -87,4 +87,3 @@ Other optpath: \code{\link{addOptPathEl}},
   \code{\link{setOptPathElDOB}},
   \code{\link{setOptPathElEOL}}
 }
-
