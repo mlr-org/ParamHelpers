@@ -10,7 +10,7 @@ hasFiniteBoxConstraints = function(par, dict = NULL) {
 
 #' @export
 hasFiniteBoxConstraints.Param = function(par, dict = NULL) {
-  bounds = c(getUpper(par, dict = dict), getUpper(par, dict = dict))
+  bounds = c(getLower(par, dict = dict), getUpper(par, dict = dict))
   if (length(bounds) == 0)
     return(TRUE)
   return(all(is.finite(bounds)))
