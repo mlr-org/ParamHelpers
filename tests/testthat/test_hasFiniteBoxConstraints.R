@@ -23,4 +23,10 @@ test_that("hasFiniteBoxConstraints", {
   )
 
   expect_false(hasFiniteBoxConstraints(par.set))
+
+  par.set = makeParamSet(
+    makeNumericParam("numeric1", lower = 1, upper = expression(n))
+  )
+  expect_true(hasFiniteBoxConstraints(par.set, dict = list(n = 10)))
+  expect_false(hasFiniteBoxConstraints(par.set, dict = list(n = Inf)))
 })

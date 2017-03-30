@@ -4,11 +4,16 @@
 \alias{hasFiniteBoxConstraints}
 \title{Checks if a parameter or each parameter of a parameter set has ONLY finite lower and upper bounds.}
 \usage{
-hasFiniteBoxConstraints(par)
+hasFiniteBoxConstraints(par, dict = NULL)
 }
 \arguments{
 \item{par}{[\code{\link{Param}} | \code{\link{ParamSet}}]\cr
 Parameter or parameter set.}
+
+\item{dict}{[\code{environment} | \code{list} | \code{NULL}]\cr
+Environment or list which will be used for evaluating the variables
+of expressions within a parameter, parameter set or list of parameters.
+The default is \code{NULL}.}
 }
 \value{
 [\code{logical(1)}]
@@ -16,4 +21,3 @@ Parameter or parameter set.}
 \description{
 Checks if a parameter or each parameter of a parameter set has ONLY finite lower and upper bounds.
 }
-
