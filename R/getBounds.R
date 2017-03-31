@@ -42,7 +42,6 @@
 #' )
 #' getLower(par.vals)
 #' getUpper(par.vals, dict = list(n = 12))
-#' @export
 getLower = function(obj, with.nr = FALSE, dict = NULL) {
   getBounds(obj, type.of.bounds = "lower", with.nr = with.nr, dict = dict)
 }
