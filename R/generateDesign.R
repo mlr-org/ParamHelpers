@@ -73,6 +73,7 @@
 #'   If the the design is of size less than \code{n} after all tries, a warning is issued
 #'   and the smaller design is returned.
 #'   Default is 20.
+#' @template arg_add.default 
 #' @template ret_gendes_df
 #' @export
 #' @useDynLib ParamHelpers c_generateDesign c_trafo_and_set_dep_to_na
@@ -90,7 +91,8 @@
 #'   makeNumericVectorParam("y", len = 2, lower = 0, upper = 1, trafo = function(x) x/sum(x))
 #' )
 #' generateDesign(10, ps, trafo = TRUE)
-generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALSE, augment = 20L) {
+generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALSE, augment = 20L,
+  add.default = FALSE) {
 
   n = asInt(n)
   z = doBasicGenDesignChecks(par.set)
@@ -104,11 +106,19 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
     assertFunction(fun)
   assertList(fun.args)
   assertFlag(trafo)
+  assertFlag(add.default)
   augment = asInt(augment, lower = 0L)
 
   ### precompute some useful stuff
   pars = par.set$pars
   lens = getParamLengths(par.set)
+  if (add.default) {
+    n = n - 1L  #one point less to sample because we add the default later
+    defaults = getDefaults(par.set)
+    diff = setdiff(names(pars), names(defaults))
+    if (length(diff) > 0)
+      stop(sprintf("No default parameter setting for %s", paste(diff, collapse = ", ")))
+  } 
   k = sum(lens)
   pids = getParamIds(par.set, repeated = TRUE, with.nr = TRUE)
   lower2 = setNames(rep(NA_real_, k), pids)
@@ -170,6 +180,14 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
     warningf("generateDesign could only produce %i points instead of %i!", nrow(res), n)
 
   colnames(res) = pids
+  
+  if (add.default) {
+    #convert defaults to a data.frame with one row and identical column names as res
+    defaults = data.frame(lapply(seq_along(defaults), function(x) t(unlist(defaults[x]))))
+    res = rbind(defaults, res)
+  }
+
+
   res = fixDesignFactors(res, par.set)
   attr(res, "trafo") = trafo
   return(res)

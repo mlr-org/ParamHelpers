@@ -29,10 +29,20 @@
 #' @template arg_gendes_n
 #' @template arg_parset
 #' @template arg_trafo
+#' @template arg_add.default
 #' @template ret_gendes_df
 #' @export
-generateRandomDesign = function(n = 10L, par.set, trafo = FALSE) {
+generateRandomDesign = function(n = 10L, par.set, trafo = FALSE, add.default = FALSE) {
   doBasicGenDesignChecks(par.set)
+  assertFlag(trafo)
+  assertFlag(add.default)
+  if (add.default) {
+    n = n - 1L #one point less to sample because we add the default later
+    defaults = getDefaults(par.set)
+    diff = setdiff(names(par.set$pars), names(defaults))
+    if (length(diff) > 0)
+      stop(sprintf("No default parameter setting for %s", paste(diff, collapse = ", ")))
+  }
   des = sampleValues(par.set, n, discrete.names = TRUE, trafo = trafo)
 
   # FIXME: all next lines are sloooow in R I guess. C?
@@ -49,6 +59,13 @@ generateRandomDesign = function(n = 10L, par.set, trafo = FALSE) {
   des = lapply(des, do.call, what = cbind)
   des = do.call(rbind, des)
   colnames(des) = getParamIds(par.set, repeated = TRUE, with.nr = TRUE)
+  
+  if (add.default) {
+    #convert defaults to a data.frame with one row and identical column names as res
+    defaults = data.frame(lapply(seq_along(defaults), function(x) t(unlist(defaults[x]))))
+    des = rbind(defaults, des)
+  }
+  
   des  = fixDesignFactors(des, par.set)
   attr(des, "trafo") = trafo
   return(des)

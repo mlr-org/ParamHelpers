@@ -5,7 +5,7 @@
 \title{Generates a statistical design for a parameter set.}
 \usage{
 generateDesign(n = 10L, par.set, fun, fun.args = list(), trafo = FALSE,
-  augment = 20L)
+  augment = 20L, add.default = FALSE)
 }
 \arguments{
 \item{n}{[\code{integer(1)}]\cr
@@ -37,6 +37,12 @@ and \code{augment} specifies the number of tries to augment.
 If the the design is of size less than \code{n} after all tries, a warning is issued
 and the smaller design is returned.
 Default is 20.}
+
+\item{add.default}{[\code{logical(1)}]\cr
+Should one fixed design point be added at the default value of all parameters? If \code{TRUE}
+only \code{n-1} points are sampled and a design point at the default values is added as the first
+row to the result. This requires that all parameters in the param set actually have a default.
+Default is \code{FALSE}.}
 }
 \value{
 [\code{data.frame}]. Columns are named by the ids of the parameters.
