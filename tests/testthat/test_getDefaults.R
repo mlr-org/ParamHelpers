@@ -8,9 +8,11 @@ test_that("getDefaults", {
     makeNumericParam("u", default = 2),
     makeIntegerParam("v"),
     makeCharacterParam("s", default = "foo"),
-    makeUntypedParam("w", default = iris)
+    makeUntypedParam("w", default = iris),
+    makeLogicalParam("t", default = NULL, special.vals = list(NULL))
   )
-  expect_equal(getDefaults(ps), list(u = 2, s = "foo", w = iris))
+  expect_equal(getDefaults(ps), list(u = 2, s = "foo", w = iris, t = NULL))
+  expect_output(print(ps), "NULL")
 
   ps = makeParamSet(
     makeIntegerParam("v")
