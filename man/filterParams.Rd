@@ -2,8 +2,8 @@
 % Please edit documentation in R/filterParams.R
 \name{filterParams}
 \alias{filterParams}
-\alias{filterParamsDiscrete}
 \alias{filterParamsNumeric}
+\alias{filterParamsDiscrete}
 \title{Get parameter subset of only certain parameters.}
 \usage{
 filterParams(par.set, ids = NULL, type = NULL, tunable = c(TRUE, FALSE),
@@ -76,4 +76,3 @@ filterParams(ps, type = "numeric", tunable = TRUE)
 # filter for all numeric parameters among "u", "v" and "x"
 filterParams(ps, type = "numeric", ids = c("u", "v", "x"))
 }
-

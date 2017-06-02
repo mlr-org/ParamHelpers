@@ -16,4 +16,3 @@ Parameter set.}
 \description{
 Check parameter set for forbidden region.
 }
-

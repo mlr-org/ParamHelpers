@@ -2,18 +2,18 @@
 % Please edit documentation in R/aParam.R, R/makeParamFuns.R
 \name{Param}
 \alias{Param}
-\alias{makeCharacterParam}
-\alias{makeCharacterVectorParam}
-\alias{makeDiscreteParam}
-\alias{makeDiscreteVectorParam}
-\alias{makeFunctionParam}
+\alias{makeNumericParam}
+\alias{makeNumericVectorParam}
 \alias{makeIntegerParam}
 \alias{makeIntegerVectorParam}
 \alias{makeLogicalParam}
 \alias{makeLogicalVectorParam}
-\alias{makeNumericParam}
-\alias{makeNumericVectorParam}
+\alias{makeDiscreteParam}
+\alias{makeDiscreteVectorParam}
+\alias{makeFunctionParam}
 \alias{makeUntypedParam}
+\alias{makeCharacterParam}
+\alias{makeCharacterVectorParam}
 \title{Create a description object for a parameter.}
 \usage{
 makeNumericParam(id, lower = -Inf, upper = Inf, allow.inf = FALSE,
@@ -158,4 +158,3 @@ makeNumericVectorParam("x", len = 2)
 makeDiscreteParam("y", values = c("a","b"))
 makeCharacterParam("z")
 }
-

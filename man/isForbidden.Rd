@@ -19,4 +19,3 @@ Parameter setting to check.}
 \description{
 Parameter sets without a forbidden region always return \code{FALSE}.
 }
-

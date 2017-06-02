@@ -21,4 +21,3 @@ Default is \code{FALSE}.}
 \description{
 Converts to a textual description used in irace and then potentially calls \link[irace]{readParameters}.
 }
-

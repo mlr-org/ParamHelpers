@@ -154,4 +154,3 @@ Same as \code{\link{plotOptPath}}, but renders the plots for just 1 iteration
 and returns a list of plots instead of printing the plot. Useful, if you want
 to extract single plots or to edit the ggplots by yourself.
 }
-

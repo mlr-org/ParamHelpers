@@ -17,4 +17,3 @@ Parameter or parameter set.}
 \code{TRUE} iff the parameter has any trafos or any parameter in the set has
 trafos.
 }
-

@@ -34,4 +34,3 @@ getParamIds(ps)
 getParamIds(ps, repeated = TRUE)
 getParamIds(ps, repeated = TRUE, with.nr = TRUE)
 }
-

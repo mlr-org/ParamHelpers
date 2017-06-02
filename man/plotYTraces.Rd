@@ -21,4 +21,3 @@ names exec.time. Possible values are dob and exec.time, default is \code{dob}.}
 \description{
 Plot function for \code{\link{renderYTraces}}
 }
-

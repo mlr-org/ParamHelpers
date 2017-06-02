@@ -63,4 +63,3 @@ par.vals = list(
 getLower(par.vals)
 getUpper(par.vals, dict = list(n = 12))
 }
-

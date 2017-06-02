@@ -16,4 +16,3 @@ Object to extract the ParamSet from.}
 \description{
 \code{getParamSet} is a generic and can be called to extract the \code{ParamSet} from different objects.
 }
-

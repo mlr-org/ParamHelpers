@@ -31,4 +31,3 @@ as.data.frame(op)
 op = trafoOptPath(op)
 as.data.frame(op)
 }
-

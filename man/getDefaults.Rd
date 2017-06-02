@@ -45,4 +45,3 @@ ps2 = makeParamSet(
 )
 getDefaults(ps2, dict = list(k = 3, p = 5.4))
 }
-

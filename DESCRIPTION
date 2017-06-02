@@ -20,7 +20,7 @@ License: BSD_2_clause + file LICENSE
 Roxygen: list(wrap = FALSE)
 Imports:
     BBmisc (>= 1.10),
-    checkmate (>= 1.8.1),
+    checkmate (>= 1.8.2),
     methods
 Suggests:
     akima,
@@ -38,4 +38,4 @@ Suggests:
 LazyData: yes
 ByteCompile: yes
 Version: 1.11
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

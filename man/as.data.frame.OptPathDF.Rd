@@ -66,4 +66,3 @@ Dependent parameters whose constraints are unsatisfied generate \code{NA} entrie
 respective columns.
 Factor columns of discrete parameters always have their complete level set from the \code{param.set}.
 }
-
