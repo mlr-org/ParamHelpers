@@ -279,6 +279,9 @@ test_that("param print works", {
   expect_output(print(p), "99")
   p = makeUntypedParam(id = "x", default = c(99, 99))
   expect_output(print(p), "untyped")
+  p = makeDiscreteVectorLearnerParam("test",
+    default = list(), values = c("a", "b", "c"), len = NA)
+  expect_output(print(p), "discretevector")
 })
 
 test_that("normal (not learner) vec param cannot have NA lengths", {
