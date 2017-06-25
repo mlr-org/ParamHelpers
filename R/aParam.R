@@ -77,8 +77,7 @@
 #'   Defining a parameter to be not-tunable allows to mark arguments like, e.g., \dQuote{verbose} or
 #'   other purely technical stuff, and allows them to be excluded from later automatic optimization
 #'   procedures that would try to consider all available parameters.
-#'   Default is \code{TRUE} (except for \code{untyped}, \code{function}, \code{character} and
-#'   \code{characterVector}) which means it is tunable.
+#'   Default is \code{TRUE}, which means it is tunable.
 #' @param special.vals [\code{list()}]\cr
 #'   A list of special values the parameter can except which are outside of the defined range.
 #'   Default is an empty list.
