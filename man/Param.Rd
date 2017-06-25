@@ -43,16 +43,17 @@ makeDiscreteParam(id, values, trafo = NULL, default, requires = NULL,
 makeDiscreteVectorParam(id, len, values, default, requires = NULL,
   tunable = TRUE, special.vals = list())
 
-makeFunctionParam(id, default = default, requires = NULL,
+makeFunctionParam(id, default = default, requires = NULL, tunable = TRUE,
   special.vals = list())
 
 makeUntypedParam(id, default, requires = NULL, tunable = TRUE,
   special.vals = list())
 
-makeCharacterParam(id, default, requires = NULL, special.vals = list())
+makeCharacterParam(id, default, requires = NULL, tunable = TRUE,
+  special.vals = list())
 
 makeCharacterVectorParam(id, len, cnames = NULL, default, requires = NULL,
-  special.vals = list())
+  tunable = TRUE, special.vals = list())
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr
@@ -100,8 +101,7 @@ Is this parameter tunable?
 Defining a parameter to be not-tunable allows to mark arguments like, e.g., \dQuote{verbose} or
 other purely technical stuff, and allows them to be excluded from later automatic optimization
 procedures that would try to consider all available parameters.
-Default is \code{TRUE} (except for \code{untyped}, \code{function}, \code{character} and
-\code{characterVector}) which means it is tunable.}
+Default is \code{TRUE}, which means it is tunable.}
 
 \item{special.vals}{[\code{list()}]\cr
 A list of special values the parameter can except which are outside of the defined range.

@@ -12,6 +12,8 @@
 \alias{makeLogicalVectorLearnerParam}
 \alias{makeUntypedLearnerParam}
 \alias{makeFunctionLearnerParam}
+\alias{makeCharacterParam}
+\alias{makeCharacterVectorParam}
 \title{Create a description object for a parameter of a machine learning algorithm.}
 \usage{
 makeNumericLearnerParam(id, lower = -Inf, upper = Inf, allow.inf = FALSE,
@@ -48,6 +50,12 @@ makeUntypedLearnerParam(id, default, when = "train", requires = NULL,
   tunable = TRUE, special.vals = list())
 
 makeFunctionLearnerParam(id, default, when = "train", requires = NULL,
+  tunable = TRUE, special.vals = list())
+
+makeCharacterParam(id, default, requires = NULL, tunable = TRUE,
+  special.vals = list())
+
+makeCharacterVectorParam(id, len, cnames = NULL, default, requires = NULL,
   tunable = TRUE, special.vals = list())
 }
 \arguments{
@@ -94,8 +102,7 @@ Is this parameter tunable?
 Defining a parameter to be not-tunable allows to mark arguments like, e.g., \dQuote{verbose} or
 other purely technical stuff, and allows them to be excluded from later automatic optimization
 procedures that would try to consider all available parameters.
-Default is \code{TRUE} (except for \code{untyped}, \code{function}, \code{character} and
-\code{characterVector}) which means it is tunable.}
+Default is \code{TRUE}, which means it is tunable.}
 
 \item{special.vals}{[\code{list()}]\cr
 A list of special values the parameter can except which are outside of the defined range.
@@ -111,6 +118,11 @@ you are also allowed to pass a list of quite \dQuote{complex} R objects,
 which are used as discrete choices. If you do the latter,
 the elements must be uniquely named, so that the names can be used
 as internal representations for the choice.}
+
+\item{cnames}{[\code{character}]\cr
+Component names for vector params (except discrete).
+Every function in this package that creates vector values for such a param, will name
+that vector with \code{cnames}.}
 }
 \value{
 [\code{\link{LearnerParam}}].
