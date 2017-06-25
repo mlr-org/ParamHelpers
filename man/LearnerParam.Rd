@@ -12,8 +12,8 @@
 \alias{makeLogicalVectorLearnerParam}
 \alias{makeUntypedLearnerParam}
 \alias{makeFunctionLearnerParam}
-\alias{makeCharacterParam}
-\alias{makeCharacterVectorParam}
+\alias{makeCharacterLearnerParam}
+\alias{makeCharacterLearnerVectorParam}
 \title{Create a description object for a parameter of a machine learning algorithm.}
 \usage{
 makeNumericLearnerParam(id, lower = -Inf, upper = Inf, allow.inf = FALSE,
@@ -52,11 +52,12 @@ makeUntypedLearnerParam(id, default, when = "train", requires = NULL,
 makeFunctionLearnerParam(id, default, when = "train", requires = NULL,
   tunable = TRUE, special.vals = list())
 
-makeCharacterParam(id, default, requires = NULL, tunable = TRUE,
-  special.vals = list())
-
-makeCharacterVectorParam(id, len, cnames = NULL, default, requires = NULL,
+makeCharacterLearnerParam(id, default, when = "train", requires = NULL,
   tunable = TRUE, special.vals = list())
+
+makeCharacterLearnerVectorParam(id, len = as.integer(NA), default,
+  when = "train", requires = NULL, tunable = TRUE,
+  special.vals = list())
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr
@@ -118,11 +119,6 @@ you are also allowed to pass a list of quite \dQuote{complex} R objects,
 which are used as discrete choices. If you do the latter,
 the elements must be uniquely named, so that the names can be used
 as internal representations for the choice.}
-
-\item{cnames}{[\code{character}]\cr
-Component names for vector params (except discrete).
-Every function in this package that creates vector values for such a param, will name
-that vector with \code{cnames}.}
 }
 \value{
 [\code{\link{LearnerParam}}].

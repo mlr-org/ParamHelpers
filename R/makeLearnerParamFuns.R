@@ -85,7 +85,7 @@ makeFunctionLearnerParam = function(id, default, when = "train", requires = NULL
 
 #' @rdname LearnerParam
 #' @export
-makeCharacterParam = function(id, default, when = "train", requires = NULL, tunable = TRUE,
+makeCharacterLearnerParam = function(id, default, when = "train", requires = NULL, tunable = TRUE,
   special.vals = list()) {
   makeParam(id = id, type = "character", learner.param = TRUE,
     default = default, requires = requires, tunable = tunable, special.vals = special.vals, when = when)
@@ -93,7 +93,7 @@ makeCharacterParam = function(id, default, when = "train", requires = NULL, tuna
 
 #' @rdname LearnerParam
 #' @export
-makeCharacterVectorParam = function(id, len = as.integer(NA), default, when = "train",
+makeCharacterLearnerVectorParam = function(id, len = as.integer(NA), default, when = "train",
   requires = NULL, tunable = TRUE, special.vals = list()) {
 
   makeParam(id = id, type = "charactervector", learner.param = TRUE, len = len,
