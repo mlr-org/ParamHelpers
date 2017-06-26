@@ -65,6 +65,6 @@ discreteValueToName = function(par, x) {
   if (par$type == "discrete") {
     ns[getIndex(par$values, x)]
   } else if (par$type == "discretevector")  {
-    sapply(x, function(x) ns[getIndex(x, values = par$values)])
+    vcapply(x, function(app  x) ns[getIndex(x, values = par$values)])
   }
 }
