@@ -53,7 +53,7 @@ discreteValueToName = function(par, x) {
     return(NA_character_)
   assertClass(par, "Param")
   assertChoice(par$type, c("discrete", "discretevector"))
-  if (par$type == "discretevector" && !is.na(par$len) && length(x) != par$len)
+  if (par$type == "discretevector" && isTRUE(length(x) != par$len))
     stopf("Length of x must be %i!", par$len)
   ns = names(par$values)
   getIndex = function(values, v) {
