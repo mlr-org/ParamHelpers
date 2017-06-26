@@ -13,7 +13,7 @@
 \alias{makeUntypedLearnerParam}
 \alias{makeFunctionLearnerParam}
 \alias{makeCharacterLearnerParam}
-\alias{makeCharacterLearnerVectorParam}
+\alias{makeCharacterVectorLearnerParam}
 \title{Create a description object for a parameter of a machine learning algorithm.}
 \usage{
 makeNumericLearnerParam(id, lower = -Inf, upper = Inf, allow.inf = FALSE,
@@ -55,7 +55,7 @@ makeFunctionLearnerParam(id, default, when = "train", requires = NULL,
 makeCharacterLearnerParam(id, default, when = "train", requires = NULL,
   tunable = TRUE, special.vals = list())
 
-makeCharacterLearnerVectorParam(id, len = as.integer(NA), default,
+makeCharacterVectorLearnerParam(id, len = as.integer(NA), default,
   when = "train", requires = NULL, tunable = TRUE,
   special.vals = list())
 }

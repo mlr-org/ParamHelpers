@@ -72,7 +72,7 @@ test_that("disc vec", {
 
 test_that("function", {
   p = makeFunctionLearnerParam("f1")
-  expect_equal(p$id, "x")
+  expect_equal(p$id, "f1")
   expect_true(!isFeasible(p, "a"))
   expect_true(isFeasible(p, identity))
   expect_true(isFeasible(p, function(x) x^2))
@@ -84,16 +84,17 @@ test_that("function", {
 test_that("character", {
   p = makeCharacterLearnerParam("c")
   expect_equal(p$id, "c")
-  expect_true(isFeasible(p, "a"))
-  expect_true(!isFeasible(p, "ab"))
+  expect_true(isFeasible(p, "ab"))
+  expect_true(!isFeasible(p, c("a","b")))
+  expect_true(!isFeasible(p, 1))
 })
 
 test_that("character vec", {
   p = makeCharacterVectorLearnerParam("cv")
   expect_equal(p$id, "cv")
   expect_true(isFeasible(p, "a"))
-  expect_true(isFeasible(p, c("a","b")))
-  expect_true(!isFeasible(p, "ab"))
+  expect_true(isFeasible(p, c("a","b","a")))
+  expect_true(!isFeasible(p, 1:3))
 })
 
 test_that("untyped", {
