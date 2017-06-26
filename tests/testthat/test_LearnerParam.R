@@ -70,6 +70,31 @@ test_that("disc vec", {
   p = makeDiscreteVectorLearnerParam(id = "x", len = NA_integer_, values = list("a", "b"), default = list("a", "b", "a"))
 })
 
+test_that("function", {
+  p = makeFunctionLearnerParam("f1")
+  expect_equal(p$id, "x")
+  expect_true(!isFeasible(p, "a"))
+  expect_true(isFeasible(p, identity))
+  expect_true(isFeasible(p, function(x) x^2))
+  # defaults
+  p = makeFunctionLearnerParam(id = "f2", default = sin)
+  expect_equal(getDefaults(p), sin)
+})
+
+test_that("character", {
+  p = makeCharacterLearnerParam("c")
+  expect_equal(p$id, "c")
+  expect_true(isFeasible(p, "a"))
+  expect_true(!isFeasible(p, "ab"))
+})
+
+test_that("character vec", {
+  p = makeCharacterVectorLearnerParam("cv")
+  expect_equal(p$id, "cv")
+  expect_true(isFeasible(p, "a"))
+  expect_true(isFeasible(p, c("a","b")))
+  expect_true(!isFeasible(p, "ab"))
+})
 
 test_that("untyped", {
   p = makeUntypedLearnerParam("x")

@@ -93,7 +93,7 @@ makeCharacterLearnerParam = function(id, default, when = "train", requires = NUL
 
 #' @rdname LearnerParam
 #' @export
-makeCharacterLearnerVectorParam = function(id, len = as.integer(NA), default, when = "train",
+makeCharacterVectorLearnerParam = function(id, len = as.integer(NA), default, when = "train",
   requires = NULL, tunable = TRUE, special.vals = list()) {
 
   makeParam(id = id, type = "charactervector", learner.param = TRUE, len = len,
