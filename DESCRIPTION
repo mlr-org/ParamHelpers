@@ -21,6 +21,7 @@ Roxygen: list(wrap = FALSE)
 Imports:
     BBmisc (>= 1.10),
     checkmate (>= 1.8.2),
+    stringi,
     methods
 Suggests:
     akima,
