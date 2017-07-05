@@ -12,35 +12,26 @@ readPCS = function(file) {
     convert(s)
   }
 
-
   assertFileExists(file, access = "r", extension = "pcs")
 
-  lines = readLines(file)
+  lines = stri_read_lines(file)
   lines = stri_replace_all_regex(lines, "#.*", "")
   lines = stri_trim_both(lines)
   lines = lines[nzchar(lines)]
   result = list()
 
+  lines = lines[!stri_startswith_fixed(lines, "Conditionals:")]
   j = stri_detect_fixed(lines, "|")
   lines.cond = lines[j]
   lines = lines[!j]
 
+  lines = lines[!stri_startswith_fixed(lines, "Forbidden:")]
   j = stri_startswith_fixed(lines, "{") & stri_endswith_fixed(lines, "}")
   lines.forbidden = lines[j]
   lines = lines[!j]
 
-  # remove Conditionals start line
-  lines = lines[!stri_startswith_fixed(lines, "Conditionals:")]
-  # remove forbidden start line
-  lines = lines[!stri_startswith_fixed(lines, "Forbidden:")]
-
-
-  lines.params = lines
-
   ### parse param lines
-  for (i in seq_along(lines.params)) {
-    line = lines.params[i]
-    # print(line)
+  for (line in lines) {
     z = consume(line, "[a-zA-Z0-9_\\-]+\\s*")
     id = z$match
 
@@ -68,8 +59,7 @@ readPCS = function(file) {
     result[[id]] = par
   }
 
-  for (i in seq_along(lines.cond)) {
-    line = lines.cond[i]
+  for (line in lines.cond) {
     s = stri_trim_both(stri_split_fixed(line, "|")[[1L]])
     id1 = s[1L]
     stopifnot(id %in% names(result))
