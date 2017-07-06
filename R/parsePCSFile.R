@@ -1,17 +1,23 @@
-readPCS = function(file) {
-  consume = function(s, regexp) {
-    loc = stri_locate_first_regex(s, regexp)[1L, ]
-    e = substr(s, loc[1L], loc[2L])
-    r = paste0(stri_sub(s, 1, loc[1L] - 1L), stri_sub(s, loc[2L] + 1L, stri_length(s)))
-    list(match = stri_trim_both(e), rest = stri_trim_both(r))
-  }
+consume = function(s, regexp) {
+  loc = stri_locate_first_regex(s, regexp)[1L, ]
+  e = substr(s, loc[1L], loc[2L])
+  r = paste0(stri_sub(s, 1, loc[1L] - 1L), stri_sub(s, loc[2L] + 1L, stri_length(s)))
+  list(match = stri_trim_both(e), rest = stri_trim_both(r))
+}
 
-  parseDefault = function(s, convert = as.character) {
-    s = consume(s, "\\[.*\\]")
-    s = stri_trim_both(stri_replace_all_regex(s$match, "[\\[\\]]", ""))
-    convert(s)
-  }
+parseDefault = function(s, convert = as.character) {
+  s = consume(s, "\\[.*\\]")
+  s = stri_trim_both(stri_replace_all_regex(s$match, "[\\[\\]]", ""))
+  convert(s)
+}
 
+#' @title Read and parse PCS files
+#'
+#' @param file [\code{character(1)}].\cr
+#'   Path to the PCS file.
+#' @return \code{\link{ParamSet}}.
+#' @export
+parsePCSFile = function(file) {
   assertFileExists(file, access = "r", extension = "pcs")
 
   lines = stri_read_lines(file)
@@ -68,7 +74,6 @@ readPCS = function(file) {
     id2 = s[1L]
     stopifnot(id2 %in% names(result))
 
-    # now take parse values and quote them
     vals = stri_trim_both(stri_split_fixed(stri_replace_all_regex(s[2L], "[{}]", ""), ",")[[1L]])
     req = sprintf("%s %%in%% c('%s')", id2, stri_flatten(vals, "','"))
     req = quote(req)
