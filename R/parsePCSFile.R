@@ -1,14 +1,17 @@
 consume = function(s, regexp) {
   loc = stri_locate_first_regex(s, regexp)[1L, ]
-  e = substr(s, loc[1L], loc[2L])
-  r = paste0(stri_sub(s, 1, loc[1L] - 1L), stri_sub(s, loc[2L] + 1L, stri_length(s)))
+  e = stri_sub(s, loc[1L], loc[2L])
+  r = stri_join(stri_sub(s, 1L, loc[1L] - 1L), stri_sub(s, loc[2L] + 1L, stri_length(s)))
   list(match = stri_trim_both(e), rest = stri_trim_both(r))
 }
 
-parseDefault = function(s, convert = as.character) {
+parseDefault = function(s) {
   s = consume(s, "\\[.*\\]")
-  s = stri_trim_both(stri_replace_all_regex(s$match, "[\\[\\]]", ""))
-  convert(s)
+  stri_trim_both(stri_replace_all_regex(s$match, "[\\[\\]]", ""))
+}
+
+stri_split_trim = function(x, sep = ",") {
+  stri_trim_both(stri_split_fixed(x, sep)[[1L]])
 }
 
 #' @title Read and parse PCS files
@@ -44,37 +47,36 @@ parsePCSFile = function(file) {
     if (stri_startswith_fixed(z$rest, "[")) { # num or int param
       z = consume(z$rest, "^\\[.*?\\]")
       bounds = stri_replace_all_regex(z$match, "[\\[\\]]", "")
-      bounds = as.numeric(stri_trim_both(stri_split_fixed(bounds, ",")[[1L]]))
+      bounds = as.numeric(stri_split_trim(bounds))
       if (stri_detect_fixed(z$rest, "i")) {
-        def = parseDefault(z$rest, as.integer)
+        def = as.numeric(parseDefault(z$rest))
         par = makeIntegerParam(id = id, lower = bounds[1L], upper = bounds[2L], default = def)
       } else {
-        def = parseDefault(z$rest, as.double)
+        def = as.integer(parseDefault(z$rest))
         par = makeNumericParam(id = id, lower = bounds[1L], upper = bounds[2L], default = def)
       }
-    } else if (stri_startswith_fixed(z$rest, "{")) {
-      # discrete
+    } else if (stri_startswith_fixed(z$rest, "{")) { # discrete
       z = consume(z$rest, "^\\{.*\\}")
       values = stri_replace_all_regex(z$match, "[{}]", "")
-      values = stri_trim_both(stri_split_fixed(values, ",")[[1L]])
+      values = stri_split_trim(values)
       def = parseDefault(z$rest)
       par = makeDiscreteParam(id = id, values = values, default = def)
     } else {
-      stop("Should not happen!")
+      stop("Illegal format")
     }
     result[[id]] = par
   }
 
   for (line in lines.cond) {
-    s = stri_trim_both(stri_split_fixed(line, "|")[[1L]])
+    s = stri_split_trim(line, "|")
     id1 = s[1L]
     stopifnot(id %in% names(result))
 
-    s = stri_trim_both(stri_split_fixed(s[2L], " in ")[[1L]])
+    s = stri_split_trim(s[2L], " in ")
     id2 = s[1L]
     stopifnot(id2 %in% names(result))
 
-    vals = stri_trim_both(stri_split_fixed(stri_replace_all_regex(s[2L], "[{}]", ""), ",")[[1L]])
+    vals = stri_split_trim(stri_replace_all_regex(s[2L], "[{}]", ""))
     req = sprintf("%s %%in%% c('%s')", id2, stri_flatten(vals, "','"))
     req = quote(req)
     result[[id1]]$requires = req
