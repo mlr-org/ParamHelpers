@@ -69,8 +69,6 @@
 #'   Can be an object created either with \code{expression} or \code{quote},
 #'   the former type is auto-converted into the later.
 #'   Only really useful if the parameter is included in a \code{\link{ParamSet}}.
-#'   Note that if your dependent parameter is a logical Boolean you need to verbosely write
-#'   \code{requires = quote(a == TRUE)} and not \code{requires = quote(a)}.
 #'   Default is \code{NULL} which means no requirements.
 #' @param tunable [\code{logical(1)}]\cr
 #'   Is this parameter tunable?
