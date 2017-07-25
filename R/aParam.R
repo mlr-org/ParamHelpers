@@ -135,7 +135,7 @@ makeParam = function(id, type, learner.param, len = 1L, lower = NULL, upper = NU
     assertFunction(trafo)
   if (!is.null(requires)) {
     requires = convertExpressionToCall(requires)
-    assertClass(requires, "call")
+    assertSubset(mode(requires), c("call", "name"))
   }
   assertList(special.vals)
 

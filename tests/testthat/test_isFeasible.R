@@ -99,3 +99,15 @@ test_that("isFeasible works when len=NA, and default is given (with other length
   expect_true(isFeasible(p, c(10,10,10)))
   expect_false(isFeasible(p, c(-1)))
 })
+
+test_that("atomic requires", {
+  ps = makeParamSet(
+    makeLogicalParam("a"),
+    makeIntegerParam("b", 0, 1, requires = quote(a))
+  )
+
+  expect_true(isFeasible(ps, list(a = TRUE, b = 0)))
+  expect_true(isFeasible(ps, list(a = FALSE, b = NA)))
+  expect_false(isFeasible(ps, list(a = TRUE, b = NA)))
+  expect_false(isFeasible(ps, list(a = FALSE, b = 0)))
+})
