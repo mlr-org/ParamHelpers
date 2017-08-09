@@ -2,16 +2,16 @@
 % Please edit documentation in R/LearnerParam.R, R/makeLearnerParamFuns.R
 \name{LearnerParam}
 \alias{LearnerParam}
-\alias{makeDiscreteLearnerParam}
-\alias{makeDiscreteVectorLearnerParam}
-\alias{makeFunctionLearnerParam}
-\alias{makeIntegerLearnerParam}
-\alias{makeIntegerVectorLearnerParam}
-\alias{makeLogicalLearnerParam}
-\alias{makeLogicalVectorLearnerParam}
 \alias{makeNumericLearnerParam}
 \alias{makeNumericVectorLearnerParam}
+\alias{makeIntegerLearnerParam}
+\alias{makeIntegerVectorLearnerParam}
+\alias{makeDiscreteLearnerParam}
+\alias{makeDiscreteVectorLearnerParam}
+\alias{makeLogicalLearnerParam}
+\alias{makeLogicalVectorLearnerParam}
 \alias{makeUntypedLearnerParam}
+\alias{makeFunctionLearnerParam}
 \title{Create a description object for a parameter of a machine learning algorithm.}
 \usage{
 makeNumericLearnerParam(id, lower = -Inf, upper = Inf, allow.inf = FALSE,
@@ -48,28 +48,31 @@ makeUntypedLearnerParam(id, default, when = "train", requires = NULL,
   tunable = TRUE, special.vals = list())
 
 makeFunctionLearnerParam(id, default, when = "train", requires = NULL,
-  special.vals = list())
+  tunable = TRUE, special.vals = list())
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr
 Name of parameter.}
 
-\item{lower}{[\code{numeric}]\cr
+\item{lower}{[\code{numeric} | \code{expression}]\cr
 Lower bounds.
 A singe value of length 1 is automatically replicated to \code{len} for vector parameters.
+If \code{len = NA} you can only pass length-1 scalars.
 Default is \code{-Inf}.}
 
-\item{upper}{[\code{numeric}]\cr
+\item{upper}{[\code{numeric} | \code{expression}]\cr
 Upper bounds.
 A singe value of length 1 is automatically replicated to \code{len} for vector parameters.
+If \code{len = NA} you can only pass length-1 scalars.
 Default is \code{Inf}.}
 
 \item{allow.inf}{[\code{logical(1)}]\cr
 Allow infinite values for numeric and numericvector params to be feasible settings.
 Default is \code{FALSE}.}
 
-\item{default}{[any]\cr
+\item{default}{[any concrete value | \code{expression}]\cr
 Default value used in learner.
+Note: When this is a discrete parameter make sure to use a VALUE here, not the NAME of the value.
 If this argument is missing, it means no default value is available.}
 
 \item{when}{[\code{character(1)}]\cr
@@ -102,7 +105,7 @@ Default is an empty list.}
 Length of vector parameter.
 Can be set to \code{NA} to define a vector with unspecified length.}
 
-\item{values}{[\code{vector} | \code{list}]\cr
+\item{values}{[\code{vector} | \code{list} | \code{expression}]\cr
 Possible discrete values. Instead of using a vector of atomic values,
 you are also allowed to pass a list of quite \dQuote{complex} R objects,
 which are used as discrete choices. If you do the latter,
@@ -119,9 +122,8 @@ Note that you can set \code{length} to \code{NA}
 
 The S3 class is a \code{\link{Param}} which additionally stores these elements:
 \describe{
-\item{default [any]}{See argument of same name.}
-\item{has.default [\code{logical(1)}]}{Was a default value provided?}
 \item{when [\code{character(1)}]}{See argument of same name.}
 }
-}
 
+See the note in \code{\link{Param}} about being able to pass expressions to certain arguments.
+}

@@ -23,7 +23,7 @@ test_that("isFeasible ParamSet", {
   expect_match(attr(res, "warning"), "Param c=2 is set but does not meet requirements")
   expect_true((res = isFeasible(ps, list(a = 2, c = NA), filter = TRUE)))
   expect_true(isFeasible(ps, list(c = 2), filter = TRUE, use.defaults = TRUE))
-  
+
   #make sure we can ignore defaults if they contradict a new setting
   ps = makeParamSet(
     makeIntegerParam("a", default = 1L, requires = quote(b == 2)),
@@ -87,8 +87,27 @@ test_that("length of vectors", {
     makeNumericVectorLearnerParam("c", len = 4L, lower = -1, upper = 5),
     keys = "n"
   )
-  
+
   expect_true(isFeasible(ps, list(a = 1, b = 2, c = rep(3, 4))))
   expect_false((res = isFeasible(ps, list(a = 1, b = 2, c = 3))))
   expect_match(attr(res, "warning"), "The parameter setting c=3 does not meet constraints")
+})
+
+# we had a bug here, see issue #145
+test_that("isFeasible works when len=NA, and default is given (with other lengths than in isFeasible)", {
+  p = makeIntegerVectorLearnerParam(id = "test", default = c(10,10), lower = 0)
+  expect_true(isFeasible(p, c(10,10,10)))
+  expect_false(isFeasible(p, c(-1)))
+})
+
+test_that("atomic requires", {
+  ps = makeParamSet(
+    makeLogicalParam("a"),
+    makeIntegerParam("b", 0, 1, requires = quote(a))
+  )
+
+  expect_true(isFeasible(ps, list(a = TRUE, b = 0)))
+  expect_true(isFeasible(ps, list(a = FALSE, b = NA)))
+  expect_false(isFeasible(ps, list(a = TRUE, b = NA)))
+  expect_false(isFeasible(ps, list(a = FALSE, b = 0)))
 })

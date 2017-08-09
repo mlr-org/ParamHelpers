@@ -3,6 +3,10 @@ ParamHelpers_1.10:
 - new functions
 -- getRequirements
 -- isSpecialValue
+-- getTypeStringsLogical, getTypeStringsCharacter, getTypeStringsAll
+-- isNumericTypeString, isIntegerTypeString,
+   isDiscreteTypeString, isLogicalTypeString, isCharacterTypeString, isVectorTypeString
+-- generateDesignOfDefaults
 
 ParamHelpers_1.9:
 - Many parameters can now be expressions which can be evaluated later while

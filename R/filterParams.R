@@ -1,7 +1,7 @@
 #' @title Get parameter subset of only certain parameters.
 #'
 #' @description
-#' Parameter order is not changed. 
+#' Parameter order is not changed.
 #' It is possible to filter via multiple arguments, e.g., first filter based on id, then the type and lastly tunable.
 #' The order in which the filters are executed is always fixed (id > type > tunable).
 #'
@@ -21,7 +21,7 @@
 #'   \code{TRUE}, \code{FALSE} or \code{c(TRUE, FALSE)}.
 #'   The default is \code{c(TRUE, FALSE)}, i.e. none of the parameters will be filtered out.
 #' @param check.requires [\code{logical(1)}]\cr
-#'   Toggle whether it should be checked that all requirements in the \code{\link{ParamSet}} are still valid after filtering or not. 
+#'   Toggle whether it should be checked that all requirements in the \code{\link{ParamSet}} are still valid after filtering or not.
 #'   This check is done after filtering and will throw an error if those Params are filtered which other Params need for their requirements.
 #'   Default is \code{FALSE}.
 #' @return [\code{\link{ParamSet}}].
@@ -52,9 +52,7 @@ filterParams = function(par.set, ids = NULL, type = NULL, tunable = c(TRUE, FALS
     par.set$pars = Filter(function(p) p$id %in% ids, par.set$pars)
   }
   if (!is.null(type)) {
-    assertSubset(type, c("numeric", "integer", "numericvector", "integervector", "discrete",
-        "discretevector", "logical", "logicalvector", "character", "charactervector",
-        "function", "untyped"))
+    assertSubset(type, getTypeStringsAll())
     par.set$pars = Filter(function(p) p$type %in% type, par.set$pars)
   }
   assertLogical(tunable, min.len = 1L, max.len = 2L, unique = TRUE)

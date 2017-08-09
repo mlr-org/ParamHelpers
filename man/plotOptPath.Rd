@@ -58,4 +58,3 @@ types of variables. For every iteration up to 4 types of plots can be generated:
 One plot for the distribution of points in X and Y space respectively and plots
 for the trend of specified X variables, Y variables and extra measures over the time.
 }
-

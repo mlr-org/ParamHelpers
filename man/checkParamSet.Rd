@@ -33,4 +33,3 @@ ps = makeParamSet(
 )
 checkParamSet(ps, dict = list(p = 3, z = "b"))
 }
-

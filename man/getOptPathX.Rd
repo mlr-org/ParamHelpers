@@ -40,4 +40,3 @@ Other optpath: \code{\link{OptPath}},
   \code{\link{getOptPathY}}, \code{\link{setOptPathElDOB}},
   \code{\link{setOptPathElEOL}}
 }
-

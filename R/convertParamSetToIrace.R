@@ -22,8 +22,9 @@ convertParamSetToIrace = function(par.set, as.chars = FALSE) {
   count = 1L
   for (i in seq_along(par.set$pars)) {
     p = par.set$pars[[i]]
+    ptype = p$type
     type = switch(
-      p$type,
+      ptype,
       numeric = "r",
       numericvector = "r",
       integer = "i",
@@ -36,17 +37,17 @@ convertParamSetToIrace = function(par.set, as.chars = FALSE) {
     )
     for (j in seq_len(p$len)) {
       id = if (p$len == 1L) p$id else paste(p$id, j, sep = "")
-      if (p$type %in% c("numeric", "numericvector"))
+      if (isNumericTypeString(ptype, include.int = FALSE))
         line = sprintf('%s "" %s (%g, %g)', id, type, p$lower[j], p$upper[j])
-      else if (p$type %in% c("integer", "integervector"))
+      else if (isIntegerTypeString(ptype))
         line = sprintf('%s "" %s (%i, %i)', id, type, p$lower[j], p$upper[j])
-      else if (p$type %in% c("discrete", "discretevector", "logical", "logicalvector")) {
+      else if (isDiscreteTypeString(ptype, include.logical = TRUE)) {
         v = paste("\"", names(p$values), "\"", sep = "")
         line = sprintf('%s "" %s (%s)', id, type, collapse(v))
       } else  {
         stopf("Unknown parameter type: %s", p$type)
       }
-      if (!is.null(p$requires)) {
+      if (hasRequires(p)) {
         line = paste(line, collapse(deparse(p$requires, width.cutoff = 500L), sep=""), sep = " | ")
       }
       lines[count] = line
@@ -64,7 +65,7 @@ convertParamSetToIrace = function(par.set, as.chars = FALSE) {
       if (isNumeric(p, include.int = TRUE)) {
         pids = getParamIds(p, repeated = TRUE, with.nr = TRUE)
         for (j in seq_len(p$len)) {
-          if (isNumericStrict(p))
+          if (isNumeric(p, include.int = FALSE))
             params$boundary[[pids[j]]] = c(p$lower[j], p$upper[j])
           if (isInteger(p))
             params$boundary[[pids[j]]] = as.integer(c(p$lower[j], p$upper[j]))

@@ -2,8 +2,8 @@
 % Please edit documentation in R/filterParams.R
 \name{filterParams}
 \alias{filterParams}
-\alias{filterParamsDiscrete}
 \alias{filterParamsNumeric}
+\alias{filterParamsDiscrete}
 \title{Get parameter subset of only certain parameters.}
 \usage{
 filterParams(par.set, ids = NULL, type = NULL, tunable = c(TRUE, FALSE),
@@ -37,7 +37,7 @@ Vector of allowed values for the property \code{tunable}. Accepted arguments are
 The default is \code{c(TRUE, FALSE)}, i.e. none of the parameters will be filtered out.}
 
 \item{check.requires}{[\code{logical(1)}]\cr
-Toggle whether it should be checked that all requirements in the \code{\link{ParamSet}} are still valid after filtering or not. 
+Toggle whether it should be checked that all requirements in the \code{\link{ParamSet}} are still valid after filtering or not.
 This check is done after filtering and will throw an error if those Params are filtered which other Params need for their requirements.
 Default is \code{FALSE}.}
 
@@ -53,7 +53,7 @@ Default is \code{TRUE}.}
 [\code{\link{ParamSet}}].
 }
 \description{
-Parameter order is not changed. 
+Parameter order is not changed.
 It is possible to filter via multiple arguments, e.g., first filter based on id, then the type and lastly tunable.
 The order in which the filters are executed is always fixed (id > type > tunable).
 }
@@ -76,4 +76,3 @@ filterParams(ps, type = "numeric", tunable = TRUE)
 # filter for all numeric parameters among "u", "v" and "x"
 filterParams(ps, type = "numeric", ids = c("u", "v", "x"))
 }
-

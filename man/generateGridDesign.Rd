@@ -66,4 +66,3 @@ ps = makeParamSet(
 )
 generateGridDesign(ps, resolution = c(x1 = 4, x2 = 5), trafo = TRUE)
 }
-

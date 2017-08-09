@@ -53,4 +53,3 @@ ps = makeParamSet(
 isFeasible(ps, list(0, "a")) # True
 isFeasible(ps, list("a", 0)) # False, wrong order
 }
-

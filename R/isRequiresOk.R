@@ -15,8 +15,7 @@
 #' @export
 isRequiresOk = function(par.set, par.vals, ids = names(par.vals), use.defaults = TRUE) {
   assertClass(par.set, "ParamSet")
-  assertList(par.vals)
-  assertNamed(par.vals)
+  assertList(par.vals, names = "named")
   if (is.numeric(ids))
     assertInteger(ids, lower = 1L, upper = length(par.vals), unique = TRUE)
   else

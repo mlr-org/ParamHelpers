@@ -52,7 +52,7 @@ isFeasible.Param = function(par, x, use.defaults = FALSE, filter = FALSE) {
 #' @export
 isFeasible.LearnerParam = function(par, x, use.defaults = FALSE, filter = FALSE) {
   # we don't have to consider requires here, it is not a param set
-  constraintsOkLearnerParam(par, x)
+  constraintsOkParam(par, x)
 }
 
 #' @export
@@ -118,13 +118,13 @@ constraintsOkParam = function(par, x) {
     return(TRUE)
   inValues = function(v) any(vlapply(par$values, function(w) isTRUE(all.equal(w, v))))
   ok = if (type == "numeric")
-    is.numeric(x) && length(x) == 1 && (par$allow.inf || is.finite(x)) && checkBoundsOrExpr(par = par, x = x)
+    is.numeric(x) && length(x) == 1 && (par$allow.inf || is.finite(x)) && inBoundsOrExpr(par = par, x = x)
   else if (type == "integer")
-    is.numeric(x) && length(x) == 1 && is.finite(x) && checkBoundsOrExpr(par = par, x = x) && x == as.integer(x)
+    is.numeric(x) && length(x) == 1 && is.finite(x) && inBoundsOrExpr(par, x) && x == as.integer(x)
   else if (type == "numericvector")
-    is.numeric(x) && checkLength(par, x) && all((par$allow.inf | is.finite(x)) & checkBoundsOrExprVec(par = par, x = x))
+    is.numeric(x) && checkLength(par, x) && all((par$allow.inf | is.finite(x)) & inBoundsOrExpr(par, x))
   else if (type == "integervector")
-    is.numeric(x) && checkLength(par, x) && all(is.finite(x) & checkBoundsOrExprVec(par = par, x = x) & x == as.integer(x))
+    is.numeric(x) && checkLength(par, x) && all(is.finite(x) & inBoundsOrExpr(par, x) & x == as.integer(x))
   else if (type == "discrete")
     inValues(x)
   else if (type == "discretevector")
@@ -139,30 +139,10 @@ constraintsOkParam = function(par, x) {
     is.character(x) && checkLength(par, x) && !anyMissing(x)
   else if (type == "function")
     is.function(x)
-
   # if we have cnames, check them
   if (!is.null(par$cnames))
     ok = ok && !is.null(names(x)) && all(names(x) == par$cnames)
-
   return(ok)
-}
-
-constraintsOkLearnerParam = function(par, x) {
-  if (isSpecialValue(par, x))
-    return(TRUE)
-  inValues = function(v) any(vlapply(par$values, function(w) isTRUE(all.equal(w, v))))
-  type = par$type
-  # extra case for unkown dim in vector
-  if (type == "numericvector")
-    is.numeric(x) && checkLength(par, x) && all(is.finite(x) & checkBoundsOrExprVec(par = par, x = x))
-  else if (type == "integervector")
-    is.numeric(x) && checkLength(par, x) && all(is.finite(x) & checkBoundsOrExprVec(par = par, x = x) & x == as.integer(x))
-  else if (type == "logicalvector")
-    is.logical(x) && checkLength(par, x) && !anyMissing(x)
-  else if (type == "discretevector")
-    is.list(x) && checkLength(par, x) && all(vlapply(x, inValues))
-  else
-    constraintsOkParam(par, x)
 }
 
 # checks if the requires part of the i-th param is valid for value x (x[[i]] is value or i-th param)
@@ -176,11 +156,8 @@ requiresOk = function(par, x) {
 
 
 # helper function which checks whether 'x' lies within the boundaries (unless they are expressions)
-checkBoundsOrExpr = function(par, x)
-  (is.expression(par$lower) || x >= par$lower) && (is.expression(par$upper) || x <= par$upper)
-
-checkBoundsOrExprVec = function(par, x)
-  (is.expression(par$lower) | x >= par$lower) & (is.expression(par$upper) | x <= par$upper)
+inBoundsOrExpr = function(par, x)
+  (is.expression(par$lower) || all(x >= par$lower)) && (is.expression(par$upper) || all(x <= par$upper))
 
 checkLength = function(par, x)
   (is.expression(par$len) || is.na(par$len) || length(x) == par$len)

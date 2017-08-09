@@ -17,4 +17,3 @@ Parameter or parameter set.}
 \code{TRUE} iff the parameter is a vector parameter or all parameters in the
 set are vector parameters.
 }
-

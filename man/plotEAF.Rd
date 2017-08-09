@@ -35,4 +35,3 @@ We changed the defaults of \code{\link[eaf]{eafplot}} in the following way:
   values and linetypes changed, too. With our colors / linetypes default it is
   possible to distinguish 6 different algorithms. But this can again be overwritten by the user.
 }
-
