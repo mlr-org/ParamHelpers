@@ -19,4 +19,3 @@ Splits up vector params into a multiple length-1 params.
 Sometimes a useful conversion if it is nicer to operate on
 the individual normal params.
 }
-

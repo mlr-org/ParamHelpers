@@ -3,19 +3,28 @@
 \name{getTypeStrings}
 \alias{getTypeStrings}
 \alias{getTypeStringsAll}
-\alias{getTypeStringsDiscrete}
-\alias{getTypeStringsInteger}
 \alias{getTypeStringsNumeric}
 \alias{getTypeStringsNumericStrict}
+\alias{getTypeStringsInteger}
+\alias{getTypeStringsCharacter}
+\alias{getTypeStringsDiscrete}
+\alias{getTypeStringsLogical}
+\alias{getTypeStringsAll}
 \title{Get parameter type-strings.}
 \usage{
+getTypeStringsAll()
+
 getTypeStringsNumeric(include.int = TRUE)
 
 getTypeStringsNumericStrict()
 
 getTypeStringsInteger()
 
+getTypeStringsCharacter()
+
 getTypeStringsDiscrete(include.logical = TRUE)
+
+getTypeStringsLogical()
 
 getTypeStringsAll()
 }
@@ -34,4 +43,3 @@ Default is \code{TRUE}.}
 \description{
 Returns type strings used in \code{param$type} for certain groups of parameters.
 }
-
