@@ -21,7 +21,7 @@ Roxygen: list(wrap = FALSE)
 Imports:
     backports,
     BBmisc (>= 1.10),
-    checkmate (>= 1.8.1),
+    checkmate (>= 1.8.2),
     fastmatch,
     methods
 Suggests:
@@ -39,5 +39,5 @@ Suggests:
     testthat
 LazyData: yes
 ByteCompile: yes
-Version: 1.10
+Version: 1.11
 RoxygenNote: 6.0.1
