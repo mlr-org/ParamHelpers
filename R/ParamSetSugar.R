@@ -11,35 +11,42 @@ funct = list
 untyped = list
 
 
-#' @title Turn the argument list into a \code{ParamSet} of \code{LearnerParam}s
+#' @title Turn the argument list into a \code{ParamSet}
 #'
 #' @description
 #'
-#' \code{pSS}, short for \code{paramSetSugar}, is a shorthand API for \code{ParamHelpers}
+#' \code{pSS}, short for \dQuote{ParamSet Sugar}, is a shorthand API for \code{\link{makeParamSet}}
 #' which enables entry of \code{\link{ParamSet}}s in short form. It behaves similarly to
 #' \code{\link{makeParamSet}}, but instead of having to construct each parameter individually,
 #' the parameters can be given in shorthand form with a convenient syntax, making use of R's
 #' nonstandard evaluation.
 #'
+#' This makes definition of \code{\link{ParamSet}}s shorter and more readable.
+#'
+#' The difference between \code{pSS} and \code{pSSLrn} is only in the default value of \code{.pss.learner.params}
+#' being \code{FALSE} for the former and \code{TRUE} for the latter.
+#'
+#' @section Details:
 #' The arguments are of the form
 #'
 #' \code{name = default: type range [^ dimension] [settings]}.
 #'
 #' \code{name} is any valid R identifier name.
 #'
-#' \dQuote{= default} Determines the 'default' setting
-#' in \dQuote{makeXXXLearnerParam}. Note that this is different from an R function parameter
+#' \code{= default} Determines the 'default' setting
+#' in \code{makeXXXParam}. Note that this is different from an R function parameter
 #' default value, in that it serves only as information to the user and does not set the
-#' parameter to this value if it is not given. To define `no default`, use NA or
+#' parameter to this value if it is not given. To define \sQuote{no default}, use \code{NA} or
 #' leave the \dQuote{= default} part out. Leaving it out can cause problems when R's static
-#' type checker verifies a package, so this is *only* recommended for interactive sessions
-#' and top-level applications! (To actually set a parameter default to NA, put it in parentheses)
+#' type checker verifies a package, so this is \emph{only} recommended for interactive sessions
+#' and top-level applications. (To actually set a parameter default to NA, use \code{(NA)} in parentheses)
 #'
 #' \code{type} is one of
-#' \dQuote{integer}, \dQuote{numeric}, \dQuote{logical}, \dQuote{discrete}, \dQuote{funct}, \dQuote{character}, \dQuote{untyped}
+#' \dQuote{integer}, \dQuote{numeric}, \dQuote{logical}, \dQuote{discrete}, \dQuote{funct}, \dQuote{character}, \dQuote{untyped}.
+#' Each of these types leads to a \code{\link{Param}} or \code{\link{LearnerParam}} of the given type to be created.
 #'
-#' \code{range} is absent for type \dQuote{logical}, \dQuote{funct}, \dQuote{character}, or \dQuote{untyped}. For \dQuote{discrete},
-#' it is either \code{[valuelist]} with \code{valuelist} evaluating to a list,
+#' \code{range} is optional and only used for \emph{integer}, \emph{numeric}, and \emph{discrete} parameters.
+#' For \dQuote{discrete}, it is either \code{[valuelist]} with \code{valuelist} evaluating to a list,
 #' or of the form \code{[value1, value2, ...]}, creating a discrete parameter of character
 #' or numeric values according to \code{value1},
 #' \code{value2} etc. If \code{type} is one of \dQuote{integer} or \dQuote{numeric},
@@ -47,21 +54,17 @@ untyped = list
 #' and \code{upBound} must either be numerical (or integer) values indicating the
 #' lower and upper bound, or may be missing (indicating the absence of a bound). To indicate
 #' an exclusive bound, prefix the values with a tilde (\dQuote{~}). For a \dQuote{numeric} variable, to
-#' indicate an unbounded value which may not be infinite, you can use \code{~Inf} resp \code{~-Inf},
+#' indicate an unbounded value which may not be infinite, you can use \code{~Inf} or \code{~-Inf},
 #' or use tilde-dot (\dQuote{~.}).
 #'
-#' \code{^ dimension} may be absent, resulting in a normal \code{\link{LearnerParam}}, or present,
-#' resulting in a \code{VectorLearnerParam}. Note that a one-dimensional \code{VectorLearnerParam}
-#' is distinct from a normal \code{\link{LearnerParam}}.
+#' \code{^ dimension} is optionally determining the dimension of a \sQuote{vector} parameter.
+#' If it is absent, the result is a normal \code{\link{Param}} or \code{\link{LearnerParam}}, if it is present,
+#' the result is a \code{Vector(Learner)Param}. Note that a one-dimensional \code{Vector(Learner)Param}
+#' is distinct from a normal \code{(Learner)Param}.
 #'
-#' \code{settings} may be a collection of further settings to supply to \code{makeXXXLearnerParam}
-#' and is optional. To specify a series of settings, put in double square brackets (\code{[[}, \code{]]}),
+#' \code{settings} may be a collection of further settings to supply to \code{makeXXXParam}
+#' and is optional. To specify one or more settings, put in double square brackets (\code{[[}, \code{]]}),
 #' and comma-separate settings if more than one is present.
-#'
-#' This makes definition of \code{\link{ParamSet}}s shorter and more readable.
-#'
-#' The difference between \code{pSS} and \code{pSSLrn} is only in the default value of \code{.pss.learner.params}
-#' being \code{FALSE} for the former and \code{TRUE} for the latter.
 #'
 #' @param ... Parameters, see description.
 #' @param .pss.learner.params [\code{logical}]\cr
@@ -73,15 +76,21 @@ untyped = list
 #'
 #' @examples
 #' pSSLrn(a = NA: integer [~0, ]^2 [[requires = expression(b != 0)]],
-#'        b = -10: numeric [~., 0], c: discrete [x, y, 1])
+#'        b = -10: numeric [~., 0],
+#'        c: discrete [x, y, 1],
+#'        d: logical,
+#'        e: integer)
+#'
 #' # is equivalent to
+#'
 #' makeParamSet(
-#'     makeIntegerVectorLearnerParam('a', len = 2, lower = 1,  # note exclusive bound
+#'     makeIntegerVectorLearnerParam("a", len = 2, lower = 1,  # note exclusive bound
 #'          upper = Inf, requires = expression(b != 0)),
-#'     makeNumericLearnerParam('b', lower = -Inf, upper = 0,
+#'     makeNumericLearnerParam("b", lower = -Inf, upper = 0,
 #'          allow.inf = FALSE, default = -10),  # note infinite value is prohibited.
-#'     makeDiscreteLearnerParam('c', values = list(x = "x", y = "y", `1` = 1))
-#' )
+#'     makeDiscreteLearnerParam("c", values = list(x = "x", y = "y", `1` = 1),
+#'     makeLogicalLearnerParam("d"),
+#'     makeIntegerLearnerParam("e"))
 #'
 #'
 #' @export
