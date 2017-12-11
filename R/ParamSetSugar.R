@@ -44,6 +44,7 @@ untyped = list
 #' \code{type} is one of
 #' \dQuote{integer}, \dQuote{numeric}, \dQuote{logical}, \dQuote{discrete}, \dQuote{funct}, \dQuote{character}, \dQuote{untyped}.
 #' Each of these types leads to a \code{\link{Param}} or \code{\link{LearnerParam}} of the given type to be created.
+#' Note that \dQuote{character} is not available if \sQuote{Learner}-parameters are created.
 #'
 #' \code{range} is optional and only used for \emph{integer}, \emph{numeric}, and \emph{discrete} parameters.
 #' For \dQuote{discrete}, it is either \code{[valuelist]} with \code{valuelist} evaluating to a list,
@@ -114,10 +115,10 @@ pSSLrn = function(..., .pss.learner.params = TRUE, .pss.env = parent.frame()) {
 ### Auxiliary functions
 
 # formerr: Give informational error about malformed parameter
-formerr = function(pstring, specific) {
+formerr = function(pstring, pattern, ...) {
     stopf("Parameter '%s' must be of the form\n%s\n%s", pstring,
           "NAME = DEFAULT: TYPE [RANGE] [^ DIMENSION] [SETTINGS]",
-          specific)
+          sprintf(pattern, ...))
 }
 
 # get the makeXXXParam function appropriate for the type and vector-ness
@@ -161,6 +162,115 @@ getConstructor = function(type, is.learner, is.vector) {
   }
 }
 
+
+### parsing single parameter
+# this function does the heavy lifting:
+# it takes the name and expression of a given parameter and returns
+# the constructed ParamSet.
+# @param name [character(1)] the "name" of this item in the call object, this is the name of the parameter, if present.
+# @param thispar [language] the rest of the expression in the call, to be parsed
+# @param is.learner [logical(1)] whether to construct a LearnerParam
+# @param pss.env [environment] the environment to use
+# @return [Param | LearnerParam] the constructed parameter.
+parseSingleParameter = function(name, thispar, is.learner, pss.env) {
+  constructor.params = list()
+  additional.settings = list()
+  is.vector = FALSE
+  pstring = deparseJoin(thispar)  # represent this parameter in warning / error messages
+  if (name != "") {
+    pstring = paste(name, "=", pstring)
+  }
+
+  if (length(thispar) < 3 || !identical(thispar[[1]], quote(`:`))) {
+    formerr(pstring, "`:` was missing or at unexpected position.")
+  }
+
+  if (name == "") {  # no default, i.e. param is not of the form 'parname = default: type'
+    constructor.params$id = as.character(thispar[[2]])
+  } else {
+    constructor.params$id = name
+    if (!identical(thispar[[2]], NA)) {
+      # the following uses single braces + list() to keep 'NULL' values
+      constructor.params["default"] = list(eval(thispar[[2]], envir = pss.env))
+    }
+  }
+
+  pdeco = thispar[[3]]  # pdeco: the part after the ':'
+
+  # We now need to go up the table of operator precedences, see 'help(Syntax)'
+  # We check the operators '^' (dimension), '[[' (additional settings), '[' (range)
+
+  # ** dimension **
+  if (is.recursive(pdeco) && identical(pdeco[[1]], quote(`^`))) {
+    rl = parseDimension(pdeco, pstring, pss.env)
+    pdeco = rl$pdeco  # replace pdeco with what's left after removing dimension part
+    constructor.params$len = rl$len
+    is.vector = TRUE
+  }
+
+  # ** settings **
+  if (is.recursive(pdeco) && identical(pdeco[[1]], quote(`[[`))) {
+    additional.settings = as.list(pdeco)
+    additional.settings[[1]] = NULL  # delete `[[`
+    additional.settings[[1]] = NULL  # delete part before `[[`
+    additional.settings = lapply(additional.settings, function(x) eval(x, envir = pss.env))
+    pdeco = pdeco[[2]]  # replace pdeco with what's left after removing settings part
+  }
+
+  # ** range (if any) **
+  if (!is.recursive(pdeco)) {
+    pdeco = list(pdeco)  # so we can access [[1]]
+  }
+  hasrange = identical(pdeco[[1]], quote(`[`))
+  if (hasrange) {
+    pdeco[[1]] = NULL
+  }
+
+  # from here on, pdeco[[1]] is the type, pdeco[[2]], ... is the range
+
+  # ** actual parameter type **
+  if (!is.name(pdeco[[1]])) {
+    formerr(pstring, "Unknown parameter type %s", deparseJoin(pdeco[[1]]))
+  }
+
+  ptype = as.character(pdeco[[1]])
+
+  if (is.null(getConstructor(ptype, is.learner, is.vector))) {
+    if (ptype == "character") {
+      formerr(pstring, "Parameter type 'character' not allowed for Learner params.")
+    }
+    formerr(pstring, "Unknown parameter type %s", ptype)
+  }
+
+  # ** check sanity of 'range' part **
+  if (hasrange && ptype %nin% c("discrete", "numeric", "integer")) {
+    formerr(pstring, "'%s' parameter may not have range parameter: %s", ptype, deparseJoin(pdeco))
+  }
+  if (!hasrange && length(pdeco) > 1) {
+    formerr(pstring, "'%s' parameter with unexpected postfix: %s", pstring, deparseJoin(pdeco))
+  }
+  if (hasrange && length(pdeco) == 1) {
+    formerr(pstring, "'%s' may not have empty range.", ptype)
+  }
+
+  # build the arguments to the make***Param constructor call in the 'constructor.params' variable
+  if (ptype == "discrete") {
+    if (!hasrange) {
+      formerr(pstring, "discrete parameter must be of the form 'param: discrete[val1, val2]'\nRange suffix ([...] part) is missing.")
+    }
+    constructor.params$values = parseDiscrete(pdeco, pstring, pss.env)  # range is an enumeration of items, or a list
+  }
+  if (ptype %in% c("numeric", "integer")) {
+    if (hasrange) {
+      constructor.params = insert(constructor.params, parseNumeric(pdeco, ptype, pstring, pss.env)) # range is [lower, upper]
+    } else if (ptype == "numeric") {
+      constructor.params$allow.inf = TRUE
+    }
+  }
+  constructor.params = insert(constructor.params, additional.settings)
+  do.call(getConstructor(ptype, is.learner, is.vector), constructor.params, quote = TRUE)
+}
+
 ### parameter parsing sub-functions
 
 # parseDimension: parse the '^n' part indicating a vector
@@ -176,8 +286,8 @@ parseDimension = function(pdeco, pstring, pss.env) {
     pdeco = pdeco[[2]]  # remove '^...' part
   }
   len = eval(exponent, envir = pss.env)
-  if (!is.numeric(len) && !is.na(len)) {
-    formerr(pstring, sprintf("`^` found, but exponent %s did not eval to numeric.", deparseJoin(exponent)))
+  if (!is.atomic(len) || (!is.numeric(len) && !is.na(len))) {
+    formerr(pstring, "`^` found, but exponent %s did not eval to numeric.", deparseJoin(exponent))
   }
   list(pdeco = pdeco, len = len)
 }
@@ -197,7 +307,7 @@ parseDiscrete = function(pdeco, pstring, pss.env) {
       } else if (is.numeric(item)) {
         item
       } else {
-        formerr(pstring, sprintf("value list %s invalid", deparseJoin(pdeco)))
+        formerr(pstring, "value list %s invalid", deparseJoin(vallist))
       }
     })
     names(vallist) = sapply(vallist, as.character)
@@ -223,7 +333,7 @@ parseNumeric = function(pdeco, ptype, pstring, pss.env) {
       }
       if (is.infinite(value)) {
         if (ptype == "integer") {
-          formerr(pstring, '"."-bounds (unbounded but excluding "Inf") are only allowed for "numeric" variables.')
+          formerr(pstring, '"~."-bounds (unbounded but excluding "Inf") are only allowed for "numeric" variables.')
         }
         if ((value < 0) == lower) {
           value = ifelse(lower, -quasi.inf, quasi.inf)
@@ -271,85 +381,6 @@ parseNumeric = function(pdeco, ptype, pstring, pss.env) {
   rl
 }
 
-### parsing single parameter
-# this function does the heavy lifting:
-# it takes the name and expression of a given parameter and returns
-# the constructed ParamSet.
-parseSingleParameter = function(name, thispar, is.learner, pss.env) {
-  constructor.params = list()
-  additional.settings = list()
-  is.vector = FALSE
-  pstring = deparseJoin(thispar)
-  if (name != "") {
-    pstring = paste(name, "=", pstring)
-  }
-
-  if (!identical(thispar[[1]], quote(`:`))) {
-    formerr(pstring, "`:` was missing or at unexpected position.")
-  }
-
-  if (name == "") {  # no default
-    constructor.params$id = as.character(thispar[[2]])
-  } else {
-    constructor.params$id = name
-    if (!identical(thispar[[2]], NA)) {
-      constructor.params["default"] = list(eval(thispar[[2]], envir = pss.env))
-    }
-  }
-
-  pdeco = thispar[[3]]
-  if (is.recursive(pdeco) && identical(pdeco[[1]], quote(`^`))) { # dimension
-    rl = parseDimension(pdeco, pstring, pss.env)
-    pdeco = rl$pdeco
-    constructor.params$len = rl$len
-    is.vector = TRUE
-  }
-  if (is.recursive(pdeco) && identical(pdeco[[1]], quote(`[[`))) {  # settings
-    additional.settings = as.list(pdeco)
-    additional.settings[[1]] = NULL  # delete `[[`
-    additional.settings[[1]] = NULL  # delete part before `[[`
-    additional.settings = lapply(additional.settings, function(x) eval(x, envir = pss.env))
-    pdeco = pdeco[[2]]
-  }
-  if (!is.recursive(pdeco)) {
-    pdeco = list(pdeco)  # so we can access [[1]]
-  }
-  if (identical(pdeco[[1]], quote(`[`))) {
-    pdeco[[1]] = NULL
-  } else if (!(
-    identical(pdeco[[1]], quote(logical)) || identical(pdeco[[1]], quote(funct)) ||
-    identical(pdeco[[1]], quote(character)) || identical(pdeco[[1]], quote(untyped)))) {
-    # the only type that may have no range attached is `logical`
-    if (as.character(pdeco[[1]]) %in% c("integer", "numeric", "logical", "discrete")) {
-      formerr(pstring, sprintf("range is missing"))
-    } else {
-      formerr(pstring, sprintf("range must be indicated using square brackets"))
-    }
-  }
-  ptype = as.character(pdeco[[1]])
-  if (!ptype %in% c("integer", "numeric", "logical", "discrete", "funct", "character", "untyped")) {
-    formerr(pstring, sprintf("Unknown parameter type %s", deparseJoin(pdeco[[1]])))
-  }
-
-  # check sanity of 'range' part
-  needspostfix = ptype %in% c("discrete", "numeric", "integer")
-  if (!needspostfix && length(pdeco) > 1) {
-    formerr(pstring, sprintf("Logical parameter with unexpected postfix: %s", deparseJoin(pdeco)))
-  }
-  if (needspostfix && length(pdeco) == 1) {
-    formerr(pstring, sprintf("Parameter of type '%s' needs range postfix.", ptype))
-  }
-
-  # interpret range of discrete parameters
-  if (ptype == "discrete") {
-    constructor.params$values = parseDiscrete(pdeco, pstring, pss.env)
-  }
-  if (ptype %in% c("numeric", "integer")) {
-    constructor.params = insert(constructor.params, parseNumeric(pdeco, ptype, pstring, pss.env))
-  }
-  constructor.params = insert(constructor.params, additional.settings)
-  do.call(getConstructor(ptype, is.learner, is.vector), constructor.params, quote = TRUE)
-}
 
 # deparseJoin: deparse, but work with longer than 500 char expressions, mostly.
 # Note that this is a heuristic for user messages only, the result can not be
