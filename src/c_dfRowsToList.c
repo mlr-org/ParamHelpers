@@ -11,12 +11,13 @@ SEXP c_dfRowsToList(SEXP s_df, SEXP s_pars, SEXP s_types, SEXP s_parnames, SEXP 
   int type; /* type of column we are currently handling */
   int parlen; /* length of param we are currently handling */
   int colcount = 0; /* when we iterate params, what is the (first) column of s_df that corresponds? */
-  SEXP s_res, s_rowlist, s_parval, s_call;
+  SEXP s_res, s_rowlist, s_parval;
   Rboolean all_missing;
 
   /* we iterate thru rows then params. */
   s_res = PROTECT(NEW_LIST(nrow_df));
-  s_call = PROTECT(lang3(install("discreteNameToValue"), R_NilValue, R_NilValue));
+
+
   for (row = 0; row < nrow_df; row++) {
     s_rowlist = PROTECT(NEW_LIST(npars));
     /* convert row to R objects and define them in envir s_env */
@@ -69,11 +70,14 @@ SEXP c_dfRowsToList(SEXP s_df, SEXP s_pars, SEXP s_types, SEXP s_parnames, SEXP 
 
       /* convert discrete names to values */
       if (!all_missing && type == 3) {
+        SEXP ns = PROTECT(eval(lang2(install("getNamespace"), ScalarString(mkChar("ParamHelpers"))),    R_GlobalEnv));
+        SEXP s_call = PROTECT(lang3(install("discreteNameToValue"), R_NilValue, R_NilValue));
         SETCADR(s_call, VECTOR_ELT(s_pars, par));
         SETCADDR(s_call, s_parval);
-        s_parval = PROTECT(eval(s_call, R_GlobalEnv));
-        UNPROTECT(1); /* eval */
+        s_parval = PROTECT(eval(s_call, ns));
+        UNPROTECT(3); /* ns, s_call, ? */
       }
+
       /* only support for cnames for num, int, log and char vecs currently */
       if (type == 1 || type == 2 || type == 4 || type == 5)
         SET_NAMES(s_parval, VECTOR_ELT(s_cnames, par));
@@ -86,6 +90,6 @@ SEXP c_dfRowsToList(SEXP s_df, SEXP s_pars, SEXP s_types, SEXP s_parnames, SEXP 
     SET_VECTOR_ELT(s_res, row, s_rowlist);
     UNPROTECT(1); /* s_rowlist */
   }
-  UNPROTECT(2); /* s_res, s_call */
+  UNPROTECT(1); /* s_res*/
   return s_res;
 }
