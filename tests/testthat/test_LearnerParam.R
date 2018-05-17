@@ -81,8 +81,8 @@ test_that("untyped", {
 })
 
 
-if (interactive()) {
 test_that("s3 objs works for values", {
+  skip_if_not_installed("mboost")
   library(mboost)
   vals = list(a = AdaExp(), b = Binomial())
   p = makeDiscreteLearnerParam("x", values = vals)
@@ -90,7 +90,6 @@ test_that("s3 objs works for values", {
   p = makeDiscreteLearnerParam("x", values = vals, default = AdaExp())
   capture.output(print(p))
 })
-}
 
 test_that("unknown length works", {
   p = makeNumericVectorLearnerParam("x", len = NA, lower = 1)

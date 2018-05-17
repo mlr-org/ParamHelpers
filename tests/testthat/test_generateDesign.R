@@ -208,7 +208,8 @@ test_that("list of further arguments passed to lhs function produces no error", 
     makeDiscreteParam("x", values = c("a", "b", "c")),
     makeNumericParam("realA", lower = 0, upper = 100)
   )
-  generateDesign(10L, ps, fun.args = list(preserveDraw = TRUE))
+  des = generateDesign(10L, ps, fun.args = list(preserveDraw = TRUE))
+  expect_data_frame(des)
 })
 
 test_that("removing duplicates", {
