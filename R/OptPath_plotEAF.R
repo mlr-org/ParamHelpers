@@ -79,14 +79,13 @@ plotEAF = function(opt.paths, xlim = NULL, ylim = NULL, ...) {
     col = c("darkgrey", "darkgrey", "darkgrey", "black", "black", "black"),
     lty =  c("solid", "dashed", "dotdash", "solid", "dashed", "dotdash")
   )
-  dots = list(...)
-  dots = insert(defaults, dots)
-  args = list(f)
+  args = list(...)
+  args = insert(defaults, args)
   args$data = data
   args$groups = quote(.algo)
   args$maximise = !minimize
   args$xlim = xlim
   args$ylim = ylim
-  do.call(eaf::eafplot, c(args, dots))
+  do.call(eaf::eafplot, c(list(f), args)) # due to not so good programming in eafplot the first argument can not be named if it's a formula
   return(data)
 }
