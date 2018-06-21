@@ -28,7 +28,7 @@ test_that("convertParamSetToIrace", {
     makeIntegerVectorParam("y2", len = 2, lower = 0:1, upper = 4),
     makeDiscreteVectorParam("z2", len = 2, values = c("a", "b", "c"))
   )
-  target.runner = function(experiment, config = list()) list(cost = 1, time = NA)
+  target.runner = function(experiment, config = list()) list(cost = 1)
   runIrace(ps, target.runner, max.exps = 300)
   ps = makeParamSet(
     makeDiscreteParam("x1", values = c("a", "b")),
@@ -44,7 +44,7 @@ test_that("convertParamSetToIrace", {
       stop("foo")
     if ((v$x1 == "a" && v$x2 == "FALSE" && is.na(v$x3)) || (!(v$x1 == "a" && v$x2 == "FALSE") && !is.na(v$x3)))
       stop("requires failed")
-    list(cost = 1, time = NA)
+    list(cost = 1)
   }
   runIrace(ps, target.runner, max.exps = 300)
 })
