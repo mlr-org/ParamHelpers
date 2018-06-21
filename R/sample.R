@@ -34,23 +34,23 @@ sampleValue = function(par, discrete.names = FALSE, trafo = FALSE) {
 
 #' @export
 sampleValue.Param = function(par, discrete.names = FALSE, trafo = FALSE) {
+  assertFlag(discrete.names)
+  assertFlag(trafo)
   type = par$type
-  if (isNumericTypeString(type, include.int = TRUE))
-    if (any(is.infinite(c(par$lower, par$upper))))
-      stop("Cannot sample with Inf bounds!")
   if (!is.null(par$len) && is.na(par$len))
     stop("Cannot sample with NA length!")
-  if (type == "numeric") {
-    x = runif(1, min = par$lower, max = par$upper)
-  } else if (type == "numericvector") {
-    x = runif(par$len, min = par$lower, max = par$upper)
-  } else if (type == "integer") {
-    x = as.integer(round(runif(1, min = par$lower-0.5, max = par$upper+0.5)))
-  } else if (type == "integervector") {
-    x = as.integer(round(runif(par$len, min = par$lower-0.5, max = par$upper+0.5)))
-  } else if (type %in% c("logical", "logicalvector")) {
+
+  if (isNumericTypeString(type)) {
+    if (anyInfinite(c(par$lower, par$upper)))
+      stop("Cannot sample with Inf bounds!")
+    if (isIntegerTypeString(type)) {
+      x = as.integer(round(runif(par$len, min = par$lower-0.5, max = par$upper+0.5)))
+    } else {
+      x = runif(par$len, min = par$lower, max = par$upper)
+    }
+  } else if (isLogicalTypeString(type)) {
     x = sample(c(TRUE, FALSE), par$len, replace = TRUE)
-  } else if (type %in% c("discrete", "discretevector")) {
+  } else if (isDiscreteTypeString(type, FALSE)) {
     x = sample(names(par$values), par$len, replace = TRUE)
     if (!discrete.names) {
       x = if (type  == "discretevector")
@@ -58,7 +58,7 @@ sampleValue.Param = function(par, discrete.names = FALSE, trafo = FALSE) {
       else
         par$values[[x]]
     }
-  } else if (type %in% c("function", "untyped", "character", "charactervector")) {
+  } else {
     stopf("Cannot generate random value for %s variable!", type)
   }
   if (trafo && !is.null(par$trafo))

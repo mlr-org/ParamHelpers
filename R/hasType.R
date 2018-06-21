@@ -23,21 +23,21 @@ hasDiscrete = function(par.set, include.logical = TRUE) {
 #' @rdname hasType
 hasInteger = function(par.set) {
   assertClass(par.set, "ParamSet")
-  return(hasSomeParamsOfTypes(par.set, types = c("integer", "integervector")))
+  hasSomeParamsOfTypes(par.set, types = getTypeStringsInteger())
 }
 
 #' @export
 #' @rdname hasType
 hasLogical = function(par.set) {
   assertClass(par.set, "ParamSet")
-  return(hasSomeParamsOfTypes(par.set, types = c("logical", "logicalvector")))
+  hasSomeParamsOfTypes(par.set, types = getTypeStringsLogical())
 }
 
 #' @export
 #' @rdname hasType
 hasCharacter = function(par.set) {
   assertClass(par.set, "ParamSet")
-  return(hasSomeParamsOfTypes(par.set, types = c("character", "charactervector")))
+  hasSomeParamsOfTypes(par.set, types = getTypeStringsCharacter())
 }
 
 #' @export
@@ -51,11 +51,10 @@ hasNumeric = function(par.set, include.int = TRUE) {
 
 # is at least one of types somewhere in par.set?
 hasSomeParamsOfTypes = function(par.set, types) {
-  return(any(types %in% getParamTypes(par.set, df.cols = FALSE, with.nr = FALSE , use.names = FALSE)))
+  any(getParamTypes(par.set, df.cols = FALSE, with.nr = FALSE, use.names = FALSE) %fin% types)
 }
 
 # are all param types contained in 'types'
 hasAllParamsOfTypes = function(par.set, types) {
-  return(all(getParamTypes(par.set, df.cols = FALSE, with.nr = FALSE , use.names = FALSE) %in% types))
+  all(getParamTypes(par.set, df.cols = FALSE, with.nr = FALSE, use.names = FALSE) %fin% types)
 }
-

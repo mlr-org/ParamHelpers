@@ -19,8 +19,10 @@ BugReports: https://github.com/berndbischl/ParamHelpers/issues
 License: BSD_2_clause + file LICENSE
 Roxygen: list(wrap = FALSE)
 Imports:
+    backports,
     BBmisc (>= 1.10),
     checkmate (>= 1.8.2),
+    fastmatch,
     methods
 Suggests:
     akima,

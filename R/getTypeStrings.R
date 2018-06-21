@@ -11,50 +11,48 @@ NULL
 #' @export
 #' @rdname getTypeStrings
 getTypeStringsAll = function() {
-  c("numeric", "integer", "numericvector", "integervector", "discrete",
-    "discretevector", "logical", "logicalvector", "character", "charactervector",
-    "function", "untyped")
+  ph$type.strings
 }
 
 #' @export
 #' @rdname getTypeStrings
 getTypeStringsNumeric = function(include.int = TRUE) {
   if (include.int)
-    c("numeric", "numericvector", "integer", "integervector")
+    ph$type.strings.numeric
   else
-    c("numeric", "numericvector")
+    ph$type.strings.double
 }
 
 #' @export
 #' @rdname getTypeStrings
 getTypeStringsNumericStrict = function() {
-  c("numeric", "numericvector")
+  ph$type.strings.double
 }
 
 #' @export
 #' @rdname getTypeStrings
 getTypeStringsInteger = function() {
-  c("integer", "integervector")
+  ph$type.strings.integer
 }
 
 #' @export
 #' @rdname getTypeStrings
 getTypeStringsCharacter = function() {
-  c("character", "charactervector")
+  ph$type.strings.character
 }
 
 #' @export
 #' @rdname getTypeStrings
 getTypeStringsDiscrete = function(include.logical = TRUE) {
   if (include.logical)
-    c("discrete", "discretevector", "logical", "logicalvector")
+    c(ph$type.strings.discrete, ph$type.strings.logical)
   else
-    c("discrete", "discretevector")
+    ph$type.strings.discrete
 }
 
 #' @export
 #' @rdname getTypeStrings
 getTypeStringsLogical = function() {
-  c("logical", "logicalvector")
+  ph$type.strings.logical
 }
 

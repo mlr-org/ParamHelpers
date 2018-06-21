@@ -16,36 +16,35 @@ NULL
 #' @export
 #' @rdname isTypeString
 isNumericTypeString = function(type, include.int = TRUE) {
-  type %in% getTypeStringsNumeric(include.int)
+  type %fin% getTypeStringsNumeric(include.int)
 }
 
 #' @export
 #' @rdname isTypeString
 isIntegerTypeString = function(type) {
-  type %in% getTypeStringsInteger()
+  type %fin% getTypeStringsInteger()
 }
 
 #' @export
 #' @rdname isTypeString
 isCharacterTypeString = function(type) {
-  type %in% getTypeStringsCharacter()
+  type %fin% getTypeStringsCharacter()
 }
 
 #' @export
 #' @rdname isTypeString
 isDiscreteTypeString = function(type, include.logical = TRUE) {
-  type %in% getTypeStringsDiscrete(include.logical)
+  type %fin% getTypeStringsDiscrete(include.logical)
 }
 
 #' @export
 #' @rdname isTypeString
 isLogicalTypeString = function(type) {
-  type %in% getTypeStringsLogical()
+  type %fin% getTypeStringsLogical()
 }
 
 #' @export
 #' @rdname isTypeString
 isVectorTypeString = function(type) {
-  grepl("vector", fixed = TRUE, type)
+  endsWith(type, "vector")
 }
-
