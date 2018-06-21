@@ -80,7 +80,7 @@ makeOptPath = function(par.set, y.names, minimize, add.transformed.x = FALSE,
     names(minimize) = y.names
   if (any(c("dob", "eol", "error.message") %in% (union(x.names, y.names))))
     stop("'dob', 'eol' and 'error.message' are not allowed in parameter names or 'y.names'!")
-  ee = new.env()
+  ee = new.env(parent = emptyenv())
   ee$dob = ee$eol = integer(0)
 
   # potentially init error.message and exec.time in env
