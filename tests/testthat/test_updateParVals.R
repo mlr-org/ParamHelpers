@@ -13,7 +13,11 @@ test_that("updateParVals works", {
     makeLogicalParam("f", default = TRUE))
   pc = updateParVals(ps, pa, pb)
   expect_equal(pc, list(a = 0, c = 3, d = 4, e = 5))
-  expect_warning(updateParVals(ps, pa, pb, warn = TRUE), "ParamSetting b=2")
+  expect_warning(updateParVals(ps, pa, pb, warn = TRUE), "ParamSettings \\(b=2\\)")
+
+  pb2 = list(a = 0, f = FALSE)
+  pc2 = updateParVals(ps, pa, pb2)
+  expect_equal(pc2, list(a = 0, f = FALSE, d = 4))
 
   pb2 = list(a = 0, f = FALSE)
   pc2 = updateParVals(ps, pa, pb2)
@@ -44,4 +48,28 @@ test_that("updateParVals works", {
   pb = list(b = 3)
   pc = updateParVals(ps, pa, pb)
   expect_equal(pc, list(b = 3, c = TRUE))
+  
+  #more complicated stuff
+  ps = makeParamSet(
+    makeDiscreteLearnerParam(id = "a", default = "a2",
+                             values = c("a1", "a2",  "a3"),
+                             requires = quote(!a %in% c("a2") || b == TRUE)),
+    makeLogicalLearnerParam(id = "b", default = FALSE, tunable = FALSE)
+  )
+  pa = list(a = "a1")
+  pb = list()
+  pc = updateParVals(ps, pa, pb)
+  expect_equal(pc, pa)
+
+  ps = makeParamSet(
+    makeIntegerParam("a", default = 10L)
+  )
+  pa = list(a = 0L)
+  pb = list()
+  pc = updateParVals(ps, pa, pb)
+  expect_equal(pc, pa)
+  pb2 = list(a = 5L)
+  pc2 = updateParVals(ps, pa, pb2)
+  expect_equal(pc2, pb2)
+
 })
