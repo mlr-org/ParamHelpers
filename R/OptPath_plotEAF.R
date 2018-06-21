@@ -81,12 +81,11 @@ plotEAF = function(opt.paths, xlim = NULL, ylim = NULL, ...) {
   )
   args = list(...)
   args = insert(defaults, args)
-  args$x = f
   args$data = data
   args$groups = quote(.algo)
   args$maximise = !minimize
   args$xlim = xlim
   args$ylim = ylim
-  do.call(eaf::eafplot, args)
+  do.call(eaf::eafplot, c(list(f), args)) # due to not so good programming in eafplot the first argument can not be named if it's a formula
   return(data)
 }
