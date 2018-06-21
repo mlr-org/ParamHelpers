@@ -7,12 +7,12 @@ Description: Functions for parameter descriptions and operations in black-box
     general be programmed on. A useful OptPath object (archive) to log function
     evaluations is also provided.
 Authors@R: c(
-    person("Bernd", "Bischl", email = "bernd_bischl@gmx.net", role = c("aut", "cre")),
+    person("Bernd", "Bischl", email = "bernd_bischl@gmx.net", role = "aut"),
     person("Michel", "Lang", email = "michellang@gmail.com", role = "aut"),
+    person("Jakob", "Richter", email = "code@jakob-r.de", role = c("aut", "cre")),
     person("Jakob", "Bossek", email = "j.bossek@gmail.com", role = "aut"),
     person("Daniel", "Horn", email = "daniel.horn@tu-dortmund.de", role = "aut"),
     person("Karin", "Schork", email = "karin.schork@tu-dortmund.de", role = "ctb"),
-    person("Jakob", "Richter", email = "code@jakob-r.de", role = "aut"),
     person("Pascal", "Kerschke", email = "kerschke@uni-muenster.de", role = "aut"))
 URL: https://github.com/berndbischl/ParamHelpers
 BugReports: https://github.com/berndbischl/ParamHelpers/issues
