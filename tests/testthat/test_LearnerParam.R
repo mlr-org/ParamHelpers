@@ -81,16 +81,17 @@ test_that("untyped", {
 })
 
 
-if (interactive()) {
-test_that("s3 objs works for values", {
-  library(mboost)
-  vals = list(a = AdaExp(), b = Binomial())
+test_that("s4 objs works for values", {
+  setClass("Dummy", representation(name = "character", id = "numeric"))
+  obj.a = new("Dummy", name = "foo", id = 1)
+  obj.b = new("Dummy", name = "bar", id = 2)
+  vals = list(a = obj.a, b = obj.b)
   p = makeDiscreteLearnerParam("x", values = vals)
-  expect_true(isFeasible(p, AdaExp()))
-  p = makeDiscreteLearnerParam("x", values = vals, default = AdaExp())
-  capture.output(print(p))
+  expect_true(isFeasible(p, new("Dummy", name = "foo", id = 1)))
+  expect_false(isFeasible(p, new("Dummy", name = "foo", id = 2)))
+  p = makeDiscreteLearnerParam("x", values = vals, default = new("Dummy", name = "foo", id = 1))
+  expect_output(print(p), "a,b")
 })
-}
 
 test_that("unknown length works", {
   p = makeNumericVectorLearnerParam("x", len = NA, lower = 1)
