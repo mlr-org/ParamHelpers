@@ -53,8 +53,12 @@ paramValueToString.Param = function(par, x, show.missing.values = FALSE, num.for
     else
       return("")
   }
-  if (isDiscrete(par, include.logical = FALSE))
+  if (isDiscrete(par, include.logical = FALSE)) {
     x = discreteValueToName(par, x)
+    if (length(x) == 0) {
+      x = "list()"
+    }
+  }
   s = convertToShortString(x, num.format = num.format)
 }
 

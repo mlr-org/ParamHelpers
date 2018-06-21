@@ -12,6 +12,8 @@
 \alias{makeLogicalVectorLearnerParam}
 \alias{makeUntypedLearnerParam}
 \alias{makeFunctionLearnerParam}
+\alias{makeCharacterLearnerParam}
+\alias{makeCharacterVectorLearnerParam}
 \title{Create a description object for a parameter of a machine learning algorithm.}
 \usage{
 makeNumericLearnerParam(id, lower = -Inf, upper = Inf, allow.inf = FALSE,
@@ -49,6 +51,13 @@ makeUntypedLearnerParam(id, default, when = "train", requires = NULL,
 
 makeFunctionLearnerParam(id, default, when = "train", requires = NULL,
   tunable = TRUE, special.vals = list())
+
+makeCharacterLearnerParam(id, default, when = "train", requires = NULL,
+  tunable = TRUE, special.vals = list())
+
+makeCharacterVectorLearnerParam(id, len = as.integer(NA), default,
+  when = "train", requires = NULL, tunable = TRUE,
+  special.vals = list())
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr
@@ -92,8 +101,7 @@ Is this parameter tunable?
 Defining a parameter to be not-tunable allows to mark arguments like, e.g., \dQuote{verbose} or
 other purely technical stuff, and allows them to be excluded from later automatic optimization
 procedures that would try to consider all available parameters.
-Default is \code{TRUE} (except for \code{untyped}, \code{function}, \code{character} and
-\code{characterVector}) which means it is tunable.}
+Default is \code{TRUE}, which means it is tunable.}
 
 \item{special.vals}{[\code{list()}]\cr
 A list of special values the parameter can except which are outside of the defined range.

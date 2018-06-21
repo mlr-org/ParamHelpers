@@ -76,10 +76,11 @@ makeDiscreteVectorParam = function(id, len, values, default, requires = NULL,
 
 #' @rdname Param
 #' @export
-makeFunctionParam = function(id, default = default, requires = NULL, special.vals = list()) {
+makeFunctionParam = function(id, default = default, requires = NULL, tunable = TRUE,
+  special.vals = list()) {
   makeParam(id = id, type = "function", learner.param = FALSE,
     values = NULL, default = default, trafo = NULL,
-    requires = requires, tunable = FALSE, special.vals = special.vals)
+    requires = requires, tunable = tunable, special.vals = special.vals)
 }
 
 #FIXME: what happens if NA is later used for untyped params? because we might interpret this as
@@ -94,19 +95,20 @@ makeUntypedParam = function(id, default, requires = NULL, tunable = TRUE, specia
 
 #' @rdname Param
 #' @export
-makeCharacterParam = function(id, default, requires = NULL, special.vals = list()) {
+makeCharacterParam = function(id, default, requires = NULL, tunable = TRUE,
+  special.vals = list()) {
   makeParam(id = id, type = "character", learner.param = FALSE,
     default = default, trafo = NULL,
-    requires = requires, tunable = FALSE, special.vals = special.vals)
+    requires = requires, tunable = tunable, special.vals = special.vals)
 }
 
 #' @rdname Param
 #' @export
 makeCharacterVectorParam = function(id, len, cnames = NULL, default,
-  requires = NULL, special.vals = list()) {
+  requires = NULL, tunable = TRUE, special.vals = list()) {
 
   makeParam(id = id, type = "charactervector", learner.param = FALSE, len = len,
     cnames = cnames, default = default,
-    trafo = NULL, requires = requires, tunable = FALSE, special.vals = special.vals)
+    trafo = NULL, requires = requires, tunable = tunable, special.vals = special.vals)
 }
 

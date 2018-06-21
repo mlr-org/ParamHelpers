@@ -64,7 +64,7 @@ makeLogicalLearnerParam = function(id, default, when = "train", requires = NULL,
 makeLogicalVectorLearnerParam = function(id, len = as.integer(NA), default, when = "train",
   requires = NULL, tunable = TRUE, special.vals = list()) {
   values = list("TRUE" = TRUE, "FALSE" = FALSE)
-  makeParam(id = id, type = "logicalvector", learner.param = TRUE, len = len,values = values,
+  makeParam(id = id, type = "logicalvector", learner.param = TRUE, len = len, values = values,
     default = default, requires = requires, tunable = tunable, special.vals = special.vals, when = when)
 }
 
@@ -79,6 +79,24 @@ makeUntypedLearnerParam = function(id, default, when = "train", requires = NULL,
 #' @export
 makeFunctionLearnerParam = function(id, default, when = "train", requires = NULL, tunable = TRUE, special.vals = list()) {
   makeParam(id = id, type = "function", learner.param = TRUE,
+    default = default, requires = requires, tunable = tunable, special.vals = special.vals, when = when)
+}
+
+
+#' @rdname LearnerParam
+#' @export
+makeCharacterLearnerParam = function(id, default, when = "train", requires = NULL, tunable = TRUE,
+  special.vals = list()) {
+  makeParam(id = id, type = "character", learner.param = TRUE,
+    default = default, requires = requires, tunable = tunable, special.vals = special.vals, when = when)
+}
+
+#' @rdname LearnerParam
+#' @export
+makeCharacterVectorLearnerParam = function(id, len = as.integer(NA), default, when = "train",
+  requires = NULL, tunable = TRUE, special.vals = list()) {
+
+  makeParam(id = id, type = "charactervector", learner.param = TRUE, len = len,
     default = default, requires = requires, tunable = tunable, special.vals = special.vals, when = when)
 }
 

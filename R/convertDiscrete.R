@@ -53,7 +53,7 @@ discreteValueToName = function(par, x) {
     return(NA_character_)
   assertClass(par, "Param")
   assertChoice(par$type, c("discrete", "discretevector"))
-  if (par$type == "discretevector" && length(x) != par$len)
+  if (par$type == "discretevector" && isTRUE(length(x) != par$len))
     stopf("Length of x must be %i!", par$len)
   ns = names(par$values)
   getIndex = function(values, v) {
@@ -65,6 +65,6 @@ discreteValueToName = function(par, x) {
   if (par$type == "discrete") {
     ns[getIndex(par$values, x)]
   } else if (par$type == "discretevector")  {
-    ns[sapply(x, getIndex, values = par$values)]
+    vcapply(x, function(x) ns[getIndex(x, values = par$values)])
   }
 }
