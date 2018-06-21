@@ -9,6 +9,7 @@
 \alias{getTypeStringsCharacter}
 \alias{getTypeStringsDiscrete}
 \alias{getTypeStringsLogical}
+\alias{getTypeStringsAll}
 \title{Get parameter type-strings.}
 \usage{
 getTypeStringsAll()
@@ -24,6 +25,8 @@ getTypeStringsCharacter()
 getTypeStringsDiscrete(include.logical = TRUE)
 
 getTypeStringsLogical()
+
+getTypeStringsAll()
 }
 \arguments{
 \item{include.int}{[\code{logical(1)}]\cr
