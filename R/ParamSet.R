@@ -148,9 +148,9 @@ makeNumericParamSet = function(id = "x", len, lower = -Inf, upper = Inf, vector 
     lower = rep(lower, len)
   if (is.numeric(upper) && length(upper) == 1L)
     upper = rep(upper, len)
-    assertNumeric(lower, len = len)
-    assertNumeric(upper, len = len)
-    assertFlag(vector)
+  assertNumeric(lower, len = len)
+  assertNumeric(upper, len = len)
+  assertFlag(vector)
   if (vector) {
     return(makeParamSet(makeNumericVectorParam(id = id, len = len, lower = lower, upper = upper)))
   } else {
