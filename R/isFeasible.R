@@ -10,8 +10,9 @@
 #'
 #' @template arg_par_or_set
 #' @param x [any] \cr
-#'   Single value to check.
-#'   For a parameter set this must be a list.
+#'   Single value to check against the \code{Param} or \code{ParamSet}.
+#'   For a \code{ParamSet} \code{x} must be a list.
+#'   \code{x} has to contain the untransformed values.
 #'   If the list is named, it is possible to only pass a subset of parameters defined
 #'   in the \code{\link{ParamSet}} \code{par}. In that case, only conditions regarding the passed
 #'   parameters are checked.
