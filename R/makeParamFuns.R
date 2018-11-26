@@ -11,11 +11,12 @@ makeNumericParam = function(id, lower = -Inf, upper = Inf, allow.inf = FALSE,
 #' @rdname Param
 #' @export
 makeNumericVectorParam = function(id, len, lower = -Inf, upper = Inf, cnames = NULL,
-  allow.inf = FALSE, default, trafo = NULL, requires = NULL,
+  allow.inf = FALSE, default, trafo = NULL, requires = NULL, distinct = FALSE,
   tunable = TRUE, special.vals = list()) {
   makeParam(id = id, type = "numericvector", learner.param = FALSE, len = len, lower = lower,
     upper = upper, cnames = cnames, allow.inf = allow.inf,
-    default = default, trafo = trafo, requires = requires, tunable = tunable, special.vals = special.vals)
+    default = default, trafo = trafo, requires = requires, tunable = tunable,
+    distinct = distinct, special.vals = special.vals)
 }
 
 #' @rdname Param
@@ -30,10 +31,11 @@ makeIntegerParam = function(id, lower = -Inf, upper = Inf, default, trafo = NULL
 #' @rdname Param
 #' @export
 makeIntegerVectorParam = function(id, len, lower = -Inf, upper = Inf, cnames = NULL,
-  default, trafo = NULL, requires = NULL, tunable = TRUE, special.vals = list()) {
+  default, trafo = NULL, requires = NULL, tunable = TRUE,
+  distinct = FALSE, special.vals = list()) {
   makeParam(id = id, type = "integervector", learner.param = FALSE, len = len, lower = lower, upper = upper,
     cnames = cnames, default = default, trafo = trafo,
-    requires = requires, tunable = tunable, special.vals = special.vals)
+    requires = requires, tunable = tunable, distinct = distinct, special.vals = special.vals)
 }
 
 #' @rdname Param
@@ -70,8 +72,9 @@ makeDiscreteVectorParam = function(id, len, values, default, requires = NULL,
   tunable = TRUE, distinct = FALSE, special.vals = list()) {
 
   makeParam(id = id, type = "discretevector", learner.param = FALSE, len = len,
-    values = values, default = default, distinct = distinct,
-    trafo = NULL, requires = requires, tunable = tunable, special.vals = special.vals)
+    values = values, default = default,
+    trafo = NULL, requires = requires, tunable = tunable,
+    distinct = distinct, special.vals = special.vals)
 }
 
 #' @rdname Param
@@ -103,10 +106,11 @@ makeCharacterParam = function(id, default, requires = NULL, special.vals = list(
 #' @rdname Param
 #' @export
 makeCharacterVectorParam = function(id, len, cnames = NULL, default,
-  requires = NULL, special.vals = list()) {
+  requires = NULL, distinct = FALSE, special.vals = list()) {
 
   makeParam(id = id, type = "charactervector", learner.param = FALSE, len = len,
     cnames = cnames, default = default,
-    trafo = NULL, requires = requires, tunable = FALSE, special.vals = special.vals)
+    trafo = NULL, requires = requires, tunable = FALSE,
+    distinct = distinct, special.vals = special.vals)
 }
 
