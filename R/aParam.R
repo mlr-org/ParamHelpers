@@ -24,6 +24,7 @@
 #'   \item{default [any concrete value | \code{expression}]}{See argument of same name.}
 #'   \item{has.default [\code{logical(1)}]}{Extra flag to really be able to check whether the user passed a default, to avoid troubles with \code{NULL} and \code{NA}.}
 #'   \item{tunable [\code{logical(1)}]}{See argument of same name.}
+#'   \item{distinct [\code{logical(1)}]}{See argument of same name.}
 #'   \item{special.vals [\code{list}]}{See argument of same name.}
 #' }
 #'
@@ -75,6 +76,9 @@
 #'   Defining a parameter to be not-tunable allows to mark arguments like, e.g., \dQuote{verbose} or other purely technical stuff.
 #'   Note that this flag is most likely not respected by optimizing procedures unless stated otherwise.
 #'   Default is \code{TRUE} (except for \code{untyped}, \code{function}, \code{character} and \code{characterVector}) which means it is tunable.
+#' @param distinct [\code{logical(1)}]\cr
+#'   Whether sampling with or without replacement should be done for vector params.
+#'   Default is to sample with replacment (\code{distinct = FALSE}).
 #' @param special.vals [\code{list()}]\cr
 #'   A list of special values the parameter can except which are outside of the defined range.
 #'   Default is an empty list.
