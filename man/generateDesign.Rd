@@ -4,8 +4,8 @@
 \alias{generateDesign}
 \title{Generates a statistical design for a parameter set.}
 \usage{
-generateDesign(n = 10L, par.set, fun, fun.args = list(), trafo = FALSE,
-  augment = 20L)
+generateDesign(n = 10L, par.set, fun, fun.args = list(),
+  trafo = FALSE, augment = 20L)
 }
 \arguments{
 \item{n}{[\code{integer(1)}]\cr

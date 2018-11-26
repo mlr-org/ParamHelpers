@@ -20,28 +20,30 @@ makeNumericParam(id, lower = -Inf, upper = Inf, allow.inf = FALSE,
   default, trafo = NULL, requires = NULL, tunable = TRUE,
   special.vals = list())
 
-makeNumericVectorParam(id, len, lower = -Inf, upper = Inf, cnames = NULL,
-  allow.inf = FALSE, default, trafo = NULL, requires = NULL,
-  tunable = TRUE, special.vals = list())
-
-makeIntegerParam(id, lower = -Inf, upper = Inf, default, trafo = NULL,
-  requires = NULL, tunable = TRUE, special.vals = list())
-
-makeIntegerVectorParam(id, len, lower = -Inf, upper = Inf, cnames = NULL,
-  default, trafo = NULL, requires = NULL, tunable = TRUE,
+makeNumericVectorParam(id, len, lower = -Inf, upper = Inf,
+  cnames = NULL, allow.inf = FALSE, default, trafo = NULL,
+  requires = NULL, distinct = FALSE, tunable = TRUE,
   special.vals = list())
+
+makeIntegerParam(id, lower = -Inf, upper = Inf, default,
+  trafo = NULL, requires = NULL, tunable = TRUE,
+  special.vals = list())
+
+makeIntegerVectorParam(id, len, lower = -Inf, upper = Inf,
+  cnames = NULL, default, trafo = NULL, requires = NULL,
+  tunable = TRUE, distinct = FALSE, special.vals = list())
 
 makeLogicalParam(id, default, requires = NULL, tunable = TRUE,
   special.vals = list())
 
-makeLogicalVectorParam(id, len, cnames = NULL, default, requires = NULL,
-  tunable = TRUE, special.vals = list())
+makeLogicalVectorParam(id, len, cnames = NULL, default,
+  requires = NULL, tunable = TRUE, special.vals = list())
 
 makeDiscreteParam(id, values, trafo = NULL, default, requires = NULL,
   tunable = TRUE, special.vals = list())
 
 makeDiscreteVectorParam(id, len, values, default, requires = NULL,
-  tunable = TRUE, special.vals = list())
+  tunable = TRUE, distinct = FALSE, special.vals = list())
 
 makeFunctionParam(id, default = default, requires = NULL,
   special.vals = list())
@@ -51,8 +53,8 @@ makeUntypedParam(id, default, requires = NULL, tunable = TRUE,
 
 makeCharacterParam(id, default, requires = NULL, special.vals = list())
 
-makeCharacterVectorParam(id, len, cnames = NULL, default, requires = NULL,
-  special.vals = list())
+makeCharacterVectorParam(id, len, cnames = NULL, default,
+  requires = NULL, distinct = FALSE, special.vals = list())
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr
@@ -95,11 +97,9 @@ Default is \code{NULL} which means no requirements.}
 
 \item{tunable}{[\code{logical(1)}]\cr
 Is this parameter tunable?
-Defining a parameter to be not-tunable allows to mark arguments like, e.g., \dQuote{verbose} or
-other purely technical stuff, and allows them to be excluded from later automatic optimization
-procedures that would try to consider all available parameters.
-Default is \code{TRUE} (except for \code{untyped}, \code{function}, \code{character} and
-\code{characterVector}) which means it is tunable.}
+Defining a parameter to be not-tunable allows to mark arguments like, e.g., \dQuote{verbose} or other purely technical stuff.
+Note that this flag is most likely not respected by optimizing procedures unless stated otherwise.
+Default is \code{TRUE} (except for \code{untyped}, \code{function}, \code{character} and \code{characterVector}) which means it is tunable.}
 
 \item{special.vals}{[\code{list()}]\cr
 A list of special values the parameter can except which are outside of the defined range.
@@ -112,6 +112,10 @@ Length of vector parameter.}
 Component names for vector params (except discrete).
 Every function in this package that creates vector values for such a param, will name
 that vector with \code{cnames}.}
+
+\item{distinct}{[\code{logical(1)}]\cr
+Whether sampling with or without replacement should be done for vector params.
+Default is to sample with replacment (\code{distinct = FALSE}).}
 
 \item{values}{[\code{vector} | \code{list} | \code{expression}]\cr
 Possible discrete values. Instead of using a vector of atomic values,
@@ -147,6 +151,7 @@ The S3 class is a list which stores these elements:
   \item{default [any concrete value | \code{expression}]}{See argument of same name.}
   \item{has.default [\code{logical(1)}]}{Extra flag to really be able to check whether the user passed a default, to avoid troubles with \code{NULL} and \code{NA}.}
   \item{tunable [\code{logical(1)}]}{See argument of same name.}
+  \item{distinct [\code{logical(1)}]}{See argument of same name.}
   \item{special.vals [\code{list}]}{See argument of same name.}
 }
 }

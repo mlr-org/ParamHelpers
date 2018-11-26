@@ -25,6 +25,8 @@ Default is \code{FALSE}.}
 [\code{list}]. For consistency always a list is returned.
 }
 \description{
+Sample n random values from a parameter or a parameter set uniformly.
+
 Dependent parameters whose requirements are not satisfied are represented by a scalar NA in the output.
 }
 \examples{

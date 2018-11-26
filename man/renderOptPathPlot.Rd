@@ -4,11 +4,12 @@
 \alias{renderOptPathPlot}
 \title{Function for plotting optimization paths.}
 \usage{
-renderOptPathPlot(op, iter, x.over.time, y.over.time, contour.name = NULL,
-  xlim = list(), ylim = list(), alpha = TRUE, log = NULL,
-  colours = c("red", "blue", "green", "orange"), size.points = 3,
-  size.lines = 1.5, impute.scale = 1, impute.value = "missing",
-  scale = "std", ggplot.theme = ggplot2::theme(legend.position = "top"),
+renderOptPathPlot(op, iter, x.over.time, y.over.time,
+  contour.name = NULL, xlim = list(), ylim = list(), alpha = TRUE,
+  log = NULL, colours = c("red", "blue", "green", "orange"),
+  size.points = 3, size.lines = 1.5, impute.scale = 1,
+  impute.value = "missing", scale = "std",
+  ggplot.theme = ggplot2::theme(legend.position = "top"),
   marked = NULL, subset.obs, subset.vars, subset.targets, short.x.names,
   short.y.names, short.rest.names)
 }

@@ -23,6 +23,8 @@ The return type is determined by the type of the parameter. For a set a named li
   of such values in the correct order is returned.
 }
 \description{
+Sample a random value from a parameter or a parameter set uniformly.
+
 Dependent parameters whose requirements are not satisfied are represented by a scalar NA in the output.
 }
 \examples{
