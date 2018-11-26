@@ -40,4 +40,5 @@ Suggests:
 LazyData: yes
 ByteCompile: yes
 Version: 1.11
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
+Encoding: UTF-8
