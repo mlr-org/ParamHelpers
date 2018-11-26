@@ -67,10 +67,10 @@ makeDiscreteParam = function(id, values, trafo = NULL, default,
 #' @rdname Param
 #' @export
 makeDiscreteVectorParam = function(id, len, values, default, requires = NULL,
-  tunable = TRUE, special.vals = list()) {
+  tunable = TRUE, distinct = FALSE, special.vals = list()) {
 
   makeParam(id = id, type = "discretevector", learner.param = FALSE, len = len,
-    values = values, default = default,
+    values = values, default = default, distinct = distinct,
     trafo = NULL, requires = requires, tunable = tunable, special.vals = special.vals)
 }
 

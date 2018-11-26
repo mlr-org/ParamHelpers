@@ -89,7 +89,7 @@
 NULL
 
 makeParam = function(id, type, learner.param, len = 1L, lower = NULL, upper = NULL, values = NULL, cnames = NULL, allow.inf = FALSE, default,
-  trafo = NULL, requires = NULL, tunable = TRUE, special.vals = list(), when) {
+  trafo = NULL, requires = NULL, distinct = FALSE, tunable = TRUE, special.vals = list(), when) {
   assertString(id)
   assert(
     checkCount(len, na.ok = learner.param),
@@ -160,6 +160,7 @@ makeParam = function(id, type, learner.param, len = 1L, lower = NULL, upper = NU
     default = default,
     trafo = trafo,
     requires = requires,
+    distinct = distinct,
     tunable = tunable,
     special.vals = special.vals
   )

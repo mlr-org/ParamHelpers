@@ -51,7 +51,11 @@ sampleValue.Param = function(par, discrete.names = FALSE, trafo = FALSE) {
   } else if (isLogicalTypeString(type)) {
     x = sample(c(TRUE, FALSE), par$len, replace = TRUE)
   } else if (isDiscreteTypeString(type, FALSE)) {
-    x = sample(names(par$values), par$len, replace = TRUE)
+    if (isTRUE(par$distinct)) {
+      x = sample(names(par$values), par$len, replace = FALSE)
+    } else {
+      x = sample(names(par$values), par$len, replace = TRUE)
+    }
     if (!discrete.names) {
       x = if (type  == "discretevector")
         par$values[x]
