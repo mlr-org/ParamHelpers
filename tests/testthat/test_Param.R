@@ -28,6 +28,9 @@ test_that("num param", {
   expect_equal(p$values, NULL)
 
   # defaults
+  p = makeNumericParam(id = "x", default = 5)
+  expect_equal(p$default, 5)
+
   p = makeNumericParam(id = "x", allow.inf = TRUE, default = Inf)
   expect_error(makeNumericParam(id = "x", allow.inf = FALSE, default = Inf), "feasible")
 
@@ -67,6 +70,13 @@ test_that("num vec param", {
   expect_true(!isFeasible(p, NULL))
   expect_true(isFeasible(p, -Inf))
 
+  # defaults
+  p = makeNumericVectorParam(id = "x", default = c(4,3,2), len = 3)
+  expect_equal(p$default, c(4,3,2))
+  expect_error(makeNumericVectorParam(id = "x", default = 1, len = 3), "feasible")
+  p = makeNumericVectorParam(id = "x", allow.inf = TRUE, default = c(Inf, 2), len = 2)
+  expect_error(makeNumericVectorParam(id = "x", allow.inf = FALSE, default = c(Inf, 2), len = 2), "feasible")
+
   ## Error conditions:
   expect_error(makeNumericVectorParam(id = "x", lower = "bam", upper = 1))
   expect_error(makeNumericVectorParam(id = "x", len = 2, lower = NA, upper = 1))
@@ -101,6 +111,10 @@ test_that("int param", {
   expect_true(!isFeasible(p, -2L))
   expect_true(!isFeasible(p, -Inf))
   expect_true(!isFeasible(p, NULL))
+
+  # defaults
+  p = makeIntegerParam(id = "x", default = 5L)
+  expect_equal(p$default, 5L)
 
   ## Error conditions:
   expect_error(makeIntegerParam(id = "x", lower = "bam", upper = 1L))
@@ -137,6 +151,11 @@ test_that("int vec param", {
   expect_true(!isFeasible(p, c(-Inf, 1)))
   expect_true(!isFeasible(p, NULL))
 
+  # defaults
+  p = makeIntegerVectorParam(id = "x", default = c(4L,3L,2L), len = 3)
+  expect_equal(p$default, c(4L,3L,2L))
+  expect_error(makeIntegerVectorParam(id = "x", default = 1L, len = 3L), "feasible")
+
   ## Error conditions:
   expect_error(makeIntegerVectorParam(id = "x", lower = "bam", upper = 1))
   expect_error(makeIntegerVectorParam(id = "x", len = 2, lower = NA, upper = 1))
@@ -171,6 +190,10 @@ test_that("discrete param", {
   expect_equal(p$lower, NULL)
   expect_equal(p$upper, NULL)
 
+  # defaults
+  p = makeDiscreteParam(id = "x", default = "zeb", values = list("zeb", "ra", 45, 22))
+  expect_equal(p$default, "zeb")
+
   ## Error conditions:
   expect_error(makeDiscreteParam(id = "x", values = list(a = 1, "a")), "names could not be guessed")
   expect_error(makeDiscreteParam(id = "x", values = list()), "No possible value")
@@ -192,6 +215,16 @@ test_that("discrete vec param", {
   expect_equal(p$lower, NULL)
   expect_equal(p$upper, NULL)
 
+  # defaults
+  p = makeDiscreteVectorParam(id = "x", default = c("zeb", "ra"), values = list("zeb", "ra", 45, 22), len = 2)
+  expect_equal(unlist(unname(p$default)), c("zeb", "ra"))
+
+  p = makeDiscreteVectorParam(id = "x", default = "zeb", values = list("zeb", "ra", 45, 22), len = 1)
+  expect_equal(unlist(unname(p$default)), "zeb")
+
+  expect_error(makeDiscreteVectorParam(id = "x", default = "zeb", values = list("zeb", "ra", 45, 22), len = 3L), "feasible")
+  expect_error(makeDiscreteVectorParam(id = "x", default = "34567", values = list("zeb", "ra", 45, 22), len = 3L), "feasible")
+
   ## Error conditions:
   expect_error(makeDiscreteVectorParam(id = "x", len = 2, values = list(a = 1, "a")), "names could not be guessed")
   expect_error(makeDiscreteVectorParam(id = "x", len = 2, values = list()), "No possible value")
@@ -209,6 +242,10 @@ test_that("logic param", {
   expect_true(!isFeasible(p, 1L))
   expect_true(!isFeasible(p, 1))
   expect_true(!isFeasible(p, NULL))
+
+  # defaults
+  p = makeLogicalParam(id = "x", default = TRUE)
+  expect_equal(p$default, TRUE)
 })
 
 test_that("logic vec param", {
@@ -221,6 +258,12 @@ test_that("logic vec param", {
   expect_true(!isFeasible(p, TRUE))
   expect_true(!isFeasible(p, FALSE))
   expect_true(!isFeasible(p, NULL))
+
+  # defaults
+  p = makeLogicalVectorParam(id = "x", default = c(TRUE, FALSE, TRUE), len = 3)
+  expect_equal(p$default, c(TRUE, FALSE, TRUE))
+
+  expect_error(makeLogicalVectorParam(id = "x", default = c(TRUE), len = 3L), "feasible")
 })
 
 test_that("character param", {
