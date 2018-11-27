@@ -129,7 +129,7 @@ constraintsOkParam = function(par, x) {
   else if (type == "discrete")
     inValues(x)
   else if (type == "discretevector")
-    is.list(x) && checkLength(par, x) && all(vlapply(x, inValues))
+    (is.vector(x) || is.list(x)) && checkLength(par, x) && all(vlapply(x, inValues))
   else if (type == "logical")
     is.logical(x) && length(x) == 1 && !is.na(x)
   else if (type == "logicalvector")
