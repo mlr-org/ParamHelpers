@@ -50,11 +50,11 @@ makeLogicalParam = function(id, default, requires = NULL, tunable = TRUE, specia
 #' @rdname Param
 #' @export
 makeLogicalVectorParam = function(id, len, cnames = NULL, default,
-  requires = NULL, tunable = TRUE, special.vals = list()) {
+  requires = NULL, tunable = TRUE, trafo = NULL, special.vals = list()) {
   values = list("TRUE" = TRUE, "FALSE" = FALSE)
   makeParam(id = id, type = "logicalvector", learner.param = FALSE, len = len,
     values = values, cnames = cnames, default = default,
-    trafo = NULL, requires = requires, tunable = tunable, special.vals = special.vals)
+    trafo = trafo, requires = requires, tunable = tunable, special.vals = special.vals)
 }
 
 #' @rdname Param
