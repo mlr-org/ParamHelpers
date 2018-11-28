@@ -124,6 +124,11 @@ makeParam = function(id, type, learner.param, len = 1L, lower = NULL, upper = NU
   } else {
     has.default = TRUE
   }
+  # allow default to be a vector to make makeDiscreteVectorParam more similar to makeDiscreteParam
+  # see https://github.com/berndbischl/ParamHelpers/pull/207
+  if (has.default && type == "discretevector" && !is.list(default)) {
+    default = as.list(default)
+  }
   # FIXME: Do we need to check for NA here? Hopefully not because this might occur in mlr?
   if (has.default && isScalarNA(default))
     warningf("NA used as a default value for learner parameter %s.\nParamHelpers uses NA as a special value for dependent parameters.", id)
