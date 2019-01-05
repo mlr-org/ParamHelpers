@@ -87,3 +87,4 @@ Other optpath: \code{\link{addOptPathEl}},
   \code{\link{setOptPathElDOB}},
   \code{\link{setOptPathElEOL}}
 }
+\concept{optpath}

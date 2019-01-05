@@ -4,7 +4,8 @@
 \alias{isRequiresOk}
 \title{Check if parameter requirements are met.}
 \usage{
-isRequiresOk(par.set, par.vals, ids = names(par.vals), use.defaults = TRUE)
+isRequiresOk(par.set, par.vals, ids = names(par.vals),
+  use.defaults = TRUE)
 }
 \arguments{
 \item{par.set}{[\code{\link{ParamSet}}]\cr
