@@ -4,9 +4,9 @@
 \alias{as.data.frame.OptPathDF}
 \title{Convert optimization path to data.frame.}
 \usage{
-\method{as.data.frame}{OptPathDF}(x, row.names = NULL, optional = FALSE,
-  include.x = TRUE, include.y = TRUE, include.rest = TRUE,
-  dob = x$env$dob, eol = x$env$eol, ...)
+\method{as.data.frame}{OptPathDF}(x, row.names = NULL,
+  optional = FALSE, include.x = TRUE, include.y = TRUE,
+  include.rest = TRUE, dob = x$env$dob, eol = x$env$eol, ...)
 }
 \arguments{
 \item{x}{[\code{\link{OptPath}}]\cr

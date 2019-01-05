@@ -1,3 +1,7 @@
+ParamHelpers_1.12:
+- improved documentation
+- speedups
+
 ParamHelpers_1.10:
 - adapt to irace 2.1 API changes
 - new functions

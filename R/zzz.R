@@ -1,10 +1,13 @@
-#' @import backports
 #' @import BBmisc
 #' @import checkmate
 #' @import methods
 #' @import stats
 #' @importFrom fastmatch %fin% fmatch
 NULL
+
+.onLoad = function(libname, pkgname) {
+  backports::import(pkgname)
+}
 
 ph = new.env(parent = emptyenv())
 ph$type.strings.integer = c("integer", "integervector")

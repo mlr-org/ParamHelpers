@@ -14,9 +14,9 @@
 \alias{makeFunctionLearnerParam}
 \title{Create a description object for a parameter of a machine learning algorithm.}
 \usage{
-makeNumericLearnerParam(id, lower = -Inf, upper = Inf, allow.inf = FALSE,
-  default, when = "train", requires = NULL, tunable = TRUE,
-  special.vals = list())
+makeNumericLearnerParam(id, lower = -Inf, upper = Inf,
+  allow.inf = FALSE, default, when = "train", requires = NULL,
+  tunable = TRUE, special.vals = list())
 
 makeNumericVectorLearnerParam(id, len = as.integer(NA), lower = -Inf,
   upper = Inf, allow.inf = FALSE, default, when = "train",
@@ -27,8 +27,8 @@ makeIntegerLearnerParam(id, lower = -Inf, upper = Inf, default,
   special.vals = list())
 
 makeIntegerVectorLearnerParam(id, len = as.integer(NA), lower = -Inf,
-  upper = Inf, default, when = "train", requires = NULL, tunable = TRUE,
-  special.vals = list())
+  upper = Inf, default, when = "train", requires = NULL,
+  tunable = TRUE, special.vals = list())
 
 makeDiscreteLearnerParam(id, values, default, when = "train",
   requires = NULL, tunable = TRUE, special.vals = list())
@@ -89,11 +89,9 @@ Default is \code{NULL} which means no requirements.}
 
 \item{tunable}{[\code{logical(1)}]\cr
 Is this parameter tunable?
-Defining a parameter to be not-tunable allows to mark arguments like, e.g., \dQuote{verbose} or
-other purely technical stuff, and allows them to be excluded from later automatic optimization
-procedures that would try to consider all available parameters.
-Default is \code{TRUE} (except for \code{untyped}, \code{function}, \code{character} and
-\code{characterVector}) which means it is tunable.}
+Defining a parameter to be not-tunable allows to mark arguments like, e.g., \dQuote{verbose} or other purely technical stuff.
+Note that this flag is most likely not respected by optimizing procedures unless stated otherwise.
+Default is \code{TRUE} (except for \code{untyped}, \code{function}, \code{character} and \code{characterVector}) which means it is tunable.}
 
 \item{special.vals}{[\code{list()}]\cr
 A list of special values the parameter can except which are outside of the defined range.

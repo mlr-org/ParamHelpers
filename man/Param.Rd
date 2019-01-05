@@ -20,22 +20,23 @@ makeNumericParam(id, lower = -Inf, upper = Inf, allow.inf = FALSE,
   default, trafo = NULL, requires = NULL, tunable = TRUE,
   special.vals = list())
 
-makeNumericVectorParam(id, len, lower = -Inf, upper = Inf, cnames = NULL,
-  allow.inf = FALSE, default, trafo = NULL, requires = NULL,
-  tunable = TRUE, special.vals = list())
-
-makeIntegerParam(id, lower = -Inf, upper = Inf, default, trafo = NULL,
+makeNumericVectorParam(id, len, lower = -Inf, upper = Inf,
+  cnames = NULL, allow.inf = FALSE, default, trafo = NULL,
   requires = NULL, tunable = TRUE, special.vals = list())
 
-makeIntegerVectorParam(id, len, lower = -Inf, upper = Inf, cnames = NULL,
-  default, trafo = NULL, requires = NULL, tunable = TRUE,
+makeIntegerParam(id, lower = -Inf, upper = Inf, default,
+  trafo = NULL, requires = NULL, tunable = TRUE,
   special.vals = list())
+
+makeIntegerVectorParam(id, len, lower = -Inf, upper = Inf,
+  cnames = NULL, default, trafo = NULL, requires = NULL,
+  tunable = TRUE, special.vals = list())
 
 makeLogicalParam(id, default, requires = NULL, tunable = TRUE,
   special.vals = list())
 
-makeLogicalVectorParam(id, len, cnames = NULL, default, requires = NULL,
-  tunable = TRUE, special.vals = list())
+makeLogicalVectorParam(id, len, cnames = NULL, default,
+  requires = NULL, tunable = TRUE, special.vals = list())
 
 makeDiscreteParam(id, values, trafo = NULL, default, requires = NULL,
   tunable = TRUE, special.vals = list())
@@ -51,8 +52,8 @@ makeUntypedParam(id, default, requires = NULL, tunable = TRUE,
 
 makeCharacterParam(id, default, requires = NULL, special.vals = list())
 
-makeCharacterVectorParam(id, len, cnames = NULL, default, requires = NULL,
-  special.vals = list())
+makeCharacterVectorParam(id, len, cnames = NULL, default,
+  requires = NULL, special.vals = list())
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr
@@ -95,11 +96,9 @@ Default is \code{NULL} which means no requirements.}
 
 \item{tunable}{[\code{logical(1)}]\cr
 Is this parameter tunable?
-Defining a parameter to be not-tunable allows to mark arguments like, e.g., \dQuote{verbose} or
-other purely technical stuff, and allows them to be excluded from later automatic optimization
-procedures that would try to consider all available parameters.
-Default is \code{TRUE} (except for \code{untyped}, \code{function}, \code{character} and
-\code{characterVector}) which means it is tunable.}
+Defining a parameter to be not-tunable allows to mark arguments like, e.g., \dQuote{verbose} or other purely technical stuff.
+Note that this flag is most likely not respected by optimizing procedures unless stated otherwise.
+Default is \code{TRUE} (except for \code{untyped}, \code{function}, \code{character} and \code{characterVector}) which means it is tunable.}
 
 \item{special.vals}{[\code{list()}]\cr
 A list of special values the parameter can except which are outside of the defined range.

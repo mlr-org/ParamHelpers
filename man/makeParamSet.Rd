@@ -66,8 +66,6 @@ The constructed S3 class is simply a list that contains the element \code{pars}.
 
 If \code{keys} are provided it will automatically be checked whether all expressions within the
 provided parameters only contain arguments that are a subset of keys.
-
-\code{makeNumericParamSet}: Convenience function for numerics.
 }
 \examples{
 makeParamSet(
