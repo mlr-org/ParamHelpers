@@ -12,7 +12,7 @@ test_that("dfRowToList", {
   expect_true(is.list(vals) && length(vals) == nrow(des))
   for (i in seq_row(des)) {
     v = vals[[i]]
-    expect_true(is.list(v) && length(v) == 3 && names(v) == c("x", "y", "z"))
+    expect_true(is.list(v) && length(v) == 3 && all(names(v) == c("x", "y", "z")))
     expect_true(identical(v$x, iris) || identical(v$x, 123))
     expect_true(is.numeric(v$y) && length(v$y) == 1 && v$y >= 1 && v$y <= 2)
     expect_true(is.numeric(v$z) && length(v$z) == 2 && all(v$z >= 10 & v$z <= 20))
@@ -31,7 +31,7 @@ test_that("requires works", {
     expect_true(is.list(vals) && length(vals) == nrow(des))
     for (i in seq_row(des)) {
       v = vals[[i]]
-      expect_true(is.list(v) && length(v) == 3L && (names(v) %in% c("x", "y", "z")))
+      expect_true(is.list(v) && length(v) == 3L && all(names(v) %in% c("x", "y", "z")))
       expect_true(is.character(v$x) && length(v$x) == 1 && v$x %in% c("a", "b"))
       if (v$x == "a") {
         expect_true(is.numeric(v$y) && length(v$y) == 1 && v$y >= 1 && v$y <= 2)

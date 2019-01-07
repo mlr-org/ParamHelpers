@@ -40,4 +40,4 @@ Suggests:
 LazyData: yes
 ByteCompile: yes
 Version: 1.12
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1

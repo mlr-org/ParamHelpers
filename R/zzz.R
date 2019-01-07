@@ -1,8 +1,8 @@
-#' @import BBmisc
 #' @import checkmate
 #' @import methods
 #' @import stats
 #' @importFrom fastmatch %fin% fmatch
+#' @rawNamespace import(BBmisc, except = isFALSE)
 NULL
 
 .onLoad = function(libname, pkgname) {
