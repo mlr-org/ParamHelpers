@@ -57,9 +57,9 @@ test_that("simple num/int/discrete/log design", {
   expect_equal(levels(des[,3]), names(ps3$pars[[3]]$values))
   expect_true(is.logical(des[,4]))
   tab = as.numeric(table(des[,3]))
-  expect_true(all(tab > 140 && tab < 180))
+  expect_true(all(tab > 140) && all(tab < 180))
   tab = as.numeric(table(des[,4]))
-  expect_true(all(tab > 200 & tab < 300))
+  expect_true(all(tab > 200) && all(tab < 300))
 })
 
 test_that("num/int/disc vec design", {

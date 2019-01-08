@@ -97,7 +97,7 @@ test_that("discrete sampling", {
   expect_true(is.list(r))
   expect_equal(length(r), 10)
   ok = function(x) is.list(x) && length(x) == 2 &&
-    (length(x[[1]]) == 0L || x[[1]] %in% 1:3) &&  (length(x[[2]]) == 0L || x[[2]] %in% 1:3)
+    (length(x[[1]]) == 0L || all(x[[1]] %in% 1:3)) &&  (length(x[[2]]) == 0L || all(x[[2]] %in% 1:3))
   expect_true(all(sapply(r, ok)))
 })
 

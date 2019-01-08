@@ -1,6 +1,7 @@
 context("convertParamSetToIrace")
 
 test_that("convertParamSetToIrace", {
+  skip_on_cran() #FIXME: Delete if IRACE checks on R 3.6 --as-cran
   requirePackages("_irace")
   runIrace = function(ps, target.runner, max.exps = 10) {
     ip = convertParamSetToIrace(ps)
