@@ -81,7 +81,7 @@ SEXP c_trafo_and_set_dep_to_na(SEXP s_res, SEXP s_types,
   SEXP s_trafo_fun, s_oldval, s_call, s_call_res; /* internal SEXPs */
   double *oldval_double; int *oldval_int;
   const char *parname; /* name of current param */
-  int eval_res; /* result of requires expression */
+  Rboolean eval_res; /* result of requires expression */
   int we_have_requires = 0; /* do we have params with requires? */
 
   /* fun part I: apply R trafo functions
@@ -174,7 +174,7 @@ SEXP c_trafo_and_set_dep_to_na(SEXP s_res, SEXP s_types,
         type = types[colcount];
         if(!isNull(s_require)) {
           s_call_res = eval(s_require, s_env);
-          eval_res = asLogical(s_call_res);
+          eval_res = LOGICAL(s_call_res)[0];
           if (!eval_res) {
             if (type == 1) { /* numerics */
               for (k = 0; k < parlen; k++)
