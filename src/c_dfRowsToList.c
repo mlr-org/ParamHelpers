@@ -70,12 +70,14 @@ SEXP c_dfRowsToList(SEXP s_df, SEXP s_pars, SEXP s_types, SEXP s_parnames, SEXP 
 
       /* convert discrete names to values */
       if (!all_missing && type == 3) {
-        SEXP ns = PROTECT(eval(lang2(install("getNamespace"), ScalarString(mkChar("ParamHelpers"))),    R_GlobalEnv));
+        SEXP pkg = PROTECT(ScalarString(mkChar("ParamHelpers")));
+        SEXP get_namespace = PROTECT(install("getNamespace"));
+        SEXP ns = PROTECT(eval(lang2(get_namespace, pkg), R_GlobalEnv));
         SEXP s_call = PROTECT(lang3(install("discreteNameToValue"), R_NilValue, R_NilValue));
         SETCADR(s_call, VECTOR_ELT(s_pars, par));
         SETCADDR(s_call, s_parval);
         s_parval = PROTECT(eval(s_call, ns));
-        UNPROTECT(3); /* ns, s_call, ? */
+        UNPROTECT(5); /* ns, s_call, ? */
       }
 
       /* only support for cnames for num, int, log and char vecs currently */
