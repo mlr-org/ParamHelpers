@@ -62,22 +62,25 @@ SEXP c_dfRowsToList(SEXP s_df, SEXP s_pars, SEXP s_types, SEXP s_parnames, SEXP 
           if (STRING_ELT(s_parval, k) != NA_STRING)
             all_missing = FALSE;
         }
+      } else {
+        error("should not happen!");
       }
 
       /* are all entries in s_parval NA ? */
       if (all_missing)
-        s_parval = ScalarLogical(NA_LOGICAL);
+        s_parval = PROTECT(ScalarLogical(NA_LOGICAL));
 
       /* convert discrete names to values */
       if (!all_missing && type == 3) {
         SEXP pkg = PROTECT(ScalarString(mkChar("ParamHelpers")));
         SEXP get_namespace = PROTECT(install("getNamespace"));
-        SEXP ns = PROTECT(eval(lang2(get_namespace, pkg), R_GlobalEnv));
+        SEXP fn = PROTECT(fn = lang2(get_namespace, pkg));
+        SEXP ns = PROTECT(ns = eval(fn, R_GlobalEnv));
         SEXP s_call = PROTECT(lang3(install("discreteNameToValue"), R_NilValue, R_NilValue));
         SETCADR(s_call, VECTOR_ELT(s_pars, par));
         SETCADDR(s_call, s_parval);
         s_parval = PROTECT(eval(s_call, ns));
-        UNPROTECT(5); /* ns, s_call, ? */
+        UNPROTECT(6); /* ns, s_call, ? */
       }
 
       /* only support for cnames for num, int, log and char vecs currently */
@@ -88,6 +91,8 @@ SEXP c_dfRowsToList(SEXP s_df, SEXP s_pars, SEXP s_types, SEXP s_parnames, SEXP 
       SET_NAMES(s_rowlist, s_parnames);
       colcount += parlen;
       UNPROTECT(1); /* s_parval  */
+      if (all_missing)
+        UNPROTECT(1);
     }
     SET_VECTOR_ELT(s_res, row, s_rowlist);
     UNPROTECT(1); /* s_rowlist */
