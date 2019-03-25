@@ -80,4 +80,9 @@ makeParamSet(
   makeIntegerParam("v", lower = expression(floor(n)), upper = 2),
   keys = c("p", "n")
 )
+makeParamSet(
+  makeNumericParam("min", lower = 0, upper = 0.8),
+  makeNumericParam("max", lower = 0.2, upper = 1),
+  forbidden = expression(min > max)
+)
 }
