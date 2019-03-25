@@ -10,13 +10,14 @@ test_that("trafoValue with param set", {
   ps = makeParamSet(
     makeIntegerParam("u", trafo=function(x) 2*x),
     makeNumericVectorParam("v", len=2, trafo=function(x) x/sum(x)),
-    makeDiscreteParam("w", values=c("a", "b"))
+    makeDiscreteParam("w", values=c("a", "b"), trafo=function(x) paste0("=", x, "=")),
+    makeDiscreteVectorParam("x", values=letters, len=3, trafo=sort)
   )
-  expect_equal(trafoValue(ps, list(3, c(2, 4), "a")), list(u=6, v=c(2/6, 4/6), w="a"))
+  expect_equal(trafoValue(ps, list(3, c(2, 4), "a", c("b", "a", "c"))), list(u=6, v=c(2/6, 4/6), w="=a=", x=c("a", "b", "c")))
   # check if error is thrown when list has different names
-  expect_error(trafoValue(ps, list(a=1, b=1, c="b")))
+  expect_error(trafoValue(ps, list(a=1, b=1, c="b", d=c("a", "b", "c"))))
   # check if trafo function is applied on correct list-slots
-  expect_equal(trafoValue(ps, list(w="b", v=1:2, u=1)), list(u = 2*1, v = 1:2/sum(1:2), w="b"))
+  expect_equal(trafoValue(ps, list(w="b", v=1:2, u=1, x=c("x", "f", "p"))), list(u = 2*1, v = 1:2/sum(1:2), w="=b=", x = c("f", "p", "x")))
 })
 
 
