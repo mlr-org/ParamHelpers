@@ -132,6 +132,11 @@ test_that("makeNumericParamset", {
   expect_equal(getParamLengths(ps), c(x = 2))
   expect_equal(getLower(ps), c(x = 10, x = 10))
   expect_equal(getUpper(ps), c(x = Inf, x = Inf))
+  ps = makeNumericParamSet(upper = 10, len = 2, vector = TRUE)
+  expect_equal(getParamIds(ps), "x")
+  expect_equal(getParamLengths(ps), c(x = 2))
+  expect_equal(getLower(ps), c(x = -Inf, x = -Inf))
+  expect_equal(getUpper(ps), c(x = 10, x = 10))
   ps = makeNumericParamSet(id = "y", upper = 3, len = 2, vector = FALSE)
   expect_equal(getParamIds(ps), c("y1", "y2"))
   expect_equal(getParamLengths(ps), c(y1 = 1, y2 = 1))
@@ -187,6 +192,13 @@ test_that("print works", {
     makeNumericVectorLearnerParam(id = "v", default = 1:2, len = 2L)
   )
   expect_output(print(ps, trafo = FALSE, used = FALSE), "numericvector")
+
+  ps = makeParamSet(
+    makeIntegerLearnerParam(id = "x", default = 50L, lower = 1L),
+    makeNumericVectorLearnerParam(id = "v", default = 1:2, len = 2L),
+    forbidden = expression(x < v[[1]])
+  )
+  expect_output(print(ps), "Forbidden region specified")
 })
 
 test_that("expressions get converted", {
@@ -205,4 +217,18 @@ test_that("expressions get converted", {
       makeLogicalLearnerParam("a", default = FALSE),
       makeLogicalLearnerParam("b", default = FALSE, requires = "a == TRUE")
     )}, "call")
+})
+
+test_that("test whether paramset fails gracefully", {
+  li <- list(
+    makeLogicalLearnerParam("a", default = FALSE),
+    makeLogicalLearnerParam("b", default = FALSE, requires = expression(a == TRUE))
+  )
+  expect_error({
+    makeParamSet(
+      makeLogicalLearnerParam("a", default = FALSE),
+      makeLogicalLearnerParam("b", default = FALSE, requires = quote(a == TRUE)),
+      params = li
+    )
+  }, regexp = "You can only use one of \\.\\.\\. or params!")
 })
