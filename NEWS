@@ -1,3 +1,6 @@
+ParamHelpers_1.13:
+- trafo allowed in DiscreteVectorParam
+
 ParamHelpers_1.12:
 - improved documentation
 - speedups
