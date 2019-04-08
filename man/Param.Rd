@@ -41,8 +41,8 @@ makeLogicalVectorParam(id, len, cnames = NULL, default,
 makeDiscreteParam(id, values, trafo = NULL, default, requires = NULL,
   tunable = TRUE, special.vals = list())
 
-makeDiscreteVectorParam(id, len, values, default, requires = NULL,
-  tunable = TRUE, special.vals = list())
+makeDiscreteVectorParam(id, len, values, trafo = NULL, default,
+  requires = NULL, tunable = TRUE, special.vals = list())
 
 makeFunctionParam(id, default = default, requires = NULL,
   special.vals = list())
