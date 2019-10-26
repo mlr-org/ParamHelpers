@@ -11,4 +11,3 @@
 isSpecialValue = function(par, x) {
   any(vlapply(par$special.vals, function(special.val) isTRUE(all.equal(x, special.val))))
 }
-

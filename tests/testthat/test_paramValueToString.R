@@ -2,11 +2,11 @@ context("paramValueToString")
 
 test_that("paramValueToString ", {
   u = makeNumericParam("u")
-  v = makeIntegerVectorParam("v", len=2)
-  w = makeDiscreteParam("w", values=list(a=1, b=list()))
+  v = makeIntegerVectorParam("v", len = 2)
+  w = makeDiscreteParam("w", values = list(a = 1, b = list()))
   x = makeLogicalParam("x")
-  y = makeLogicalVectorParam("y", len=2)
-  z = makeDiscreteVectorParam("z", len=2, values=list(a=1, b=list()))
+  y = makeLogicalVectorParam("y", len = 2)
+  z = makeDiscreteVectorParam("z", len = 2, values = list(a = 1, b = list()))
   s = makeCharacterParam("s")
   p1 = makeUntypedParam("w", default = iris)
   p2 = makeLogicalParam("t", default = NULL, special.vals = list(NULL))
@@ -24,7 +24,7 @@ test_that("paramValueToString ", {
   expect_equal(paramValueToString(s, "PH"), "PH")
   expect_equal(paramValueToString(ps, list(u = 1, v = 1:2, w = list(), x = FALSE,
     y = c(TRUE, FALSE), z = list(1, list()), s = "PH")),
-    "u=1; v=1,2; w=b; x=FALSE; y=TRUE,FALSE; z=a,b; s=PH")
+  "u=1; v=1,2; w=b; x=FALSE; y=TRUE,FALSE; z=a,b; s=PH")
   expect_equal(paramValueToString(u, expression(ceiling(n / 3))),
     "ceiling(n/3)")
   expect_equal(paramValueToString(p1, iris), "<data.frame>")
@@ -34,15 +34,15 @@ test_that("paramValueToString ", {
 test_that("requires works", {
   ps = makeParamSet(
     makeDiscreteParam("x", values = c("a", "b")),
-    makeNumericParam("y", lower=1, upper=2, requires = quote(x == "a")),
-    makeIntegerVectorParam("z", len=2, lower=1, upper=20, requires = quote(x == "b"))
+    makeNumericParam("y", lower = 1, upper = 2, requires = quote(x == "a")),
+    makeIntegerVectorParam("z", len = 2, lower = 1, upper = 20, requires = quote(x == "b"))
   )
-  expect_equal(paramValueToString(ps, list(x="a", y=1, z=NA), show.missing.values=TRUE), "x=a; y=1; z=NA")
-  expect_equal(paramValueToString(ps, list(x="b", y=NA, z=2:3), show.missing.values=TRUE), "x=b; y=NA; z=2,3")
-  expect_equal(paramValueToString(ps, list(x="b", z=2:3), show.missing.values=TRUE), "x=b; z=2,3")
-  expect_equal(paramValueToString(ps, list(x="a", y=1, z=NA), show.missing.values=FALSE), "x=a; y=1")
-  expect_equal(paramValueToString(ps, list(x="b", y=NA, z=2:3), show.missing.values=FALSE), "x=b; z=2,3")
-  expect_equal(paramValueToString(ps, list(x="b", z=2:3), show.missing.values=FALSE), "x=b; z=2,3")
+  expect_equal(paramValueToString(ps, list(x = "a", y = 1, z = NA), show.missing.values = TRUE), "x=a; y=1; z=NA")
+  expect_equal(paramValueToString(ps, list(x = "b", y = NA, z = 2:3), show.missing.values = TRUE), "x=b; y=NA; z=2,3")
+  expect_equal(paramValueToString(ps, list(x = "b", z = 2:3), show.missing.values = TRUE), "x=b; z=2,3")
+  expect_equal(paramValueToString(ps, list(x = "a", y = 1, z = NA), show.missing.values = FALSE), "x=a; y=1")
+  expect_equal(paramValueToString(ps, list(x = "b", y = NA, z = 2:3), show.missing.values = FALSE), "x=b; z=2,3")
+  expect_equal(paramValueToString(ps, list(x = "b", z = 2:3), show.missing.values = FALSE), "x=b; z=2,3")
 })
 
 test_that("num.format works", {
@@ -50,5 +50,3 @@ test_that("num.format works", {
   expect_equal(paramValueToString(x, 1), "1")
   expect_equal(paramValueToString(x, 1, num.format = "%.3f"), "1.000")
 })
-
-

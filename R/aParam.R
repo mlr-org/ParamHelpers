@@ -29,7 +29,7 @@
 #'
 #' @param id [\code{character(1)}]\cr
 #'   Name of parameter.
- #' @param len [\code{integer(1)} | \code{expression}]\cr
+#' @param len [\code{integer(1)} | \code{expression}]\cr
 #'   Length of vector parameter.
 #' @param lower [\code{numeric} | \code{expression}]\cr
 #'   Lower bounds.
@@ -82,14 +82,15 @@
 #' @name Param
 #' @rdname Param
 #' @examples
-#' makeNumericParam("x",lower = -1, upper = 1)
+#' makeNumericParam("x", lower = -1, upper = 1)
 #' makeNumericVectorParam("x", len = 2)
-#' makeDiscreteParam("y", values = c("a","b"))
+#' makeDiscreteParam("y", values = c("a", "b"))
 #' makeCharacterParam("z")
 NULL
 
 makeParam = function(id, type, learner.param, len = 1L, lower = NULL, upper = NULL, values = NULL, cnames = NULL, allow.inf = FALSE, default,
   trafo = NULL, requires = NULL, tunable = TRUE, special.vals = list(), when) {
+
   assertString(id)
   assert(
     checkCount(len, na.ok = learner.param),
@@ -106,18 +107,20 @@ makeParam = function(id, type, learner.param, len = 1L, lower = NULL, upper = NU
     )
     # the following check also ensures that if len=NA, the lower and upper must be scalars
     if (!is.expression(len) && !is.expression(lower)) {
-      if (length(lower) %nin% c(1L, len))
+      if (length(lower) %nin% c(1L, len)) {
         stopf("For param '%s' length 'lower' must be either 1 or length of param, not: %i", id, length(lower))
+      }
     }
     if (!is.expression(len) && !is.expression(upper)) {
-      if (length(upper) %nin% c(1L, len))
+      if (length(upper) %nin% c(1L, len)) {
         stopf("For param '%s' length 'upper' must be either 1 or length of param, not: %i", id, length(upper))
+      }
     }
   }
   if (isDiscreteTypeString(type)) {
     values = checkValuesForDiscreteParam(id, values)
   }
-  #We cannot check default} for NULL or NA as this could be the default value!
+  # We cannot check default} for NULL or NA as this could be the default value!
   if (missing(default)) {
     has.default = FALSE
     default = NULL
@@ -125,10 +128,12 @@ makeParam = function(id, type, learner.param, len = 1L, lower = NULL, upper = NU
     has.default = TRUE
   }
   # FIXME: Do we need to check for NA here? Hopefully not because this might occur in mlr?
-  if (has.default && isScalarNA(default))
+  if (has.default && isScalarNA(default)) {
     warningf("NA used as a default value for learner parameter %s.\nParamHelpers uses NA as a special value for dependent parameters.", id)
-  if (!is.null(trafo))
+  }
+  if (!is.null(trafo)) {
     assertFunction(trafo)
+  }
   if (!is.null(requires)) {
     requires = convertExpressionToCall(requires)
     assertSubset(mode(requires), c("call", "name"))
@@ -137,14 +142,17 @@ makeParam = function(id, type, learner.param, len = 1L, lower = NULL, upper = NU
 
   if (isNumericTypeString(type, include.int = TRUE)) {
     if (!is.expression(len) && !is.na(len) && len > 1L) {
-      if (isScalarNumeric(lower))
+      if (isScalarNumeric(lower)) {
         lower = rep(lower, len)
-      if (isScalarNumeric(upper))
+      }
+      if (isScalarNumeric(upper)) {
         upper = rep(upper, len)
+      }
     }
     if (!is.expression(lower) && !is.expression(upper)) {
-     if (any(upper < lower))
+      if (any(upper < lower)) {
         stopf("For param '%s' some component of 'upper' is smaller than the corresponding one in 'lower'", id)
+      }
     }
   }
   p = makeS3Obj("Param",
@@ -163,11 +171,13 @@ makeParam = function(id, type, learner.param, len = 1L, lower = NULL, upper = NU
     tunable = tunable,
     special.vals = special.vals
   )
-  if (learner.param)
+  if (learner.param) {
     p = makeLearnerParam(p, when)
+  }
   if (has.default && !is.expression(default)) {
-    if (!isFeasible(p, default))
+    if (!isFeasible(p, default)) {
       stop(p$id, " : 'default' must be a feasible parameter setting.")
+    }
   }
   return(p)
 }
@@ -180,28 +190,31 @@ getParPrintData = function(x, trafo = TRUE, used = TRUE, constr.clip = 40L) {
       x$lower = unique(x$lower)
       x$upper = unique(x$upper)
     }
-    low = if (is.expression(x$lower))  as.character(x$lower) else g(x$lower)
+    low = if (is.expression(x$lower)) as.character(x$lower) else g(x$lower)
     upp = if (is.expression(x$upper)) as.character(x$upper) else g(x$upper)
     constr = sprintf("%s to %s", low, upp)
   } else if (isDiscrete(x, include.logical = FALSE)) {
     vals = if (is.expression(x$values)) as.character(x$values) else collapse(names(x$values))
     constr = clipString(vals, constr.clip)
-  } else
+  } else {
     constr = "-"
+  }
   if (x$has.default) {
     if (!is.expression(x$default)) {
       def = x$default
       def = paramValueToString(x, def)
-    } else
+    } else {
       def = as.character(x$default)
+    }
   } else {
     def = "-"
   }
   if (isVector(x)) {
-    if (!is.expression(x$len))
+    if (!is.expression(x$len)) {
       len = x$len
-    else
+    } else {
       len = as.character(x$len)
+    }
   } else {
     len = "-"
   }
@@ -214,8 +227,9 @@ getParPrintData = function(x, trafo = TRUE, used = TRUE, constr.clip = 40L) {
     Tunable = x$tunable,
     stringsAsFactors = FALSE
   )
-  if (trafo)
+  if (trafo) {
     d$Trafo = ifelse(is.null(x$trafo), "-", "Y")
+  }
   return(d)
 }
 
@@ -226,32 +240,37 @@ print.Param = function(x, ..., trafo = TRUE) {
 
 # helper function to perform sanity checks on values of disctrete param
 checkValuesForDiscreteParam = function(id, values) {
-  if (is.vector(values) && !is.expression(values))
+  if (is.vector(values) && !is.expression(values)) {
     values = as.list(values)
+  }
   assert(
     checkList(values),
     checkClass(values, "expression")
   )
   if (!is.expression(values)) {
-    if (length(values) == 0L)
+    if (length(values) == 0L) {
       stopf("No possible value for discrete parameter %s!", id)
+    }
 
     # check that NA does not occur in values, we use that for "missing state" for dependent params
     # make sure that this works for complex object too, cannot be done with simple is.na
-    if (any(vlapply(values, isScalarNA)))
+    if (any(vlapply(values, isScalarNA))) {
       stopf("NA is not allowed as a value for discrete parameter %s.\nParamHelpers uses NA as a special value for dependent parameters.", id)
+    }
 
     n = length(values)
     ns = names(values)
     # if names missing, set all to ""
-    if (is.null(ns))
+    if (is.null(ns)) {
       ns = rep("", n)
+    }
     # guess missing names
     for (i in seq_len(n)) {
       v = values[[i]]
-      if(is.na(ns[i]) || ns[i] == "") {
-        if (is.character(v) || is.numeric(v))
+      if (is.na(ns[i]) || ns[i] == "") {
+        if (is.character(v) || is.numeric(v)) {
           ns[i] = as.character(v)
+        }
       }
     }
     names(values) = ns
@@ -260,9 +279,9 @@ checkValuesForDiscreteParam = function(id, values) {
     }
 
     # check that NA does not occur in value names, see above
-    if ("NA" %in% names(values))
+    if ("NA" %in% names(values)) {
       stopf("NA is not allowed as a value name for discrete parameter %s.\nParamHelpers uses NA as a special value for dependent parameters.", id)
+    }
   }
   return(values)
 }
-

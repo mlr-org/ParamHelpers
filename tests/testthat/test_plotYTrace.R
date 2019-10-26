@@ -1,7 +1,6 @@
 context("plotYTrace")
 
 test_that("plotYTrace works", {
-  
   makeArtOP = function() {
     ps = makeNumericParamSet(len = 1L)
     op = makeOptPathDF(par.set = ps, y.names = "y", minimize = TRUE,
@@ -11,9 +10,9 @@ test_that("plotYTrace works", {
     for (i in 1:20) {
       addOptPathEl(op, x = list(
         x = X[i * 2]),
-        y = X[ i * 2 - 1],
-        dob = dob[i],
-        exec.time = rexp(1))
+      y = X[ i * 2 - 1],
+      dob = dob[i],
+      exec.time = rexp(1))
     }
     op
   }
@@ -23,8 +22,8 @@ test_that("plotYTrace works", {
     algo2 = makeArtOP(),
     algo3 = makeArtOP(),
     algo4 = makeArtOP())
-  
-  
+
+
   pl = renderYTraces(opt.paths, over.time = "dob")
   expect_is(pl, "gg")
   expect_is(pl, "ggplot")

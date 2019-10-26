@@ -15,4 +15,3 @@ getParamTypeCounts = function(par.set) {
   names(count) = supported.types
   return(count)
 }
-

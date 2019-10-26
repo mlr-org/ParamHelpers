@@ -37,6 +37,7 @@
 #' @useDynLib ParamHelpers c_dfRowsToList
 #' @rdname dfRowsToList
 dfRowsToList = function(df, par.set, enforce.col.types = FALSE, ...) {
+
   assertClass(df, "data.frame")
   assertClass(par.set, "ParamSet")
   assertFlag(enforce.col.types)
@@ -45,10 +46,11 @@ dfRowsToList = function(df, par.set, enforce.col.types = FALSE, ...) {
     types = getParamTypes(par.set, df.cols = TRUE)
     for (i in seq_along(types)) {
       tt = types[i]
-      if (tt == "factor")
-        df[,i] = as.factor(df[, i])
-      else
-        df[,i] = as(df[,i], tt)
+      if (tt == "factor") {
+        df[, i] = as.factor(df[, i])
+      } else {
+        df[, i] = as(df[, i], tt)
+      }
     }
   }
 

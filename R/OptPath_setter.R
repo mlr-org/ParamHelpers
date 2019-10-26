@@ -87,9 +87,8 @@ setOptPathElEOL = function(op, index, eol) {
 #' addOptPathEl(op, x = list(p1 = 7, p2 = "b"), y = 1)
 #' addOptPathEl(op, x = list(p1 = -1, p2 = "a"), y = 2)
 #' as.data.frame(op)
-addOptPathEl = function(op, x, y, dob = getOptPathLength(op)+1L, eol = as.integer(NA),
+addOptPathEl = function(op, x, y, dob = getOptPathLength(op) + 1L, eol = as.integer(NA),
   error.message = NA_character_, exec.time = NA_real_, extra = NULL,
   check.feasible = !op$add.transformed.x) {
-
   UseMethod("addOptPathEl")
 }

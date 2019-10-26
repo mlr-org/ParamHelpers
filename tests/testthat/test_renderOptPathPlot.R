@@ -13,11 +13,11 @@ test_that("renderOptPathPlot", {
   for (i in 1:7) {
     addOptPathEl(op0, x = list(
       x = X[i * 2]),
-      y = X[ i * 2 - 1],
-      dob = dob[i])
+    y = X[ i * 2 - 1],
+    dob = dob[i])
   }
   pl = renderOptPathPlot(op0, iter = 0, alpha = FALSE)
-  pl = sapply(c(0,2), FUN = function(x) {
+  pl = sapply(c(0, 2), FUN = function(x) {
     renderOptPathPlot(op0, iter = x, short.x.names = "e", short.y.names = "f")
   })
   pl = plotOptPath(op0, iters = 0:2, pause = FALSE, title = "Optimization Path")
@@ -37,7 +37,9 @@ test_that("renderOptPathPlot", {
     addOptPathEl(op1, x = list(x = abs(X[i * 4 - 3]), z = Z[i]),
       y = c(y1 = X[i * 4 - 2], y2 = abs(X[i * 4 - 1]), y3 = abs(X[i * 4])), dob = dob[i])
   }
-  muffle({pl = renderOptPathPlot(op1, iter = 3)})
+  muffle({
+    pl = renderOptPathPlot(op1, iter = 3)
+  })
   pl = sapply(c(0, 20), FUN = function(x) {
     muffle(renderOptPathPlot(op1, iter = x, marked = "best",
       ggplot.theme = ggplot2::theme(legend.position = "bottom"),
@@ -66,9 +68,11 @@ test_that("renderOptPathPlot", {
     addOptPathEl(op2, x = list(x = X[i]), y = c(y1 = Y[i], y2 = Y[7 + i]), dob = dob[i],
       extra = list(extra.var = i))
   }
-  muffle({pl = renderOptPathPlot(op2, iter = 2, x.over.time = list(c("x"), c("extra.var")),
-    short.rest.names = c("extra"))})
-  pl = sapply(c(0,2), FUN = function(x) {
+  muffle({
+    pl = renderOptPathPlot(op2, iter = 2, x.over.time = list(c("x"), c("extra.var")),
+      short.rest.names = c("extra"))
+  })
+  pl = sapply(c(0, 2), FUN = function(x) {
     muffle(renderOptPathPlot(op2, iter = x, marked = c(3),
       xlim = list(YSpace = c(-10, 10)),
       ylim = list(YSpace = c(-10, 10), XSpace = c(0, 10)),
@@ -96,19 +100,19 @@ test_that("renderOptPathPlot", {
       y = c(y1 = Y[i]), dob = dob[i])
   }
 
-  pl = sapply(c(0,2), FUN = function(x) {
+  pl = sapply(c(0, 2), FUN = function(x) {
     muffle(renderOptPathPlot(op3, iter = x, scale = "globalminmax", impute.scale = 2,
       impute.value = "miss"))
- })
-  pl = sapply(c(0,2), FUN = function(x) {
+  })
+  pl = sapply(c(0, 2), FUN = function(x) {
     muffle(renderOptPathPlot(op3, iter = x, xlim = list(YSpace = c(-0.5, 0.5)),
       short.x.names = c("a", "b", "c"), colours = c("black", "yellow", "orange", "green"),
       scale = "globalminmax"))
- })
+  })
 
 
   # Test subsetting
-  muffle(renderOptPathPlot(op1, iter = 2, subset.obs = c(1,2,6,7)))
+  muffle(renderOptPathPlot(op1, iter = 2, subset.obs = c(1, 2, 6, 7)))
   renderOptPathPlot(op1, iter = 0, subset.vars = 1)
   muffle(renderOptPathPlot(op1, iter = 0, subset.targets = 2:3))
 })

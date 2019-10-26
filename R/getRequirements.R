@@ -16,7 +16,8 @@ getRequirements = function(par.set, remove.null = TRUE) {
   assertClass(par.set, "ParamSet")
   assertFlag(remove.null)
   res = extractSubList(par.set$pars, "requires", simplify = FALSE, use.names = TRUE)
-  if (remove.null)
+  if (remove.null) {
     res = filterNull(res)
+  }
   return(res)
 }

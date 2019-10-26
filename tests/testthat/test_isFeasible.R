@@ -3,15 +3,15 @@ context("isFeasible")
 test_that("isFeasible ParamSet", {
   ps = makeParamSet(
     makeIntegerParam("a", default = 1L),
-    makeDiscreteParam("b", values = list('0' = "NIL", '1' = "ONE", 'f' = function(x) x + 1)),
+    makeDiscreteParam("b", values = list("0" = "NIL", "1" = "ONE", "f" = function(x) x + 1)),
     makeIntegerParam("c", default = 1L, requires = quote(a == 1)),
     makeIntegerParam("d", default = 1L, requires = quote(a == 2)),
     makeIntegerParam("e", default = expression(n = 99L)),
     keys = "n"
   )
-  expect_true(isFeasible(ps, list(a = 1, b = function(x) x+1, c = 1, d = NA, e = 12L)))
-  expect_true(isFeasible(ps, list(a = 1, b = function(x) x+1, c = 1), filter = TRUE))
-  expect_true(isFeasible(ps, list(a = 2, b = function(x) x+1, d = 1), filter = TRUE))
+  expect_true(isFeasible(ps, list(a = 1, b = function(x) x + 1, c = 1, d = NA, e = 12L)))
+  expect_true(isFeasible(ps, list(a = 1, b = function(x) x + 1, c = 1), filter = TRUE))
+  expect_true(isFeasible(ps, list(a = 2, b = function(x) x + 1, d = 1), filter = TRUE))
   expect_error(isFeasible(ps, list(a = 1, c = 1)), "does not match ParamSet length")
   expect_error(isFeasible(ps, list(1, 1)), "does not match ParamSet length")
   expect_error(isFeasible(ps, list(1, 1), filter = TRUE), "only works with named input")
@@ -24,7 +24,7 @@ test_that("isFeasible ParamSet", {
   expect_true((res = isFeasible(ps, list(a = 2, c = NA), filter = TRUE)))
   expect_true(isFeasible(ps, list(c = 2), filter = TRUE, use.defaults = TRUE))
 
-  #make sure we can ignore defaults if they contradict a new setting
+  # make sure we can ignore defaults if they contradict a new setting
   ps = makeParamSet(
     makeIntegerParam("a", default = 1L, requires = quote(b == 2)),
     makeIntegerParam("b", default = 2L, requires = quote(c == TRUE)),
@@ -36,14 +36,14 @@ test_that("isFeasible ParamSet", {
 test_that("isFeasible LearnerParamSet", {
   ps = makeParamSet(
     makeIntegerLearnerParam("a", default = 1L),
-    makeDiscreteLearnerParam("b", values = list('0' = "NIL", '1' = "ONE", 'f' = function(x) x + 1)),
+    makeDiscreteLearnerParam("b", values = list("0" = "NIL", "1" = "ONE", "f" = function(x) x + 1)),
     makeIntegerLearnerParam("c", default = 1L, requires = quote(a == 1)),
     makeIntegerLearnerParam("d", default = 1L, requires = quote(a == 2))
   )
 
-  expect_true(isFeasible(ps, list(a = 1, b = function(x) x+1, c = 1, d = NA)))
-  expect_true(isFeasible(ps, list(a = 1, b = function(x) x+1, c = 1), filter = TRUE))
-  expect_true(isFeasible(ps, list(a = 2, b = function(x) x+1, d = 1), filter = TRUE))
+  expect_true(isFeasible(ps, list(a = 1, b = function(x) x + 1, c = 1, d = NA)))
+  expect_true(isFeasible(ps, list(a = 1, b = function(x) x + 1, c = 1), filter = TRUE))
+  expect_true(isFeasible(ps, list(a = 2, b = function(x) x + 1, d = 1), filter = TRUE))
   expect_error(isFeasible(ps, list(a = 1, c = 1)), "does not match ParamSet length")
   expect_error(isFeasible(ps, list(1, 1)), "does not match ParamSet length")
   expect_error(isFeasible(ps, list(1, 1), filter = TRUE), "only works with named input")
@@ -58,16 +58,16 @@ test_that("isFeasible LearnerParamSet", {
 
   ps = makeParamSet(
     makeIntegerLearnerParam("a", default = 1L),
-    makeDiscreteLearnerParam("b", values = list('0' = "NIL", '1' = "ONE", 'f' = function(x) x + 1)),
+    makeDiscreteLearnerParam("b", values = list("0" = "NIL", "1" = "ONE", "f" = function(x) x + 1)),
     makeIntegerLearnerParam("c", default = 1L, requires = quote(a == 1)),
     makeIntegerLearnerParam("d", default = 1L, requires = quote(a == 2)),
-    makeIntegerLearnerParam("e", default = expression(n), upper = expression(2*n)),
+    makeIntegerLearnerParam("e", default = expression(n), upper = expression(2 * n)),
     keys = "n"
   )
 
-  expect_true(isFeasible(ps, list(a = 1, b = function(x) x+1, c = 1, d = NA, e = 12L)))
-  expect_true(isFeasible(ps, list(a = 1, b = function(x) x+1, c = 1), filter = TRUE))
-  expect_true(isFeasible(ps, list(a = 2, b = function(x) x+1, d = 1), filter = TRUE))
+  expect_true(isFeasible(ps, list(a = 1, b = function(x) x + 1, c = 1, d = NA, e = 12L)))
+  expect_true(isFeasible(ps, list(a = 1, b = function(x) x + 1, c = 1), filter = TRUE))
+  expect_true(isFeasible(ps, list(a = 2, b = function(x) x + 1, d = 1), filter = TRUE))
   expect_error(isFeasible(ps, list(a = 1, c = 1)), "does not match ParamSet length")
   expect_error(isFeasible(ps, list(1, 1)), "does not match ParamSet length")
   expect_error(isFeasible(ps, list(1, 1), filter = TRUE), "only works with named input")
@@ -95,8 +95,8 @@ test_that("length of vectors", {
 
 # we had a bug here, see issue #145
 test_that("isFeasible works when len=NA, and default is given (with other lengths than in isFeasible)", {
-  p = makeIntegerVectorLearnerParam(id = "test", default = c(10,10), lower = 0)
-  expect_true(isFeasible(p, c(10,10,10)))
+  p = makeIntegerVectorLearnerParam(id = "test", default = c(10, 10), lower = 0)
+  expect_true(isFeasible(p, c(10, 10, 10)))
   expect_false(isFeasible(p, c(-1)))
 })
 

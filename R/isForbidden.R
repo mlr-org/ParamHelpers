@@ -10,9 +10,10 @@
 #' @export
 isForbidden = function(par.set, x) {
   assertClass(par.set, "ParamSet")
-  #FIXME: check for correct names here
+  # FIXME: check for correct names here
   assertList(x)
-  if (!hasForbidden(par.set))
+  if (!hasForbidden(par.set)) {
     return(FALSE)
+  }
   return(eval(par.set$forbidden, envir = x))
 }

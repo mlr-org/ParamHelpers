@@ -117,8 +117,9 @@ renderOptPathPlot = function(op, iter, x.over.time, y.over.time, contour.name = 
 
   if (!is.null(marked)) {
     if (is.character(marked)) {
-      if (marked != "best")
+      if (marked != "best") {
         stop("Marked must either be 'best' or an integerish vector.")
+      }
     } else {
       marked = asInteger(marked)
     }
@@ -172,14 +173,16 @@ renderOptPathPlot = function(op, iter, x.over.time, y.over.time, contour.name = 
       length.out = dim.x))
   } else {
     if (!is.null(x.over.time)) {
-      if (!is.list(x.over.time))
+      if (!is.list(x.over.time)) {
         x.over.time = list(x.over.time)
+      }
       assertList(x.over.time)
       for (vec in x.over.time) {
-        if (is.character(vec))
+        if (is.character(vec)) {
           assertSubset(x = vec, choices = c(x.names, rest.names), empty.ok = FALSE)
-        else
+        } else {
           assertNumeric(x = vec, lower = 1L, upper = dim.x, any.missing = FALSE, unique = TRUE)
+        }
       }
     }
   }
@@ -189,25 +192,29 @@ renderOptPathPlot = function(op, iter, x.over.time, y.over.time, contour.name = 
       length.out = dim.y))
   } else {
     if (!is.null(y.over.time)) {
-      if (!is.list(y.over.time))
+      if (!is.list(y.over.time)) {
         y.over.time = list(y.over.time)
+      }
       assertList(y.over.time)
       for (vec in y.over.time) {
-        if (is.character(vec))
+        if (is.character(vec)) {
           assertSubset(x = vec, choices = c(y.names, rest.names), empty.ok = FALSE)
-        else
+        } else {
           assertNumeric(x = vec, lower = 1L, upper = dim.y, any.missing = FALSE, unique = TRUE)
+        }
       }
     }
   }
 
   if (!is.null(contour.name)) {
-    if (length(x.names) != 2 || any(apply(op.x, 2, class) != "numeric"))
+    if (length(x.names) != 2 || any(apply(op.x, 2, class) != "numeric")) {
       stop("Contour lines can only be applied if there are exacr 2 numeric x variables. Consider subsetting your variables.")
+    }
     assertChoice(contour.name, y.names)
   } else {
-    if (length(x.names) == 2 && all(apply(op.x, 2, class) == "numeric"))
+    if (length(x.names) == 2 && all(apply(op.x, 2, class) == "numeric")) {
       contour.name = y.names[1L]
+    }
   }
 
 
@@ -218,7 +225,7 @@ renderOptPathPlot = function(op, iter, x.over.time, y.over.time, contour.name = 
   # So much for the data and the input, now the plots
 
   # Special case: X and Y are 1D
-  if(dim.x == 1L && dim.y == 1L) {
+  if (dim.x == 1L && dim.y == 1L) {
     pl1 = plot2D(cbind(x = op.x, y = op.y), .alpha, .type, log, names = c(x.names, y.names),
       short.names = c(short.x.names, short.y.names), space = "both", iter = iter,
       classes = c(classes.x, classes.y), xlim = xlim[["XSpace"]], ylim = xlim[["YSpace"]],
@@ -279,8 +286,9 @@ renderOptPathPlot = function(op, iter, x.over.time, y.over.time, contour.name = 
     # extract variable information from over.time
     vars = x.over.time[[i]]
     # if specified via character vector, convert to numeric
-    if (is.character(vars))
+    if (is.character(vars)) {
       var.inds = which(c(names(op.x), names(op.rest)) %in% vars)
+    }
     names = c(x.names, rest.names)[var.inds]
     short.names = c(short.x.names, short.rest.names)[var.inds]
 
@@ -296,8 +304,9 @@ renderOptPathPlot = function(op, iter, x.over.time, y.over.time, contour.name = 
         iter = iter, colours = colours, ggplot.theme = ggplot.theme)
     }
   }
-  if (length(pl3) == 0)
+  if (length(pl3) == 0) {
     pl3 = NULL
+  }
 
 
   # plot 4: y space over time
@@ -306,8 +315,9 @@ renderOptPathPlot = function(op, iter, x.over.time, y.over.time, contour.name = 
     # extract variable information from over.time
     vars = y.over.time[[i]]
     # if specified via character vector, convert to numeric
-    if (is.character(vars))
+    if (is.character(vars)) {
       var.inds = which(c(names(op.y), names(op.rest)) %in% vars)
+    }
     names = c(y.names, rest.names)[var.inds]
     short.names = c(short.y.names, short.rest.names)[var.inds]
 
@@ -324,8 +334,9 @@ renderOptPathPlot = function(op, iter, x.over.time, y.over.time, contour.name = 
     }
   }
 
-  if (length(pl4) == 0)
+  if (length(pl4) == 0) {
     pl4 = NULL
+  }
 
   return(list(plot.x = pl1, plot.y = pl2, plot.x.over.time = pl3, plot.y.over.time = pl4))
 }

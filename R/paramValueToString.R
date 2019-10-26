@@ -24,20 +24,20 @@
 #' paramValueToString(p, 0.000039)
 #' paramValueToString(p, 8.13402, num.format = "%.2f")
 #'
-#' p = makeIntegerVectorParam("x", len=2)
+#' p = makeIntegerVectorParam("x", len = 2)
 #' paramValueToString(p, c(1L, 2L))
 #'
 #' p = makeLogicalParam("x")
 #' paramValueToString(p, TRUE)
 #'
-#' p = makeDiscreteParam("x", values=list(a=NULL, b=2))
+#' p = makeDiscreteParam("x", values = list(a = NULL, b = 2))
 #' paramValueToString(p, NULL)
 #'
 #' ps = makeParamSet(
-#'   makeNumericVectorParam("x", len=2L),
-#'   makeDiscreteParam("y", values=list(a=NULL, b=2))
+#'   makeNumericVectorParam("x", len = 2L),
+#'   makeDiscreteParam("y", values = list(a = NULL, b = 2))
 #' )
-#' paramValueToString(ps, list(x=c(1,2), y=NULL))
+#' paramValueToString(ps, list(x = c(1, 2), y = NULL))
 paramValueToString = function(par, x, show.missing.values = FALSE, num.format = "%.3g") {
   assertFlag(show.missing.values)
   assertString(num.format)
@@ -48,31 +48,35 @@ paramValueToString = function(par, x, show.missing.values = FALSE, num.format = 
 paramValueToString.Param = function(par, x, show.missing.values = FALSE, num.format = "%.3g") {
   # handle missings
   if (isScalarNA(x)) {
-    if (show.missing.values)
+    if (show.missing.values) {
       return("NA")
-    else
+    } else {
       return("")
+    }
   }
-  if (isDiscrete(par, include.logical = FALSE))
+  if (isDiscrete(par, include.logical = FALSE)) {
     x = discreteValueToName(par, x)
+  }
   s = convertToShortString(x, num.format = num.format)
 }
 
 #' @export
 paramValueToString.ParamSet = function(par, x, show.missing.values = FALSE, num.format = "%.3g") {
   assertList(x)
-  if (!isProperlyNamed(x))
+  if (!isProperlyNamed(x)) {
     stop("'x' must be a properly named list!")
+  }
   rest = setdiff(names(x), names(par$pars))
-  if (length(rest) > 0L)
+  if (length(rest) > 0L) {
     stopf("Not all names of 'x' occur in par set 'par': %s", collapse(rest))
+  }
   res = character(0L)
   for (i in seq_along(x)) {
     pn = names(x)[i]
     val = x[[pn]]
-    if (show.missing.values || !isScalarNA(val))  {
+    if (show.missing.values || !isScalarNA(val)) {
       p = par$pars[[pn]]
-      res[length(res)+1] = sprintf("%s=%s", pn, paramValueToString(p, val, show.missing.values, num.format))
+      res[length(res) + 1] = sprintf("%s=%s", pn, paramValueToString(p, val, show.missing.values, num.format))
     }
   }
   return(collapse(res, sep = "; "))

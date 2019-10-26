@@ -17,10 +17,11 @@ getTypeStringsAll = function() {
 #' @export
 #' @rdname getTypeStrings
 getTypeStringsNumeric = function(include.int = TRUE) {
-  if (include.int)
+  if (include.int) {
     ph$type.strings.numeric
-  else
+  } else {
     ph$type.strings.double
+  }
 }
 
 #' @export
@@ -44,10 +45,11 @@ getTypeStringsCharacter = function() {
 #' @export
 #' @rdname getTypeStrings
 getTypeStringsDiscrete = function(include.logical = TRUE) {
-  if (include.logical)
+  if (include.logical) {
     c(ph$type.strings.discrete, ph$type.strings.logical)
-  else
+  } else {
     ph$type.strings.discrete
+  }
 }
 
 #' @export
@@ -55,4 +57,3 @@ getTypeStringsDiscrete = function(include.logical = TRUE) {
 getTypeStringsLogical = function() {
   ph$type.strings.logical
 }
-

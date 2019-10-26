@@ -1,8 +1,8 @@
 # @title Convert a list to a data.frame with one row
 #
-# @description 
+# @description
 # Convert a list of vectors or scalars to a \code{data.frame} with only one row. Names of the columns correspond to
-# the names of elements in the list. If a vector is one list element it is spread over multiple 
+# the names of elements in the list. If a vector is one list element it is spread over multiple
 # columns and named sequentially, e.g. \code{a = c(5,7)} becomes \code{data.frame(a1 = 5, a2 = 7)}.
 #
 # @param l [\code{list}]\cr

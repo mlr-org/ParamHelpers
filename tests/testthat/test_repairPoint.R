@@ -1,7 +1,6 @@
 context("repairPoint")
 
 test_that("repairPoint", {
-
   ps = makeParamSet(
     makeNumericParam("num1", lower = 1, upper = 5),
     makeIntegerParam("num2", lower = 1, upper = 10),
@@ -19,5 +18,3 @@ test_that("repairPoint", {
   expect_true(all(x.repaired$num3 == c(2, 5)))
   expect_true(x.repaired$disc1 == x$disc1)
 })
-
-

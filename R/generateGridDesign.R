@@ -48,6 +48,7 @@
 #' )
 #' generateGridDesign(ps, resolution = c(x1 = 4, x2 = 5), trafo = TRUE)
 generateGridDesign = function(par.set, resolution, trafo = FALSE) {
+
   doBasicGenDesignChecks(par.set)
 
   pars = par.set$pars
@@ -63,8 +64,9 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE) {
       resolution = setNames(rep(resolution, length(pids.num)), pids.num)
     }
     resolution = asInteger(resolution, lower = 1L, len = length(pids.num), names = "named")
-    if (!all(names(resolution) %in% pids.num))
+    if (!all(names(resolution) %in% pids.num)) {
       stop("'resolution' must be named with parameter ids!")
+    }
   }
 
   assertFlag(trafo)
@@ -113,7 +115,7 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE) {
 
   # check each row if forbidden, then remove
   if (hasForbidden(par.set)) {
-    #FIXME: this is pretty slow, but correct
+    # FIXME: this is pretty slow, but correct
     fb = rowSapply(res, isForbidden, par.set = par.set)
     res = res[!fb, , drop = FALSE]
   }
@@ -123,10 +125,11 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE) {
     types.df = getParamTypes(par.set, df.cols = TRUE)
     types.int = convertTypesToCInts(types.df)
     # ignore trafos if the user did not request transformed values
-    trafos = if(trafo)
+    trafos = if (trafo) {
       lapply(pars, function(p) p$trafo)
-    else
+    } else {
       replicate(length(pars), NULL, simplify = FALSE)
+    }
     par.requires = lapply(pars, function(p) p$requires)
     res = convertDataFrameCols(res, factors.as.char = TRUE)
     res = .Call(c_trafo_and_set_dep_to_na, res, types.int, names(pars), lens, trafos, par.requires, new.env())
@@ -137,7 +140,7 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE) {
 
   res = convertDataFrameCols(res, chars.as.factor = TRUE)
 
-  #fix factors
+  # fix factors
   res = fixDesignFactors(res, par.set)
 
   attr(res, "trafo") = trafo

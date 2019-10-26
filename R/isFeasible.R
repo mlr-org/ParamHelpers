@@ -58,6 +58,7 @@ isFeasible.LearnerParam = function(par, x, use.defaults = FALSE, filter = FALSE)
 
 #' @export
 isFeasible.ParamSet = function(par, x, use.defaults = FALSE, filter = FALSE) {
+
   named = testNamed(x)
   assertList(x)
   res = FALSE
@@ -68,8 +69,9 @@ isFeasible.ParamSet = function(par, x, use.defaults = FALSE, filter = FALSE) {
   if (!named && filter) {
     stopf("filter = TRUE only works with named input")
   }
-  if (named && any(names(x) %nin% getParamIds(par)))
+  if (named && any(names(x) %nin% getParamIds(par))) {
     stopf("Following names of given values do not match with ParamSet: %s", collapse(setdiff(names(x), getParamIds(par))))
+  }
   if (isForbidden(par, x)) {
     attr(res, "warning") = "The given parameter setting has forbidden values."
     return(res)
@@ -84,10 +86,11 @@ isFeasible.ParamSet = function(par, x, use.defaults = FALSE, filter = FALSE) {
     names(x) = getParamIds(par)
   }
   missing.reqs = setdiff(getRequiredParamNames(par), names(x))
-  if (length(missing.reqs) > 0)
+  if (length(missing.reqs) > 0) {
     stopf("Following parameters are missing but needed for requirements: %s", collapse(missing.reqs))
+  }
 
-  #FIXME: very slow
+  # FIXME: very slow
   for (i in seq_along(par$pars)) {
     p = par$pars[[i]]
     v = x[[i]]
@@ -111,38 +114,42 @@ isFeasible.ParamSet = function(par, x, use.defaults = FALSE, filter = FALSE) {
 
 # are the contraints ok for value of a param (not considering requires)
 constraintsOkParam = function(par, x) {
-  if (isSpecialValue(par, x))
+  if (isSpecialValue(par, x)) {
     return(TRUE)
+  }
   type = par$type
   # this should work in any! case.
-  if (type == "untyped")
+  if (type == "untyped") {
     return(TRUE)
+  }
   inValues = function(v) any(vlapply(par$values, function(w) isTRUE(all.equal(w, v))))
-  ok = if (type == "numeric")
+  ok = if (type == "numeric") {
     is.numeric(x) && length(x) == 1 && (par$allow.inf || is.finite(x)) && inBoundsOrExpr(par = par, x = x)
-  else if (type == "integer")
+  } else if (type == "integer") {
     is.numeric(x) && length(x) == 1 && is.finite(x) && inBoundsOrExpr(par, x) && x == as.integer(x)
-  else if (type == "numericvector")
+  } else if (type == "numericvector") {
     is.numeric(x) && checkLength(par, x) && all((par$allow.inf | is.finite(x)) & inBoundsOrExpr(par, x))
-  else if (type == "integervector")
+  } else if (type == "integervector") {
     is.numeric(x) && checkLength(par, x) && all(is.finite(x) & inBoundsOrExpr(par, x) & x == as.integer(x))
-  else if (type == "discrete")
+  } else if (type == "discrete") {
     inValues(x)
-  else if (type == "discretevector")
+  } else if (type == "discretevector") {
     is.list(x) && checkLength(par, x) && all(vlapply(x, inValues))
-  else if (type == "logical")
+  } else if (type == "logical") {
     is.logical(x) && length(x) == 1 && !is.na(x)
-  else if (type == "logicalvector")
+  } else if (type == "logicalvector") {
     is.logical(x) && checkLength(par, x) && !anyMissing(x)
-  else if (type == "character")
+  } else if (type == "character") {
     is.character(x) && length(x) == 1 && !is.na(x)
-  else if (type == "charactervector")
+  } else if (type == "charactervector") {
     is.character(x) && checkLength(par, x) && !anyMissing(x)
-  else if (type == "function")
+  } else if (type == "function") {
     is.function(x)
+  }
   # if we have cnames, check them
-  if (!is.null(par$cnames))
+  if (!is.null(par$cnames)) {
     ok = ok && !is.null(names(x)) && all(names(x) == par$cnames)
+  }
   return(ok)
 }
 
@@ -157,8 +164,10 @@ requiresOk = function(par, x) {
 
 
 # helper function which checks whether 'x' lies within the boundaries (unless they are expressions)
-inBoundsOrExpr = function(par, x)
+inBoundsOrExpr = function(par, x) {
   (is.expression(par$lower) || all(x >= par$lower)) && (is.expression(par$upper) || all(x <= par$upper))
+}
 
-checkLength = function(par, x)
+checkLength = function(par, x) {
   (is.expression(par$len) || is.na(par$len) || length(x) == par$len)
+}

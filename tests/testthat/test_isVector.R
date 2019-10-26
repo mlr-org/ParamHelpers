@@ -22,4 +22,3 @@ test_that("isVector", {
   expect_true(isVector(vector.ps$pars[[1L]]))
   expect_true(isVector(vector.ps$pars[[2L]]))
 })
-

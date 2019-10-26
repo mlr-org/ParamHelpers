@@ -170,33 +170,37 @@ getOptPathCols = function(op, names, dob, eol, row.names = NULL) {
 #' getOptPathBestIndex(op)
 #' getOptPathBestIndex(op, ties = "first")
 getOptPathBestIndex = function(op, y.name = op$y.names[1], dob = op$env$dob, eol = op$env$eol, ties = "last") {
+
   assertClass(op, "OptPath")
   assertChoice(y.name, choices = op$y.names)
   dob = asInteger(dob, any.missing = TRUE)
   eol = asInteger(eol, any.missing = TRUE)
   assertChoice(ties, c("all", "first", "last", "random"))
   life.inds = which(op$env$dob %in% dob & op$env$eol %in% eol)
-  if (length(life.inds) == 0)
+  if (length(life.inds) == 0) {
     stop("No element found which matches dob and eol restrictions!")
+  }
   y = getOptPathY(op, y.name)[life.inds]
   if (all(is.na(y))) {
     best.inds = life.inds
   } else {
-    if (op$minimize[y.name])
+    if (op$minimize[y.name]) {
       best.inds = which(min(y, na.rm = TRUE) == y)
-    else
+    } else {
       best.inds = which(max(y, na.rm = TRUE) == y)
+    }
     best.inds = life.inds[best.inds]
   }
   if (length(best.inds) > 1L) {
-    if (ties == "all")
+    if (ties == "all") {
       return(best.inds)
-    else if (ties == "first")
+    } else if (ties == "first") {
       return(best.inds[1])
-    else if (ties == "last")
+    } else if (ties == "last") {
       return(best.inds[length(best.inds)])
-    else if (ties == "random")
+    } else if (ties == "random") {
       return(best.inds[sample(length(best.inds), 1L)])
+    }
   } else {
     return(best.inds)
   }
@@ -228,6 +232,7 @@ getOptPathBestIndex = function(op, y.name = op$y.names[1], dob = op$env$dob, eol
 #' getOptPathParetoFront(op)
 #' getOptPathParetoFront(op, index = TRUE)
 getOptPathParetoFront = function(op, y.names = op$y.names, dob = op$env$dob, eol = op$env$eol, index = FALSE) {
+
   assertClass(op, "OptPath")
   assertCharacter(y.names, min.len = 2L)
   assertSubset(y.names, op$y.names, empty.ok = FALSE)
@@ -236,8 +241,9 @@ getOptPathParetoFront = function(op, y.names = op$y.names, dob = op$env$dob, eol
   assertFlag(index, na.ok = TRUE)
   requirePackages("emoa", default.method = "load")
   life.inds = which(op$env$dob %in% dob & op$env$eol %in% eol)
-  if (length(life.inds) == 0L)
+  if (length(life.inds) == 0L) {
     stop("No element found which matches dob and eol restrictions!")
+  }
   y = getOptPathY(op, y.names, drop = FALSE)[life.inds, , drop = FALSE]
   # multiply columns with -1 if maximize
   k = ifelse(op$minimize, 1, -1)
@@ -245,12 +251,14 @@ getOptPathParetoFront = function(op, y.names = op$y.names, dob = op$env$dob, eol
   # is_dominated has kind of buggy behavoiur if y2 is a row
   # (it hinks, we have a 1-dimensional optimization prob und returns the min index)
   # so we have to treat this case manually
-  if (nrow(y2) == 1L)
+  if (nrow(y2) == 1L) {
     nondom = 1L
-  else
+  } else {
     nondom = which(!emoa::is_dominated(y2))
-  if (index)
+  }
+  if (index) {
     return(life.inds[nondom])
-  else
+  } else {
     return(y[nondom, , drop = FALSE])
+  }
 }

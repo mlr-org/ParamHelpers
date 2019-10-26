@@ -20,6 +20,7 @@
 #' @template ret_gendes_df
 #' @export
 generateDesignOfDefaults = function(par.set, trafo = FALSE) {
+
   doBasicGenDesignChecks(par.set)
   assertFlag(trafo)
 
@@ -27,14 +28,16 @@ generateDesignOfDefaults = function(par.set, trafo = FALSE) {
 
   defaults = getDefaults(par.set)
   diff = setdiff(names(pars), names(defaults))
-  if (length(diff) > 0)
+  if (length(diff) > 0) {
     stopf("No default parameter setting for: %s", collapse(diff))
+  }
 
   # check if one or more default values are special values
   special.default = mapply(FUN = function(p, value) isSpecialValue(par.set$pars[[p]], value),
     p = names(defaults), value = defaults, SIMPLIFY = TRUE)
-  if (any(special.default))
+  if (any(special.default)) {
     stopf("special.vals as default for Parameter(s): %s", collapse(names(defaults)[special.default]))
+  }
 
   # convert discrete value here to names, to we can stuff them into a df
   defaults = mapply(FUN = function(p, d) {
@@ -54,10 +57,11 @@ generateDesignOfDefaults = function(par.set, trafo = FALSE) {
     types.df = getParamTypes(par.set, df.cols = TRUE)
     types.int = convertTypesToCInts(types.df)
     # ignore trafos if the user did not request transformed values
-    trafos = if (trafo)
+    trafos = if (trafo) {
       lapply(pars, function(p) p$trafo)
-    else
+    } else {
       replicate(length(pars), NULL, simplify = FALSE)
+    }
     par.requires = getRequirements(par.set, remove.null = FALSE)
     res = convertDataFrameCols(res, factors.as.char = TRUE)
     res = .Call(c_trafo_and_set_dep_to_na, res, types.int, names(pars), lens, trafos, par.requires, new.env())

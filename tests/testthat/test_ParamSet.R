@@ -24,9 +24,12 @@ test_that("mixed paramset", {
   expect_equal(getParamLengths(ps), c(u = 1L, v = 1L, w = 1L, x = 1L, y = 2L))
   expect_equal(getLower(ps), c(u = 1, v = 1L))
   expect_equal(getUpper(ps), c(u = Inf, v = 2L))
-  values1 = list(1,2); names(values1) = 1:2
-  values2 = list("a","b"); names(values2) = c("a", "b")
-  values3 = list(TRUE, FALSE); names(values3) = c("TRUE", "FALSE")
+  values1 = list(1, 2)
+  names(values1) = 1:2
+  values2 = list("a", "b")
+  names(values2) = c("a", "b")
+  values3 = list(TRUE, FALSE)
+  names(values3) = c("TRUE", "FALSE")
   expect_equal(getValues(ps), list(w = values1, x = values3, y = values2))
   expect_output(print(ps), "u\\s*numeric")
 })
@@ -37,10 +40,10 @@ test_that("mixed paramset 2", {
   p3 = makeDiscreteParam(id = "x3", values = list(a = "char", b = 2L, c = 2.2, "e"))
   ps = makeParamSet(p1, p2, p3)
 
-  expect_true(isFeasible(ps, list(0,0,"char")))
-  expect_true(!isFeasible(ps, list(2,0,"char")))
+  expect_true(isFeasible(ps, list(0, 0, "char")))
+  expect_true(!isFeasible(ps, list(2, 0, "char")))
   expect_equal(getLower(ps), c(x1 = -1, x2 = 0))
-  expect_equal(getUpper(ps), c(x1= 1, x2 = Inf))
+  expect_equal(getUpper(ps), c(x1 = 1, x2 = Inf))
   expect_true(isFeasible(ps, list(x3 = 2L, x1 = 0), filter = TRUE))
 })
 
@@ -51,7 +54,7 @@ test_that("cannot build param set from wrong stuff", {
       makeNumericParam("x"),
       makeNumericParam("x")
     ), "unique"
- )
+  )
 })
 
 test_that("paramset with vector", {
@@ -142,9 +145,9 @@ test_that("makeNumericParamset", {
   expect_equal(getParamLengths(ps), c(y1 = 1, y2 = 1))
   expect_equal(getLower(ps), c(y1 = -Inf, y2 = -Inf))
   expect_equal(getUpper(ps), c(y1 = 3, y2 = 3))
-  ps = makeNumericParamSet(lower = c(1,2), vector = TRUE)
+  ps = makeNumericParamSet(lower = c(1, 2), vector = TRUE)
   expect_equal(getLower(ps), c(x = 1, x = 2))
-  ps = makeNumericParamSet(lower = c(1,4), upper = c(2,7), vector = FALSE)
+  ps = makeNumericParamSet(lower = c(1, 4), upper = c(2, 7), vector = FALSE)
   expect_equal(getLower(ps), c(x1 = 1, x2 = 4))
   expect_equal(getUpper(ps), c(x1 = 2, x2 = 7))
 })
@@ -155,13 +158,13 @@ test_that("requires works", {
     makeNumericParam("y", requires = quote(x == "a")),
     makeIntegerVectorParam("z", len = 2, requires = quote(x == "b"))
   )
-  expect_true(isFeasible(ps, list(x = "a", y = 1,  z = NA)))
+  expect_true(isFeasible(ps, list(x = "a", y = 1, z = NA)))
   expect_false(isFeasible(ps, list(x = "a", y = NA, z = 1)))
   expect_false(isFeasible(ps, list(x = "a", y = NA, z = c(NA, NA))))
-  expect_false(isFeasible(ps, list(x = "b", y = 1, z = c(2,2))))
-  expect_true(isFeasible(ps, list(x = "b", y = NA, z = c(2,2))))
+  expect_false(isFeasible(ps, list(x = "b", y = 1, z = c(2, 2))))
+  expect_true(isFeasible(ps, list(x = "b", y = NA, z = c(2, 2))))
   expect_true(isRequiresOk(ps, list(x = "a")))
-  expect_true(isRequiresOk(ps, list(x = "c"))) #out of bound is supposed to be ignored
+  expect_true(isRequiresOk(ps, list(x = "c"))) # out of bound is supposed to be ignored
   expect_true(isRequiresOk(ps, list(y = 1)))
   expect_error(isRequiresOk(ps, list(y = 1), use.defaults = FALSE))
   expect_error(isRequiresOk(ps, list(y = 1, x = "b")), 'x == "a"')
@@ -182,7 +185,7 @@ test_that("requires chains work", {
 test_that("print works", {
   ps = makeParamSet(
     makeIntegerParam("ntree", lower = 10, upper = 50),
-    makeNumericVectorParam("cutoff", len = 3, lower = 0.001, upper = 1, trafo = function(x) 0.9*x/sum(x))
+    makeNumericVectorParam("cutoff", len = 3, lower = 0.001, upper = 1, trafo = function(x) 0.9 * x / sum(x))
   )
   expect_output(print(ps), "numericvector")
   expect_output(print(ps), "3")
@@ -216,7 +219,8 @@ test_that("expressions get converted", {
     ps = makeParamSet(
       makeLogicalLearnerParam("a", default = FALSE),
       makeLogicalLearnerParam("b", default = FALSE, requires = "a == TRUE")
-    )}, "call")
+    )
+  }, "call")
 })
 
 test_that("test whether paramset fails gracefully", {

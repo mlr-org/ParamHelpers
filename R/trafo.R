@@ -13,13 +13,13 @@
 #' @export
 #' @examples
 #' # transform simple parameter:
-#' p = makeNumericParam(id="x", trafo=function(x) x^2)
+#' p = makeNumericParam(id = "x", trafo = function(x) x^2)
 #' trafoValue(p, 2)
 #' # for a parameter set different transformation functions are possible:
 #' ps = makeParamSet(
-#'   makeIntegerParam("u", trafo=function(x) 2*x),
-#'   makeNumericVectorParam("v", len=2, trafo=function(x) x/sum(x)),
-#'   makeDiscreteParam("w", values=c("a", "b"))
+#'   makeIntegerParam("u", trafo = function(x) 2 * x),
+#'   makeNumericVectorParam("v", len = 2, trafo = function(x) x / sum(x)),
+#'   makeDiscreteParam("w", values = c("a", "b"))
 #' )
 #' # now the values of "u" and "v" are transformed:
 #' trafoValue(ps, list(3, c(2, 4), "a"))
@@ -38,10 +38,11 @@ trafoValue = function(par, x) {
     }
     Map(trafoValue, par$pars, x)
   } else {
-    if (is.null(par$trafo))
+    if (is.null(par$trafo)) {
       x
-    else
+    } else {
       par$trafo(x)
+    }
   }
 }
 
@@ -56,21 +57,22 @@ trafoValue = function(par, x) {
 #' @export
 #' @examples
 #' ps = makeParamSet(
-#'   makeIntegerParam("u", trafo=function(x) 2*x),
-#'   makeNumericVectorParam("v", len=2, trafo=function(x) x/sum(x)),
-#'   makeDiscreteParam("w", values=c("a", "b"))
+#'   makeIntegerParam("u", trafo = function(x) 2 * x),
+#'   makeNumericVectorParam("v", len = 2, trafo = function(x) x / sum(x)),
+#'   makeDiscreteParam("w", values = c("a", "b"))
 #' )
-#' op = makeOptPathDF(ps, y.names="y", minimize=TRUE)
-#' addOptPathEl(op, x=list(3, c(2, 4), "a"), y=0, dob=1, eol=1)
-#' addOptPathEl(op, x=list(4, c(5, 3), "b"), y=2, dob=5, eol=7)
+#' op = makeOptPathDF(ps, y.names = "y", minimize = TRUE)
+#' addOptPathEl(op, x = list(3, c(2, 4), "a"), y = 0, dob = 1, eol = 1)
+#' addOptPathEl(op, x = list(4, c(5, 3), "b"), y = 2, dob = 5, eol = 7)
 #'
 #' as.data.frame(op)
 #' op = trafoOptPath(op)
 #' as.data.frame(op)
 trafoOptPath = function(opt.path) {
   assertClass(opt.path, "OptPath")
-  if (opt.path$add.transformed.x)
+  if (opt.path$add.transformed.x) {
     stop("Cannot further trafo opt.path, you already added transformed x values to it!")
+  }
   ps = opt.path$par.set
   # FIXME: this only works for the DF implementation!
   op2 = makeOptPathDF(opt.path$par.set, opt.path$y.names, opt.path$minimize, add.transformed.x = TRUE,
