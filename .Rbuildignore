@@ -9,3 +9,4 @@ README.md
 ^appveyor\.yml$
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^ParamHelpers\.Rproj$
