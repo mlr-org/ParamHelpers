@@ -32,24 +32,26 @@
 #' @template ret_gendes_df
 #' @export
 generateRandomDesign = function(n = 10L, par.set, trafo = FALSE) {
+
   doBasicGenDesignChecks(par.set)
   des = sampleValues(par.set, n, discrete.names = TRUE, trafo = trafo)
 
   # FIXME: all next lines are sloooow in R I guess. C?
-  elementsToDf = function(x)  {
+  elementsToDf = function(x) {
     Map(function(p, v) {
       # blow up scalar NAs
-      if (isScalarNA(v))
+      if (isScalarNA(v)) {
         v = as.data.frame(t(rep(v, p$len)))
-      else
+      } else {
         as.data.frame(t(v))
+      }
     }, par.set$pars, x)
   }
   des = lapply(des, elementsToDf)
   des = lapply(des, do.call, what = cbind)
   des = do.call(rbind, des)
   colnames(des) = getParamIds(par.set, repeated = TRUE, with.nr = TRUE)
-  des  = fixDesignFactors(des, par.set)
+  des = fixDesignFactors(des, par.set)
   attr(des, "trafo") = trafo
   return(des)
 }

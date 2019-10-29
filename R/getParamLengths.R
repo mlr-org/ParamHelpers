@@ -27,12 +27,14 @@ getParamLengths = function(par, dict = NULL) {
 getParamLengths.Param = function(par, dict = NULL) {
   assertClass(par, "Param")
   assertList(dict, names = "unique", null.ok = TRUE)
-  if (length(par) == 0L)
+  if (length(par) == 0L) {
     return(integer(0L))
+  }
 
   length = par$len
-  if (is.expression(length))
+  if (is.expression(length)) {
     length = eval(length, envir = dict)
+  }
   as.integer(length)
 }
 
@@ -40,8 +42,9 @@ getParamLengths.Param = function(par, dict = NULL) {
 getParamLengths.ParamSet = function(par, dict = NULL) {
   assertClass(par, "ParamSet")
   assertList(dict, names = "unique", null.ok = TRUE)
-  if (isEmpty(par))
+  if (isEmpty(par)) {
     return(integer(0L))
+  }
 
   lengths = extractSubList(par$pars, "len", simplify = FALSE)
   j = vlapply(par$pars, function(x) is.expression(x$len))

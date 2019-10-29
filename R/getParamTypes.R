@@ -24,6 +24,7 @@
 #' @export
 getParamTypes = function(par.set, df.cols = FALSE, df.discretes.as.factor = TRUE,
   use.names = FALSE, with.nr = TRUE) {
+
   assertClass(par.set, "ParamSet")
   assertFlag(df.cols)
   assertFlag(df.discretes.as.factor)
@@ -31,8 +32,9 @@ getParamTypes = function(par.set, df.cols = FALSE, df.discretes.as.factor = TRUE
   assertFlag(with.nr)
 
   types = extractSubList(par.set$pars, "type")
-  if (length(types) == 0L)
+  if (length(types) == 0L) {
     return(character(0L))
+  }
 
   recode = function(types, from, to) {
     i = fmatch(types, from, nomatch = 0L)
@@ -45,14 +47,15 @@ getParamTypes = function(par.set, df.cols = FALSE, df.discretes.as.factor = TRUE
     to = if (df.discretes.as.factor) {
       c("numeric", "integer", "factor", "factor", "logical", "character")
     } else {
-      c("numeric", "integer",  "character", "character", "logical","character")
+      c("numeric", "integer", "character", "character", "logical", "character")
     }
     types = recode(types, ph$convert.param.types.from, to)
   }
 
-  ns = if (use.names)
+  ns = if (use.names) {
     getParamIds(par.set, repeated = df.cols, with.nr = with.nr)
-  else
+  } else {
     NULL
+  }
   return(setNames(types, ns))
 }

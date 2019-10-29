@@ -12,8 +12,8 @@ test_that("plotEAF works", {
     for (i in 1:20) {
       addOptPathEl(op, x = list(
         x = X[i * 3]),
-        y = X[ i * 3 - 1:2],
-        dob = dob[i])
+      y = X[ i * 3 - 1:2],
+      dob = dob[i])
     }
     op
   }
@@ -21,7 +21,7 @@ test_that("plotEAF works", {
   opt.paths = list(
     algo1 = list(makeArtOP(), makeArtOP(), makeArtOP()),
     algo2 = list(makeArtOP(), makeArtOP()),
-    algo3  = list(makeArtOP()))
+    algo3 = list(makeArtOP()))
 
   # plot eaf and check returned data frame
   res = plotEAF(opt.paths)

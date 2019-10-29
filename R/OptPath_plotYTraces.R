@@ -13,6 +13,7 @@
 #'   names exec.time. Possible values are dob and exec.time, default is \code{dob}.
 #' @return ggplot2 plot object
 renderYTraces = function(opt.paths, over.time = "dob") {
+
   opt.paths = ensureVector(opt.paths, cl = "OptPath", n = 1L, names = "opt.path")
   assertList(opt.paths, types = "OptPath", min.len = 1L, names = "unique")
   assertChoice(over.time, choices = c("dob", "exec.time"))
@@ -22,6 +23,7 @@ renderYTraces = function(opt.paths, over.time = "dob") {
   data = data.frame()
   # combine y traces for this algo + add algo / repl + do some sanity checks
   fronts = lapply(seq_along(opt.paths), function(j) {
+
     run = opt.paths[[j]]
     name = names(as.data.frame(run, include.x = FALSE, include.rest = FALSE))
     if (j == 1L) {
@@ -39,11 +41,12 @@ renderYTraces = function(opt.paths, over.time = "dob") {
       stopf("Must always have the same 'minimize' settings for objective in opt path: %s (first one taken).
           But found here: %s", minimize, run$minimize)
     }
-    if (over.time == "dob")
+    if (over.time == "dob") {
       df = data.frame(
         y = getOptPathY(op = run),
         time = getOptPathDOB(op = run)
       )
+    }
     if (over.time == "exec.time") {
       times = seq(0, sum(getOptPathExecTimes(run)), length.out = 128)
       df = getOptPathColAtTimes(run, times)
@@ -60,8 +63,9 @@ renderYTraces = function(opt.paths, over.time = "dob") {
 
   pl = ggplot2::ggplot(data, ggplot2::aes_string(x = "time", y = y.name, group = ".algo",
     linetype = ".algo", col = ".algo"))
-  if (over.time == "dob")
+  if (over.time == "dob") {
     pl = pl + ggplot2::geom_point(size = 3)
+  }
   pl = pl + ggplot2::geom_line(data = mean.data, size = 1)
 
   return(pl)

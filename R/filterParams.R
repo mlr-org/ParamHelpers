@@ -46,7 +46,7 @@
 #' @export
 filterParams = function(par.set, ids = NULL, type = NULL, tunable = c(TRUE, FALSE), check.requires = FALSE) {
   # if (!is.null(par.set$forbidden))
-    # stopf("Operation not allowed for param set with forbidden region currently!")
+  # stopf("Operation not allowed for param set with forbidden region currently!")
   if (!is.null(ids)) {
     assertSubset(ids, names(par.set$pars))
     par.set$pars = Filter(function(p) p$id %in% ids, par.set$pars)
@@ -60,8 +60,9 @@ filterParams = function(par.set, ids = NULL, type = NULL, tunable = c(TRUE, FALS
   if (check.requires) {
     # find all vars which are in each params requirements which are not part of the param.set
     missing.vars = setdiff(getRequiredParamNames(par.set), getParamIds(par.set))
-    if (length(missing.vars) > 0)
+    if (length(missing.vars) > 0) {
       stopf("Params %s filtered but needed for requirements of present Params", collapse(missing.vars))
+    }
   }
   return(par.set)
 }
@@ -82,5 +83,3 @@ filterParamsDiscrete = function(par.set, ids = NULL, tunable = c(TRUE, FALSE), i
   filterParams(par.set, ids = ids, tunable = tunable,
     type = getTypeStringsDiscrete(include.logical = include.logical))
 }
-
-

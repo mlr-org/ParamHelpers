@@ -32,11 +32,11 @@
 #' @export
 #' @examples
 #' makeParamSet(
-#'   makeNumericParam("u", lower=1),
-#'   makeIntegerParam("v", lower=1, upper=2),
-#'   makeDiscreteParam("w", values=1:2),
+#'   makeNumericParam("u", lower = 1),
+#'   makeIntegerParam("v", lower = 1, upper = 2),
+#'   makeDiscreteParam("w", values = 1:2),
 #'   makeLogicalParam("x"),
-#'   makeDiscreteVectorParam("y", len=2, values=c("a", "b"))
+#'   makeDiscreteVectorParam("y", len = 2, values = c("a", "b"))
 #' )
 #' makeParamSet(
 #'   makeNumericParam("u", lower = expression(ceiling(n))),
@@ -49,9 +49,11 @@
 #'   forbidden = expression(min > max)
 #' )
 makeParamSet = function(..., params = NULL, forbidden = NULL, keys = NULL) {
+
   pars = list(...)
-  if (length(pars) > 0 && !is.null(params))
+  if (length(pars) > 0 && !is.null(params)) {
     stop("You can only use one of ... or params!")
+  }
   if (!is.null(params)) {
     assertList(params, types = "Param")
     pars = params
@@ -59,8 +61,9 @@ makeParamSet = function(..., params = NULL, forbidden = NULL, keys = NULL) {
     assertList(pars, types = "Param")
   }
   ns = extractSubList(pars, "id")
-  if (anyDuplicated(ns))
+  if (anyDuplicated(ns)) {
     stop("All parameters must have unique names!")
+  }
   names(pars) = ns
   par.set = makeS3Obj("ParamSet", pars = pars, forbidden = forbidden)
 
@@ -72,8 +75,9 @@ makeParamSet = function(..., params = NULL, forbidden = NULL, keys = NULL) {
       par.set = addClasses(par.set, classes = "LearnerParamSet")
       keys = union(keys, c("task", "n", "p", "k", "type"))
     }
-    if (!is.null(keys) && (hasExpression(par.set)))
+    if (!is.null(keys) && (hasExpression(par.set))) {
       checkExpressionFeasibility(par.set = par.set, keys = keys)
+    }
   }
   return(par.set)
 }
@@ -87,11 +91,12 @@ getParSetPrintData = function(x, trafo = TRUE, used = TRUE, constr.clip = 40L) {
 print.ParamSet = function(x, ..., trafo = TRUE, used = TRUE, constr.clip = 40L) {
   if (isEmpty(x)) {
     print("Empty parameter set.")
-  } else  {
+  } else {
     print(getParSetPrintData(x, trafo = trafo, used = used, constr.clip = constr.clip))
   }
-  if (hasForbidden(x))
+  if (hasForbidden(x)) {
     catf("Forbidden region specified.")
+  }
   return(invisible(NULL))
 }
 
@@ -142,25 +147,29 @@ isEmpty.ParamSet = function(par.set) {
 makeNumericParamSet = function(id = "x", len, lower = -Inf, upper = Inf, vector = TRUE) {
   assertString(id)
   if (missing(len)) {
-    if (!missing(lower))
+    if (!missing(lower)) {
       len = length(lower)
-    else if (!missing(upper))
+    } else if (!missing(upper)) {
       len = length(upper)
+    }
   } else {
     len = asInt(len)
   }
-  if (is.numeric(lower) && length(lower) == 1L)
+  if (is.numeric(lower) && length(lower) == 1L) {
     lower = rep(lower, len)
-  if (is.numeric(upper) && length(upper) == 1L)
+  }
+  if (is.numeric(upper) && length(upper) == 1L) {
     upper = rep(upper, len)
+  }
   assertNumeric(lower, len = len)
   assertNumeric(upper, len = len)
   assertFlag(vector)
   if (vector) {
     return(makeParamSet(makeNumericVectorParam(id = id, len = len, lower = lower, upper = upper)))
   } else {
-    return(makeParamSet(params = lapply(1:len, function(i)
-      makeNumericParam(id = paste(id, i, sep = ""), lower = lower[i], upper = upper[i]))
+    return(makeParamSet(params = lapply(1:len, function(i) {
+      makeNumericParam(id = paste(id, i, sep = ""), lower = lower[i], upper = upper[i])
+    })
     ))
   }
 }

@@ -7,6 +7,6 @@ test_that("dropParams", {
     makeDiscreteParam("w", values = 1:2)
   )
   expect_equal(getParamIds(dropParams(ps, "u")), c("v", "w"))
-  expect_equal(getParamIds(dropParams(ps, c("u","v"))), "w")
+  expect_equal(getParamIds(dropParams(ps, c("u", "v"))), "w")
   expect_true(isEmpty(dropParams(ps, c("u", "v", "w"))))
 })

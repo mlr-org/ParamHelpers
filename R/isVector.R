@@ -20,4 +20,3 @@ isVector.Param = function(par) {
 isVector.ParamSet = function(par) {
   all(vlapply(par$pars, isVector))
 }
-

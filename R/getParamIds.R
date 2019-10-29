@@ -29,8 +29,9 @@ getParamIds = function(par, repeated = FALSE, with.nr = FALSE) {
 
 #' @export
 getParamIds.ParamSet = function(par, repeated = FALSE, with.nr = FALSE) {
-  if (isEmpty(par))
+  if (isEmpty(par)) {
     return(character(0L))
+  }
   unlist(lapply(par$pars, getParamIds, repeated = repeated, with.nr = with.nr), use.names = FALSE)
 }
 
@@ -40,10 +41,11 @@ getParamIds.Param = function(par, repeated = FALSE, with.nr = FALSE) {
   if (repeated && isVector(par)) {
     n = par$len
     if (!is.na(n)) {
-      if (n > 1L && with.nr)
+      if (n > 1L && with.nr) {
         paste(rep(pid, n), seq_len(n), sep = "")
-      else
+      } else {
         rep(pid, n)
+      }
     } else {
       pid
     }

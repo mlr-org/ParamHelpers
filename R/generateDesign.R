@@ -1,9 +1,9 @@
-#FIXME: generateDesign will NOT work if there are dependencies
+# FIXME: generateDesign will NOT work if there are dependencies
 # over multiple levels of params and one only states the dependency only
 #  wrt to the "last" param. also see daniels unit test.
 #  it works as long all dependencies are stated, we need to at least document this
 
-#FIXME: it really makes no sense to calculate the distance for params that are NA
+# FIXME: it really makes no sense to calculate the distance for params that are NA
 # when we do the design and augment it right? think about what happens here
 
 
@@ -87,7 +87,7 @@
 #' # with trafo
 #' ps = makeParamSet(
 #'   makeNumericParam("x", lower = -2, upper = 1),
-#'   makeNumericVectorParam("y", len = 2, lower = 0, upper = 1, trafo = function(x) x/sum(x))
+#'   makeNumericVectorParam("y", len = 2, lower = 0, upper = 1, trafo = function(x) x / sum(x))
 #' )
 #' generateDesign(10, ps, trafo = TRUE)
 generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALSE, augment = 20L) {
@@ -98,10 +98,11 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
   upper = z$upper
 
   requirePackages("lhs", why = "generateDesign", default.method = "load")
-  if (missing(fun))
+  if (missing(fun)) {
     fun = lhs::randomLHS
-  else
+  } else {
     assertFunction(fun)
+  }
   assertList(fun.args)
   assertFlag(trafo)
   augment = asInt(augment, lower = 0L)
@@ -120,10 +121,11 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
   types.int = convertTypesToCInts(types.df)
   types.df[types.df == "factor"] = "character"
   # ignore trafos if the user did not request transformed values
-  trafos = if(trafo)
+  trafos = if (trafo) {
     lapply(pars, function(p) p$trafo)
-  else
+  } else {
     replicate(length(pars), NULL, simplify = FALSE)
+  }
   par.requires = lapply(pars, function(p) p$requires)
 
 
@@ -134,17 +136,18 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
   for (iter in seq_len(augment)) {
     ### get design, types converted, trafos, conditionals set to NA
     # create new design or augment if we already have some points
-    newdes = if (nmissing == n)
+    newdes = if (nmissing == n) {
       do.call(fun, insert(list(n = nmissing, k = k), fun.args))
-    else
+    } else {
       lhs::randomLHS(nmissing, k = k)
+    }
     # preallocate result for C
     newres = makeDataFrame(nmissing, k, col.types = types.df)
     newres = .Call(c_generateDesign, newdes, newres, types.int, lower2, upper2, values)
     colnames(newres) = pids
     # check each row if forbidden, then remove
     if (hasForbidden(par.set)) {
-      #FIXME: this is pretty slow, but correct
+      # FIXME: this is pretty slow, but correct
       fb = unlist(lapply(dfRowsToList(newres, par.set = par.set), function(x) {
         isForbidden(x, par.set = par.set)
       }))
@@ -162,12 +165,14 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
     nmissing = n - nrow(res)
 
     # Enough points? We are done!
-    if (nmissing == 0L)
+    if (nmissing == 0L) {
       break
+    }
   }
 
-  if (nrow(res) < n)
+  if (nrow(res) < n) {
     warningf("generateDesign could only produce %i points instead of %i!", nrow(res), n)
+  }
 
   colnames(res) = pids
   res = fixDesignFactors(res, par.set)

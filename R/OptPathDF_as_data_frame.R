@@ -49,12 +49,14 @@ as.data.frame.OptPathDF = function(x, row.names = NULL, optional = FALSE, includ
   dob = asInteger(dob)
   eol = asInteger(eol)
 
-  if (!include.x && !include.y && !include.rest)
+  if (!include.x && !include.y && !include.rest) {
     stopf("Not able to create data.frame from opt.path. You need to include something!")
+  }
 
   ind = getOptPathDobAndEolIndex(x, dob, eol)
-  if (!any(ind))
+  if (!any(ind)) {
     stopf("No elements where selected (via 'dob' and 'eol')!")
+  }
 
   res = makeDataFrame(nrow = sum(ind), ncol = 0)
 
@@ -74,10 +76,12 @@ as.data.frame.OptPathDF = function(x, row.names = NULL, optional = FALSE, includ
   if (include.rest) {
     res = cbind(res, dob = x$env$dob[ind], eol = x$env$eol[ind])
     # if err message / exec time included, add it
-    if (!is.null(x$env$error.message))
+    if (!is.null(x$env$error.message)) {
       res$error.message = x$env$error.message[ind]
-    if (!is.null(x$env$exec.time))
+    }
+    if (!is.null(x$env$exec.time)) {
       res$exec.time = x$env$exec.time[ind]
+    }
     if (!is.null(x$env$extra)) {
       extra.clean = lapply(x$env$extra[ind], removeDotEntries)
       res = cbind(res, convertListOfRowsToDataFrame(extra.clean))

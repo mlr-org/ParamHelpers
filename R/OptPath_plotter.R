@@ -29,8 +29,9 @@ plotOptPath = function(op, iters, pause = TRUE, xlim = list(), ylim = list(),
 
   requirePackages(c("grid", "gridExtra"), why = "plotOptPath")
 
-  if (missing(iters))
+  if (missing(iters)) {
     iters = max(getOptPathDOB(op))
+  }
 
   assertClass(op, "OptPath")
   assertIntegerish(iters, lower = 0L, upper = max(getOptPathDOB(op)), any.missing = FALSE)
@@ -53,19 +54,21 @@ plotOptPath = function(op, iters, pause = TRUE, xlim = list(), ylim = list(),
     max.width = getMaxPlotWidth(plots)
     plots = toAlignedGTable(plots, max.width)
 
-    if (!is.null(plots$plot.x.over.time))
+    if (!is.null(plots$plot.x.over.time)) {
       plots$plot.x.over.time = gridExtra::arrangeGrob(grobs = plots$plot.x.over.time, ncol = 1L)
+    }
 
-    if (!is.null(plots$plot.y.over.time))
+    if (!is.null(plots$plot.y.over.time)) {
       plots$plot.y.over.time = gridExtra::arrangeGrob(grobs = plots$plot.y.over.time, ncol = 1L)
+    }
 
     plot.top = Filter(Negate(is.null), list(plots$plot.x, plots$plot.y))
-    plot.top =  gridExtra::arrangeGrob(grobs = plot.top, nrow = 1L)
+    plot.top = gridExtra::arrangeGrob(grobs = plot.top, nrow = 1L)
 
     plot.bottom = Filter(Negate(is.null), list(plots$plot.x.over.time, plots$plot.y.over.time))
 
     if (length(plot.bottom) > 0L) {
-      plot.bottom =  do.call(gridExtra::arrangeGrob, c(plot.bottom, nrow = 1L))
+      plot.bottom = do.call(gridExtra::arrangeGrob, c(plot.bottom, nrow = 1L))
       plots = list(plot.top, plot.bottom)
     } else {
       plots = list(plot.top)

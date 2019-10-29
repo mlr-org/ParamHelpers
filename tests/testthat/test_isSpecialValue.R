@@ -12,4 +12,3 @@ test_that("isSpecialValue", {
   expect_true(isSpecialValue(p, 1.5))
   expect_true(isSpecialValue(p, iris))
 })
-

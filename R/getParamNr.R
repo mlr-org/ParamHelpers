@@ -19,8 +19,9 @@
 getParamNr = function(par.set, devectorize = FALSE) {
   assertClass(par.set, "ParamSet")
   assertFlag(devectorize)
-  if (devectorize)
+  if (devectorize) {
     return(sum(getParamLengths(par.set)))
-  else
+  } else {
     return(length(par.set$pars))
+  }
 }

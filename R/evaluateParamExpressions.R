@@ -36,9 +36,11 @@ evaluateParamExpressions = function(obj, dict = NULL) {
 
 #' @export
 evaluateParamExpressions.Param = function(obj, dict = NULL) {
+
   assertClass(obj, "Param")
-  if (!hasExpression(obj))
+  if (!hasExpression(obj)) {
     return(obj)
+  }
   assertList(dict, names = "unique", null.ok = TRUE)
   # replace expressions in length (needs to be done prior to computing
   # defaults, values and boundaries)
@@ -46,22 +48,27 @@ evaluateParamExpressions.Param = function(obj, dict = NULL) {
   obj$len = asInt(length, na.ok = TRUE)
 
   # replace expressions in default, values and boundaries
-  if (!is.null(obj$lower))
+  if (!is.null(obj$lower)) {
     obj$lower = unname(getLower(obj = obj, dict = dict))
-  if (!is.null(obj$upper))
+  }
+  if (!is.null(obj$upper)) {
     obj$upper = unname(getUpper(obj = obj, dict = dict))
-  if (!is.null(obj$default))
+  }
+  if (!is.null(obj$default)) {
     obj$default = getDefaults(obj = obj, dict = dict)
-  if (!is.null(obj$values))
+  }
+  if (!is.null(obj$values)) {
     obj$values = getValues(obj = obj, dict = dict)
+  }
   return(obj)
 }
 
 #' @export
 evaluateParamExpressions.ParamSet = function(obj, dict = NULL) {
   assertClass(obj, "ParamSet")
-  if (!hasExpression(obj))
+  if (!hasExpression(obj)) {
     return(obj)
+  }
   assertList(dict, names = "unique", null.ok = TRUE)
   ids = names(obj$pars)
   # evaluate all parameters separately

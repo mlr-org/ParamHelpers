@@ -65,21 +65,27 @@ makeOptPath = function(par.set, y.names, minimize, add.transformed.x = FALSE,
   n.y = length(y.names)
   ok = c("numeric", "integer", "numericvector", "integervector", "logical",
     "logicalvector", "discrete", "discretevector", "character", "charactervector")
-  if(length(par.set$pars) > length(filterParams(par.set, type = ok)$pars))
+  if (length(par.set$pars) > length(filterParams(par.set, type = ok)$pars)) {
     stop("OptPath can currently only be used for: ", paste(ok, collapse = ","))
+  }
   x.names = getParamIds(par.set)
   # be really sure that x and y columns are uniquely named
   x.names2 = c(getParamIds(par.set, with.nr = TRUE), getParamIds(par.set, with.nr = FALSE))
-  if (length(intersect(x.names2, y.names)) > 0)
+  if (length(intersect(x.names2, y.names)) > 0) {
     stop("'x.names' and 'y.names' must not contain common elements!")
-  if (length(minimize) != n.y)
+  }
+  if (length(minimize) != n.y) {
     stop("'y.names' and 'minimize' must be of the same length!")
-  if (is.character(names(minimize)) && !setequal(names(minimize), y.names))
+  }
+  if (is.character(names(minimize)) && !setequal(names(minimize), y.names)) {
     stop("Given names for 'minimize' must be the same as 'y.names'!")
-  if (is.null(names(minimize)))
+  }
+  if (is.null(names(minimize))) {
     names(minimize) = y.names
-  if (any(c("dob", "eol", "error.message") %in% (union(x.names, y.names))))
+  }
+  if (any(c("dob", "eol", "error.message") %in% (union(x.names, y.names)))) {
     stop("'dob', 'eol' and 'error.message' are not allowed in parameter names or 'y.names'!")
+  }
   ee = new.env(parent = emptyenv())
   ee$dob = ee$eol = integer(0)
 
@@ -99,6 +105,7 @@ makeOptPath = function(par.set, y.names, minimize, add.transformed.x = FALSE,
 
 #' @export
 print.OptPath = function(x, ...) {
+
   n = getOptPathLength(x)
   em = x$env$error.message
   et = x$env$exec.time
@@ -108,7 +115,7 @@ print.OptPath = function(x, ...) {
     length(x$par.set$pars), sum(getParamLengths(x$par.set)), length(x$y.names))
   catf("  Length: %i", n)
   catf("  Add x values transformed: %s", x$add.transformed.x)
-  s = if (is.null(em)) ""  else sprintf(" Errors: %i / %i.", sum(!is.na(em)), n)
+  s = if (is.null(em)) "" else sprintf(" Errors: %i / %i.", sum(!is.na(em)), n)
   catf("  Error messages: %s.%s", !is.null(em), s)
   s = if (is.null(et)) {
     s = ""
@@ -119,7 +126,7 @@ print.OptPath = function(x, ...) {
     if (ntimes == 0L) {
       et1 = 0
       et2 = 0
-     } else {
+    } else {
       et1 = min(et, na.rm = TRUE)
       et2 = max(et, na.rm = TRUE)
     }
@@ -128,7 +135,7 @@ print.OptPath = function(x, ...) {
   catf("  Exec times: %s.%s", !is.null(et), s)
   if (!is.null(ex)) {
     nondot.extra.length = ifelse(length(ex) > 0L,
-        length(removeDotEntries(ex[[1L]])), NA)
+      length(removeDotEntries(ex[[1L]])), NA)
     catf("  Extras: %i columns", nondot.extra.length)
   }
 }

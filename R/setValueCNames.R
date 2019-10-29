@@ -17,8 +17,9 @@ setValueCNames = function(par, x) {
 #' @export
 setValueCNames.Param = function(par, x) {
   # do not set names for missing / req.params
-  if (par$type %fin% ph$value.component.names && !isScalarNA(x))
+  if (par$type %fin% ph$value.component.names && !isScalarNA(x)) {
     names(x) = par$cnames
+  }
   return(x)
 }
 
