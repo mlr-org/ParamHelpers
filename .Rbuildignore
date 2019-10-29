@@ -11,3 +11,4 @@ README.md
 ^\.Rproj\.user$
 ^ParamHelpers\.Rproj$
 ^codecov\.yml$
+^tic\.R$
