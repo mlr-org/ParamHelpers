@@ -58,7 +58,8 @@ Suggests:
     lhs,
     plyr,
     reshape2,
-    testthat
+    testthat,
+    covr
 ByteCompile: yes
 Encoding: UTF-8
 LazyData: yes
