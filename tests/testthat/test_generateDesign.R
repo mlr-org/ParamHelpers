@@ -232,7 +232,7 @@ test_that("vector params and forbidden regions", {
   )
 
   # the expression in 'forbidden' should not throw an error anymore
-  # See https://github.com/berndbischl/ParamHelpers/issues/51
+  # See https://github.com/mlr-org/ParamHelpers/issues/51
   res = generateDesign(100L, ps)
   expect_equal(nrow(res), 100L)
   expect_numeric(rowSums(res[, c("x1", "x2")]), lower = 0, upper = 1)
