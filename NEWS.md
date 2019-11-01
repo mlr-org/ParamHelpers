@@ -1,11 +1,11 @@
-ParamHelpers_1.13:
+# ParamHelpers 1.13
 - trafo allowed in DiscreteVectorParam
 
-ParamHelpers_1.12:
+# ParamHelpers 1.12
 - improved documentation
 - speedups
 
-ParamHelpers_1.10:
+# ParamHelpers 1.10
 - adapt to irace 2.1 API changes
 - new functions
 -- getRequirements
@@ -15,7 +15,7 @@ ParamHelpers_1.10:
    isDiscreteTypeString, isLogicalTypeString, isCharacterTypeString, isVectorTypeString
 -- generateDesignOfDefaults
 
-ParamHelpers_1.9:
+# ParamHelpers 1.9
 - Many parameters can now be expressions which can be evaluated later while
   providing a lookup dictionary.
 - make*Param now accepts special.vals which are always feasible
@@ -24,7 +24,7 @@ ParamHelpers_1.9:
 -- evaluateParamExpressions
 -- hasExpression
 
-ParamHelpers_1.8:
+# ParamHelpers 1.8
 - plots produced by renderOptPathPlot, plotOptPath are now always nicely aligned
 - removed soobench from SUGGESTS and removed function extractParamSetFromSooFunction
 - hasDiscrete: added arg "include.logical"
@@ -43,11 +43,11 @@ ParamHelpers_1.8:
 -- filterParamsNumeric, filterParamsDiscrete
 -- updateParVals
 
-ParamHelpers_1.7:
+# ParamHelpers 1.7
 - dfRowsToList, dfRowToList: added arg enforce.col.types
 - UntypedParam also got the "tunable" flag
 
-ParamHelpers_1.6:
+# ParamHelpers 1.6
 - added new character parameter types, see new functions below
 - added property 'tunable' to make*Param
 - isFeasible supports named lists for unordered checks
@@ -64,11 +64,11 @@ ParamHelpers_1.6:
 -- makeCharacterParam, makeCharacterVectorParam
 -- isCharacter, hasCharacter
 
-ParamHelpers_1.5:
+# ParamHelpers 1.5
 - added constr.clip to print.ParamSet and related internal functions to make prints more readable
 - getDefaults: new option include.null
 
-ParamHelpers_1.4:
+# ParamHelpers 1.4
 - sampleValue(s): 'discrete.names' now only affects discrtete params and not logicals anymore.
   logical params always result in R data type 'logical'
 - Vector params (num, int and log) can now have component names
@@ -77,7 +77,7 @@ ParamHelpers_1.4:
 -- getOptPathX
 -- generateRandomDesign
 
-ParamHelpers_1.3:
+# ParamHelpers 1.3
 - sampleValue(s): 'discrete.names' now only affects discrtete params and not logicals anymore.
   logical params always result in R data type 'logical'
 - Vector params (num, int and log) can now have component names
@@ -89,7 +89,7 @@ ParamHelpers_1.3:
 -- setValueCNames
 -- repairPoint
 
-ParamHelpers_1.2:
+# ParamHelpers 1.2
 - normal parameters can now have a default value
 - parameter spaces can now define a forbidden region of infeasibility.
   all operations on the set respect this, although a few are disallowed and produce an exception.
@@ -115,7 +115,7 @@ ParamHelpers_1.2:
 -- getOptPathParetoFront
 -- getOptPathCol
 
-ParamHelpers_1.1-35:
+# ParamHelpers 1.1-35
 - concept of dependent parameters was introduced (argument "requires")
 - as.data.frame.OptPath: discretes.as.factor option
 - all arguments "length" renamed to len
@@ -126,9 +126,9 @@ ParamHelpers_1.1-35:
 -- hasRequires
 -- removeMissingValues
 
-ParamHelpers_1.0-55:
+# ParamHelpers 1.0-55
 - disabled one unreasonable unit test for CRAN
 - some dependencies are now imports like they should be
 
-ParamHelpers_1.0-54:
+# ParamHelpers 1.0-54
 - First submit to CRAN.
