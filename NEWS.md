@@ -1,6 +1,7 @@
 # ParamHelpers 1.12.0.9000
 
 - trafo allowed in DiscreteVectorParam
+- removed non-descriptive warning when a param has `NA` set as default
 
 # ParamHelpers 1.12
 
