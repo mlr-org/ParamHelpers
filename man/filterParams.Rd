@@ -16,41 +16,41 @@ filterParamsDiscrete(par.set, ids = NULL, tunable = c(TRUE, FALSE),
   include.logical = TRUE)
 }
 \arguments{
-\item{par.set}{[\code{\link{ParamSet}}]\cr
+\item{par.set}{\link{\code{\link{ParamSet}}}\cr
 Parameter set.}
 
-\item{ids}{[\code{NULL} | \code{character}]\cr
+\item{ids}{\link[=`NULL` | `character`]{NULL | character}\cr
 Vector with id strings containing the parameters to select. Has to be a
 subset of the parameter names within the parameter set.
 Per default (\code{ids = NULL}) no filtering based on names is done.}
 
-\item{type}{[\code{NULL} | \code{character}]\cr
+\item{type}{\link[=`NULL` | `character`]{NULL | character}\cr
 Vector of allowed types, subset of: \dQuote{numeric}, \dQuote{integer}, \dQuote{numericvector},
 \dQuote{integervector}, \dQuote{discrete}, \dQuote{discretevector}, \dQuote{logical},
 \dQuote{logicalvector}, \dQuote{character}, \dQuote{charactervector},
 \dQuote{function}, \dQuote{untyped}.
 Setting \code{type = NULL}, which is the default, allows the consideration of all types.}
 
-\item{tunable}{[\code{logical}]\cr
+\item{tunable}{\code{\link{logical}}\cr
 Vector of allowed values for the property \code{tunable}. Accepted arguments are
 \code{TRUE}, \code{FALSE} or \code{c(TRUE, FALSE)}.
 The default is \code{c(TRUE, FALSE)}, i.e. none of the parameters will be filtered out.}
 
-\item{check.requires}{[\code{logical(1)}]\cr
-Toggle whether it should be checked that all requirements in the \code{\link{ParamSet}} are still valid after filtering or not.
+\item{check.requires}{\code{\link{logical(1)}}\cr
+Toggle whether it should be checked that all requirements in the \code{\link[=ParamSet]{ParamSet()}} are still valid after filtering or not.
 This check is done after filtering and will throw an error if those Params are filtered which other Params need for their requirements.
 Default is \code{FALSE}.}
 
-\item{include.int}{[\code{logical(1)}]\cr
+\item{include.int}{\link{\code{logical(1)}}\cr
 Are integers also considered to be numeric?
 Default is \code{TRUE}.}
 
-\item{include.logical}{[\code{logical(1)}]\cr
+\item{include.logical}{\link{\code{logical(1)}}\cr
 Are logicals also considered to be discrete?
 Default is \code{TRUE}.}
 }
 \value{
-[\code{\link{ParamSet}}].
+[\code{\link[=ParamSet]{ParamSet()}}].
 }
 \description{
 Parameter order is not changed.

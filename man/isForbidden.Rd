@@ -7,14 +7,14 @@
 isForbidden(par.set, x)
 }
 \arguments{
-\item{par.set}{[\code{\link{ParamSet}}]\cr
+\item{par.set}{\link{\code{\link{ParamSet}}}\cr
 Parameter set.}
 
-\item{x}{[named \code{list}] \cr
+\item{x}{\link[=named `list`]{named list} \cr
 Parameter setting to check.}
 }
 \value{
-[\code{logical(1)}].
+\code{\link{logical(1)}}.
 }
 \description{
 Parameter sets without a forbidden region always return \code{FALSE}.

@@ -51,9 +51,9 @@ trafoValue = function(par, x) {
 #' Transform optimization path with associated transformation functions of parameters.
 #' Can only be done when x values where added \dQuote{untransformed}.
 #'
-#' @param opt.path [\code{\link{OptPath}}]\cr
+#' @param opt.path [[OptPath()]]\cr
 #'   Optimization path.
-#' @return [\code{\link{OptPath}}].
+#' @return [[OptPath()]].
 #' @export
 #' @examples
 #' ps = makeParamSet(

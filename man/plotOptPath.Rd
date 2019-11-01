@@ -8,20 +8,20 @@ plotOptPath(op, iters, pause = TRUE, xlim = list(), ylim = list(),
   title = "Optimization Path Plots", ...)
 }
 \arguments{
-\item{op}{[\code{OptPath}]\cr
+\item{op}{\code{\link{OptPath}}\cr
 Optimization path.}
 
-\item{iters}{[\code{integer} | NULL]\cr
+\item{iters}{\link[=`integer` | NULL]{integer | NULL}\cr
 Vector of iterations which should be plotted one after another. If \code{NULL},
 which is the default, only the last iteration is plotted. Iteration 0 plots
 all elements with dob = 0. Note that the plots for iteration i contains
 all observations alive in iteration i.}
 
-\item{pause}{[\code{logical(1)}]\cr
+\item{pause}{\code{\link{logical(1)}}\cr
 Should the process be paused after each iteration?
 Default is \code{TRUE}.}
 
-\item{xlim}{[\code{list}] \cr
+\item{xlim}{\link{\code{list}} \cr
 X axis limits for the plots. Must be a named list, so you can specify the
 axis limits for every plot. Every element of the list must be a numeric
 vector of length 2. Available names for elements are:
@@ -34,7 +34,7 @@ Note: We do not support setting lims for the over.time.plots. We think,
 in nearly every case the ggplot defaults are fine, and the very rare case
 you have to set them, you can you can extract the plots and add your own limits.}
 
-\item{ylim}{[\code{list}] \cr
+\item{ylim}{\link{\code{list}} \cr
 Y axis limits for the plots. Must be a named list, so you can specify the
 axis limits for every plot. Every element of the list must be a numeric
 vector of length 2. Available names for elements are:
@@ -47,10 +47,10 @@ Note: We do not support setting lims for the over.time.plots. We think,
 in nearly every case the ggplot defaults are fine, and the very rare case
 you have to set them, you can you can extract the plots and add your own limits.}
 
-\item{title}{[\code{character(1)}]\cr
+\item{title}{\code{\link{character(1)}}\cr
 Main title for the arranged plots, default is Optimization Path Plots.}
 
-\item{...}{Additional parameters for \code{\link{renderOptPathPlot}}.}
+\item{...}{Additional parameters for \code{\link[=renderOptPathPlot]{renderOptPathPlot()}}.}
 }
 \description{
 Plot method for every type of optimization path, containing any numbers and

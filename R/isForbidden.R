@@ -1,12 +1,12 @@
 #' @title Check whether parameter setting lies in forbidden region of parameter set.
 #'
 #' @description
-#' Parameter sets without a forbidden region always return \code{FALSE}.
+#' Parameter sets without a forbidden region always return `FALSE`.
 #'
 #' @template arg_parset
-#' @param x [named \code{list}] \cr
+#' @param x [named `list`] \cr
 #'   Parameter setting to check.
-#' @return [\code{logical(1)}].
+#' @return [`logical(1)`].
 #' @export
 isForbidden = function(par.set, x) {
   assertClass(par.set, "ParamSet")

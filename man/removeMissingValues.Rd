@@ -7,11 +7,11 @@
 removeMissingValues(x)
 }
 \arguments{
-\item{x}{[\code{list}]\cr
+\item{x}{\code{\link{list}}\cr
 List of paramter values.}
 }
 \value{
-[\code{list}].
+\code{\link{list}}.
 }
 \description{
 Removes all scalar NAs from a parameter setting list.

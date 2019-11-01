@@ -111,11 +111,11 @@ sampleValue.ParamSet = function(par, discrete.names = FALSE, trafo = FALSE) {
 #' @template desc_dep_pars_na
 #'
 #' @template arg_par_or_set
-#' @param n [\code{integer(1)}]\cr
+#' @param n [`integer(1)`]\cr
 #'   Number of values.
 #' @template arg_disc_names
 #' @template arg_trafo
-#' @return [\code{list}]. For consistency always a list is returned.
+#' @return [`list`]. For consistency always a list is returned.
 #' @export
 #' @examples
 #' p = makeIntegerParam("x", lower = -10, upper = 10)

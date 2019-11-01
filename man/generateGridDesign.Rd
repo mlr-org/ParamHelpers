@@ -7,46 +7,46 @@
 generateGridDesign(par.set, resolution, trafo = FALSE)
 }
 \arguments{
-\item{par.set}{[\code{\link{ParamSet}}]\cr
+\item{par.set}{\link{\code{\link{ParamSet}}}\cr
 Parameter set.}
 
-\item{resolution}{[\code{integer}]\cr
+\item{resolution}{\code{\link{integer}}\cr
 Resolution of the grid for each numeric/integer parameter in \code{par.set}.
 For vector parameters, it is the resolution per dimension.
 Either pass one resolution for all parameters, or a named vector.}
 
-\item{trafo}{[\code{logical(1)}]\cr
+\item{trafo}{\link{\code{logical(1)}}\cr
 Transform all parameters by using theirs respective transformation functions.
 Default is \code{FALSE}.}
 }
 \value{
-[\code{data.frame}]. Columns are named by the ids of the parameters.
-  If the \code{par.set} argument contains a vector parameter, its corresponding column names
-  in the design are the parameter id concatenated with 1 to dimension of the vector.
-  The result will have an \code{logical(1)} attribute \dQuote{trafo},
-  which is set to the value of argument \code{trafo}.
+\link{\code{data.frame}}. Columns are named by the ids of the parameters.
+If the \code{par.set} argument contains a vector parameter, its corresponding column names
+in the design are the parameter id concatenated with 1 to dimension of the vector.
+The result will have an \code{logical(1)} attribute \dQuote{trafo},
+which is set to the value of argument \code{trafo}.
 }
 \description{
 The following types of columns are created:
 \tabular{ll}{
- numeric(vector)   \tab  \code{numeric}  \cr
- integer(vector)   \tab  \code{integer}  \cr
- discrete(vector)  \tab  \code{factor} (names of values = levels) \cr
- logical(vector)   \tab  \code{logical}
+numeric(vector)   \tab  \code{numeric}  \cr
+integer(vector)   \tab  \code{integer}  \cr
+discrete(vector)  \tab  \code{factor} (names of values = levels) \cr
+logical(vector)   \tab  \code{logical}
 }
-If you want to convert these, look at \code{\link[BBmisc]{convertDataFrameCols}}.
+If you want to convert these, look at \code{\link[BBmisc:convertDataFrameCols]{BBmisc::convertDataFrameCols()}}.
 Dependent parameters whose constraints are unsatisfied generate \code{NA} entries in their
 respective columns.
 For discrete vectors the levels and their order will be preserved.
 
 The algorithm currently performs these steps:
 \enumerate{
-  \item{We create a grid. For numerics and integers we use the specfied resolution. For discretes all values will be taken.}
-  \item{Forbidden points are removed.}
-  \item{Parameters are trafoed (potentially, depending on the setting of argument \code{trafo});
-  dependent parameters whose constraints are unsatisfied are set to \code{NA} entries.}
-  \item{Duplicated points are removed. Duplicated points are not generated in a
-   grid design, but the way parameter dependencies are handled make this possible.}
+\item{We create a grid. For numerics and integers we use the specfied resolution. For discretes all values will be taken.}
+\item{Forbidden points are removed.}
+\item{Parameters are trafoed (potentially, depending on the setting of argument \code{trafo});
+dependent parameters whose constraints are unsatisfied are set to \code{NA} entries.}
+\item{Duplicated points are removed. Duplicated points are not generated in a
+grid design, but the way parameter dependencies are handled make this possible.}
 }
 
 Note that if you have trafos attached to your params, the complete creation of the design

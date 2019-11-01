@@ -7,16 +7,16 @@
 getParamLengths(par, dict = NULL)
 }
 \arguments{
-\item{par}{[\code{\link{Param}} | \code{\link{ParamSet}}]\cr
+\item{par}{\link{\code{\link{Param}} | \code{\link{ParamSet}}}\cr
 Parameter or parameter set.}
 
-\item{dict}{[\code{environment} | \code{list} | \code{NULL}]\cr
+\item{dict}{\link{\code{environment} | \code{list} | \code{NULL}}\cr
 Environment or list which will be used for evaluating the variables
 of expressions within a parameter, parameter set or list of parameters.
 The default is \code{NULL}.}
 }
 \value{
-[\code{integer}]. Named and in the same order as the input for \code{\link{ParamSet}} input.
+\code{\link{integer}}. Named and in the same order as the input for \code{\link[=ParamSet]{ParamSet()}} input.
 }
 \description{
 Useful for vector parameters.

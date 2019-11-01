@@ -8,28 +8,28 @@ generateDesign(n = 10L, par.set, fun, fun.args = list(),
   trafo = FALSE, augment = 20L)
 }
 \arguments{
-\item{n}{[\code{integer(1)}]\cr
+\item{n}{\link{\code{integer(1)}}\cr
 Number of samples in design.
 Default is 10.}
 
-\item{par.set}{[\code{\link{ParamSet}}]\cr
+\item{par.set}{\link{\code{\link{ParamSet}}}\cr
 Parameter set.}
 
-\item{fun}{[\code{function}]\cr
+\item{fun}{\code{\link{function}}\cr
 Function from package lhs.
-Possible are: \code{\link[lhs]{maximinLHS}}, \code{\link[lhs]{randomLHS}},
-\code{\link[lhs]{geneticLHS}}, \code{\link[lhs]{improvedLHS}}, \code{\link[lhs]{optAugmentLHS}},
-\code{\link[lhs]{optimumLHS}}
-Default is \code{\link[lhs]{randomLHS}}.}
+Possible are: \code{\link[lhs:maximinLHS]{lhs::maximinLHS()}}, \code{\link[lhs:randomLHS]{lhs::randomLHS()}},
+\code{\link[lhs:geneticLHS]{lhs::geneticLHS()}}, \code{\link[lhs:improvedLHS]{lhs::improvedLHS()}}, \code{\link[lhs:optAugmentLHS]{lhs::optAugmentLHS()}},
+\code{\link[lhs:optimumLHS]{lhs::optimumLHS()}}
+Default is \code{\link[lhs:randomLHS]{lhs::randomLHS()}}.}
 
-\item{fun.args}{[\code{list}]\cr
+\item{fun.args}{\code{\link{list}}\cr
 List of further arguments passed to \code{fun}.}
 
-\item{trafo}{[\code{logical(1)}]\cr
+\item{trafo}{\link{\code{logical(1)}}\cr
 Transform all parameters by using theirs respective transformation functions.
 Default is \code{FALSE}.}
 
-\item{augment}{[\code{integer(1)}]\cr
+\item{augment}{\code{\link{integer(1)}}\cr
 Duplicated values and forbidden regions in the parameter space can lead to the design
 becoming smaller than \code{n}. With this option it is possible to augment the design again
 to size \code{n}. It is not guaranteed that this always works (to full size)
@@ -39,21 +39,21 @@ and the smaller design is returned.
 Default is 20.}
 }
 \value{
-[\code{data.frame}]. Columns are named by the ids of the parameters.
-  If the \code{par.set} argument contains a vector parameter, its corresponding column names
-  in the design are the parameter id concatenated with 1 to dimension of the vector.
-  The result will have an \code{logical(1)} attribute \dQuote{trafo},
-  which is set to the value of argument \code{trafo}.
+\link{\code{data.frame}}. Columns are named by the ids of the parameters.
+If the \code{par.set} argument contains a vector parameter, its corresponding column names
+in the design are the parameter id concatenated with 1 to dimension of the vector.
+The result will have an \code{logical(1)} attribute \dQuote{trafo},
+which is set to the value of argument \code{trafo}.
 }
 \description{
 The following types of columns are created:
 \tabular{ll}{
- numeric(vector)   \tab  \code{numeric}  \cr
- integer(vector)   \tab  \code{integer}  \cr
- discrete(vector)  \tab  \code{factor} (names of values = levels) \cr
- logical(vector)   \tab  \code{logical}
+numeric(vector)   \tab  \code{numeric}  \cr
+integer(vector)   \tab  \code{integer}  \cr
+discrete(vector)  \tab  \code{factor} (names of values = levels) \cr
+logical(vector)   \tab  \code{logical}
 }
-If you want to convert these, look at \code{\link[BBmisc]{convertDataFrameCols}}.
+If you want to convert these, look at \code{\link[BBmisc:convertDataFrameCols]{BBmisc::convertDataFrameCols()}}.
 Dependent parameters whose constraints are unsatisfied generate \code{NA} entries in their
 respective columns.
 For discrete vectors the levels and their order will be preserved, even if not all levels are present.
@@ -62,20 +62,20 @@ Currently only lhs designs are supported.
 
 The algorithm currently iterates the following steps:
 \enumerate{
-  \item{We create a space filling design for all parameters, disregarding \code{requires},
-    a \code{trafo} or the forbidden region.}
-  \item{Forbidden points are removed.}
-  \item{Parameters are trafoed (potentially, depending on the setting of argument \code{trafo});
-    dependent parameters whose constraints are unsatisfied are set to \code{NA} entries.}
-  \item{Duplicated design points are removed. Duplicated points are not generated in a
-   reasonable space-filling design, but the way discrete parameters and also parameter dependencies
-   are handled make this possible.}
-  \item{If we removed some points, we now try to augment the design in a space-filling way
-    and iterate.}
+\item{We create a space filling design for all parameters, disregarding \code{requires},
+a \code{trafo} or the forbidden region.}
+\item{Forbidden points are removed.}
+\item{Parameters are trafoed (potentially, depending on the setting of argument \code{trafo});
+dependent parameters whose constraints are unsatisfied are set to \code{NA} entries.}
+\item{Duplicated design points are removed. Duplicated points are not generated in a
+reasonable space-filling design, but the way discrete parameters and also parameter dependencies
+are handled make this possible.}
+\item{If we removed some points, we now try to augment the design in a space-filling way
+and iterate.}
 }
 
 Note that augmenting currently is somewhat experimental as we simply generate missing points
-via new calls to \code{\link[lhs]{randomLHS}}, but do not add points so they are maximally
+via new calls to \code{\link[lhs:randomLHS]{lhs::randomLHS()}}, but do not add points so they are maximally
 far away from the already present ones. The reason is that the latter is quite hard to achieve
 with complicated dependencies and forbidden regions, if one wants to ensure that points actually
 get added... But we are working on it.
@@ -101,7 +101,7 @@ generateDesign(5, ps)
 # with trafo
 ps = makeParamSet(
   makeNumericParam("x", lower = -2, upper = 1),
-  makeNumericVectorParam("y", len = 2, lower = 0, upper = 1, trafo = function(x) x/sum(x))
+  makeNumericVectorParam("y", len = 2, lower = 0, upper = 1, trafo = function(x) x / sum(x))
 )
 generateDesign(10, ps, trafo = TRUE)
 }

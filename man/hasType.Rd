@@ -20,19 +20,19 @@ hasCharacter(par.set)
 hasNumeric(par.set, include.int = TRUE)
 }
 \arguments{
-\item{par.set}{[\code{\link{ParamSet}}]\cr
+\item{par.set}{\link{\code{\link{ParamSet}}}\cr
 Parameter set.}
 
-\item{include.logical}{[\code{logical(1)}]\cr
+\item{include.logical}{\link{\code{logical(1)}}\cr
 Are logicals also considered to be discrete?
 Default is \code{TRUE}.}
 
-\item{include.int}{[\code{logical(1)}]\cr
+\item{include.int}{\link{\code{logical(1)}}\cr
 Are integers also considered to be numeric?
 Default is \code{TRUE}.}
 }
 \value{
-[\code{logical(1)}].
+\code{\link{logical(1)}}.
 }
 \description{
 \code{TRUE} iff the parameter set contains at least one parameter of the mentioned type x.

@@ -8,10 +8,10 @@ getParamTypes(par.set, df.cols = FALSE, df.discretes.as.factor = TRUE,
   use.names = FALSE, with.nr = TRUE)
 }
 \arguments{
-\item{par.set}{[\code{\link{ParamSet}}]\cr
+\item{par.set}{\link{\code{\link{ParamSet}}}\cr
 Parameter set.}
 
-\item{df.cols}{[\code{logical(1)}]\cr
+\item{df.cols}{\code{\link{logical(1)}}\cr
 If \code{FALSE} simply return the parameter types in the set,
 i.e., \code{par$type}.
 If \code{TRUE}, convert types so they correspond to R types of a data.frame
@@ -20,22 +20,22 @@ This also results in replication of output types for
 vector parameters.
 Default is \code{FALSE}.}
 
-\item{df.discretes.as.factor}{[\code{logical(1)}]\cr
+\item{df.discretes.as.factor}{\code{\link{logical(1)}}\cr
 If \code{df.cols} is \code{TRUE}:
 Should type for discrete params be \code{factor} or \code{character}?
 Default is \code{TRUE}.}
 
-\item{use.names}{[\code{logical(1)}]\cr
+\item{use.names}{\code{\link{logical(1)}}\cr
 Name the result vector?
 Default is \code{FALSE}.}
 
-\item{with.nr}{[\code{logical(1)}]\cr
+\item{with.nr}{\code{\link{logical(1)}}\cr
 Should number from 1 to length be appended to name?
 Only used if \code{use.names} and \code{df.cols} are \code{TRUE}.
 Default is \code{TRUE}.}
 }
 \value{
-[\code{character}].
+\code{\link{character}}.
 }
 \description{
 Returns type information for a parameter set.

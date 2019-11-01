@@ -7,18 +7,18 @@
 getOptPathCol(op, name, dob, eol)
 }
 \arguments{
-\item{op}{[\code{\link{OptPath}}]\cr
+\item{op}{\link{\code{\link{OptPath}}}\cr
 Optimization path.}
 
-\item{name}{[\code{character(1)}]\cr
+\item{name}{\code{\link{character(1)}}\cr
 Name of the column.}
 
-\item{dob}{[\code{integer}]\cr
+\item{dob}{\link{\code{integer}}\cr
 Vector of date-of-birth values to further subset the result.
 Only elements with a date-of-birth included in \code{dob} are selected.
 Default is all.}
 
-\item{eol}{[\code{integer}]\cr
+\item{eol}{\link{\code{integer}}\cr
 Vector of end-of-life values to further subset the result.
 Only elements with an end-of-life included in \code{eol} are selected.
 Default is all.}

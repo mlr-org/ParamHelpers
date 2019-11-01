@@ -8,14 +8,14 @@
 #' @param x [any]\cr
 #'   Value for parameter or value for parameter set. In the latter case it must be named list.
 #'   For discrete parameters their values must be used, not their names.
-#' @param show.missing.values [\code{logical(1)}]\cr
+#' @param show.missing.values [`logical(1)`]\cr
 #'   Display \dQuote{NA} for parameters, which have no setting, because their requirements are not
 #'   satisfied (dependent parameters), instead of displaying nothing?
-#'   Default is \code{FALSE}.
-#' @param num.format [\code{character(1)}]\cr
+#'   Default is `FALSE`.
+#' @param num.format [`character(1)`]\cr
 #'   Number format for output of numeric parameters. See the details section of the manual for
-#'   \code{\link[base]{sprintf}} for details.
-#' @return [\code{character(1)}].
+#'   [base::sprintf()] for details.
+#' @return [`character(1)`].
 #' @export
 #' @examples
 #' p = makeNumericParam("x")

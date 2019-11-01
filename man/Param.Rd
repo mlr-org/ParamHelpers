@@ -56,63 +56,63 @@ makeCharacterVectorParam(id, len, cnames = NULL, default,
   requires = NULL, special.vals = list())
 }
 \arguments{
-\item{id}{[\code{character(1)}]\cr
+\item{id}{\code{\link{character(1)}}\cr
 Name of parameter.}
 
-\item{lower}{[\code{numeric} | \code{expression}]\cr
+\item{lower}{\link[=`numeric` | `expression`]{numeric | expression}\cr
 Lower bounds.
 A singe value of length 1 is automatically replicated to \code{len} for vector parameters.
 If \code{len = NA} you can only pass length-1 scalars.
 Default is \code{-Inf}.}
 
-\item{upper}{[\code{numeric} | \code{expression}]\cr
+\item{upper}{\link[=`numeric` | `expression`]{numeric | expression}\cr
 Upper bounds.
 A singe value of length 1 is automatically replicated to \code{len} for vector parameters.
 If \code{len = NA} you can only pass length-1 scalars.
 Default is \code{Inf}.}
 
-\item{allow.inf}{[\code{logical(1)}]\cr
+\item{allow.inf}{\code{\link{logical(1)}}\cr
 Allow infinite values for numeric and numericvector params to be feasible settings.
 Default is \code{FALSE}.}
 
-\item{default}{[any concrete value | \code{expression}]\cr
+\item{default}{\link[=any concrete value | `expression`]{any concrete value | expression}\cr
 Default value used in learner.
 Note: When this is a discrete parameter make sure to use a VALUE here, not the NAME of the value.
 If this argument is missing, it means no default value is available.}
 
-\item{trafo}{[\code{NULL} | \code{function(x)}]\cr
+\item{trafo}{\link[=`NULL` | `function(x)`]{NULL | function(x)}\cr
 Function to transform parameter. It should be applied to the parameter value
 before it is, e.g., passed to a corresponding objective function.
 Function must accept a parameter value as the first argument and return a transformed one.
 Default is \code{NULL} which means no transformation.}
 
-\item{requires}{[\code{NULL} | \code{call} | \code{expression}]\cr
+\item{requires}{\link[=`NULL` | `call` | `expression`]{NULL | call | expression}\cr
 States requirements on other parameters' values, so that setting
 this parameter only makes sense if its requirements are satisfied (dependent parameter).
 Can be an object created either with \code{expression} or \code{quote},
 the former type is auto-converted into the later.
-Only really useful if the parameter is included in a \code{\link{ParamSet}}.
+Only really useful if the parameter is included in a \code{\link[=ParamSet]{ParamSet()}}.
 Default is \code{NULL} which means no requirements.}
 
-\item{tunable}{[\code{logical(1)}]\cr
+\item{tunable}{\code{\link{logical(1)}}\cr
 Is this parameter tunable?
 Defining a parameter to be not-tunable allows to mark arguments like, e.g., \dQuote{verbose} or other purely technical stuff.
 Note that this flag is most likely not respected by optimizing procedures unless stated otherwise.
 Default is \code{TRUE} (except for \code{untyped}, \code{function}, \code{character} and \code{characterVector}) which means it is tunable.}
 
-\item{special.vals}{[\code{list()}]\cr
+\item{special.vals}{\code{\link[=list]{list()}}\cr
 A list of special values the parameter can except which are outside of the defined range.
 Default is an empty list.}
 
-\item{len}{[\code{integer(1)} | \code{expression}]\cr
+\item{len}{\link[=`integer(1)` | `expression`]{integer(1) | expression}\cr
 Length of vector parameter.}
 
-\item{cnames}{[\code{character}]\cr
+\item{cnames}{\code{\link{character}}\cr
 Component names for vector params (except discrete).
 Every function in this package that creates vector values for such a param, will name
 that vector with \code{cnames}.}
 
-\item{values}{[\code{vector} | \code{list} | \code{expression}]\cr
+\item{values}{\link[=`vector` | `list` | `expression`]{vector | list | expression}\cr
 Possible discrete values. Instead of using a vector of atomic values,
 you are also allowed to pass a list of quite \dQuote{complex} R objects,
 which are used as discrete choices. If you do the latter,
@@ -120,7 +120,7 @@ the elements must be uniquely named, so that the names can be used
 as internal representations for the choice.}
 }
 \value{
-[\code{\link{Param}}].
+[\code{\link[=Param]{Param()}}].
 }
 \description{
 For each parameter type a special constructor function is available, see below.
@@ -128,30 +128,30 @@ For each parameter type a special constructor function is available, see below.
 For the following arguments you can also pass an \code{expression} instead of a concrete value:
 \code{default}, \code{len}, \code{lower}, \code{upper}, \code{values}.
 These expressions can depend on arbitrary symbols, which are later filled in / substituted from
-a dictionary, in order to produce a concrete valu, see \code{\link{evaluateParamExpressions}}.
+a dictionary, in order to produce a concrete valu, see \code{\link[=evaluateParamExpressions]{evaluateParamExpressions()}}.
 So this enables data / context dependent settings, which is sometimes useful.
 
 The S3 class is a list which stores these elements:
 \describe{
-  \item{id [\code{character(1)}]}{See argument of same name.}
-  \item{type [\code{character(1)}]}{Data type of parameter. For all type string see \code{\link{getTypeStringsAll}}}
-  \item{len [\code{integer(1)} | \code{expression}]}{See argument of same name.}
-  \item{lower [\code{numeric} | \code{expression}]}{See argument of same name. Length of this vector is \code{len}.}
-  \item{upper [\code{numeric} | \code{expression}]}{See argument of same name. Length of this vector is \code{len}.}
-  \item{values [\code{list} | \code{expression}]}{Discrete values, always stored as a named list.}
-  \item{cnames [\code{character}}{See argument of same name.}
-  \item{allow.inf [\code{logical(1)}]}{See argument of same name.}
-  \item{trafo [\code{NULL} | \code{function(x)}]}{See argument of same name.}
-  \item{requires [\code{NULL} | \code{expression}]}{See argument of same name.}
-  \item{default [any concrete value | \code{expression}]}{See argument of same name.}
-  \item{has.default [\code{logical(1)}]}{Extra flag to really be able to check whether the user passed a default, to avoid troubles with \code{NULL} and \code{NA}.}
-  \item{tunable [\code{logical(1)}]}{See argument of same name.}
-  \item{special.vals [\code{list}]}{See argument of same name.}
+\item{id \code{\link{character(1)}}}{See argument of same name.}
+\item{type \code{\link{character(1)}}}{Data type of parameter. For all type string see \code{\link[=getTypeStringsAll]{getTypeStringsAll()}}}
+\item{len \link[=`integer(1)` | `expression`]{integer(1) | expression}}{See argument of same name.}
+\item{lower \link[=`numeric` | `expression`]{numeric | expression}}{See argument of same name. Length of this vector is \code{len}.}
+\item{upper \link[=`numeric` | `expression`]{numeric | expression}}{See argument of same name. Length of this vector is \code{len}.}
+\item{values \link[=`list` | `expression`]{list | expression}}{Discrete values, always stored as a named list.}
+\item{cnames [\code{character}}{See argument of same name.}
+\item{allow.inf \code{\link{logical(1)}}}{See argument of same name.}
+\item{trafo \link[=`NULL` | `function(x)`]{NULL | function(x)}}{See argument of same name.}
+\item{requires \link[=`NULL` | `expression`]{NULL | expression}}{See argument of same name.}
+\item{default \link[=any concrete value | `expression`]{any concrete value | expression}}{See argument of same name.}
+\item{has.default \code{\link{logical(1)}}}{Extra flag to really be able to check whether the user passed a default, to avoid troubles with \code{NULL} and \code{NA}.}
+\item{tunable \code{\link{logical(1)}}}{See argument of same name.}
+\item{special.vals \code{\link{list}}}{See argument of same name.}
 }
 }
 \examples{
-makeNumericParam("x",lower = -1, upper = 1)
+makeNumericParam("x", lower = -1, upper = 1)
 makeNumericVectorParam("x", len = 2)
-makeDiscreteParam("y", values = c("a","b"))
+makeDiscreteParam("y", values = c("a", "b"))
 makeCharacterParam("z")
 }

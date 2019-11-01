@@ -1,38 +1,38 @@
 #' @title Convert a data.frame row to list of parameter-value-lists.
 #'
 #' @description
-#' Please note that (naturally) the columns of \code{df} have to be of the correct
+#' Please note that (naturally) the columns of `df` have to be of the correct
 #' type w.r.t. the corresponding parameter. The only exception are integer parameters
-#' where the corresponding columns in \code{df} are allowed to be numerics.
-#' And also see the argument \code{enforce.col.types} as a way around this restriction.
+#' where the corresponding columns in `df` are allowed to be numerics.
+#' And also see the argument `enforce.col.types` as a way around this restriction.
 #'
 #' \tabular{ll}{
-#'  numeric(vector)   \tab  \code{numeric}  \cr
-#'  integer(vector)   \tab  \code{integer}  \cr
-#'  discrete(vector)  \tab  \code{factor} (names of values = levels) \cr
-#'  logical(vector)   \tab  \code{logical}
+#'  numeric(vector)   \tab  `numeric`  \cr
+#'  integer(vector)   \tab  `integer`  \cr
+#'  discrete(vector)  \tab  `factor` (names of values = levels) \cr
+#'  logical(vector)   \tab  `logical`
 #' }
 #'
 #' Dependent parameters whose requirements are not satisfied are represented by a scalar
 #' NA in the output.
 #'
-#' @param df [\code{data.frame}]\cr
-#'   Data.frame, potentially from \code{\link{OptPathDF}}.
+#' @param df [`data.frame`]\cr
+#'   Data.frame, potentially from [OptPathDF()].
 #'   Columns are assumed to be in the same order as par.set.
 #' @template arg_parset
-#' @param i [\code{integer(1)}]\cr
+#' @param i [`integer(1)`]\cr
 #'   Row index.
-#' @param enforce.col.types [\code{logical(1)}]\cr
-#'   Should all \code{df} columns be initially converted to the type
-#'   returned by \code{getParamTypes(df, df.cols = TRUE)}.
+#' @param enforce.col.types [`logical(1)`]\cr
+#'   Should all `df` columns be initially converted to the type
+#'   returned by `getParamTypes(df, df.cols = TRUE)`.
 #'   This can help to work with \dQuote{non-standard} data.frames where the types are
 #'   slightly \dQuote{off}. But note that there is no guarantee that this will
 #'   work if the types are really wrong and there is no naturally correct way
 #'   to convert them.
-#'   Default is \code{FALSE}.
+#'   Default is `FALSE`.
 #' @param ... [any]\cr
-#'   Arguments passed to \code{\link[BBmisc]{convertDataFrameCols}}
-#' @return [\code{list}]. Named by parameter ids.
+#'   Arguments passed to [BBmisc::convertDataFrameCols()]
+#' @return [`list`]. Named by parameter ids.
 #' @export
 #' @useDynLib ParamHelpers c_dfRowsToList
 #' @rdname dfRowsToList

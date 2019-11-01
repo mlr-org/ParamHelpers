@@ -8,7 +8,7 @@ isRequiresOk(par.set, par.vals, ids = names(par.vals),
   use.defaults = TRUE)
 }
 \arguments{
-\item{par.set}{[\code{\link{ParamSet}}]\cr
+\item{par.set}{\link{\code{\link{ParamSet}}}\cr
 Parameter set.}
 
 \item{par.vals}{\code{list()} \cr

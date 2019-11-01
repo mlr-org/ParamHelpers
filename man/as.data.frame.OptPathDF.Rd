@@ -9,59 +9,59 @@
   include.rest = TRUE, dob = x$env$dob, eol = x$env$eol, ...)
 }
 \arguments{
-\item{x}{[\code{\link{OptPath}}]\cr
+\item{x}{[\code{\link[=OptPath]{OptPath()}}]\cr
 Optimization path.}
 
-\item{row.names}{[\code{character}]\cr
+\item{row.names}{\code{\link{character}}\cr
 Row names for result.
 Default is none.}
 
-\item{optional}{[any]\cr
+\item{optional}{\link{any}\cr
 Currently ignored.}
 
-\item{include.x}{[\code{logical(1)}]\cr
+\item{include.x}{\code{\link{logical(1)}}\cr
 Include all input params?
 Default is \code{TRUE}.}
 
-\item{include.y}{[\code{logical(1)}]\cr
+\item{include.y}{\code{\link{logical(1)}}\cr
 Include all y-columns?
 Default is \code{TRUE}.}
 
-\item{include.rest}{[\code{logical(1)}]\cr
+\item{include.rest}{\code{\link{logical(1)}}\cr
 Include all other columns?
 Default is \code{TRUE}.}
 
-\item{dob}{[\code{integer}]\cr
+\item{dob}{\link{\code{integer}}\cr
 Vector of date-of-birth values to further subset the result.
 Only elements with a date-of-birth included in \code{dob} are selected.
 Default is all.}
 
-\item{eol}{[\code{integer}]\cr
+\item{eol}{\link{\code{integer}}\cr
 Vector of end-of-life values to further subset the result.
 Only elements with an end-of-life included in \code{eol} are selected.
 Default is all.}
 
-\item{...}{[any] \cr
+\item{...}{\link{any} \cr
 Currently ignored.}
 }
 \value{
-[\code{data.frame}].
+\code{\link{data.frame}}.
 }
 \description{
 The following types of columns are created:
 \tabular{ll}{
- x-numeric(vector)   \tab  \code{numeric}  \cr
- x-integer(vector)   \tab  \code{integer}  \cr
- x-discrete(vector)  \tab  \code{factor} (names of values = levels) \cr
- x-logical(vector)   \tab  \code{logical} \cr
- y-columns           \tab  \code{numeric}  \cr
- dob                 \tab  \code{integer}  \cr
- eol                 \tab  \code{integer}  \cr
- error.message       \tab  \code{character} \cr
- exec.time           \tab  \code{numeric}  \cr
- extra-columns       \tab  any \cr
+x-numeric(vector)   \tab  \code{numeric}  \cr
+x-integer(vector)   \tab  \code{integer}  \cr
+x-discrete(vector)  \tab  \code{factor} (names of values = levels) \cr
+x-logical(vector)   \tab  \code{logical} \cr
+y-columns           \tab  \code{numeric}  \cr
+dob                 \tab  \code{integer}  \cr
+eol                 \tab  \code{integer}  \cr
+error.message       \tab  \code{character} \cr
+exec.time           \tab  \code{numeric}  \cr
+extra-columns       \tab  any \cr
 }
-If you want to convert these, look at \code{\link[BBmisc]{convertDataFrameCols}}.
+If you want to convert these, look at \code{\link[BBmisc:convertDataFrameCols]{BBmisc::convertDataFrameCols()}}.
 Dependent parameters whose constraints are unsatisfied generate \code{NA} entries in their
 respective columns.
 Factor columns of discrete parameters always have their complete level set from the \code{param.set}.

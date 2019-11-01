@@ -6,21 +6,21 @@
 #' One plot for the distribution of points in X and Y space respectively and plots
 #' for the trend of specified X variables, Y variables and extra measures over the time.
 #'
-#' @param op [\code{OptPath}]\cr
+#' @param op [`OptPath`]\cr
 #'   Optimization path.
-#' @param iters [\code{integer} | NULL]\cr
-#'   Vector of iterations which should be plotted one after another. If \code{NULL},
+#' @param iters [`integer` | NULL]\cr
+#'   Vector of iterations which should be plotted one after another. If `NULL`,
 #'   which is the default, only the last iteration is plotted. Iteration 0 plots
 #'   all elements with dob = 0. Note that the plots for iteration i contains
 #'   all observations alive in iteration i.
-#' @param pause [\code{logical(1)}]\cr
+#' @param pause [`logical(1)`]\cr
 #'   Should the process be paused after each iteration?
-#'   Default is \code{TRUE}.
+#'   Default is `TRUE`.
 #' @template arg_opplotter_lims
-#' @param title [\code{character(1)}]\cr
+#' @param title [`character(1)`]\cr
 #'   Main title for the arranged plots, default is Optimization Path Plots.
 #' @param ...
-#'   Additional parameters for \code{\link{renderOptPathPlot}}.
+#'   Additional parameters for [renderOptPathPlot()].
 #' @return NULL
 #' @export
 #'

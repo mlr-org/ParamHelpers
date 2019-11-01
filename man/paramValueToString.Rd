@@ -8,24 +8,24 @@ paramValueToString(par, x, show.missing.values = FALSE,
   num.format = "\%.3g")
 }
 \arguments{
-\item{par}{[\code{\link{Param}} | \code{\link{ParamSet}}]\cr
+\item{par}{\link{\code{\link{Param}} | \code{\link{ParamSet}}}\cr
 Parameter or parameter set.}
 
-\item{x}{[any]\cr
+\item{x}{\link{any}\cr
 Value for parameter or value for parameter set. In the latter case it must be named list.
 For discrete parameters their values must be used, not their names.}
 
-\item{show.missing.values}{[\code{logical(1)}]\cr
+\item{show.missing.values}{\code{\link{logical(1)}}\cr
 Display \dQuote{NA} for parameters, which have no setting, because their requirements are not
 satisfied (dependent parameters), instead of displaying nothing?
 Default is \code{FALSE}.}
 
-\item{num.format}{[\code{character(1)}]\cr
+\item{num.format}{\code{\link{character(1)}}\cr
 Number format for output of numeric parameters. See the details section of the manual for
-\code{\link[base]{sprintf}} for details.}
+\code{\link[base:sprintf]{base::sprintf()}} for details.}
 }
 \value{
-[\code{character(1)}].
+\code{\link{character(1)}}.
 }
 \description{
 Useful helper for logging.
@@ -38,18 +38,18 @@ paramValueToString(p, 1.2345)
 paramValueToString(p, 0.000039)
 paramValueToString(p, 8.13402, num.format = "\%.2f")
 
-p = makeIntegerVectorParam("x", len=2)
+p = makeIntegerVectorParam("x", len = 2)
 paramValueToString(p, c(1L, 2L))
 
 p = makeLogicalParam("x")
 paramValueToString(p, TRUE)
 
-p = makeDiscreteParam("x", values=list(a=NULL, b=2))
+p = makeDiscreteParam("x", values = list(a = NULL, b = 2))
 paramValueToString(p, NULL)
 
 ps = makeParamSet(
-  makeNumericVectorParam("x", len=2L),
-  makeDiscreteParam("y", values=list(a=NULL, b=2))
+  makeNumericVectorParam("x", len = 2L),
+  makeDiscreteParam("y", values = list(a = NULL, b = 2))
 )
-paramValueToString(ps, list(x=c(1,2), y=NULL))
+paramValueToString(ps, list(x = c(1, 2), y = NULL))
 }

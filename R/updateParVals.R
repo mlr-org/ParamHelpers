@@ -5,14 +5,14 @@
 #'   Default values of the Param Set are respected to chek if the new param settings meet the requirements.
 #'
 #' @template arg_parset
-#' @param old.par.vals [\code{list}]\cr
+#' @param old.par.vals [`list`]\cr
 #'   Param Values to be updated.
-#' @param new.par.vals [\code{list}]\cr
-#'   New Param Values to update the \code{old.par.vals}.
-#' @param warn [\code{logical}]\cr
-#'   Whether a warning should be shown, if a param setting from \code{old.par.vals} is dropped.
-#'   Default is \code{FALSE}.
-#' @return [\code{list}].
+#' @param new.par.vals [`list`]\cr
+#'   New Param Values to update the `old.par.vals`.
+#' @param warn [`logical`]\cr
+#'   Whether a warning should be shown, if a param setting from `old.par.vals` is dropped.
+#'   Default is `FALSE`.
+#' @return [`list`].
 #' @export
 updateParVals = function(par.set, old.par.vals, new.par.vals, warn = FALSE) {
   assertList(old.par.vals, names = "named")

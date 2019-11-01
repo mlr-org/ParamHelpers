@@ -5,12 +5,12 @@
 #' Useful to compare runs of different algorithms on the same optimization problem.
 #' You can add your own ggplot layers to the resulting plot object.
 #'
-#' @param opt.paths [\code{\link{OptPath}} | list of \code{\link{OptPath}}]\cr
+#' @param opt.paths [[OptPath()] | list of [OptPath()]]\cr
 #'   Object(s) to plot.
-#' @param over.time [\code{character}]\cr
+#' @param over.time [`character`]\cr
 #'   Should the traces be plotted versus the iteration number or the cumulated
 #'   execution time? For the later, the opt.path has to contain a extra column
-#'   names exec.time. Possible values are dob and exec.time, default is \code{dob}.
+#'   names exec.time. Possible values are dob and exec.time, default is `dob`.
 #' @return ggplot2 plot object
 renderYTraces = function(opt.paths, over.time = "dob") {
 
@@ -73,16 +73,16 @@ renderYTraces = function(opt.paths, over.time = "dob") {
 
 #' @title Plots Y traces of multiple optimization paths
 #'
-#' @description Plot function for \code{\link{renderYTraces}}
+#' @description Plot function for [renderYTraces()]
 #'
-#' @param opt.paths [\code{list}]\cr
-#'   List of \code{OptPath} objects
-#' @param over.time [\code{character}]\cr
+#' @param opt.paths [`list`]\cr
+#'   List of `OptPath` objects
+#' @param over.time [`character`]\cr
 #'   Should the traces be plotted versus the iteration number or the cumulated
 #'   execution time? For the later, the opt.path has to contain a extra column
-#'   names exec.time. Possible values are dob and exec.time, default is \code{dob}.
+#'   names exec.time. Possible values are dob and exec.time, default is `dob`.
 #'
-#' @return [\code{NULL}]
+#' @return [`NULL`]
 #'
 #' @export
 plotYTraces = function(opt.paths, over.time = "dob") {

@@ -7,28 +7,28 @@
 getOptPathCols(op, names, dob, eol, row.names = NULL)
 }
 \arguments{
-\item{op}{[\code{\link{OptPath}}]\cr
+\item{op}{\link{\code{\link{OptPath}}}\cr
 Optimization path.}
 
-\item{names}{[\code{character}]\cr
+\item{names}{\code{\link{character}}\cr
 Names of the columns.}
 
-\item{dob}{[\code{integer}]\cr
+\item{dob}{\link{\code{integer}}\cr
 Vector of date-of-birth values to further subset the result.
 Only elements with a date-of-birth included in \code{dob} are selected.
 Default is all.}
 
-\item{eol}{[\code{integer}]\cr
+\item{eol}{\link{\code{integer}}\cr
 Vector of end-of-life values to further subset the result.
 Only elements with an end-of-life included in \code{eol} are selected.
 Default is all.}
 
-\item{row.names}{[\code{character}]\cr
+\item{row.names}{\code{\link{character}}\cr
 Row names for result.
 Default is none.}
 }
 \value{
-[\code{data.frame}].
+\code{\link{data.frame}}.
 }
 \description{
 Get columns from the optimization path.

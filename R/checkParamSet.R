@@ -7,7 +7,7 @@
 #'
 #' @template arg_parset
 #' @template arg_dict
-#' @return [\code{TRUE}] on success. An exception is raised otherwise.
+#' @return [`TRUE`] on success. An exception is raised otherwise.
 #' @export
 #' @examples
 #' ps = makeParamSet(

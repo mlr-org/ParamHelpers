@@ -3,17 +3,17 @@
 #' @description
 #' Return defaults of single parameters or parameters in a parameter set or a list of parameters.
 #'
-#' @param obj [\code{\link{Param}} | \code{\link[ParamHelpers]{ParamSet}} | \code{list}]\cr
+#' @param obj [[Param()] | [ParamHelpers::ParamSet()] | `list`]\cr
 #'   Parameter, parameter set or list of parameters, whose defaults should be extracted.
 #'   In case the default values contain expressions, they will be evaluated using the
-#'   provided dictionary (\code{dict}).
-#' @param include.null [\code{logical(1)}]\cr
-#'   Include \code{NULL} entries for parameters without default values in the result list?
-#'   Note that this can be slightly dangerous as \code{NULL} might be used as default value
+#'   provided dictionary (`dict`).
+#' @param include.null [`logical(1)`]\cr
+#'   Include `NULL` entries for parameters without default values in the result list?
+#'   Note that this can be slightly dangerous as `NULL` might be used as default value
 #'   for other parameters.
-#'   Default is \code{FALSE}.
+#'   Default is `FALSE`.
 #' @template arg_dict
-#' @return [named \code{list}]. Named (and in case of a \code{\link{ParamSet}}, in the same order).
+#' @return [named `list`]. Named (and in case of a [ParamSet()], in the same order).
 #'   Parameters without defaults are not present in the list.
 #' @examples
 #' ps1 = makeParamSet(

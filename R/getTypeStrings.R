@@ -1,9 +1,9 @@
 #' @title Get parameter type-strings.
 #' @description
-#' Returns type strings used in \code{param$type} for certain groups of parameters.
+#' Returns type strings used in `param$type` for certain groups of parameters.
 #' @template arg_include_int
 #' @template arg_include_logical
-#' @return [\code{character}].
+#' @return [`character`].
 #' @name getTypeStrings
 #' @rdname getTypeStrings
 NULL

@@ -3,17 +3,17 @@
 #' @description
 #' The following types of columns are created:
 #' \tabular{ll}{
-#'  numeric(vector)   \tab  \code{numeric}  \cr
-#'  integer(vector)   \tab  \code{integer}  \cr
-#'  discrete(vector)  \tab  \code{factor} (names of values = levels) \cr
-#'  logical(vector)   \tab  \code{logical}
+#'  numeric(vector)   \tab  `numeric`  \cr
+#'  integer(vector)   \tab  `integer`  \cr
+#'  discrete(vector)  \tab  `factor` (names of values = levels) \cr
+#'  logical(vector)   \tab  `logical`
 #' }
 #' This will create a design containing only one point at the default values of the supplied param set.
-#' In most cases you will combine the resulting \code{data.frame} with a different generation function
-#' e.g. \code{\link{generateDesign}}, \code{\link{generateRandomDesign}} or \code{\link{generateGridDesign}}.
+#' In most cases you will combine the resulting `data.frame` with a different generation function
+#' e.g. [generateDesign()], [generateRandomDesign()] or [generateGridDesign()].
 #' This is useful to force an evaluation at the default location of the parameters while still generating
 #' a design.
-#' Parameters default values, whose conditions (\code{requires}) are not fulfilled will be set to \code{NA}
+#' Parameters default values, whose conditions (`requires`) are not fulfilled will be set to `NA`
 #' in the result.
 #' @template arg_parset
 #' @template arg_trafo
