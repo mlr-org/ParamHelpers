@@ -124,9 +124,6 @@ makeParam = function(id, type, learner.param, len = 1L, lower = NULL, upper = NU
   } else {
     has.default = TRUE
   }
-  # FIXME: Do we need to check for NA here? Hopefully not because this might occur in mlr?
-  if (has.default && isScalarNA(default))
-    warningf("NA used as a default value for learner parameter %s.\nParamHelpers uses NA as a special value for dependent parameters.", id)
   if (!is.null(trafo))
     assertFunction(trafo)
   if (!is.null(requires)) {
