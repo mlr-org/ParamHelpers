@@ -130,7 +130,7 @@ makeParam = function(id, type, learner.param, len = 1L, lower = NULL, upper = NU
   } else {
     has.default = TRUE
   }
-  if (!is.null(trafo))
+  if (!is.null(trafo)) {
     assertFunction(trafo)
   }
   if (!is.null(requires)) {
