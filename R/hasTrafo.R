@@ -1,11 +1,11 @@
 #' @title Check parameter / parameter set for trafos.
 #'
 #' @description
-#' \code{TRUE} iff the parameter has any trafos or any parameter in the set has
+#' `TRUE` iff the parameter has any trafos or any parameter in the set has
 #' trafos.
 #'
 #' @template arg_par_or_set
-#' @return [\code{logical(1)}].
+#' @return `logical(1)`.
 #' @export
 hasTrafo = function(par) {
   UseMethod("hasTrafo")

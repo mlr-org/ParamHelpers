@@ -7,10 +7,10 @@
 renderYTraces(opt.paths, over.time = "dob")
 }
 \arguments{
-\item{opt.paths}{[\code{\link{OptPath}} | list of \code{\link{OptPath}}]\cr
+\item{opt.paths}{[\code{\link[=OptPath]{OptPath()}} | list of \code{\link[=OptPath]{OptPath()}}]\cr
 Object(s) to plot.}
 
-\item{over.time}{[\code{character}]\cr
+\item{over.time}{\code{\link{character}}\cr
 Should the traces be plotted versus the iteration number or the cumulated
 execution time? For the later, the opt.path has to contain a extra column
 names exec.time. Possible values are dob and exec.time, default is \code{dob}.}
@@ -19,7 +19,7 @@ names exec.time. Possible values are dob and exec.time, default is \code{dob}.}
 ggplot2 plot object
 }
 \description{
-Can be used for only single-objective optimization paths.
-Useful to compare runs of different algorithms on the same optimization problem.
-You can add your own ggplot layers to the resulting plot object.
+Can be used for only single-objective optimization paths. Useful
+to compare runs of different algorithms on the same optimization problem. You
+can add your own ggplot layers to the resulting plot object.
 }

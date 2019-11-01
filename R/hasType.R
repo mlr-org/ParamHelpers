@@ -1,13 +1,12 @@
 #' @title Check whether parameter set contains a certain type.
 #'
-#' @description
-#' \code{TRUE} iff the parameter set contains at least one parameter of the mentioned type x.
-#' Type x always subsumes x and x-vector.
+#' @description `TRUE` if the parameter set contains at least one parameter of
+#' the mentioned type x. Type x always subsumes x and x-vector.
 #'
 #' @template arg_parset
 #' @template arg_include_int
 #' @template arg_include_logical
-#' @return [\code{logical(1)}].
+#' @return `logical(1)`
 #' @name hasType
 #' @rdname hasType
 NULL

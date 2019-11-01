@@ -7,14 +7,15 @@
 hasExpression(obj)
 }
 \arguments{
-\item{obj}{[\code{\link{Param}} | \code{\link[ParamHelpers]{ParamSet}} | \code{list}]\cr
+\item{obj}{(\code{\link[=Param]{Param()}} | \code{\link[ParamHelpers:ParamSet]{ParamHelpers::ParamSet()}} | \code{list})\cr
 Parameter, parameter set or list of parameters.}
 }
 \value{
-[\code{logical(1)}].
+\code{logical(1)}.
 }
 \description{
-Checks if a parameter, parameter set or list of parameters contain expressions.
+Checks if a parameter, parameter set or list of parameters
+contain expressions.
 }
 \examples{
 ps1 = makeParamSet(

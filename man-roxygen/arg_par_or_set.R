@@ -1,3 +1,3 @@
-#' @param par [\code{\link{Param}} | \code{\link{ParamSet}}]\cr
+#' @param par ([Param] | [ParamSet])\cr
 #'   Parameter or parameter set.
 

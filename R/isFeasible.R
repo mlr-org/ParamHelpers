@@ -1,32 +1,32 @@
 #' @title Check if parameter value is valid.
 #'
-#' @description
-#' Check if a parameter value satisfies the constraints of the parameter description.
-#' This includes the \code{requires} expressions and the \code{forbidden} expression, if \code{par} is a \code{\link{ParamSet}}.
-#' If \code{requires} is not satisfied, the parameter value must be set to scalar \code{NA} to be still feasible, a single scalar even in a case of a vector parameter.
-#' If the result is \code{FALSE} the attribute \code{"warning"} is attached which gives the reason for the negative result.
+#' @description Check if a parameter value satisfies the constraints of the
+#' parameter description. This includes the `requires` expressions and the
+#' `forbidden` expression, if `par` is a [ParamSet()]. If `requires` is not
+#' satisfied, the parameter value must be set to scalar `NA` to be still
+#' feasible, a single scalar even in a case of a vector parameter. If the result
+#' is `FALSE` the attribute `"warning"` is attached which gives the reason for
+#' the negative result.
 #'
-#' If the parameter has \code{cnames}, these are also checked.
+#' If the parameter has `cnames`, these are also checked.
 #'
 #' @template arg_par_or_set
-#' @param x [any] \cr
-#'   Single value to check against the \code{Param} or \code{ParamSet}.
-#'   For a \code{ParamSet} \code{x} must be a list.
-#'   \code{x} has to contain the untransformed values.
-#'   If the list is named, it is possible to only pass a subset of parameters defined
-#'   in the \code{\link{ParamSet}} \code{par}. In that case, only conditions regarding the passed
-#'   parameters are checked.
-#'   (Note that this might not work if one of the passed params has a \code{requires} setting
-#'   which refers to an unpassed param.)
-#' @param use.defaults [\code{logical(1)}]\cr
-#'   Whether defaults of the \code{\link{Param}}/\code{\link{ParamSet}} should be used if no values are supplied.
-#'   If the defaults have requirements that are not met by \code{x} it will be feasible nonetheless.
-#'   Default is \code{FALSE}.
-#' @param filter [\code{logical(1)}]\cr
-#'   Whether the \code{\link{ParamSet}} should be reduced to the space of the given Param Values.
-#'   Note that in case of \code{use.defaults = TRUE} the filtering will be conducted after the insertion of the default values.
-#'   Default is \code{FALSE}.
-#' @return [\code{logical(1)}].
+#' @param x (any) \cr
+#'   Single value to check against the `Param` or `ParamSet`. For a `ParamSet`
+#'   `x` must be a list. `x` has to contain the untransformed values. If the
+#'   list is named, it is possible to only pass a subset of parameters defined
+#'   in the [ParamSet()] `par`. In that case, only conditions regarding the
+#'   passed parameters are checked. (Note that this might not work if one of the
+#'   passed params has a `requires` setting which refers to an unpassed param.)
+#' @param use.defaults (`logical(1)`)\cr
+#'   Whether defaults of the [Param()]/[ParamSet()] should be used if no values
+#'   are supplied. If the defaults have requirements that are not met by `x` it
+#'   will be feasible nonetheless. Default is `FALSE`.
+#' @param filter (`logical(1)`)\cr
+#'   Whether the [ParamSet()] should be reduced to the space of the given Param
+#'   Values. Note that in case of `use.defaults = TRUE` the filtering will be
+#'   conducted after the insertion of the default values. Default is `FALSE`.
+#' @return `logical(1)`.
 #' @examples
 #' p = makeNumericParam("x", lower = -1, upper = 1)
 #' isFeasible(p, 0) # True

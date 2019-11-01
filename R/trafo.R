@@ -4,11 +4,10 @@
 #' Transform a value with associated transformation function(s).
 #'
 #' @template arg_par_or_set
-#' @param x [any] \cr
-#'   Single value to check.
-#'   For a parameter set this must be a list. If the list is unnamed (not recommended) it must be in
-#'   the same order as the param set. If it is named, its names must match the parameter names in the
-#'   param set.
+#' @param x (any) \cr
+#'   Single value to check. For a parameter set this must be a list. If the list
+#'   is unnamed (not recommended) it must be in the same order as the param set.
+#'   If it is named, its names must match the parameter names in the param set.
 #' @return Transformed value.
 #' @export
 #' @examples
@@ -51,9 +50,9 @@ trafoValue = function(par, x) {
 #' Transform optimization path with associated transformation functions of parameters.
 #' Can only be done when x values where added \dQuote{untransformed}.
 #'
-#' @param opt.path [\code{\link{OptPath}}]\cr
+#' @param opt.path [[OptPath()]]\cr
 #'   Optimization path.
-#' @return [\code{\link{OptPath}}].
+#' @return [[OptPath()]].
 #' @export
 #' @examples
 #' ps = makeParamSet(

@@ -4,14 +4,14 @@
 #' Useful if vectors are included.
 #'
 #' @template arg_par_or_set
-#' @param repeated [\code{logical(1)}]\cr
+#' @param repeated (`logical(1)`)\cr
 #'   Should ids be repeated length-times if parameter is a vector?
-#'   Default is \code{FALSE}.
-#' @param with.nr [\code{logical(1)}]\cr
-#'   Should number from 1 to length be appended to id if \code{repeated} is \code{TRUE}?
+#'   Default is `FALSE`.
+#' @param with.nr (`logical(1)`)\cr
+#'   Should number from 1 to length be appended to id if `repeated` is `TRUE`?
 #'   Otherwise ignored.
-#'   Default is \code{FALSE}.
-#' @return [\code{character}].
+#'   Default is `FALSE`.
+#' @return [`character`].
 #' @export
 #' @examples
 #' ps = makeParamSet(

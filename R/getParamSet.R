@@ -1,11 +1,11 @@
 #' @title Get parameter set.
 #'
-#' @description
-#' \code{getParamSet} is a generic and can be called to extract the \code{ParamSet} from different objects.
+#' @description `getParamSet` is a generic and can be called to extract the
+#' `ParamSet` from different objects.
 #'
-#' @param x [\code{object}] \cr
+#' @param x (`object`) \cr
 #'   Object to extract the ParamSet from.
-#' @return [\code{\link[ParamHelpers]{ParamSet}}]
+#' @return [ParamHelpers::ParamSet()]
 #' @export
 getParamSet = function(x) {
   UseMethod("getParamSet")

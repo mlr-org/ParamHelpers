@@ -1,59 +1,57 @@
 #' @title Create optimization path.
 #'
-#' @description
-#' Optimizers can iteratively log their evaluated points
-#' into this object. Can be converted into a data.frame with
-#' \code{as.data.frame(x, discretes.as.factor = TRUE / FALSE)}.
+#' @description Optimizers can iteratively log their evaluated points into this
+#' object. Can be converted into a data.frame with `as.data.frame(x,
+#' discretes.as.factor = TRUE / FALSE)`.
 #'
-#' A optimization path has a number of path elements, where each element consists of: the value of the
-#' decision variables at this point, the values of the performance measures at this point,
-#' the date-of-birth (dob) of this point, the end-of-life (eol) of this point and possibly
-#' an error message. See also \code{\link{addOptPathEl}}.
+#' A optimization path has a number of path elements, where each element
+#' consists of: the value of the decision variables at this point, the values of
+#' the performance measures at this point, the date-of-birth (dob) of this
+#' point, the end-of-life (eol) of this point and possibly an error message. See
+#' also [addOptPathEl()].
 #'
-#' For discrete parameters always the name of the value is stored as a character.
-#' When you retrieve an element with \code{\link{getOptPathEl}}, this name is converted to
-#' the actual discrete value.
+#' For discrete parameters always the name of the value is stored as a
+#' character. When you retrieve an element with [getOptPathEl()], this name is
+#' converted to the actual discrete value.
 #'
-#' If parameters have associated transformation you are free to decide whether you want to
-#' add x values before or after transformation, see argument \code{add.transformed.x} and
-#' \code{\link{trafoOptPath}}.
+#' If parameters have associated transformation you are free to decide whether
+#' you want to add x values before or after transformation, see argument
+#' `add.transformed.x` and [trafoOptPath()].
 #'
 #' The S3 class is a list which stores at least these elements:
 #' \describe{
-#' \item{par.set [\code{\link{ParamSet}}]}{See argument of same name.}
-#' \item{y.names [\code{character}]}{See argument of same name.}
-#' \item{minimize [\code{logical}]}{See argument of same name.}
-#' \item{add.transformed.x [\code{logical(1)}]}{See argument of same name.}
-#' \item{env [\code{environment}]}{Environment which stores the optimization path.
+#' \item{par.set [ParamSet()]}{See argument of same name.}
+#' \item{y.names [`character`]}{See argument of same name.}
+#' \item{minimize [`logical`]}{See argument of same name.}
+#' \item{add.transformed.x `logical(1)`}{See argument of same name.}
+#' \item{env [`environment`]}{Environment which stores the optimization path.
 #'   Contents depend on implementation.}
 #' }
 #'
 #' @template arg_parset
-#' @param y.names [\code{character}]\cr
+#' @param y.names (`character`)\cr
 #'   Names of performance measures that are optimized or logged.
-#' @param minimize [\code{logical}]\cr
+#' @param minimize (`logical`)\cr
 #'   Which of the performance measures in y.names should be minimized?
-#'   Vector of booleans in the same order as \code{y.names}.
-#' @param add.transformed.x [\code{logical(1)}]\cr
-#'   If some parameters have associated transformations, are you going to
-#'   add x values after they have been transformed?
-#'   Default is \code{FALSE}.
-#' @param include.error.message [\code{logical(1)}]\cr
-#'   Should it be possible to include an error message string (or NA if no error occurred)
-#'   into the path for each evaluation?
-#'   This is useful if you have complex, long running objective evaluations that might fail.
-#'   Default is \code{FALSE}.
-#' @param include.exec.time [\code{logical(1)}]\cr
-#'   Should it be possible to include execution time of evaluations
-#'   into the path for each evaluation?
-#'   Note that execution time could also be entered in \code{y.names} as a direct
-#'   performance measure. If you use this option here, time is regarded as an extra measurement
-#'   you might be curious about.
-#'   Default is \code{FALSE}.
-#' @param include.extra [\code{logical(1)}]\cr
+#'   Vector of booleans in the same order as `y.names`.
+#' @param add.transformed.x (`logical(1)`)\cr
+#'   If some parameters have associated transformations, are you going to add x
+#'   values after they have been transformed? Default is `FALSE`.
+#' @param include.error.message (`logical(1)`)\cr
+#'   Should it be possible to include an error message string (or NA if no error
+#'   occurred) into the path for each evaluation? This is useful if you have
+#'   complex, long running objective evaluations that might fail. Default is
+#'   `FALSE`.
+#' @param include.exec.time (`logical(1)`)\cr
+#'   Should it be possible to include execution time of evaluations into the
+#'   path for each evaluation? Note that execution time could also be entered in
+#'   `y.names` as a direct performance measure. If you use this option here,
+#'   time is regarded as an extra measurement you might be curious about.
+#'   Default is `FALSE`.
+#' @param include.extra (`logical(1)`)\cr
 #'   Should it be possible to include extra info
 #'   into the path for each evaluation?
-#'   Default is \code{FALSE}.
+#'   Default is `FALSE`.
 #' @name OptPath
 #' @rdname OptPath
 #' @family optpath

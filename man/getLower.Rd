@@ -13,28 +13,30 @@ getUpper(obj, with.nr = FALSE, dict = NULL)
 getValues(obj, dict = NULL)
 }
 \arguments{
-\item{obj}{[\code{\link{Param}} | \code{\link{ParamSet}} | \code{list}]\cr
+\item{obj}{(\code{\link[=Param]{Param()}} | \code{\link[=ParamSet]{ParamSet()}} | \code{list})\cr
 Parameter, parameter set or list of parameters, whose boundaries and/or
-values should be extracted. In case the boundaries or values contain expressions,
-they will be evaluated using the provided dictionary \code{dict}.}
+values should be extracted. In case the boundaries or values contain
+expressions, they will be evaluated using the provided dictionary \code{dict}.}
 
-\item{with.nr}{[\code{logical(1)}]\cr
+\item{with.nr}{(\code{logical(1)})\cr
 Should number from 1 to length be appended to names of vector params?
 Default is \code{FALSE}.}
 
-\item{dict}{[\code{environment} | \code{list} | \code{NULL}]\cr
-Environment or list which will be used for evaluating the variables
-of expressions within a parameter, parameter set or list of parameters.
-The default is \code{NULL}.}
+\item{dict}{(\code{environment} | \link{list} | \code{NULL})\cr
+Environment or list which will be used for evaluating the variables of
+expressions within a parameter, parameter set or list of parameters. The
+default is \code{NULL}.}
 }
 \value{
-[\code{vector} | \code{list}]. Named by parameter ids.
+\code{vector} | \code{list}. Named by parameter ids.
 }
 \description{
-\code{getLower} and \code{getUpper} return a numerical vector of lower and upper
-bounds, \code{getValues} returns a list of possible value sets for discrete parameters.
+\code{getLower} and \code{getUpper} return a numerical vector of lower and
+upper bounds, \code{getValues} returns a list of possible value sets for discrete
+parameters.
 
-Parameters for which such bound make no sense - due to their type - are not present in the result.
+Parameters for which such bound make no sense - due to their type - are not
+present in the result.
 }
 \examples{
 ps = makeParamSet(

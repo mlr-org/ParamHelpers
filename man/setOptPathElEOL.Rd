@@ -7,13 +7,13 @@
 setOptPathElEOL(op, index, eol)
 }
 \arguments{
-\item{op}{[\code{\link{OptPath}}]\cr
+\item{op}{\link{OptPath}\cr
 Optimization path.}
 
-\item{index}{[\code{integer}]\cr
+\item{index}{\link{integer}\cr
 Vector of indices of elements.}
 
-\item{eol}{[integer] \cr
+\item{eol}{\link{integer} \cr
 EOL dates, single value or same length of \code{index}.}
 }
 \value{

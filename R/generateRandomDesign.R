@@ -3,28 +3,32 @@
 #' @description
 #' The following types of columns are created:
 #' \tabular{ll}{
-#'  numeric(vector)   \tab  \code{numeric}  \cr
-#'  integer(vector)   \tab  \code{integer}  \cr
-#'  discrete(vector)  \tab  \code{factor} (names of values = levels) \cr
-#'  logical(vector)   \tab  \code{logical}
+#'  numeric(vector)   \tab  `numeric`  \cr
+#'  integer(vector)   \tab  `integer`  \cr
+#'  discrete(vector)  \tab  `factor` (names of values = levels) \cr
+#'  logical(vector)   \tab  `logical`
 #' }
-#' If you want to convert these, look at \code{\link[BBmisc]{convertDataFrameCols}}.
-#' For discrete vectors the levels and their order will be preserved, even if not all levels are present.
+#' If you want to convert these, look at [BBmisc::convertDataFrameCols()]. For
+#' discrete vectors the levels and their order will be preserved, even if not
+#' all levels are present.
 #'
-#' The algorithm simply calls \code{\link{sampleValues}} and arranges the result in a data.frame.
+#' The algorithm simply calls [sampleValues()] and arranges the result in a
+#' data.frame.
 #'
-#' Parameters are trafoed (potentially, depending on the setting of argument \code{trafo});
-#' dependent parameters whose constraints are unsatisfied are set to \code{NA} entries.
+#' Parameters are trafoed (potentially, depending on the setting of argument
+#' `trafo`); dependent parameters whose constraints are unsatisfied are set to
+#' `NA` entries.
 #'
-#' \code{generateRandomDesign} will NOT work if there are dependencies over multiple levels of
-#' parameters and the dependency is only given with respect to the \dQuote{previous} parameter.
-#' A current workaround is to state all dependencies on all parameters involved.
-#' (We are working on it.)
+#' `generateRandomDesign` will NOT work if there are dependencies over multiple
+#' levels of parameters and the dependency is only given with respect to the
+#' \dQuote{previous} parameter. A current workaround is to state all
+#' dependencies on all parameters involved. (We are working on it.)
 #'
-#' Note that if you have trafos attached to your params, the complete creation of the design
-#' (except for the detection of invalid parameters w.r.t to their \code{requires} setting)
-#' takes place on the UNTRANSFORMED scale. So this function samples from a uniform density
-#' over the param space on the UNTRANSFORMED scale, but not necessarily the transformed scale.
+#' Note that if you have trafos attached to your params, the complete creation
+#' of the design (except for the detection of invalid parameters w.r.t to their
+#' `requires` setting) takes place on the UNTRANSFORMED scale. So this function
+#' samples from a uniform density over the param space on the UNTRANSFORMED
+#' scale, but not necessarily the transformed scale.
 #'
 #' @template arg_gendes_n
 #' @template arg_parset

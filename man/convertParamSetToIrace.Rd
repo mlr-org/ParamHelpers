@@ -7,17 +7,17 @@
 convertParamSetToIrace(par.set, as.chars = FALSE)
 }
 \arguments{
-\item{par.set}{[\code{\link{ParamSet}}]\cr
+\item{par.set}{\link{ParamSet}\cr
 Parameter set.}
 
-\item{as.chars}{[\code{logical(1)}]\cr
-Return results as character vector of lines \code{FALSE} or call
-\code{\link[irace]{readParameters}} on it (\code{TRUE}).
-Default is \code{FALSE}.}
+\item{as.chars}{(\code{logical(1)})\cr Return results as character vector of lines
+\code{FALSE} or call \code{\link[irace:readParameters]{irace::readParameters()}} on it (\code{TRUE}). Default is
+\code{FALSE}.}
 }
 \value{
-[\code{\link{list}}].
+[\code{\link[=list]{list()}}].
 }
 \description{
-Converts to a textual description used in irace and then potentially calls \link[irace]{readParameters}.
+Converts to a textual description used in irace and then
+potentially calls \link[irace:readParameters]{readParameters}.
 }

@@ -12,13 +12,13 @@
 #' @description
 #' The following types of columns are created:
 #' \tabular{ll}{
-#'  numeric(vector)   \tab  \code{numeric}  \cr
-#'  integer(vector)   \tab  \code{integer}  \cr
-#'  discrete(vector)  \tab  \code{factor} (names of values = levels) \cr
-#'  logical(vector)   \tab  \code{logical}
+#'  numeric(vector)   \tab  `numeric`  \cr
+#'  integer(vector)   \tab  `integer`  \cr
+#'  discrete(vector)  \tab  `factor` (names of values = levels) \cr
+#'  logical(vector)   \tab  `logical`
 #' }
-#' If you want to convert these, look at \code{\link[BBmisc]{convertDataFrameCols}}.
-#' Dependent parameters whose constraints are unsatisfied generate \code{NA} entries in their
+#' If you want to convert these, look at [BBmisc::convertDataFrameCols()].
+#' Dependent parameters whose constraints are unsatisfied generate `NA` entries in their
 #' respective columns.
 #' For discrete vectors the levels and their order will be preserved, even if not all levels are present.
 #'
@@ -26,11 +26,11 @@
 #'
 #' The algorithm currently iterates the following steps:
 #' \enumerate{
-#'   \item{We create a space filling design for all parameters, disregarding \code{requires},
-#'     a \code{trafo} or the forbidden region.}
+#'   \item{We create a space filling design for all parameters, disregarding `requires`,
+#'     a `trafo` or the forbidden region.}
 #'   \item{Forbidden points are removed.}
-#'   \item{Parameters are trafoed (potentially, depending on the setting of argument \code{trafo});
-#'     dependent parameters whose constraints are unsatisfied are set to \code{NA} entries.}
+#'   \item{Parameters are trafoed (potentially, depending on the setting of argument `trafo`);
+#'     dependent parameters whose constraints are unsatisfied are set to `NA` entries.}
 #'   \item{Duplicated design points are removed. Duplicated points are not generated in a
 #'    reasonable space-filling design, but the way discrete parameters and also parameter dependencies
 #'    are handled make this possible.}
@@ -38,41 +38,42 @@
 #'     and iterate.}
 #' }
 #'
-#' Note that augmenting currently is somewhat experimental as we simply generate missing points
-#' via new calls to \code{\link[lhs]{randomLHS}}, but do not add points so they are maximally
-#' far away from the already present ones. The reason is that the latter is quite hard to achieve
-#' with complicated dependencies and forbidden regions, if one wants to ensure that points actually
-#' get added... But we are working on it.
+#' Note that augmenting currently is somewhat experimental as we simply generate
+#' missing points via new calls to [lhs::randomLHS()], but do not add points so
+#' they are maximally far away from the already present ones. The reason is that
+#' the latter is quite hard to achieve with complicated dependencies and
+#' forbidden regions, if one wants to ensure that points actually get added...
+#' But we are working on it.
 #'
-#' Note that if you have trafos attached to your params, the complete creation of the design
-#' (except for the detection of invalid parameters w.r.t to their \code{requires} setting)
-#' takes place on the UNTRANSFORMED scale. So this function creates, e.g., a maximin LHS
-#' design on the UNTRANSFORMED scale, but not necessarily the transformed scale.
+#' Note that if you have trafos attached to your params, the complete creation
+#' of the design (except for the detection of invalid parameters w.r.t to their
+#' `requires` setting) takes place on the UNTRANSFORMED scale. So this function
+#' creates, e.g., a maximin LHS design on the UNTRANSFORMED scale, but not
+#' necessarily the transformed scale.
 #'
-#' \code{generateDesign} will NOT work if there are dependencies over multiple levels of
-#' parameters and the dependency is only given with respect to the \dQuote{previous} parameter.
-#' A current workaround is to state all dependencies on all parameters involved.
-#' (We are working on it.)
+#' `generateDesign` will NOT work if there are dependencies over multiple levels
+#' of parameters and the dependency is only given with respect to the
+#' \dQuote{previous} parameter. A current workaround is to state all
+#' dependencies on all parameters involved. (We are working on it.)
 #'
 #' @template arg_gendes_n
 #' @template arg_parset
-#' @param fun [\code{function}]\cr
+#' @param fun (`function`)\cr
 #'   Function from package lhs.
-#'   Possible are: \code{\link[lhs]{maximinLHS}}, \code{\link[lhs]{randomLHS}},
-#'   \code{\link[lhs]{geneticLHS}}, \code{\link[lhs]{improvedLHS}}, \code{\link[lhs]{optAugmentLHS}},
-#'   \code{\link[lhs]{optimumLHS}}
-#'   Default is \code{\link[lhs]{randomLHS}}.
-#' @param fun.args [\code{list}]\cr
-#'   List of further arguments passed to \code{fun}.
+#'   Possible are: [lhs::maximinLHS()], [lhs::randomLHS()],
+#'   [lhs::geneticLHS()], [lhs::improvedLHS()], [lhs::optAugmentLHS()],
+#'   [lhs::optimumLHS()]
+#'   Default is [lhs::randomLHS()].
+#' @param fun.args (`list`)\cr
+#'   List of further arguments passed to `fun`.
 #' @template arg_trafo
-#' @param augment [\code{integer(1)}]\cr
-#'   Duplicated values and forbidden regions in the parameter space can lead to the design
-#'   becoming smaller than \code{n}. With this option it is possible to augment the design again
-#'   to size \code{n}. It is not guaranteed that this always works (to full size)
-#'   and \code{augment} specifies the number of tries to augment.
-#'   If the the design is of size less than \code{n} after all tries, a warning is issued
-#'   and the smaller design is returned.
-#'   Default is 20.
+#' @param augment (`integer(1)`)\cr
+#'   Duplicated values and forbidden regions in the parameter space can lead to
+#'   the design becoming smaller than `n`. With this option it is possible to
+#'   augment the design again to size `n`. It is not guaranteed that this always
+#'   works (to full size) and `augment` specifies the number of tries to
+#'   augment. If the the design is of size less than `n` after all tries, a
+#'   warning is issued and the smaller design is returned. Default is 20.
 #' @template ret_gendes_df
 #' @export
 #' @useDynLib ParamHelpers c_generateDesign c_trafo_and_set_dep_to_na

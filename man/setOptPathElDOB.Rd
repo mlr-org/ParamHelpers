@@ -7,13 +7,13 @@
 setOptPathElDOB(op, index, dob)
 }
 \arguments{
-\item{op}{[\code{\link{OptPath}}]\cr
+\item{op}{\link{OptPath}\cr
 Optimization path.}
 
-\item{index}{[\code{integer}]\cr
+\item{index}{\link{integer}\cr
 Vector of indices of elements.}
 
-\item{dob}{[integer] \cr
+\item{dob}{\link{integer} \cr
 Dates of birth, single value or same length of \code{index}.}
 }
 \value{

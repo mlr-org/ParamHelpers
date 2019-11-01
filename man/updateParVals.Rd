@@ -7,24 +7,25 @@
 updateParVals(par.set, old.par.vals, new.par.vals, warn = FALSE)
 }
 \arguments{
-\item{par.set}{[\code{\link{ParamSet}}]\cr
+\item{par.set}{\link{ParamSet}\cr
 Parameter set.}
 
-\item{old.par.vals}{[\code{list}]\cr
+\item{old.par.vals}{\link{list}\cr
 Param Values to be updated.}
 
-\item{new.par.vals}{[\code{list}]\cr
+\item{new.par.vals}{\link{list}\cr
 New Param Values to update the \code{old.par.vals}.}
 
-\item{warn}{[\code{logical}]\cr
-Whether a warning should be shown, if a param setting from \code{old.par.vals} is dropped.
-Default is \code{FALSE}.}
+\item{warn}{\link{logical}\cr
+Whether a warning should be shown, if a param setting from \code{old.par.vals}
+is dropped. Default is \code{FALSE}.}
 }
 \value{
-[\code{list}].
+\code{\link{list}}.
 }
 \description{
-Update the values of a given parameter setting with a new parameter setting.
-  Settings that do not meet the requirements anymore will be deleted from the first given parameter setting.
-  Default values of the Param Set are respected to chek if the new param settings meet the requirements.
+Update the values of a given parameter setting with a new
+parameter setting. Settings that do not meet the requirements anymore will be
+deleted from the first given parameter setting. Default values of the Param
+Set are respected to chek if the new param settings meet the requirements.
 }

@@ -5,8 +5,8 @@
 #' @template arg_par_or_set
 #' @template arg_disc_names
 #' @template arg_trafo
-#' @return The return type is determined by the type of the parameter. For a set a named list
-#'   of such values in the correct order is returned.
+#' @return The return type is determined by the type of the parameter. For a set
+#'   a named list of such values in the correct order is returned.
 #' @export
 #' @examples
 #' # bounds are necessary here, can't sample with Inf bounds:
@@ -111,11 +111,11 @@ sampleValue.ParamSet = function(par, discrete.names = FALSE, trafo = FALSE) {
 #' @template desc_dep_pars_na
 #'
 #' @template arg_par_or_set
-#' @param n [\code{integer(1)}]\cr
+#' @param n (`integer(1)`)\cr
 #'   Number of values.
 #' @template arg_disc_names
 #' @template arg_trafo
-#' @return [\code{list}]. For consistency always a list is returned.
+#' @return `list`. For consistency always a list is returned.
 #' @export
 #' @examples
 #' p = makeIntegerParam("x", lower = -10, upper = 10)

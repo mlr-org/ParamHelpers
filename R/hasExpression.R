@@ -1,9 +1,10 @@
 #' @title Check if parameter values contain expressions.
 #'
-#' @description Checks if a parameter, parameter set or list of parameters contain expressions.
-#' @param obj [\code{\link{Param}} | \code{\link[ParamHelpers]{ParamSet}} | \code{list}]\cr
+#' @description Checks if a parameter, parameter set or list of parameters
+#'   contain expressions.
+#' @param obj ([Param()] | [ParamHelpers::ParamSet()] | `list`)\cr
 #'   Parameter, parameter set or list of parameters.
-#' @return [\code{logical(1)}].
+#' @return `logical(1)`.
 #' @examples
 #' ps1 = makeParamSet(
 #'   makeNumericParam("x", lower = 1, upper = 2),

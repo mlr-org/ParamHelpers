@@ -1,14 +1,13 @@
 #' @title Converts a ParamSet object to a parameter object of the irace package.
 #'
-#' @description
-#' Converts to a textual description used in irace and then potentially calls \link[irace]{readParameters}.
+#' @description Converts to a textual description used in irace and then
+#' potentially calls [readParameters][irace::readParameters].
 #'
 #' @template arg_parset
-#' @param as.chars [\code{logical(1)}]\cr
-#'   Return results as character vector of lines \code{FALSE} or call
-#'   \code{\link[irace]{readParameters}} on it (\code{TRUE}).
-#'   Default is \code{FALSE}.
-#' @return [\code{\link{list}}].
+#' @param as.chars (`logical(1)`)\cr Return results as character vector of lines
+#'   `FALSE` or call [irace::readParameters()] on it (`TRUE`). Default is
+#'   `FALSE`.
+#' @return [[list()]].
 #' @export
 convertParamSetToIrace = function(par.set, as.chars = FALSE) {
   assertClass(par.set, "ParamSet")

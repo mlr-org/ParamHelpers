@@ -7,15 +7,15 @@
 discreteValueToName(par, x)
 }
 \arguments{
-\item{par}{[\code{\link{Param}}]\cr
+\item{par}{\link{Param}\cr
 Parameter.}
 
-\item{x}{[any]\cr
+\item{x}{\link{any}\cr
 Parameter value or a list of values for a discrete vector.}
 }
 \value{
-[\code{character}]. Single name for a discrete parameter or a character vector of
-  names for a discrete vector.
+\code{\link{character}}. Single name for a discrete parameter or a character vector of
+names for a discrete vector.
 }
 \description{
 For a discrete parameter or discrete vector.
@@ -23,6 +23,6 @@ If the value \code{x} is \code{NA}, indicating a missing parameter value due to 
 \code{NA} is returned.
 }
 \examples{
-p = makeDiscreteParam("u", values=c(x1="a", x2="b", x3="c"))
+p = makeDiscreteParam("u", values = c(x1 = "a", x2 = "b", x3 = "c"))
 discreteValueToName(p, "b")
 }

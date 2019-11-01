@@ -7,29 +7,29 @@
 getOptPathY(op, names, dob, eol, drop = TRUE)
 }
 \arguments{
-\item{op}{[\code{\link{OptPath}}]\cr
+\item{op}{\link{OptPath}\cr
 Optimization path.}
 
-\item{names}{[\code{character}]\cr
+\item{names}{\link{character}\cr
 Names of performance measure.
 Default is all performance measures in path.}
 
-\item{dob}{[\code{integer}]\cr
+\item{dob}{\link{integer}\cr
 Vector of date-of-birth values to further subset the result.
 Only elements with a date-of-birth included in \code{dob} are selected.
 Default is all.}
 
-\item{eol}{[\code{integer}]\cr
+\item{eol}{\link{integer}\cr
 Vector of end-of-life values to further subset the result.
 Only elements with an end-of-life included in \code{eol} are selected.
 Default is all.}
 
-\item{drop}{[\code{logical(1)}]\cr
+\item{drop}{(\code{logical(1)})\cr
 Return vector instead of matrix when only one y-column was selected?
 Default is \code{TRUE}.}
 }
 \value{
-[\code{numeric} | \code{matrix}]. The columns of the matrix are always named.
+(\code{numeric} | \code{matrix}). The columns of the matrix are always named.
 }
 \description{
 Get y-vector or y-matrix from the optimization path.

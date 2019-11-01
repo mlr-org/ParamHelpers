@@ -66,5 +66,5 @@ Suggests:
 ByteCompile: yes
 Encoding: UTF-8
 LazyData: yes
-Roxygen: list(wrap = FALSE)
+Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1

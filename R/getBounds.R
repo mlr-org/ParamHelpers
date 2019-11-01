@@ -1,20 +1,21 @@
 #' @title Get lower / upper bounds and allowed discrete values for parameters.
 #'
-#' @description
-#' \code{getLower} and \code{getUpper} return a numerical vector of lower and upper
-#' bounds, \code{getValues} returns a list of possible value sets for discrete parameters.
+#' @description `getLower` and `getUpper` return a numerical vector of lower and
+#' upper bounds, `getValues` returns a list of possible value sets for discrete
+#' parameters.
 #'
-#' Parameters for which such bound make no sense - due to their type - are not present in the result.
+#' Parameters for which such bound make no sense - due to their type - are not
+#' present in the result.
 #'
-#' @param obj [\code{\link{Param}} | \code{\link{ParamSet}} | \code{list}]\cr
+#' @param obj ([Param()] | [ParamSet()] | `list`)\cr
 #'   Parameter, parameter set or list of parameters, whose boundaries and/or
-#'   values should be extracted. In case the boundaries or values contain expressions,
-#'   they will be evaluated using the provided dictionary \code{dict}.
-#' @param with.nr [\code{logical(1)}]\cr
+#'   values should be extracted. In case the boundaries or values contain
+#'   expressions, they will be evaluated using the provided dictionary `dict`.
+#' @param with.nr (`logical(1)`)\cr
 #'   Should number from 1 to length be appended to names of vector params?
-#'   Default is \code{FALSE}.
+#'   Default is `FALSE`.
 #' @template arg_dict
-#' @return [\code{vector} | \code{list}]. Named by parameter ids.
+#' @return `vector` | `list`. Named by parameter ids.
 #' @export
 #' @examples
 #' ps = makeParamSet(

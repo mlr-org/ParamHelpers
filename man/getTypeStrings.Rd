@@ -26,16 +26,16 @@ getTypeStringsDiscrete(include.logical = TRUE)
 getTypeStringsLogical()
 }
 \arguments{
-\item{include.int}{[\code{logical(1)}]\cr
+\item{include.int}{(\code{logical(1)})\cr
 Are integers also considered to be numeric?
 Default is \code{TRUE}.}
 
-\item{include.logical}{[\code{logical(1)}]\cr
+\item{include.logical}{(\code{logical(1)})\cr
 Are logicals also considered to be discrete?
 Default is \code{TRUE}.}
 }
 \value{
-[\code{character}].
+\code{\link{character}}.
 }
 \description{
 Returns type strings used in \code{param$type} for certain groups of parameters.

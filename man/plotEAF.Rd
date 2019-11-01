@@ -7,31 +7,33 @@
 plotEAF(opt.paths, xlim = NULL, ylim = NULL, ...)
 }
 \arguments{
-\item{opt.paths}{[\code{list}]\cr
-List of list of \code{OptPath} objects. First index is the algorithm / major variation
-in the experiment, second index is the index of the replicated run.}
+\item{opt.paths}{(\code{list})\cr
+List of list of \code{OptPath} objects. First index is the algorithm / major
+variation in the experiment, second index is the index of the replicated
+run.}
 
-\item{xlim}{[\code{numeric(2)}]\cr
+\item{xlim}{(\code{numeric(2)})\cr
 The x limits (x1, x2) of the plot.}
 
-\item{ylim}{[\code{numeric(2)}]\cr
+\item{ylim}{(\code{numeric(2)})\cr
 The y limits (y1, y2) of the plot.}
 
-\item{...}{[any]\cr
-Passed on to \code{\link[eaf]{eafplot}}.}
+\item{...}{(any)\cr
+Passed on to \code{\link[eaf:eafplot]{eaf::eafplot()}}.}
 }
 \value{
-[\code{data.frame}]
-  Invisibly returns the data passed to \code{\link[eaf]{eafplot}}.
+\code{\link{data.frame}}
+Invisibly returns the data passed to \code{\link[eaf:eafplot]{eaf::eafplot()}}.
 }
 \description{
 Can be used to plot OptPaths where information for bi-objective
 evaluation was logged for repeated runs of different algorithmic runs.
-Pretty directly calls \code{\link[eaf]{eafplot}}.
+Pretty directly calls \code{\link[eaf:eafplot]{eaf::eafplot()}}.
 }
 \note{
-We changed the defaults of \code{\link[eaf]{eafplot}} in the following way:
-  The axis are labeled by \code{y.names}, colors are set to our favorite grey
-  values and linetypes changed, too. With our colors / linetypes default it is
-  possible to distinguish 6 different algorithms. But this can again be overwritten by the user.
+We changed the defaults of \code{\link[eaf:eafplot]{eaf::eafplot()}} in the following way: The axis
+are labeled by \code{y.names}, colors are set to our favorite grey values and
+linetypes changed, too. With our colors / linetypes default it is possible
+to distinguish 6 different algorithms. But this can again be overwritten by
+the user.
 }

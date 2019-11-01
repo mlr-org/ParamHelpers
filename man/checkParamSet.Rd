@@ -7,16 +7,16 @@
 checkParamSet(par.set, dict = NULL)
 }
 \arguments{
-\item{par.set}{[\code{\link{ParamSet}}]\cr
+\item{par.set}{\link{ParamSet}\cr
 Parameter set.}
 
-\item{dict}{[\code{environment} | \code{list} | \code{NULL}]\cr
-Environment or list which will be used for evaluating the variables
-of expressions within a parameter, parameter set or list of parameters.
-The default is \code{NULL}.}
+\item{dict}{(\code{environment} | \link{list} | \code{NULL})\cr
+Environment or list which will be used for evaluating the variables of
+expressions within a parameter, parameter set or list of parameters. The
+default is \code{NULL}.}
 }
 \value{
-[\code{TRUE}] on success. An exception is raised otherwise.
+\code{\link{TRUE}} on success. An exception is raised otherwise.
 }
 \description{
 Checks whether the default values of the numerical parameters are located

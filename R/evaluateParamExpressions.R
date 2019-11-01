@@ -1,15 +1,14 @@
 #' @title Evaluates all expressions within a parameter.
 #'
-#' @description
-#' Evaluates the expressions of a parameter, parameter set or list of parameters for
-#' a given dictionary.
+#' @description Evaluates the expressions of a parameter, parameter set or list
+#' of parameters for a given dictionary.
 #'
-#' @param obj [\code{\link{Param}} | \code{\link[ParamHelpers]{ParamSet}} | \code{list}]\cr
-#'   Parameter, parameter set or list of parameter values. Expressions within \code{len},
-#'   \code{lower} or \code{upper} boundaries, \code{default} or \code{values} will be
-#'   evaluated using the provided dictionary (\code{dict}).
+#' @param obj ([Param()] | [ParamHelpers::ParamSet()] | `list`)\cr
+#'   Parameter, parameter set or list of parameter values. Expressions within
+#'   `len`, `lower` or `upper` boundaries, `default` or `values` will be
+#'   evaluated using the provided dictionary (`dict`).
 #' @template arg_dict
-#' @return [\code{\link{Param}} | \code{\link[ParamHelpers]{ParamSet}} | \code{list}].
+#' @return [[Param()] | [ParamHelpers::ParamSet()] | `list`].
 #' @export
 #' @examples
 #' ps = makeParamSet(

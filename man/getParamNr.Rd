@@ -7,15 +7,15 @@
 getParamNr(par.set, devectorize = FALSE)
 }
 \arguments{
-\item{par.set}{[\code{\link{ParamSet}}]\cr
+\item{par.set}{\link{ParamSet}\cr
 Parameter set.}
 
-\item{devectorize}{[\code{logical(1)}]\cr
+\item{devectorize}{(\code{logical(1)})\cr
 Sum over length of vector parameters?
 Default is code{FALSE}.}
 }
 \value{
-[\code{integer}].
+\code{\link{integer}}.
 }
 \description{
 Either number of parameters or sum over parameter lengths.

@@ -7,21 +7,21 @@
 getOptPathEOL(op, dob, eol)
 }
 \arguments{
-\item{op}{[\code{\link{OptPath}}]\cr
+\item{op}{\link{OptPath}\cr
 Optimization path.}
 
-\item{dob}{[\code{integer}]\cr
+\item{dob}{\link{integer}\cr
 Vector of date-of-birth values to further subset the result.
 Only elements with a date-of-birth included in \code{dob} are selected.
 Default is all.}
 
-\item{eol}{[\code{integer}]\cr
+\item{eol}{\link{integer}\cr
 Vector of end-of-life values to further subset the result.
 Only elements with an end-of-life included in \code{eol} are selected.
 Default is all.}
 }
 \value{
-[\code{integer}].
+\link{integer}.
 }
 \description{
 Get end-of-life vector from the optimization path.

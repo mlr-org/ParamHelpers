@@ -7,11 +7,11 @@
 isEmpty(par.set)
 }
 \arguments{
-\item{par.set}{\code{\link{ParamSet}}]\cr
+\item{par.set}{(ParamSet()])\cr
 Parameter set.}
 }
 \value{
-[\code{logical(1)}].
+\code{logical(1)}.
 }
 \description{
 Check whether parameter set is empty.

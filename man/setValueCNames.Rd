@@ -7,10 +7,10 @@
 setValueCNames(par, x)
 }
 \arguments{
-\item{par}{[\code{\link{Param}} | \code{\link{ParamSet}}]\cr
+\item{par}{(\link{Param} | \link{ParamSet})\cr
 Parameter or parameter set.}
 
-\item{x}{[any] \cr
+\item{x}{(any) \cr
 Param value(s).
 For a parameter set this must be a list in the correct order.}
 }

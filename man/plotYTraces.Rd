@@ -7,17 +7,17 @@
 plotYTraces(opt.paths, over.time = "dob")
 }
 \arguments{
-\item{opt.paths}{[\code{list}]\cr
+\item{opt.paths}{\code{\link{list}}\cr
 List of \code{OptPath} objects}
 
-\item{over.time}{[\code{character}]\cr
+\item{over.time}{\code{\link{character}}\cr
 Should the traces be plotted versus the iteration number or the cumulated
 execution time? For the later, the opt.path has to contain a extra column
 names exec.time. Possible values are dob and exec.time, default is \code{dob}.}
 }
 \value{
-[\code{NULL}]
+\code{\link{NULL}}
 }
 \description{
-Plot function for \code{\link{renderYTraces}}
+Plot function for \code{\link[=renderYTraces]{renderYTraces()}}
 }
