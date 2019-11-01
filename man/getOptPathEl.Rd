@@ -7,17 +7,17 @@
 getOptPathEl(op, index)
 }
 \arguments{
-\item{op}{\link{\code{\link{OptPath}}}\cr
+\item{op}{\link{OptPath}\cr
 Optimization path.}
 
-\item{index}{\code{\link{integer(1)}}\cr
+\item{index}{(\code{integer(1)})\cr
 Index of element.}
 }
 \value{
-List with elements \code{x} \link[=named `list`]{named list}, \code{y} \link[=named `numeric`]{named numeric},
-\code{dob} \code{\link{integer(1)}}, \code{eol} \code{\link{integer(1)}}.
-The elements \code{error.message} \code{\link{character(1)}},
-\code{exec.time} \code{\link{numeric(1)}} and \code{extra} \link[=named `list`]{named list} are
+List with elements \code{x} (named \code{list}), \code{y} (named \code{numeric}),
+\code{dob} \code{integer(1)}, \code{eol} \code{integer(1)}.
+The elements \code{error.message} (\code{character(1)}),
+\code{exec.time} (\code{numeric(1)}) and \code{extra} (named \code{list}) are
 there if the respective options in \code{\link[=OptPath]{OptPath()}} are enabled.
 }
 \description{

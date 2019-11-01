@@ -1,83 +1,86 @@
 #' @title Create a description object for a parameter.
 #'
-#' @description
-#' For each parameter type a special constructor function is available, see below.
+#' @description For each parameter type a special constructor function is
+#' available, see below.
 #'
-#' For the following arguments you can also pass an `expression` instead of a concrete value:
-#' `default`, `len`, `lower`, `upper`, `values`.
-#' These expressions can depend on arbitrary symbols, which are later filled in / substituted from
-#' a dictionary, in order to produce a concrete valu, see [evaluateParamExpressions()].
-#' So this enables data / context dependent settings, which is sometimes useful.
+#' For the following arguments you can also pass an `expression` instead of a
+#' concrete value: `default`, `len`, `lower`, `upper`, `values`. These
+#' expressions can depend on arbitrary symbols, which are later filled in /
+#' substituted from a dictionary, in order to produce a concrete valu, see
+#' [evaluateParamExpressions()]. So this enables data / context dependent
+#' settings, which is sometimes useful.
 #'
 #' The S3 class is a list which stores these elements:
 #' \describe{
-#'   \item{id [`character(1)`]}{See argument of same name.}
-#'   \item{type [`character(1)`]}{Data type of parameter. For all type string see [getTypeStringsAll()]}
-#'   \item{len [`integer(1)` | `expression`]}{See argument of same name.}
-#'   \item{lower [`numeric` | `expression`]}{See argument of same name. Length of this vector is `len`.}
-#'   \item{upper [`numeric` | `expression`]}{See argument of same name. Length of this vector is `len`.}
-#'   \item{values [`list` | `expression`]}{Discrete values, always stored as a named list.}
-#'   \item{cnames [`character`}{See argument of same name.}
-#'   \item{allow.inf [`logical(1)`]}{See argument of same name.}
-#'   \item{trafo [`NULL` | `function(x)`]}{See argument of same name.}
-#'   \item{requires [`NULL` | `expression`]}{See argument of same name.}
-#'   \item{default [any concrete value | `expression`]}{See argument of same name.}
-#'   \item{has.default [`logical(1)`]}{Extra flag to really be able to check whether the user passed a default, to avoid troubles with `NULL` and `NA`.}
-#'   \item{tunable [`logical(1)`]}{See argument of same name.}
-#'   \item{special.vals [`list`]}{See argument of same name.}
+#'   \item{id (`character(1)`)}{See argument of same name.}
+#'   \item{type (`character(1)`)}{Data type of parameter. For all type string see (getTypeStringsAll())}
+#'   \item{len (`integer(1)` | `expression`)}{See argument of same name.}
+#'   \item{lower (`numeric` | `expression`)}{See argument of same name. Length of this vector is `len`.}
+#'   \item{upper (`numeric` | `expression`)}{See argument of same name. Length of this vector is `len`.}
+#'   \item{values (`list` | `expression`)}{Discrete values, always stored as a named list.}
+#'   \item{cnames (`character`}{See argument of same name.}
+#'   \item{allow.inf (`logical(1)`)}{See argument of same name.}
+#'   \item{trafo (`NULL` | `function(x)`)}{See argument of same name.}
+#'   \item{requires (`NULL` | `expression`)}{See argument of same name.}
+#'   \item{default (any concrete value | `expression`)}{See argument of same name.}
+#'   \item{has.default (`logical(1)`)}{Extra flag to really be able to check whether the user passed a default, to avoid troubles with `NULL` and `NA`.}
+#'   \item{tunable (`logical(1)`)}{See argument of same name.}
+#'   \item{special.vals (`list`)}{See argument of same name.}
 #' }
 #'
-#' @param id [`character(1)`]\cr
+#' @param id (`character(1)`)\cr
 #'   Name of parameter.
-#' @param len [`integer(1)` | `expression`]\cr
-#'   Length of vector parameter.
-#' @param lower [`numeric` | `expression`]\cr
-#'   Lower bounds.
-#'   A singe value of length 1 is automatically replicated to `len` for vector parameters.
-#'   If `len = NA` you can only pass length-1 scalars.
-#'   Default is `-Inf`.
-#' @param upper [`numeric` | `expression`]\cr
-#'   Upper bounds.
-#'   A singe value of length 1 is automatically replicated to `len` for vector parameters.
-#'   If `len = NA` you can only pass length-1 scalars.
-#'   Default is `Inf`.
-#' @param values [`vector` | `list` | `expression`]\cr
-#'   Possible discrete values. Instead of using a vector of atomic values,
-#'   you are also allowed to pass a list of quite \dQuote{complex} R objects,
-#'   which are used as discrete choices. If you do the latter,
-#'   the elements must be uniquely named, so that the names can be used
-#'   as internal representations for the choice.
-#' @param cnames [`character`]\cr
-#'   Component names for vector params (except discrete).
-#'   Every function in this package that creates vector values for such a param, will name
-#'   that vector with `cnames`.
-#' @param allow.inf [`logical(1)`]\cr
-#'   Allow infinite values for numeric and numericvector params to be feasible settings.
-#'   Default is `FALSE`.
-#' @param default [any concrete value | `expression`]\cr
-#'   Default value used in learner.
-#'   Note: When this is a discrete parameter make sure to use a VALUE here, not the NAME of the value.
-#'   If this argument is missing, it means no default value is available.
-#' @param trafo [`NULL` | `function(x)`]\cr
-#'   Function to transform parameter. It should be applied to the parameter value
-#'   before it is, e.g., passed to a corresponding objective function.
-#'   Function must accept a parameter value as the first argument and return a transformed one.
-#'   Default is `NULL` which means no transformation.
-#' @param requires [`NULL` | `call` | `expression`]\cr
-#'   States requirements on other parameters' values, so that setting
-#'   this parameter only makes sense if its requirements are satisfied (dependent parameter).
-#'   Can be an object created either with `expression` or `quote`,
-#'   the former type is auto-converted into the later.
-#'   Only really useful if the parameter is included in a [ParamSet()].
-#'   Default is `NULL` which means no requirements.
-#' @param tunable [`logical(1)`]\cr
-#'   Is this parameter tunable?
-#'   Defining a parameter to be not-tunable allows to mark arguments like, e.g., \dQuote{verbose} or other purely technical stuff.
-#'   Note that this flag is most likely not respected by optimizing procedures unless stated otherwise.
-#'   Default is `TRUE` (except for `untyped`, `function`, `character` and `characterVector`) which means it is tunable.
-#' @param special.vals [`list()`]\cr
-#'   A list of special values the parameter can except which are outside of the defined range.
-#'   Default is an empty list.
+#' @param len (`integer(1)` | `expression`)\cr
+#'  Length of vector parameter.
+#' @param lower (`numeric` | `expression`)\cr
+#'   Lower bounds. A singe value of
+#'   length 1 is automatically replicated to `len` for vector parameters. If
+#'   `len = NA` you can only pass length-1 scalars. Default is `-Inf`.
+#' @param upper (`numeric` | `expression`)\cr
+#'   Upper bounds. A singe value of
+#'   length 1 is automatically replicated to `len` for vector parameters. If
+#'   `len = NA` you can only pass length-1 scalars. Default is `Inf`.
+#' @param values (`vector` | `list` | `expression`)\cr
+#'   Possible discrete values.
+#'   Instead of using a vector of atomic values, you are also allowed to pass a
+#'   list of quite \dQuote{complex} R objects, which are used as discrete
+#'   choices. If you do the latter, the elements must be uniquely named, so that
+#'   the names can be used as internal representations for the choice.
+#' @param cnames (`character`)\cr
+#'   Component names for vector params (except
+#'   discrete). Every function in this package that creates vector values for
+#'   such a param, will name that vector with `cnames`.
+#' @param allow.inf (`logical(1)`)\cr
+#'   Allow infinite values for numeric and
+#'   numericvector params to be feasible settings. Default is `FALSE`.
+#' @param default (any concrete value | `expression`)\cr
+#'   Default value used in
+#'   learner. Note: When this is a discrete parameter make sure to use a VALUE
+#'   here, not the NAME of the value. If this argument is missing, it means no
+#'   default value is available.
+#' @param trafo (`NULL` | `function(x)`)\cr
+#'   Function to transform parameter. It
+#'   should be applied to the parameter value before it is, e.g., passed to a
+#'   corresponding objective function. Function must accept a parameter value as
+#'   the first argument and return a transformed one. Default is `NULL` which
+#'   means no transformation.
+#' @param requires (`NULL` | `call` | `expression`)\cr
+#'   States requirements on
+#'   other parameters' values, so that setting this parameter only makes sense
+#'   if its requirements are satisfied (dependent parameter). Can be an object
+#'   created either with `expression` or `quote`, the former type is
+#'   auto-converted into the later. Only really useful if the parameter is
+#'   included in a (ParamSet()). Default is `NULL` which means no requirements.
+#' @param tunable (`logical(1)`)\cr
+#'   Is this parameter tunable? Defining a
+#'   parameter to be not-tunable allows to mark arguments like, e.g.,
+#'   \dQuote{verbose} or other purely technical stuff. Note that this flag is
+#'   most likely not respected by optimizing procedures unless stated otherwise.
+#'   Default is `TRUE` (except for `untyped`, `function`, `character` and
+#'   `characterVector`) which means it is tunable.
+#' @param special.vals (`list()`)\cr
+#'   A list of special values the parameter can
+#'   except which are outside of the defined range. Default is an empty list.
 #' @return [[Param()]].
 #' @name Param
 #' @rdname Param

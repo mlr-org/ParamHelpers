@@ -15,29 +15,29 @@
 #'  extra-columns       \tab  any \cr
 #' }
 #' If you want to convert these, look at [BBmisc::convertDataFrameCols()].
-#' Dependent parameters whose constraints are unsatisfied generate `NA` entries in their
-#' respective columns.
-#' Factor columns of discrete parameters always have their complete level set from the `param.set`.
+#' Dependent parameters whose constraints are unsatisfied generate `NA` entries
+#' in their respective columns. Factor columns of discrete parameters always
+#' have their complete level set from the `param.set`.
 #'
-#' @param x [[OptPath()]]\cr
+#' @param x ([OptPath()])\cr
 #'   Optimization path.
-#' @param row.names [`character`]\cr
+#' @param row.names [character]\cr
 #'   Row names for result.
 #'   Default is none.
-#' @param optional [any]\cr
+#' @param optional (any)\cr
 #'   Currently ignored.
-#' @param include.x [`logical(1)`]\cr
+#' @param include.x (`logical(1)`)\cr
 #'   Include all input params?
 #'   Default is `TRUE`.
-#' @param include.y [`logical(1)`]\cr
+#' @param include.y (`logical(1)`)\cr
 #'   Include all y-columns?
 #'   Default is `TRUE`.
-#' @param include.rest [`logical(1)`]\cr
+#' @param include.rest (`logical(1)`)\cr
 #'   Include all other columns?
 #'   Default is `TRUE`.
 #' @template arg_opgetter_dob
 #' @template arg_opgetter_eol
-#' @param ... [any] \cr
+#' @param ... (any) \cr
 #'   Currently ignored.
 #' @return [`data.frame`].
 #' @export

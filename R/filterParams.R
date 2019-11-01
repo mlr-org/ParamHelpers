@@ -1,30 +1,33 @@
 #' @title Get parameter subset of only certain parameters.
 #'
 #' @description
-#' Parameter order is not changed.
-#' It is possible to filter via multiple arguments, e.g., first filter based on id, then the type and lastly tunable.
-#' The order in which the filters are executed is always fixed (id > type > tunable).
+#' Parameter order is not changed. It is possible to filter via multiple
+#' arguments, e.g., first filter based on id, then the type and lastly tunable.
+#' The order in which the filters are executed is always fixed (id > type >
+#' tunable).
 #'
 #' @template arg_parset
-#' @param ids [`NULL` | `character`]\cr
+#' @param ids (`NULL` | `character`)\cr
 #'   Vector with id strings containing the parameters to select. Has to be a
 #'   subset of the parameter names within the parameter set.
 #'   Per default (`ids = NULL`) no filtering based on names is done.
-#' @param type [`NULL` | `character`]\cr
-#'   Vector of allowed types, subset of: \dQuote{numeric}, \dQuote{integer}, \dQuote{numericvector},
-#'   \dQuote{integervector}, \dQuote{discrete}, \dQuote{discretevector}, \dQuote{logical},
-#'   \dQuote{logicalvector}, \dQuote{character}, \dQuote{charactervector},
-#'   \dQuote{function}, \dQuote{untyped}.
+#' @param type (`NULL` | `character`)\cr
+#'   Vector of allowed types, subset of: \dQuote{numeric}, \dQuote{integer},
+#'   \dQuote{numericvector}, \dQuote{integervector}, \dQuote{discrete},
+#'   \dQuote{discretevector}, \dQuote{logical}, \dQuote{logicalvector},
+#'   \dQuote{character}, \dQuote{charactervector}, \dQuote{function},
+#'   \dQuote{untyped}.
 #'   Setting `type = NULL`, which is the default, allows the consideration of all types.
-#' @param tunable [`logical`]\cr
+#' @param tunable (`logical`)\cr
 #'   Vector of allowed values for the property `tunable`. Accepted arguments are
-#'   `TRUE`, `FALSE` or `c(TRUE, FALSE)`.
-#'   The default is `c(TRUE, FALSE)`, i.e. none of the parameters will be filtered out.
-#' @param check.requires [`logical(1)`]\cr
-#'   Toggle whether it should be checked that all requirements in the [ParamSet()] are still valid after filtering or not.
-#'   This check is done after filtering and will throw an error if those Params are filtered which other Params need for their requirements.
-#'   Default is `FALSE`.
-#' @return [[ParamSet()]].
+#'   `TRUE`, `FALSE` or `c(TRUE, FALSE)`. The default is `c(TRUE, FALSE)`, i.e.
+#'   none of the parameters will be filtered out.
+#' @param check.requires (`logical(1)`)\cr
+#'   Toggle whether it should be checked that all requirements in the
+#'   (ParamSet()) are still valid after filtering or not. This check is done
+#'   after filtering and will throw an error if those Params are filtered which
+#'   other Params need for their requirements. Default is `FALSE`.
+#' @return [ParamSet()].
 #' @examples
 #' ps = makeParamSet(
 #'   makeNumericParam("u", lower = 1),

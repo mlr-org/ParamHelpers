@@ -7,19 +7,19 @@
 repairPoint(par.set, x, warn = FALSE)
 }
 \arguments{
-\item{par.set}{\link{\code{\link{ParamSet}}}\cr
+\item{par.set}{\link{ParamSet}\cr
 Parameter set.}
 
-\item{x}{\code{\link{list}}\cr
+\item{x}{\link{list}\cr
 List of parameter values. Must be in correct order.
 Values corresponding to non-numeric/integer types are left unchanged.}
 
-\item{warn}{\code{\link{logical(1)}}\cr
+\item{warn}{(\code{logical(1)})\cr
 Boolean indicating whether a warning should be printed each time a value is repaired.
 Default is \code{FALSE}.}
 }
 \value{
-\code{\link{list}}:
+\link{list}:
 List of repaired points.
 }
 \description{

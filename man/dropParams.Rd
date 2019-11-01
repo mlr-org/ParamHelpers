@@ -7,10 +7,10 @@
 dropParams(par.set, drop)
 }
 \arguments{
-\item{par.set}{\link{\code{\link{ParamSet}}}\cr
+\item{par.set}{\link{ParamSet}\cr
 Parameter set.}
 
-\item{drop}{\code{\link{character}}\cr
+\item{drop}{(\code{character})\cr
 \code{id}s of the \code{\link[=Param]{Param()}}s in the \code{\link[=ParamSet]{ParamSet()}} to drop from the ParamSet.}
 }
 \value{

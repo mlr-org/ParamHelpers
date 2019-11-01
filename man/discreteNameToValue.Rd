@@ -7,20 +7,20 @@
 discreteNameToValue(par, name)
 }
 \arguments{
-\item{par}{\link{\code{\link{Param}}}\cr
+\item{par}{\link{Param}\cr
 Parameter.}
 
-\item{name}{\code{\link{character}}\cr
-Name (string) encoding the value for a discrete parameter,
-or a character vector of names for a discrete vector.}
+\item{name}{(\code{character})\cr
+Name (string) encoding the value for a discrete
+parameter, or a character vector of names for a discrete vector.}
 }
 \value{
-\link{any}. Parameter value for a discrete parameter
-or a list of values for a discrete vector.
+\link{any}. Parameter value for a discrete parameter or a list of values
+for a discrete vector.
 }
 \description{
-For a discrete parameter or discrete vector.
-If the \code{name} is \code{NA}, indicating a missing parameter value due to unsatisfied requirements,
+For a discrete parameter or discrete vector. If the \code{name} is
+\code{NA}, indicating a missing parameter value due to unsatisfied requirements,
 \code{NA} is returned.
 }
 \examples{

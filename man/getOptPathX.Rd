@@ -7,21 +7,21 @@
 getOptPathX(op, dob, eol)
 }
 \arguments{
-\item{op}{\link{\code{\link{OptPath}}}\cr
+\item{op}{\link{OptPath}\cr
 Optimization path.}
 
-\item{dob}{\link{\code{integer}}\cr
+\item{dob}{\link{integer}\cr
 Vector of date-of-birth values to further subset the result.
 Only elements with a date-of-birth included in \code{dob} are selected.
 Default is all.}
 
-\item{eol}{\link{\code{integer}}\cr
+\item{eol}{\link{integer}\cr
 Vector of end-of-life values to further subset the result.
 Only elements with an end-of-life included in \code{eol} are selected.
 Default is all.}
 }
 \value{
-\code{\link{data.frame}}.
+\link{data.frame}.
 }
 \description{
 Get data.frame of input points (X-space) referring to the param set from the optimization path.

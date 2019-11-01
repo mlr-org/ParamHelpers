@@ -1,10 +1,10 @@
 #' @title Convert a data.frame row to list of parameter-value-lists.
 #'
-#' @description
-#' Please note that (naturally) the columns of `df` have to be of the correct
-#' type w.r.t. the corresponding parameter. The only exception are integer parameters
-#' where the corresponding columns in `df` are allowed to be numerics.
-#' And also see the argument `enforce.col.types` as a way around this restriction.
+#' @description Please note that (naturally) the columns of `df` have to be of
+#' the correct type w.r.t. the corresponding parameter. The only exception are
+#' integer parameters where the corresponding columns in `df` are allowed to be
+#' numerics. And also see the argument `enforce.col.types` as a way around this
+#' restriction.
 #'
 #' \tabular{ll}{
 #'  numeric(vector)   \tab  `numeric`  \cr
@@ -13,24 +13,23 @@
 #'  logical(vector)   \tab  `logical`
 #' }
 #'
-#' Dependent parameters whose requirements are not satisfied are represented by a scalar
-#' NA in the output.
+#' Dependent parameters whose requirements are not satisfied are represented by
+#' a scalar NA in the output.
 #'
-#' @param df [`data.frame`]\cr
+#' @param df (`data.frame`)\cr
 #'   Data.frame, potentially from [OptPathDF()].
 #'   Columns are assumed to be in the same order as par.set.
 #' @template arg_parset
-#' @param i [`integer(1)`]\cr
+#' @param i (`integer(1)`)\cr
 #'   Row index.
-#' @param enforce.col.types [`logical(1)`]\cr
-#'   Should all `df` columns be initially converted to the type
-#'   returned by `getParamTypes(df, df.cols = TRUE)`.
-#'   This can help to work with \dQuote{non-standard} data.frames where the types are
-#'   slightly \dQuote{off}. But note that there is no guarantee that this will
-#'   work if the types are really wrong and there is no naturally correct way
-#'   to convert them.
-#'   Default is `FALSE`.
-#' @param ... [any]\cr
+#' @param enforce.col.types (`logical(1)`)\cr
+#'   Should all `df` columns be initially converted to the type returned by
+#'   `getParamTypes(df, df.cols = TRUE)`. This can help to work with
+#'   \dQuote{non-standard} data.frames where the types are slightly
+#'   \dQuote{off}. But note that there is no guarantee that this will work if
+#'   the types are really wrong and there is no naturally correct way to convert
+#'   them. Default is `FALSE`.
+#' @param ... (any)\cr
 #'   Arguments passed to [BBmisc::convertDataFrameCols()]
 #' @return [`list`]. Named by parameter ids.
 #' @export

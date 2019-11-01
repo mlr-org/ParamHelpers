@@ -8,17 +8,19 @@ isRequiresOk(par.set, par.vals, ids = names(par.vals),
   use.defaults = TRUE)
 }
 \arguments{
-\item{par.set}{\link{\code{\link{ParamSet}}}\cr
+\item{par.set}{\link{ParamSet}\cr
 Parameter set.}
 
-\item{par.vals}{\code{list()} \cr
+\item{par.vals}{(\code{list()}) \cr
 List of parameter settings.}
 
-\item{ids}{\code{character()} \cr
+\item{ids}{(\code{character()}) \cr
 \code{id}s of the param.vals to check. Default is \code{names(par.vals)}.}
 
-\item{use.defaults}{\code{logical()} \cr
-Some requirements relay on default values of the \code{par.set}. Default is \code{TRUE}, which means that if the value is not present in \code{par.vals} the default value will be considered.}
+\item{use.defaults}{(\code{logical()}) \cr
+Some requirements relay on default values of the \code{par.set}. Default is
+\code{TRUE}, which means that if the value is not present in \code{par.vals} the
+default value will be considered.}
 }
 \value{
 \code{logical(1)} \cr

@@ -5,7 +5,7 @@
 #' Otherwise `x` is left unchanged.
 #'
 #' @template arg_par_or_set
-#' @param x [any] \cr
+#' @param x (any) \cr
 #'   Param value(s).
 #'   For a parameter set this must be a list in the correct order.
 #' @return `x` with changed names.

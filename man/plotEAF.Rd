@@ -7,17 +7,18 @@
 plotEAF(opt.paths, xlim = NULL, ylim = NULL, ...)
 }
 \arguments{
-\item{opt.paths}{\code{\link{list}}\cr
-List of list of \code{OptPath} objects. First index is the algorithm / major variation
-in the experiment, second index is the index of the replicated run.}
+\item{opt.paths}{(\code{list})\cr
+List of list of \code{OptPath} objects. First index is the algorithm / major
+variation in the experiment, second index is the index of the replicated
+run.}
 
-\item{xlim}{\code{\link{numeric(2)}}\cr
+\item{xlim}{(\code{numeric(2)})\cr
 The x limits (x1, x2) of the plot.}
 
-\item{ylim}{\code{\link{numeric(2)}}\cr
+\item{ylim}{(\code{numeric(2)})\cr
 The y limits (y1, y2) of the plot.}
 
-\item{...}{\link{any}\cr
+\item{...}{(any)\cr
 Passed on to \code{\link[eaf:eafplot]{eaf::eafplot()}}.}
 }
 \value{
@@ -30,8 +31,9 @@ evaluation was logged for repeated runs of different algorithmic runs.
 Pretty directly calls \code{\link[eaf:eafplot]{eaf::eafplot()}}.
 }
 \note{
-We changed the defaults of \code{\link[eaf:eafplot]{eaf::eafplot()}} in the following way:
-The axis are labeled by \code{y.names}, colors are set to our favorite grey
-values and linetypes changed, too. With our colors / linetypes default it is
-possible to distinguish 6 different algorithms. But this can again be overwritten by the user.
+We changed the defaults of \code{\link[eaf:eafplot]{eaf::eafplot()}} in the following way: The axis
+are labeled by \code{y.names}, colors are set to our favorite grey values and
+linetypes changed, too. With our colors / linetypes default it is possible
+to distinguish 6 different algorithms. But this can again be overwritten by
+the user.
 }

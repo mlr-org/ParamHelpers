@@ -1,7 +1,7 @@
 #' Set the dates of birth of parameter values, in-place.
 #'
 #' @template arg_op
-#' @param index [`integer`]\cr
+#' @param index [integer]\cr
 #'   Vector of indices of elements.
 #' @param dob [integer] \cr
 #'   Dates of birth, single value or same length of `index`.
@@ -20,7 +20,7 @@ setOptPathElDOB = function(op, index, dob) {
 #' Set the end of life dates of parameter values, in-place.
 #'
 #' @template arg_op
-#' @param index [`integer`]\cr
+#' @param index [integer]\cr
 #'   Vector of indices of elements.
 #' @param eol [integer] \cr
 #'   EOL dates, single value or same length of `index`.
@@ -38,42 +38,43 @@ setOptPathElEOL = function(op, index, eol) {
 #' @title Add a new element to an optimization path.
 #'
 #' @description
-#' Changes the argument in-place.
-#' Note that when adding parameters that have associated transformations, it is probably
-#' best to add the untransformed values to the path. Otherwise you have to switch off the
-#' feasibility check, as constraints might now not hold anymore.
+#' Changes the argument in-place. Note that when adding parameters that have
+#' associated transformations, it is probably best to add the untransformed
+#' values to the path. Otherwise you have to switch off the feasibility check,
+#' as constraints might now not hold anymore.
 #'
-#' Dependent parameters whose requirements are not satisfied must be represented by a scalar
-#' NA in the input.
+#' Dependent parameters whose requirements are not satisfied must be represented
+#' by a scalar NA in the input.
 #'
 #' @template arg_op
-#' @param x [`list`]\cr
-#'   List of parameter values for a point in input space. Must be in same order as parameters.
-#' @param y [`numeric`]\cr
+#' @param x (`list`)\cr
+#'   List of parameter values for a point in input space. Must be in same order
+#'   as parameters.
+#' @param y (`numeric`)\cr
 #'   Vector of fitness values.  Must be in same order as `y.names`.
-#' @param dob [`integer(1)`]\cr
+#' @param dob (`integer(1)`)\cr
 #'   Date of birth of the new parameters.
 #'   Default is length of path + 1.
-#' @param eol [`integer(1)`]\cr
+#' @param eol (`integer(1)`)\cr
 #'   End of life of point.
 #'   Default is `NA`.
-#' @param error.message [`character(1)`]\cr
+#' @param error.message (`character(1)`)\cr
 #'   Possible error message that occurred for this parameter values.
 #'   Default is `NA`.
-#' @param exec.time [`numeric(1)`]\cr
+#' @param exec.time (`numeric(1)`)\cr
 #'   Possible exec time for this evaluation.
 #'   Default is `NA`.
-#' @param extra [`list`]\cr
+#' @param extra (`list`)\cr
 #'   Possible list of extra values to store.
 #'   The list must be fully named. The list can contain nonscalar values, but
 #'   these nonscalar entries must have a name starting with a dot (`.`).
 #'   Other entries must be scalar, and must be in the same order of all calls of
 #'   `addOptPathEl`.
-#'   Watch out: if `include.extra` was set to `TRUE` in [makeOptPathDF()]
+#'   Watch out: if `include.extra` was set to `TRUE` in (makeOptPathDF())
 #'   the list of extras is mandatory.
 #'   Default is `NULL`.
-#' @param check.feasible [`logical(1)`]\cr
-#'   Should `x` be checked with [isFeasible()]?
+#' @param check.feasible (`logical(1)`)\cr
+#'   Should `x` be checked with (isFeasible())?
 #'   Default is `TRUE`.
 #' @return Nothing.
 #' @export

@@ -2,7 +2,7 @@
 #'
 #' @template arg_par_or_set
 #' @template arg_dict
-#' @return [`logical(1)`]
+#' @return `logical(1)`
 #' @export
 hasFiniteBoxConstraints = function(par, dict = NULL) {
   UseMethod("hasFiniteBoxConstraints")

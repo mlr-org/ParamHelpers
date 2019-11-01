@@ -7,10 +7,10 @@
 setOptPathElEOL(op, index, eol)
 }
 \arguments{
-\item{op}{\link{\code{\link{OptPath}}}\cr
+\item{op}{\link{OptPath}\cr
 Optimization path.}
 
-\item{index}{\code{\link{integer}}\cr
+\item{index}{\link{integer}\cr
 Vector of indices of elements.}
 
 \item{eol}{\link{integer} \cr

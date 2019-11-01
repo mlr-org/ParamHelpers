@@ -5,7 +5,7 @@
 #' trafos.
 #'
 #' @template arg_par_or_set
-#' @return [`logical(1)`].
+#' @return `logical(1)`.
 #' @export
 hasTrafo = function(par) {
   UseMethod("hasTrafo")

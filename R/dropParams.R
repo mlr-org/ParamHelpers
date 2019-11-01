@@ -1,7 +1,7 @@
 #' Drop Params from ParamSet by ids.
 #'
 #' @template arg_parset
-#' @param drop [`character`]\cr
+#' @param drop (`character`)\cr
 #'   `id`s of the [Param()]s in the [ParamSet()] to drop from the ParamSet.
 #' @return [[ParamSet()]].
 #' @export

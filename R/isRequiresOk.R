@@ -5,12 +5,14 @@
 #' parameter description. This only checks the `requires` expressions.
 #'
 #' @template arg_parset
-#' @param par.vals `list()` \cr
+#' @param par.vals (`list()`) \cr
 #'   List of parameter settings.
-#' @param ids `character()` \cr
+#' @param ids (`character()`) \cr
 #'   `id`s of the param.vals to check. Default is `names(par.vals)`.
-#' @param use.defaults `logical()` \cr
-#'   Some requirements relay on default values of the `par.set`. Default is `TRUE`, which means that if the value is not present in `par.vals` the default value will be considered.
+#' @param use.defaults (`logical()`) \cr
+#'   Some requirements relay on default values of the `par.set`. Default is
+#'   `TRUE`, which means that if the value is not present in `par.vals` the
+#'   default value will be considered.
 #' @return `logical(1)` \cr
 #' @export
 isRequiresOk = function(par.set, par.vals, ids = names(par.vals), use.defaults = TRUE) {

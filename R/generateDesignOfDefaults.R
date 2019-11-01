@@ -8,13 +8,13 @@
 #'  discrete(vector)  \tab  `factor` (names of values = levels) \cr
 #'  logical(vector)   \tab  `logical`
 #' }
-#' This will create a design containing only one point at the default values of the supplied param set.
-#' In most cases you will combine the resulting `data.frame` with a different generation function
-#' e.g. [generateDesign()], [generateRandomDesign()] or [generateGridDesign()].
-#' This is useful to force an evaluation at the default location of the parameters while still generating
-#' a design.
-#' Parameters default values, whose conditions (`requires`) are not fulfilled will be set to `NA`
-#' in the result.
+#' This will create a design containing only one point at the default values of
+#' the supplied param set. In most cases you will combine the resulting
+#' `data.frame` with a different generation function e.g. [generateDesign()],
+#' [generateRandomDesign()] or [generateGridDesign()]. This is useful to force
+#' an evaluation at the default location of the parameters while still
+#' generating a design. Parameters default values, whose conditions (`requires`)
+#' are not fulfilled will be set to `NA` in the result.
 #' @template arg_parset
 #' @template arg_trafo
 #' @template ret_gendes_df

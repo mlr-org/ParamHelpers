@@ -7,14 +7,14 @@
 getParamIds(par, repeated = FALSE, with.nr = FALSE)
 }
 \arguments{
-\item{par}{\link{\code{\link{Param}} | \code{\link{ParamSet}}}\cr
+\item{par}{(\link{Param} | \link{ParamSet})\cr
 Parameter or parameter set.}
 
-\item{repeated}{\code{\link{logical(1)}}\cr
+\item{repeated}{(\code{logical(1)})\cr
 Should ids be repeated length-times if parameter is a vector?
 Default is \code{FALSE}.}
 
-\item{with.nr}{\code{\link{logical(1)}}\cr
+\item{with.nr}{(\code{logical(1)})\cr
 Should number from 1 to length be appended to id if \code{repeated} is \code{TRUE}?
 Otherwise ignored.
 Default is \code{FALSE}.}

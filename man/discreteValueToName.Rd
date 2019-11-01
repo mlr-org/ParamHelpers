@@ -7,7 +7,7 @@
 discreteValueToName(par, x)
 }
 \arguments{
-\item{par}{\link{\code{\link{Param}}}\cr
+\item{par}{\link{Param}\cr
 Parameter.}
 
 \item{x}{\link{any}\cr

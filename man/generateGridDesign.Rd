@@ -7,24 +7,24 @@
 generateGridDesign(par.set, resolution, trafo = FALSE)
 }
 \arguments{
-\item{par.set}{\link{\code{\link{ParamSet}}}\cr
+\item{par.set}{\link{ParamSet}\cr
 Parameter set.}
 
-\item{resolution}{\code{\link{integer}}\cr
+\item{resolution}{(\code{integer})\cr
 Resolution of the grid for each numeric/integer parameter in \code{par.set}.
 For vector parameters, it is the resolution per dimension.
 Either pass one resolution for all parameters, or a named vector.}
 
-\item{trafo}{\link{\code{logical(1)}}\cr
-Transform all parameters by using theirs respective transformation functions.
-Default is \code{FALSE}.}
+\item{trafo}{(\code{logical(1)})\cr
+Transform all parameters by using theirs respective transformation
+functions. Default is \code{FALSE}.}
 }
 \value{
-\link{\code{data.frame}}. Columns are named by the ids of the parameters.
-If the \code{par.set} argument contains a vector parameter, its corresponding column names
-in the design are the parameter id concatenated with 1 to dimension of the vector.
-The result will have an \code{logical(1)} attribute \dQuote{trafo},
-which is set to the value of argument \code{trafo}.
+\link{data.frame}. Columns are named by the ids of the parameters. If the
+\code{par.set} argument contains a vector parameter, its corresponding column
+names in the design are the parameter id concatenated with 1 to dimension
+of the vector. The result will have an \code{logical(1)} attribute
+\dQuote{trafo}, which is set to the value of argument \code{trafo}.
 }
 \description{
 The following types of columns are created:
@@ -35,9 +35,9 @@ discrete(vector)  \tab  \code{factor} (names of values = levels) \cr
 logical(vector)   \tab  \code{logical}
 }
 If you want to convert these, look at \code{\link[BBmisc:convertDataFrameCols]{BBmisc::convertDataFrameCols()}}.
-Dependent parameters whose constraints are unsatisfied generate \code{NA} entries in their
-respective columns.
-For discrete vectors the levels and their order will be preserved.
+Dependent parameters whose constraints are unsatisfied generate \code{NA} entries
+in their respective columns. For discrete vectors the levels and their order
+will be preserved.
 
 The algorithm currently performs these steps:
 \enumerate{
@@ -49,15 +49,16 @@ dependent parameters whose constraints are unsatisfied are set to \code{NA} entr
 grid design, but the way parameter dependencies are handled make this possible.}
 }
 
-Note that if you have trafos attached to your params, the complete creation of the design
-(except for the detection of invalid parameters w.r.t to their \code{requires} setting)
-takes place on the UNTRANSFORMED scale. So this function creates a regular grid
-over the param space on the UNTRANSFORMED scale, but not necessarily the transformed scale.
+Note that if you have trafos attached to your params, the complete creation
+of the design (except for the detection of invalid parameters w.r.t to their
+\code{requires} setting) takes place on the UNTRANSFORMED scale. So this function
+creates a regular grid over the param space on the UNTRANSFORMED scale, but
+not necessarily the transformed scale.
 
-\code{generateDesign} will NOT work if there are dependencies over multiple levels of
-parameters and the dependency is only given with respect to the \dQuote{previous} parameter.
-A current workaround is to state all dependencies on all parameters involved.
-(We are working on it.)
+\code{generateDesign} will NOT work if there are dependencies over multiple levels
+of parameters and the dependency is only given with respect to the
+\dQuote{previous} parameter. A current workaround is to state all
+dependencies on all parameters involved. (We are working on it.)
 }
 \examples{
 ps = makeParamSet(

@@ -4,7 +4,7 @@
 #' Either number of parameters or sum over parameter lengths.
 #'
 #' @template arg_parset
-#' @param devectorize [`logical(1)`]\cr
+#' @param devectorize (`logical(1)`)\cr
 #'   Sum over length of vector parameters?
 #'   Default is code{FALSE}.
 #' @return [`integer`].

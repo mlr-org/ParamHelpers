@@ -8,24 +8,25 @@ paramValueToString(par, x, show.missing.values = FALSE,
   num.format = "\%.3g")
 }
 \arguments{
-\item{par}{\link{\code{\link{Param}} | \code{\link{ParamSet}}}\cr
+\item{par}{(\link{Param} | \link{ParamSet})\cr
 Parameter or parameter set.}
 
-\item{x}{\link{any}\cr
-Value for parameter or value for parameter set. In the latter case it must be named list.
-For discrete parameters their values must be used, not their names.}
+\item{x}{(any)\cr
+Value for parameter or value for parameter set. In the latter case it must
+be named list. For discrete parameters their values must be used, not their
+names.}
 
-\item{show.missing.values}{\code{\link{logical(1)}}\cr
-Display \dQuote{NA} for parameters, which have no setting, because their requirements are not
-satisfied (dependent parameters), instead of displaying nothing?
-Default is \code{FALSE}.}
+\item{show.missing.values}{(\code{logical(1)})\cr
+Display \dQuote{NA} for parameters, which have no setting, because their
+requirements are not satisfied (dependent parameters), instead of
+displaying nothing? Default is \code{FALSE}.}
 
-\item{num.format}{\code{\link{character(1)}}\cr
-Number format for output of numeric parameters. See the details section of the manual for
-\code{\link[base:sprintf]{base::sprintf()}} for details.}
+\item{num.format}{(\code{character(1)})\cr
+Number format for output of numeric parameters. See the details section of
+the manual for \code{\link[base:sprintf]{base::sprintf()}} for details.}
 }
 \value{
-\code{\link{character(1)}}.
+\code{character(1)}.
 }
 \description{
 Useful helper for logging.

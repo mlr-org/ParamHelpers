@@ -7,11 +7,11 @@
 hasForbidden(par.set)
 }
 \arguments{
-\item{par.set}{\link{\code{\link{ParamSet}}}\cr
+\item{par.set}{\link{ParamSet}\cr
 Parameter set.}
 }
 \value{
-\code{\link{logical(1)}}.
+\code{logical(1)}.
 }
 \description{
 Check parameter set for forbidden region.

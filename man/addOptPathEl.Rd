@@ -10,56 +10,57 @@ addOptPathEl(op, x, y, dob = getOptPathLength(op) + 1L,
   check.feasible = !op$add.transformed.x)
 }
 \arguments{
-\item{op}{\link{\code{\link{OptPath}}}\cr
+\item{op}{\link{OptPath}\cr
 Optimization path.}
 
-\item{x}{\code{\link{list}}\cr
-List of parameter values for a point in input space. Must be in same order as parameters.}
+\item{x}{(\code{list})\cr
+List of parameter values for a point in input space. Must be in same order
+as parameters.}
 
-\item{y}{\code{\link{numeric}}\cr
+\item{y}{(\code{numeric})\cr
 Vector of fitness values.  Must be in same order as \code{y.names}.}
 
-\item{dob}{\code{\link{integer(1)}}\cr
+\item{dob}{(\code{integer(1)})\cr
 Date of birth of the new parameters.
 Default is length of path + 1.}
 
-\item{eol}{\code{\link{integer(1)}}\cr
+\item{eol}{(\code{integer(1)})\cr
 End of life of point.
 Default is \code{NA}.}
 
-\item{error.message}{\code{\link{character(1)}}\cr
+\item{error.message}{(\code{character(1)})\cr
 Possible error message that occurred for this parameter values.
 Default is \code{NA}.}
 
-\item{exec.time}{\code{\link{numeric(1)}}\cr
+\item{exec.time}{(\code{numeric(1)})\cr
 Possible exec time for this evaluation.
 Default is \code{NA}.}
 
-\item{extra}{\code{\link{list}}\cr
+\item{extra}{(\code{list})\cr
 Possible list of extra values to store.
 The list must be fully named. The list can contain nonscalar values, but
 these nonscalar entries must have a name starting with a dot (\code{.}).
 Other entries must be scalar, and must be in the same order of all calls of
 \code{addOptPathEl}.
-Watch out: if \code{include.extra} was set to \code{TRUE} in \code{\link[=makeOptPathDF]{makeOptPathDF()}}
+Watch out: if \code{include.extra} was set to \code{TRUE} in (makeOptPathDF())
 the list of extras is mandatory.
 Default is \code{NULL}.}
 
-\item{check.feasible}{\code{\link{logical(1)}}\cr
-Should \code{x} be checked with \code{\link[=isFeasible]{isFeasible()}}?
+\item{check.feasible}{(\code{logical(1)})\cr
+Should \code{x} be checked with (isFeasible())?
 Default is \code{TRUE}.}
 }
 \value{
 Nothing.
 }
 \description{
-Changes the argument in-place.
-Note that when adding parameters that have associated transformations, it is probably
-best to add the untransformed values to the path. Otherwise you have to switch off the
-feasibility check, as constraints might now not hold anymore.
+Changes the argument in-place. Note that when adding parameters that have
+associated transformations, it is probably best to add the untransformed
+values to the path. Otherwise you have to switch off the feasibility check,
+as constraints might now not hold anymore.
 
-Dependent parameters whose requirements are not satisfied must be represented by a scalar
-NA in the input.
+Dependent parameters whose requirements are not satisfied must be represented
+by a scalar NA in the input.
 }
 \examples{
 ps = makeParamSet(

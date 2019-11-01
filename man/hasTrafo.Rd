@@ -7,11 +7,11 @@
 hasTrafo(par)
 }
 \arguments{
-\item{par}{\link{\code{\link{Param}} | \code{\link{ParamSet}}}\cr
+\item{par}{(\link{Param} | \link{ParamSet})\cr
 Parameter or parameter set.}
 }
 \value{
-\code{\link{logical(1)}}.
+\code{logical(1)}.
 }
 \description{
 \code{TRUE} iff the parameter has any trafos or any parameter in the set has

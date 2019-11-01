@@ -12,7 +12,8 @@
 \alias{makeLogicalVectorLearnerParam}
 \alias{makeUntypedLearnerParam}
 \alias{makeFunctionLearnerParam}
-\title{Create a description object for a parameter of a machine learning algorithm.}
+\title{Create a description object for a parameter of a machine learning
+algorithm.}
 \usage{
 makeNumericLearnerParam(id, lower = -Inf, upper = Inf,
   allow.inf = FALSE, default, when = "train", requires = NULL,
@@ -51,74 +52,75 @@ makeFunctionLearnerParam(id, default, when = "train", requires = NULL,
   tunable = TRUE, special.vals = list())
 }
 \arguments{
-\item{id}{\code{\link{character(1)}}\cr
+\item{id}{(\code{character(1)})\cr
 Name of parameter.}
 
-\item{lower}{\link[=`numeric` | `expression`]{numeric | expression}\cr
-Lower bounds.
-A singe value of length 1 is automatically replicated to \code{len} for vector parameters.
-If \code{len = NA} you can only pass length-1 scalars.
-Default is \code{-Inf}.}
+\item{lower}{(\code{numeric} | \code{expression})\cr
+Lower bounds. A singe value of
+length 1 is automatically replicated to \code{len} for vector parameters. If
+\code{len = NA} you can only pass length-1 scalars. Default is \code{-Inf}.}
 
-\item{upper}{\link[=`numeric` | `expression`]{numeric | expression}\cr
-Upper bounds.
-A singe value of length 1 is automatically replicated to \code{len} for vector parameters.
-If \code{len = NA} you can only pass length-1 scalars.
-Default is \code{Inf}.}
+\item{upper}{(\code{numeric} | \code{expression})\cr
+Upper bounds. A singe value of
+length 1 is automatically replicated to \code{len} for vector parameters. If
+\code{len = NA} you can only pass length-1 scalars. Default is \code{Inf}.}
 
-\item{allow.inf}{\code{\link{logical(1)}}\cr
-Allow infinite values for numeric and numericvector params to be feasible settings.
-Default is \code{FALSE}.}
+\item{allow.inf}{(\code{logical(1)})\cr
+Allow infinite values for numeric and
+numericvector params to be feasible settings. Default is \code{FALSE}.}
 
-\item{default}{\link[=any concrete value | `expression`]{any concrete value | expression}\cr
-Default value used in learner.
-Note: When this is a discrete parameter make sure to use a VALUE here, not the NAME of the value.
-If this argument is missing, it means no default value is available.}
+\item{default}{(any concrete value | \code{expression})\cr
+Default value used in
+learner. Note: When this is a discrete parameter make sure to use a VALUE
+here, not the NAME of the value. If this argument is missing, it means no
+default value is available.}
 
-\item{when}{\code{\link{character(1)}}\cr
-Specifies when parameter is used in the learner: \dQuote{train}, \dQuote{predict} or \dQuote{both}.
-Default is \dQuote{train}.}
+\item{when}{(\code{character(1)})\cr
+Specifies when parameter is used in the learner: \dQuote{train},
+\dQuote{predict} or \dQuote{both}. Default is \dQuote{train}.}
 
-\item{requires}{\link[=`NULL` | `call` | `expression`]{NULL | call | expression}\cr
-States requirements on other parameters' values, so that setting
-this parameter only makes sense if its requirements are satisfied (dependent parameter).
-Can be an object created either with \code{expression} or \code{quote},
-the former type is auto-converted into the later.
-Only really useful if the parameter is included in a \code{\link[=ParamSet]{ParamSet()}}.
-Default is \code{NULL} which means no requirements.}
+\item{requires}{(\code{NULL} | \code{call} | \code{expression})\cr
+States requirements on
+other parameters' values, so that setting this parameter only makes sense
+if its requirements are satisfied (dependent parameter). Can be an object
+created either with \code{expression} or \code{quote}, the former type is
+auto-converted into the later. Only really useful if the parameter is
+included in a (ParamSet()). Default is \code{NULL} which means no requirements.}
 
-\item{tunable}{\code{\link{logical(1)}}\cr
-Is this parameter tunable?
-Defining a parameter to be not-tunable allows to mark arguments like, e.g., \dQuote{verbose} or other purely technical stuff.
-Note that this flag is most likely not respected by optimizing procedures unless stated otherwise.
-Default is \code{TRUE} (except for \code{untyped}, \code{function}, \code{character} and \code{characterVector}) which means it is tunable.}
+\item{tunable}{(\code{logical(1)})\cr
+Is this parameter tunable? Defining a
+parameter to be not-tunable allows to mark arguments like, e.g.,
+\dQuote{verbose} or other purely technical stuff. Note that this flag is
+most likely not respected by optimizing procedures unless stated otherwise.
+Default is \code{TRUE} (except for \code{untyped}, \code{function}, \code{character} and
+\code{characterVector}) which means it is tunable.}
 
-\item{special.vals}{\code{\link[=list]{list()}}\cr
-A list of special values the parameter can except which are outside of the defined range.
-Default is an empty list.}
+\item{special.vals}{(\code{list()})\cr
+A list of special values the parameter can
+except which are outside of the defined range. Default is an empty list.}
 
-\item{len}{\code{\link{integer(1)}}\cr
+\item{len}{(\code{integer(1)})\cr
 Length of vector parameter.
 Can be set to \code{NA} to define a vector with unspecified length.}
 
-\item{values}{\link[=`vector` | `list` | `expression`]{vector | list | expression}\cr
-Possible discrete values. Instead of using a vector of atomic values,
-you are also allowed to pass a list of quite \dQuote{complex} R objects,
-which are used as discrete choices. If you do the latter,
-the elements must be uniquely named, so that the names can be used
-as internal representations for the choice.}
+\item{values}{(\code{vector} | \code{list} | \code{expression})\cr
+Possible discrete values.
+Instead of using a vector of atomic values, you are also allowed to pass a
+list of quite \dQuote{complex} R objects, which are used as discrete
+choices. If you do the latter, the elements must be uniquely named, so that
+the names can be used as internal representations for the choice.}
 }
 \value{
-[\code{\link[=LearnerParam]{LearnerParam()}}].
+\code{\link[=LearnerParam]{LearnerParam()}}.
 }
 \description{
-This specializes \code{\link[=Param]{Param()}} by adding a few more attributes,
-like a default value, whether it refers to a training or a predict function, etc.
+This specializes \code{\link[=Param]{Param()}} by adding a few more attributes, like
+a default value, whether it refers to a training or a predict function, etc.
 Note that you can set \code{length} to \code{NA}
 
 The S3 class is a \code{\link[=Param]{Param()}} which additionally stores these elements:
 \describe{
-\item{when \code{\link{character(1)}}}{See argument of same name.}
+\item{when \code{character(1)}}{See argument of same name.}
 }
 
 See the note in \code{\link[=Param]{Param()}} about being able to pass expressions to certain arguments.

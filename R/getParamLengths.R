@@ -5,7 +5,7 @@
 #'
 #' @template arg_par_or_set
 #' @template arg_dict
-#' @return [`integer`]. Named and in the same order as the input for [ParamSet()] input.
+#' @return (`integer`). Named and in the same order as the input for [ParamSet()] input.
 #' @examples
 #' ps = makeParamSet(
 #'   makeNumericParam("u"),

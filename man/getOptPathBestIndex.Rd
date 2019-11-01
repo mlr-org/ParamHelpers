@@ -8,24 +8,24 @@ getOptPathBestIndex(op, y.name = op$y.names[1], dob = op$env$dob,
   eol = op$env$eol, ties = "last")
 }
 \arguments{
-\item{op}{\link{\code{\link{OptPath}}}\cr
+\item{op}{\link{OptPath}\cr
 Optimization path.}
 
-\item{y.name}{\code{\link{character(1)}}\cr
+\item{y.name}{(\code{character(1)})\cr
 Name of target value to decide which element is best.
 Default is \code{y.names[1]}.}
 
-\item{dob}{\link{\code{integer}}\cr
+\item{dob}{\link{integer}\cr
 Vector of date-of-birth values to further subset the result.
 Only elements with a date-of-birth included in \code{dob} are selected.
 Default is all.}
 
-\item{eol}{\link{\code{integer}}\cr
+\item{eol}{\link{integer}\cr
 Vector of end-of-life values to further subset the result.
 Only elements with an end-of-life included in \code{eol} are selected.
 Default is all.}
 
-\item{ties}{\code{\link{character(1)}}\cr
+\item{ties}{(\code{character(1)})\cr
 How should ties be broken when more than one optimal element is found?
 \dQuote{all}: return all indices,
 \dQuote{first}: return first optimal element in path,

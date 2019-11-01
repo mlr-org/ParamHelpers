@@ -7,7 +7,7 @@
 getParamTypeCounts(par.set)
 }
 \arguments{
-\item{par.set}{\link{\code{\link{ParamSet}}}\cr
+\item{par.set}{\link{ParamSet}\cr
 Parameter set.}
 }
 \value{

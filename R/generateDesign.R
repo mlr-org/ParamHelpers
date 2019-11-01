@@ -38,41 +38,42 @@
 #'     and iterate.}
 #' }
 #'
-#' Note that augmenting currently is somewhat experimental as we simply generate missing points
-#' via new calls to [lhs::randomLHS()], but do not add points so they are maximally
-#' far away from the already present ones. The reason is that the latter is quite hard to achieve
-#' with complicated dependencies and forbidden regions, if one wants to ensure that points actually
-#' get added... But we are working on it.
+#' Note that augmenting currently is somewhat experimental as we simply generate
+#' missing points via new calls to [lhs::randomLHS()], but do not add points so
+#' they are maximally far away from the already present ones. The reason is that
+#' the latter is quite hard to achieve with complicated dependencies and
+#' forbidden regions, if one wants to ensure that points actually get added...
+#' But we are working on it.
 #'
-#' Note that if you have trafos attached to your params, the complete creation of the design
-#' (except for the detection of invalid parameters w.r.t to their `requires` setting)
-#' takes place on the UNTRANSFORMED scale. So this function creates, e.g., a maximin LHS
-#' design on the UNTRANSFORMED scale, but not necessarily the transformed scale.
+#' Note that if you have trafos attached to your params, the complete creation
+#' of the design (except for the detection of invalid parameters w.r.t to their
+#' `requires` setting) takes place on the UNTRANSFORMED scale. So this function
+#' creates, e.g., a maximin LHS design on the UNTRANSFORMED scale, but not
+#' necessarily the transformed scale.
 #'
-#' `generateDesign` will NOT work if there are dependencies over multiple levels of
-#' parameters and the dependency is only given with respect to the \dQuote{previous} parameter.
-#' A current workaround is to state all dependencies on all parameters involved.
-#' (We are working on it.)
+#' `generateDesign` will NOT work if there are dependencies over multiple levels
+#' of parameters and the dependency is only given with respect to the
+#' \dQuote{previous} parameter. A current workaround is to state all
+#' dependencies on all parameters involved. (We are working on it.)
 #'
 #' @template arg_gendes_n
 #' @template arg_parset
-#' @param fun [`function`]\cr
+#' @param fun (`function`)\cr
 #'   Function from package lhs.
 #'   Possible are: [lhs::maximinLHS()], [lhs::randomLHS()],
 #'   [lhs::geneticLHS()], [lhs::improvedLHS()], [lhs::optAugmentLHS()],
 #'   [lhs::optimumLHS()]
 #'   Default is [lhs::randomLHS()].
-#' @param fun.args [`list`]\cr
+#' @param fun.args (`list`)\cr
 #'   List of further arguments passed to `fun`.
 #' @template arg_trafo
-#' @param augment [`integer(1)`]\cr
-#'   Duplicated values and forbidden regions in the parameter space can lead to the design
-#'   becoming smaller than `n`. With this option it is possible to augment the design again
-#'   to size `n`. It is not guaranteed that this always works (to full size)
-#'   and `augment` specifies the number of tries to augment.
-#'   If the the design is of size less than `n` after all tries, a warning is issued
-#'   and the smaller design is returned.
-#'   Default is 20.
+#' @param augment (`integer(1)`)\cr
+#'   Duplicated values and forbidden regions in the parameter space can lead to
+#'   the design becoming smaller than `n`. With this option it is possible to
+#'   augment the design again to size `n`. It is not guaranteed that this always
+#'   works (to full size) and `augment` specifies the number of tries to
+#'   augment. If the the design is of size less than `n` after all tries, a
+#'   warning is issued and the smaller design is returned. Default is 20.
 #' @template ret_gendes_df
 #' @export
 #' @useDynLib ParamHelpers c_generateDesign c_trafo_and_set_dep_to_na

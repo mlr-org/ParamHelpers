@@ -1,7 +1,7 @@
 #' Returns type information for a parameter set.
 #'
 #' @template arg_parset
-#' @param df.cols [`logical(1)`]\cr
+#' @param df.cols (`logical(1)`)\cr
 #'   If `FALSE` simply return the parameter types in the set,
 #'   i.e., `par$type`.
 #'   If `TRUE`, convert types so they correspond to R types of a data.frame
@@ -9,14 +9,14 @@
 #'   This also results in replication of output types for
 #'   vector parameters.
 #'   Default is `FALSE`.
-#' @param df.discretes.as.factor [`logical(1)`]\cr
+#' @param df.discretes.as.factor (`logical(1)`)\cr
 #'   If `df.cols` is `TRUE`:
 #'   Should type for discrete params be `factor` or `character`?
 #'   Default is `TRUE`.
-#' @param use.names [`logical(1)`]\cr
+#' @param use.names (`logical(1)`)\cr
 #'   Name the result vector?
 #'   Default is `FALSE`.
-#' @param with.nr [`logical(1)`]\cr
+#' @param with.nr (`logical(1)`)\cr
 #'   Should number from 1 to length be appended to name?
 #'   Only used if `use.names` and `df.cols` are `TRUE`.
 #'   Default is `TRUE`.

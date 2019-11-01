@@ -1,23 +1,23 @@
 #' @title Plot method for optimization paths.
 #'
-#' @description
-#' Plot method for every type of optimization path, containing any numbers and
-#' types of variables. For every iteration up to 4 types of plots can be generated:
-#' One plot for the distribution of points in X and Y space respectively and plots
-#' for the trend of specified X variables, Y variables and extra measures over the time.
+#' @description Plot method for every type of optimization path, containing any
+#' numbers and types of variables. For every iteration up to 4 types of plots
+#' can be generated: One plot for the distribution of points in X and Y space
+#' respectively and plots for the trend of specified X variables, Y variables
+#' and extra measures over the time.
 #'
-#' @param op [`OptPath`]\cr
+#' @param op (`OptPath`)\cr
 #'   Optimization path.
-#' @param iters [`integer` | NULL]\cr
+#' @param iters (`integer` | NULL)\cr
 #'   Vector of iterations which should be plotted one after another. If `NULL`,
 #'   which is the default, only the last iteration is plotted. Iteration 0 plots
-#'   all elements with dob = 0. Note that the plots for iteration i contains
-#'   all observations alive in iteration i.
-#' @param pause [`logical(1)`]\cr
+#'   all elements with dob = 0. Note that the plots for iteration i contains all
+#'   observations alive in iteration i.
+#' @param pause (`logical(1)`)\cr
 #'   Should the process be paused after each iteration?
 #'   Default is `TRUE`.
 #' @template arg_opplotter_lims
-#' @param title [`character(1)`]\cr
+#' @param title (`character(1)`)\cr
 #'   Main title for the arranged plots, default is Optimization Path Plots.
 #' @param ...
 #'   Additional parameters for [renderOptPathPlot()].

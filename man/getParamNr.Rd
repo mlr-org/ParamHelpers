@@ -7,10 +7,10 @@
 getParamNr(par.set, devectorize = FALSE)
 }
 \arguments{
-\item{par.set}{\link{\code{\link{ParamSet}}}\cr
+\item{par.set}{\link{ParamSet}\cr
 Parameter set.}
 
-\item{devectorize}{\code{\link{logical(1)}}\cr
+\item{devectorize}{(\code{logical(1)})\cr
 Sum over length of vector parameters?
 Default is code{FALSE}.}
 }

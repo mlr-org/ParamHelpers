@@ -5,7 +5,7 @@
 #' requirements.
 #'
 #' @template arg_par_or_set
-#' @return [`logical(1)`].
+#' @return `logical(1)`.
 #' @export
 hasRequires = function(par) {
   UseMethod("hasRequires")

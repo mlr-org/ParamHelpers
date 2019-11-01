@@ -5,20 +5,22 @@
 #' evaluation was logged for repeated runs of different algorithmic runs.
 #' Pretty directly calls [eaf::eafplot()].
 #'
-#' @param opt.paths [`list`]\cr
-#'   List of list of `OptPath` objects. First index is the algorithm / major variation
-#'   in the experiment, second index is the index of the replicated run.
-#' @param xlim [`numeric(2)`]\cr
+#' @param opt.paths (`list`)\cr
+#'   List of list of `OptPath` objects. First index is the algorithm / major
+#'   variation in the experiment, second index is the index of the replicated
+#'   run.
+#' @param xlim (`numeric(2)`)\cr
 #'   The x limits (x1, x2) of the plot.
-#' @param ylim [`numeric(2)`]\cr
+#' @param ylim (`numeric(2)`)\cr
 #'   The y limits (y1, y2) of the plot.
-#' @param ... [any]\cr
+#' @param ... (any)\cr
 #'   Passed on to [eaf::eafplot()].
 #' @note
-#'   We changed the defaults of [eaf::eafplot()] in the following way:
-#'   The axis are labeled by `y.names`, colors are set to our favorite grey
-#'   values and linetypes changed, too. With our colors / linetypes default it is
-#'   possible to distinguish 6 different algorithms. But this can again be overwritten by the user.
+#'   We changed the defaults of [eaf::eafplot()] in the following way: The axis
+#'   are labeled by `y.names`, colors are set to our favorite grey values and
+#'   linetypes changed, too. With our colors / linetypes default it is possible
+#'   to distinguish 6 different algorithms. But this can again be overwritten by
+#'   the user.
 #' @return [`data.frame`]
 #'   Invisibly returns the data passed to [eaf::eafplot()].
 #' @export

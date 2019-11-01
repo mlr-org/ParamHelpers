@@ -7,14 +7,13 @@
 trafoValue(par, x)
 }
 \arguments{
-\item{par}{\link{\code{\link{Param}} | \code{\link{ParamSet}}}\cr
+\item{par}{(\link{Param} | \link{ParamSet})\cr
 Parameter or parameter set.}
 
-\item{x}{\link{any} \cr
-Single value to check.
-For a parameter set this must be a list. If the list is unnamed (not recommended) it must be in
-the same order as the param set. If it is named, its names must match the parameter names in the
-param set.}
+\item{x}{(any) \cr
+Single value to check. For a parameter set this must be a list. If the list
+is unnamed (not recommended) it must be in the same order as the param set.
+If it is named, its names must match the parameter names in the param set.}
 }
 \value{
 Transformed value.

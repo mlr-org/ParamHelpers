@@ -8,42 +8,41 @@ generateDesign(n = 10L, par.set, fun, fun.args = list(),
   trafo = FALSE, augment = 20L)
 }
 \arguments{
-\item{n}{\link{\code{integer(1)}}\cr
+\item{n}{(\code{integer(1)})\cr
 Number of samples in design.
 Default is 10.}
 
-\item{par.set}{\link{\code{\link{ParamSet}}}\cr
+\item{par.set}{\link{ParamSet}\cr
 Parameter set.}
 
-\item{fun}{\code{\link{function}}\cr
+\item{fun}{(\code{function})\cr
 Function from package lhs.
 Possible are: \code{\link[lhs:maximinLHS]{lhs::maximinLHS()}}, \code{\link[lhs:randomLHS]{lhs::randomLHS()}},
 \code{\link[lhs:geneticLHS]{lhs::geneticLHS()}}, \code{\link[lhs:improvedLHS]{lhs::improvedLHS()}}, \code{\link[lhs:optAugmentLHS]{lhs::optAugmentLHS()}},
 \code{\link[lhs:optimumLHS]{lhs::optimumLHS()}}
 Default is \code{\link[lhs:randomLHS]{lhs::randomLHS()}}.}
 
-\item{fun.args}{\code{\link{list}}\cr
+\item{fun.args}{(\code{list})\cr
 List of further arguments passed to \code{fun}.}
 
-\item{trafo}{\link{\code{logical(1)}}\cr
-Transform all parameters by using theirs respective transformation functions.
-Default is \code{FALSE}.}
+\item{trafo}{(\code{logical(1)})\cr
+Transform all parameters by using theirs respective transformation
+functions. Default is \code{FALSE}.}
 
-\item{augment}{\code{\link{integer(1)}}\cr
-Duplicated values and forbidden regions in the parameter space can lead to the design
-becoming smaller than \code{n}. With this option it is possible to augment the design again
-to size \code{n}. It is not guaranteed that this always works (to full size)
-and \code{augment} specifies the number of tries to augment.
-If the the design is of size less than \code{n} after all tries, a warning is issued
-and the smaller design is returned.
-Default is 20.}
+\item{augment}{(\code{integer(1)})\cr
+Duplicated values and forbidden regions in the parameter space can lead to
+the design becoming smaller than \code{n}. With this option it is possible to
+augment the design again to size \code{n}. It is not guaranteed that this always
+works (to full size) and \code{augment} specifies the number of tries to
+augment. If the the design is of size less than \code{n} after all tries, a
+warning is issued and the smaller design is returned. Default is 20.}
 }
 \value{
-\link{\code{data.frame}}. Columns are named by the ids of the parameters.
-If the \code{par.set} argument contains a vector parameter, its corresponding column names
-in the design are the parameter id concatenated with 1 to dimension of the vector.
-The result will have an \code{logical(1)} attribute \dQuote{trafo},
-which is set to the value of argument \code{trafo}.
+\link{data.frame}. Columns are named by the ids of the parameters. If the
+\code{par.set} argument contains a vector parameter, its corresponding column
+names in the design are the parameter id concatenated with 1 to dimension
+of the vector. The result will have an \code{logical(1)} attribute
+\dQuote{trafo}, which is set to the value of argument \code{trafo}.
 }
 \description{
 The following types of columns are created:
@@ -74,21 +73,23 @@ are handled make this possible.}
 and iterate.}
 }
 
-Note that augmenting currently is somewhat experimental as we simply generate missing points
-via new calls to \code{\link[lhs:randomLHS]{lhs::randomLHS()}}, but do not add points so they are maximally
-far away from the already present ones. The reason is that the latter is quite hard to achieve
-with complicated dependencies and forbidden regions, if one wants to ensure that points actually
-get added... But we are working on it.
+Note that augmenting currently is somewhat experimental as we simply generate
+missing points via new calls to \code{\link[lhs:randomLHS]{lhs::randomLHS()}}, but do not add points so
+they are maximally far away from the already present ones. The reason is that
+the latter is quite hard to achieve with complicated dependencies and
+forbidden regions, if one wants to ensure that points actually get added...
+But we are working on it.
 
-Note that if you have trafos attached to your params, the complete creation of the design
-(except for the detection of invalid parameters w.r.t to their \code{requires} setting)
-takes place on the UNTRANSFORMED scale. So this function creates, e.g., a maximin LHS
-design on the UNTRANSFORMED scale, but not necessarily the transformed scale.
+Note that if you have trafos attached to your params, the complete creation
+of the design (except for the detection of invalid parameters w.r.t to their
+\code{requires} setting) takes place on the UNTRANSFORMED scale. So this function
+creates, e.g., a maximin LHS design on the UNTRANSFORMED scale, but not
+necessarily the transformed scale.
 
-\code{generateDesign} will NOT work if there are dependencies over multiple levels of
-parameters and the dependency is only given with respect to the \dQuote{previous} parameter.
-A current workaround is to state all dependencies on all parameters involved.
-(We are working on it.)
+\code{generateDesign} will NOT work if there are dependencies over multiple levels
+of parameters and the dependency is only given with respect to the
+\dQuote{previous} parameter. A current workaround is to state all
+dependencies on all parameters involved. (We are working on it.)
 }
 \examples{
 ps = makeParamSet(

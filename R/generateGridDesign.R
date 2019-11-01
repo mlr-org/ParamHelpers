@@ -9,9 +9,9 @@
 #'  logical(vector)   \tab  `logical`
 #' }
 #' If you want to convert these, look at [BBmisc::convertDataFrameCols()].
-#' Dependent parameters whose constraints are unsatisfied generate `NA` entries in their
-#' respective columns.
-#' For discrete vectors the levels and their order will be preserved.
+#' Dependent parameters whose constraints are unsatisfied generate `NA` entries
+#' in their respective columns. For discrete vectors the levels and their order
+#' will be preserved.
 #'
 #' The algorithm currently performs these steps:
 #' \enumerate{
@@ -23,18 +23,19 @@
 #'    grid design, but the way parameter dependencies are handled make this possible.}
 #' }
 #'
-#' Note that if you have trafos attached to your params, the complete creation of the design
-#' (except for the detection of invalid parameters w.r.t to their `requires` setting)
-#' takes place on the UNTRANSFORMED scale. So this function creates a regular grid
-#' over the param space on the UNTRANSFORMED scale, but not necessarily the transformed scale.
+#' Note that if you have trafos attached to your params, the complete creation
+#' of the design (except for the detection of invalid parameters w.r.t to their
+#' `requires` setting) takes place on the UNTRANSFORMED scale. So this function
+#' creates a regular grid over the param space on the UNTRANSFORMED scale, but
+#' not necessarily the transformed scale.
 #'
-#' `generateDesign` will NOT work if there are dependencies over multiple levels of
-#' parameters and the dependency is only given with respect to the \dQuote{previous} parameter.
-#' A current workaround is to state all dependencies on all parameters involved.
-#' (We are working on it.)
+#' `generateDesign` will NOT work if there are dependencies over multiple levels
+#' of parameters and the dependency is only given with respect to the
+#' \dQuote{previous} parameter. A current workaround is to state all
+#' dependencies on all parameters involved. (We are working on it.)
 #'
 #' @template arg_parset
-#' @param resolution [`integer`]\cr
+#' @param resolution (`integer`)\cr
 #'   Resolution of the grid for each numeric/integer parameter in `par.set`.
 #'   For vector parameters, it is the resolution per dimension.
 #'   Either pass one resolution for all parameters, or a named vector.
