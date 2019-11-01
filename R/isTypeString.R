@@ -1,9 +1,9 @@
 #' @title Check if type string is of certain type.
 #'
-#' @description
-#' \code{TRUE} iff the type string is a certain type,
-#' e.g. \code{isIntegerTypeString} checks if we have \dQuote{integer} or \dQuote{integervector},
-#' and \code{isVectorTypeString} check if we have \dQuote{*vector}.
+#' @description `TRUE` iff the type string is a certain type, e.g.
+#' `isIntegerTypeString` checks if we have \dQuote{integer} or
+#' \dQuote{integervector}, and `isVectorTypeString` check if we have
+#' \dQuote{*vector}.
 #'
 #' @template arg_typestring
 #' @template arg_include_int

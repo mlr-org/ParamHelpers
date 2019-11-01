@@ -15,5 +15,3 @@ test_that("getParamNr", {
   expect_equal(getParamNr(ps), 5L)
   expect_equal(getParamNr(ps, devectorize = TRUE), 6L)
 })
-
-

@@ -7,22 +7,22 @@
 evaluateParamExpressions(obj, dict = NULL)
 }
 \arguments{
-\item{obj}{[\code{\link{Param}} | \code{\link[ParamHelpers]{ParamSet}} | \code{list}]\cr
-Parameter, parameter set or list of parameter values. Expressions within \code{len},
-\code{lower} or \code{upper} boundaries, \code{default} or \code{values} will be
+\item{obj}{(\code{\link[=Param]{Param()}} | \code{\link[ParamHelpers:ParamSet]{ParamHelpers::ParamSet()}} | \code{list})\cr
+Parameter, parameter set or list of parameter values. Expressions within
+\code{len}, \code{lower} or \code{upper} boundaries, \code{default} or \code{values} will be
 evaluated using the provided dictionary (\code{dict}).}
 
-\item{dict}{[\code{environment} | \code{list} | \code{NULL}]\cr
-Environment or list which will be used for evaluating the variables
-of expressions within a parameter, parameter set or list of parameters.
-The default is \code{NULL}.}
+\item{dict}{(\code{environment} | \link{list} | \code{NULL})\cr
+Environment or list which will be used for evaluating the variables of
+expressions within a parameter, parameter set or list of parameters. The
+default is \code{NULL}.}
 }
 \value{
-[\code{\link{Param}} | \code{\link[ParamHelpers]{ParamSet}} | \code{list}].
+[\code{\link[=Param]{Param()}} | \code{\link[ParamHelpers:ParamSet]{ParamHelpers::ParamSet()}} | \code{list}].
 }
 \description{
-Evaluates the expressions of a parameter, parameter set or list of parameters for
-a given dictionary.
+Evaluates the expressions of a parameter, parameter set or list
+of parameters for a given dictionary.
 }
 \examples{
 ps = makeParamSet(

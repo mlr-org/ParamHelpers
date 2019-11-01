@@ -46,23 +46,23 @@ test_that("num param", {
 test_that("num vec param", {
   p = makeNumericVectorParam(id = "x", lower = -1L, upper = 1, len = 2)
   expect_equal("numericvector", p$type)
-  expect_equal(c(-1,-1), p$lower)
-  expect_equal(c(1,1), p$upper)
+  expect_equal(c(-1, -1), p$lower)
+  expect_equal(c(1, 1), p$upper)
 
-  expect_true(isFeasible(p, c(-1,-1)))
-  expect_true(isFeasible(p, c(1,1)))
-  expect_true(isFeasible(p, c(0,1)))
+  expect_true(isFeasible(p, c(-1, -1)))
+  expect_true(isFeasible(p, c(1, 1)))
+  expect_true(isFeasible(p, c(0, 1)))
 
-  expect_true(!isFeasible(p, c(2,0)))
-  expect_true(!isFeasible(p, c(NA,0)))
+  expect_true(!isFeasible(p, c(2, 0)))
+  expect_true(!isFeasible(p, c(NA, 0)))
   expect_true(!isFeasible(p, Inf))
   expect_true(!isFeasible(p, -Inf))
   expect_true(!isFeasible(p, NA))
   expect_true(!isFeasible(p, "bam"))
 
   p = makeNumericVectorParam(id = "x", lower = 0, upper = Inf, len = 3, special.vals = list(-Inf))
-  expect_true(isFeasible(p, c(2,1,1)))
-  expect_true(!isFeasible(p, c(-2,1,0)))
+  expect_true(isFeasible(p, c(2, 1, 1)))
+  expect_true(!isFeasible(p, c(-2, 1, 0)))
   expect_true(!isFeasible(p, c(-Inf, 1)))
   expect_true(!isFeasible(p, NULL))
   expect_true(isFeasible(p, -Inf))
@@ -75,7 +75,7 @@ test_that("num vec param", {
   expect_error(makeNumericVectorParam(id = "x", len = 2, lower = 0, upper = NA))
   expect_error(makeNumericVectorParam(id = "x", len = 2, lower = 0, upper = NULL))
   expect_error(makeNumericVectorParam(id = "x", len = 2, lower = 1, upper = -1))
-  expect_error(makeNumericVectorParam(id = "x", len = 2, lower = c(1, 1), upper = c(0,0)))
+  expect_error(makeNumericVectorParam(id = "x", len = 2, lower = c(1, 1), upper = c(0, 0)))
 })
 
 test_that("int param", {
@@ -117,23 +117,23 @@ test_that("int param", {
 test_that("int vec param", {
   p = makeIntegerVectorParam(id = "x", lower = -10L, upper = 10, len = 2)
   expect_equal("integervector", p$type)
-  expect_equal(c(-10,-10), p$lower)
-  expect_equal(c(10,10), p$upper)
+  expect_equal(c(-10, -10), p$lower)
+  expect_equal(c(10, 10), p$upper)
 
-  expect_true(isFeasible(p, c(-10,-1)))
-  expect_true(isFeasible(p, c(1,1)))
-  expect_true(isFeasible(p, c(0,10)))
+  expect_true(isFeasible(p, c(-10, -1)))
+  expect_true(isFeasible(p, c(1, 1)))
+  expect_true(isFeasible(p, c(0, 10)))
 
-  expect_true(!isFeasible(p, c(20,0)))
+  expect_true(!isFeasible(p, c(20, 0)))
   expect_true(!isFeasible(p, Inf))
   expect_true(!isFeasible(p, -Inf))
   expect_true(!isFeasible(p, c(NA, 5)))
   expect_true(!isFeasible(p, "bam"))
 
   p = makeIntegerVectorParam(id = "x", lower = 0, len = 3)
-  expect_true(isFeasible(p, c(2,1,1)))
+  expect_true(isFeasible(p, c(2, 1, 1)))
   expect_true(isFeasible(p, c(10^7, 10^7, 10^7)))
-  expect_true(!isFeasible(p, c(-2,1,0)))
+  expect_true(!isFeasible(p, c(-2, 1, 0)))
   expect_true(!isFeasible(p, c(-Inf, 1)))
   expect_true(!isFeasible(p, NULL))
 
@@ -145,7 +145,7 @@ test_that("int vec param", {
   expect_error(makeIntegerVectorParam(id = "x", len = 2, lower = 0, upper = NA))
   expect_error(makeIntegerVectorParam(id = "x", len = 2, lower = 0, upper = NULL))
   expect_error(makeIntegerVectorParam(id = "x", len = 2, lower = 1, upper = -1))
-  expect_error(makeIntegerVectorParam(id = "x", len = 2, lower = c(1, 1), upper = c(0,0)))
+  expect_error(makeIntegerVectorParam(id = "x", len = 2, lower = c(1, 1), upper = c(0, 0)))
 })
 
 
@@ -294,5 +294,3 @@ test_that("for discrete: default setting cannot be the name but must the VALUE",
   # should run
   expect_error(makeDiscreteParam("p", values = c(foo = "bar"), default = "foo"), "feasible")
 })
-
-

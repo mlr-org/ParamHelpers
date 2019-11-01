@@ -1,3 +1,3 @@
-#' @param par [\code{\link{Param}}]\cr
+#' @param par [Param]\cr
 #'   Parameter.
 

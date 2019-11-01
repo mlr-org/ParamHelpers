@@ -60,9 +60,9 @@ test_that("logical vector sampling", {
   expect_true(setequal(unique(unlist(r)), c(TRUE, FALSE)))
   r = do.call(rbind, r)
   if (interactive()) {
-    r1 = as.numeric(table(r[,1]))
+    r1 = as.numeric(table(r[, 1]))
     expect_true(all(r1 > 300))
-    r2 = as.numeric(table(r[,2]))
+    r2 = as.numeric(table(r[, 2]))
     expect_true(all(r2 > 300))
   }
 })
@@ -96,8 +96,10 @@ test_that("discrete sampling", {
   r = sampleValues(p, 10)
   expect_true(is.list(r))
   expect_equal(length(r), 10)
-  ok = function(x) is.list(x) && length(x) == 2 &&
-    (length(x[[1]]) == 0L || all(x[[1]] %in% 1:3)) &&  (length(x[[2]]) == 0L || all(x[[2]] %in% 1:3))
+  ok = function(x) {
+    is.list(x) && length(x) == 2 &&
+      (length(x[[1]]) == 0L || all(x[[1]] %in% 1:3)) && (length(x[[2]]) == 0L || all(x[[2]] %in% 1:3))
+  }
   expect_true(all(sapply(r, ok)))
 })
 
@@ -116,7 +118,7 @@ test_that("sampleValues with paramset works", {
   r = sampleValues(ps, 5, discrete.names = TRUE)
   expect_true(is.list(r))
   expect_equal(length(r), 5)
-  expect_true(all(sapply(r, function(x) is.numeric(x[[1]]) && x[[1]] >= 1 &&  x[[1]] <= 100)))
+  expect_true(all(sapply(r, function(x) is.numeric(x[[1]]) && x[[1]] >= 1 && x[[1]] <= 100)))
   expect_true(all(sapply(r, function(x) x[[2]] %in% c("xx", "yy"))))
 })
 
@@ -135,12 +137,9 @@ test_that("requires works", {
 
 test_that("trafo works", {
   ps = makeParamSet(
-    makeNumericParam("x", lower =-2, upper = 2, trafo = function(x) 2^x)
+    makeNumericParam("x", lower = -2, upper = 2, trafo = function(x) 2^x)
   )
   vals = sampleValues(ps, n = 100, trafo = TRUE)
   vals = extractSubList(vals, "x")
   expect_true(all(vals >= 2^(-2) & vals <= 2^2))
 })
-
-
-

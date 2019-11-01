@@ -10,10 +10,12 @@ getOptPathLength.OptPathDF = function(op) {
 
 #' @export
 getOptPathEl.OptPathDF = function(op, index) {
+
   index = asInt(index)
   n = getOptPathLength(op)
-  if (!(index >= 1 && index <= n))
+  if (!(index >= 1 && index <= n)) {
     stop("Index must be between 1 and ", n, "!")
+  }
   e = op$env
   path = e$path
   y = unlist(path[index, op$y.names, drop = FALSE])
@@ -22,12 +24,15 @@ getOptPathEl.OptPathDF = function(op, index) {
   x = dfRowToList(path, op$par.set, index)
   res = list(x = x, y = y, dob = e$dob[index], eol = e$eol[index])
   # if errmsg there, return it
-  if (!is.null(e$error.message))
+  if (!is.null(e$error.message)) {
     res$error.message = e$error.message[index]
-  if (!is.null(e$exec.time))
-    res$exec.time= e$exec.time[index]
-  if (!is.null(e$extra))
+  }
+  if (!is.null(e$exec.time)) {
+    res$exec.time = e$exec.time[index]
+  }
+  if (!is.null(e$extra)) {
     res$extra = e$extra[[index]]
+  }
   return(res)
 }
 
@@ -38,14 +43,16 @@ getOptPathX.OptPathDF = function(op, dob = op$env$dob, eol = op$env$eol) {
 
 #' @export
 getOptPathY.OptPathDF = function(op, names, dob = op$env$dob, eol = op$env$eol, drop = TRUE) {
-  if (missing(names))
+  if (missing(names)) {
     names = op$y.names
-  else
+  } else {
     c(names, subset = op$y.names)
+  }
   assertFlag(drop)
   y = as.matrix(op$env$path[getOptPathDobAndEolIndex(op, dob, eol), names, drop = FALSE])
-  if (drop && length(names) == 1L)
+  if (drop && length(names) == 1L) {
     y = as.numeric(y)
+  }
   return(y)
 }
 
@@ -72,21 +79,28 @@ getOptPathExecTimes.OptPathDF = function(op, dob = op$env$dob, eol = op$env$eol)
 #' @export
 getOptPathCol.OptPathDF = function(op, name, dob = op$env$dob, eol = op$env$eol) {
   assertString(name)
-  if (getOptPathLength(op) == 0L)
+  if (getOptPathLength(op) == 0L) {
     stopf("Trying to return a col from an empty opt.path")
-  if (name %in% colnames(op$env$path))
+  }
+  if (name %in% colnames(op$env$path)) {
     return(op$env$path[getOptPathDobAndEolIndex(op, dob, eol), name])
-  if (name == "dob")
+  }
+  if (name == "dob") {
     return(getOptPathDOB(op, dob, eol))
-  if (name == "eol")
+  }
+  if (name == "eol") {
     return(getOptPathEOL(op, dob, eol))
-  if (name == "exec.time")
+  }
+  if (name == "exec.time") {
     return(getOptPathExecTimes(op, dob, eol))
-  if (name == "error.message")
+  }
+  if (name == "error.message") {
     return(getOptPathErrorMessages(op, dob, eol))
-  if (name %in% names(op$env$extra[[1]]) || substr(name, 1, 1) == ".")
+  }
+  if (name %in% names(op$env$extra[[1]]) || substr(name, 1, 1) == ".") {
     return(extractSubList(op$env$extra[getOptPathDobAndEolIndex(op, dob, eol)], name,
-            simplify = substr(name, 1, 1) != "."))
+      simplify = substr(name, 1, 1) != "."))
+  }
   stop("The column you specified is not present in the opt.path.")
 }
 

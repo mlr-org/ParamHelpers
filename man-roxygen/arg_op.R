@@ -1,2 +1,2 @@
-#' @param op [\code{\link{OptPath}}]\cr
+#' @param op [OptPath]\cr
 #'   Optimization path.

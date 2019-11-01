@@ -1,7 +1,7 @@
 #' Returns information on the number of parameters of a each type.
 #'
 #' @template arg_parset
-#' @return [\code{list}]
+#' @return [`list`]
 #'  Named list which contains for each supported parameter type the
 #'  number of parameters of this type in the given ParamSet.
 #' @export
@@ -15,4 +15,3 @@ getParamTypeCounts = function(par.set) {
   names(count) = supported.types
   return(count)
 }
-

@@ -17,4 +17,3 @@ test_that("getRequirements", {
   expect_equal(getRequirements(ps, remove.null = TRUE), list(b = r1, c = r2))
   expect_equal(getRequirements(ps, remove.null = FALSE), list(a = NULL, b = r1, c = r2))
 })
-

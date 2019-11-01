@@ -5,8 +5,8 @@
 #' @template arg_par_or_set
 #' @template arg_disc_names
 #' @template arg_trafo
-#' @return The return type is determined by the type of the parameter. For a set a named list
-#'   of such values in the correct order is returned.
+#' @return The return type is determined by the type of the parameter. For a set
+#'   a named list of such values in the correct order is returned.
 #' @export
 #' @examples
 #' # bounds are necessary here, can't sample with Inf bounds:
@@ -14,7 +14,7 @@
 #' # returns a random number between 0 and 1:
 #' sampleValue(u)
 #'
-#' p = makeDiscreteParam("x", values = c("a","b","c"))
+#' p = makeDiscreteParam("x", values = c("a", "b", "c"))
 #' # can be either "a", "b" or "c"
 #' sampleValue(p)
 #'
@@ -34,17 +34,20 @@ sampleValue = function(par, discrete.names = FALSE, trafo = FALSE) {
 
 #' @export
 sampleValue.Param = function(par, discrete.names = FALSE, trafo = FALSE) {
+
   assertFlag(discrete.names)
   assertFlag(trafo)
   type = par$type
-  if (!is.null(par$len) && is.na(par$len))
+  if (!is.null(par$len) && is.na(par$len)) {
     stop("Cannot sample with NA length!")
+  }
 
   if (isNumericTypeString(type)) {
-    if (anyInfinite(c(par$lower, par$upper)))
+    if (anyInfinite(c(par$lower, par$upper))) {
       stop("Cannot sample with Inf bounds!")
+    }
     if (isIntegerTypeString(type)) {
-      x = as.integer(round(runif(par$len, min = par$lower-0.5, max = par$upper+0.5)))
+      x = as.integer(round(runif(par$len, min = par$lower - 0.5, max = par$upper + 0.5)))
     } else {
       x = runif(par$len, min = par$lower, max = par$upper)
     }
@@ -53,19 +56,22 @@ sampleValue.Param = function(par, discrete.names = FALSE, trafo = FALSE) {
   } else if (isDiscreteTypeString(type, FALSE)) {
     x = sample(names(par$values), par$len, replace = TRUE)
     if (!discrete.names) {
-      x = if (type  == "discretevector")
+      x = if (type == "discretevector") {
         par$values[x]
-      else
+      } else {
         par$values[[x]]
+      }
     }
   } else {
     stopf("Cannot generate random value for %s variable!", type)
   }
-  if (trafo && !is.null(par$trafo))
+  if (trafo && !is.null(par$trafo)) {
     x = par$trafo(x)
+  }
   # if the components have names, set them
-  if (!is.null(par$cnames))
+  if (!is.null(par$cnames)) {
     names(x) = par$cnames
+  }
   return(x)
 }
 
@@ -74,8 +80,9 @@ sampleValue.ParamSet = function(par, discrete.names = FALSE, trafo = FALSE) {
   # sample value for each param, do it until we a get one which is not forbidden
   repeat {
     val = lapply(par$pars, sampleValue, discrete.names = discrete.names, trafo = trafo)
-    if (is.null(par$forbidden) || !isForbidden(par, val))
+    if (is.null(par$forbidden) || !isForbidden(par, val)) {
       break
+    }
   }
   # set conditional params to NA is condition not OK
   val = lapply(seq_along(val), function(i) {
@@ -90,9 +97,9 @@ sampleValue.ParamSet = function(par, discrete.names = FALSE, trafo = FALSE) {
         type
       )
       as(NA, type)
-     } else {
+    } else {
       val[[i]]
-     }
+    }
   })
   names(val) = names(par$pars)
   return(val)
@@ -104,11 +111,11 @@ sampleValue.ParamSet = function(par, discrete.names = FALSE, trafo = FALSE) {
 #' @template desc_dep_pars_na
 #'
 #' @template arg_par_or_set
-#' @param n [\code{integer(1)}]\cr
+#' @param n (`integer(1)`)\cr
 #'   Number of values.
 #' @template arg_disc_names
 #' @template arg_trafo
-#' @return [\code{list}]. For consistency always a list is returned.
+#' @return `list`. For consistency always a list is returned.
 #' @export
 #' @examples
 #' p = makeIntegerParam("x", lower = -10, upper = 10)

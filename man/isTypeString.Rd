@@ -23,22 +23,23 @@ isLogicalTypeString(type)
 isVectorTypeString(type)
 }
 \arguments{
-\item{type}{[\code{character(1)}]\cr
+\item{type}{(\code{character(1)})\cr
 Type string.}
 
-\item{include.int}{[\code{logical(1)}]\cr
+\item{include.int}{(\code{logical(1)})\cr
 Are integers also considered to be numeric?
 Default is \code{TRUE}.}
 
-\item{include.logical}{[\code{logical(1)}]\cr
+\item{include.logical}{(\code{logical(1)})\cr
 Are logicals also considered to be discrete?
 Default is \code{TRUE}.}
 }
 \value{
-[\code{logical(1)}]
+(\code{logical(1)})
 }
 \description{
-\code{TRUE} iff the type string is a certain type,
-e.g. \code{isIntegerTypeString} checks if we have \dQuote{integer} or \dQuote{integervector},
-and \code{isVectorTypeString} check if we have \dQuote{*vector}.
+\code{TRUE} iff the type string is a certain type, e.g.
+\code{isIntegerTypeString} checks if we have \dQuote{integer} or
+\dQuote{integervector}, and \code{isVectorTypeString} check if we have
+\dQuote{*vector}.
 }

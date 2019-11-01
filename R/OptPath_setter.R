@@ -1,10 +1,10 @@
 #' Set the dates of birth of parameter values, in-place.
 #'
 #' @template arg_op
-#' @param index [\code{integer}]\cr
+#' @param index [integer]\cr
 #'   Vector of indices of elements.
 #' @param dob [integer] \cr
-#'   Dates of birth, single value or same length of \code{index}.
+#'   Dates of birth, single value or same length of `index`.
 #' @return Nothing.
 #' @export
 #' @family optpath
@@ -20,10 +20,10 @@ setOptPathElDOB = function(op, index, dob) {
 #' Set the end of life dates of parameter values, in-place.
 #'
 #' @template arg_op
-#' @param index [\code{integer}]\cr
+#' @param index [integer]\cr
 #'   Vector of indices of elements.
 #' @param eol [integer] \cr
-#'   EOL dates, single value or same length of \code{index}.
+#'   EOL dates, single value or same length of `index`.
 #' @return Nothing.
 #' @export
 #' @family optpath
@@ -38,43 +38,44 @@ setOptPathElEOL = function(op, index, eol) {
 #' @title Add a new element to an optimization path.
 #'
 #' @description
-#' Changes the argument in-place.
-#' Note that when adding parameters that have associated transformations, it is probably
-#' best to add the untransformed values to the path. Otherwise you have to switch off the
-#' feasibility check, as constraints might now not hold anymore.
+#' Changes the argument in-place. Note that when adding parameters that have
+#' associated transformations, it is probably best to add the untransformed
+#' values to the path. Otherwise you have to switch off the feasibility check,
+#' as constraints might now not hold anymore.
 #'
-#' Dependent parameters whose requirements are not satisfied must be represented by a scalar
-#' NA in the input.
+#' Dependent parameters whose requirements are not satisfied must be represented
+#' by a scalar NA in the input.
 #'
 #' @template arg_op
-#' @param x [\code{list}]\cr
-#'   List of parameter values for a point in input space. Must be in same order as parameters.
-#' @param y [\code{numeric}]\cr
-#'   Vector of fitness values.  Must be in same order as \code{y.names}.
-#' @param dob [\code{integer(1)}]\cr
+#' @param x (`list`)\cr
+#'   List of parameter values for a point in input space. Must be in same order
+#'   as parameters.
+#' @param y (`numeric`)\cr
+#'   Vector of fitness values.  Must be in same order as `y.names`.
+#' @param dob (`integer(1)`)\cr
 #'   Date of birth of the new parameters.
 #'   Default is length of path + 1.
-#' @param eol [\code{integer(1)}]\cr
+#' @param eol (`integer(1)`)\cr
 #'   End of life of point.
-#'   Default is \code{NA}.
-#' @param error.message [\code{character(1)}]\cr
+#'   Default is `NA`.
+#' @param error.message (`character(1)`)\cr
 #'   Possible error message that occurred for this parameter values.
-#'   Default is \code{NA}.
-#' @param exec.time [\code{numeric(1)}]\cr
+#'   Default is `NA`.
+#' @param exec.time (`numeric(1)`)\cr
 #'   Possible exec time for this evaluation.
-#'   Default is \code{NA}.
-#' @param extra [\code{list}]\cr
+#'   Default is `NA`.
+#' @param extra (`list`)\cr
 #'   Possible list of extra values to store.
 #'   The list must be fully named. The list can contain nonscalar values, but
-#'   these nonscalar entries must have a name starting with a dot (\code{.}).
+#'   these nonscalar entries must have a name starting with a dot (`.`).
 #'   Other entries must be scalar, and must be in the same order of all calls of
-#'   \code{addOptPathEl}.
-#'   Watch out: if \code{include.extra} was set to \code{TRUE} in \code{\link{makeOptPathDF}}
+#'   `addOptPathEl`.
+#'   Watch out: if `include.extra` was set to `TRUE` in (makeOptPathDF())
 #'   the list of extras is mandatory.
-#'   Default is \code{NULL}.
-#' @param check.feasible [\code{logical(1)}]\cr
-#'   Should \code{x} be checked with \code{\link{isFeasible}}?
-#'   Default is \code{TRUE}.
+#'   Default is `NULL`.
+#' @param check.feasible (`logical(1)`)\cr
+#'   Should `x` be checked with (isFeasible())?
+#'   Default is `TRUE`.
 #' @return Nothing.
 #' @export
 #' @family optpath
@@ -87,9 +88,8 @@ setOptPathElEOL = function(op, index, eol) {
 #' addOptPathEl(op, x = list(p1 = 7, p2 = "b"), y = 1)
 #' addOptPathEl(op, x = list(p1 = -1, p2 = "a"), y = 2)
 #' as.data.frame(op)
-addOptPathEl = function(op, x, y, dob = getOptPathLength(op)+1L, eol = as.integer(NA),
+addOptPathEl = function(op, x, y, dob = getOptPathLength(op) + 1L, eol = as.integer(NA),
   error.message = NA_character_, exec.time = NA_real_, extra = NULL,
   check.feasible = !op$add.transformed.x) {
-
   UseMethod("addOptPathEl")
 }

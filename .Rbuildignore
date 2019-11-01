@@ -10,3 +10,6 @@ README.md
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^ParamHelpers\.Rproj$
+^codecov\.yml$
+^tic\.R$
+^pkgdown$

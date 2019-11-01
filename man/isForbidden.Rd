@@ -2,19 +2,20 @@
 % Please edit documentation in R/isForbidden.R
 \name{isForbidden}
 \alias{isForbidden}
-\title{Check whether parameter setting lies in forbidden region of parameter set.}
+\title{Check whether parameter setting lies in forbidden region of parameter
+set.}
 \usage{
 isForbidden(par.set, x)
 }
 \arguments{
-\item{par.set}{[\code{\link{ParamSet}}]\cr
+\item{par.set}{\link{ParamSet}\cr
 Parameter set.}
 
-\item{x}{[named \code{list}] \cr
+\item{x}{(named \code{list}) \cr
 Parameter setting to check.}
 }
 \value{
-[\code{logical(1)}].
+\code{logical(1)}.
 }
 \description{
 Parameter sets without a forbidden region always return \code{FALSE}.

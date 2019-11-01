@@ -7,20 +7,20 @@
 sampleValue(par, discrete.names = FALSE, trafo = FALSE)
 }
 \arguments{
-\item{par}{[\code{\link{Param}} | \code{\link{ParamSet}}]\cr
+\item{par}{(\link{Param} | \link{ParamSet})\cr
 Parameter or parameter set.}
 
-\item{discrete.names}{[\code{logical(1)}]\cr
+\item{discrete.names}{(\code{logical(1)})\cr
 Should names be sampled for discrete paramaters or values instead?
 Default is code {FALSE}.}
 
-\item{trafo}{[\code{logical(1)}]\cr
-Transform all parameters by using theirs respective transformation functions.
-Default is \code{FALSE}.}
+\item{trafo}{(\code{logical(1)})\cr
+Transform all parameters by using theirs respective transformation
+functions. Default is \code{FALSE}.}
 }
 \value{
-The return type is determined by the type of the parameter. For a set a named list
-  of such values in the correct order is returned.
+The return type is determined by the type of the parameter. For a set
+a named list of such values in the correct order is returned.
 }
 \description{
 Sample a random value from a parameter or a parameter set uniformly.
@@ -33,7 +33,7 @@ u = makeNumericParam("x", lower = 0, upper = 1)
 # returns a random number between 0 and 1:
 sampleValue(u)
 
-p = makeDiscreteParam("x", values = c("a","b","c"))
+p = makeDiscreteParam("x", values = c("a", "b", "c"))
 # can be either "a", "b" or "c"
 sampleValue(p)
 

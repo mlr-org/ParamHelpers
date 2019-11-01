@@ -5,17 +5,18 @@
 #' For discrete parameter values always the name of the discrete value is used.
 #'
 #' @template arg_par_or_set
-#' @param x [any]\cr
-#'   Value for parameter or value for parameter set. In the latter case it must be named list.
-#'   For discrete parameters their values must be used, not their names.
-#' @param show.missing.values [\code{logical(1)}]\cr
-#'   Display \dQuote{NA} for parameters, which have no setting, because their requirements are not
-#'   satisfied (dependent parameters), instead of displaying nothing?
-#'   Default is \code{FALSE}.
-#' @param num.format [\code{character(1)}]\cr
-#'   Number format for output of numeric parameters. See the details section of the manual for
-#'   \code{\link[base]{sprintf}} for details.
-#' @return [\code{character(1)}].
+#' @param x (any)\cr
+#'   Value for parameter or value for parameter set. In the latter case it must
+#'   be named list. For discrete parameters their values must be used, not their
+#'   names.
+#' @param show.missing.values (`logical(1)`)\cr
+#'   Display \dQuote{NA} for parameters, which have no setting, because their
+#'   requirements are not satisfied (dependent parameters), instead of
+#'   displaying nothing? Default is `FALSE`.
+#' @param num.format (`character(1)`)\cr
+#'   Number format for output of numeric parameters. See the details section of
+#'   the manual for [base::sprintf()] for details.
+#' @return `character(1)`.
 #' @export
 #' @examples
 #' p = makeNumericParam("x")
@@ -24,20 +25,20 @@
 #' paramValueToString(p, 0.000039)
 #' paramValueToString(p, 8.13402, num.format = "%.2f")
 #'
-#' p = makeIntegerVectorParam("x", len=2)
+#' p = makeIntegerVectorParam("x", len = 2)
 #' paramValueToString(p, c(1L, 2L))
 #'
 #' p = makeLogicalParam("x")
 #' paramValueToString(p, TRUE)
 #'
-#' p = makeDiscreteParam("x", values=list(a=NULL, b=2))
+#' p = makeDiscreteParam("x", values = list(a = NULL, b = 2))
 #' paramValueToString(p, NULL)
 #'
 #' ps = makeParamSet(
-#'   makeNumericVectorParam("x", len=2L),
-#'   makeDiscreteParam("y", values=list(a=NULL, b=2))
+#'   makeNumericVectorParam("x", len = 2L),
+#'   makeDiscreteParam("y", values = list(a = NULL, b = 2))
 #' )
-#' paramValueToString(ps, list(x=c(1,2), y=NULL))
+#' paramValueToString(ps, list(x = c(1, 2), y = NULL))
 paramValueToString = function(par, x, show.missing.values = FALSE, num.format = "%.3g") {
   assertFlag(show.missing.values)
   assertString(num.format)
@@ -48,31 +49,35 @@ paramValueToString = function(par, x, show.missing.values = FALSE, num.format = 
 paramValueToString.Param = function(par, x, show.missing.values = FALSE, num.format = "%.3g") {
   # handle missings
   if (isScalarNA(x)) {
-    if (show.missing.values)
+    if (show.missing.values) {
       return("NA")
-    else
+    } else {
       return("")
+    }
   }
-  if (isDiscrete(par, include.logical = FALSE))
+  if (isDiscrete(par, include.logical = FALSE)) {
     x = discreteValueToName(par, x)
+  }
   s = convertToShortString(x, num.format = num.format)
 }
 
 #' @export
 paramValueToString.ParamSet = function(par, x, show.missing.values = FALSE, num.format = "%.3g") {
   assertList(x)
-  if (!isProperlyNamed(x))
+  if (!isProperlyNamed(x)) {
     stop("'x' must be a properly named list!")
+  }
   rest = setdiff(names(x), names(par$pars))
-  if (length(rest) > 0L)
+  if (length(rest) > 0L) {
     stopf("Not all names of 'x' occur in par set 'par': %s", collapse(rest))
+  }
   res = character(0L)
   for (i in seq_along(x)) {
     pn = names(x)[i]
     val = x[[pn]]
-    if (show.missing.values || !isScalarNA(val))  {
+    if (show.missing.values || !isScalarNA(val)) {
       p = par$pars[[pn]]
-      res[length(res)+1] = sprintf("%s=%s", pn, paramValueToString(p, val, show.missing.values, num.format))
+      res[length(res) + 1] = sprintf("%s=%s", pn, paramValueToString(p, val, show.missing.values, num.format))
     }
   }
   return(collapse(res, sep = "; "))

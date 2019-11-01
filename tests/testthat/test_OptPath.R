@@ -68,17 +68,17 @@ test_that("OptPath", {
     makeIntegerParam("y")
   )
   op = makeOptPathDF(par.set = ps, y.names = "z", minimize = TRUE)
-  addOptPathEl(op, x = list(c(1,1), 7L), y = 1)
-  addOptPathEl(op, x = list(c(2,2), 8L), y = 3)
+  addOptPathEl(op, x = list(c(1, 1), 7L), y = 1)
+  addOptPathEl(op, x = list(c(2, 2), 8L), y = 3)
   df = as.data.frame(op)
   expect_equal(dim(df), c(2, 3 + 1 + 2))
   expect_equal(colnames(df), c("x1", "x2", "y", "z", "dob", "eol"))
   e = getOptPathEl(op, 1)
-  expect_equal(e$x, list(x = c(1,1), y = 7L))
+  expect_equal(e$x, list(x = c(1, 1), y = 7L))
   # really make sure that names are there
   expect_equal(names(e$y), "z")
   # check error msg for wrong y
-  expect_error(addOptPathEl(op, x = list(c(1,1), 7L), y = c(1, 1)), "Must have length")
+  expect_error(addOptPathEl(op, x = list(c(1, 1), 7L), y = c(1, 1)), "Must have length")
 })
 
 test_that("OptPath with vector and discrete params works", {
@@ -113,11 +113,11 @@ test_that("OptPath with vector and discrete params works", {
   expect_true(is.logical(d$x73))
   expect_true(is.factor(d$x8)) # strings internally saved as factors?
   expect_true(
-       d[1,1] == 1L && d[1,2] == 3L
-    && d[1,3] == "a" && d[1,4] == "2" && d[1,5] == "5" && d[1,6] == "foo"
-    && d[1,7] == FALSE && d[1,8] == "b" && d[1,9] == "a"
-    && d[1,10] == TRUE && d[1,11] == FALSE && d[1,12] == TRUE
-    && d[1,13] == "PH")
+    d[1, 1] == 1L && d[1, 2] == 3L
+    && d[1, 3] == "a" && d[1, 4] == "2" && d[1, 5] == "5" && d[1, 6] == "foo"
+    && d[1, 7] == FALSE && d[1, 8] == "b" && d[1, 9] == "a"
+    && d[1, 10] == TRUE && d[1, 11] == FALSE && d[1, 12] == TRUE
+    && d[1, 13] == "PH")
   d = as.data.frame(op, discretes.as.factor = TRUE)
   expect_true(nrow(d) == 1 && ncol(d) == 3 + 8 + 1 + 2 + 2)
   expect_true(is.integer(d$x01))
@@ -134,11 +134,11 @@ test_that("OptPath with vector and discrete params works", {
   expect_true(is.logical(d$x73))
   expect_true(is.factor(d$x8)) # strings internally saved as factors?
   expect_true(
-    d[1,1] == 1L && d[1,2] == 3L
-    && d[1,3] == "a" && d[1,4] == "2" && d[1,5] == "5" && d[1,6] == "foo"
-    && d[1,7] == FALSE && d[1,8] == "b" && d[1,9] == "a"
-    && d[1,10] == TRUE && d[1,11] == FALSE && d[1,12] == TRUE
-    && d[1,13] == "PH")
+    d[1, 1] == 1L && d[1, 2] == 3L
+    && d[1, 3] == "a" && d[1, 4] == "2" && d[1, 5] == "5" && d[1, 6] == "foo"
+    && d[1, 7] == FALSE && d[1, 8] == "b" && d[1, 9] == "a"
+    && d[1, 10] == TRUE && d[1, 11] == FALSE && d[1, 12] == TRUE
+    && d[1, 13] == "PH")
   e = getOptPathEl(op, 1L)
   expect_equal(e$x, x)
 })
@@ -195,7 +195,7 @@ test_that("requires works", {
   addOptPathEl(op, x = el, y = 0)
   expect_equal(getOptPathEl(op, 2)$x, el)
   d = as.data.frame(op, discretes.as.factor = TRUE)
-  expect_equal(d[,1:4], data.frame(x = c("a", "b"), y = c(1, NA), z1 = c(NA, 2L), z2 = c(NA, 3L)))
+  expect_equal(d[, 1:4], data.frame(x = c("a", "b"), y = c(1, NA), z1 = c(NA, 2L), z2 = c(NA, 3L)))
 })
 
 test_that("pareto front", {
@@ -255,7 +255,7 @@ test_that("logging extra works", {
   expect_error(addOptPathEl(op, x = list(v = 1), y = 5, extra = list(ee = 7, ff = 1)), "Trying to add unknown extra\\(s\\): ff")
   expect_error(addOptPathEl(op, x = list(v = 1), y = 5, extra = list()), "You have to add extras to opt path if the option is enabled.")
   expect_error(addOptPathEl(op, x = list(v = 2), y = 6), "You have to add extras to opt path if the option is enabled.")
-  })
+})
 
 test_that("exta entries with dots may be nonscalar", {
   ps = makeParamSet(makeNumericParam("v"))
@@ -297,7 +297,7 @@ test_that("as.data.frame flags and getCols works", {
   # the dotted entries are not present as columns.
   expect_equal(sapply(df4, class), c(x = "numeric", y = "factor", z1 = "numeric", z2 = "numeric",
     dob = "integer", eol = "integer", ee = "numeric"))
-  expect_error(getOptPathCol(op,"bla"), "not present")
+  expect_error(getOptPathCol(op, "bla"), "not present")
   expect_equal(getOptPathCol(op, "dob"), c(1, 2))
   expect_equal(getOptPathCol(op, "eol"), c(NA_integer_, NA_integer_))
   expect_equal(getOptPathCol(op, "error.message"), NULL)
@@ -317,7 +317,6 @@ test_that("as.data.frame flags and getCols works", {
   d = getOptPathCols(op, "y")
   expect_equal(dim(d), c(2L, 1L))
   expect_true(is.factor(d$y))
-
 })
 
 

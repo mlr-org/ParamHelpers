@@ -2,7 +2,6 @@ context("forbidden")
 
 
 test_that("forbidden", {
-
   ps = makeParamSet(
     makeNumericParam("x", lower = 1, upper = 5),
     makeIntegerParam("y", lower = 1, upper = 10),
@@ -11,9 +10,9 @@ test_that("forbidden", {
   )
 
   expect_true(!isForbidden(ps, list(x = 1, y = 7, z = TRUE)))
-  expect_true( isForbidden(ps, list(x = 3, y = 7, z = TRUE)))
-  expect_true( isFeasible(ps,  list(x = 1, y = 7, z = TRUE)))
-  expect_true(!isFeasible(ps,  list(x = 3, y = 7, z = TRUE)))
+  expect_true(isForbidden(ps, list(x = 3, y = 7, z = TRUE)))
+  expect_true(isFeasible(ps, list(x = 1, y = 7, z = TRUE)))
+  expect_true(!isFeasible(ps, list(x = 3, y = 7, z = TRUE)))
 
   xs = sampleValues(ps, 1000)
   fb = sapply(xs, isForbidden, par.set = ps)
@@ -27,5 +26,3 @@ test_that("forbidden", {
   d = generateDesign(500, ps, augment = 100)
   expect_true(all(d$x <= 2))
 })
-
-

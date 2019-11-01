@@ -3,13 +3,13 @@
 #' Clips values outside of box constraints to bounds.
 #'
 #' @template arg_parset
-#' @param x [\code{list}]\cr
+#' @param x [list]\cr
 #'   List of parameter values. Must be in correct order.
 #'   Values corresponding to non-numeric/integer types are left unchanged.
-#' @param warn [\code{logical(1)}]\cr
+#' @param warn (`logical(1)`)\cr
 #'   Boolean indicating whether a warning should be printed each time a value is repaired.
-#'   Default is \code{FALSE}.
-#' @return [\code{list}]:
+#'   Default is `FALSE`.
+#' @return [list]:
 #'   List of repaired points.
 #' @export
 repairPoint = function(par.set, x, warn = FALSE) {

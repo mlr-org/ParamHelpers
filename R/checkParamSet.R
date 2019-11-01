@@ -7,7 +7,7 @@
 #'
 #' @template arg_parset
 #' @template arg_dict
-#' @return [\code{TRUE}] on success. An exception is raised otherwise.
+#' @return [`TRUE`] on success. An exception is raised otherwise.
 #' @export
 #' @examples
 #' ps = makeParamSet(
@@ -19,13 +19,15 @@
 #' )
 #' checkParamSet(ps, dict = list(p = 3, z = "b"))
 checkParamSet = function(par.set, dict = NULL) {
+
   assertClass(par.set, "ParamSet")
   assertList(dict, names = "unique", null.ok = TRUE)
 
   # evaluate expressions of par.set (in case it contains any)
   if (hasExpression(par.set)) {
-    if (is.null(dict)) # error if dict is not defined, but par.set contains expressions
+    if (is.null(dict)) { # error if dict is not defined, but par.set contains expressions
       stop("At least one of the parameters contains expressions and therefore 'dict' has to be defined.")
+    }
     par.set = evaluateParamExpressions(obj = par.set, dict = dict)
   }
 
@@ -67,8 +69,9 @@ checkParamSet = function(par.set, dict = NULL) {
 checkExpressionFeasibility = function(par.set, keys) {
   has.expression = vlapply(par.set$pars, hasExpression)
   # if par.set has no expressions, the expressions are feasible
-  if (!any(has.expression))
+  if (!any(has.expression)) {
     return(TRUE)
+  }
 
   # for all params which have an expression, check whether its
   # arguments are listed in 'keys'
@@ -81,8 +84,8 @@ checkExpressionFeasibility = function(par.set, keys) {
       if (length(missing.vars) > 0L) {
         message = sprintf("The %s '%s' %s to be defined in 'keys'",
           ifelse(length(missing.vars) == 1L, "parameter", "parameters"),
-            paste(missing.vars, collapse = "', '"),
-            ifelse(length(missing.vars) == 1L, "needs", "need"))
+          paste(missing.vars, collapse = "', '"),
+          ifelse(length(missing.vars) == 1L, "needs", "need"))
         stop(message)
       }
     })

@@ -1,18 +1,18 @@
 #' @title Plots Y traces of multiple optimization paths
 #'
-#' @description
-#' Can be used for only single-objective optimization paths.
-#' Useful to compare runs of different algorithms on the same optimization problem.
-#' You can add your own ggplot layers to the resulting plot object.
+#' @description Can be used for only single-objective optimization paths. Useful
+#' to compare runs of different algorithms on the same optimization problem. You
+#' can add your own ggplot layers to the resulting plot object.
 #'
-#' @param opt.paths [\code{\link{OptPath}} | list of \code{\link{OptPath}}]\cr
+#' @param opt.paths [[OptPath()] | list of [OptPath()]]\cr
 #'   Object(s) to plot.
-#' @param over.time [\code{character}]\cr
+#' @param over.time [`character`]\cr
 #'   Should the traces be plotted versus the iteration number or the cumulated
 #'   execution time? For the later, the opt.path has to contain a extra column
-#'   names exec.time. Possible values are dob and exec.time, default is \code{dob}.
+#'   names exec.time. Possible values are dob and exec.time, default is `dob`.
 #' @return ggplot2 plot object
 renderYTraces = function(opt.paths, over.time = "dob") {
+
   opt.paths = ensureVector(opt.paths, cl = "OptPath", n = 1L, names = "opt.path")
   assertList(opt.paths, types = "OptPath", min.len = 1L, names = "unique")
   assertChoice(over.time, choices = c("dob", "exec.time"))
@@ -22,6 +22,7 @@ renderYTraces = function(opt.paths, over.time = "dob") {
   data = data.frame()
   # combine y traces for this algo + add algo / repl + do some sanity checks
   fronts = lapply(seq_along(opt.paths), function(j) {
+
     run = opt.paths[[j]]
     name = names(as.data.frame(run, include.x = FALSE, include.rest = FALSE))
     if (j == 1L) {
@@ -39,11 +40,12 @@ renderYTraces = function(opt.paths, over.time = "dob") {
       stopf("Must always have the same 'minimize' settings for objective in opt path: %s (first one taken).
           But found here: %s", minimize, run$minimize)
     }
-    if (over.time == "dob")
+    if (over.time == "dob") {
       df = data.frame(
         y = getOptPathY(op = run),
         time = getOptPathDOB(op = run)
       )
+    }
     if (over.time == "exec.time") {
       times = seq(0, sum(getOptPathExecTimes(run)), length.out = 128)
       df = getOptPathColAtTimes(run, times)
@@ -60,8 +62,9 @@ renderYTraces = function(opt.paths, over.time = "dob") {
 
   pl = ggplot2::ggplot(data, ggplot2::aes_string(x = "time", y = y.name, group = ".algo",
     linetype = ".algo", col = ".algo"))
-  if (over.time == "dob")
+  if (over.time == "dob") {
     pl = pl + ggplot2::geom_point(size = 3)
+  }
   pl = pl + ggplot2::geom_line(data = mean.data, size = 1)
 
   return(pl)
@@ -69,16 +72,16 @@ renderYTraces = function(opt.paths, over.time = "dob") {
 
 #' @title Plots Y traces of multiple optimization paths
 #'
-#' @description Plot function for \code{\link{renderYTraces}}
+#' @description Plot function for [renderYTraces()]
 #'
-#' @param opt.paths [\code{list}]\cr
-#'   List of \code{OptPath} objects
-#' @param over.time [\code{character}]\cr
+#' @param opt.paths [`list`]\cr
+#'   List of `OptPath` objects
+#' @param over.time [`character`]\cr
 #'   Should the traces be plotted versus the iteration number or the cumulated
 #'   execution time? For the later, the opt.path has to contain a extra column
-#'   names exec.time. Possible values are dob and exec.time, default is \code{dob}.
+#'   names exec.time. Possible values are dob and exec.time, default is `dob`.
 #'
-#' @return [\code{NULL}]
+#' @return [`NULL`]
 #'
 #' @export
 plotYTraces = function(opt.paths, over.time = "dob") {

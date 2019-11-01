@@ -64,7 +64,7 @@ makeLogicalLearnerParam = function(id, default, when = "train", requires = NULL,
 makeLogicalVectorLearnerParam = function(id, len = as.integer(NA), default, when = "train",
   requires = NULL, tunable = TRUE, special.vals = list()) {
   values = list("TRUE" = TRUE, "FALSE" = FALSE)
-  makeParam(id = id, type = "logicalvector", learner.param = TRUE, len = len,values = values,
+  makeParam(id = id, type = "logicalvector", learner.param = TRUE, len = len, values = values,
     default = default, requires = requires, tunable = tunable, special.vals = special.vals, when = when)
 }
 
@@ -81,5 +81,3 @@ makeFunctionLearnerParam = function(id, default, when = "train", requires = NULL
   makeParam(id = id, type = "function", learner.param = TRUE,
     default = default, requires = requires, tunable = tunable, special.vals = special.vals, when = when)
 }
-
-

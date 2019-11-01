@@ -7,33 +7,33 @@
 generateDesignOfDefaults(par.set, trafo = FALSE)
 }
 \arguments{
-\item{par.set}{[\code{\link{ParamSet}}]\cr
+\item{par.set}{\link{ParamSet}\cr
 Parameter set.}
 
-\item{trafo}{[\code{logical(1)}]\cr
-Transform all parameters by using theirs respective transformation functions.
-Default is \code{FALSE}.}
+\item{trafo}{(\code{logical(1)})\cr
+Transform all parameters by using theirs respective transformation
+functions. Default is \code{FALSE}.}
 }
 \value{
-[\code{data.frame}]. Columns are named by the ids of the parameters.
-  If the \code{par.set} argument contains a vector parameter, its corresponding column names
-  in the design are the parameter id concatenated with 1 to dimension of the vector.
-  The result will have an \code{logical(1)} attribute \dQuote{trafo},
-  which is set to the value of argument \code{trafo}.
+\link{data.frame}. Columns are named by the ids of the parameters. If the
+\code{par.set} argument contains a vector parameter, its corresponding column
+names in the design are the parameter id concatenated with 1 to dimension
+of the vector. The result will have an \code{logical(1)} attribute
+\dQuote{trafo}, which is set to the value of argument \code{trafo}.
 }
 \description{
 The following types of columns are created:
 \tabular{ll}{
- numeric(vector)   \tab  \code{numeric}  \cr
- integer(vector)   \tab  \code{integer}  \cr
- discrete(vector)  \tab  \code{factor} (names of values = levels) \cr
- logical(vector)   \tab  \code{logical}
+numeric(vector)   \tab  \code{numeric}  \cr
+integer(vector)   \tab  \code{integer}  \cr
+discrete(vector)  \tab  \code{factor} (names of values = levels) \cr
+logical(vector)   \tab  \code{logical}
 }
-This will create a design containing only one point at the default values of the supplied param set.
-In most cases you will combine the resulting \code{data.frame} with a different generation function
-e.g. \code{\link{generateDesign}}, \code{\link{generateRandomDesign}} or \code{\link{generateGridDesign}}.
-This is useful to force an evaluation at the default location of the parameters while still generating
-a design.
-Parameters default values, whose conditions (\code{requires}) are not fulfilled will be set to \code{NA}
-in the result.
+This will create a design containing only one point at the default values of
+the supplied param set. In most cases you will combine the resulting
+\code{data.frame} with a different generation function e.g. \code{\link[=generateDesign]{generateDesign()}},
+\code{\link[=generateRandomDesign]{generateRandomDesign()}} or \code{\link[=generateGridDesign]{generateGridDesign()}}. This is useful to force
+an evaluation at the default location of the parameters while still
+generating a design. Parameters default values, whose conditions (\code{requires})
+are not fulfilled will be set to \code{NA} in the result.
 }

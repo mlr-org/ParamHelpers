@@ -3,39 +3,40 @@
 #' @description
 #' The following types of columns are created:
 #' \tabular{ll}{
-#'  numeric(vector)   \tab  \code{numeric}  \cr
-#'  integer(vector)   \tab  \code{integer}  \cr
-#'  discrete(vector)  \tab  \code{factor} (names of values = levels) \cr
-#'  logical(vector)   \tab  \code{logical}
+#'  numeric(vector)   \tab  `numeric`  \cr
+#'  integer(vector)   \tab  `integer`  \cr
+#'  discrete(vector)  \tab  `factor` (names of values = levels) \cr
+#'  logical(vector)   \tab  `logical`
 #' }
-#' If you want to convert these, look at \code{\link[BBmisc]{convertDataFrameCols}}.
-#' Dependent parameters whose constraints are unsatisfied generate \code{NA} entries in their
-#' respective columns.
-#' For discrete vectors the levels and their order will be preserved.
+#' If you want to convert these, look at [BBmisc::convertDataFrameCols()].
+#' Dependent parameters whose constraints are unsatisfied generate `NA` entries
+#' in their respective columns. For discrete vectors the levels and their order
+#' will be preserved.
 #'
 #' The algorithm currently performs these steps:
 #' \enumerate{
 #'   \item{We create a grid. For numerics and integers we use the specfied resolution. For discretes all values will be taken.}
 #'   \item{Forbidden points are removed.}
-#'   \item{Parameters are trafoed (potentially, depending on the setting of argument \code{trafo});
-#'   dependent parameters whose constraints are unsatisfied are set to \code{NA} entries.}
+#'   \item{Parameters are trafoed (potentially, depending on the setting of argument `trafo`);
+#'   dependent parameters whose constraints are unsatisfied are set to `NA` entries.}
 #'   \item{Duplicated points are removed. Duplicated points are not generated in a
 #'    grid design, but the way parameter dependencies are handled make this possible.}
 #' }
 #'
-#' Note that if you have trafos attached to your params, the complete creation of the design
-#' (except for the detection of invalid parameters w.r.t to their \code{requires} setting)
-#' takes place on the UNTRANSFORMED scale. So this function creates a regular grid
-#' over the param space on the UNTRANSFORMED scale, but not necessarily the transformed scale.
+#' Note that if you have trafos attached to your params, the complete creation
+#' of the design (except for the detection of invalid parameters w.r.t to their
+#' `requires` setting) takes place on the UNTRANSFORMED scale. So this function
+#' creates a regular grid over the param space on the UNTRANSFORMED scale, but
+#' not necessarily the transformed scale.
 #'
-#' \code{generateDesign} will NOT work if there are dependencies over multiple levels of
-#' parameters and the dependency is only given with respect to the \dQuote{previous} parameter.
-#' A current workaround is to state all dependencies on all parameters involved.
-#' (We are working on it.)
+#' `generateDesign` will NOT work if there are dependencies over multiple levels
+#' of parameters and the dependency is only given with respect to the
+#' \dQuote{previous} parameter. A current workaround is to state all
+#' dependencies on all parameters involved. (We are working on it.)
 #'
 #' @template arg_parset
-#' @param resolution [\code{integer}]\cr
-#'   Resolution of the grid for each numeric/integer parameter in \code{par.set}.
+#' @param resolution (`integer`)\cr
+#'   Resolution of the grid for each numeric/integer parameter in `par.set`.
 #'   For vector parameters, it is the resolution per dimension.
 #'   Either pass one resolution for all parameters, or a named vector.
 #' @template arg_trafo
@@ -48,6 +49,7 @@
 #' )
 #' generateGridDesign(ps, resolution = c(x1 = 4, x2 = 5), trafo = TRUE)
 generateGridDesign = function(par.set, resolution, trafo = FALSE) {
+
   doBasicGenDesignChecks(par.set)
 
   pars = par.set$pars
@@ -63,8 +65,9 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE) {
       resolution = setNames(rep(resolution, length(pids.num)), pids.num)
     }
     resolution = asInteger(resolution, lower = 1L, len = length(pids.num), names = "named")
-    if (!all(names(resolution) %in% pids.num))
+    if (!all(names(resolution) %in% pids.num)) {
       stop("'resolution' must be named with parameter ids!")
+    }
   }
 
   assertFlag(trafo)
@@ -113,7 +116,7 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE) {
 
   # check each row if forbidden, then remove
   if (hasForbidden(par.set)) {
-    #FIXME: this is pretty slow, but correct
+    # FIXME: this is pretty slow, but correct
     fb = rowSapply(res, isForbidden, par.set = par.set)
     res = res[!fb, , drop = FALSE]
   }
@@ -123,10 +126,11 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE) {
     types.df = getParamTypes(par.set, df.cols = TRUE)
     types.int = convertTypesToCInts(types.df)
     # ignore trafos if the user did not request transformed values
-    trafos = if(trafo)
+    trafos = if (trafo) {
       lapply(pars, function(p) p$trafo)
-    else
+    } else {
       replicate(length(pars), NULL, simplify = FALSE)
+    }
     par.requires = lapply(pars, function(p) p$requires)
     res = convertDataFrameCols(res, factors.as.char = TRUE)
     res = .Call(c_trafo_and_set_dep_to_na, res, types.int, names(pars), lens, trafos, par.requires, new.env())
@@ -137,7 +141,7 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE) {
 
   res = convertDataFrameCols(res, chars.as.factor = TRUE)
 
-  #fix factors
+  # fix factors
   res = fixDesignFactors(res, par.set)
 
   attr(res, "trafo") = trafo

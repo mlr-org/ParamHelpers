@@ -33,9 +33,9 @@ test_that("filter mixed paramset", {
   expect_equal(getParamIds(filterParams(ps, type = c("logical", "logicalvector"))), c("x", "z"))
   expect_equal(getParamIds(filterParams(ps, type = c("character", "charactervector"))), "s")
   expect_equal(getParamIds(filterParams(ps, type = "discretevector")), "y")
-  expect_equal(getParamIds(filterParams(ps, type = c("numeric","integer"))), c("u", "v"))
-  expect_equal(getParamIds(filterParams(ps, type = c("integer","numeric"))), c("u", "v"))
-  expect_equal(getParamIds(filterParams(ps, type = c("integer","function"))), "v")
+  expect_equal(getParamIds(filterParams(ps, type = c("numeric", "integer"))), c("u", "v"))
+  expect_equal(getParamIds(filterParams(ps, type = c("integer", "numeric"))), c("u", "v"))
+  expect_equal(getParamIds(filterParams(ps, type = c("integer", "function"))), "v")
   expect_true(isEmpty(filterParams(ps, type = "function")))
 })
 

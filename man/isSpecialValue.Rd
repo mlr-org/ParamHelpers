@@ -7,14 +7,14 @@
 isSpecialValue(par, x)
 }
 \arguments{
-\item{par}{[\code{\link{Param}}]\cr
+\item{par}{\link{Param}\cr
 Parameter.}
 
-\item{x}{[any] \cr
+\item{x}{(any) \cr
 Single value to check.}
 }
 \value{
-[\code{logical(1)}].
+\code{logical(1)}.
 }
 \description{
 See title.

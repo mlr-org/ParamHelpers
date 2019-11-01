@@ -22,10 +22,10 @@ test_that("dfRowToList", {
 test_that("requires works", {
   ps = makeParamSet(
     makeDiscreteParam("x", values = c("a", "b")),
-    makeNumericParam("y", lower = 1, upper=2, requires = quote(x == "a")),
+    makeNumericParam("y", lower = 1, upper = 2, requires = quote(x == "a")),
     makeNumericVectorParam("z", len = 2, lower = 10, upper = 20, requires = quote(x == "b"))
   )
-  des = generateDesign(10, par.set=ps)
+  des = generateDesign(10, par.set = ps)
 
   mycheck = function(vals) {
     expect_true(is.list(vals) && length(vals) == nrow(des))
@@ -67,6 +67,3 @@ test_that("enforce.col.types works", {
   x = dfRowToList(df, ps, 1L, enforce.col.types = TRUE)
   expect_equal(x, list(u = NA, x = 1L, y = 1L, z = TRUE))
 })
-
-
-

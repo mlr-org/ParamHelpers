@@ -4,14 +4,14 @@
 #' Useful if vectors are included.
 #'
 #' @template arg_par_or_set
-#' @param repeated [\code{logical(1)}]\cr
+#' @param repeated (`logical(1)`)\cr
 #'   Should ids be repeated length-times if parameter is a vector?
-#'   Default is \code{FALSE}.
-#' @param with.nr [\code{logical(1)}]\cr
-#'   Should number from 1 to length be appended to id if \code{repeated} is \code{TRUE}?
+#'   Default is `FALSE`.
+#' @param with.nr (`logical(1)`)\cr
+#'   Should number from 1 to length be appended to id if `repeated` is `TRUE`?
 #'   Otherwise ignored.
-#'   Default is \code{FALSE}.
-#' @return [\code{character}].
+#'   Default is `FALSE`.
+#' @return [`character`].
 #' @export
 #' @examples
 #' ps = makeParamSet(
@@ -29,8 +29,9 @@ getParamIds = function(par, repeated = FALSE, with.nr = FALSE) {
 
 #' @export
 getParamIds.ParamSet = function(par, repeated = FALSE, with.nr = FALSE) {
-  if (isEmpty(par))
+  if (isEmpty(par)) {
     return(character(0L))
+  }
   unlist(lapply(par$pars, getParamIds, repeated = repeated, with.nr = with.nr), use.names = FALSE)
 }
 
@@ -40,10 +41,11 @@ getParamIds.Param = function(par, repeated = FALSE, with.nr = FALSE) {
   if (repeated && isVector(par)) {
     n = par$len
     if (!is.na(n)) {
-      if (n > 1L && with.nr)
+      if (n > 1L && with.nr) {
         paste(rep(pid, n), seq_len(n), sep = "")
-      else
+      } else {
         rep(pid, n)
+      }
     } else {
       pid
     }

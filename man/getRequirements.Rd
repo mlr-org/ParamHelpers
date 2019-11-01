@@ -7,18 +7,19 @@
 getRequirements(par.set, remove.null = TRUE)
 }
 \arguments{
-\item{par.set}{[\code{\link{ParamSet}}]\cr
+\item{par.set}{\link{ParamSet}\cr
 Parameter set.}
 
-\item{remove.null}{[\code{logical(1)}]\cr
-If not set, params without a requires-setting will result in a \code{NULL} element in the returned list,
-otherwise they are removed.
-Default is code{TRUE}.}
+\item{remove.null}{(\code{logical(1)})\cr
+If not set, params without a requires-setting will result in a \code{NULL}
+element in the returned list, otherwise they are removed. Default is
+code{TRUE}.}
 }
 \value{
-[named \code{list}].
-  Named list of require-call-objects, lengths corresponds to number of params (potentially
-  only the subset with requires-field), named with with param ids.
+xnamed \code{list}.
+Named list of require-call-objects, lengths corresponds to number of params
+(potentially only the subset with requires-field), named with with param
+ids.
 }
 \description{
 Returns all \code{require}s-objects of a param set as a list.

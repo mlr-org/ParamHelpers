@@ -7,13 +7,13 @@
 getParamTypeCounts(par.set)
 }
 \arguments{
-\item{par.set}{[\code{\link{ParamSet}}]\cr
+\item{par.set}{\link{ParamSet}\cr
 Parameter set.}
 }
 \value{
-[\code{list}]
- Named list which contains for each supported parameter type the
- number of parameters of this type in the given ParamSet.
+\code{\link{list}}
+Named list which contains for each supported parameter type the
+number of parameters of this type in the given ParamSet.
 }
 \description{
 Returns information on the number of parameters of a each type.

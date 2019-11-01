@@ -1,2 +1,2 @@
-#' @param par.set [\code{\link{ParamSet}}]\cr
+#' @param par.set [ParamSet]\cr
 #'   Parameter set.

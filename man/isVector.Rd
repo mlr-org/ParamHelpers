@@ -7,13 +7,13 @@
 isVector(par)
 }
 \arguments{
-\item{par}{[\code{\link{Param}} | \code{\link{ParamSet}}]\cr
+\item{par}{(\link{Param} | \link{ParamSet})\cr
 Parameter or parameter set.}
 }
 \value{
-[\code{logical(1)}].
+\code{logical(1)}.
 }
 \description{
-\code{TRUE} iff the parameter is a vector parameter or all parameters in the
+\code{TRUE} if the parameter is a vector parameter or all parameters in the
 set are vector parameters.
 }

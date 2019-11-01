@@ -7,11 +7,11 @@
 getOptPathLength(op)
 }
 \arguments{
-\item{op}{[\code{\link{OptPath}}]\cr
+\item{op}{\link{OptPath}\cr
 Optimization path.}
 }
 \value{
-[\code{integer(1)}]
+\code{integer(1)}
 }
 \description{
 Dependent parameters whose requirements are not satisfied are represented by a scalar

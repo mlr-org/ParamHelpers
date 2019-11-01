@@ -1,26 +1,26 @@
 #' @title Plot method for optimization paths.
 #'
-#' @description
-#' Plot method for every type of optimization path, containing any numbers and
-#' types of variables. For every iteration up to 4 types of plots can be generated:
-#' One plot for the distribution of points in X and Y space respectively and plots
-#' for the trend of specified X variables, Y variables and extra measures over the time.
+#' @description Plot method for every type of optimization path, containing any
+#' numbers and types of variables. For every iteration up to 4 types of plots
+#' can be generated: One plot for the distribution of points in X and Y space
+#' respectively and plots for the trend of specified X variables, Y variables
+#' and extra measures over the time.
 #'
-#' @param op [\code{OptPath}]\cr
+#' @param op (`OptPath`)\cr
 #'   Optimization path.
-#' @param iters [\code{integer} | NULL]\cr
-#'   Vector of iterations which should be plotted one after another. If \code{NULL},
+#' @param iters (`integer` | NULL)\cr
+#'   Vector of iterations which should be plotted one after another. If `NULL`,
 #'   which is the default, only the last iteration is plotted. Iteration 0 plots
-#'   all elements with dob = 0. Note that the plots for iteration i contains
-#'   all observations alive in iteration i.
-#' @param pause [\code{logical(1)}]\cr
+#'   all elements with dob = 0. Note that the plots for iteration i contains all
+#'   observations alive in iteration i.
+#' @param pause (`logical(1)`)\cr
 #'   Should the process be paused after each iteration?
-#'   Default is \code{TRUE}.
+#'   Default is `TRUE`.
 #' @template arg_opplotter_lims
-#' @param title [\code{character(1)}]\cr
+#' @param title (`character(1)`)\cr
 #'   Main title for the arranged plots, default is Optimization Path Plots.
 #' @param ...
-#'   Additional parameters for \code{\link{renderOptPathPlot}}.
+#'   Additional parameters for [renderOptPathPlot()].
 #' @return NULL
 #' @export
 #'
@@ -29,8 +29,9 @@ plotOptPath = function(op, iters, pause = TRUE, xlim = list(), ylim = list(),
 
   requirePackages(c("grid", "gridExtra"), why = "plotOptPath")
 
-  if (missing(iters))
+  if (missing(iters)) {
     iters = max(getOptPathDOB(op))
+  }
 
   assertClass(op, "OptPath")
   assertIntegerish(iters, lower = 0L, upper = max(getOptPathDOB(op)), any.missing = FALSE)
@@ -53,19 +54,21 @@ plotOptPath = function(op, iters, pause = TRUE, xlim = list(), ylim = list(),
     max.width = getMaxPlotWidth(plots)
     plots = toAlignedGTable(plots, max.width)
 
-    if (!is.null(plots$plot.x.over.time))
+    if (!is.null(plots$plot.x.over.time)) {
       plots$plot.x.over.time = gridExtra::arrangeGrob(grobs = plots$plot.x.over.time, ncol = 1L)
+    }
 
-    if (!is.null(plots$plot.y.over.time))
+    if (!is.null(plots$plot.y.over.time)) {
       plots$plot.y.over.time = gridExtra::arrangeGrob(grobs = plots$plot.y.over.time, ncol = 1L)
+    }
 
     plot.top = Filter(Negate(is.null), list(plots$plot.x, plots$plot.y))
-    plot.top =  gridExtra::arrangeGrob(grobs = plot.top, nrow = 1L)
+    plot.top = gridExtra::arrangeGrob(grobs = plot.top, nrow = 1L)
 
     plot.bottom = Filter(Negate(is.null), list(plots$plot.x.over.time, plots$plot.y.over.time))
 
     if (length(plot.bottom) > 0L) {
-      plot.bottom =  do.call(gridExtra::arrangeGrob, c(plot.bottom, nrow = 1L))
+      plot.bottom = do.call(gridExtra::arrangeGrob, c(plot.bottom, nrow = 1L))
       plots = list(plot.top, plot.bottom)
     } else {
       plots = list(plot.top)

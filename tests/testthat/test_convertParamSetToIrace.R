@@ -1,7 +1,7 @@
 context("convertParamSetToIrace")
 
 test_that("convertParamSetToIrace", {
-  skip_on_cran() #FIXME: Delete if IRACE checks on R 3.6 --as-cran
+  skip_on_cran() # FIXME: Delete if IRACE checks on R 3.6 --as-cran
   requirePackages("_irace")
   runIrace = function(ps, target.runner, max.exps = 10) {
     ip = convertParamSetToIrace(ps)
@@ -41,10 +41,12 @@ test_that("convertParamSetToIrace", {
   expect_false(identical(ips$constraints$x2, expression(TRUE)))
   target.runner = function(experiment, config = list()) {
     v = experiment$configuration
-    if ((v$x1 == "a" && is.na(v$x2)) || (v$x1 == "b" && !is.na(v$x2)))
+    if ((v$x1 == "a" && is.na(v$x2)) || (v$x1 == "b" && !is.na(v$x2))) {
       stop("foo")
-    if ((v$x1 == "a" && v$x2 == "FALSE" && is.na(v$x3)) || (!(v$x1 == "a" && v$x2 == "FALSE") && !is.na(v$x3)))
+    }
+    if ((v$x1 == "a" && v$x2 == "FALSE" && is.na(v$x3)) || (!(v$x1 == "a" && v$x2 == "FALSE") && !is.na(v$x3))) {
       stop("requires failed")
+    }
     list(cost = 1)
   }
   runIrace(ps, target.runner, max.exps = 300)
@@ -75,9 +77,9 @@ test_that("convertParamSetToIrace uses correct boundaries", {
 
 test_that("convertParamSetToIrace work with vecparam", { # has issue here, see 85
   ps = makeParamSet(
-    makeNumericVectorParam("a", len=2, -10, 10),
+    makeNumericVectorParam("a", len = 2, -10, 10),
     makeDiscreteParam("b", c("v", "w")),
-    makeNumericVectorParam("c", len=2, -10, 10)
+    makeNumericVectorParam("c", len = 2, -10, 10)
   )
   i = convertParamSetToIrace(ps)
   b = i$domain

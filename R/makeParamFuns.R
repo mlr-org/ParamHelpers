@@ -2,7 +2,6 @@
 #' @export
 makeNumericParam = function(id, lower = -Inf, upper = Inf, allow.inf = FALSE,
   default, trafo = NULL, requires = NULL, tunable = TRUE, special.vals = list()) {
-
   makeParam(id = id, type = "numeric", learner.param = FALSE, lower = lower,
     upper = upper, allow.inf = allow.inf,
     default = default, trafo = trafo, requires = requires, tunable = tunable, special.vals = special.vals)
@@ -68,7 +67,6 @@ makeDiscreteParam = function(id, values, trafo = NULL, default,
 #' @export
 makeDiscreteVectorParam = function(id, len, values, trafo = NULL, default, requires = NULL,
   tunable = TRUE, special.vals = list()) {
-
   makeParam(id = id, type = "discretevector", learner.param = FALSE, len = len,
     values = values, default = default,
     trafo = trafo, requires = requires, tunable = tunable, special.vals = special.vals)
@@ -82,7 +80,7 @@ makeFunctionParam = function(id, default = default, requires = NULL, special.val
     requires = requires, tunable = FALSE, special.vals = special.vals)
 }
 
-#FIXME: what happens if NA is later used for untyped params? because we might interpret this as
+# FIXME: what happens if NA is later used for untyped params? because we might interpret this as
 # missing value wrt. dependent params
 #' @rdname Param
 #' @export
@@ -104,9 +102,7 @@ makeCharacterParam = function(id, default, requires = NULL, special.vals = list(
 #' @export
 makeCharacterVectorParam = function(id, len, cnames = NULL, default,
   requires = NULL, special.vals = list()) {
-
   makeParam(id = id, type = "charactervector", learner.param = FALSE, len = len,
     cnames = cnames, default = default,
     trafo = NULL, requires = requires, tunable = FALSE, special.vals = special.vals)
 }
-

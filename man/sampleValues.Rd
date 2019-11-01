@@ -7,22 +7,22 @@
 sampleValues(par, n, discrete.names = FALSE, trafo = FALSE)
 }
 \arguments{
-\item{par}{[\code{\link{Param}} | \code{\link{ParamSet}}]\cr
+\item{par}{(\link{Param} | \link{ParamSet})\cr
 Parameter or parameter set.}
 
-\item{n}{[\code{integer(1)}]\cr
+\item{n}{(\code{integer(1)})\cr
 Number of values.}
 
-\item{discrete.names}{[\code{logical(1)}]\cr
+\item{discrete.names}{(\code{logical(1)})\cr
 Should names be sampled for discrete paramaters or values instead?
 Default is code {FALSE}.}
 
-\item{trafo}{[\code{logical(1)}]\cr
-Transform all parameters by using theirs respective transformation functions.
-Default is \code{FALSE}.}
+\item{trafo}{(\code{logical(1)})\cr
+Transform all parameters by using theirs respective transformation
+functions. Default is \code{FALSE}.}
 }
 \value{
-[\code{list}]. For consistency always a list is returned.
+\code{list}. For consistency always a list is returned.
 }
 \description{
 Sample n random values from a parameter or a parameter set uniformly.

@@ -22,7 +22,6 @@ test_that("cnames work with different operations", {
   p = makeIntegerParam(id = "x")
   x = setValueCNames(p, 1L)
   expect_equal(x, 1L)
-
 })
 
 test_that("cnames work with dep params", {
@@ -31,7 +30,7 @@ test_that("cnames work with dep params", {
     makeNumericVectorParam("y", lower = 1, upper = 2, len = 2L,
       requires = quote(x == "a"), cnames = c("xxx", "yyy"))
   )
-  x = setValueCNames(ps, list(x = "a", y = c(1,2)))
+  x = setValueCNames(ps, list(x = "a", y = c(1, 2)))
   expect_equal(x, list(x = "a", y = c(xxx = 1, yyy = 2)))
   x = setValueCNames(ps, list(x = "b", y = NA_real_))
   expect_equal(x, list(x = "b", y = NA_real_))

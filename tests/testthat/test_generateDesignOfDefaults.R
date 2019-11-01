@@ -4,7 +4,7 @@ context("generateDesignOfDefaults")
 test_that("generateDesignOfDefaults", {
   ps = makeParamSet(
     makeNumericParam("x", lower = 1, upper = 5, default = 1),
-    makeIntegerParam("y", lower = 2, upper= 6, default = 3)
+    makeIntegerParam("y", lower = 2, upper = 6, default = 3)
   )
   d = generateDesignOfDefaults(ps)
   e = data.frame(x = 1, y = 3)
@@ -13,7 +13,7 @@ test_that("generateDesignOfDefaults", {
 
   ps = makeParamSet(
     makeNumericParam("u", lower = 1, upper = 5, default = 1),
-    makeIntegerParam("v", lower = 2, upper= 6, default = 3),
+    makeIntegerParam("v", lower = 2, upper = 6, default = 3),
     makeLogicalParam("w", default = TRUE),
     makeDiscreteParam("x", values = c("a", "b"), default = "a")
   )
@@ -25,7 +25,7 @@ test_that("generateDesignOfDefaults", {
   # vectors
   ps = makeParamSet(
     makeNumericVectorParam("x", len = 2L, lower = 1, upper = 2, default = c(1, 2)),
-    makeIntegerVectorParam("y", len = 2L, lower = 3, upper = 4, default = c(3,3)),
+    makeIntegerVectorParam("y", len = 2L, lower = 3, upper = 4, default = c(3, 3)),
     makeLogicalVectorParam("z", len = 2L, default = c(TRUE, FALSE))
   )
   d = generateDesignOfDefaults(ps)
@@ -36,7 +36,7 @@ test_that("generateDesignOfDefaults", {
   # trafo
   ps = makeParamSet(
     makeNumericParam("x", lower = 0, upper = 1, default = 0),
-    makeNumericParam("y", lower = 3, upper = 4, trafo = function(x) 2*x, default = 3)
+    makeNumericParam("y", lower = 3, upper = 4, trafo = function(x) 2 * x, default = 3)
   )
   d = generateDesignOfDefaults(ps, trafo = TRUE)
   e = data.frame(x = 0, y = 6)
@@ -46,7 +46,7 @@ test_that("generateDesignOfDefaults", {
   # missing default
   ps = makeParamSet(
     makeNumericParam("x", lower = 1, upper = 5),
-    makeIntegerParam("y", lower = 2, upper= 6, default = 3)
+    makeIntegerParam("y", lower = 2, upper = 6, default = 3)
   )
   expect_error(generateDesignOfDefaults(ps), regexp = "No default parameter setting for: x")
 
@@ -67,7 +67,7 @@ test_that("generateDesignOfDefaults", {
   d = generateDesignOfDefaults(ps)
   e = data.frame(x = 2L)
   attr(e, "trafo") = FALSE
-  expect_identical(class(d[,1]), class(e[,1]))
+  expect_identical(class(d[, 1]), class(e[, 1]))
 
   # special vals
   ps = makeParamSet(
@@ -80,7 +80,6 @@ test_that("generateDesignOfDefaults", {
 
 
 test_that("generateDesignOfDefaults works with discrete params and complex values", {
-
   ps = makeParamSet(
     makeDiscreteParam("p", values = c("a", "b"), default = "b")
   )
@@ -103,4 +102,3 @@ test_that("generateDesignOfDefaults works with discrete params and complex value
   d = generateDesignOfDefaults(ps)
   expect_equal(d, data.frame(p = factor("foo", levels = c("ir", "foo"))), check.attributes = FALSE)
 })
-

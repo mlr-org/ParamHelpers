@@ -3,7 +3,7 @@ context("generateGridDesign")
 test_that("generateGridDesign", {
   ps = makeParamSet(
     makeNumericParam("x", lower = 1, upper = 5),
-    makeIntegerParam("y", lower = 2, upper= 6)
+    makeIntegerParam("y", lower = 2, upper = 6)
   )
   d = generateGridDesign(ps, resolution = 3L)
   e = expand.grid(x = c(1, 3, 5), y = c(2L, 4L, 6L), KEEP.OUT.ATTRS = FALSE)
@@ -12,7 +12,7 @@ test_that("generateGridDesign", {
 
   ps = makeParamSet(
     makeNumericParam("u", lower = 1, upper = 5),
-    makeIntegerParam("v", lower = 2, upper= 6),
+    makeIntegerParam("v", lower = 2, upper = 6),
     makeLogicalParam("w"),
     makeDiscreteParam("x", values = c("a", "b"))
   )
@@ -41,12 +41,12 @@ test_that("generateGridDesign", {
   # trafo
   ps = makeParamSet(
     makeNumericParam("x", lower = 0, upper = 1),
-    makeNumericParam("y", lower = 3, upper = 4, trafo = function(x) 2*x)
+    makeNumericParam("y", lower = 3, upper = 4, trafo = function(x) 2 * x)
   )
   d = generateGridDesign(ps, resolution = c(y = 4, x = 2), trafo = TRUE)
   e = expand.grid(
     x = seq(0, 1, length.out = 2),
-    y = 2*(seq(3, 4, length.out = 4)),
+    y = 2 * (seq(3, 4, length.out = 4)),
     KEEP.OUT.ATTRS = FALSE
   )
   attr(e, "trafo") = TRUE
@@ -61,7 +61,7 @@ test_that("generateGridDesign", {
     KEEP.OUT.ATTRS = FALSE
   )
   f = as.data.frame(t(apply(e, 1, function(x) x / sum(x))))
-  f = f[!duplicated(f),]
+  f = f[!duplicated(f), ]
   attr(f, "trafo") = TRUE
   expect_equal(setRowNames(d, NULL), setRowNames(f, NULL))
 })
@@ -93,15 +93,15 @@ test_that("nested requires", {
     makeDiscreteParam("discA", values = c("m", "w"), requires = quote(disc == "a")),
     makeNumericParam("realB", lower = -100, upper = 100, requires = quote(disc == "b")),
     makeDiscreteParam("discB", values = c("R", "NR"), requires = quote(disc == "b")),
-    makeNumericParam("realBR", lower = 0, upper = 2*pi, requires = quote(identical(discB, "R") && identical(disc, "b"))),
-    makeNumericParam("realBNR", lower = 0, upper = 2*pi, requires = quote(identical(discB, "NR") && identical(disc, "b")))
+    makeNumericParam("realBR", lower = 0, upper = 2 * pi, requires = quote(identical(discB, "R") && identical(disc, "b"))),
+    makeNumericParam("realBNR", lower = 0, upper = 2 * pi, requires = quote(identical(discB, "NR") && identical(disc, "b")))
   )
   des = generateGridDesign(par.set = ps7, resolution = 3)
-  expect_true(all(is.na(des[des$disc == "a",5:8])))
-  expect_true(all(is.na(des[des$disc == "b",2:4])))
-  expect_true(all(is.na(des[des$disc == "c",2:8])))
-  expect_true(all(is.na(des[des$disc == "b" & des$discB == "NR",7])))
-  expect_true(all(is.na(des[des$disc == "b" & des$discB == "R",8])))
+  expect_true(all(is.na(des[des$disc == "a", 5:8])))
+  expect_true(all(is.na(des[des$disc == "b", 2:4])))
+  expect_true(all(is.na(des[des$disc == "c", 2:8])))
+  expect_true(all(is.na(des[des$disc == "b" & des$discB == "NR", 7])))
+  expect_true(all(is.na(des[des$disc == "b" & des$discB == "R", 8])))
 
   vals = dfRowsToList(des, ps7)
   oks = sapply(vals, isFeasible, par = ps7)
@@ -113,11 +113,11 @@ test_that("discrete works without resolution", {
     makeDiscreteParam("disc", values = c("c", "b", "a")),
     makeDiscreteParam("discA", values = c("m", "w"), requires = quote(disc == "a")),
     makeLogicalParam("logA")
-    )
+  )
   des = generateGridDesign(par.set = ps8)
   expect_true(nrow(des) == 8)
   expect_true(all(is.na(des[des$disc == "c", "discA"])))
   expect_true(all(is.na(des[des$disc == "b", "discA"])))
-  expect_equal(levels(des[,2]), c("m", "w"))
-  expect_equal(levels(des[,1]), c("c", "b", "a"))
+  expect_equal(levels(des[, 2]), c("m", "w"))
+  expect_equal(levels(des[, 1]), c("c", "b", "a"))
 })

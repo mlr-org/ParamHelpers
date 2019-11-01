@@ -1,94 +1,99 @@
 #' @title Function for plotting optimization paths.
 #'
 #' @description
-#' Same as \code{\link{plotOptPath}}, but renders the plots for just 1 iteration
+#' Same as [plotOptPath()], but renders the plots for just 1 iteration
 #' and returns a list of plots instead of printing the plot. Useful, if you want
 #' to extract single plots or to edit the ggplots by yourself.
 #'
-#' @param op [\code{OptPath}]\cr
+#' @param op [OptPath]\cr
 #'   Optimization path.
-#' @param iter [\code{integer(1)}]\cr
-#'   Selected iteration of \code{x} to render plots for.
-#' @param x.over.time [\code{list} | NULL]
-#'   List of vectors of x-variables, either specified via name or id. If specified
-#'   via names, also extra measurements from the opt.path can be selected. Maximum
-#'   length for each vector is 5. For each list-element a line-plot iteration
-#'   versus variable is generated. If the vector has length > 2 only mean values
-#'   per iteration are plotted as lines, if vector has length 1 every point is
-#'   plotted. Default is to plot all variables into as few plots as possible.
-#'   Note that discrete variables are converted to numeric, if specified in the
-#'   same vector with numerics. Moreover, if more than 1 point per iteration
-#'   exists, mean values are calculated. This is also done for factor variables!
-#'   We recommend you to specify  this argument in a useful way.
-#' @param y.over.time [\code{list} | NULL]
-#'   List of vectors of y-variables, either specified via name or id. If specified
-#'   via names, also extra measurements from the opt.path can be selected. Maximum
-#'   length for each vector is 5. For each list-element a line-plot iteration
-#'   versus variable is generated. If the vector has length > 2 only mean values
-#'   per iteration are plotted as lines, if vector has length 1 every point is
-#'   plotted. Default is to plot all variables into as few plots as possible.
-#'   Note that discrete variables are converted to numeric, if specified in the
-#'   same vector with numerics. Moreover, if more than 1 point per iteration
-#'   exists, mean values are calculated. This is also done for factor variables!
-#'   We recommend you to specify  this argument in a useful way.
-#' @param contour.name [\code{character(1)} | NULL]
-#'   It is possible to overlay the XSpace plot with an contour plot. This is only
-#'   possible, if the XSpace has exact 2 numeric and 0 discrete variable. Consider
-#'   subsetting your variables to use this feature! contour.name is the name of the
-#'   target variable that will be used for the contour lines. Default is to use
-#'   the first target variable, if it is possible to add contour lines.
+#' @param iter (`integer(1)`)\cr
+#'   Selected iteration of `x` to render plots for.
+#' @param x.over.time (`list` | NULL)\cr
+#'   List of vectors of x-variables, either specified via name or id. If
+#'   specified via names, also extra measurements from the opt.path can be
+#'   selected. Maximum length for each vector is 5. For each list-element a
+#'   line-plot iteration versus variable is generated. If the vector has length
+#'   > 2 only mean values per iteration are plotted as lines, if vector has
+#'   length 1 every point is plotted. Default is to plot all variables into as
+#'   few plots as possible. Note that discrete variables are converted to
+#'   numeric, if specified in the same vector with numerics. Moreover, if more
+#'   than 1 point per iteration exists, mean values are calculated. This is also
+#'   done for factor variables! We recommend you to specify  this argument in a
+#'   useful way.
+#' @param y.over.time (`list` | NULL]
+#'   List of vectors of y-variables, either specified via name or id. If
+#'   specified via names, also extra measurements from the opt.path can be
+#'   selected. Maximum length for each vector is 5. For each list-element a
+#'   line-plot iteration versus variable is generated. If the vector has length
+#'   > 2 only mean values per iteration are plotted as lines, if vector has
+#'   length 1 every point is plotted. Default is to plot all variables into as
+#'   few plots as possible. Note that discrete variables are converted to
+#'   numeric, if specified in the same vector with numerics. Moreover, if more
+#'   than 1 point per iteration exists, mean values are calculated. This is also
+#'   done for factor variables! We recommend you to specify  this argument in a
+#'   useful way.
+#' @param contour.name (`character(1)` | NULL)
+#'   It is possible to overlay the XSpace plot with an contour plot. This is
+#'   only possible, if the XSpace has exact 2 numeric and 0 discrete variable.
+#'   Consider subsetting your variables to use this feature! contour.name is the
+#'   name of the target variable that will be used for the contour lines.
+#'   Default is to use the first target variable, if it is possible to add
+#'   contour lines.
 #' @template arg_opplotter_lims
-#' @param alpha [\code{logical(1)}]\cr
-#'   Activates or deactivates the alpha fading for the plots. Default is \code{TRUE}.
-#' @param log [\code{character}]\cr
+#' @param alpha (`logical(1)`)\cr
+#'   Activates or deactivates the alpha fading for the plots. Default is `TRUE`.
+#' @param log [character]\cr
 #'   Vector of variable names. All of this variable logarithmized in every plot.
-#'   Default is NULL - no logarithm is applied. Note that, if an
-#'   variable has only negative value, it is multiplied with -1. For variables
-#'   with both positive and negative values you have to do your own data preprocessing.
-#' @param colours [\code{character(4)}]\cr
-#'   Colours of the points/lines for the four point types init, seq, prob and marked.
-#'   Default is red for init, blue for seq, green for prob and orange for marked.
-#' @param size.points [\code{numeric(4)} | NULL]\cr
+#'   Default is NULL - no logarithm is applied. Note that, if an variable has
+#'   only negative value, it is multiplied with -1. For variables with both
+#'   positive and negative values you have to do your own data preprocessing.
+#' @param colours (`character(4)`)\cr
+#'   Colours of the points/lines for the four point types init, seq, prob and
+#'   marked. Default is red for init, blue for seq, green for prob and orange
+#'   for marked.
+#' @param size.points (`numeric(4)` | NULL)\cr
 #'   Size of points in the plot, default is 3.
-#' @param size.lines [\code{numeric(4)} | NULL]\cr
+#' @param size.lines (`numeric(4)` | NULL)\cr
 #'   Size of lines in the plots, default is 1.5.
-#' @param impute.scale [\code{numeric(1)}]\cr
-#'   Numeric missing values will be replaced by \code{max + impute.scale * (max - min)}.
-#'   Default is \code{1}.
-#' @param impute.value [\code{character(1)}]\cr
-#'   Factor missing values will be replaced by \code{impute.value}. Default is \code{missing}.
-#' @param scale [\code{character(1)}]\cr
-#'   Parameter \code{scale} from the function \code{\link[GGally]{ggparcoord}} which is used for
-#'   the multiD-case. Default is \code{std}.
+#' @param impute.scale (`numeric(1)`)\cr
+#'   Numeric missing values will be replaced by `max + impute.scale * (max - min)`.
+#'   Default is `1`.
+#' @param impute.value (`character(1)`)\cr
+#'   Factor missing values will be replaced by `impute.value`. Default is `missing`.
+#' @param scale (`character(1)`)\cr
+#'   Parameter `scale` from the function [GGally::ggparcoord()] which is used for
+#'   the multiD-case. Default is `std`.
 #' @param ggplot.theme
-#'   Theme for the ggplots. Can be generated by \code{\link[ggplot2]{theme}}. Default is
-#'   \code{ggplot2::theme(legend.position = "top")}.
-#' @param marked [\code{integer} | \code{character(1)} | NULL]\cr
+#'   Theme for the ggplots. Can be generated by [ggplot2::theme()]. Default is
+#'   `ggplot2::theme(legend.position = "top")`.
+#' @param marked (`integer` | `character(1)` | NULL)\cr
 #'    \dQuote{best} or indices of points that should be marked in the plots.
-#'    If \code{marked = "best"} the best point for single crit optimization
+#'    If `marked = "best"` the best point for single crit optimization
 #'    respectively the pareto front for multi crit optimization is marked.
-#'    Default is \code{NULL} (no points are marked).
-#' @param subset.obs [\code{integer}]\cr
-#'   Vector of indices to subset of observations to be plotted, default is all observations.
-#'   All indices must be available in the opt.path. But, to enable subsetting over multiple
-#'   iterations, not all indices must be available in the current iteration.
-#'   Indices not available in the current iteration will be ignored. Default is all observations.
-#' @param subset.vars [\code{integer} | \code{character}]\cr
-#'   Subset of variables (x-variables) to be plotted. Either vector of indices or names.
-#'   Default is all variables.
-#' @param subset.targets [\code{integer} | \code{character}]\cr
-#'   Subset of target variables (y-variables) to be plotted. Either vector of indices or names.
-#'   Default is all variables
-#' @param short.x.names [\code{character}]\cr
+#'    Default is `NULL` (no points are marked).
+#' @param subset.obs [integer]\cr
+#'   Vector of indices to subset of observations to be plotted, default is all
+#'   observations. All indices must be available in the opt.path. But, to enable
+#'   subsetting over multiple iterations, not all indices must be available in
+#'   the current iteration. Indices not available in the current iteration will
+#'   be ignored. Default is all observations.
+#' @param subset.vars (`integer` | `character`)\cr
+#'   Subset of variables (x-variables) to be plotted. Either vector of indices
+#'   or names. Default is all variables.
+#' @param subset.targets (`integer` | `character`)\cr
+#'   Subset of target variables (y-variables) to be plotted. Either vector of
+#'   indices or names. Default is all variables
+#' @param short.x.names [character]\cr
 #'   Short names for x variables that are used as axis labels. Note you can
-#'   only give shortnames for variables you are using in \code{subset.vars}
-#' @param short.y.names [\code{character}]\cr
+#'   only give shortnames for variables you are using in `subset.vars`
+#' @param short.y.names [character]\cr
 #'   Short names for y variables that are used as axis labels. Note you can
-#'   only give shortnames for variables you are using in \code{subset.targets}
-#' @param short.rest.names [\code{character}]\cr
+#'   only give shortnames for variables you are using in `subset.targets`
+#' @param short.rest.names [character]\cr
 #'   Short names for rest variables that are used as axis labels. Note you can
-#'   only give shortnames for variables you are used in \code{x.over.time}
-#'   or \code{y.over.time}.
+#'   only give shortnames for variables you are used in `x.over.time`
+#'   or `y.over.time`.
 #' @return List of plots. List has up to elements:
 #'   plot.x: Plot for XSpace. If both X and Y are 1D, Plot for both
 #'   plot.y: Plot for YSpace. If both X and Y are 1D, NULL.
@@ -117,8 +122,9 @@ renderOptPathPlot = function(op, iter, x.over.time, y.over.time, contour.name = 
 
   if (!is.null(marked)) {
     if (is.character(marked)) {
-      if (marked != "best")
+      if (marked != "best") {
         stop("Marked must either be 'best' or an integerish vector.")
+      }
     } else {
       marked = asInteger(marked)
     }
@@ -172,14 +178,16 @@ renderOptPathPlot = function(op, iter, x.over.time, y.over.time, contour.name = 
       length.out = dim.x))
   } else {
     if (!is.null(x.over.time)) {
-      if (!is.list(x.over.time))
+      if (!is.list(x.over.time)) {
         x.over.time = list(x.over.time)
+      }
       assertList(x.over.time)
       for (vec in x.over.time) {
-        if (is.character(vec))
+        if (is.character(vec)) {
           assertSubset(x = vec, choices = c(x.names, rest.names), empty.ok = FALSE)
-        else
+        } else {
           assertNumeric(x = vec, lower = 1L, upper = dim.x, any.missing = FALSE, unique = TRUE)
+        }
       }
     }
   }
@@ -189,25 +197,29 @@ renderOptPathPlot = function(op, iter, x.over.time, y.over.time, contour.name = 
       length.out = dim.y))
   } else {
     if (!is.null(y.over.time)) {
-      if (!is.list(y.over.time))
+      if (!is.list(y.over.time)) {
         y.over.time = list(y.over.time)
+      }
       assertList(y.over.time)
       for (vec in y.over.time) {
-        if (is.character(vec))
+        if (is.character(vec)) {
           assertSubset(x = vec, choices = c(y.names, rest.names), empty.ok = FALSE)
-        else
+        } else {
           assertNumeric(x = vec, lower = 1L, upper = dim.y, any.missing = FALSE, unique = TRUE)
+        }
       }
     }
   }
 
   if (!is.null(contour.name)) {
-    if (length(x.names) != 2 || any(apply(op.x, 2, class) != "numeric"))
+    if (length(x.names) != 2 || any(apply(op.x, 2, class) != "numeric")) {
       stop("Contour lines can only be applied if there are exacr 2 numeric x variables. Consider subsetting your variables.")
+    }
     assertChoice(contour.name, y.names)
   } else {
-    if (length(x.names) == 2 && all(apply(op.x, 2, class) == "numeric"))
+    if (length(x.names) == 2 && all(apply(op.x, 2, class) == "numeric")) {
       contour.name = y.names[1L]
+    }
   }
 
 
@@ -218,7 +230,7 @@ renderOptPathPlot = function(op, iter, x.over.time, y.over.time, contour.name = 
   # So much for the data and the input, now the plots
 
   # Special case: X and Y are 1D
-  if(dim.x == 1L && dim.y == 1L) {
+  if (dim.x == 1L && dim.y == 1L) {
     pl1 = plot2D(cbind(x = op.x, y = op.y), .alpha, .type, log, names = c(x.names, y.names),
       short.names = c(short.x.names, short.y.names), space = "both", iter = iter,
       classes = c(classes.x, classes.y), xlim = xlim[["XSpace"]], ylim = xlim[["YSpace"]],
@@ -279,8 +291,9 @@ renderOptPathPlot = function(op, iter, x.over.time, y.over.time, contour.name = 
     # extract variable information from over.time
     vars = x.over.time[[i]]
     # if specified via character vector, convert to numeric
-    if (is.character(vars))
+    if (is.character(vars)) {
       var.inds = which(c(names(op.x), names(op.rest)) %in% vars)
+    }
     names = c(x.names, rest.names)[var.inds]
     short.names = c(short.x.names, short.rest.names)[var.inds]
 
@@ -296,8 +309,9 @@ renderOptPathPlot = function(op, iter, x.over.time, y.over.time, contour.name = 
         iter = iter, colours = colours, ggplot.theme = ggplot.theme)
     }
   }
-  if (length(pl3) == 0)
+  if (length(pl3) == 0) {
     pl3 = NULL
+  }
 
 
   # plot 4: y space over time
@@ -306,8 +320,9 @@ renderOptPathPlot = function(op, iter, x.over.time, y.over.time, contour.name = 
     # extract variable information from over.time
     vars = y.over.time[[i]]
     # if specified via character vector, convert to numeric
-    if (is.character(vars))
+    if (is.character(vars)) {
       var.inds = which(c(names(op.y), names(op.rest)) %in% vars)
+    }
     names = c(y.names, rest.names)[var.inds]
     short.names = c(short.y.names, short.rest.names)[var.inds]
 
@@ -324,8 +339,9 @@ renderOptPathPlot = function(op, iter, x.over.time, y.over.time, contour.name = 
     }
   }
 
-  if (length(pl4) == 0)
+  if (length(pl4) == 0) {
     pl4 = NULL
+  }
 
   return(list(plot.x = pl1, plot.y = pl2, plot.x.over.time = pl3, plot.y.over.time = pl4))
 }

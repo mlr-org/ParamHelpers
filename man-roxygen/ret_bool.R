@@ -1,2 +1,2 @@
-#' @return [\code{logical(1)}]
+#' @return (`logical(1)`)
 
