@@ -155,7 +155,7 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
       newres = newres[!fb, , drop = FALSE]
       newdes = newdes[!fb, , drop = FALSE]
     }
-    newres = .Call(c_trafo_and_set_dep_to_na, newres, types.int, names(pars), lens, trafos, par.requires, new.env())
+    newres = fix_na_helper(newres, types.int, pars, lens, trafos, par.requires)
     # add to result (design matrix and data.frame)
     des = rbind(des, newdes)
     res = rbind(res, newres)
@@ -179,4 +179,11 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
   res = fixDesignFactors(res, par.set)
   attr(res, "trafo") = trafo
   return(res)
+}
+
+fix_na_helper = function(newres, types.int, pars, lens, trafos, par.requires) {
+  # This function just exists to isolate the
+  # REAL() can only be applied to a 'numeric', not a 'NULL'
+  # error
+  .Call(c_trafo_and_set_dep_to_na, newres, types.int, names(pars), lens, trafos, par.requires, new.env())
 }
