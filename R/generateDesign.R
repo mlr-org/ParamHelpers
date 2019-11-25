@@ -120,7 +120,6 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
   upper2 = insert(upper2, upper)
   values = getParamSetValues(par.set)
   types.df = getParamTypes(par.set, df.cols = TRUE)
-  types.int = convertTypesToCInts(types.df)
   types.df[types.df == "factor"] = "character"
 
   nmissing = n
