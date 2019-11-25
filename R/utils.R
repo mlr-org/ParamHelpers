@@ -104,5 +104,5 @@ mapDfc = function(.x, .f, ...) {
   cols = lapply(.x, .f, ...)
   j = vapply(cols, function(x) !is.null(dim(x)) && !is.null(colnames(x)), FUN.VALUE = NA, USE.NAMES = FALSE)
   names(cols)[j] = ""
-  do.call(data.frame, c(cols, list(check.names = TRUE)))
+  do.call(data.frame, c(cols, list(check.names = TRUE, stringsAsFactors = FALSE)))
 }
