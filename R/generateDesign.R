@@ -113,6 +113,8 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
   lens = getParamLengths(par.set)
   k = sum(lens)
   pids = getParamIds(par.set, repeated = TRUE, with.nr = TRUE)
+  par.ids.each = lapply(pars, getParamIds, repeated = TRUE, with.nr = TRUE)
+  par.nas.each = lapply(pars, getParamNA, repeated = FALSE)
   lower2 = setNames(rep(NA_real_, k), pids)
   lower2 = insert(lower2, lower)
   upper2 = setNames(rep(NA_real_, k), pids)
@@ -122,9 +124,6 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
   types.int = convertTypesToCInts(types.df)
   types.df[types.df == "factor"] = "character"
   # ignore trafos if the user did not request transformed values
-
-  par.requires = lapply(pars, function(p) p$requires)
-
 
   nmissing = n
   # result objects
@@ -173,7 +172,14 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
     if (trafo) {
       newres = applyTrafos(newres, pars)
     }
-    newres = setRequiresToNA(newres, pars, par.requires)
+
+    # heuristic if we allow this requirement to be evaluated in an vectorized fashion
+    req_vectorized = vapply(X = lapply(pars, function(p) p$requires), function(req) {
+    # vectorized if no "&&", "||" or "(" is detected
+      !grepl(x = deparse(req), pattern = "\\|\\||&&|\\(")
+    }, FUN.VALUE = logical(1))
+
+    newres = setRequiresToNA(newres, pars, par.ids.each, par.nas.each, req_vectorized)
     # add to result (design matrix and data.frame)
     des = rbind(des, newdes)
     res = rbind(res, newres)
@@ -217,34 +223,22 @@ applyTrafos = function(newres, pars) {
   newres
 }
 
-setRequiresToNA = function(newres, pars, par.requires) {
-  changes = setNames(rep(TRUE, length(pars)), names(pars))
+setRequiresToNA = function(newres, pars, par.ids.each, par.nas.each, req_vectorized) {
 
-  # heuristic if we allow this requirement to be evaluated in an vectorized fashion
-  req_vectorized = vapply(X = par.requires, function(req) {
-    # vectorized if no "&&", "||" or "(" is detected
-    !grepl(x = deparse(req), pattern = "\\|\\||&&|\\(")
-  }, FUN.VALUE = logical(1))
+  for (par in pars) {
+    if (!is.null(pars$requires)) {
+      # set rows to NA 1) where req does not evalue to true AND 2) where the row is not already NA
 
-  while (any(changes)) {
-    for (par in pars) {
-      if (!is.null(par.requires[[par$id]])) {
-        # set rows to NA 1) where req does not evalue to true AND 2) where the row is not already NA
-
-        if (req_vectorized[par$id]) {
-          set_to_na = !eval(par.requires[[par$id]], newres)
-        } else {
-          # unfortunately we allowed requirements to be not vectorized
-          set_to_na = !vapply(seq_len(nrow(newres)), function(i) {
-            eval(par.requires[[par$id]], newres[i,])
-          }, FUN.VALUE = logical(1))
-        }
-        set_to_na = set_to_na & !is.na(newres[[getParamIds(par, repeated = TRUE, with.nr = TRUE)[1]]])
-        newres[set_to_na, getParamIds(par, repeated = TRUE, with.nr = TRUE)] = getParamNA(par, repeated = FALSE)
-        changes[par$id] = any(set_to_na)
+      if (req_vectorized[par$id]) {
+        set_to_na = !eval(pars$requires, newres)
       } else {
-        changes[par$id] = FALSE
+        # unfortunately we allowed requirements to be not vectorized
+        set_to_na = !vapply(seq_len(nrow(newres)), function(i) {
+          eval(pars$requires, newres[i,])
+        }, FUN.VALUE = logical(1))
       }
+      set_to_na = set_to_na & !is.na(newres[[par.ids.each[[par$id]][1]]])
+      newres[set_to_na, par.ids.each[[par$id]]] = par.nas.each[[par$id]]
     }
   }
   newres
