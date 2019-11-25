@@ -25,9 +25,6 @@ doBasicGenDesignChecks = function(par.set) {
   lower = getLower(par.set, with.nr = TRUE)
   upper = getUpper(par.set, with.nr = TRUE)
 
-  assertNumeric(lower, min.len = 1, any.missing = FALSE)
-  assertNumeric(upper, min.len = 1, any.missing = FALSE)
-
   if (any(is.infinite(c(lower, upper)))) {
     stop("Finite box constraints required!")
   }
