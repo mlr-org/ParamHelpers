@@ -122,11 +122,7 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
   types.int = convertTypesToCInts(types.df)
   types.df[types.df == "factor"] = "character"
   # ignore trafos if the user did not request transformed values
-  trafos = if (trafo) {
-    lapply(pars, function(p) p$trafo)
-  } else {
-    replicate(length(pars), NULL, simplify = FALSE)
-  }
+
   par.requires = lapply(pars, function(p) p$requires)
 
 
@@ -142,10 +138,29 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
     } else {
       lhs::randomLHS(nmissing, k = k)
     }
-    # preallocate result for C
-    newres = makeDataFrame(nmissing, k, col.types = types.df)
-    newres = .Call(c_generateDesign, newdes, newres, types.int, lower2, upper2, values)
+
+    # taken and adapted from individual Param Objects in mlr-org/paradox
+    getMapping = function(i) {
+      # Numeric
+      if (types.df[i] == "numeric") {
+        newdes[,i] * (upper2[i] - lower2[i]) + lower2[i]
+      } else if (types.df[i] == "integer") {
+      # Integer
+        as.integer(floor(newdes[,i] * ((upper2[i] - lower2[i]) + 1L) * (1 - 1e-16)) + lower2[i])
+      # Logic
+      } else if (types.df[i] == "logical") {
+        newdes[,i] < 0.5
+      # Discrete
+      } else if (types.df[i] == "character") {
+        values[[i]][floor(newdes[,i] * length(values[[i]]) * (1 - 1e-16)) + 1]
+      } else {
+        stopf("%s for Param %s is an unsupported type.", types.df[i], pids[i])
+      }
+    }
+
+    newres = mapDfc(seq_along(pids), getMapping)
     colnames(newres) = pids
+
     # check each row if forbidden, then remove
     if (hasForbidden(par.set)) {
       # FIXME: this is pretty slow, but correct
@@ -155,7 +170,10 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
       newres = newres[!fb, , drop = FALSE]
       newdes = newdes[!fb, , drop = FALSE]
     }
-    newres = fix_na_helper(newres, types.int, pars, lens, trafos, par.requires)
+    if (trafo) {
+      newres = applyTrafos(newres, pars)
+    }
+    newres = setRequiresToNA(newres, pars, par.requires)
     # add to result (design matrix and data.frame)
     des = rbind(des, newdes)
     res = rbind(res, newres)
@@ -181,9 +199,53 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
   return(res)
 }
 
-fix_na_helper = function(newres, types.int, pars, lens, trafos, par.requires) {
-  # This function just exists to isolate the
-  # REAL() can only be applied to a 'numeric', not a 'NULL'
-  # error
-  .Call(c_trafo_and_set_dep_to_na, newres, types.int, names(pars), lens, trafos, par.requires, new.env())
+applyTrafos = function(newres, pars) {
+  for (par in pars) {
+    if (!is.null(par$trafo)) {
+      ids = getParamIds(par, repeated = TRUE, with.nr = TRUE)
+      if (par$len == 1) {
+        # we expect, that the trafo works vectorized for normal params
+        newres[, ids] = par$trafo(newres[, ids])
+      } else {
+        # for vector params the trafo has to work on the single vector
+        for (i in seq_len(nrow(newres))) {
+          newres[i, ids] = par$trafo(newres[i, ids])
+        }
+      }
+    }
+  }
+  newres
+}
+
+setRequiresToNA = function(newres, pars, par.requires) {
+  changes = setNames(rep(TRUE, length(pars)), names(pars))
+
+  # heuristic if we allow this requirement to be evaluated in an vectorized fashion
+  req_vectorized = vapply(X = par.requires, function(req) {
+    # vectorized if no "&&", "||" or "(" is detected
+    !grepl(x = deparse(req), pattern = "\\|\\||&&|\\(")
+  }, FUN.VALUE = logical(1))
+
+  while (any(changes)) {
+    for (par in pars) {
+      if (!is.null(par.requires[[par$id]])) {
+        # set rows to NA 1) where req does not evalue to true AND 2) where the row is not already NA
+
+        if (req_vectorized[par$id]) {
+          set_to_na = !eval(par.requires[[par$id]], newres)
+        } else {
+          # unfortunately we allowed requirements to be not vectorized
+          set_to_na = !vapply(seq_len(nrow(newres)), function(i) {
+            eval(par.requires[[par$id]], newres[i,])
+          }, FUN.VALUE = logical(1))
+        }
+        set_to_na = set_to_na & !is.na(newres[[getParamIds(par, repeated = TRUE, with.nr = TRUE)[1]]])
+        newres[set_to_na, getParamIds(par, repeated = TRUE, with.nr = TRUE)] = getParamNA(par, repeated = FALSE)
+        changes[par$id] = any(set_to_na)
+      } else {
+        changes[par$id] = FALSE
+      }
+    }
+  }
+  newres
 }

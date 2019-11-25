@@ -98,3 +98,11 @@ convertExpressionToCall = function(req) {
   }
   req
 }
+
+# adapted from mlr-org/mlr3misc/purrr_map.R map_dtc
+mapDfc = function(.x, .f, ...) {
+  cols = lapply(.x, .f, ...)
+  j = vapply(cols, function(x) !is.null(dim(x)) && !is.null(colnames(x)), FUN.VALUE = NA, USE.NAMES = FALSE)
+  names(cols)[j] = ""
+  do.call(data.frame, c(cols, list(check.names = TRUE)))
+}
