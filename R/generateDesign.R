@@ -76,7 +76,6 @@
 #'   warning is issued and the smaller design is returned. Default is 20.
 #' @template ret_gendes_df
 #' @export
-#' @useDynLib ParamHelpers c_generateDesign c_trafo_and_set_dep_to_na
 #' @examples
 #' ps = makeParamSet(
 #'   makeNumericParam("x1", lower = -2, upper = 1),
@@ -123,7 +122,6 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
   types.df = getParamTypes(par.set, df.cols = TRUE)
   types.int = convertTypesToCInts(types.df)
   types.df[types.df == "factor"] = "character"
-  # ignore trafos if the user did not request transformed values
 
   nmissing = n
   # result objects
@@ -174,12 +172,12 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
     }
 
     # heuristic if we allow this requirement to be evaluated in an vectorized fashion
-    req_vectorized = vapply(X = lapply(pars, function(p) p$requires), function(req) {
+    req.vectorized = vapply(X = lapply(pars, function(p) p$requires), function(req) {
     # vectorized if no "&&", "||" or "(" is detected
       !grepl(x = deparse(req), pattern = "\\|\\||&&|\\(")
     }, FUN.VALUE = logical(1))
 
-    newres = setRequiresToNA(newres, pars, par.ids.each, par.nas.each, req_vectorized)
+    newres = setRequiresToNA(newres, pars, par.ids.each, par.nas.each, req.vectorized)
     # add to result (design matrix and data.frame)
     des = rbind(des, newdes)
     res = rbind(res, newres)
@@ -223,23 +221,23 @@ applyTrafos = function(newres, pars) {
   newres
 }
 
-setRequiresToNA = function(newres, pars, par.ids.each, par.nas.each, req_vectorized) {
+setRequiresToNA = function(newres, pars, par.ids.each, par.nas.each, req.vectorized) {
 
   for (par in pars) {
     req = par$requires
     if (!is.null(req)) {
       # set rows to NA 1) where req does not evalue to true AND 2) where the row is not already NA
 
-      if (req_vectorized[par$id]) {
-        set_to_na = !eval(req, newres)
+      if (req.vectorized[par$id]) {
+        set.to.na = !eval(req, newres)
       } else {
         # unfortunately we allowed requirements to be not vectorized
-        set_to_na = !vapply(seq_len(nrow(newres)), function(i) {
+        set.to.na = !vapply(seq_len(nrow(newres)), function(i) {
           eval(req, newres[i,])
         }, FUN.VALUE = logical(1))
       }
-      set_to_na = set_to_na & !is.na(newres[[par.ids.each[[par$id]][1]]])
-      newres[set_to_na, par.ids.each[[par$id]]] = par.nas.each[[par$id]]
+      set.to.na = set.to.na & !is.na(newres[[par.ids.each[[par$id]][1]]])
+      newres[set.to.na, par.ids.each[[par$id]]] = par.nas.each[[par$id]]
     }
   }
   newres
