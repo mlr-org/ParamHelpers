@@ -226,15 +226,16 @@ applyTrafos = function(newres, pars) {
 setRequiresToNA = function(newres, pars, par.ids.each, par.nas.each, req_vectorized) {
 
   for (par in pars) {
-    if (!is.null(par$requires)) {
+    req = par$requires
+    if (!is.null(req)) {
       # set rows to NA 1) where req does not evalue to true AND 2) where the row is not already NA
 
       if (req_vectorized[par$id]) {
-        set_to_na = !eval(par$requires, newres)
+        set_to_na = !eval(req, newres)
       } else {
         # unfortunately we allowed requirements to be not vectorized
         set_to_na = !vapply(seq_len(nrow(newres)), function(i) {
-          eval(par$requires, newres[i,])
+          eval(req, newres[i,])
         }, FUN.VALUE = logical(1))
       }
       set_to_na = set_to_na & !is.na(newres[[par.ids.each[[par$id]][1]]])
