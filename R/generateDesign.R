@@ -169,7 +169,7 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
       newdes = newdes[!fb, , drop = FALSE]
     }
 
-    newres = trafoAndSetDepToNa(newres, trafo, par.set, pars = pars, types.df = types.df, convert.cols = FALSE)
+    newres = trafoAndSetDepToNa(newres, trafo, par.set, pars = pars, convert.cols = FALSE)
 
     # add to result (design matrix and data.frame)
     des = rbind(des, newdes)
@@ -197,6 +197,7 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
 }
 
 trafoAndSetDepToNa = function(res, trafo, par.set, types.df = NULL, pars = par.set$pars, convert.cols = FALSE) {
+  res = force(res)
   if (convert.cols) {
     res = convertDataFrameCols(res, factors.as.char = TRUE)
   }
@@ -213,7 +214,6 @@ trafoAndSetDepToNa = function(res, trafo, par.set, types.df = NULL, pars = par.s
       replicate(length(pars), NULL, simplify = FALSE)
     }
     par.requires = lapply(pars, function(p) p$requires)
-    browser()
     res = .Call(c_trafo_and_set_dep_to_na, res, types.int, names(pars), lens, trafos, par.requires, new.env())
   }
   res
