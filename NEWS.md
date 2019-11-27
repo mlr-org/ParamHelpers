@@ -2,6 +2,7 @@
 
 - trafo allowed in DiscreteVectorParam
 - removed non-descriptive warning when a param has `NA` set as default
+- `generateDesign` partly rewritten in `R` to avoid random error in C `REAL() can only be applied to a 'numeric', not a 'NULL'`. Function should actually be slightly faster now.
 
 # ParamHelpers 1.12
 
@@ -37,7 +38,7 @@
 - removed soobench from SUGGESTS and removed function extractParamSetFromSooFunction
 - hasDiscrete: added arg "include.logical"
 - getParamSet has become a generic
-- OptPath: it is possible to log non-scalar values under "extras" now by starting the extra-name with a dot. 
+- OptPath: it is possible to log non-scalar values under "extras" now by starting the extra-name with a dot.
   These elements wll not be contained is as.data.frame(opt.path) when converted.
 - make*Param argument 'requires' now accepts expressions and quote'd expressions.
 - getParamIds is now S3 and also callable on type "Param"
@@ -84,7 +85,7 @@
 
 # ParamHelpers 1.4
 
-- sampleValue(s): 'discrete.names' now only affects discrtete params and not logicals anymore. 
+- sampleValue(s): 'discrete.names' now only affects discrtete params and not logicals anymore.
   logical params always result in R data type 'logical'
 - Vector params (num, int and log) can now have component names
 - many more OptPath getter methods allow the selection option 'dob' and 'eol' to subset the result
@@ -99,7 +100,7 @@
 - Vector params (num, int and log) can now have component names Functions that produce such vector values (e.g. sampleValue or dfRowsToList)
   will name the components of this vector automatically.
   The user can also call setValueCNames in his own code.
-  
+
 ## new functions
 - getOptPathCols
 - setValueCNames
