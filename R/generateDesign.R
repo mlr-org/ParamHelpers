@@ -197,7 +197,7 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
 }
 
 trafoAndSetDepToNa = function(res, trafo, par.set, types.df = NULL, pars = par.set$pars, convert.cols = FALSE) {
-  res = force(res)
+  res = force(res) # otherwise c call does weird things
   if (convert.cols) {
     res = convertDataFrameCols(res, factors.as.char = TRUE)
   }
