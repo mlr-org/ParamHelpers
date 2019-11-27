@@ -113,14 +113,13 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
   lens = getParamLengths(par.set)
   k = sum(lens)
   pids = getParamIds(par.set, repeated = TRUE, with.nr = TRUE)
-  par.ids.each = lapply(pars, getParamIds, repeated = TRUE, with.nr = TRUE)
-  par.nas.each = lapply(pars, getParamNA, repeated = FALSE)
   lower2 = setNames(rep(NA_real_, k), pids)
   lower2 = insert(lower2, lower)
   upper2 = setNames(rep(NA_real_, k), pids)
   upper2 = insert(upper2, upper)
   values = getParamSetValues(par.set)
   types.df = getParamTypes(par.set, df.cols = TRUE)
+  types.int = convertTypesToCInts(types.df)
   types.df[types.df == "factor"] = "character"
 
   nmissing = n
@@ -169,7 +168,7 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
       newdes = newdes[!fb, , drop = FALSE]
     }
 
-    newres = trafoAndSetDepToNa(newres, trafo, par.set, pars = pars, convert.cols = FALSE)
+    newres = trafoAndSetDepToNa(newres, trafo, par.set, pars = pars, types.df= types.df, types.int = types.int)
 
     # add to result (design matrix and data.frame)
     des = rbind(des, newdes)
@@ -196,16 +195,8 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
   return(res)
 }
 
-trafoAndSetDepToNa = function(res, trafo, par.set, types.df = NULL, pars = par.set$pars, convert.cols = FALSE) {
-  res = force(res) # otherwise c call does weird things
-  if (convert.cols) {
-    res = convertDataFrameCols(res, factors.as.char = TRUE)
-  }
+trafoAndSetDepToNa = function(res, trafo, par.set, types.df = getParamTypes(par.set, df.cols = TRUE), types.int = convertTypesToCInts(types.df), pars = par.set$pars) {
   if (trafo || hasRequires(par.set)) {
-    if (is.null(types.df)) {
-      types.df = getParamTypes(par.set, df.cols = TRUE)
-    }
-    types.int = convertTypesToCInts(types.df)
     lens = getParamLengths(par.set)
       # ignore trafos if the user did not request transformed values
     trafos = if (trafo) {
@@ -214,6 +205,7 @@ trafoAndSetDepToNa = function(res, trafo, par.set, types.df = NULL, pars = par.s
       replicate(length(pars), NULL, simplify = FALSE)
     }
     par.requires = lapply(pars, function(p) p$requires)
+    force(res) # otherwise c call does weird things
     res = .Call(c_trafo_and_set_dep_to_na, res, types.int, names(pars), lens, trafos, par.requires, new.env())
   }
   res

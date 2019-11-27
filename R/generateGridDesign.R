@@ -121,7 +121,8 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE) {
     res = res[!fb, , drop = FALSE]
   }
 
-  res = trafoAndSetDepToNa(res, trafo, par.set, convert.cols = TRUE)
+  res = convertDataFrameCols(res, factors.as.char = TRUE)
+  res = trafoAndSetDepToNa(res, trafo, par.set)
 
   # remove duplicates
   res = unique(res)

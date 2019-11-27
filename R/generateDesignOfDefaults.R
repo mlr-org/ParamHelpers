@@ -46,8 +46,8 @@ generateDesignOfDefaults = function(par.set, trafo = FALSE) {
 
 
   res = listToDfOneRow(defaults)
-
-  res = trafoAndSetDepToNa(res, trafo, par.set, convert.cols = TRUE)
+  res = convertDataFrameCols(res, factors.as.char = TRUE)
+  res = trafoAndSetDepToNa(res, trafo, par.set)
 
   res = fixDesignFactors(res, par.set)
   res = fixDesignVarTypes(res, par.set)
