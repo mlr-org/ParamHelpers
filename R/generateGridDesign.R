@@ -121,25 +121,10 @@ generateGridDesign = function(par.set, resolution, trafo = FALSE) {
     res = res[!fb, , drop = FALSE]
   }
 
-  if (trafo || hasRequires(par.set)) {
-    # the following lines are mainly copy paste from generateDesign
-    types.df = getParamTypes(par.set, df.cols = TRUE)
-    types.int = convertTypesToCInts(types.df)
-    # ignore trafos if the user did not request transformed values
-    trafos = if (trafo) {
-      lapply(pars, function(p) p$trafo)
-    } else {
-      replicate(length(pars), NULL, simplify = FALSE)
-    }
-    par.requires = lapply(pars, function(p) p$requires)
-    res = convertDataFrameCols(res, factors.as.char = TRUE)
-    res = .Call(c_trafo_and_set_dep_to_na, res, types.int, names(pars), lens, trafos, par.requires, new.env())
-  }
+  res = trafoAndSetDepToNa(res, trafo, par.set, convert.cols = TRUE)
 
   # remove duplicates
-  res = res[!duplicated(res), , drop = FALSE]
-
-  res = convertDataFrameCols(res, chars.as.factor = TRUE)
+  res = unique(res)
 
   # fix factors
   res = fixDesignFactors(res, par.set)
