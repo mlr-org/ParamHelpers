@@ -198,6 +198,12 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
   return(res)
 }
 
+# applies the trafo to each parameter
+# @param res data.frame()
+#  with columns named accroding to getParamIds(par, repeated = TRUE, with.nr = TRUE) (so multiple columns for vector params)
+# @pars list()
+#  the ps$pars part of a param set
+# @value data.frame()
 applyTrafos = function(res, pars) {
   for (par in pars) {
     if (!is.null(par$trafo)) {
@@ -216,6 +222,11 @@ applyTrafos = function(res, pars) {
   res
 }
 
+# determines if the requirements work vectorized accrding to a simple heuristic
+# @param pars list()
+#   the ps$pars part of a param set
+# @value logical named
+#   TRUE for each column that I can evaluate vectorized
 determineReqVectorized = function(pars) {
   # heuristic if we allow this requirement to be evaluated in an vectorized fashion
   vapply(X = lapply(pars, function(p) p$requires), function(req) {
@@ -224,6 +235,18 @@ determineReqVectorized = function(pars) {
   }, FUN.VALUE = logical(1))
 }
 
+# Sets values of params to NA if requirements are not evaluated to TRUE (rowwise)
+# @param res data.frame(n,m)
+#   The design
+# @param pars list()
+#   the ps$pars part of a param set
+# @param pars.ids.each list()
+#   the colnames that are used by each parameter (especially important for vector params, otherwise ist just list(paramA = "paramA"))
+# @param pars.nas.each list()
+#   the na type (e.g NA_character) that should be filled in if req is not met (important so that we do not destroy the right column type)
+# @param req.vectorized named logical()
+#   TRUE for each column that I can evaluate the req vectorized
+# @value data.frame()
 setRequiresToNA = function(res, pars, par.ids.each = NULL, par.nas.each = NULL, req.vectorized = NULL) {
 
   # these values can be passed manually to make this function faster if it is called multiple times because the single S3 function calls can sum up to some seconds!
