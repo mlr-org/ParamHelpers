@@ -3,7 +3,6 @@
 #' @import stats
 #' @importFrom fastmatch %fin% fmatch
 #' @rawNamespace import(BBmisc, except = isFALSE)
-#' @useDynLib ParamHelpers c_trafo_and_set_dep_to_na
 NULL
 
 .onLoad = function(libname, pkgname) {

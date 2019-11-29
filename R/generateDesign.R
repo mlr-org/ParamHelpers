@@ -114,6 +114,7 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
   pids = getParamIds(par.set, repeated = TRUE, with.nr = TRUE)
   par.ids.each = lapply(pars, getParamIds, repeated = TRUE, with.nr = TRUE)
   par.nas.each = lapply(pars, getParamNA, repeated = FALSE)
+  req.vectorized = determineReqVectorized(pars)
   lower2 = setNames(rep(NA_real_, k), pids)
   lower2 = insert(lower2, lower)
   upper2 = setNames(rep(NA_real_, k), pids)
@@ -170,13 +171,8 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
       newres = applyTrafos(newres, pars)
     }
 
-    # heuristic if we allow this requirement to be evaluated in an vectorized fashion
-    req.vectorized = vapply(X = lapply(pars, function(p) p$requires), function(req) {
-    # vectorized if no "&&", "||" or "(" is detected
-      !grepl(x = deparse(req), pattern = "\\|\\||&&|\\(")
-    }, FUN.VALUE = logical(1))
-
     newres = setRequiresToNA(newres, pars, par.ids.each, par.nas.each, req.vectorized)
+
     # add to result (design matrix and data.frame)
     des = rbind(des, newdes)
     res = rbind(res, newres)
@@ -202,25 +198,44 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
   return(res)
 }
 
-applyTrafos = function(newres, pars) {
+applyTrafos = function(res, pars) {
   for (par in pars) {
     if (!is.null(par$trafo)) {
       ids = getParamIds(par, repeated = TRUE, with.nr = TRUE)
       if (par$len == 1) {
         # we expect, that the trafo works vectorized for normal params
-        newres[, ids] = par$trafo(newres[, ids])
+        res[, ids] = par$trafo(res[, ids])
       } else {
         # for vector params the trafo has to work on the single vector
-        for (i in seq_len(nrow(newres))) {
-          newres[i, ids] = par$trafo(newres[i, ids])
+        for (i in seq_len(nrow(res))) {
+          res[i, ids] = par$trafo(res[i, ids])
         }
       }
     }
   }
-  newres
+  res
 }
 
-setRequiresToNA = function(newres, pars, par.ids.each, par.nas.each, req.vectorized) {
+determineReqVectorized = function(pars) {
+  # heuristic if we allow this requirement to be evaluated in an vectorized fashion
+  vapply(X = lapply(pars, function(p) p$requires), function(req) {
+    # vectorized if no "&&", "||" or "(" is detected
+    !grepl(x = deparse(req), pattern = "\\|\\||&&|\\(")
+  }, FUN.VALUE = logical(1))
+}
+
+setRequiresToNA = function(res, pars, par.ids.each = NULL, par.nas.each = NULL, req.vectorized = NULL) {
+
+  # these values can be passed manually to make this function faster if it is called multiple times because the single S3 function calls can sum up to some seconds!
+  if (is.null(par.ids.each)) {
+    par.ids.each = lapply(pars, getParamIds, repeated = TRUE, with.nr = TRUE)
+  }
+  if (is.null(par.nas.each)) {
+    par.nas.each = lapply(pars, getParamNA, repeated = FALSE)
+  }
+  if (is.null(req.vectorized)) {
+    req.vectorized = determineReqVectorized(pars)
+  }
 
   for (par in pars) {
     req = par$requires
@@ -228,16 +243,16 @@ setRequiresToNA = function(newres, pars, par.ids.each, par.nas.each, req.vectori
       # set rows to NA 1) where req does not evalue to true AND 2) where the row is not already NA
 
       if (req.vectorized[par$id]) {
-        set.to.na = !eval(req, newres)
+        set.to.na = !eval(req, res)
       } else {
         # unfortunately we allowed requirements to be not vectorized
-        set.to.na = !vapply(seq_len(nrow(newres)), function(i) {
-          eval(req, newres[i,])
+        set.to.na = !vapply(seq_len(nrow(res)), function(i) {
+          eval(req, res[i,])
         }, FUN.VALUE = logical(1))
       }
-      set.to.na = set.to.na & !is.na(newres[[par.ids.each[[par$id]][1]]])
-      newres[set.to.na, par.ids.each[[par$id]]] = par.nas.each[[par$id]]
+      set.to.na = set.to.na & !is.na(res[[par.ids.each[[par$id]][1]]])
+      res[set.to.na, par.ids.each[[par$id]]] = par.nas.each[[par$id]]
     }
   }
-  newres
+  res
 }
