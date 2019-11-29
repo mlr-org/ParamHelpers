@@ -75,7 +75,6 @@
 #'   augment. If the the design is of size less than `n` after all tries, a
 #'   warning is issued and the smaller design is returned. Default is 20.
 #' @template ret_gendes_df
-#' @useDynLib ParamHelpers c_trafo_and_set_dep_to_na
 #' @export
 #' @examples
 #' ps = makeParamSet(
@@ -113,27 +112,27 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
   lens = getParamLengths(par.set)
   k = sum(lens)
   pids = getParamIds(par.set, repeated = TRUE, with.nr = TRUE)
+  par.ids.each = lapply(pars, getParamIds, repeated = TRUE, with.nr = TRUE)
+  par.nas.each = lapply(pars, getParamNA, repeated = FALSE)
   lower2 = setNames(rep(NA_real_, k), pids)
   lower2 = insert(lower2, lower)
   upper2 = setNames(rep(NA_real_, k), pids)
   upper2 = insert(upper2, upper)
   values = getParamSetValues(par.set)
   types.df = getParamTypes(par.set, df.cols = TRUE)
-  types.int = convertTypesToCInts(types.df)
   types.df[types.df == "factor"] = "character"
 
   nmissing = n
   # result objects
   res = data.frame()
-  des = matrix(nrow = 0, ncol = k) # we keep the lhs design because n is counted on des and not on the discretized res (which can be smaller and never reach n)
-
+  des = matrix(nrow = 0, ncol = k)
   for (iter in seq_len(augment)) {
     ### get design, types converted, trafos, conditionals set to NA
     # create new design or augment if we already have some points
     newdes = if (nmissing == n) {
       do.call(fun, insert(list(n = nmissing, k = k), fun.args))
     } else {
-      lhs::randomLHS(nmissing, k = k) # we could call lhs::augmentLHS but we wont change the behaviour of ParamHelpers anymore
+      lhs::randomLHS(nmissing, k = k)
     }
 
     # taken and adapted from individual Param Objects in mlr-org/paradox
@@ -167,9 +166,17 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
       newres = newres[!fb, , drop = FALSE]
       newdes = newdes[!fb, , drop = FALSE]
     }
+    if (trafo) {
+      newres = applyTrafos(newres, pars)
+    }
 
-    newres = trafoAndSetDepToNa(newres, trafo, par.set, pars = pars, types.df= types.df, types.int = types.int)
+    # heuristic if we allow this requirement to be evaluated in an vectorized fashion
+    req.vectorized = vapply(X = lapply(pars, function(p) p$requires), function(req) {
+    # vectorized if no "&&", "||" or "(" is detected
+      !grepl(x = deparse(req), pattern = "\\|\\||&&|\\(")
+    }, FUN.VALUE = logical(1))
 
+    newres = setRequiresToNA(newres, pars, par.ids.each, par.nas.each, req.vectorized)
     # add to result (design matrix and data.frame)
     des = rbind(des, newdes)
     res = rbind(res, newres)
@@ -195,18 +202,42 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
   return(res)
 }
 
-trafoAndSetDepToNa = function(res, trafo, par.set, types.df = getParamTypes(par.set, df.cols = TRUE), types.int = convertTypesToCInts(types.df), pars = par.set$pars) {
-  if (trafo || hasRequires(par.set)) {
-    lens = getParamLengths(par.set)
-      # ignore trafos if the user did not request transformed values
-    trafos = if (trafo) {
-      lapply(pars, function(p) p$trafo)
-    } else {
-      replicate(length(pars), NULL, simplify = FALSE)
+applyTrafos = function(newres, pars) {
+  for (par in pars) {
+    if (!is.null(par$trafo)) {
+      ids = getParamIds(par, repeated = TRUE, with.nr = TRUE)
+      if (par$len == 1) {
+        # we expect, that the trafo works vectorized for normal params
+        newres[, ids] = par$trafo(newres[, ids])
+      } else {
+        # for vector params the trafo has to work on the single vector
+        for (i in seq_len(nrow(newres))) {
+          newres[i, ids] = par$trafo(newres[i, ids])
+        }
+      }
     }
-    par.requires = lapply(pars, function(p) p$requires)
-    force(res) # otherwise c call does weird things
-    res = .Call(c_trafo_and_set_dep_to_na, res, types.int, names(pars), lens, trafos, par.requires, new.env())
   }
-  res
+  newres
+}
+
+setRequiresToNA = function(newres, pars, par.ids.each, par.nas.each, req.vectorized) {
+
+  for (par in pars) {
+    req = par$requires
+    if (!is.null(req)) {
+      # set rows to NA 1) where req does not evalue to true AND 2) where the row is not already NA
+
+      if (req.vectorized[par$id]) {
+        set.to.na = !eval(req, newres)
+      } else {
+        # unfortunately we allowed requirements to be not vectorized
+        set.to.na = !vapply(seq_len(nrow(newres)), function(i) {
+          eval(req, newres[i,])
+        }, FUN.VALUE = logical(1))
+      }
+      set.to.na = set.to.na & !is.na(newres[[par.ids.each[[par$id]][1]]])
+      newres[set.to.na, par.ids.each[[par$id]]] = par.nas.each[[par$id]]
+    }
+  }
+  newres
 }

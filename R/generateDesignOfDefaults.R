@@ -46,8 +46,26 @@ generateDesignOfDefaults = function(par.set, trafo = FALSE) {
 
 
   res = listToDfOneRow(defaults)
-  res = convertDataFrameCols(res, factors.as.char = TRUE)
-  res = trafoAndSetDepToNa(res, trafo, par.set)
+
+  # now trafo and set params whose conditions are not fulfilled to NA
+  #
+  # FIXME: this is basically a copy-paste from generateGridDesign and generateDesign
+  # we should probably refactor this operation! the whole code sucks here!
+  if (trafo || hasRequires(par.set)) {
+    lens = getParamLengths(par.set)
+    # the following lines are mainly copy paste from generateDesign
+    types.df = getParamTypes(par.set, df.cols = TRUE)
+    types.int = convertTypesToCInts(types.df)
+    # ignore trafos if the user did not request transformed values
+    trafos = if (trafo) {
+      lapply(pars, function(p) p$trafo)
+    } else {
+      replicate(length(pars), NULL, simplify = FALSE)
+    }
+    par.requires = getRequirements(par.set, remove.null = FALSE)
+    res = convertDataFrameCols(res, factors.as.char = TRUE)
+    res = .Call(c_trafo_and_set_dep_to_na, res, types.int, names(pars), lens, trafos, par.requires, new.env())
+  }
 
   res = fixDesignFactors(res, par.set)
   res = fixDesignVarTypes(res, par.set)

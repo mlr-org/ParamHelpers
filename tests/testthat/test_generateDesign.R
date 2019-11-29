@@ -188,7 +188,7 @@ test_that("requires chains work", {
     # FIXME: shouldn't need to make the chain explicit
     makeNumericLearnerParam("c", lower = 0, upper = 1, requires = quote(b == TRUE && a == TRUE))
   )
-  des = generateDesign(8L, par.set = ps8, augment = 100L)
+  des = generateDesign(4L, par.set = ps8, augment = 100L)
   vals = dfRowsToList(des, ps8)
   oks = sapply(vals, isFeasible, par = ps8)
   expect_true(all(oks))
