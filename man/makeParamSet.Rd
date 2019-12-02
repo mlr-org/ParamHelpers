@@ -8,8 +8,7 @@
 \usage{
 makeParamSet(..., params = NULL, forbidden = NULL, keys = NULL)
 
-makeNumericParamSet(id = "x", len, lower = -Inf, upper = Inf,
-  vector = TRUE)
+makeNumericParamSet(id = "x", len, lower = -Inf, upper = Inf, vector = TRUE)
 }
 \arguments{
 \item{...}{(\code{\link[=Param]{Param()}})\cr

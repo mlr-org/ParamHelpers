@@ -4,8 +4,15 @@
 \alias{plotOptPath}
 \title{Plot method for optimization paths.}
 \usage{
-plotOptPath(op, iters, pause = TRUE, xlim = list(), ylim = list(),
-  title = "Optimization Path Plots", ...)
+plotOptPath(
+  op,
+  iters,
+  pause = TRUE,
+  xlim = list(),
+  ylim = list(),
+  title = "Optimization Path Plots",
+  ...
+)
 }
 \arguments{
 \item{op}{(\code{OptPath})\cr

@@ -15,41 +15,111 @@
 \title{Create a description object for a parameter of a machine learning
 algorithm.}
 \usage{
-makeNumericLearnerParam(id, lower = -Inf, upper = Inf,
-  allow.inf = FALSE, default, when = "train", requires = NULL,
-  tunable = TRUE, special.vals = list())
+makeNumericLearnerParam(
+  id,
+  lower = -Inf,
+  upper = Inf,
+  allow.inf = FALSE,
+  default,
+  when = "train",
+  requires = NULL,
+  tunable = TRUE,
+  special.vals = list()
+)
 
-makeNumericVectorLearnerParam(id, len = as.integer(NA), lower = -Inf,
-  upper = Inf, allow.inf = FALSE, default, when = "train",
-  requires = NULL, tunable = TRUE, special.vals = list())
+makeNumericVectorLearnerParam(
+  id,
+  len = as.integer(NA),
+  lower = -Inf,
+  upper = Inf,
+  allow.inf = FALSE,
+  default,
+  when = "train",
+  requires = NULL,
+  tunable = TRUE,
+  special.vals = list()
+)
 
-makeIntegerLearnerParam(id, lower = -Inf, upper = Inf, default,
-  when = "train", requires = NULL, tunable = TRUE,
-  special.vals = list())
+makeIntegerLearnerParam(
+  id,
+  lower = -Inf,
+  upper = Inf,
+  default,
+  when = "train",
+  requires = NULL,
+  tunable = TRUE,
+  special.vals = list()
+)
 
-makeIntegerVectorLearnerParam(id, len = as.integer(NA), lower = -Inf,
-  upper = Inf, default, when = "train", requires = NULL,
-  tunable = TRUE, special.vals = list())
+makeIntegerVectorLearnerParam(
+  id,
+  len = as.integer(NA),
+  lower = -Inf,
+  upper = Inf,
+  default,
+  when = "train",
+  requires = NULL,
+  tunable = TRUE,
+  special.vals = list()
+)
 
-makeDiscreteLearnerParam(id, values, default, when = "train",
-  requires = NULL, tunable = TRUE, special.vals = list())
+makeDiscreteLearnerParam(
+  id,
+  values,
+  default,
+  when = "train",
+  requires = NULL,
+  tunable = TRUE,
+  special.vals = list()
+)
 
-makeDiscreteVectorLearnerParam(id, len = as.integer(NA), values, default,
-  when = "train", requires = NULL, tunable = TRUE,
-  special.vals = list())
+makeDiscreteVectorLearnerParam(
+  id,
+  len = as.integer(NA),
+  values,
+  default,
+  when = "train",
+  requires = NULL,
+  tunable = TRUE,
+  special.vals = list()
+)
 
-makeLogicalLearnerParam(id, default, when = "train", requires = NULL,
-  tunable = TRUE, special.vals = list())
+makeLogicalLearnerParam(
+  id,
+  default,
+  when = "train",
+  requires = NULL,
+  tunable = TRUE,
+  special.vals = list()
+)
 
-makeLogicalVectorLearnerParam(id, len = as.integer(NA), default,
-  when = "train", requires = NULL, tunable = TRUE,
-  special.vals = list())
+makeLogicalVectorLearnerParam(
+  id,
+  len = as.integer(NA),
+  default,
+  when = "train",
+  requires = NULL,
+  tunable = TRUE,
+  special.vals = list()
+)
 
-makeUntypedLearnerParam(id, default, when = "train", requires = NULL,
-  tunable = TRUE, special.vals = list())
+makeUntypedLearnerParam(
+  id,
+  default,
+  when = "train",
+  requires = NULL,
+  tunable = TRUE,
+  special.vals = list()
+)
 
-makeFunctionLearnerParam(id, default, when = "train", requires = NULL,
-  tunable = TRUE, special.vals = list())
+makeFunctionLearnerParam(
+  id,
+  default,
+  when = "train",
+  requires = NULL,
+  tunable = TRUE,
+  special.vals = list()
+)
 }
 \arguments{
 \item{id}{(\code{character(1)})\cr

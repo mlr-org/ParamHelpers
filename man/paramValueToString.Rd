@@ -4,8 +4,7 @@
 \alias{paramValueToString}
 \title{Convert a value to a string.}
 \usage{
-paramValueToString(par, x, show.missing.values = FALSE,
-  num.format = "\%.3g")
+paramValueToString(par, x, show.missing.values = FALSE, num.format = "\%.3g")
 }
 \arguments{
 \item{par}{(\link{Param} | \link{ParamSet})\cr

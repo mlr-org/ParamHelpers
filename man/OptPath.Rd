@@ -6,9 +6,15 @@
 \alias{OptPathDF}
 \title{Create optimization path.}
 \usage{
-makeOptPathDF(par.set, y.names, minimize, add.transformed.x = FALSE,
-  include.error.message = FALSE, include.exec.time = FALSE,
-  include.extra = FALSE)
+makeOptPathDF(
+  par.set,
+  y.names,
+  minimize,
+  add.transformed.x = FALSE,
+  include.error.message = FALSE,
+  include.exec.time = FALSE,
+  include.extra = FALSE
+)
 }
 \arguments{
 \item{par.set}{\link{ParamSet}\cr
@@ -72,17 +78,21 @@ Contents depend on implementation.}
 }
 }
 \seealso{
-Other optpath: \code{\link{addOptPathEl}},
-  \code{\link{getOptPathBestIndex}},
-  \code{\link{getOptPathCols}},
-  \code{\link{getOptPathCol}}, \code{\link{getOptPathDOB}},
-  \code{\link{getOptPathEOL}}, \code{\link{getOptPathEl}},
-  \code{\link{getOptPathErrorMessages}},
-  \code{\link{getOptPathExecTimes}},
-  \code{\link{getOptPathLength}},
-  \code{\link{getOptPathParetoFront}},
-  \code{\link{getOptPathX}}, \code{\link{getOptPathY}},
-  \code{\link{setOptPathElDOB}},
-  \code{\link{setOptPathElEOL}}
+Other optpath: 
+\code{\link{addOptPathEl}()},
+\code{\link{getOptPathBestIndex}()},
+\code{\link{getOptPathCols}()},
+\code{\link{getOptPathCol}()},
+\code{\link{getOptPathDOB}()},
+\code{\link{getOptPathEOL}()},
+\code{\link{getOptPathEl}()},
+\code{\link{getOptPathErrorMessages}()},
+\code{\link{getOptPathExecTimes}()},
+\code{\link{getOptPathLength}()},
+\code{\link{getOptPathParetoFront}()},
+\code{\link{getOptPathX}()},
+\code{\link{getOptPathY}()},
+\code{\link{setOptPathElDOB}()},
+\code{\link{setOptPathElEOL}()}
 }
 \concept{optpath}

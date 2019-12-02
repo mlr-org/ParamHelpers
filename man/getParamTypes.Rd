@@ -4,8 +4,13 @@
 \alias{getParamTypes}
 \title{Returns type information for a parameter set.}
 \usage{
-getParamTypes(par.set, df.cols = FALSE, df.discretes.as.factor = TRUE,
-  use.names = FALSE, with.nr = TRUE)
+getParamTypes(
+  par.set,
+  df.cols = FALSE,
+  df.discretes.as.factor = TRUE,
+  use.names = FALSE,
+  with.nr = TRUE
+)
 }
 \arguments{
 \item{par.set}{\link{ParamSet}\cr

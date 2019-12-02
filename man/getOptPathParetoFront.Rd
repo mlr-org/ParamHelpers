@@ -4,8 +4,13 @@
 \alias{getOptPathParetoFront}
 \title{Get indices of pareto front of optimization path.}
 \usage{
-getOptPathParetoFront(op, y.names = op$y.names, dob = op$env$dob,
-  eol = op$env$eol, index = FALSE)
+getOptPathParetoFront(
+  op,
+  y.names = op$y.names,
+  dob = op$env$dob,
+  eol = op$env$eol,
+  index = FALSE
+)
 }
 \arguments{
 \item{op}{\link{OptPath}\cr
@@ -48,17 +53,21 @@ getOptPathParetoFront(op)
 getOptPathParetoFront(op, index = TRUE)
 }
 \seealso{
-Other optpath: \code{\link{OptPath}},
-  \code{\link{addOptPathEl}},
-  \code{\link{getOptPathBestIndex}},
-  \code{\link{getOptPathCols}},
-  \code{\link{getOptPathCol}}, \code{\link{getOptPathDOB}},
-  \code{\link{getOptPathEOL}}, \code{\link{getOptPathEl}},
-  \code{\link{getOptPathErrorMessages}},
-  \code{\link{getOptPathExecTimes}},
-  \code{\link{getOptPathLength}},
-  \code{\link{getOptPathX}}, \code{\link{getOptPathY}},
-  \code{\link{setOptPathElDOB}},
-  \code{\link{setOptPathElEOL}}
+Other optpath: 
+\code{\link{OptPath}},
+\code{\link{addOptPathEl}()},
+\code{\link{getOptPathBestIndex}()},
+\code{\link{getOptPathCols}()},
+\code{\link{getOptPathCol}()},
+\code{\link{getOptPathDOB}()},
+\code{\link{getOptPathEOL}()},
+\code{\link{getOptPathEl}()},
+\code{\link{getOptPathErrorMessages}()},
+\code{\link{getOptPathExecTimes}()},
+\code{\link{getOptPathLength}()},
+\code{\link{getOptPathX}()},
+\code{\link{getOptPathY}()},
+\code{\link{setOptPathElDOB}()},
+\code{\link{setOptPathElEOL}()}
 }
 \concept{optpath}

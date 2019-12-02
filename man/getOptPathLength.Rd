@@ -18,17 +18,21 @@ Dependent parameters whose requirements are not satisfied are represented by a s
 NA in the output.
 }
 \seealso{
-Other optpath: \code{\link{OptPath}},
-  \code{\link{addOptPathEl}},
-  \code{\link{getOptPathBestIndex}},
-  \code{\link{getOptPathCols}},
-  \code{\link{getOptPathCol}}, \code{\link{getOptPathDOB}},
-  \code{\link{getOptPathEOL}}, \code{\link{getOptPathEl}},
-  \code{\link{getOptPathErrorMessages}},
-  \code{\link{getOptPathExecTimes}},
-  \code{\link{getOptPathParetoFront}},
-  \code{\link{getOptPathX}}, \code{\link{getOptPathY}},
-  \code{\link{setOptPathElDOB}},
-  \code{\link{setOptPathElEOL}}
+Other optpath: 
+\code{\link{OptPath}},
+\code{\link{addOptPathEl}()},
+\code{\link{getOptPathBestIndex}()},
+\code{\link{getOptPathCols}()},
+\code{\link{getOptPathCol}()},
+\code{\link{getOptPathDOB}()},
+\code{\link{getOptPathEOL}()},
+\code{\link{getOptPathEl}()},
+\code{\link{getOptPathErrorMessages}()},
+\code{\link{getOptPathExecTimes}()},
+\code{\link{getOptPathParetoFront}()},
+\code{\link{getOptPathX}()},
+\code{\link{getOptPathY}()},
+\code{\link{setOptPathElDOB}()},
+\code{\link{setOptPathElEOL}()}
 }
 \concept{optpath}

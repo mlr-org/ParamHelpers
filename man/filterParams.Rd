@@ -6,14 +6,27 @@
 \alias{filterParamsDiscrete}
 \title{Get parameter subset of only certain parameters.}
 \usage{
-filterParams(par.set, ids = NULL, type = NULL, tunable = c(TRUE,
-  FALSE), check.requires = FALSE)
+filterParams(
+  par.set,
+  ids = NULL,
+  type = NULL,
+  tunable = c(TRUE, FALSE),
+  check.requires = FALSE
+)
 
-filterParamsNumeric(par.set, ids = NULL, tunable = c(TRUE, FALSE),
-  include.int = TRUE)
+filterParamsNumeric(
+  par.set,
+  ids = NULL,
+  tunable = c(TRUE, FALSE),
+  include.int = TRUE
+)
 
-filterParamsDiscrete(par.set, ids = NULL, tunable = c(TRUE, FALSE),
-  include.logical = TRUE)
+filterParamsDiscrete(
+  par.set,
+  ids = NULL,
+  tunable = c(TRUE, FALSE),
+  include.logical = TRUE
+)
 }
 \arguments{
 \item{par.set}{\link{ParamSet}\cr

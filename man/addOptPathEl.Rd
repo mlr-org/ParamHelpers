@@ -4,10 +4,17 @@
 \alias{addOptPathEl}
 \title{Add a new element to an optimization path.}
 \usage{
-addOptPathEl(op, x, y, dob = getOptPathLength(op) + 1L,
-  eol = as.integer(NA), error.message = NA_character_,
-  exec.time = NA_real_, extra = NULL,
-  check.feasible = !op$add.transformed.x)
+addOptPathEl(
+  op,
+  x,
+  y,
+  dob = getOptPathLength(op) + 1L,
+  eol = as.integer(NA),
+  error.message = NA_character_,
+  exec.time = NA_real_,
+  extra = NULL,
+  check.feasible = !op$add.transformed.x
+)
 }
 \arguments{
 \item{op}{\link{OptPath}\cr
@@ -73,17 +80,21 @@ addOptPathEl(op, x = list(p1 = -1, p2 = "a"), y = 2)
 as.data.frame(op)
 }
 \seealso{
-Other optpath: \code{\link{OptPath}},
-  \code{\link{getOptPathBestIndex}},
-  \code{\link{getOptPathCols}},
-  \code{\link{getOptPathCol}}, \code{\link{getOptPathDOB}},
-  \code{\link{getOptPathEOL}}, \code{\link{getOptPathEl}},
-  \code{\link{getOptPathErrorMessages}},
-  \code{\link{getOptPathExecTimes}},
-  \code{\link{getOptPathLength}},
-  \code{\link{getOptPathParetoFront}},
-  \code{\link{getOptPathX}}, \code{\link{getOptPathY}},
-  \code{\link{setOptPathElDOB}},
-  \code{\link{setOptPathElEOL}}
+Other optpath: 
+\code{\link{OptPath}},
+\code{\link{getOptPathBestIndex}()},
+\code{\link{getOptPathCols}()},
+\code{\link{getOptPathCol}()},
+\code{\link{getOptPathDOB}()},
+\code{\link{getOptPathEOL}()},
+\code{\link{getOptPathEl}()},
+\code{\link{getOptPathErrorMessages}()},
+\code{\link{getOptPathExecTimes}()},
+\code{\link{getOptPathLength}()},
+\code{\link{getOptPathParetoFront}()},
+\code{\link{getOptPathX}()},
+\code{\link{getOptPathY}()},
+\code{\link{setOptPathElDOB}()},
+\code{\link{setOptPathElEOL}()}
 }
 \concept{optpath}

@@ -4,14 +4,31 @@
 \alias{renderOptPathPlot}
 \title{Function for plotting optimization paths.}
 \usage{
-renderOptPathPlot(op, iter, x.over.time, y.over.time,
-  contour.name = NULL, xlim = list(), ylim = list(), alpha = TRUE,
-  log = NULL, colours = c("red", "blue", "green", "orange"),
-  size.points = 3, size.lines = 1.5, impute.scale = 1,
-  impute.value = "missing", scale = "std",
+renderOptPathPlot(
+  op,
+  iter,
+  x.over.time,
+  y.over.time,
+  contour.name = NULL,
+  xlim = list(),
+  ylim = list(),
+  alpha = TRUE,
+  log = NULL,
+  colours = c("red", "blue", "green", "orange"),
+  size.points = 3,
+  size.lines = 1.5,
+  impute.scale = 1,
+  impute.value = "missing",
+  scale = "std",
   ggplot.theme = ggplot2::theme(legend.position = "top"),
-  marked = NULL, subset.obs, subset.vars, subset.targets, short.x.names,
-  short.y.names, short.rest.names)
+  marked = NULL,
+  subset.obs,
+  subset.vars,
+  subset.targets,
+  short.x.names,
+  short.y.names,
+  short.rest.names
+)
 }
 \arguments{
 \item{op}{\link{OptPath}\cr
@@ -24,29 +41,13 @@ Selected iteration of \code{x} to render plots for.}
 List of vectors of x-variables, either specified via name or id. If
 specified via names, also extra measurements from the opt.path can be
 selected. Maximum length for each vector is 5. For each list-element a
-line-plot iteration versus variable is generated. If the vector has length
-
-2 only mean values per iteration are plotted as lines, if vector has
-length 1 every point is plotted. Default is to plot all variables into as
-few plots as possible. Note that discrete variables are converted to
-numeric, if specified in the same vector with numerics. Moreover, if more
-than 1 point per iteration exists, mean values are calculated. This is also
-done for factor variables! We recommend you to specify  this argument in a
-useful way.}
+line-plot iteration versus variable is generated. If the vector has length2 only mean values per iteration are plotted as lines, if vector haslength 1 every point is plotted. Default is to plot all variables into asfew plots as possible. Note that discrete variables are converted tonumeric, if specified in the same vector with numerics. Moreover, if morethan 1 point per iteration exists, mean values are calculated. This is alsodone for factor variables! We recommend you to specify  this argument in auseful way.}
 
 \item{y.over.time}{(\code{list} | NULL]
 List of vectors of y-variables, either specified via name or id. If
 specified via names, also extra measurements from the opt.path can be
 selected. Maximum length for each vector is 5. For each list-element a
-line-plot iteration versus variable is generated. If the vector has length
-
-2 only mean values per iteration are plotted as lines, if vector has
-length 1 every point is plotted. Default is to plot all variables into as
-few plots as possible. Note that discrete variables are converted to
-numeric, if specified in the same vector with numerics. Moreover, if more
-than 1 point per iteration exists, mean values are calculated. This is also
-done for factor variables! We recommend you to specify  this argument in a
-useful way.}
+line-plot iteration versus variable is generated. If the vector has length2 only mean values per iteration are plotted as lines, if vector haslength 1 every point is plotted. Default is to plot all variables into asfew plots as possible. Note that discrete variables are converted tonumeric, if specified in the same vector with numerics. Moreover, if morethan 1 point per iteration exists, mean values are calculated. This is alsodone for factor variables! We recommend you to specify  this argument in auseful way.}
 
 \item{contour.name}{(\code{character(1)} | NULL)
 It is possible to overlay the XSpace plot with an contour plot. This is

@@ -16,44 +16,120 @@
 \alias{makeCharacterVectorParam}
 \title{Create a description object for a parameter.}
 \usage{
-makeNumericParam(id, lower = -Inf, upper = Inf, allow.inf = FALSE,
-  default, trafo = NULL, requires = NULL, tunable = TRUE,
-  special.vals = list())
+makeNumericParam(
+  id,
+  lower = -Inf,
+  upper = Inf,
+  allow.inf = FALSE,
+  default,
+  trafo = NULL,
+  requires = NULL,
+  tunable = TRUE,
+  special.vals = list()
+)
 
-makeNumericVectorParam(id, len, lower = -Inf, upper = Inf,
-  cnames = NULL, allow.inf = FALSE, default, trafo = NULL,
-  requires = NULL, tunable = TRUE, special.vals = list())
+makeNumericVectorParam(
+  id,
+  len,
+  lower = -Inf,
+  upper = Inf,
+  cnames = NULL,
+  allow.inf = FALSE,
+  default,
+  trafo = NULL,
+  requires = NULL,
+  tunable = TRUE,
+  special.vals = list()
+)
 
-makeIntegerParam(id, lower = -Inf, upper = Inf, default,
-  trafo = NULL, requires = NULL, tunable = TRUE,
-  special.vals = list())
+makeIntegerParam(
+  id,
+  lower = -Inf,
+  upper = Inf,
+  default,
+  trafo = NULL,
+  requires = NULL,
+  tunable = TRUE,
+  special.vals = list()
+)
 
-makeIntegerVectorParam(id, len, lower = -Inf, upper = Inf,
-  cnames = NULL, default, trafo = NULL, requires = NULL,
-  tunable = TRUE, special.vals = list())
+makeIntegerVectorParam(
+  id,
+  len,
+  lower = -Inf,
+  upper = Inf,
+  cnames = NULL,
+  default,
+  trafo = NULL,
+  requires = NULL,
+  tunable = TRUE,
+  special.vals = list()
+)
 
-makeLogicalParam(id, default, requires = NULL, tunable = TRUE,
-  special.vals = list())
+makeLogicalParam(
+  id,
+  default,
+  requires = NULL,
+  tunable = TRUE,
+  special.vals = list()
+)
 
-makeLogicalVectorParam(id, len, cnames = NULL, default,
-  requires = NULL, tunable = TRUE, special.vals = list())
+makeLogicalVectorParam(
+  id,
+  len,
+  cnames = NULL,
+  default,
+  requires = NULL,
+  tunable = TRUE,
+  special.vals = list()
+)
 
-makeDiscreteParam(id, values, trafo = NULL, default, requires = NULL,
-  tunable = TRUE, special.vals = list())
+makeDiscreteParam(
+  id,
+  values,
+  trafo = NULL,
+  default,
+  requires = NULL,
+  tunable = TRUE,
+  special.vals = list()
+)
 
-makeDiscreteVectorParam(id, len, values, trafo = NULL, default,
-  requires = NULL, tunable = TRUE, special.vals = list())
+makeDiscreteVectorParam(
+  id,
+  len,
+  values,
+  trafo = NULL,
+  default,
+  requires = NULL,
+  tunable = TRUE,
+  special.vals = list()
+)
 
-makeFunctionParam(id, default = default, requires = NULL,
-  special.vals = list())
+makeFunctionParam(
+  id,
+  default = default,
+  requires = NULL,
+  special.vals = list()
+)
 
-makeUntypedParam(id, default, requires = NULL, tunable = TRUE,
-  special.vals = list())
+makeUntypedParam(
+  id,
+  default,
+  requires = NULL,
+  tunable = TRUE,
+  special.vals = list()
+)
 
 makeCharacterParam(id, default, requires = NULL, special.vals = list())
 
-makeCharacterVectorParam(id, len, cnames = NULL, default,
-  requires = NULL, special.vals = list())
+makeCharacterVectorParam(
+  id,
+  len,
+  cnames = NULL,
+  default,
+  requires = NULL,
+  special.vals = list()
+)
 }
 \arguments{
 \item{id}{(\code{character(1)})\cr
@@ -79,7 +155,7 @@ learner. Note: When this is a discrete parameter make sure to use a VALUE
 here, not the NAME of the value. If this argument is missing, it means no
 default value is available.}
 
-\item{trafo}{(\code{NULL} | \code{function(x)})\cr
+\item{trafo}{(\code{NULL} | \verb{function(x)})\cr
 Function to transform parameter. It
 should be applied to the parameter value before it is, e.g., passed to a
 corresponding objective function. Function must accept a parameter value as
@@ -145,7 +221,7 @@ The S3 class is a list which stores these elements:
 \item{values (\code{list} | \code{expression})}{Discrete values, always stored as a named list.}
 \item{cnames (\code{character}}{See argument of same name.}
 \item{allow.inf (\code{logical(1)})}{See argument of same name.}
-\item{trafo (\code{NULL} | \code{function(x)})}{See argument of same name.}
+\item{trafo (\code{NULL} | \verb{function(x)})}{See argument of same name.}
 \item{requires (\code{NULL} | \code{expression})}{See argument of same name.}
 \item{default (any concrete value | \code{expression})}{See argument of same name.}
 \item{has.default (\code{logical(1)})}{Extra flag to really be able to check whether the user passed a default, to avoid troubles with \code{NULL} and \code{NA}.}

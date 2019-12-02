@@ -4,8 +4,13 @@
 \alias{getOptPathBestIndex}
 \title{Get index of the best element from optimization path.}
 \usage{
-getOptPathBestIndex(op, y.name = op$y.names[1], dob = op$env$dob,
-  eol = op$env$eol, ties = "last")
+getOptPathBestIndex(
+  op,
+  y.name = op$y.names[1],
+  dob = op$env$dob,
+  eol = op$env$eol,
+  ties = "last"
+)
 }
 \arguments{
 \item{op}{\link{OptPath}\cr
@@ -52,16 +57,21 @@ getOptPathBestIndex(op)
 getOptPathBestIndex(op, ties = "first")
 }
 \seealso{
-Other optpath: \code{\link{OptPath}},
-  \code{\link{addOptPathEl}}, \code{\link{getOptPathCols}},
-  \code{\link{getOptPathCol}}, \code{\link{getOptPathDOB}},
-  \code{\link{getOptPathEOL}}, \code{\link{getOptPathEl}},
-  \code{\link{getOptPathErrorMessages}},
-  \code{\link{getOptPathExecTimes}},
-  \code{\link{getOptPathLength}},
-  \code{\link{getOptPathParetoFront}},
-  \code{\link{getOptPathX}}, \code{\link{getOptPathY}},
-  \code{\link{setOptPathElDOB}},
-  \code{\link{setOptPathElEOL}}
+Other optpath: 
+\code{\link{OptPath}},
+\code{\link{addOptPathEl}()},
+\code{\link{getOptPathCols}()},
+\code{\link{getOptPathCol}()},
+\code{\link{getOptPathDOB}()},
+\code{\link{getOptPathEOL}()},
+\code{\link{getOptPathEl}()},
+\code{\link{getOptPathErrorMessages}()},
+\code{\link{getOptPathExecTimes}()},
+\code{\link{getOptPathLength}()},
+\code{\link{getOptPathParetoFront}()},
+\code{\link{getOptPathX}()},
+\code{\link{getOptPathY}()},
+\code{\link{setOptPathElDOB}()},
+\code{\link{setOptPathElEOL}()}
 }
 \concept{optpath}
