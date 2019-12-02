@@ -2,7 +2,7 @@ Package: ParamHelpers
 Title: Helpers for Parameters in Black-Box Optimization, Tuning
     and Machine Learning
 Version: 1.12.0.9000
-Authors@R: 
+Authors@R:
     c(person(given = "Bernd",
              family = "Bischl",
              role = "aut",
@@ -16,7 +16,7 @@ Authors@R:
       person(given = "Jakob",
              family = "Richter",
              role = c("cre", "aut"),
-             email = "jakob1richter@gmail.com",
+             email = "code@jakob-r.de",
              comment = c(ORCID = "0000-0003-4481-5554")),
       person(given = "Jakob",
              family = "Bossek",
