@@ -24,7 +24,7 @@ renderYTraces = function(opt.paths, over.time = "dob") {
   fronts = lapply(seq_along(opt.paths), function(j) {
 
     run = opt.paths[[j]]
-    name = names(as.data.frame(run, include.x = FALSE, include.rest = FALSE))
+    name = names(as.data.frame(run, include.x = FALSE, include.rest = FALSE, stringsAsFactors = TRUE))
     if (j == 1L) {
       y.name <<- name
       minimize <<- run$minimize
@@ -43,7 +43,8 @@ renderYTraces = function(opt.paths, over.time = "dob") {
     if (over.time == "dob") {
       df = data.frame(
         y = getOptPathY(op = run),
-        time = getOptPathDOB(op = run)
+        time = getOptPathDOB(op = run),
+        stringsAsFactors = TRUE
       )
     }
     if (over.time == "exec.time") {
