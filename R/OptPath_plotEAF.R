@@ -69,7 +69,7 @@ plotEAF = function(opt.paths, xlim = NULL, ylim = NULL, ...) {
           But found here: %s", collapse(minimize), collapse(run$minimize))
       }
       # add column for algorithm and replication
-      cbind(df, .algo = a, .repl = j)
+      cbind(df, .algo = a, .repl = j, stringsAsFactors = TRUE)
     })
     fronts = do.call(rbind, fronts)
     data = rbind(data, fronts)

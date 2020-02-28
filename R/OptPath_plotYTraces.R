@@ -54,7 +54,7 @@ renderYTraces = function(opt.paths, over.time = "dob") {
     }
 
     # add column for algorithm and replication
-    cbind(df, .algo = run.name[j])
+    cbind(df, .algo = run.name[j], stringsAsFactors = TRUE)
   })
 
   data = do.call(rbind, fronts)
