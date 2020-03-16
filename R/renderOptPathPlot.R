@@ -10,30 +10,26 @@
 #' @param iter (`integer(1)`)\cr
 #'   Selected iteration of `x` to render plots for.
 #' @param x.over.time (`list` | NULL)\cr
-#'   List of vectors of x-variables, either specified via name or id. If
-#'   specified via names, also extra measurements from the opt.path can be
-#'   selected. Maximum length for each vector is 5. For each list-element a
-#'   line-plot iteration versus variable is generated. If the vector has length
-#'   > 2 only mean values per iteration are plotted as lines, if vector has
-#'   length 1 every point is plotted. Default is to plot all variables into as
-#'   few plots as possible. Note that discrete variables are converted to
-#'   numeric, if specified in the same vector with numerics. Moreover, if more
-#'   than 1 point per iteration exists, mean values are calculated. This is also
-#'   done for factor variables! We recommend you to specify  this argument in a
-#'   useful way.
-#' @param y.over.time (`list` | NULL]
-#'   List of vectors of y-variables, either specified via name or id. If
-#'   specified via names, also extra measurements from the opt.path can be
-#'   selected. Maximum length for each vector is 5. For each list-element a
-#'   line-plot iteration versus variable is generated. If the vector has length
-#'   > 2 only mean values per iteration are plotted as lines, if vector has
-#'   length 1 every point is plotted. Default is to plot all variables into as
-#'   few plots as possible. Note that discrete variables are converted to
-#'   numeric, if specified in the same vector with numerics. Moreover, if more
-#'   than 1 point per iteration exists, mean values are calculated. This is also
-#'   done for factor variables! We recommend you to specify  this argument in a
-#'   useful way.
-#' @param contour.name (`character(1)` | NULL)
+#'   List of vectors of x-variables, either specified via name or id.
+#'   If specified via names, also extra measurements from the opt.path can be
+#'   selected.
+#'   Maximum length for each vector is 5. For each list-element a line-plot iteration versus variable is generated.
+#'   If the vector has length > 2 only mean values per iteration are plotted as lines, if vector has length 1 every point is plotted.
+#'   Default is to plot all variables into as few plots as possible.
+#'   Note that discrete variables are converted to numeric, if specified in the same vector with numerics.
+#'   Moreover, if more than 1 point per iteration exists, mean values are calculated.
+#'   This is also done for factor variables! We recommend you to specify  this argument in a useful way.
+#' @param y.over.time (`list` | NULL)\cr
+#'   List of vectors of y-variables, either specified via name or id.
+#'   If specified via names, also extra measurements from the opt.path can be selected.
+#'   Maximum length for each vector is 5.
+#'   For each list-element a line-plot iteration versus variable is generated.
+#'   If the vector has length > 2 only mean values per iteration are plotted as lines, if vector has length 1 every point is plotted.
+#'   Default is to plot all variables into as few plots as possible.
+#'   Note that discrete variables are converted to numeric, if specified in the same vector with numerics.
+#'   Moreover, if more than 1 point per iteration exists, mean values are calculated.
+#'   This is also done for factor variables! We recommend you to specify  this argument in a useful way.
+#' @param contour.name (`character(1)` | NULL)\cr
 #'   It is possible to overlay the XSpace plot with an contour plot. This is
 #'   only possible, if the XSpace has exact 2 numeric and 0 discrete variable.
 #'   Consider subsetting your variables to use this feature! contour.name is the

@@ -12,5 +12,5 @@ listToDfOneRow = function(l) {
   assertList(l, min.len = 1)
   lapply(l, assert_atomic_vector)
   l = lapply(seq_along(l), function(x) t(unlist(l[x])))
-  data.frame(l)
+  data.frame(l, stringsAsFactors = TRUE)
 }
