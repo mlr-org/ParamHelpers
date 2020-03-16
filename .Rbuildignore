@@ -13,3 +13,6 @@ README.md
 ^codecov\.yml$
 ^tic\.R$
 ^pkgdown$
+^\.ccache$
+^\.github$
+^clang-.*
