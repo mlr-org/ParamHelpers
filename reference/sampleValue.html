@@ -176,17 +176,17 @@ a named list of such values in the correct order is returned.</p>
 <span class='fu'>sampleValue</span>(<span class='no'>p</span>)</div><div class='output co'>#&gt; [1] "b"</div><div class='input'>
 <span class='no'>p</span> <span class='kw'>=</span> <span class='fu'><a href='Param.html'>makeIntegerVectorParam</a></span>(<span class='st'>"x"</span>, <span class='kw'>len</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>5</span>)
 <span class='co'># vector of two random integers between 1 and 5:</span>
-<span class='fu'>sampleValue</span>(<span class='no'>p</span>)</div><div class='output co'>#&gt; [1] 2 2</div><div class='input'>
+<span class='fu'>sampleValue</span>(<span class='no'>p</span>)</div><div class='output co'>#&gt; [1] 2 3</div><div class='input'>
 <span class='no'>ps</span> <span class='kw'>=</span> <span class='fu'><a href='makeParamSet.html'>makeParamSet</a></span>(
   <span class='fu'><a href='Param.html'>makeNumericParam</a></span>(<span class='st'>"x"</span>, <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>10</span>),
   <span class='fu'><a href='Param.html'>makeIntegerParam</a></span>(<span class='st'>"y"</span>, <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>10</span>),
   <span class='fu'><a href='Param.html'>makeDiscreteParam</a></span>(<span class='st'>"z"</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>2</span>)
 )
 <span class='fu'>sampleValue</span>(<span class='no'>ps</span>)</div><div class='output co'>#&gt; $x
-#&gt; [1] 5.320677
+#&gt; [1] 9.28005
 #&gt; 
 #&gt; $y
-#&gt; [1] 10
+#&gt; [1] 5
 #&gt; 
 #&gt; $z
 #&gt; [1] 1
