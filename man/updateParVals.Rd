@@ -27,5 +27,5 @@ is dropped. Default is \code{FALSE}.}
 Update the values of a given parameter setting with a new
 parameter setting. Settings that do not meet the requirements anymore will be
 deleted from the first given parameter setting. Default values of the Param
-Set are respected to chek if the new param settings meet the requirements.
+Set are respected to check if the new param settings meet the requirements.
 }

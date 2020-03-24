@@ -58,7 +58,7 @@ paramValueToString.Param = function(par, x, show.missing.values = FALSE, num.for
   if (isDiscrete(par, include.logical = FALSE)) {
     x = discreteValueToName(par, x)
   }
-  s = convertToShortString(x, num.format = num.format)
+  return(convertToShortString(x, num.format = num.format))
 }
 
 #' @export
