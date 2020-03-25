@@ -1,4 +1,6 @@
-# ParamHelpers 1.13.0.9000
+# ParamHelpers 1.14
+
+- Fixes to work with R-4.0.0
 
 # ParamHelpers 1.13
 

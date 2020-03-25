@@ -14,7 +14,7 @@ Parameter or parameter set.}
 Number of values.}
 
 \item{discrete.names}{(\code{logical(1)})\cr
-Should names be sampled for discrete paramaters or values instead?
+Should names be sampled for discrete parameters or values instead?
 Default is code {FALSE}.}
 
 \item{trafo}{(\code{logical(1)})\cr

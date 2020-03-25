@@ -51,7 +51,7 @@ plotEAF = function(opt.paths, xlim = NULL, ylim = NULL, ...) {
     # combine all fronts for this algo + add algo / repl + do some sanity checks
     fronts = lapply(seq_along(runs), function(j) {
       run = runs[[j]]
-      df = as.data.frame(getOptPathParetoFront(run))
+      df = as.data.frame(getOptPathParetoFront(run), stringsAsFactors = TRUE)
       cns = colnames(df)
       if (length(cns) != 2L) {
         stopf("Must always have 2 objectives in opt path. But found: %i", length(cns))
@@ -69,7 +69,7 @@ plotEAF = function(opt.paths, xlim = NULL, ylim = NULL, ...) {
           But found here: %s", collapse(minimize), collapse(run$minimize))
       }
       # add column for algorithm and replication
-      cbind(df, .algo = a, .repl = j)
+      cbind(df, .algo = a, .repl = j, stringsAsFactors = TRUE)
     })
     fronts = do.call(rbind, fronts)
     data = rbind(data, fronts)

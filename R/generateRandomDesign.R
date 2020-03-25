@@ -45,9 +45,9 @@ generateRandomDesign = function(n = 10L, par.set, trafo = FALSE) {
     Map(function(p, v) {
       # blow up scalar NAs
       if (isScalarNA(v)) {
-        v = as.data.frame(t(rep(v, p$len)))
+        v = as.data.frame(t(rep(v, p$len)), stringsAsFactors = TRUE)
       } else {
-        as.data.frame(t(v))
+        as.data.frame(t(v), stringsAsFactors = TRUE)
       }
     }, par.set$pars, x)
   }

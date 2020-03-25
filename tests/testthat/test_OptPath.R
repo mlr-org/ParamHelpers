@@ -195,7 +195,7 @@ test_that("requires works", {
   addOptPathEl(op, x = el, y = 0)
   expect_equal(getOptPathEl(op, 2)$x, el)
   d = as.data.frame(op, discretes.as.factor = TRUE)
-  expect_equal(d[, 1:4], data.frame(x = c("a", "b"), y = c(1, NA), z1 = c(NA, 2L), z2 = c(NA, 3L)))
+  expect_equal(d[, 1:4], data.frame(x = c("a", "b"), y = c(1, NA), z1 = c(NA, 2L), z2 = c(NA, 3L), stringsAsFactors = TRUE))
 })
 
 test_that("pareto front", {

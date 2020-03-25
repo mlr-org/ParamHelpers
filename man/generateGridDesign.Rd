@@ -41,7 +41,7 @@ will be preserved.
 
 The algorithm currently performs these steps:
 \enumerate{
-\item{We create a grid. For numerics and integers we use the specfied resolution. For discretes all values will be taken.}
+\item{We create a grid. For numerics and integers we use the specified resolution. For discretes all values will be taken.}
 \item{Forbidden points are removed.}
 \item{Parameters are trafoed (potentially, depending on the setting of argument \code{trafo});
 dependent parameters whose constraints are unsatisfied are set to \code{NA} entries.}
