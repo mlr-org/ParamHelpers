@@ -64,7 +64,7 @@ Dependent parameters whose requirements are not satisfied are represented by a s
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -79,7 +79,7 @@ Dependent parameters whose requirements are not satisfied are represented by a s
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
-        <a class="navbar-brand" href="../index.html">ParamHelpers <small>v1.14.9000</small></a>
+        <a class="navbar-brand" href="../index.html">ParamHelpers <small>v1.14</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -91,14 +91,14 @@ Dependent parameters whose requirements are not satisfied are represented by a s
   <a href="../news/index.html">Changelog</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/ParamHelpers">
+  <a href="https://github.com/mlr-org/ParamHelpers/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://mlr-org.slack.com">
-    <span class="fab fa fab fa-slack"></span>
+  <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite">
+    <span class="fa fa fa fa-comments"></span>
      
   </a>
 </li>
@@ -176,30 +176,26 @@ a named list of such values in the correct order is returned.</p>
 <span class='fu'>sampleValue</span>(<span class='no'>p</span>)</div><div class='output co'>#&gt; [1] "b"</div><div class='input'>
 <span class='no'>p</span> <span class='kw'>=</span> <span class='fu'><a href='Param.html'>makeIntegerVectorParam</a></span>(<span class='st'>"x"</span>, <span class='kw'>len</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>5</span>)
 <span class='co'># vector of two random integers between 1 and 5:</span>
-<span class='fu'>sampleValue</span>(<span class='no'>p</span>)</div><div class='output co'>#&gt; [1] 2 2</div><div class='input'>
+<span class='fu'>sampleValue</span>(<span class='no'>p</span>)</div><div class='output co'>#&gt; [1] 2 3</div><div class='input'>
 <span class='no'>ps</span> <span class='kw'>=</span> <span class='fu'><a href='makeParamSet.html'>makeParamSet</a></span>(
   <span class='fu'><a href='Param.html'>makeNumericParam</a></span>(<span class='st'>"x"</span>, <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>10</span>),
   <span class='fu'><a href='Param.html'>makeIntegerParam</a></span>(<span class='st'>"y"</span>, <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>10</span>),
   <span class='fu'><a href='Param.html'>makeDiscreteParam</a></span>(<span class='st'>"z"</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>2</span>)
 )
 <span class='fu'>sampleValue</span>(<span class='no'>ps</span>)</div><div class='output co'>#&gt; $x
-#&gt; [1] 5.320677
+#&gt; [1] 9.28005
 #&gt; 
 #&gt; $y
-#&gt; [1] 10
+#&gt; [1] 5
 #&gt; 
 #&gt; $z
 #&gt; [1] 1
 #&gt; </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -210,7 +206,7 @@ a named list of such values in the correct order is returned.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>

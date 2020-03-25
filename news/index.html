@@ -61,7 +61,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -76,7 +76,7 @@
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
-        <a class="navbar-brand" href="../index.html">ParamHelpers <small>v1.14.9000</small></a>
+        <a class="navbar-brand" href="../index.html">ParamHelpers <small>v1.14</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -88,14 +88,14 @@
   <a href="../news/index.html">Changelog</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/ParamHelpers">
+  <a href="https://github.com/mlr-org/ParamHelpers/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://mlr-org.slack.com">
-    <span class="fab fa fab fa-slack"></span>
+  <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite">
+    <span class="fa fa fa fa-comments"></span>
      
   </a>
 </li>
@@ -124,21 +124,21 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Changelog <small></small></h1>
+      <h1 data-toc-skip>Changelog <small></small></h1>
       <small>Source: <a href='https://github.com/mlr-org/ParamHelpers/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="paramhelpers-1-14" class="section level1">
-<h1 class="page-header">
-<a href="#paramhelpers-1-14" class="anchor"></a>ParamHelpers 1.14<small> 2020-03-24 </small>
+    <div id="paramhelpers-114" class="section level1">
+<h1 class="page-header" data-toc-text="1.14">
+<a href="#paramhelpers-114" class="anchor"></a>ParamHelpers 1.14<small> 2020-03-24 </small>
 </h1>
 <ul>
 <li>Fixes to work with R-4.0.0</li>
 </ul>
 </div>
-    <div id="paramhelpers-1-13" class="section level1">
-<h1 class="page-header">
-<a href="#paramhelpers-1-13" class="anchor"></a>ParamHelpers 1.13<small> 2019-12-02 </small>
+    <div id="paramhelpers-113" class="section level1">
+<h1 class="page-header" data-toc-text="1.13">
+<a href="#paramhelpers-113" class="anchor"></a>ParamHelpers 1.13<small> 2019-12-02 </small>
 </h1>
 <ul>
 <li>
@@ -148,18 +148,18 @@
 <code>generateDesign</code> rewritten in <code>R</code> to avoid random error in C <code>REAL() can only be applied to a 'numeric', not a 'NULL'</code>. Function should only be slower if requirements are given in a non vectorized manner.</li>
 </ul>
 </div>
-    <div id="paramhelpers-1-12" class="section level1">
-<h1 class="page-header">
-<a href="#paramhelpers-1-12" class="anchor"></a>ParamHelpers 1.12<small> 2019-01-18 </small>
+    <div id="paramhelpers-112" class="section level1">
+<h1 class="page-header" data-toc-text="1.12">
+<a href="#paramhelpers-112" class="anchor"></a>ParamHelpers 1.12<small> 2019-01-18 </small>
 </h1>
 <ul>
 <li>improved documentation</li>
 <li>speedups</li>
 </ul>
 </div>
-    <div id="paramhelpers-1-10" class="section level1">
-<h1 class="page-header">
-<a href="#paramhelpers-1-10" class="anchor"></a>ParamHelpers 1.10<small> 2017-01-05 </small>
+    <div id="paramhelpers-110" class="section level1">
+<h1 class="page-header" data-toc-text="1.10">
+<a href="#paramhelpers-110" class="anchor"></a>ParamHelpers 1.10<small> 2017-01-05 </small>
 </h1>
 <ul>
 <li>adapt to irace 2.1 API changes</li>
@@ -176,9 +176,9 @@
 </ul>
 </div>
 </div>
-    <div id="paramhelpers-1-9" class="section level1">
-<h1 class="page-header">
-<a href="#paramhelpers-1-9" class="anchor"></a>ParamHelpers 1.9<small> 2016-09-09 </small>
+    <div id="paramhelpers-19" class="section level1">
+<h1 class="page-header" data-toc-text="1.9">
+<a href="#paramhelpers-19" class="anchor"></a>ParamHelpers 1.9<small> 2016-09-09 </small>
 </h1>
 <ul>
 <li>Many parameters can now be expressions which can be evaluated later while providing a lookup dictionary.</li>
@@ -194,9 +194,9 @@
 </ul>
 </div>
 </div>
-    <div id="paramhelpers-1-8" class="section level1">
-<h1 class="page-header">
-<a href="#paramhelpers-1-8" class="anchor"></a>ParamHelpers 1.8<small> 2016-07-19 </small>
+    <div id="paramhelpers-18" class="section level1">
+<h1 class="page-header" data-toc-text="1.8">
+<a href="#paramhelpers-18" class="anchor"></a>ParamHelpers 1.8<small> 2016-07-19 </small>
 </h1>
 <ul>
 <li>plots produced by renderOptPathPlot, plotOptPath are now always nicely aligned</li>
@@ -221,18 +221,18 @@
 </ul>
 </div>
 </div>
-    <div id="paramhelpers-1-7" class="section level1">
-<h1 class="page-header">
-<a href="#paramhelpers-1-7" class="anchor"></a>ParamHelpers 1.7<small> 2016-02-03 </small>
+    <div id="paramhelpers-17" class="section level1">
+<h1 class="page-header" data-toc-text="1.7">
+<a href="#paramhelpers-17" class="anchor"></a>ParamHelpers 1.7<small> 2016-02-03 </small>
 </h1>
 <ul>
 <li>dfRowsToList, dfRowToList: added arg enforce.col.types</li>
 <li>UntypedParam also got the “tunable” flag</li>
 </ul>
 </div>
-    <div id="paramhelpers-1-6" class="section level1">
-<h1 class="page-header">
-<a href="#paramhelpers-1-6" class="anchor"></a>ParamHelpers 1.6<small> 2015-11-18 </small>
+    <div id="paramhelpers-16" class="section level1">
+<h1 class="page-header" data-toc-text="1.6">
+<a href="#paramhelpers-16" class="anchor"></a>ParamHelpers 1.6<small> 2015-11-18 </small>
 </h1>
 <ul>
 <li>added new character parameter types, see new functions below</li>
@@ -257,33 +257,33 @@
 </ul>
 </div>
 </div>
-    <div id="paramhelpers-1-5" class="section level1">
-<h1 class="page-header">
-<a href="#paramhelpers-1-5" class="anchor"></a>ParamHelpers 1.5<small> 2015-02-03 </small>
+    <div id="paramhelpers-15" class="section level1">
+<h1 class="page-header" data-toc-text="1.5">
+<a href="#paramhelpers-15" class="anchor"></a>ParamHelpers 1.5<small> 2015-02-03 </small>
 </h1>
 <ul>
 <li>added constr.clip to print.ParamSet and related internal functions to make prints more readable</li>
 <li>getDefaults: new option include.null</li>
 </ul>
 </div>
-    <div id="paramhelpers-1-4" class="section level1">
-<h1 class="page-header">
-<a href="#paramhelpers-1-4" class="anchor"></a>ParamHelpers 1.4<small> 2014-10-10 </small>
+    <div id="paramhelpers-14" class="section level1">
+<h1 class="page-header" data-toc-text="1.4">
+<a href="#paramhelpers-14" class="anchor"></a>ParamHelpers 1.4<small> 2014-10-10 </small>
 </h1>
 <ul>
-<li>sampleValue(s): ‘discrete.names’ now only affects discrtete params and not logicals anymore. logical params always result in R data type ‘logical’</li>
-<li>Vector params (num, int and log) can now have component names</li>
+<li><p>sampleValue(s): ‘discrete.names’ now only affects discrtete params and not logicals anymore. logical params always result in R data type ‘logical’</p></li>
+<li><p>Vector params (num, int and log) can now have component names</p></li>
 <li>
 <p>many more OptPath getter methods allow the selection option ‘dob’ and ‘eol’ to subset the result</p>
 <h2 id="new-functions-4">new functions</h2>
 </li>
-<li>getOptPathX</li>
+<li><p>getOptPathX</p></li>
 <li><p>generateRandomDesign</p></li>
 </ul>
 </div>
-    <div id="paramhelpers-1-3" class="section level1">
-<h1 class="page-header">
-<a href="#paramhelpers-1-3" class="anchor"></a>ParamHelpers 1.3<small> 2014-07-15 </small>
+    <div id="paramhelpers-13" class="section level1">
+<h1 class="page-header" data-toc-text="1.3">
+<a href="#paramhelpers-13" class="anchor"></a>ParamHelpers 1.3<small> 2014-07-15 </small>
 </h1>
 <ul>
 <li>sampleValue(s): ‘discrete.names’ now only affects discrtete params and not logicals anymore. logical params always result in R data type ‘logical’</li>
@@ -299,9 +299,9 @@
 </ul>
 </div>
 </div>
-    <div id="paramhelpers-1-2" class="section level1">
-<h1 class="page-header">
-<a href="#paramhelpers-1-2" class="anchor"></a>ParamHelpers 1.2<small> 2014-07-03 </small>
+    <div id="paramhelpers-12" class="section level1">
+<h1 class="page-header" data-toc-text="1.2">
+<a href="#paramhelpers-12" class="anchor"></a>ParamHelpers 1.2<small> 2014-07-03 </small>
 </h1>
 <ul>
 <li>normal parameters can now have a default value</li>
@@ -333,9 +333,9 @@
 </ul>
 </div>
 </div>
-    <div id="paramhelpers-1-1-35" class="section level1">
-<h1 class="page-header">
-<a href="#paramhelpers-1-1-35" class="anchor"></a>ParamHelpers 1.1-35<small> Unreleased </small>
+    <div id="paramhelpers-11-35" class="section level1">
+<h1 class="page-header" data-toc-text="1.1-35">
+<a href="#paramhelpers-11-35" class="anchor"></a>ParamHelpers 1.1-35<small> Unreleased </small>
 </h1>
 <ul>
 <li>concept of dependent parameters was introduced (argument “requires”)</li>
@@ -354,18 +354,18 @@
 </ul>
 </div>
 </div>
-    <div id="paramhelpers-1-0-55" class="section level1">
-<h1 class="page-header">
-<a href="#paramhelpers-1-0-55" class="anchor"></a>ParamHelpers 1.0-55<small> 2012-06-03 </small>
+    <div id="paramhelpers-10-55" class="section level1">
+<h1 class="page-header" data-toc-text="1.0-55">
+<a href="#paramhelpers-10-55" class="anchor"></a>ParamHelpers 1.0-55<small> 2012-06-03 </small>
 </h1>
 <ul>
 <li>disabled one unreasonable unit test for CRAN</li>
 <li>some dependencies are now imports like they should be</li>
 </ul>
 </div>
-    <div id="paramhelpers-1-0-54" class="section level1">
-<h1 class="page-header">
-<a href="#paramhelpers-1-0-54" class="anchor"></a>ParamHelpers 1.0-54<small> 2012-06-01 </small>
+    <div id="paramhelpers-10-54" class="section level1">
+<h1 class="page-header" data-toc-text="1.0-54">
+<a href="#paramhelpers-10-54" class="anchor"></a>ParamHelpers 1.0-54<small> 2012-06-01 </small>
 </h1>
 <ul>
 <li>First submit to CRAN.</li>
@@ -373,27 +373,10 @@
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <div id="tocnav">
-      <h2>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="#paramhelpers-1-14">1.14</a></li>
-        <li><a href="#paramhelpers-1-13">1.13</a></li>
-        <li><a href="#paramhelpers-1-12">1.12</a></li>
-        <li><a href="#paramhelpers-1-10">1.10</a></li>
-        <li><a href="#paramhelpers-1-9">1.9</a></li>
-        <li><a href="#paramhelpers-1-8">1.8</a></li>
-        <li><a href="#paramhelpers-1-7">1.7</a></li>
-        <li><a href="#paramhelpers-1-6">1.6</a></li>
-        <li><a href="#paramhelpers-1-5">1.5</a></li>
-        <li><a href="#paramhelpers-1-4">1.4</a></li>
-        <li><a href="#paramhelpers-1-3">1.3</a></li>
-        <li><a href="#paramhelpers-1-2">1.2</a></li>
-        <li><a href="#paramhelpers-1-1-35">1.1-35</a></li>
-        <li><a href="#paramhelpers-1-0-55">1.0-55</a></li>
-        <li><a href="#paramhelpers-1-0-54">1.0-54</a></li>
-      </ul>
-    </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 
 </div>
@@ -405,7 +388,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>

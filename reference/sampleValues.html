@@ -64,7 +64,7 @@ Dependent parameters whose requirements are not satisfied are represented by a s
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -79,7 +79,7 @@ Dependent parameters whose requirements are not satisfied are represented by a s
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
-        <a class="navbar-brand" href="../index.html">ParamHelpers <small>v1.14.9000</small></a>
+        <a class="navbar-brand" href="../index.html">ParamHelpers <small>v1.14</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -91,14 +91,14 @@ Dependent parameters whose requirements are not satisfied are represented by a s
   <a href="../news/index.html">Changelog</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/ParamHelpers">
+  <a href="https://github.com/mlr-org/ParamHelpers/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://mlr-org.slack.com">
-    <span class="fab fa fab fa-slack"></span>
+  <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite">
+    <span class="fa fa fa fa-comments"></span>
      
   </a>
 </li>
@@ -173,42 +173,42 @@ functions. Default is <code>FALSE</code>.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>p</span> <span class='kw'>=</span> <span class='fu'><a href='Param.html'>makeIntegerParam</a></span>(<span class='st'>"x"</span>, <span class='kw'>lower</span> <span class='kw'>=</span> -<span class='fl'>10</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>10</span>)
 <span class='fu'>sampleValues</span>(<span class='no'>p</span>, <span class='fl'>4</span>)</div><div class='output co'>#&gt; [[1]]
-#&gt; [1] -6
-#&gt; 
-#&gt; [[2]]
 #&gt; [1] 4
 #&gt; 
-#&gt; [[3]]
+#&gt; [[2]]
 #&gt; [1] -9
 #&gt; 
-#&gt; [[4]]
+#&gt; [[3]]
 #&gt; [1] 10
+#&gt; 
+#&gt; [[4]]
+#&gt; [1] -7
 #&gt; </div><div class='input'>
 <span class='no'>p</span> <span class='kw'>=</span> <span class='fu'><a href='Param.html'>makeNumericParam</a></span>(<span class='st'>"x"</span>, <span class='kw'>lower</span> <span class='kw'>=</span> -<span class='fl'>10</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>10</span>)
 <span class='fu'>sampleValues</span>(<span class='no'>p</span>, <span class='fl'>4</span>)</div><div class='output co'>#&gt; [[1]]
-#&gt; [1] -7.019291
-#&gt; 
-#&gt; [[2]]
 #&gt; [1] 0.3711327
 #&gt; 
-#&gt; [[3]]
+#&gt; [[2]]
 #&gt; [1] 6.922401
 #&gt; 
-#&gt; [[4]]
+#&gt; [[3]]
 #&gt; [1] 4.365394
+#&gt; 
+#&gt; [[4]]
+#&gt; [1] -5.17372
 #&gt; </div><div class='input'>
 <span class='no'>p</span> <span class='kw'>=</span> <span class='fu'><a href='Param.html'>makeLogicalParam</a></span>(<span class='st'>"x"</span>)
 <span class='fu'>sampleValues</span>(<span class='no'>p</span>, <span class='fl'>4</span>)</div><div class='output co'>#&gt; [[1]]
-#&gt; [1] TRUE
+#&gt; [1] FALSE
 #&gt; 
 #&gt; [[2]]
 #&gt; [1] FALSE
 #&gt; 
 #&gt; [[3]]
-#&gt; [1] FALSE
+#&gt; [1] TRUE
 #&gt; 
 #&gt; [[4]]
-#&gt; [1] TRUE
+#&gt; [1] FALSE
 #&gt; </div><div class='input'>
 <span class='no'>ps</span> <span class='kw'>=</span> <span class='fu'><a href='makeParamSet.html'>makeParamSet</a></span>(
   <span class='fu'><a href='Param.html'>makeNumericParam</a></span>(<span class='st'>"u"</span>, <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>10</span>),
@@ -217,35 +217,31 @@ functions. Default is <code>FALSE</code>.</p></td>
 )
 <span class='fu'>sampleValues</span>(<span class='no'>ps</span>, <span class='fl'>2</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]$u
-#&gt; [1] 5.224459
+#&gt; [1] 8.25112
 #&gt; 
 #&gt; [[1]]$v
 #&gt; [1] 9
 #&gt; 
 #&gt; [[1]]$w
-#&gt; [1] 2
+#&gt; [1] 1
 #&gt; 
 #&gt; 
 #&gt; [[2]]
 #&gt; [[2]]$u
-#&gt; [1] 4.635199
+#&gt; [1] 2.965879
 #&gt; 
 #&gt; [[2]]$v
-#&gt; [1] 3
+#&gt; [1] 5
 #&gt; 
 #&gt; [[2]]$w
-#&gt; [1] 1
+#&gt; [1] 2
 #&gt; 
 #&gt; </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -256,7 +252,7 @@ functions. Default is <code>FALSE</code>.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>

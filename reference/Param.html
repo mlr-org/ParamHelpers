@@ -88,7 +88,7 @@ special.vals (list)See argument of same name.
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -103,7 +103,7 @@ special.vals (list)See argument of same name.
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
-        <a class="navbar-brand" href="../index.html">ParamHelpers <small>v1.14.9000</small></a>
+        <a class="navbar-brand" href="../index.html">ParamHelpers <small>v1.14</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -115,14 +115,14 @@ special.vals (list)See argument of same name.
   <a href="../news/index.html">Changelog</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/ParamHelpers">
+  <a href="https://github.com/mlr-org/ParamHelpers/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://mlr-org.slack.com">
-    <span class="fab fa fab fa-slack"></span>
+  <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite">
+    <span class="fa fa fa fa-comments"></span>
      
   </a>
 </li>
@@ -165,7 +165,7 @@ expressions can depend on arbitrary symbols, which are later filled in /
 substituted from a dictionary, in order to produce a concrete valu, see
 <code><a href='evaluateParamExpressions.html'>evaluateParamExpressions()</a></code>. So this enables data / context dependent
 settings, which is sometimes useful.</p>
-<p>The S3 class is a list which stores these elements:</p><dl class='dl-horizontal'>
+<p>The S3 class is a list which stores these elements:</p><dl'>
 <dt>id (<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)</dt><dd><p>See argument of same name.</p></dd>
 <dt>type (<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)</dt><dd><p>Data type of parameter. For all type string see (getTypeStringsAll())</p></dd>
 <dt>len (<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code> | <code>expression</code>)</dt><dd><p>See argument of same name.</p></dd>
@@ -405,14 +405,10 @@ the names can be used as internal representations for the choice.</p></td>
 #&gt; 1 discrete   -   -    a,b   -    TRUE     -</div><div class='input'><span class='fu'>makeCharacterParam</span>(<span class='st'>"z"</span>)</div><div class='output co'>#&gt;        Type len Def Constr Req Tunable Trafo
 #&gt; 1 character   -   -      -   -   FALSE     -</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -423,7 +419,7 @@ the names can be used as internal representations for the choice.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>
