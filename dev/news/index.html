@@ -205,13 +205,13 @@
 <ul>
 <li>plots produced by renderOptPathPlot, plotOptPath are now always nicely aligned</li>
 <li>removed soobench from SUGGESTS and removed function extractParamSetFromSooFunction</li>
-<li>hasDiscrete: added arg âinclude.logicalâ</li>
+<li>hasDiscrete: added arg “include.logical”</li>
 <li>getParamSet has become a generic</li>
-<li>OptPath: it is possible to log non-scalar values under âextrasâ now by starting the extra-name with a dot. These elements wll not be contained is as.data.frame(opt.path) when converted.</li>
-<li>make*Param argument ârequiresâ now accepts expressions and quoteâd expressions.</li>
-<li>getParamIds is now S3 and also callable on type âParamâ</li>
-<li>filterParams: has new arg âcheck.requiresâ</li>
-<li>isFeasible: new args âuse.defaultsâ and âfilterâ</li>
+<li>OptPath: it is possible to log non-scalar values under “extras” now by starting the extra-name with a dot. These elements wll not be contained is as.data.frame(opt.path) when converted.</li>
+<li>make*Param argument ‘requires’ now accepts expressions and quote’d expressions.</li>
+<li>getParamIds is now S3 and also callable on type “Param”</li>
+<li>filterParams: has new arg “check.requires”</li>
+<li>isFeasible: new args “use.defaults” and “filter”</li>
 <li>trafoValue: slightly robustify arg handling</li>
 </ul>
 <div id="new-functions-2" class="section level2">
@@ -231,7 +231,7 @@
 </h1>
 <ul>
 <li>dfRowsToList, dfRowToList: added arg enforce.col.types</li>
-<li>UntypedParam also got the âtunableâ flag</li>
+<li>UntypedParam also got the “tunable” flag</li>
 </ul>
 </div>
     <div id="paramhelpers-16" class="section level1">
@@ -240,11 +240,11 @@
 </h1>
 <ul>
 <li>added new character parameter types, see new functions below</li>
-<li>added property âtunableâ to make*Param</li>
+<li>added property ‘tunable’ to make*Param</li>
 <li>isFeasible supports named lists for unordered checks</li>
-<li>numeric and numericvector Params and LearnerParams have a new arg âallow.infâ</li>
-<li>filterParams can now filter based on âidsâ and âtunableâ</li>
-<li>convertParamSetToIrace: removed argument âdigitsâ to keep maximum precision of boundaries</li>
+<li>numeric and numericvector Params and LearnerParams have a new arg ‘allow.inf’</li>
+<li>filterParams can now filter based on ‘ids’ and ‘tunable’</li>
+<li>convertParamSetToIrace: removed argument ‘digits’ to keep maximum precision of boundaries</li>
 <li>added renderOptPathPlot and plotOptPath for plotting of optimization paths.</li>
 <li>added plotEAF and plotYTraces to compare singlecrit and bicrit optimization paths.</li>
 </ul>
@@ -275,10 +275,10 @@
 <a href="#paramhelpers-14" class="anchor"></a>ParamHelpers 1.4<small> 2014-10-10 </small>
 </h1>
 <ul>
-<li><p>sampleValue(s): âdiscrete.namesâ now only affects discrtete params and not logicals anymore. logical params always result in R data type âlogicalâ</p></li>
+<li><p>sampleValue(s): ‘discrete.names’ now only affects discrtete params and not logicals anymore. logical params always result in R data type ‘logical’</p></li>
 <li><p>Vector params (num, int and log) can now have component names</p></li>
 <li>
-<p>many more OptPath getter methods allow the selection option âdobâ and âeolâ to subset the result</p>
+<p>many more OptPath getter methods allow the selection option ‘dob’ and ‘eol’ to subset the result</p>
 <h2 id="new-functions-4">new functions</h2>
 </li>
 <li><p>getOptPathX</p></li>
@@ -290,8 +290,8 @@
 <a href="#paramhelpers-13" class="anchor"></a>ParamHelpers 1.3<small> 2014-07-15 </small>
 </h1>
 <ul>
-<li>sampleValue(s): âdiscrete.namesâ now only affects discrtete params and not logicals anymore. logical params always result in R data type âlogicalâ</li>
-<li>Vector params (num, int and log) can now have component names Functions that produce such vector values (e.g.Â sampleValue or dfRowsToList) will name the components of this vector automatically. The user can also call setValueCNames in his own code.</li>
+<li>sampleValue(s): ‘discrete.names’ now only affects discrtete params and not logicals anymore. logical params always result in R data type ‘logical’</li>
+<li>Vector params (num, int and log) can now have component names Functions that produce such vector values (e.g. sampleValue or dfRowsToList) will name the components of this vector automatically. The user can also call setValueCNames in his own code.</li>
 </ul>
 <div id="new-functions-5" class="section level2">
 <h2 class="hasAnchor">
@@ -316,7 +316,7 @@
 <li>Added option to log error messages, execution time and extra info in the optimization path.</li>
 <li>slightly change interface of getOptPathY, so one can now return a matrix of multiple measures.</li>
 <li>paramValueToString produces better readable output</li>
-<li>sampleValue(s) have new option âtrafoâ</li>
+<li>sampleValue(s) have new option “trafo”</li>
 <li>getLower and getUpper have with.nr argument now</li>
 <li>getTypes renamed to getParamTypes</li>
 </ul>
@@ -342,9 +342,9 @@
 <a href="#paramhelpers-11-35" class="anchor"></a>ParamHelpers 1.1-35<small> Unreleased </small>
 </h1>
 <ul>
-<li>concept of dependent parameters was introduced (argument ârequiresâ)</li>
+<li>concept of dependent parameters was introduced (argument “requires”)</li>
 <li>as.data.frame.OptPath: discretes.as.factor option</li>
-<li>all arguments âlengthâ renamed to len</li>
+<li>all arguments “length” renamed to len</li>
 </ul>
 <div id="new-functions-7" class="section level2">
 <h2 class="hasAnchor">
@@ -392,7 +392,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>
