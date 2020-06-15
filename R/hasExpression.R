@@ -2,7 +2,7 @@
 #'
 #' @description Checks if a parameter, parameter set or list of parameters
 #'   contain expressions.
-#' @param obj ([Param()] | [ParamHelpers::ParamSet()] | `list`)\cr
+#' @param obj ([Param()] | `ParamHelpers::ParamSet()` | `list`)\cr
 #'   Parameter, parameter set or list of parameters.
 #' @return `logical(1)`.
 #' @examples

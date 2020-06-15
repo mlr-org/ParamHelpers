@@ -3,12 +3,12 @@
 #' @description Evaluates the expressions of a parameter, parameter set or list
 #' of parameters for a given dictionary.
 #'
-#' @param obj ([Param()] | [ParamHelpers::ParamSet()] | `list`)\cr
+#' @param obj ([Param()] | `ParamHelpers::ParamSet()` | `list`)\cr
 #'   Parameter, parameter set or list of parameter values. Expressions within
 #'   `len`, `lower` or `upper` boundaries, `default` or `values` will be
 #'   evaluated using the provided dictionary (`dict`).
 #' @template arg_dict
-#' @return [[Param()] | [ParamHelpers::ParamSet()] | `list`].
+#' @return [[Param()] | `ParamHelpers::ParamSet()` | `list`].
 #' @export
 #' @examples
 #' ps = makeParamSet(

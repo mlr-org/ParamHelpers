@@ -5,7 +5,7 @@
 #'
 #' @param x (`object`) \cr
 #'   Object to extract the ParamSet from.
-#' @return [ParamHelpers::ParamSet()]
+#' @return `ParamHelpers::ParamSet()`
 #' @export
 getParamSet = function(x) {
   UseMethod("getParamSet")

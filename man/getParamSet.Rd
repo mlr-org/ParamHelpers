@@ -11,7 +11,7 @@ getParamSet(x)
 Object to extract the ParamSet from.}
 }
 \value{
-\code{\link[ParamHelpers:ParamSet]{ParamHelpers::ParamSet()}}
+\code{ParamHelpers::ParamSet()}
 }
 \description{
 \code{getParamSet} is a generic and can be called to extract the

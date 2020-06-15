@@ -7,7 +7,7 @@
 hasExpression(obj)
 }
 \arguments{
-\item{obj}{(\code{\link[=Param]{Param()}} | \code{\link[ParamHelpers:ParamSet]{ParamHelpers::ParamSet()}} | \code{list})\cr
+\item{obj}{(\code{\link[=Param]{Param()}} | \code{ParamHelpers::ParamSet()} | \code{list})\cr
 Parameter, parameter set or list of parameters.}
 }
 \value{

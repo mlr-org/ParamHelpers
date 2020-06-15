@@ -7,7 +7,7 @@
 evaluateParamExpressions(obj, dict = NULL)
 }
 \arguments{
-\item{obj}{(\code{\link[=Param]{Param()}} | \code{\link[ParamHelpers:ParamSet]{ParamHelpers::ParamSet()}} | \code{list})\cr
+\item{obj}{(\code{\link[=Param]{Param()}} | \code{ParamHelpers::ParamSet()} | \code{list})\cr
 Parameter, parameter set or list of parameter values. Expressions within
 \code{len}, \code{lower} or \code{upper} boundaries, \code{default} or \code{values} will be
 evaluated using the provided dictionary (\code{dict}).}
@@ -18,7 +18,7 @@ expressions within a parameter, parameter set or list of parameters. The
 default is \code{NULL}.}
 }
 \value{
-[\code{\link[=Param]{Param()}} | \code{\link[ParamHelpers:ParamSet]{ParamHelpers::ParamSet()}} | \code{list}].
+[\code{\link[=Param]{Param()}} | \code{ParamHelpers::ParamSet()} | \code{list}].
 }
 \description{
 Evaluates the expressions of a parameter, parameter set or list
