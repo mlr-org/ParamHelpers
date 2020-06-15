@@ -17,3 +17,5 @@ README.md
 ^\.github$
 ^clang-.*
 ^\.vscode$
+^\.travis\.yml$
+^\.lintr$
