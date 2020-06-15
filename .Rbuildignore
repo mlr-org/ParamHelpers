@@ -19,3 +19,4 @@ README.md
 ^\.vscode$
 ^\.travis\.yml$
 ^\.lintr$
+^\.pre-commit-config\.yaml$
