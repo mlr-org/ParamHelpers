@@ -6,7 +6,7 @@ Helpers for parameters in black-box optimization, tuning and machine learning.
 
 <!-- badges: start -->
 
-[![R CMD Check via {tic}](https://github.com/mlr-org/ParamHelpers/workflows/R%20CMD%20Check%20via%20{tic}/badge.svg?branch=master)](https://github.com/mlr-org/ParamHelpers/actions)
+[![tic](https://github.com/mlr-org/ParamHelpers/workflows/tic/badge.svg?branch=master)](https://github.com/mlr-org/ParamHelpers/actions)
 [![CRAN Status Badge](http://www.r-pkg.org/badges/version/ParamHelpers)](http://cran.r-project.org/web/packages/ParamHelpers)
 [![Codecov test coverage](https://codecov.io/gh/mlr-org/ParamHelpers/branch/master/graph/badge.svg)](https://codecov.io/gh/mlr-org/ParamHelpers?branch=master)
 [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/ParamHelpers)](http://cran.rstudio.com/web/packages/ParamHelpers/index.html)
