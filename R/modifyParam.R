@@ -16,7 +16,7 @@
 #     cs = modifyParam(ps, id="power", lower = 333, upper = 333)
 #     cs = modifyParam(ps, id="gas", lower = list("Argon", "Nitrogen"))
 #  if modifying an existing constraint set
-#    cs = modifyParam(ps, cs, id="gas", lower = "Argon", upper="Nitrogen")
+#     cs = modifyParam(ps, cs, id="gas", lower = "Argon", upper="Nitrogen")
 
 modifyParam = function(ps, cs = NULL, id = NULL, lower = NULL, upper = NULL) {
     psParamIDs = getParamIds(ps)
@@ -40,11 +40,7 @@ modifyParam = function(ps, cs = NULL, id = NULL, lower = NULL, upper = NULL) {
                 cs[["pars"]][[id]][["upper"]] = validNum(ps, id, upper, "upper")
             # for parameters of type discrete
             } else if (cs[["pars"]][[id]][["type"]] == "discrete") {
-                values = c()
-                # make list of valid discrete values for parameter id
-                for (value in ps[["pars"]][[id]][["values"]]) {
-                    values = append(values, value)
-                }
+                values = ps[["pars"]][[id]][["values"]]
                 appVal = 0L
                 # if lower is not NULL and in ps's set of param IDs then copy value to cs
                 if (!(is.null(lower))) {
@@ -52,7 +48,8 @@ modifyParam = function(ps, cs = NULL, id = NULL, lower = NULL, upper = NULL) {
                         if (lower %in% values) {
                             appVal = 2L
                         } else {
-                            cat("Warning:",lower,"not a valid value for",id,"\b, using values from parameter set\n")
+                            warning(lower, " not a valid value for ", id, 
+                            ", using values from parameter set\n")
                             appVal = 1L
                         }
                     } else if (class(lower) == "list") {
@@ -62,7 +59,7 @@ modifyParam = function(ps, cs = NULL, id = NULL, lower = NULL, upper = NULL) {
                                 apndLow = append(apndLow, low)
                                 appVal = 2L
                             } else {
-                                cat("Warning:",low,"not a valid value for",id,"\n")
+                                warning(low, " not a valid value for ", id, "\n")
                             }
                         }
                     }
@@ -74,7 +71,8 @@ modifyParam = function(ps, cs = NULL, id = NULL, lower = NULL, upper = NULL) {
                             if (appVal == 0L) appVal = 3L
                             if (appVal == 2L) appVal = 4L
                         } else {
-                            cat("Warning:",upper,"not a valid value for",id,"\b, using values from parameter set\n")
+                            warning(upper, " not a valid value for ", id, 
+                            ", using values from parameter set\n")
                             appVal = 1L
                         }
                     } else if (class(upper) == "list") {
@@ -85,7 +83,7 @@ modifyParam = function(ps, cs = NULL, id = NULL, lower = NULL, upper = NULL) {
                                 if (appVal == 0L) appVal = 3L
                                 if (appVal == 2L) appVal = 4L
                             } else {
-                                cat("Warning:",up,"not a valid value for",id,"\n")
+                                warning(up, " not a valid value for ", id, "\n")
                             }   
                         }
                     }
@@ -114,10 +112,10 @@ modifyParam = function(ps, cs = NULL, id = NULL, lower = NULL, upper = NULL) {
                 } 
             # other types of parameters not supported
             } else {
-                print("modifyParam only implemented for types of integer, numeric & discrete")
+                stopf("modifyParam only implemented for types of integer, numeric & discrete")
             }
         } else {
-            cat("Warning:",id,"not in parameter set, ignoring constraint\n")
+            warning(id, " not in parameter set, ignoring constraint\n")
         }
     }
 
@@ -133,10 +131,10 @@ validNum = function(ps, id, limitVal, limit) {
                 limitVal <= ps[["pars"]][[id]][["upper"]]) {
                 ret = limitVal
             } else {
-                cat("Warning:",limitVal,"is outside parameter limits, using limit from parameter set\n")
+                warning(limitVal, " is outside parameter limits, using limit from parameter set\n")
             }
         } else {
-            cat("Warning: integer and numeric parameters must have class(value) = numeric\n")
+            warning("integer and numeric parameters must have class(value) = numeric\n")
 
         }
     }
