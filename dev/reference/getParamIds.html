@@ -139,7 +139,7 @@
     <p>Useful if vectors are included.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>getParamIds</span>(<span class='no'>par</span>, <span class='kw'>repeated</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>with.nr</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>getParamIds</span>(<span class='kw'>par</span>, repeated = <span class='fl'>FALSE</span>, with.nr = <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -169,11 +169,14 @@ Default is <code>FALSE</code>.</p></td>
     <p><code><a href='https://rdrr.io/r/base/character.html'>character</a></code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>ps</span> <span class='kw'>=</span> <span class='fu'><a href='makeParamSet.html'>makeParamSet</a></span>(
+    <pre class="examples"><div class='input'><span class='kw'>ps</span> <span class='op'>=</span> <span class='fu'><a href='makeParamSet.html'>makeParamSet</a></span>(
   <span class='fu'><a href='Param.html'>makeNumericParam</a></span>(<span class='st'>"u"</span>),
-  <span class='fu'><a href='Param.html'>makeIntegerVectorParam</a></span>(<span class='st'>"v"</span>, <span class='kw'>len</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+  <span class='fu'><a href='Param.html'>makeIntegerVectorParam</a></span>(<span class='st'>"v"</span>, len = <span class='fl'>2</span>)
 )
-<span class='fu'>getParamIds</span>(<span class='no'>ps</span>)</div><div class='output co'>#&gt; [1] "u" "v"</div><div class='input'><span class='fu'>getParamIds</span>(<span class='no'>ps</span>, <span class='kw'>repeated</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] "u" "v" "v"</div><div class='input'><span class='fu'>getParamIds</span>(<span class='no'>ps</span>, <span class='kw'>repeated</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>with.nr</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] "u"  "v1" "v2"</div></pre>
+<span class='fu'>getParamIds</span>(<span class='kw'>ps</span>)
+</div><div class='output co'>#&gt; [1] "u" "v"</div><div class='input'><span class='fu'>getParamIds</span>(<span class='kw'>ps</span>, repeated = <span class='fl'>TRUE</span>)
+</div><div class='output co'>#&gt; [1] "u" "v" "v"</div><div class='input'><span class='fu'>getParamIds</span>(<span class='kw'>ps</span>, repeated = <span class='fl'>TRUE</span>, with.nr = <span class='fl'>TRUE</span>)
+</div><div class='output co'>#&gt; [1] "u"  "v1" "v2"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -189,7 +192,7 @@ Default is <code>FALSE</code>.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

@@ -150,7 +150,7 @@ algorithm.</h1>
     <p>This specializes <code><a href='Param.html'>Param()</a></code> by adding a few more attributes, like
 a default value, whether it refers to a training or a predict function, etc.
 Note that you can set <code>length</code> to <code>NA</code></p>
-<p>The S3 class is a <code><a href='Param.html'>Param()</a></code> which additionally stores these elements:</p><dl'>
+<p>The S3 class is a <code><a href='Param.html'>Param()</a></code> which additionally stores these elements:</p><dl>
 <dt>when <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code></dt><dd><p>See argument of same name.</p></dd>
 
 </dl>
@@ -159,109 +159,109 @@ Note that you can set <code>length</code> to <code>NA</code></p>
     </div>
 
     <pre class="usage"><span class='fu'>makeNumericLearnerParam</span>(
-  <span class='no'>id</span>,
-  <span class='kw'>lower</span> <span class='kw'>=</span> -<span class='fl'>Inf</span>,
-  <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>Inf</span>,
-  <span class='kw'>allow.inf</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>default</span>,
-  <span class='kw'>when</span> <span class='kw'>=</span> <span class='st'>"train"</span>,
-  <span class='kw'>requires</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>tunable</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>special.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
+  <span class='kw'>id</span>,
+  lower = <span class='op'>-</span><span class='fl'>Inf</span>,
+  upper = <span class='fl'>Inf</span>,
+  allow.inf = <span class='fl'>FALSE</span>,
+  <span class='kw'>default</span>,
+  when = <span class='st'>"train"</span>,
+  requires = <span class='kw'>NULL</span>,
+  tunable = <span class='fl'>TRUE</span>,
+  special.vals = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
 )
 
 <span class='fu'>makeNumericVectorLearnerParam</span>(
-  <span class='no'>id</span>,
-  <span class='kw'>len</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span>(<span class='fl'>NA</span>),
-  <span class='kw'>lower</span> <span class='kw'>=</span> -<span class='fl'>Inf</span>,
-  <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>Inf</span>,
-  <span class='kw'>allow.inf</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>default</span>,
-  <span class='kw'>when</span> <span class='kw'>=</span> <span class='st'>"train"</span>,
-  <span class='kw'>requires</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>tunable</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>special.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
+  <span class='kw'>id</span>,
+  len = <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span>(<span class='fl'>NA</span>),
+  lower = <span class='op'>-</span><span class='fl'>Inf</span>,
+  upper = <span class='fl'>Inf</span>,
+  allow.inf = <span class='fl'>FALSE</span>,
+  <span class='kw'>default</span>,
+  when = <span class='st'>"train"</span>,
+  requires = <span class='kw'>NULL</span>,
+  tunable = <span class='fl'>TRUE</span>,
+  special.vals = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
 )
 
 <span class='fu'>makeIntegerLearnerParam</span>(
-  <span class='no'>id</span>,
-  <span class='kw'>lower</span> <span class='kw'>=</span> -<span class='fl'>Inf</span>,
-  <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>Inf</span>,
-  <span class='no'>default</span>,
-  <span class='kw'>when</span> <span class='kw'>=</span> <span class='st'>"train"</span>,
-  <span class='kw'>requires</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>tunable</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>special.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
+  <span class='kw'>id</span>,
+  lower = <span class='op'>-</span><span class='fl'>Inf</span>,
+  upper = <span class='fl'>Inf</span>,
+  <span class='kw'>default</span>,
+  when = <span class='st'>"train"</span>,
+  requires = <span class='kw'>NULL</span>,
+  tunable = <span class='fl'>TRUE</span>,
+  special.vals = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
 )
 
 <span class='fu'>makeIntegerVectorLearnerParam</span>(
-  <span class='no'>id</span>,
-  <span class='kw'>len</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span>(<span class='fl'>NA</span>),
-  <span class='kw'>lower</span> <span class='kw'>=</span> -<span class='fl'>Inf</span>,
-  <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>Inf</span>,
-  <span class='no'>default</span>,
-  <span class='kw'>when</span> <span class='kw'>=</span> <span class='st'>"train"</span>,
-  <span class='kw'>requires</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>tunable</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>special.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
+  <span class='kw'>id</span>,
+  len = <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span>(<span class='fl'>NA</span>),
+  lower = <span class='op'>-</span><span class='fl'>Inf</span>,
+  upper = <span class='fl'>Inf</span>,
+  <span class='kw'>default</span>,
+  when = <span class='st'>"train"</span>,
+  requires = <span class='kw'>NULL</span>,
+  tunable = <span class='fl'>TRUE</span>,
+  special.vals = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
 )
 
 <span class='fu'>makeDiscreteLearnerParam</span>(
-  <span class='no'>id</span>,
-  <span class='no'>values</span>,
-  <span class='no'>default</span>,
-  <span class='kw'>when</span> <span class='kw'>=</span> <span class='st'>"train"</span>,
-  <span class='kw'>requires</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>tunable</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>special.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
+  <span class='kw'>id</span>,
+  <span class='kw'>values</span>,
+  <span class='kw'>default</span>,
+  when = <span class='st'>"train"</span>,
+  requires = <span class='kw'>NULL</span>,
+  tunable = <span class='fl'>TRUE</span>,
+  special.vals = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
 )
 
 <span class='fu'>makeDiscreteVectorLearnerParam</span>(
-  <span class='no'>id</span>,
-  <span class='kw'>len</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span>(<span class='fl'>NA</span>),
-  <span class='no'>values</span>,
-  <span class='no'>default</span>,
-  <span class='kw'>when</span> <span class='kw'>=</span> <span class='st'>"train"</span>,
-  <span class='kw'>requires</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>tunable</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>special.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
+  <span class='kw'>id</span>,
+  len = <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span>(<span class='fl'>NA</span>),
+  <span class='kw'>values</span>,
+  <span class='kw'>default</span>,
+  when = <span class='st'>"train"</span>,
+  requires = <span class='kw'>NULL</span>,
+  tunable = <span class='fl'>TRUE</span>,
+  special.vals = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
 )
 
 <span class='fu'>makeLogicalLearnerParam</span>(
-  <span class='no'>id</span>,
-  <span class='no'>default</span>,
-  <span class='kw'>when</span> <span class='kw'>=</span> <span class='st'>"train"</span>,
-  <span class='kw'>requires</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>tunable</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>special.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
+  <span class='kw'>id</span>,
+  <span class='kw'>default</span>,
+  when = <span class='st'>"train"</span>,
+  requires = <span class='kw'>NULL</span>,
+  tunable = <span class='fl'>TRUE</span>,
+  special.vals = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
 )
 
 <span class='fu'>makeLogicalVectorLearnerParam</span>(
-  <span class='no'>id</span>,
-  <span class='kw'>len</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span>(<span class='fl'>NA</span>),
-  <span class='no'>default</span>,
-  <span class='kw'>when</span> <span class='kw'>=</span> <span class='st'>"train"</span>,
-  <span class='kw'>requires</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>tunable</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>special.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
+  <span class='kw'>id</span>,
+  len = <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span>(<span class='fl'>NA</span>),
+  <span class='kw'>default</span>,
+  when = <span class='st'>"train"</span>,
+  requires = <span class='kw'>NULL</span>,
+  tunable = <span class='fl'>TRUE</span>,
+  special.vals = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
 )
 
 <span class='fu'>makeUntypedLearnerParam</span>(
-  <span class='no'>id</span>,
-  <span class='no'>default</span>,
-  <span class='kw'>when</span> <span class='kw'>=</span> <span class='st'>"train"</span>,
-  <span class='kw'>requires</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>tunable</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>special.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
+  <span class='kw'>id</span>,
+  <span class='kw'>default</span>,
+  when = <span class='st'>"train"</span>,
+  requires = <span class='kw'>NULL</span>,
+  tunable = <span class='fl'>TRUE</span>,
+  special.vals = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
 )
 
 <span class='fu'>makeFunctionLearnerParam</span>(
-  <span class='no'>id</span>,
-  <span class='no'>default</span>,
-  <span class='kw'>when</span> <span class='kw'>=</span> <span class='st'>"train"</span>,
-  <span class='kw'>requires</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>tunable</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>special.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
+  <span class='kw'>id</span>,
+  <span class='kw'>default</span>,
+  when = <span class='st'>"train"</span>,
+  requires = <span class='kw'>NULL</span>,
+  tunable = <span class='fl'>TRUE</span>,
+  special.vals = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -368,7 +368,7 @@ the names can be used as internal representations for the choice.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

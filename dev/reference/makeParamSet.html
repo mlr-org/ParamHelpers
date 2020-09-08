@@ -151,9 +151,9 @@ expressions within the provided parameters only contain arguments that are a
 subset of keys.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>makeParamSet</span>(<span class='no'>...</span>, <span class='kw'>params</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>forbidden</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keys</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='fu'>makeParamSet</span>(<span class='kw'>...</span>, params = <span class='kw'>NULL</span>, forbidden = <span class='kw'>NULL</span>, keys = <span class='kw'>NULL</span>)
 
-<span class='fu'>makeNumericParamSet</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='no'>len</span>, <span class='kw'>lower</span> <span class='kw'>=</span> -<span class='fl'>Inf</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='kw'>vector</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+<span class='fu'>makeNumericParamSet</span>(id = <span class='st'>"x"</span>, <span class='kw'>len</span>, lower = <span class='op'>-</span><span class='fl'>Inf</span>, upper = <span class='fl'>Inf</span>, vector = <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -224,27 +224,30 @@ will inherit the class <code>LearnerParamSet</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>makeParamSet</span>(
-  <span class='fu'><a href='Param.html'>makeNumericParam</a></span>(<span class='st'>"u"</span>, <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>1</span>),
-  <span class='fu'><a href='Param.html'>makeIntegerParam</a></span>(<span class='st'>"v"</span>, <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>2</span>),
-  <span class='fu'><a href='Param.html'>makeDiscreteParam</a></span>(<span class='st'>"w"</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>2</span>),
+  <span class='fu'><a href='Param.html'>makeNumericParam</a></span>(<span class='st'>"u"</span>, lower = <span class='fl'>1</span>),
+  <span class='fu'><a href='Param.html'>makeIntegerParam</a></span>(<span class='st'>"v"</span>, lower = <span class='fl'>1</span>, upper = <span class='fl'>2</span>),
+  <span class='fu'><a href='Param.html'>makeDiscreteParam</a></span>(<span class='st'>"w"</span>, values = <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>),
   <span class='fu'><a href='Param.html'>makeLogicalParam</a></span>(<span class='st'>"x"</span>),
-  <span class='fu'><a href='Param.html'>makeDiscreteVectorParam</a></span>(<span class='st'>"y"</span>, <span class='kw'>len</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"a"</span>, <span class='st'>"b"</span>))
-)</div><div class='output co'>#&gt;             Type len Def   Constr Req Tunable Trafo
+  <span class='fu'><a href='Param.html'>makeDiscreteVectorParam</a></span>(<span class='st'>"y"</span>, len = <span class='fl'>2</span>, values = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"a"</span>, <span class='st'>"b"</span>))
+)
+</div><div class='output co'>#&gt;             Type len Def   Constr Req Tunable Trafo
 #&gt; u        numeric   -   - 1 to Inf   -    TRUE     -
 #&gt; v        integer   -   -   1 to 2   -    TRUE     -
 #&gt; w       discrete   -   -      1,2   -    TRUE     -
 #&gt; x        logical   -   -        -   -    TRUE     -
 #&gt; y discretevector   2   -      a,b   -    TRUE     -</div><div class='input'><span class='fu'>makeParamSet</span>(
-  <span class='fu'><a href='Param.html'>makeNumericParam</a></span>(<span class='st'>"u"</span>, <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>ceiling</a></span>(<span class='no'>n</span>))),
-  <span class='fu'><a href='Param.html'>makeIntegerParam</a></span>(<span class='st'>"v"</span>, <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>floor</a></span>(<span class='no'>n</span>)), <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>2</span>),
-  <span class='kw'>keys</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"p"</span>, <span class='st'>"n"</span>)
-)</div><div class='output co'>#&gt;      Type len Def            Constr Req Tunable Trafo
+  <span class='fu'><a href='Param.html'>makeNumericParam</a></span>(<span class='st'>"u"</span>, lower = <span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>ceiling</a></span>(<span class='kw'>n</span>))),
+  <span class='fu'><a href='Param.html'>makeIntegerParam</a></span>(<span class='st'>"v"</span>, lower = <span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>floor</a></span>(<span class='kw'>n</span>)), upper = <span class='fl'>2</span>),
+  keys = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"p"</span>, <span class='st'>"n"</span>)
+)
+</div><div class='output co'>#&gt;      Type len Def            Constr Req Tunable Trafo
 #&gt; u numeric   -   - ceiling(n) to Inf   -    TRUE     -
 #&gt; v integer   -   -     floor(n) to 2   -    TRUE     -</div><div class='input'><span class='fu'>makeParamSet</span>(
-  <span class='fu'><a href='Param.html'>makeNumericParam</a></span>(<span class='st'>"min"</span>, <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>0.8</span>),
-  <span class='fu'><a href='Param.html'>makeNumericParam</a></span>(<span class='st'>"max"</span>, <span class='kw'>lower</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>1</span>),
-  <span class='kw'>forbidden</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span>(<span class='no'>min</span> <span class='kw'>&gt;</span> <span class='no'>max</span>)
-)</div><div class='output co'>#&gt;        Type len Def   Constr Req Tunable Trafo
+  <span class='fu'><a href='Param.html'>makeNumericParam</a></span>(<span class='st'>"min"</span>, lower = <span class='fl'>0</span>, upper = <span class='fl'>0.8</span>),
+  <span class='fu'><a href='Param.html'>makeNumericParam</a></span>(<span class='st'>"max"</span>, lower = <span class='fl'>0.2</span>, upper = <span class='fl'>1</span>),
+  forbidden = <span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span>(<span class='kw'>min</span> <span class='op'>&gt;</span> <span class='kw'>max</span>)
+)
+</div><div class='output co'>#&gt;        Type len Def   Constr Req Tunable Trafo
 #&gt; min numeric   -   - 0 to 0.8   -    TRUE     -
 #&gt; max numeric   -   - 0.2 to 1   -    TRUE     -
 #&gt; Forbidden region specified.</div></pre>
@@ -263,7 +266,7 @@ will inherit the class <code>LearnerParamSet</code>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

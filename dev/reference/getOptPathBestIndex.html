@@ -140,11 +140,11 @@
     </div>
 
     <pre class="usage"><span class='fu'>getOptPathBestIndex</span>(
-  <span class='no'>op</span>,
-  <span class='kw'>y.name</span> <span class='kw'>=</span> <span class='no'>op</span>$<span class='no'>y.names</span>[<span class='fl'>1</span>],
-  <span class='kw'>dob</span> <span class='kw'>=</span> <span class='no'>op</span>$<span class='no'>env</span>$<span class='no'>dob</span>,
-  <span class='kw'>eol</span> <span class='kw'>=</span> <span class='no'>op</span>$<span class='no'>env</span>$<span class='no'>eol</span>,
-  <span class='kw'>ties</span> <span class='kw'>=</span> <span class='st'>"last"</span>
+  <span class='kw'>op</span>,
+  y.name = <span class='kw'>op</span><span class='op'>$</span><span class='kw'>y.names</span>[<span class='fl'>1</span>],
+  dob = <span class='kw'>op</span><span class='op'>$</span><span class='kw'>env</span><span class='op'>$</span><span class='kw'>dob</span>,
+  eol = <span class='kw'>op</span><span class='op'>$</span><span class='kw'>env</span><span class='op'>$</span><span class='kw'>eol</span>,
+  ties = <span class='st'>"last"</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -211,17 +211,20 @@ Index or indices into path. See <code>ties</code>.</p>
 <code><a href='setOptPathElEOL.html'>setOptPathElEOL</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>ps</span> <span class='kw'>=</span> <span class='fu'><a href='makeParamSet.html'>makeParamSet</a></span>(<span class='fu'><a href='Param.html'>makeNumericParam</a></span>(<span class='st'>"x"</span>))
-<span class='no'>op</span> <span class='kw'>=</span> <span class='fu'><a href='OptPath.html'>makeOptPathDF</a></span>(<span class='kw'>par.set</span> <span class='kw'>=</span> <span class='no'>ps</span>, <span class='kw'>y.names</span> <span class='kw'>=</span> <span class='st'>"y"</span>, <span class='kw'>minimize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'><a href='addOptPathEl.html'>addOptPathEl</a></span>(<span class='no'>op</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>1</span>), <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>5</span>)
-<span class='fu'><a href='addOptPathEl.html'>addOptPathEl</a></span>(<span class='no'>op</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>2</span>), <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>3</span>)
-<span class='fu'><a href='addOptPathEl.html'>addOptPathEl</a></span>(<span class='no'>op</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>3</span>), <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>9</span>)
-<span class='fu'><a href='addOptPathEl.html'>addOptPathEl</a></span>(<span class='no'>op</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>4</span>), <span class='kw'>y</span> <span class='kw'>=</span> <span class='fl'>3</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='no'>op</span>)</div><div class='output co'>#&gt;   x y dob eol
+    <pre class="examples"><div class='input'><span class='kw'>ps</span> <span class='op'>=</span> <span class='fu'><a href='makeParamSet.html'>makeParamSet</a></span>(<span class='fu'><a href='Param.html'>makeNumericParam</a></span>(<span class='st'>"x"</span>))
+<span class='kw'>op</span> <span class='op'>=</span> <span class='fu'><a href='OptPath.html'>makeOptPathDF</a></span>(par.set = <span class='kw'>ps</span>, y.names = <span class='st'>"y"</span>, minimize = <span class='fl'>TRUE</span>)
+<span class='fu'><a href='addOptPathEl.html'>addOptPathEl</a></span>(<span class='kw'>op</span>, x = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(x = <span class='fl'>1</span>), y = <span class='fl'>5</span>)
+<span class='fu'><a href='addOptPathEl.html'>addOptPathEl</a></span>(<span class='kw'>op</span>, x = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(x = <span class='fl'>2</span>), y = <span class='fl'>3</span>)
+<span class='fu'><a href='addOptPathEl.html'>addOptPathEl</a></span>(<span class='kw'>op</span>, x = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(x = <span class='fl'>3</span>), y = <span class='fl'>9</span>)
+<span class='fu'><a href='addOptPathEl.html'>addOptPathEl</a></span>(<span class='kw'>op</span>, x = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(x = <span class='fl'>4</span>), y = <span class='fl'>3</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='kw'>op</span>)
+</div><div class='output co'>#&gt;   x y dob eol
 #&gt; 1 1 5   1  NA
 #&gt; 2 2 3   2  NA
 #&gt; 3 3 9   3  NA
-#&gt; 4 4 3   4  NA</div><div class='input'><span class='fu'>getOptPathBestIndex</span>(<span class='no'>op</span>)</div><div class='output co'>#&gt; [1] 4</div><div class='input'><span class='fu'>getOptPathBestIndex</span>(<span class='no'>op</span>, <span class='kw'>ties</span> <span class='kw'>=</span> <span class='st'>"first"</span>)</div><div class='output co'>#&gt; [1] 2</div></pre>
+#&gt; 4 4 3   4  NA</div><div class='input'><span class='fu'>getOptPathBestIndex</span>(<span class='kw'>op</span>)
+</div><div class='output co'>#&gt; [1] 4</div><div class='input'><span class='fu'>getOptPathBestIndex</span>(<span class='kw'>op</span>, ties = <span class='st'>"first"</span>)
+</div><div class='output co'>#&gt; [1] 2</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -237,7 +240,7 @@ Index or indices into path. See <code>ties</code>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

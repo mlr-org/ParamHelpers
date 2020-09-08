@@ -169,7 +169,7 @@ expressions can depend on arbitrary symbols, which are later filled in /
 substituted from a dictionary, in order to produce a concrete valu, see
 <code><a href='evaluateParamExpressions.html'>evaluateParamExpressions()</a></code>. So this enables data / context dependent
 settings, which is sometimes useful.</p>
-<p>The S3 class is a list which stores these elements:</p><dl'>
+<p>The S3 class is a list which stores these elements:</p><dl>
 <dt>id (<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)</dt><dd><p>See argument of same name.</p></dd>
 <dt>type (<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)</dt><dd><p>Data type of parameter. For all type string see (getTypeStringsAll())</p></dd>
 <dt>len (<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code> | <code>expression</code>)</dt><dd><p>See argument of same name.</p></dd>
@@ -190,118 +190,118 @@ settings, which is sometimes useful.</p>
     </div>
 
     <pre class="usage"><span class='fu'>makeNumericParam</span>(
-  <span class='no'>id</span>,
-  <span class='kw'>lower</span> <span class='kw'>=</span> -<span class='fl'>Inf</span>,
-  <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>Inf</span>,
-  <span class='kw'>allow.inf</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>default</span>,
-  <span class='kw'>trafo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>requires</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>tunable</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>special.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
+  <span class='kw'>id</span>,
+  lower = <span class='op'>-</span><span class='fl'>Inf</span>,
+  upper = <span class='fl'>Inf</span>,
+  allow.inf = <span class='fl'>FALSE</span>,
+  <span class='kw'>default</span>,
+  trafo = <span class='kw'>NULL</span>,
+  requires = <span class='kw'>NULL</span>,
+  tunable = <span class='fl'>TRUE</span>,
+  special.vals = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
 )
 
 <span class='fu'>makeNumericVectorParam</span>(
-  <span class='no'>id</span>,
-  <span class='no'>len</span>,
-  <span class='kw'>lower</span> <span class='kw'>=</span> -<span class='fl'>Inf</span>,
-  <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>Inf</span>,
-  <span class='kw'>cnames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>allow.inf</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>default</span>,
-  <span class='kw'>trafo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>requires</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>tunable</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>special.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
+  <span class='kw'>id</span>,
+  <span class='kw'>len</span>,
+  lower = <span class='op'>-</span><span class='fl'>Inf</span>,
+  upper = <span class='fl'>Inf</span>,
+  cnames = <span class='kw'>NULL</span>,
+  allow.inf = <span class='fl'>FALSE</span>,
+  <span class='kw'>default</span>,
+  trafo = <span class='kw'>NULL</span>,
+  requires = <span class='kw'>NULL</span>,
+  tunable = <span class='fl'>TRUE</span>,
+  special.vals = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
 )
 
 <span class='fu'>makeIntegerParam</span>(
-  <span class='no'>id</span>,
-  <span class='kw'>lower</span> <span class='kw'>=</span> -<span class='fl'>Inf</span>,
-  <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>Inf</span>,
-  <span class='no'>default</span>,
-  <span class='kw'>trafo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>requires</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>tunable</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>special.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
+  <span class='kw'>id</span>,
+  lower = <span class='op'>-</span><span class='fl'>Inf</span>,
+  upper = <span class='fl'>Inf</span>,
+  <span class='kw'>default</span>,
+  trafo = <span class='kw'>NULL</span>,
+  requires = <span class='kw'>NULL</span>,
+  tunable = <span class='fl'>TRUE</span>,
+  special.vals = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
 )
 
 <span class='fu'>makeIntegerVectorParam</span>(
-  <span class='no'>id</span>,
-  <span class='no'>len</span>,
-  <span class='kw'>lower</span> <span class='kw'>=</span> -<span class='fl'>Inf</span>,
-  <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>Inf</span>,
-  <span class='kw'>cnames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>default</span>,
-  <span class='kw'>trafo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>requires</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>tunable</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>special.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
+  <span class='kw'>id</span>,
+  <span class='kw'>len</span>,
+  lower = <span class='op'>-</span><span class='fl'>Inf</span>,
+  upper = <span class='fl'>Inf</span>,
+  cnames = <span class='kw'>NULL</span>,
+  <span class='kw'>default</span>,
+  trafo = <span class='kw'>NULL</span>,
+  requires = <span class='kw'>NULL</span>,
+  tunable = <span class='fl'>TRUE</span>,
+  special.vals = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
 )
 
 <span class='fu'>makeLogicalParam</span>(
-  <span class='no'>id</span>,
-  <span class='no'>default</span>,
-  <span class='kw'>requires</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>tunable</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>special.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
+  <span class='kw'>id</span>,
+  <span class='kw'>default</span>,
+  requires = <span class='kw'>NULL</span>,
+  tunable = <span class='fl'>TRUE</span>,
+  special.vals = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
 )
 
 <span class='fu'>makeLogicalVectorParam</span>(
-  <span class='no'>id</span>,
-  <span class='no'>len</span>,
-  <span class='kw'>cnames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>default</span>,
-  <span class='kw'>requires</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>tunable</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>special.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
+  <span class='kw'>id</span>,
+  <span class='kw'>len</span>,
+  cnames = <span class='kw'>NULL</span>,
+  <span class='kw'>default</span>,
+  requires = <span class='kw'>NULL</span>,
+  tunable = <span class='fl'>TRUE</span>,
+  special.vals = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
 )
 
 <span class='fu'>makeDiscreteParam</span>(
-  <span class='no'>id</span>,
-  <span class='no'>values</span>,
-  <span class='kw'>trafo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>default</span>,
-  <span class='kw'>requires</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>tunable</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>special.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
+  <span class='kw'>id</span>,
+  <span class='kw'>values</span>,
+  trafo = <span class='kw'>NULL</span>,
+  <span class='kw'>default</span>,
+  requires = <span class='kw'>NULL</span>,
+  tunable = <span class='fl'>TRUE</span>,
+  special.vals = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
 )
 
 <span class='fu'>makeDiscreteVectorParam</span>(
-  <span class='no'>id</span>,
-  <span class='no'>len</span>,
-  <span class='no'>values</span>,
-  <span class='kw'>trafo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>default</span>,
-  <span class='kw'>requires</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>tunable</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>special.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
+  <span class='kw'>id</span>,
+  <span class='kw'>len</span>,
+  <span class='kw'>values</span>,
+  trafo = <span class='kw'>NULL</span>,
+  <span class='kw'>default</span>,
+  requires = <span class='kw'>NULL</span>,
+  tunable = <span class='fl'>TRUE</span>,
+  special.vals = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
 )
 
 <span class='fu'>makeFunctionParam</span>(
-  <span class='no'>id</span>,
-  <span class='kw'>default</span> <span class='kw'>=</span> <span class='no'>default</span>,
-  <span class='kw'>requires</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>special.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
+  <span class='kw'>id</span>,
+  default = <span class='kw'>default</span>,
+  requires = <span class='kw'>NULL</span>,
+  special.vals = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
 )
 
 <span class='fu'>makeUntypedParam</span>(
-  <span class='no'>id</span>,
-  <span class='no'>default</span>,
-  <span class='kw'>requires</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>tunable</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>special.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
+  <span class='kw'>id</span>,
+  <span class='kw'>default</span>,
+  requires = <span class='kw'>NULL</span>,
+  tunable = <span class='fl'>TRUE</span>,
+  special.vals = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
 )
 
-<span class='fu'>makeCharacterParam</span>(<span class='no'>id</span>, <span class='no'>default</span>, <span class='kw'>requires</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>special.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>())
+<span class='fu'>makeCharacterParam</span>(<span class='kw'>id</span>, <span class='kw'>default</span>, requires = <span class='kw'>NULL</span>, special.vals = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>())
 
 <span class='fu'>makeCharacterVectorParam</span>(
-  <span class='no'>id</span>,
-  <span class='no'>len</span>,
-  <span class='kw'>cnames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>default</span>,
-  <span class='kw'>requires</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>special.vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
+  <span class='kw'>id</span>,
+  <span class='kw'>len</span>,
+  cnames = <span class='kw'>NULL</span>,
+  <span class='kw'>default</span>,
+  requires = <span class='kw'>NULL</span>,
+  special.vals = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -403,10 +403,14 @@ the names can be used as internal representations for the choice.</p></td>
     <p>[<code>Param()</code>].</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>makeNumericParam</span>(<span class='st'>"x"</span>, <span class='kw'>lower</span> <span class='kw'>=</span> -<span class='fl'>1</span>, <span class='kw'>upper</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt;      Type len Def  Constr Req Tunable Trafo
-#&gt; 1 numeric   -   - -1 to 1   -    TRUE     -</div><div class='input'><span class='fu'>makeNumericVectorParam</span>(<span class='st'>"x"</span>, <span class='kw'>len</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt;            Type len Def      Constr Req Tunable Trafo
-#&gt; 1 numericvector   2   - -Inf to Inf   -    TRUE     -</div><div class='input'><span class='fu'>makeDiscreteParam</span>(<span class='st'>"y"</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"a"</span>, <span class='st'>"b"</span>))</div><div class='output co'>#&gt;       Type len Def Constr Req Tunable Trafo
-#&gt; 1 discrete   -   -    a,b   -    TRUE     -</div><div class='input'><span class='fu'>makeCharacterParam</span>(<span class='st'>"z"</span>)</div><div class='output co'>#&gt;        Type len Def Constr Req Tunable Trafo
+    <pre class="examples"><div class='input'><span class='fu'>makeNumericParam</span>(<span class='st'>"x"</span>, lower = <span class='op'>-</span><span class='fl'>1</span>, upper = <span class='fl'>1</span>)
+</div><div class='output co'>#&gt;      Type len Def  Constr Req Tunable Trafo
+#&gt; 1 numeric   -   - -1 to 1   -    TRUE     -</div><div class='input'><span class='fu'>makeNumericVectorParam</span>(<span class='st'>"x"</span>, len = <span class='fl'>2</span>)
+</div><div class='output co'>#&gt;            Type len Def      Constr Req Tunable Trafo
+#&gt; 1 numericvector   2   - -Inf to Inf   -    TRUE     -</div><div class='input'><span class='fu'>makeDiscreteParam</span>(<span class='st'>"y"</span>, values = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"a"</span>, <span class='st'>"b"</span>))
+</div><div class='output co'>#&gt;       Type len Def Constr Req Tunable Trafo
+#&gt; 1 discrete   -   -    a,b   -    TRUE     -</div><div class='input'><span class='fu'>makeCharacterParam</span>(<span class='st'>"z"</span>)
+</div><div class='output co'>#&gt;        Type len Def Constr Req Tunable Trafo
 #&gt; 1 character   -   -      -   -   FALSE     -</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -423,7 +427,7 @@ the names can be used as internal representations for the choice.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>
