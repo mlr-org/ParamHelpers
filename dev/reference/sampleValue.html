@@ -141,7 +141,7 @@ Dependent parameters whose requirements are not satisfied are represented by a s
 <p>Dependent parameters whose requirements are not satisfied are represented by a scalar NA in the output.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>sampleValue</span>(<span class='kw'>par</span>, discrete.names = <span class='fl'>FALSE</span>, trafo = <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>sampleValue</span><span class='op'>(</span><span class='va'>par</span>, discrete.names <span class='op'>=</span> <span class='cn'>FALSE</span>, trafo <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -172,24 +172,24 @@ a named list of such values in the correct order is returned.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># bounds are necessary here, can't sample with Inf bounds:</span>
-<span class='kw'>u</span> <span class='op'>=</span> <span class='fu'><a href='Param.html'>makeNumericParam</a></span>(<span class='st'>"x"</span>, lower = <span class='fl'>0</span>, upper = <span class='fl'>1</span>)
+<span class='va'>u</span> <span class='op'>=</span> <span class='fu'><a href='Param.html'>makeNumericParam</a></span><span class='op'>(</span><span class='st'>"x"</span>, lower <span class='op'>=</span> <span class='fl'>0</span>, upper <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 <span class='co'># returns a random number between 0 and 1:</span>
-<span class='fu'>sampleValue</span>(<span class='kw'>u</span>)
+<span class='fu'>sampleValue</span><span class='op'>(</span><span class='va'>u</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 0.527917</div><div class='input'>
-<span class='kw'>p</span> <span class='op'>=</span> <span class='fu'><a href='Param.html'>makeDiscreteParam</a></span>(<span class='st'>"x"</span>, values = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"a"</span>, <span class='st'>"b"</span>, <span class='st'>"c"</span>))
+<span class='va'>p</span> <span class='op'>=</span> <span class='fu'><a href='Param.html'>makeDiscreteParam</a></span><span class='op'>(</span><span class='st'>"x"</span>, values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"b"</span>, <span class='st'>"c"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'># can be either "a", "b" or "c"</span>
-<span class='fu'>sampleValue</span>(<span class='kw'>p</span>)
+<span class='fu'>sampleValue</span><span class='op'>(</span><span class='va'>p</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "b"</div><div class='input'>
-<span class='kw'>p</span> <span class='op'>=</span> <span class='fu'><a href='Param.html'>makeIntegerVectorParam</a></span>(<span class='st'>"x"</span>, len = <span class='fl'>2</span>, lower = <span class='fl'>1</span>, upper = <span class='fl'>5</span>)
+<span class='va'>p</span> <span class='op'>=</span> <span class='fu'><a href='Param.html'>makeIntegerVectorParam</a></span><span class='op'>(</span><span class='st'>"x"</span>, len <span class='op'>=</span> <span class='fl'>2</span>, lower <span class='op'>=</span> <span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
 <span class='co'># vector of two random integers between 1 and 5:</span>
-<span class='fu'>sampleValue</span>(<span class='kw'>p</span>)
+<span class='fu'>sampleValue</span><span class='op'>(</span><span class='va'>p</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 2 3</div><div class='input'>
-<span class='kw'>ps</span> <span class='op'>=</span> <span class='fu'><a href='makeParamSet.html'>makeParamSet</a></span>(
-  <span class='fu'><a href='Param.html'>makeNumericParam</a></span>(<span class='st'>"x"</span>, lower = <span class='fl'>1</span>, upper = <span class='fl'>10</span>),
-  <span class='fu'><a href='Param.html'>makeIntegerParam</a></span>(<span class='st'>"y"</span>, lower = <span class='fl'>1</span>, upper = <span class='fl'>10</span>),
-  <span class='fu'><a href='Param.html'>makeDiscreteParam</a></span>(<span class='st'>"z"</span>, values = <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>)
-)
-<span class='fu'>sampleValue</span>(<span class='kw'>ps</span>)
+<span class='va'>ps</span> <span class='op'>=</span> <span class='fu'><a href='makeParamSet.html'>makeParamSet</a></span><span class='op'>(</span>
+  <span class='fu'><a href='Param.html'>makeNumericParam</a></span><span class='op'>(</span><span class='st'>"x"</span>, lower <span class='op'>=</span> <span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>,
+  <span class='fu'><a href='Param.html'>makeIntegerParam</a></span><span class='op'>(</span><span class='st'>"y"</span>, lower <span class='op'>=</span> <span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>,
+  <span class='fu'><a href='Param.html'>makeDiscreteParam</a></span><span class='op'>(</span><span class='st'>"z"</span>, values <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>)</span>
+<span class='op'>)</span>
+<span class='fu'>sampleValue</span><span class='op'>(</span><span class='va'>ps</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $x
 #&gt; [1] 9.28005
 #&gt; 

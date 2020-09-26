@@ -139,7 +139,7 @@
     <p>Transform a value with associated transformation function(s).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>trafoValue</span>(<span class='kw'>par</span>, <span class='kw'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>trafoValue</span><span class='op'>(</span><span class='va'>par</span>, <span class='va'>x</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -164,16 +164,16 @@ If it is named, its names must match the parameter names in the param set.</p></
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># transform simple parameter:</span>
-<span class='kw'>p</span> <span class='op'>=</span> <span class='fu'><a href='Param.html'>makeNumericParam</a></span>(id = <span class='st'>"x"</span>, trafo = <span class='fu'>function</span>(<span class='kw'>x</span>) <span class='kw'>x</span><span class='op'>^</span><span class='fl'>2</span>)
-<span class='fu'>trafoValue</span>(<span class='kw'>p</span>, <span class='fl'>2</span>)
+<span class='va'>p</span> <span class='op'>=</span> <span class='fu'><a href='Param.html'>makeNumericParam</a></span><span class='op'>(</span>id <span class='op'>=</span> <span class='st'>"x"</span>, trafo <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='va'>x</span><span class='op'>^</span><span class='fl'>2</span><span class='op'>)</span>
+<span class='fu'>trafoValue</span><span class='op'>(</span><span class='va'>p</span>, <span class='fl'>2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 4</div><div class='input'><span class='co'># for a parameter set different transformation functions are possible:</span>
-<span class='kw'>ps</span> <span class='op'>=</span> <span class='fu'><a href='makeParamSet.html'>makeParamSet</a></span>(
-  <span class='fu'><a href='Param.html'>makeIntegerParam</a></span>(<span class='st'>"u"</span>, trafo = <span class='fu'>function</span>(<span class='kw'>x</span>) <span class='fl'>2</span> <span class='op'>*</span> <span class='kw'>x</span>),
-  <span class='fu'><a href='Param.html'>makeNumericVectorParam</a></span>(<span class='st'>"v"</span>, len = <span class='fl'>2</span>, trafo = <span class='fu'>function</span>(<span class='kw'>x</span>) <span class='kw'>x</span> <span class='op'>/</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='kw'>x</span>)),
-  <span class='fu'><a href='Param.html'>makeDiscreteParam</a></span>(<span class='st'>"w"</span>, values = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"a"</span>, <span class='st'>"b"</span>))
-)
+<span class='va'>ps</span> <span class='op'>=</span> <span class='fu'><a href='makeParamSet.html'>makeParamSet</a></span><span class='op'>(</span>
+  <span class='fu'><a href='Param.html'>makeIntegerParam</a></span><span class='op'>(</span><span class='st'>"u"</span>, trafo <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fl'>2</span> <span class='op'>*</span> <span class='va'>x</span><span class='op'>)</span>,
+  <span class='fu'><a href='Param.html'>makeNumericVectorParam</a></span><span class='op'>(</span><span class='st'>"v"</span>, len <span class='op'>=</span> <span class='fl'>2</span>, trafo <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='va'>x</span> <span class='op'>/</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>,
+  <span class='fu'><a href='Param.html'>makeDiscreteParam</a></span><span class='op'>(</span><span class='st'>"w"</span>, values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"b"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>)</span>
 <span class='co'># now the values of "u" and "v" are transformed:</span>
-<span class='fu'>trafoValue</span>(<span class='kw'>ps</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>3</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>4</span>), <span class='st'>"a"</span>))
+<span class='fu'>trafoValue</span><span class='op'>(</span><span class='va'>ps</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>4</span><span class='op'>)</span>, <span class='st'>"a"</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $u
 #&gt; [1] 6
 #&gt; 

@@ -141,7 +141,7 @@ of parameters for a given dictionary." />
 of parameters for a given dictionary.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>evaluateParamExpressions</span>(<span class='kw'>obj</span>, dict = <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>evaluateParamExpressions</span><span class='op'>(</span><span class='va'>obj</span>, dict <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -167,28 +167,28 @@ default is <code>NULL</code>.</p></td>
     <p>[<code><a href='Param.html'>Param()</a></code> | <code><a href='makeParamSet.html'>ParamHelpers::ParamSet()</a></code> | <code>list</code>].</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>ps</span> <span class='op'>=</span> <span class='fu'><a href='makeParamSet.html'>makeParamSet</a></span>(
-  <span class='fu'><a href='Param.html'>makeNumericParam</a></span>(<span class='st'>"x"</span>, lower = <span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span>(<span class='kw'>p</span>), upper = <span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>ceiling</a></span>(<span class='fl'>3</span> <span class='op'>*</span> <span class='kw'>p</span>))),
-  <span class='fu'><a href='Param.html'>makeIntegerParam</a></span>(<span class='st'>"y"</span>, lower = <span class='fl'>1</span>, upper = <span class='fl'>2</span>)
-)
-<span class='fu'>evaluateParamExpressions</span>(<span class='kw'>ps</span>, dict = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(p = <span class='fl'>3</span>))
+    <pre class="examples"><div class='input'><span class='va'>ps</span> <span class='op'>=</span> <span class='fu'><a href='makeParamSet.html'>makeParamSet</a></span><span class='op'>(</span>
+  <span class='fu'><a href='Param.html'>makeNumericParam</a></span><span class='op'>(</span><span class='st'>"x"</span>, lower <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span><span class='op'>(</span><span class='va'>p</span><span class='op'>)</span>, upper <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Round.html'>ceiling</a></span><span class='op'>(</span><span class='fl'>3</span> <span class='op'>*</span> <span class='va'>p</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>,
+  <span class='fu'><a href='Param.html'>makeIntegerParam</a></span><span class='op'>(</span><span class='st'>"y"</span>, lower <span class='op'>=</span> <span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+<span class='op'>)</span>
+<span class='fu'>evaluateParamExpressions</span><span class='op'>(</span><span class='va'>ps</span>, dict <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>p <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;      Type len Def Constr Req Tunable Trafo
 #&gt; x numeric   -   - 3 to 9   -    TRUE     -
 #&gt; y integer   -   - 1 to 2   -    TRUE     -</div><div class='input'>
-<span class='kw'>ps</span> <span class='op'>=</span> <span class='fu'><a href='makeParamSet.html'>makeParamSet</a></span>(
-  <span class='fu'><a href='Param.html'>makeNumericParam</a></span>(<span class='st'>"x"</span>, default = <span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='kw'>data</span><span class='op'>$</span><span class='kw'>Species</span> <span class='op'>==</span> <span class='st'>"setosa"</span>))),
-  <span class='fu'><a href='Param.html'>makeIntegerParam</a></span>(<span class='st'>"y"</span>, lower = <span class='fl'>1</span>, upper = <span class='fl'>2</span>),
-  keys = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"data"</span>, <span class='st'>"Species"</span>)
-)
-<span class='fu'>evaluateParamExpressions</span>(<span class='kw'>ps</span>, dict = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(data = <span class='kw'>iris</span>))
+<span class='va'>ps</span> <span class='op'>=</span> <span class='fu'><a href='makeParamSet.html'>makeParamSet</a></span><span class='op'>(</span>
+  <span class='fu'><a href='Param.html'>makeNumericParam</a></span><span class='op'>(</span><span class='st'>"x"</span>, default <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>Species</span> <span class='op'>==</span> <span class='st'>"setosa"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>,
+  <span class='fu'><a href='Param.html'>makeIntegerParam</a></span><span class='op'>(</span><span class='st'>"y"</span>, lower <span class='op'>=</span> <span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>,
+  keys <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"data"</span>, <span class='st'>"Species"</span><span class='op'>)</span>
+<span class='op'>)</span>
+<span class='fu'>evaluateParamExpressions</span><span class='op'>(</span><span class='va'>ps</span>, dict <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;      Type len Def      Constr Req Tunable Trafo
 #&gt; x numeric   -  50 -Inf to Inf   -    TRUE     -
 #&gt; y integer   -   -      1 to 2   -    TRUE     -</div><div class='input'>
-<span class='kw'>par.vals</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-  x = <span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span>(<span class='kw'>k</span>),
-  y = <span class='fl'>5</span>
-)
-<span class='fu'>evaluateParamExpressions</span>(<span class='kw'>par.vals</span>, dict = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(k = <span class='fl'>3</span>))
+<span class='va'>par.vals</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+  x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span><span class='op'>(</span><span class='va'>k</span><span class='op'>)</span>,
+  y <span class='op'>=</span> <span class='fl'>5</span>
+<span class='op'>)</span>
+<span class='fu'>evaluateParamExpressions</span><span class='op'>(</span><span class='va'>par.vals</span>, dict <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>k <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $x
 #&gt; [1] 3
 #&gt; 

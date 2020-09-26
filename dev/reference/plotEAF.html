@@ -140,10 +140,10 @@ Pretty directly calls eaf::eafplot()." />
     <div class="ref-description">
     <p>Can be used to plot OptPaths where information for bi-objective
 evaluation was logged for repeated runs of different algorithmic runs.
-Pretty directly calls <code><a href='https://rdrr.io/pkg/eaf/man/eafplot.html'>eaf::eafplot()</a></code>.</p>
+Pretty directly calls <code><a href='http://lopez-ibanez.eu/eaftools/reference/eafplot.html'>eaf::eafplot()</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>plotEAF</span>(<span class='kw'>opt.paths</span>, xlim = <span class='kw'>NULL</span>, ylim = <span class='kw'>NULL</span>, <span class='kw'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>plotEAF</span><span class='op'>(</span><span class='va'>opt.paths</span>, xlim <span class='op'>=</span> <span class='cn'>NULL</span>, ylim <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -168,17 +168,17 @@ The y limits (y1, y2) of the plot.</p></td>
     <tr>
       <th>...</th>
       <td><p>(any)<br />
-Passed on to <code><a href='https://rdrr.io/pkg/eaf/man/eafplot.html'>eaf::eafplot()</a></code>.</p></td>
+Passed on to <code><a href='http://lopez-ibanez.eu/eaftools/reference/eafplot.html'>eaf::eafplot()</a></code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code>
-Invisibly returns the data passed to <code><a href='https://rdrr.io/pkg/eaf/man/eafplot.html'>eaf::eafplot()</a></code>.</p>
+Invisibly returns the data passed to <code><a href='http://lopez-ibanez.eu/eaftools/reference/eafplot.html'>eaf::eafplot()</a></code>.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>We changed the defaults of <code><a href='https://rdrr.io/pkg/eaf/man/eafplot.html'>eaf::eafplot()</a></code> in the following way: The axis
+    <p>We changed the defaults of <code><a href='http://lopez-ibanez.eu/eaftools/reference/eafplot.html'>eaf::eafplot()</a></code> in the following way: The axis
 are labeled by <code>y.names</code>, colors are set to our favorite grey values and
 linetypes changed, too. With our colors / linetypes default it is possible
 to distinguish 6 different algorithms. But this can again be overwritten by

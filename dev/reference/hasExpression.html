@@ -141,7 +141,7 @@ contain expressions." />
 contain expressions.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>hasExpression</span>(<span class='kw'>obj</span>)</pre>
+    <pre class="usage"><span class='fu'>hasExpression</span><span class='op'>(</span><span class='va'>obj</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -158,18 +158,18 @@ Parameter, parameter set or list of parameters.</p></td>
     <p><code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>ps1</span> <span class='op'>=</span> <span class='fu'><a href='makeParamSet.html'>makeParamSet</a></span>(
-  <span class='fu'><a href='Param.html'>makeNumericParam</a></span>(<span class='st'>"x"</span>, lower = <span class='fl'>1</span>, upper = <span class='fl'>2</span>),
-  <span class='fu'><a href='Param.html'>makeNumericParam</a></span>(<span class='st'>"y"</span>, lower = <span class='fl'>1</span>, upper = <span class='fl'>10</span>)
-)
+    <pre class="examples"><div class='input'><span class='va'>ps1</span> <span class='op'>=</span> <span class='fu'><a href='makeParamSet.html'>makeParamSet</a></span><span class='op'>(</span>
+  <span class='fu'><a href='Param.html'>makeNumericParam</a></span><span class='op'>(</span><span class='st'>"x"</span>, lower <span class='op'>=</span> <span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>,
+  <span class='fu'><a href='Param.html'>makeNumericParam</a></span><span class='op'>(</span><span class='st'>"y"</span>, lower <span class='op'>=</span> <span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
+<span class='op'>)</span>
 
-<span class='kw'>ps2</span> <span class='op'>=</span> <span class='fu'><a href='makeParamSet.html'>makeParamSet</a></span>(
-  <span class='fu'><a href='LearnerParam.html'>makeNumericLearnerParam</a></span>(<span class='st'>"x"</span>, lower = <span class='fl'>1</span>, upper = <span class='fl'>2</span>),
-  <span class='fu'><a href='LearnerParam.html'>makeNumericLearnerParam</a></span>(<span class='st'>"y"</span>, lower = <span class='fl'>1</span>, upper = <span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span>(<span class='kw'>p</span>))
-)
+<span class='va'>ps2</span> <span class='op'>=</span> <span class='fu'><a href='makeParamSet.html'>makeParamSet</a></span><span class='op'>(</span>
+  <span class='fu'><a href='LearnerParam.html'>makeNumericLearnerParam</a></span><span class='op'>(</span><span class='st'>"x"</span>, lower <span class='op'>=</span> <span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>,
+  <span class='fu'><a href='LearnerParam.html'>makeNumericLearnerParam</a></span><span class='op'>(</span><span class='st'>"y"</span>, lower <span class='op'>=</span> <span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span><span class='op'>(</span><span class='va'>p</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>)</span>
 
-<span class='fu'>hasExpression</span>(<span class='kw'>ps1</span>)
-</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='fu'>hasExpression</span>(<span class='kw'>ps2</span>)
+<span class='fu'>hasExpression</span><span class='op'>(</span><span class='va'>ps1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='fu'>hasExpression</span><span class='op'>(</span><span class='va'>ps2</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] TRUE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
