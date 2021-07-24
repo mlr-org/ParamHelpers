@@ -12,7 +12,7 @@ test_that("plotEAF works", {
     for (i in 1:20) {
       addOptPathEl(op, x = list(
         x = X[i * 3]),
-      y = X[ i * 3 - 1:2],
+      y = X[i * 3 - 1:2],
       dob = dob[i])
     }
     op

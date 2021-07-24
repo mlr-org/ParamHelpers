@@ -140,16 +140,16 @@ generateDesign = function(n = 10L, par.set, fun, fun.args = list(), trafo = FALS
     getMapping = function(i) {
       # Numeric
       if (types.df[i] == "numeric") {
-        newdes[,i] * (upper2[i] - lower2[i]) + lower2[i]
+        newdes[, i] * (upper2[i] - lower2[i]) + lower2[i]
       } else if (types.df[i] == "integer") {
-      # Integer
-        as.integer(floor(newdes[,i] * ((upper2[i] - lower2[i]) + 1L) * (1 - 1e-16)) + lower2[i])
-      # Logic
+        # Integer
+        as.integer(floor(newdes[, i] * ((upper2[i] - lower2[i]) + 1L) * (1 - 1e-16)) + lower2[i])
+        # Logic
       } else if (types.df[i] == "logical") {
-        newdes[,i] < 0.5
-      # Discrete
+        newdes[, i] < 0.5
+        # Discrete
       } else if (types.df[i] == "character") {
-        values[[i]][floor(newdes[,i] * length(values[[i]]) * (1 - 1e-16)) + 1]
+        values[[i]][floor(newdes[, i] * length(values[[i]]) * (1 - 1e-16)) + 1]
       } else {
         stopf("%s for Param %s is an unsupported type.", types.df[i], pids[i])
       }
@@ -270,7 +270,7 @@ setRequiresToNA = function(res, pars, par.ids.each = NULL, par.nas.each = NULL, 
       } else {
         # unfortunately we allowed requirements to be not vectorized
         set.to.na = !vapply(seq_len(nrow(res)), function(i) {
-          eval(req, res[i,])
+          eval(req, res[i, ])
         }, FUN.VALUE = logical(1))
       }
       set.to.na = set.to.na & !is.na(res[[par.ids.each[[par$id]][1]]])

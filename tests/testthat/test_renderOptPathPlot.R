@@ -13,7 +13,7 @@ test_that("renderOptPathPlot", {
   for (i in 1:7) {
     addOptPathEl(op0, x = list(
       x = X[i * 2]),
-    y = X[ i * 2 - 1],
+    y = X[i * 2 - 1],
     dob = dob[i])
   }
   pl = renderOptPathPlot(op0, iter = 0, alpha = FALSE)

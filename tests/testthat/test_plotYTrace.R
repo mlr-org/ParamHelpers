@@ -10,7 +10,7 @@ test_that("plotYTrace works", {
     for (i in 1:20) {
       addOptPathEl(op, x = list(
         x = X[i * 2]),
-      y = X[ i * 2 - 1],
+      y = X[i * 2 - 1],
       dob = dob[i],
       exec.time = rexp(1))
     }

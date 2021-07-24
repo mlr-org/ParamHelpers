@@ -224,7 +224,7 @@ test_that("expressions get converted", {
 })
 
 test_that("test whether paramset fails gracefully", {
-  li <- list(
+  li = list(
     makeLogicalLearnerParam("a", default = FALSE),
     makeLogicalLearnerParam("b", default = FALSE, requires = expression(a == TRUE))
   )

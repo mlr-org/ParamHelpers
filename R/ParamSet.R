@@ -170,7 +170,6 @@ makeNumericParamSet = function(id = "x", len, lower = -Inf, upper = Inf, vector 
   } else {
     return(makeParamSet(params = lapply(1:len, function(i) {
       makeNumericParam(id = paste(id, i, sep = ""), lower = lower[i], upper = upper[i])
-    })
-    ))
+    })))
   }
 }

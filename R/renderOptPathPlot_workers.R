@@ -260,7 +260,7 @@ multiVariablesOverTime = function(op, .alpha, dob, log, names, short.names,
   pl = pl + ggplot2::scale_x_continuous(breaks = function(x) pretty(x, n = min(5, iter + 1)))
 
   # fixed number of decimals:
-  fmt <- function() {
+  fmt = function() {
     function(x) format(x, nsmall = 3, scientific = FALSE)
   }
 
@@ -339,7 +339,7 @@ oneVariableOverTime = function(op, .alpha, .type, dob, log, names, short.names, 
   }
 
   # fixed number of decimals:
-  fmt <- function() {
+  fmt = function() {
     function(x) format(x, nsmall = 3, scientific = FALSE)
   }
 
