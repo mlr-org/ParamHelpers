@@ -65,6 +65,5 @@ Suggests:
     testthat
 ByteCompile: yes
 Encoding: UTF-8
-LazyData: yes
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.0
