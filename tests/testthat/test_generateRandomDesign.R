@@ -1,5 +1,3 @@
-context("generateRandomDesign")
-
 test_that("num/int/disc vec design", {
   ps = makeParamSet(
     makeNumericParam("x", lower = -2, upper = 1),

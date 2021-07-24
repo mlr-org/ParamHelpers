@@ -1,6 +1,3 @@
-context("generateDesignOfDefaults")
-
-
 test_that("generateDesignOfDefaults", {
   ps = makeParamSet(
     makeNumericParam("x", lower = 1, upper = 5, default = 1),
@@ -84,21 +81,21 @@ test_that("generateDesignOfDefaults works with discrete params and complex value
     makeDiscreteParam("p", values = c("a", "b"), default = "b")
   )
   d = generateDesignOfDefaults(ps)
-  expect_equal(d, data.frame(p = factor("b", levels = c("a", "b"))), check.attributes = FALSE)
+  expect_equal(d, data.frame(p = factor("b", levels = c("a", "b"))), ignore_attr = TRUE)
 
   ps = makeParamSet(
     makeDiscreteParam("p", values = c(ir = "ir", foo = "bar"), default = "ir")
   )
   d = generateDesignOfDefaults(ps)
-  expect_equal(d, data.frame(p = factor("ir", levels = c("ir", "foo"))), check.attributes = FALSE)
+  expect_equal(d, data.frame(p = factor("ir", levels = c("ir", "foo"))), ignore_attr = TRUE)
 
   p = makeDiscreteParam("p", values = c(ir = "ir", foo = "bar"), default = "bar")
   ps = makeParamSet(p)
   d = generateDesignOfDefaults(ps)
-  expect_equal(d, data.frame(p = factor("foo", levels = c("ir", "foo"))), check.attributes = FALSE)
+  expect_equal(d, data.frame(p = factor("foo", levels = c("ir", "foo"))), ignore_attr = TRUE)
 
   p = makeDiscreteParam("p", values = list(ir = "ir", foo = iris), default = iris)
   ps = makeParamSet(p)
   d = generateDesignOfDefaults(ps)
-  expect_equal(d, data.frame(p = factor("foo", levels = c("ir", "foo"))), check.attributes = FALSE)
+  expect_equal(d, data.frame(p = factor("foo", levels = c("ir", "foo"))), ignore_attr = TRUE)
 })

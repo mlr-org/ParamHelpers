@@ -1,5 +1,3 @@
-context("Parameter")
-
 test_that("num param", {
   p = makeNumericParam(id = "x", lower = -1L, upper = 1)
   expect_equal("numeric", p$type)

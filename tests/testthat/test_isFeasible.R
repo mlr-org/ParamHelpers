@@ -1,5 +1,3 @@
-context("isFeasible")
-
 test_that("isFeasible ParamSet", {
   ps = makeParamSet(
     makeIntegerParam("a", default = 1L),

@@ -1,5 +1,3 @@
-context("evaluateParamExpressions")
-
 test_that("no changes", {
   ps = makeParamSet()
   expect_identical(evaluateParamExpressions(ps), ps)

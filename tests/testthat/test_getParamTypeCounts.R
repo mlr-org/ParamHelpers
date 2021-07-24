@@ -1,5 +1,3 @@
-context("getParamTypeCounts")
-
 test_that("getParamTypeCounts", {
   checkNonOccuringTypes = function(or, par.set) {
     sapply(setdiff(getTypeStringsAll(), getParamTypes(par.set)), function(type) {

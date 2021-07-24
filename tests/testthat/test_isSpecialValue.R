@@ -1,5 +1,3 @@
-context("isSpecialValue")
-
 test_that("isSpecialValue", {
   p = makeIntegerParam("a", special.vals = list(NULL))
   expect_true(isSpecialValue(p, NULL))

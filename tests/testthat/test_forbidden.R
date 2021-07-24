@@ -1,6 +1,3 @@
-context("forbidden")
-
-
 test_that("forbidden", {
   ps = makeParamSet(
     makeNumericParam("x", lower = 1, upper = 5),

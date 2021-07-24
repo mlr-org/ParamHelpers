@@ -1,5 +1,3 @@
-context("dropParams")
-
 test_that("dropParams", {
   ps = makeParamSet(
     makeNumericParam("u", lower = 1),

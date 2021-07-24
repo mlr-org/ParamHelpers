@@ -1,5 +1,3 @@
-context("plotEAF")
-
 test_that("plotEAF works", {
 
   # Build 3 artifical opt.paths with 2 crits

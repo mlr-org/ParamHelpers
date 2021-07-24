@@ -1,5 +1,3 @@
-context("ParameterSet")
-
 test_that("empty paramset", {
   ps = makeParamSet()
   expect_equal(getParamIds(ps), character(0))
@@ -213,7 +211,7 @@ test_that("expressions get converted", {
     makeLogicalLearnerParam("a", default = FALSE),
     makeLogicalLearnerParam("b", default = FALSE, requires = quote(a == TRUE))
   )
-  expect_is(ps1$pars$b$requires, "call")
+  expect_class(ps1$pars$b$requires, "call")
   expect_equal(ps1, ps2)
   expect_error({
     ps = makeParamSet(

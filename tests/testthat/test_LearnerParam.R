@@ -1,5 +1,3 @@
-context("LearnerParam")
-
 test_that("num vec", {
   p = makeNumericVectorLearnerParam("x", len = 2, lower = 0, upper = 2)
   expect_equal(p$id, "x")

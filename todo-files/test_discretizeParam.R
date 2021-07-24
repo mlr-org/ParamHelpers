@@ -1,5 +1,3 @@
-context("discretizeParam")
-
 test_that("discretizeParam", {
 
   p = makeNumericParam("x", lower = -1, upper = 1)
@@ -16,7 +14,7 @@ test_that("discretizeParam", {
   expect_equal(discretizeParam(p), p)
   p = makeDiscreteParam("x", values = c("a", "b"))
   expect_equal(discretizeParam(p), p)
-  
+
   p = makeUntypedParam("x")
   expect_error(discretizeParam(p), "untyped")
 })

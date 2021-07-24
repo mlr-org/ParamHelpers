@@ -1,5 +1,3 @@
-context("getRequiredParamNames")
-
 test_that("getRequiredParamNames", {
   ps = makeParamSet(
     makeIntegerParam("a", default = 1L),

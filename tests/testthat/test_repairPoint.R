@@ -1,5 +1,3 @@
-context("repairPoint")
-
 test_that("repairPoint", {
   ps = makeParamSet(
     makeNumericParam("num1", lower = 1, upper = 5),

@@ -1,5 +1,3 @@
-context("sample")
-
 test_that("numeric sampling", {
   p = makeNumericParam(id = "x", lower = 10, upper = 20)
   r = sampleValues(p, 13)

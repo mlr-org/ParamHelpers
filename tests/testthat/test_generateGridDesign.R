@@ -1,5 +1,3 @@
-context("generateGridDesign")
-
 test_that("generateGridDesign", {
   ps = makeParamSet(
     makeNumericParam("x", lower = 1, upper = 5),

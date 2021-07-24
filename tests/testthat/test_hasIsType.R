@@ -1,5 +1,3 @@
-context("is{Discrete, Integer, Numeric, Character} and has{Discrete, Integer, Numeric, Character}")
-
 test_that("is{Discrete, Integer, Numeric, Character} and has{Discrete, Integer, Numeric, Character}", {
   par.set.empty = makeParamSet()
   has.methods = c(hasInteger, hasDiscrete, hasNumeric, hasCharacter)

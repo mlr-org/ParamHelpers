@@ -1,5 +1,3 @@
-context("isVector")
-
 test_that("isVector", {
   ps = makeParamSet()
   expect_true(isVector(ps))

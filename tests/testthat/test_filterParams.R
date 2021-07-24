@@ -1,5 +1,3 @@
-context("FilterParams")
-
 test_that("filter empty paramset", {
   ps = makeParamSet()
   expect_true(isEmpty(filterParams(ps, type = "numeric")))

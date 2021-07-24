@@ -1,5 +1,3 @@
-context("generateDesign")
-
 test_that("simple num design", {
   requirePackages("_lhs")
   ps1 = makeParamSet(

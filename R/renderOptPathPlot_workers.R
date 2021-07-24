@@ -59,7 +59,7 @@ plot1DNum = function(op, .alpha, .type, log, names, short.names,
   } else {
     pl = pl + ggplot2::coord_cartesian(xlim = xlim)
   }
-  pl = pl + ggplot2::guides(alpha = FALSE)
+  pl = pl + ggplot2::guides(alpha = "none")
   pl = pl + ggplot2::scale_alpha_continuous(range = c(max(1 / (iter + 1), 0.1), 1L))
   pl = pl + ggplot2::scale_colour_manual(name = "type",
     values = c(init = colours[1L], seq = colours[2L], prop = colours[3L], marked = colours[4L]))
@@ -93,7 +93,7 @@ plot1DDisc = function(op, .alpha, .type, log, names, short.names,
   pl = pl + ggplot2::scale_fill_manual(name = "type",
     values = c(init = colours[1L], seq = colours[2L], prop = colours[3L], marked = colours[4L]))
   pl = pl + ggplot.theme
-  pl = pl + ggplot2::guides(alpha = FALSE)
+  pl = pl + ggplot2::guides(alpha = "none")
 
   return(pl)
 }
@@ -147,7 +147,7 @@ plot2D = function(op, .alpha, .type, log, names, short.names, y.name = NULL, op.
   }
   pl = pl + title
   pl = pl + ggplot2::xlab(short.names[1L]) + ggplot2::ylab(short.names[2L])
-  pl = pl + ggplot2::guides(alpha = FALSE)
+  pl = pl + ggplot2::guides(alpha = "none")
   pl = pl + ggplot2::scale_colour_manual(name = "type",
     values = c(init = colours[1L], seq = colours[2L], prop = colours[3L], marked = colours[4L]))
   pl = pl + ggplot2::scale_shape_manual(name = "type",
@@ -207,7 +207,7 @@ plotMultiD = function(op, .alpha, .type, log, names, short.names,
   pl = pl + ggplot2::ylab("scaled values")
   pl = pl + ggplot2::scale_x_discrete(labels = short.names)
   pl = pl + title
-  pl = pl + ggplot2::guides(alpha = FALSE, size = FALSE)
+  pl = pl + ggplot2::guides(alpha = "none", size = "none")
   pl = pl + ggplot2::scale_colour_manual(name = "type",
     values = c(init = colours[1L], seq = colours[2L], prop = colours[3L], marked = colours[4L]))
   pl = pl + ggplot.theme
@@ -349,7 +349,7 @@ oneVariableOverTime = function(op, .alpha, .type, dob, log, names, short.names, 
     pl = pl + ggplot2::scale_y_continuous(labels = fmt())
   }
   pl = pl + ggplot2::geom_vline(xintercept = 0.5)
-  pl = pl + ggplot2::guides(alpha = FALSE)
+  pl = pl + ggplot2::guides(alpha = "none")
   pl = pl + ggplot2::ylab(short.names)
   pl = pl + ggplot2::scale_colour_manual(name = "type",
     values = c(init = colours[1L], seq = colours[2L], prop = colours[3L], marked = colours[4L]))

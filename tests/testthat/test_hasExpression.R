@@ -1,5 +1,3 @@
-context("hasExpression")
-
 test_that("hasExpression.Param", {
   expect_true(!hasExpression(obj = makeDiscreteParam("u", values = 1:2)))
   expect_true(hasExpression(obj = makeDiscreteParam("v", values = expression(n * p))))

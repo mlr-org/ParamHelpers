@@ -1,5 +1,3 @@
-context("cnames")
-
 test_that("cnames work with different operations", {
   p = makeNumericVectorParam(id = "x", len = 2L, lower = 0, upper = 1, cnames = c("a", "b"))
 

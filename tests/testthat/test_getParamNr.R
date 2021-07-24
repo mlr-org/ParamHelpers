@@ -1,5 +1,3 @@
-context("getParamNr")
-
 test_that("getParamNr", {
   ps = makeParamSet()
   expect_equal(getParamNr(ps), 0L)

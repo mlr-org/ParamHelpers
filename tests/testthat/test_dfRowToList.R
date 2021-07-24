@@ -1,6 +1,3 @@
-context("dfRowToList")
-
-
 test_that("dfRowToList", {
   ps = makeParamSet(
     makeDiscreteParam("x", values = list(a = iris, b = 123)),

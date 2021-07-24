@@ -1,5 +1,3 @@
-context("getRequirements")
-
 test_that("getRequirements", {
   ps = makeParamSet()
   # FIXME: BBmisc::namedList still buggy, only return list()

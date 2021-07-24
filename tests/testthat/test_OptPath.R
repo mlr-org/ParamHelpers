@@ -1,5 +1,3 @@
-context("OptPath")
-
 test_that("OptPath", {
   ps = makeParamSet(
     makeNumericParam("x"),

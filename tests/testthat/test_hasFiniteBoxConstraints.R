@@ -1,5 +1,3 @@
-context("hasFiniteBoxConstraints")
-
 test_that("hasFiniteBoxConstraints", {
   par = makeParamSet()
   expect_true(hasFiniteBoxConstraints(par))

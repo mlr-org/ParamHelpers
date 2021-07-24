@@ -1,5 +1,3 @@
-context("trafo")
-
 test_that("trafoValue with param", {
   p = makeNumericParam(id = "x", lower = -10, upper = 10, trafo = function(x) x^2)
   expect_equal(trafoValue(p, 1), 1)

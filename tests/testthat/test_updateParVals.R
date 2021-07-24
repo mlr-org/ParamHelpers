@@ -1,5 +1,3 @@
-context("updateParVals")
-
 test_that("updateParVals works", {
   # simple dependency
   pa = list(a = 1, b = 2, d = 4, e = 5)

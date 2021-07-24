@@ -1,5 +1,3 @@
-context("getDefaults")
-
 test_that("getDefaults", {
   ps = makeParamSet()
   expect_equal(getDefaults(ps), list())

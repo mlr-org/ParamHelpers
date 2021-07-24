@@ -1,5 +1,3 @@
-context("paramValueToString")
-
 test_that("paramValueToString ", {
   u = makeNumericParam("u")
   v = makeIntegerVectorParam("v", len = 2)

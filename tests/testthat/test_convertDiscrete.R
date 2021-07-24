@@ -1,6 +1,3 @@
-context("convertDiscrete")
-
-
 test_that("discrete param NameToValue", {
   f = function(x) 2 * x
   p = makeDiscreteParam(id = "x", values = list(a = "char", b = 2L, c = 2.2, d = f, "e"))

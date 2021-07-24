@@ -1,5 +1,3 @@
-context("getParamTypes")
-
 test_that("getParamTypes", {
   ps = makeParamSet(
     makeDiscreteParam("x", values = c("a", "b")),

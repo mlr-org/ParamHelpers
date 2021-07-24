@@ -1,5 +1,3 @@
-context("hasRequires")
-
 test_that("hasRequires", {
   ps = makeParamSet()
   expect_false(hasRequires(ps))

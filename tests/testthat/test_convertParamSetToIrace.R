@@ -1,5 +1,3 @@
-context("convertParamSetToIrace")
-
 test_that("convertParamSetToIrace", {
   skip_on_cran() # FIXME: Delete if IRACE checks on R 3.6 --as-cran
   skip_if_not_installed("irace", minimum_version = "3.3.1")

@@ -1,5 +1,3 @@
-context("renderOptPathPlot")
-
 muffle = function(x) expect_warning(x, "to numeric for over time plot")
 
 test_that("renderOptPathPlot", {

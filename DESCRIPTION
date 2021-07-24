@@ -1,6 +1,6 @@
 Package: ParamHelpers
-Title: Helpers for Parameters in Black-Box Optimization, Tuning
-    and Machine Learning
+Title: Helpers for Parameters in Black-Box Optimization, Tuning and
+    Machine Learning
 Version: 1.14-9000
 Authors@R:
     c(person(given = "Bernd",
@@ -34,11 +34,11 @@ Authors@R:
              family = "Kerschke",
              role = "aut",
              email = "kerschke@uni-muenster.de"))
-Description: Functions for parameter descriptions and operations
-    in black-box optimization, tuning and machine learning. Parameters can
-    be described (type, constraints, defaults, etc.), combined to
-    parameter sets and can in general be programmed on. A useful OptPath
-    object (archive) to log function evaluations is also provided.
+Description: Functions for parameter descriptions and operations in
+    black-box optimization, tuning and machine learning. Parameters can be
+    described (type, constraints, defaults, etc.), combined to parameter
+    sets and can in general be programmed on. A useful OptPath object
+    (archive) to log function evaluations is also provided.
 License: BSD_2_clause + file LICENSE
 URL: https://paramhelpers.mlr-org.com,
     https://github.com/mlr-org/ParamHelpers
@@ -64,6 +64,8 @@ Suggests:
     reshape2,
     testthat
 ByteCompile: yes
+Config/testthat/edition: 3
+Config/testthat/parallel: true
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
