@@ -66,4 +66,4 @@ Suggests:
 ByteCompile: yes
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
