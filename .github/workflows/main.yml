@@ -90,6 +90,14 @@ jobs:
         if: runner.os == 'macOS'
         run: brew install libgit2
 
+      - name: "[Custom Stage] [macOS] Install gsl"
+        if: runner.os == 'macOS'
+        run: brew install gsl
+
+      - name: "[Custom Stage] [Linux] Install gsl"
+        if: runner.os == 'Linux'
+        run: sudo apt install libgsl-dev
+
       - name: "[Stage] [macOS] Install system libs for pkgdown"
         if: runner.os == 'macOS' && matrix.config.pkgdown != ''
         run: brew install harfbuzz fribidi
