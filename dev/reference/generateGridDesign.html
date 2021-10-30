@@ -212,7 +212,7 @@ Either pass one resolution for all parameters, or a named vector.</p></td>
     </tr>
     <tr>
       <th>trafo</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Transform all parameters by using theirs respective transformation
 functions. Default is <code>FALSE</code>.</p></td>
     </tr>
@@ -223,28 +223,29 @@ functions. Default is <code>FALSE</code>.</p></td>
     <p><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>. Columns are named by the ids of the parameters. If the
 <code>par.set</code> argument contains a vector parameter, its corresponding column
 names in the design are the parameter id concatenated with 1 to dimension
-of the vector. The result will have an <code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code> attribute
+of the vector. The result will have an <code>logical(1)</code> attribute
 &#8220;trafo&#8221;, which is set to the value of argument <code>trafo</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>ps</span> <span class='op'>=</span> <span class='fu'><a href='makeParamSet.html'>makeParamSet</a></span><span class='op'>(</span>
-  <span class='fu'><a href='Param.html'>makeNumericParam</a></span><span class='op'>(</span><span class='st'>"x1"</span>, lower <span class='op'>=</span> <span class='op'>-</span><span class='fl'>2</span>, upper <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>,
-  <span class='fu'><a href='Param.html'>makeNumericParam</a></span><span class='op'>(</span><span class='st'>"x2"</span>, lower <span class='op'>=</span> <span class='op'>-</span><span class='fl'>2</span>, upper <span class='op'>=</span> <span class='fl'>2</span>, trafo <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='va'>x</span><span class='op'>^</span><span class='fl'>2</span><span class='op'>)</span>
-<span class='op'>)</span>
-<span class='fu'>generateGridDesign</span><span class='op'>(</span><span class='va'>ps</span>, resolution <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>x1 <span class='op'>=</span> <span class='fl'>4</span>, x2 <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>, trafo <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;    x1 x2
-#&gt; 1  -2  4
-#&gt; 2  -1  4
-#&gt; 3   0  4
-#&gt; 4   1  4
-#&gt; 5  -2  1
-#&gt; 6  -1  1
-#&gt; 7   0  1
-#&gt; 8   1  1
-#&gt; 9  -2  0
-#&gt; 10 -1  0
-#&gt; 11  0  0
-#&gt; 12  1  0</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>ps</span> <span class='op'>=</span> <span class='fu'><a href='makeParamSet.html'>makeParamSet</a></span><span class='op'>(</span></span>
+<span class='r-in'>  <span class='fu'><a href='Param.html'>makeNumericParam</a></span><span class='op'>(</span><span class='st'>"x1"</span>, lower <span class='op'>=</span> <span class='op'>-</span><span class='fl'>2</span>, upper <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='fu'><a href='Param.html'>makeNumericParam</a></span><span class='op'>(</span><span class='st'>"x2"</span>, lower <span class='op'>=</span> <span class='op'>-</span><span class='fl'>2</span>, upper <span class='op'>=</span> <span class='fl'>2</span>, trafo <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='va'>x</span><span class='op'>^</span><span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>generateGridDesign</span><span class='op'>(</span><span class='va'>ps</span>, resolution <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>x1 <span class='op'>=</span> <span class='fl'>4</span>, x2 <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>, trafo <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    x1 x2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  -2  4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  -1  4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3   0  4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4   1  4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5  -2  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6  -1  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7   0  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8   1  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9  -2  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10 -1  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11  0  0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12  1  0</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

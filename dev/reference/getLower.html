@@ -165,7 +165,7 @@ expressions, they will be evaluated using the provided dictionary <code>dict</co
     </tr>
     <tr>
       <th>with.nr</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Should number from 1 to length be appended to names of vector params?
 Default is <code>FALSE</code>.</p></td>
     </tr>
@@ -183,43 +183,48 @@ default is <code>NULL</code>.</p></td>
     <p><code>vector</code> | <code>list</code>. Named by parameter ids.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>ps</span> <span class='op'>=</span> <span class='fu'><a href='makeParamSet.html'>makeParamSet</a></span><span class='op'>(</span>
-  <span class='fu'><a href='Param.html'>makeNumericParam</a></span><span class='op'>(</span><span class='st'>"u"</span><span class='op'>)</span>,
-  <span class='fu'><a href='Param.html'>makeDiscreteParam</a></span><span class='op'>(</span><span class='st'>"v"</span>, values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"b"</span><span class='op'>)</span><span class='op'>)</span>,
-  <span class='fu'><a href='Param.html'>makeIntegerParam</a></span><span class='op'>(</span><span class='st'>"w"</span>, lower <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Round.html'>ceiling</a></span><span class='op'>(</span><span class='va'>p</span> <span class='op'>/</span> <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>, upper <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>,
-  <span class='fu'><a href='Param.html'>makeDiscreteParam</a></span><span class='op'>(</span><span class='st'>"x"</span>, values <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>)</span>,
-  <span class='fu'><a href='Param.html'>makeNumericVectorParam</a></span><span class='op'>(</span><span class='st'>"y"</span>, len <span class='op'>=</span> <span class='fl'>2</span>, lower <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>10</span><span class='op'>)</span>, upper <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>11</span><span class='op'>)</span><span class='op'>)</span>,
-  keys <span class='op'>=</span> <span class='st'>"p"</span>
-<span class='op'>)</span>
-<span class='fu'>getLower</span><span class='op'>(</span><span class='va'>ps</span>, dict <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>p <span class='op'>=</span> <span class='fl'>7</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;    u    w    y    y 
-#&gt; -Inf    3    0   10 </div><div class='input'><span class='fu'>getUpper</span><span class='op'>(</span><span class='va'>ps</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   u   w   y   y 
-#&gt; Inf   2   1  11 </div><div class='input'>
-<span class='va'>ps</span> <span class='op'>=</span> <span class='fu'><a href='makeParamSet.html'>makeParamSet</a></span><span class='op'>(</span>
-  <span class='fu'><a href='Param.html'>makeNumericParam</a></span><span class='op'>(</span><span class='st'>"u"</span><span class='op'>)</span>,
-  <span class='fu'><a href='Param.html'>makeDiscreteParam</a></span><span class='op'>(</span><span class='st'>"w"</span>, values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>, b <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span><span class='op'>)</span>
-<span class='op'>)</span>
-<span class='fu'>getValues</span><span class='op'>(</span><span class='va'>ps</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $w
-#&gt; $w$a
-#&gt; list()
-#&gt; 
-#&gt; $w$b
-#&gt; NULL
-#&gt; 
-#&gt; </div><div class='input'>
-<span class='va'>par.vals</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-  u <span class='op'>=</span> <span class='fu'><a href='Param.html'>makeNumericParam</a></span><span class='op'>(</span><span class='st'>"u"</span><span class='op'>)</span>,
-  v <span class='op'>=</span> <span class='fu'><a href='Param.html'>makeIntegerParam</a></span><span class='op'>(</span><span class='st'>"v"</span>, lower <span class='op'>=</span> <span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>,
-  w <span class='op'>=</span> <span class='fu'><a href='Param.html'>makeDiscreteParam</a></span><span class='op'>(</span><span class='st'>"w"</span>, values <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>)</span>,
-  x <span class='op'>=</span> <span class='fu'><a href='Param.html'>makeNumericVectorParam</a></span><span class='op'>(</span><span class='st'>"x"</span>, len <span class='op'>=</span> <span class='fl'>2</span>, lower <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>1</span><span class='op'>)</span>, upper <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span><span class='op'>)</span>
-<span class='op'>)</span>
-<span class='fu'>getLower</span><span class='op'>(</span><span class='va'>par.vals</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;    u    v    x    x 
-#&gt; -Inf    1    3    1 </div><div class='input'><span class='fu'>getUpper</span><span class='op'>(</span><span class='va'>par.vals</span>, dict <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   u   v   x   x 
-#&gt; Inf   2  12  12 </div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>ps</span> <span class='op'>=</span> <span class='fu'><a href='makeParamSet.html'>makeParamSet</a></span><span class='op'>(</span></span>
+<span class='r-in'>  <span class='fu'><a href='Param.html'>makeNumericParam</a></span><span class='op'>(</span><span class='st'>"u"</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='fu'><a href='Param.html'>makeDiscreteParam</a></span><span class='op'>(</span><span class='st'>"v"</span>, values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"b"</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='fu'><a href='Param.html'>makeIntegerParam</a></span><span class='op'>(</span><span class='st'>"w"</span>, lower <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Round.html'>ceiling</a></span><span class='op'>(</span><span class='va'>p</span> <span class='op'>/</span> <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>, upper <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='fu'><a href='Param.html'>makeDiscreteParam</a></span><span class='op'>(</span><span class='st'>"x"</span>, values <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='fu'><a href='Param.html'>makeNumericVectorParam</a></span><span class='op'>(</span><span class='st'>"y"</span>, len <span class='op'>=</span> <span class='fl'>2</span>, lower <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>10</span><span class='op'>)</span>, upper <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>11</span><span class='op'>)</span><span class='op'>)</span>,</span>
+<span class='r-in'>  keys <span class='op'>=</span> <span class='st'>"p"</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>getLower</span><span class='op'>(</span><span class='va'>ps</span>, dict <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>p <span class='op'>=</span> <span class='fl'>7</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    u    w    y    y </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> -Inf    3    0   10 </span>
+<span class='r-in'><span class='fu'>getUpper</span><span class='op'>(</span><span class='va'>ps</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   u   w   y   y </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Inf   2   1  11 </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>ps</span> <span class='op'>=</span> <span class='fu'><a href='makeParamSet.html'>makeParamSet</a></span><span class='op'>(</span></span>
+<span class='r-in'>  <span class='fu'><a href='Param.html'>makeNumericParam</a></span><span class='op'>(</span><span class='st'>"u"</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='fu'><a href='Param.html'>makeDiscreteParam</a></span><span class='op'>(</span><span class='st'>"w"</span>, values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>, b <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>getValues</span><span class='op'>(</span><span class='va'>ps</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $w</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $w$a</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> list()</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $w$b</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NULL</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>par.vals</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>  u <span class='op'>=</span> <span class='fu'><a href='Param.html'>makeNumericParam</a></span><span class='op'>(</span><span class='st'>"u"</span><span class='op'>)</span>,</span>
+<span class='r-in'>  v <span class='op'>=</span> <span class='fu'><a href='Param.html'>makeIntegerParam</a></span><span class='op'>(</span><span class='st'>"v"</span>, lower <span class='op'>=</span> <span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>,</span>
+<span class='r-in'>  w <span class='op'>=</span> <span class='fu'><a href='Param.html'>makeDiscreteParam</a></span><span class='op'>(</span><span class='st'>"w"</span>, values <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>)</span>,</span>
+<span class='r-in'>  x <span class='op'>=</span> <span class='fu'><a href='Param.html'>makeNumericVectorParam</a></span><span class='op'>(</span><span class='st'>"x"</span>, len <span class='op'>=</span> <span class='fl'>2</span>, lower <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>1</span><span class='op'>)</span>, upper <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>getLower</span><span class='op'>(</span><span class='va'>par.vals</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    u    v    x    x </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> -Inf    1    3    1 </span>
+<span class='r-in'><span class='fu'>getUpper</span><span class='op'>(</span><span class='va'>par.vals</span>, dict <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   u   v   x   x </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Inf   2  12  12 </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

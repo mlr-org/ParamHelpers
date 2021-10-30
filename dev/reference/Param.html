@@ -170,19 +170,19 @@ substituted from a dictionary, in order to produce a concrete valu, see
 <code><a href='evaluateParamExpressions.html'>evaluateParamExpressions()</a></code>. So this enables data / context dependent
 settings, which is sometimes useful.</p>
 <p>The S3 class is a list which stores these elements:</p><dl>
-<dt>id (<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)</dt><dd><p>See argument of same name.</p></dd>
-<dt>type (<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)</dt><dd><p>Data type of parameter. For all type string see (getTypeStringsAll())</p></dd>
-<dt>len (<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code> | <code>expression</code>)</dt><dd><p>See argument of same name.</p></dd>
+<dt>id (<code>character(1)</code>)</dt><dd><p>See argument of same name.</p></dd>
+<dt>type (<code>character(1)</code>)</dt><dd><p>Data type of parameter. For all type string see (getTypeStringsAll())</p></dd>
+<dt>len (<code>integer(1)</code> | <code>expression</code>)</dt><dd><p>See argument of same name.</p></dd>
 <dt>lower (<code>numeric</code> | <code>expression</code>)</dt><dd><p>See argument of same name. Length of this vector is <code>len</code>.</p></dd>
 <dt>upper (<code>numeric</code> | <code>expression</code>)</dt><dd><p>See argument of same name. Length of this vector is <code>len</code>.</p></dd>
 <dt>values (<code>list</code> | <code>expression</code>)</dt><dd><p>Discrete values, always stored as a named list.</p></dd>
 <dt>cnames (<code>character</code></dt><dd><p>See argument of same name.</p></dd>
-<dt>allow.inf (<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)</dt><dd><p>See argument of same name.</p></dd>
+<dt>allow.inf (<code>logical(1)</code>)</dt><dd><p>See argument of same name.</p></dd>
 <dt>trafo (<code>NULL</code> | <code>function(x)</code>)</dt><dd><p>See argument of same name.</p></dd>
 <dt>requires (<code>NULL</code> | <code>expression</code>)</dt><dd><p>See argument of same name.</p></dd>
 <dt>default (any concrete value | <code>expression</code>)</dt><dd><p>See argument of same name.</p></dd>
-<dt>has.default (<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)</dt><dd><p>Extra flag to really be able to check whether the user passed a default, to avoid troubles with <code>NULL</code> and <code>NA</code>.</p></dd>
-<dt>tunable (<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)</dt><dd><p>See argument of same name.</p></dd>
+<dt>has.default (<code>logical(1)</code>)</dt><dd><p>Extra flag to really be able to check whether the user passed a default, to avoid troubles with <code>NULL</code> and <code>NA</code>.</p></dd>
+<dt>tunable (<code>logical(1)</code>)</dt><dd><p>See argument of same name.</p></dd>
 <dt>special.vals (<code>list</code>)</dt><dd><p>See argument of same name.</p></dd>
 
 </dl>
@@ -309,7 +309,7 @@ settings, which is sometimes useful.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>id</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code>)<br />
+      <td><p>(<code>character(1)</code>)<br />
 Name of parameter.</p></td>
     </tr>
     <tr>
@@ -328,7 +328,7 @@ length 1 is automatically replicated to <code>len</code> for vector parameters. 
     </tr>
     <tr>
       <th>allow.inf</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Allow infinite values for numeric and
 numericvector params to be feasible settings. Default is <code>FALSE</code>.</p></td>
     </tr>
@@ -361,7 +361,7 @@ included in a (ParamSet()). Default is <code>NULL</code> which means no requirem
     </tr>
     <tr>
       <th>tunable</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Is this parameter tunable? Defining a
 parameter to be not-tunable allows to mark arguments like, e.g.,
 &#8220;verbose&#8221; or other purely technical stuff. Note that this flag is
@@ -377,7 +377,7 @@ except which are outside of the defined range. Default is an empty list.</p></td
     </tr>
     <tr>
       <th>len</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code> | <code>expression</code>)<br />
+      <td><p>(<code>integer(1)</code> | <code>expression</code>)<br />
 Length of vector parameter.</p></td>
     </tr>
     <tr>
@@ -403,15 +403,19 @@ the names can be used as internal representations for the choice.</p></td>
     <p>[<code>Param()</code>].</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>makeNumericParam</span><span class='op'>(</span><span class='st'>"x"</span>, lower <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;      Type len Def  Constr Req Tunable Trafo
-#&gt; 1 numeric   -   - -1 to 1   -    TRUE     -</div><div class='input'><span class='fu'>makeNumericVectorParam</span><span class='op'>(</span><span class='st'>"x"</span>, len <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;            Type len Def      Constr Req Tunable Trafo
-#&gt; 1 numericvector   2   - -Inf to Inf   -    TRUE     -</div><div class='input'><span class='fu'>makeDiscreteParam</span><span class='op'>(</span><span class='st'>"y"</span>, values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"b"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;       Type len Def Constr Req Tunable Trafo
-#&gt; 1 discrete   -   -    a,b   -    TRUE     -</div><div class='input'><span class='fu'>makeCharacterParam</span><span class='op'>(</span><span class='st'>"z"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;        Type len Def Constr Req Tunable Trafo
-#&gt; 1 character   -   -      -   -   FALSE     -</div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'>makeNumericParam</span><span class='op'>(</span><span class='st'>"x"</span>, lower <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      Type len Def  Constr Req Tunable Trafo</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 numeric   -   - -1 to 1   -    TRUE     -</span>
+<span class='r-in'><span class='fu'>makeNumericVectorParam</span><span class='op'>(</span><span class='st'>"x"</span>, len <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>            Type len Def      Constr Req Tunable Trafo</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 numericvector   2   - -Inf to Inf   -    TRUE     -</span>
+<span class='r-in'><span class='fu'>makeDiscreteParam</span><span class='op'>(</span><span class='st'>"y"</span>, values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"b"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       Type len Def Constr Req Tunable Trafo</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 discrete   -   -    a,b   -    TRUE     -</span>
+<span class='r-in'><span class='fu'>makeCharacterParam</span><span class='op'>(</span><span class='st'>"z"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        Type len Def Constr Req Tunable Trafo</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 character   -   -      -   -   FALSE     -</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

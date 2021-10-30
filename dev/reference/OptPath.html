@@ -159,7 +159,7 @@ Contents depend on implementation.
 
     <div class="ref-description">
     <p>Optimizers can iteratively log their evaluated points into this
-object. Can be converted into a data.frame with <code><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame(x, discretes.as.factor = TRUE / FALSE)</a></code>.</p>
+object. Can be converted into a data.frame with <code>as.data.frame(x, discretes.as.factor = TRUE / FALSE)</code>.</p>
 <p>A optimization path has a number of path elements, where each element
 consists of: the value of the decision variables at this point, the values of
 the performance measures at this point, the date-of-birth (dob) of this
@@ -175,7 +175,7 @@ you want to add x values before or after transformation, see argument
 <dt>par.set <code><a href='makeParamSet.html'>ParamSet()</a></code></dt><dd><p>See argument of same name.</p></dd>
 <dt>y.names <code><a href='https://rdrr.io/r/base/character.html'>character</a></code></dt><dd><p>See argument of same name.</p></dd>
 <dt>minimize <code><a href='https://rdrr.io/r/base/logical.html'>logical</a></code></dt><dd><p>See argument of same name.</p></dd>
-<dt>add.transformed.x <code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code></dt><dd><p>See argument of same name.</p></dd>
+<dt>add.transformed.x <code>logical(1)</code></dt><dd><p>See argument of same name.</p></dd>
 <dt>env <code><a href='https://rdrr.io/r/base/environment.html'>environment</a></code></dt><dd><p>Environment which stores the optimization path.
 Contents depend on implementation.</p></dd>
 
@@ -214,13 +214,13 @@ Vector of booleans in the same order as <code>y.names</code>.</p></td>
     </tr>
     <tr>
       <th>add.transformed.x</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 If some parameters have associated transformations, are you going to add x
 values after they have been transformed? Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>include.error.message</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Should it be possible to include an error message string (or NA if no error
 occurred) into the path for each evaluation? This is useful if you have
 complex, long running objective evaluations that might fail. Default is
@@ -228,7 +228,7 @@ complex, long running objective evaluations that might fail. Default is
     </tr>
     <tr>
       <th>include.exec.time</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Should it be possible to include execution time of evaluations into the
 path for each evaluation? Note that execution time could also be entered in
 <code>y.names</code> as a direct performance measure. If you use this option here,
@@ -237,7 +237,7 @@ Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>include.extra</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Should it be possible to include extra info
 into the path for each evaluation?
 Default is <code>FALSE</code>.</p></td>

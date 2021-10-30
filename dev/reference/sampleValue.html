@@ -153,13 +153,13 @@ Parameter or parameter set.</p></td>
     </tr>
     <tr>
       <th>discrete.names</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Should names be sampled for discrete parameters or values instead?
 Default is code FALSE.</p></td>
     </tr>
     <tr>
       <th>trafo</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Transform all parameters by using theirs respective transformation
 functions. Default is <code>FALSE</code>.</p></td>
     </tr>
@@ -171,34 +171,38 @@ functions. Default is <code>FALSE</code>.</p></td>
 a named list of such values in the correct order is returned.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># bounds are necessary here, can't sample with Inf bounds:</span>
-<span class='va'>u</span> <span class='op'>=</span> <span class='fu'><a href='Param.html'>makeNumericParam</a></span><span class='op'>(</span><span class='st'>"x"</span>, lower <span class='op'>=</span> <span class='fl'>0</span>, upper <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-<span class='co'># returns a random number between 0 and 1:</span>
-<span class='fu'>sampleValue</span><span class='op'>(</span><span class='va'>u</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 0.527917</div><div class='input'>
-<span class='va'>p</span> <span class='op'>=</span> <span class='fu'><a href='Param.html'>makeDiscreteParam</a></span><span class='op'>(</span><span class='st'>"x"</span>, values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"b"</span>, <span class='st'>"c"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='co'># can be either "a", "b" or "c"</span>
-<span class='fu'>sampleValue</span><span class='op'>(</span><span class='va'>p</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "b"</div><div class='input'>
-<span class='va'>p</span> <span class='op'>=</span> <span class='fu'><a href='Param.html'>makeIntegerVectorParam</a></span><span class='op'>(</span><span class='st'>"x"</span>, len <span class='op'>=</span> <span class='fl'>2</span>, lower <span class='op'>=</span> <span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
-<span class='co'># vector of two random integers between 1 and 5:</span>
-<span class='fu'>sampleValue</span><span class='op'>(</span><span class='va'>p</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 2 3</div><div class='input'>
-<span class='va'>ps</span> <span class='op'>=</span> <span class='fu'><a href='makeParamSet.html'>makeParamSet</a></span><span class='op'>(</span>
-  <span class='fu'><a href='Param.html'>makeNumericParam</a></span><span class='op'>(</span><span class='st'>"x"</span>, lower <span class='op'>=</span> <span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>,
-  <span class='fu'><a href='Param.html'>makeIntegerParam</a></span><span class='op'>(</span><span class='st'>"y"</span>, lower <span class='op'>=</span> <span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>,
-  <span class='fu'><a href='Param.html'>makeDiscreteParam</a></span><span class='op'>(</span><span class='st'>"z"</span>, values <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>)</span>
-<span class='op'>)</span>
-<span class='fu'>sampleValue</span><span class='op'>(</span><span class='va'>ps</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $x
-#&gt; [1] 9.28005
-#&gt; 
-#&gt; $y
-#&gt; [1] 5
-#&gt; 
-#&gt; $z
-#&gt; [1] 1
-#&gt; </div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># bounds are necessary here, can't sample with Inf bounds:</span></span>
+<span class='r-in'><span class='va'>u</span> <span class='op'>=</span> <span class='fu'><a href='Param.html'>makeNumericParam</a></span><span class='op'>(</span><span class='st'>"x"</span>, lower <span class='op'>=</span> <span class='fl'>0</span>, upper <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># returns a random number between 0 and 1:</span></span>
+<span class='r-in'><span class='fu'>sampleValue</span><span class='op'>(</span><span class='va'>u</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 0.527917</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>p</span> <span class='op'>=</span> <span class='fu'><a href='Param.html'>makeDiscreteParam</a></span><span class='op'>(</span><span class='st'>"x"</span>, values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"b"</span>, <span class='st'>"c"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># can be either "a", "b" or "c"</span></span>
+<span class='r-in'><span class='fu'>sampleValue</span><span class='op'>(</span><span class='va'>p</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "b"</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>p</span> <span class='op'>=</span> <span class='fu'><a href='Param.html'>makeIntegerVectorParam</a></span><span class='op'>(</span><span class='st'>"x"</span>, len <span class='op'>=</span> <span class='fl'>2</span>, lower <span class='op'>=</span> <span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># vector of two random integers between 1 and 5:</span></span>
+<span class='r-in'><span class='fu'>sampleValue</span><span class='op'>(</span><span class='va'>p</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 2 3</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>ps</span> <span class='op'>=</span> <span class='fu'><a href='makeParamSet.html'>makeParamSet</a></span><span class='op'>(</span></span>
+<span class='r-in'>  <span class='fu'><a href='Param.html'>makeNumericParam</a></span><span class='op'>(</span><span class='st'>"x"</span>, lower <span class='op'>=</span> <span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='fu'><a href='Param.html'>makeIntegerParam</a></span><span class='op'>(</span><span class='st'>"y"</span>, lower <span class='op'>=</span> <span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='fu'><a href='Param.html'>makeDiscreteParam</a></span><span class='op'>(</span><span class='st'>"z"</span>, values <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>sampleValue</span><span class='op'>(</span><span class='va'>ps</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $x</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 9.28005</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $y</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $z</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

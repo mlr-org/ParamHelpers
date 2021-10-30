@@ -153,18 +153,18 @@ Parameter or parameter set.</p></td>
     </tr>
     <tr>
       <th>n</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/integer.html'>integer(1)</a></code>)<br />
+      <td><p>(<code>integer(1)</code>)<br />
 Number of values.</p></td>
     </tr>
     <tr>
       <th>discrete.names</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Should names be sampled for discrete parameters or values instead?
 Default is code FALSE.</p></td>
     </tr>
     <tr>
       <th>trafo</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Transform all parameters by using theirs respective transformation
 functions. Default is <code>FALSE</code>.</p></td>
     </tr>
@@ -175,76 +175,80 @@ functions. Default is <code>FALSE</code>.</p></td>
     <p><code>list</code>. For consistency always a list is returned.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>p</span> <span class='op'>=</span> <span class='fu'><a href='Param.html'>makeIntegerParam</a></span><span class='op'>(</span><span class='st'>"x"</span>, lower <span class='op'>=</span> <span class='op'>-</span><span class='fl'>10</span>, upper <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
-<span class='fu'>sampleValues</span><span class='op'>(</span><span class='va'>p</span>, <span class='fl'>4</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [[1]]
-#&gt; [1] 4
-#&gt; 
-#&gt; [[2]]
-#&gt; [1] -9
-#&gt; 
-#&gt; [[3]]
-#&gt; [1] 10
-#&gt; 
-#&gt; [[4]]
-#&gt; [1] -7
-#&gt; </div><div class='input'>
-<span class='va'>p</span> <span class='op'>=</span> <span class='fu'><a href='Param.html'>makeNumericParam</a></span><span class='op'>(</span><span class='st'>"x"</span>, lower <span class='op'>=</span> <span class='op'>-</span><span class='fl'>10</span>, upper <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
-<span class='fu'>sampleValues</span><span class='op'>(</span><span class='va'>p</span>, <span class='fl'>4</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [[1]]
-#&gt; [1] 0.3711327
-#&gt; 
-#&gt; [[2]]
-#&gt; [1] 6.922401
-#&gt; 
-#&gt; [[3]]
-#&gt; [1] 4.365394
-#&gt; 
-#&gt; [[4]]
-#&gt; [1] -5.17372
-#&gt; </div><div class='input'>
-<span class='va'>p</span> <span class='op'>=</span> <span class='fu'><a href='Param.html'>makeLogicalParam</a></span><span class='op'>(</span><span class='st'>"x"</span><span class='op'>)</span>
-<span class='fu'>sampleValues</span><span class='op'>(</span><span class='va'>p</span>, <span class='fl'>4</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [[1]]
-#&gt; [1] FALSE
-#&gt; 
-#&gt; [[2]]
-#&gt; [1] FALSE
-#&gt; 
-#&gt; [[3]]
-#&gt; [1] TRUE
-#&gt; 
-#&gt; [[4]]
-#&gt; [1] FALSE
-#&gt; </div><div class='input'>
-<span class='va'>ps</span> <span class='op'>=</span> <span class='fu'><a href='makeParamSet.html'>makeParamSet</a></span><span class='op'>(</span>
-  <span class='fu'><a href='Param.html'>makeNumericParam</a></span><span class='op'>(</span><span class='st'>"u"</span>, lower <span class='op'>=</span> <span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>,
-  <span class='fu'><a href='Param.html'>makeIntegerParam</a></span><span class='op'>(</span><span class='st'>"v"</span>, lower <span class='op'>=</span> <span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>,
-  <span class='fu'><a href='Param.html'>makeDiscreteParam</a></span><span class='op'>(</span><span class='st'>"w"</span>, values <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>)</span>
-<span class='op'>)</span>
-<span class='fu'>sampleValues</span><span class='op'>(</span><span class='va'>ps</span>, <span class='fl'>2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [[1]]
-#&gt; [[1]]$u
-#&gt; [1] 8.25112
-#&gt; 
-#&gt; [[1]]$v
-#&gt; [1] 9
-#&gt; 
-#&gt; [[1]]$w
-#&gt; [1] 1
-#&gt; 
-#&gt; 
-#&gt; [[2]]
-#&gt; [[2]]$u
-#&gt; [1] 2.965879
-#&gt; 
-#&gt; [[2]]$v
-#&gt; [1] 5
-#&gt; 
-#&gt; [[2]]$w
-#&gt; [1] 2
-#&gt; 
-#&gt; </div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>p</span> <span class='op'>=</span> <span class='fu'><a href='Param.html'>makeIntegerParam</a></span><span class='op'>(</span><span class='st'>"x"</span>, lower <span class='op'>=</span> <span class='op'>-</span><span class='fl'>10</span>, upper <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>sampleValues</span><span class='op'>(</span><span class='va'>p</span>, <span class='fl'>4</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[1]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[2]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] -9</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[3]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 10</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[4]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] -7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>p</span> <span class='op'>=</span> <span class='fu'><a href='Param.html'>makeNumericParam</a></span><span class='op'>(</span><span class='st'>"x"</span>, lower <span class='op'>=</span> <span class='op'>-</span><span class='fl'>10</span>, upper <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>sampleValues</span><span class='op'>(</span><span class='va'>p</span>, <span class='fl'>4</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[1]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 0.3711327</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[2]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 6.922401</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[3]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 4.365394</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[4]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] -5.17372</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>p</span> <span class='op'>=</span> <span class='fu'><a href='Param.html'>makeLogicalParam</a></span><span class='op'>(</span><span class='st'>"x"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>sampleValues</span><span class='op'>(</span><span class='va'>p</span>, <span class='fl'>4</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[1]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[2]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[3]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] TRUE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[4]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] FALSE</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>ps</span> <span class='op'>=</span> <span class='fu'><a href='makeParamSet.html'>makeParamSet</a></span><span class='op'>(</span></span>
+<span class='r-in'>  <span class='fu'><a href='Param.html'>makeNumericParam</a></span><span class='op'>(</span><span class='st'>"u"</span>, lower <span class='op'>=</span> <span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='fu'><a href='Param.html'>makeIntegerParam</a></span><span class='op'>(</span><span class='st'>"v"</span>, lower <span class='op'>=</span> <span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='fu'><a href='Param.html'>makeDiscreteParam</a></span><span class='op'>(</span><span class='st'>"w"</span>, values <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>sampleValues</span><span class='op'>(</span><span class='va'>ps</span>, <span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[1]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[1]]$u</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 8.25112</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[1]]$v</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 9</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[1]]$w</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[2]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[2]]$u</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 2.965879</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[2]]$v</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[2]]$w</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

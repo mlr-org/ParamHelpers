@@ -196,12 +196,12 @@ Setting <code>type = NULL</code>, which is the default, allows the consideration
       <th>tunable</th>
       <td><p>(<code>logical</code>)<br />
 Vector of allowed values for the property <code>tunable</code>. Accepted arguments are
-<code>TRUE</code>, <code>FALSE</code> or <code><a href='https://rdrr.io/r/base/c.html'>c(TRUE, FALSE)</a></code>. The default is <code><a href='https://rdrr.io/r/base/c.html'>c(TRUE, FALSE)</a></code>, i.e.
+<code>TRUE</code>, <code>FALSE</code> or <code>c(TRUE, FALSE)</code>. The default is <code>c(TRUE, FALSE)</code>, i.e.
 none of the parameters will be filtered out.</p></td>
     </tr>
     <tr>
       <th>check.requires</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Toggle whether it should be checked that all requirements in the
 (ParamSet()) are still valid after filtering or not. This check is done
 after filtering and will throw an error if those Params are filtered which
@@ -209,13 +209,13 @@ other Params need for their requirements. Default is <code>FALSE</code>.</p></td
     </tr>
     <tr>
       <th>include.int</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Are integers also considered to be numeric?
 Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>include.logical</th>
-      <td><p>(<code><a href='https://rdrr.io/r/base/logical.html'>logical(1)</a></code>)<br />
+      <td><p>(<code>logical(1)</code>)<br />
 Are logicals also considered to be discrete?
 Default is <code>TRUE</code>.</p></td>
     </tr>
@@ -226,29 +226,32 @@ Default is <code>TRUE</code>.</p></td>
     <p><code><a href='makeParamSet.html'>ParamSet()</a></code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>ps</span> <span class='op'>=</span> <span class='fu'><a href='makeParamSet.html'>makeParamSet</a></span><span class='op'>(</span>
-  <span class='fu'><a href='Param.html'>makeNumericParam</a></span><span class='op'>(</span><span class='st'>"u"</span>, lower <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>,
-  <span class='fu'><a href='Param.html'>makeIntegerParam</a></span><span class='op'>(</span><span class='st'>"v"</span>, lower <span class='op'>=</span> <span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>,
-  <span class='fu'><a href='Param.html'>makeDiscreteParam</a></span><span class='op'>(</span><span class='st'>"w"</span>, values <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>)</span>,
-  <span class='fu'><a href='Param.html'>makeLogicalParam</a></span><span class='op'>(</span><span class='st'>"x"</span><span class='op'>)</span>,
-  <span class='fu'><a href='Param.html'>makeCharacterParam</a></span><span class='op'>(</span><span class='st'>"s"</span><span class='op'>)</span>,
-  <span class='fu'><a href='Param.html'>makeNumericParam</a></span><span class='op'>(</span><span class='st'>"y"</span>, tunable <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-<span class='op'>)</span>
-
-<span class='co'># filter for numeric and integer parameters</span>
-<span class='fu'>filterParams</span><span class='op'>(</span><span class='va'>ps</span>, type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"integer"</span>, <span class='st'>"numeric"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;      Type len Def      Constr Req Tunable Trafo
-#&gt; u numeric   -   -    1 to Inf   -    TRUE     -
-#&gt; v integer   -   -      1 to 2   -    TRUE     -
-#&gt; y numeric   -   - -Inf to Inf   -   FALSE     -</div><div class='input'>
-<span class='co'># filter for tunable, numeric parameters</span>
-<span class='fu'>filterParams</span><span class='op'>(</span><span class='va'>ps</span>, type <span class='op'>=</span> <span class='st'>"numeric"</span>, tunable <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;      Type len Def   Constr Req Tunable Trafo
-#&gt; u numeric   -   - 1 to Inf   -    TRUE     -</div><div class='input'>
-<span class='co'># filter for all numeric parameters among "u", "v" and "x"</span>
-<span class='fu'>filterParams</span><span class='op'>(</span><span class='va'>ps</span>, type <span class='op'>=</span> <span class='st'>"numeric"</span>, ids <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"u"</span>, <span class='st'>"v"</span>, <span class='st'>"x"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;      Type len Def   Constr Req Tunable Trafo
-#&gt; u numeric   -   - 1 to Inf   -    TRUE     -</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>ps</span> <span class='op'>=</span> <span class='fu'><a href='makeParamSet.html'>makeParamSet</a></span><span class='op'>(</span></span>
+<span class='r-in'>  <span class='fu'><a href='Param.html'>makeNumericParam</a></span><span class='op'>(</span><span class='st'>"u"</span>, lower <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='fu'><a href='Param.html'>makeIntegerParam</a></span><span class='op'>(</span><span class='st'>"v"</span>, lower <span class='op'>=</span> <span class='fl'>1</span>, upper <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='fu'><a href='Param.html'>makeDiscreteParam</a></span><span class='op'>(</span><span class='st'>"w"</span>, values <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='fu'><a href='Param.html'>makeLogicalParam</a></span><span class='op'>(</span><span class='st'>"x"</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='fu'><a href='Param.html'>makeCharacterParam</a></span><span class='op'>(</span><span class='st'>"s"</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='fu'><a href='Param.html'>makeNumericParam</a></span><span class='op'>(</span><span class='st'>"y"</span>, tunable <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># filter for numeric and integer parameters</span></span>
+<span class='r-in'><span class='fu'>filterParams</span><span class='op'>(</span><span class='va'>ps</span>, type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"integer"</span>, <span class='st'>"numeric"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      Type len Def      Constr Req Tunable Trafo</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> u numeric   -   -    1 to Inf   -    TRUE     -</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> v integer   -   -      1 to 2   -    TRUE     -</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> y numeric   -   - -Inf to Inf   -   FALSE     -</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># filter for tunable, numeric parameters</span></span>
+<span class='r-in'><span class='fu'>filterParams</span><span class='op'>(</span><span class='va'>ps</span>, type <span class='op'>=</span> <span class='st'>"numeric"</span>, tunable <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      Type len Def   Constr Req Tunable Trafo</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> u numeric   -   - 1 to Inf   -    TRUE     -</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># filter for all numeric parameters among "u", "v" and "x"</span></span>
+<span class='r-in'><span class='fu'>filterParams</span><span class='op'>(</span><span class='va'>ps</span>, type <span class='op'>=</span> <span class='st'>"numeric"</span>, ids <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"u"</span>, <span class='st'>"v"</span>, <span class='st'>"x"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>      Type len Def   Constr Req Tunable Trafo</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> u numeric   -   - 1 to Inf   -    TRUE     -</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
