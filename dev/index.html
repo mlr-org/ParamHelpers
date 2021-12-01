@@ -34,6 +34,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -46,7 +48,7 @@
       </button>
 
       <div class="navbar-brand-container">
-        <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
+        <a href="https://mlr-org.com" class="external-link"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/reference/figures/logo.png" id="hexlogo" alt="mlr-org"></a>
         <a class="navbar-brand" href="index.html">ParamHelpers <small>v1.14-9000</small></a>
       </div>
     </div>
@@ -59,25 +61,25 @@
   <a href="news/index.html">Changelog</a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/ParamHelpers/">
+  <a href="https://github.com/mlr-org/ParamHelpers/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite">
+  <a href="https://lmmisld-lmu-stats-slds.srv.mwn.de/mlr_invite" class="external-link">
     <span class="fa fa-comments"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://stackoverflow.com/questions/tagged/mlr">
+  <a href="https://stackoverflow.com/questions/tagged/mlr" class="external-link">
     <span class="fab fa-stack-overflow"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://mlr-org.com/">
+  <a href="https://mlr-org.com/" class="external-link">
     <span class="fa fa-rss"></span>
      
   </a>
@@ -94,79 +96,89 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="paramhelpers" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#paramhelpers" class="anchor"></a>ParamHelpers</h1></div>
+<div class="section level1">
+<div class="page-header"><h1 id="paramhelpers">ParamHelpers<a class="anchor" aria-label="anchor" href="#paramhelpers"></a>
+</h1></div>
 <p>Package website: <a href="https://paramhelpers.mlr-org.com/">release</a> | <a href="https://paramhelpers.mlr-org.com/dev">dev</a></p>
 <p>Helpers for parameters in black-box optimization, tuning and machine learning.</p>
 <!-- badges: start -->
 
 <!-- badges: end -->
 <ul>
-<li><p>Offical CRAN release site: <a href="http://cran.r-project.org/web/packages/ParamHelpers/index.html" class="uri">http://cran.r-project.org/web/packages/ParamHelpers/index.html</a></p></li>
+<li><p>Offical CRAN release site: <a href="http://cran.r-project.org/web/packages/ParamHelpers/index.html" class="external-link uri">http://cran.r-project.org/web/packages/ParamHelpers/index.html</a></p></li>
 <li><p>R Documentation in HTML: <a href="https://paramhelpers.mlr-org.com/reference/" class="uri">https://paramhelpers.mlr-org.com/reference/</a></p></li>
 <li>
 <p>Run this in R to install the current GitHub version:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"mlr-org/ParamHelpers"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"mlr-org/ParamHelpers"</span><span class="op">)</span></code></pre></div>
 </li>
-<li><p><a href="https://github.com/tudo-r/PackagesInfo/wiki/Installation-Information">Further installation instructions</a></p></li>
+<li><p><a href="https://github.com/tudo-r/PackagesInfo/wiki/Installation-Information" class="external-link">Further installation instructions</a></p></li>
 </ul>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=ParamHelpers">https://​cloud.r-project.org/​package=ParamHelpers</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/mlr-org/ParamHelpers/">https://​github.com/​mlr-org/​ParamHelpers/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/mlr-org/ParamHelpers/issues">https://​github.com/​mlr-org/​ParamHelpers/​issues</a>
-</li>
-</ul>
-</div>
-<div class="license">
-<h2>License</h2>
-<ul class="list-unstyled">
-<li>
-<a href="https://opensource.org/licenses/BSD-2-Clause">BSD_2_clause</a> + file <a href="LICENSE-text.html">LICENSE</a>
-</li>
-</ul>
-</div>
-<div class="developers">
-<h2>Developers</h2>
-<ul class="list-unstyled">
-<li>Bernd Bischl <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-6002-6980" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Michel Lang <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-9754-0393" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Jakob Richter <br><small class="roles"> Maintainer, author </small> <a href="https://orcid.org/0000-0003-4481-5554" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Jakob Bossek <br><small class="roles"> Author </small>  </li>
-<li>Daniel Horn <br><small class="roles"> Author </small>  </li>
-<li>Pascal Kerschke <br><small class="roles"> Author </small>  </li>
-<li><a href="authors.html">All authors...</a></li>
+<li><a href="https://cloud.r-project.org/package=ParamHelpers" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/mlr-org/ParamHelpers/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/mlr-org/ParamHelpers/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="license">
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/mlr-org/ParamHelpers/actions"><img src="https://github.com/mlr-org/ParamHelpers/workflows/tic/badge.svg?branch=master" alt="tic"></a></li>
-<li><a href="http://cran.r-project.org/web/packages/ParamHelpers"><img src="http://www.r-pkg.org/badges/version/ParamHelpers" alt="CRAN Status Badge"></a></li>
-<li><a href="https://codecov.io/gh/mlr-org/ParamHelpers?branch=master"><img src="https://codecov.io/gh/mlr-org/ParamHelpers/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
-<li><a href="http://cran.rstudio.com/web/packages/ParamHelpers/index.html"><img src="http://cranlogs.r-pkg.org/badges/ParamHelpers" alt="CRAN Downloads"></a></li>
+<li>
+<a href="https://opensource.org/licenses/BSD-2-Clause" class="external-link">BSD_2_clause</a> + file <a href="LICENSE-text.html">LICENSE</a>
+</li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing ParamHelpers</a></li>
+</ul>
 </div>
+
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
+<ul class="list-unstyled">
+<li>Bernd Bischl <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-6002-6980" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Michel Lang <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-9754-0393" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Jakob Richter <br><small class="roles"> Maintainer, author </small> <a href="https://orcid.org/0000-0003-4481-5554" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Jakob Bossek <br><small class="roles"> Author </small>  </li>
+<li>Daniel Horn <br><small class="roles"> Author </small>  </li>
+<li>Pascal Kerschke <br><small class="roles"> Author </small>  </li>
+<li><a href="authors.html">More about authors...</a></li>
+</ul>
+</div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/mlr-org/ParamHelpers/actions" class="external-link"><img src="https://github.com/mlr-org/ParamHelpers/workflows/tic/badge.svg?branch=master" alt="tic"></a></li>
+<li><a href="http://cran.r-project.org/web/packages/ParamHelpers" class="external-link"><img src="http://www.r-pkg.org/badges/version/ParamHelpers" alt="CRAN Status Badge"></a></li>
+<li><a href="https://codecov.io/gh/mlr-org/ParamHelpers?branch=master" class="external-link"><img src="https://codecov.io/gh/mlr-org/ParamHelpers/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="http://cran.rstudio.com/web/packages/ParamHelpers/index.html" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/ParamHelpers" alt="CRAN Downloads"></a></li>
+</ul>
+</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Bernd Bischl, Michel Lang, Jakob Richter, Jakob Bossek, Daniel Horn, Pascal Kerschke.</p>
+  <p></p>
+<p>Developed by Bernd Bischl, Michel Lang, Jakob Richter, Jakob Bossek, Daniel Horn, Pascal Kerschke.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
 </div>
 
       </footer>
@@ -174,6 +186,8 @@
 
   
 
+
+  
 
   </body>
 </html>
