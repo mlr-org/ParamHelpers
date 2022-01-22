@@ -102,17 +102,17 @@ a named list of such values in the correct order is returned.</p>
 <span class="r-in"><span class="va">u</span> <span class="op">=</span> <span class="fu"><a href="Param.html">makeNumericParam</a></span><span class="op">(</span><span class="st">"x"</span>, lower <span class="op">=</span> <span class="fl">0</span>, upper <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span class="r-in"><span class="co"># returns a random number between 0 and 1:</span></span>
 <span class="r-in"><span class="fu">sampleValue</span><span class="op">(</span><span class="va">u</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.7010332</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.832808</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">p</span> <span class="op">=</span> <span class="fu"><a href="Param.html">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"x"</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="co"># can be either "a", "b" or "c"</span></span>
 <span class="r-in"><span class="fu">sampleValue</span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "c"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "a"</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">p</span> <span class="op">=</span> <span class="fu"><a href="Param.html">makeIntegerVectorParam</a></span><span class="op">(</span><span class="st">"x"</span>, len <span class="op">=</span> <span class="fl">2</span>, lower <span class="op">=</span> <span class="fl">1</span>, upper <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
 <span class="r-in"><span class="co"># vector of two random integers between 1 and 5:</span></span>
 <span class="r-in"><span class="fu">sampleValue</span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 3 2</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="makeParamSet.html">makeParamSet</a></span><span class="op">(</span></span>
 <span class="r-in">  <span class="fu"><a href="Param.html">makeNumericParam</a></span><span class="op">(</span><span class="st">"x"</span>, lower <span class="op">=</span> <span class="fl">1</span>, upper <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span>
@@ -121,13 +121,13 @@ a named list of such values in the correct order is returned.</p>
 <span class="r-in"><span class="op">)</span></span>
 <span class="r-in"><span class="fu">sampleValue</span><span class="op">(</span><span class="va">ps</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $x</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 6.809786</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 4.21846</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $y</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 9</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $z</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
