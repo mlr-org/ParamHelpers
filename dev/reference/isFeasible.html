@@ -93,6 +93,8 @@ the negative result.</p>
     <dl><dt>par</dt>
 <dd><p>(<a href="Param.html">Param</a> | <a href="makeParamSet.html">ParamSet</a>)<br>
 Parameter or parameter set.</p></dd>
+
+
 <dt>x</dt>
 <dd><p>(any) <br>
 Single value to check against the <code>Param</code> or <code>ParamSet</code>. For a <code>ParamSet</code>
@@ -101,20 +103,27 @@ list is named, it is possible to only pass a subset of parameters defined
 in the <code><a href="makeParamSet.html">ParamSet()</a></code> <code>par</code>. In that case, only conditions regarding the
 passed parameters are checked. (Note that this might not work if one of the
 passed params has a <code>requires</code> setting which refers to an unpassed param.)</p></dd>
+
+
 <dt>use.defaults</dt>
 <dd><p>(<code>logical(1)</code>)<br>
 Whether defaults of the <code><a href="Param.html">Param()</a></code>/<code><a href="makeParamSet.html">ParamSet()</a></code> should be used if no values
 are supplied. If the defaults have requirements that are not met by <code>x</code> it
 will be feasible nonetheless. Default is <code>FALSE</code>.</p></dd>
+
+
 <dt>filter</dt>
 <dd><p>(<code>logical(1)</code>)<br>
 Whether the <code><a href="makeParamSet.html">ParamSet()</a></code> should be reduced to the space of the given Param
 Values. Note that in case of <code>use.defaults = TRUE</code> the filtering will be
 conducted after the insertion of the default values. Default is <code>FALSE</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>logical(1)</code>.</p>
+    
+
+<p><code>logical(1)</code>.</p>
     </div>
 
     <div id="ref-examples">
@@ -151,7 +160,7 @@ conducted after the insertion of the default values. Default is <code>FALSE</cod
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer></div>

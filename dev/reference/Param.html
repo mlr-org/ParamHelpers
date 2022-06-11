@@ -295,26 +295,36 @@ settings, which is sometimes useful.</p>
     <dl><dt>id</dt>
 <dd><p>(<code>character(1)</code>)<br>
 Name of parameter.</p></dd>
+
+
 <dt>lower</dt>
 <dd><p>(<code>numeric</code> | <code>expression</code>)<br>
 Lower bounds. A singe value of
 length 1 is automatically replicated to <code>len</code> for vector parameters. If
 <code>len = NA</code> you can only pass length-1 scalars. Default is <code>-Inf</code>.</p></dd>
+
+
 <dt>upper</dt>
 <dd><p>(<code>numeric</code> | <code>expression</code>)<br>
 Upper bounds. A singe value of
 length 1 is automatically replicated to <code>len</code> for vector parameters. If
 <code>len = NA</code> you can only pass length-1 scalars. Default is <code>Inf</code>.</p></dd>
+
+
 <dt>allow.inf</dt>
 <dd><p>(<code>logical(1)</code>)<br>
 Allow infinite values for numeric and
 numericvector params to be feasible settings. Default is <code>FALSE</code>.</p></dd>
+
+
 <dt>default</dt>
 <dd><p>(any concrete value | <code>expression</code>)<br>
 Default value used in
 learner. Note: When this is a discrete parameter make sure to use a VALUE
 here, not the NAME of the value. If this argument is missing, it means no
 default value is available.</p></dd>
+
+
 <dt>trafo</dt>
 <dd><p>(<code>NULL</code> | <code>function(x)</code>)<br>
 Function to transform parameter. It
@@ -322,6 +332,8 @@ should be applied to the parameter value before it is, e.g., passed to a
 corresponding objective function. Function must accept a parameter value as
 the first argument and return a transformed one. Default is <code>NULL</code> which
 means no transformation.</p></dd>
+
+
 <dt>requires</dt>
 <dd><p>(<code>NULL</code> | <code>call</code> | <code>expression</code>)<br>
 States requirements on
@@ -330,6 +342,8 @@ if its requirements are satisfied (dependent parameter). Can be an object
 created either with <code>expression</code> or <code>quote</code>, the former type is
 auto-converted into the later. Only really useful if the parameter is
 included in a (ParamSet()). Default is <code>NULL</code> which means no requirements.</p></dd>
+
+
 <dt>tunable</dt>
 <dd><p>(<code>logical(1)</code>)<br>
 Is this parameter tunable? Defining a
@@ -338,18 +352,26 @@ parameter to be not-tunable allows to mark arguments like, e.g.,
 most likely not respected by optimizing procedures unless stated otherwise.
 Default is <code>TRUE</code> (except for <code>untyped</code>, <code>function</code>, <code>character</code> and
 <code>characterVector</code>) which means it is tunable.</p></dd>
+
+
 <dt>special.vals</dt>
 <dd><p>(<code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>)<br>
 A list of special values the parameter can
 except which are outside of the defined range. Default is an empty list.</p></dd>
+
+
 <dt>len</dt>
 <dd><p>(<code>integer(1)</code> | <code>expression</code>)<br>
 Length of vector parameter.</p></dd>
+
+
 <dt>cnames</dt>
 <dd><p>(<code>character</code>)<br>
 Component names for vector params (except
 discrete). Every function in this package that creates vector values for
 such a param, will name that vector with <code>cnames</code>.</p></dd>
+
+
 <dt>values</dt>
 <dd><p>(<code>vector</code> | <code>list</code> | <code>expression</code>)<br>
 Possible discrete values.
@@ -357,10 +379,13 @@ Instead of using a vector of atomic values, you are also allowed to pass a
 list of quite “complex” R objects, which are used as discrete
 choices. If you do the latter, the elements must be uniquely named, so that
 the names can be used as internal representations for the choice.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>[<code>Param()</code>].</p>
+    
+
+<p>[<code>Param()</code>].</p>
     </div>
 
     <div id="ref-examples">
@@ -391,7 +416,7 @@ the names can be used as internal representations for the choice.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer></div>

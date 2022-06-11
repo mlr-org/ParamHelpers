@@ -99,29 +99,43 @@ by a scalar NA in the input.</p>
     <dl><dt>op</dt>
 <dd><p><a href="OptPath.html">OptPath</a><br>
 Optimization path.</p></dd>
+
+
 <dt>x</dt>
 <dd><p>(<code>list</code>)<br>
 List of parameter values for a point in input space. Must be in same order
 as parameters.</p></dd>
+
+
 <dt>y</dt>
 <dd><p>(<code>numeric</code>)<br>
 Vector of fitness values.  Must be in same order as <code>y.names</code>.</p></dd>
+
+
 <dt>dob</dt>
 <dd><p>(<code>integer(1)</code>)<br>
 Date of birth of the new parameters.
 Default is length of path + 1.</p></dd>
+
+
 <dt>eol</dt>
 <dd><p>(<code>integer(1)</code>)<br>
 End of life of point.
 Default is <code>NA</code>.</p></dd>
+
+
 <dt>error.message</dt>
 <dd><p>(<code>character(1)</code>)<br>
 Possible error message that occurred for this parameter values.
 Default is <code>NA</code>.</p></dd>
+
+
 <dt>exec.time</dt>
 <dd><p>(<code>numeric(1)</code>)<br>
 Possible exec time for this evaluation.
 Default is <code>NA</code>.</p></dd>
+
+
 <dt>extra</dt>
 <dd><p>(<code>list</code>)<br>
 Possible list of extra values to store.
@@ -132,14 +146,19 @@ Other entries must be scalar, and must be in the same order of all calls of
 Watch out: if <code>include.extra</code> was set to <code>TRUE</code> in (makeOptPathDF())
 the list of extras is mandatory.
 Default is <code>NULL</code>.</p></dd>
+
+
 <dt>check.feasible</dt>
 <dd><p>(<code>logical(1)</code>)<br>
 Should <code>x</code> be checked with (isFeasible())?
 Default is <code>TRUE</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Nothing.</p>
+    
+
+<p>Nothing.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -188,7 +207,7 @@ Default is <code>TRUE</code>.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer></div>

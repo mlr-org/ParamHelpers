@@ -93,9 +93,13 @@ subset of keys.</p>
     <dl><dt>...</dt>
 <dd><p>(<code><a href="Param.html">Param()</a></code>)<br>
 Parameters.</p></dd>
+
+
 <dt>params</dt>
 <dd><p>(list of <code><a href="Param.html">Param()</a></code>)<br>
 List of parameters, alternative way instead of using <code>...</code>.</p></dd>
+
+
 <dt>forbidden</dt>
 <dd><p>(<code>NULL</code> | R expression)<br>
 States forbidden region of parameter set via an expression. Every setting
@@ -105,33 +109,48 @@ through simple constraints or <code>requires</code>-conditions (although these s
 be always used when possible). If parameters have associated trafos, the
 forbidden region must always be specified on the original scale and not the
 transformed one. Default is <code>NULL</code> which means no forbidden region.</p></dd>
+
+
 <dt>keys</dt>
 <dd><p><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a><br>
 Character vector with keys (names) of feasible variable names which will be
 provided via a dictionary/hash later. Default is <code>NULL</code>.</p></dd>
+
+
 <dt>id</dt>
 <dd><p>(<code>character(1)</code>)<br>
 Name of parameter.</p></dd>
+
+
 <dt>len</dt>
 <dd><p>(<code>integer(1)</code>)<br>
 Length of vector.</p></dd>
+
+
 <dt>lower</dt>
 <dd><p>(<code>numeric</code>)<br>
 Lower bound.
 Default is <code>-Inf</code>.</p></dd>
+
+
 <dt>upper</dt>
 <dd><p><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a> <br>
 Upper bound.
 Default is <code>Inf</code>.</p></dd>
+
+
 <dt>vector</dt>
 <dd><p>(<code>logical(1)</code>) <br>
 Should a <code>NumericVectorParam</code> be used instead of
 n <code>NumericParam</code> objects?
 Default is <code>TRUE</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><code>ParamSet()</code> | <code>LearnerParamSet</code>.
+    
+
+<p><code>ParamSet()</code> | <code>LearnerParamSet</code>.
 If all parameters of the <code>ParamSet</code> are learner parameters, the output
 will inherit the class <code>LearnerParamSet</code>.</p>
     </div>
@@ -182,7 +201,7 @@ will inherit the class <code>LearnerParamSet</code>.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer></div>

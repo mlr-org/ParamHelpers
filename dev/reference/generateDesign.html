@@ -154,9 +154,13 @@ dependencies on all parameters involved. (We are working on it.)</p>
 <dd><p>(<code>integer(1)</code>)<br>
 Number of samples in design.
 Default is 10.</p></dd>
+
+
 <dt>par.set</dt>
 <dd><p><a href="makeParamSet.html">ParamSet</a><br>
 Parameter set.</p></dd>
+
+
 <dt>fun</dt>
 <dd><p>(<code>function</code>)<br>
 Function from package lhs.
@@ -164,13 +168,19 @@ Possible are: <code><a href="https://rdrr.io/pkg/lhs/man/maximinLHS.html" class=
 <code><a href="https://rdrr.io/pkg/lhs/man/geneticLHS.html" class="external-link">lhs::geneticLHS()</a></code>, <code><a href="https://rdrr.io/pkg/lhs/man/improvedLHS.html" class="external-link">lhs::improvedLHS()</a></code>, <code><a href="https://rdrr.io/pkg/lhs/man/optAugmentLHS.html" class="external-link">lhs::optAugmentLHS()</a></code>,
 <code><a href="https://rdrr.io/pkg/lhs/man/optimumLHS.html" class="external-link">lhs::optimumLHS()</a></code>
 Default is <code><a href="https://rdrr.io/pkg/lhs/man/randomLHS.html" class="external-link">lhs::randomLHS()</a></code>.</p></dd>
+
+
 <dt>fun.args</dt>
 <dd><p>(<code>list</code>)<br>
 List of further arguments passed to <code>fun</code>.</p></dd>
+
+
 <dt>trafo</dt>
 <dd><p>(<code>logical(1)</code>)<br>
 Transform all parameters by using theirs respective transformation
 functions. Default is <code>FALSE</code>.</p></dd>
+
+
 <dt>augment</dt>
 <dd><p>(<code>integer(1)</code>)<br>
 Duplicated values and forbidden regions in the parameter space can lead to
@@ -179,10 +189,13 @@ augment the design again to size <code>n</code>. It is not guaranteed that this 
 works (to full size) and <code>augment</code> specifies the number of tries to
 augment. If the the design is of size less than <code>n</code> after all tries, a
 warning is issued and the smaller design is returned. Default is 20.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a>. Columns are named by the ids of the parameters. If the
+    
+
+<p><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a>. Columns are named by the ids of the parameters. If the
 <code>par.set</code> argument contains a vector parameter, its corresponding column
 names in the design are the parameter id concatenated with 1 to dimension
 of the vector. The result will have an <code>logical(1)</code> attribute
@@ -198,11 +211,11 @@ of the vector. The result will have an <code>logical(1)</code> attribute
 <span class="r-in"><span class="co"># random latin hypercube design with 5 samples:</span></span>
 <span class="r-in"><span class="fu">generateDesign</span><span class="op">(</span><span class="fl">5</span>, <span class="va">ps</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           x1 x2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  0.4498975 11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 -0.9920905 17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  0.3883014 15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 -1.9632733 13</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 -0.7094538 20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 -0.7794336 13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 -1.7099171 11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 -1.1194633 15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  0.2419855 19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  0.7434533 18</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># with trafo</span></span>
 <span class="r-in"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="makeParamSet.html">makeParamSet</a></span><span class="op">(</span></span>
@@ -210,17 +223,17 @@ of the vector. The result will have an <code>logical(1)</code> attribute
 <span class="r-in">  <span class="fu"><a href="Param.html">makeNumericVectorParam</a></span><span class="op">(</span><span class="st">"y"</span>, len <span class="op">=</span> <span class="fl">2</span>, lower <span class="op">=</span> <span class="fl">0</span>, upper <span class="op">=</span> <span class="fl">1</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">)</span></span>
 <span class="r-in"><span class="fu">generateDesign</span><span class="op">(</span><span class="fl">10</span>, <span class="va">ps</span>, trafo <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              x         y1         y2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   0.61602909 0.30910446 0.69089554</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  -1.74436762 0.78517978 0.21482022</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  -1.53477836 0.44186636 0.55813364</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  -0.38859162 0.39901864 0.60098136</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  -0.70176643 0.08581639 0.91418361</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  -0.87098743 0.70962983 0.29037017</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7   0.77021219 0.33018977 0.66981023</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  -1.38187258 0.92168461 0.07831539</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9   0.27103920 0.70297911 0.29702089</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10  0.09238849 0.47302968 0.52697032</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             x        y1        y2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  -0.1786224 0.6535658 0.3464342</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   0.9303420 0.3567736 0.6432264</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   0.3882927 0.3606521 0.6393479</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  -0.6124390 0.6321602 0.3678398</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  -1.3216571 0.7229539 0.2770461</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  -0.8834585 0.9138489 0.0861511</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  -0.3455242 0.2503697 0.7496303</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8   0.4569298 0.4509502 0.5490498</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  -1.4853053 0.5555718 0.4444282</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 -1.7526218 0.1436436 0.8563564</span>
 </code></pre></div>
     </div>
   </div>
@@ -235,7 +248,7 @@ of the vector. The result will have an <code>logical(1)</code> attribute
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer></div>

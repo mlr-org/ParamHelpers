@@ -95,16 +95,22 @@ and extra measures over the time.</p>
     <dl><dt>op</dt>
 <dd><p>(<code>OptPath</code>)<br>
 Optimization path.</p></dd>
+
+
 <dt>iters</dt>
 <dd><p>(<code>integer</code> | NULL)<br>
 Vector of iterations which should be plotted one after another. If <code>NULL</code>,
 which is the default, only the last iteration is plotted. Iteration 0 plots
 all elements with dob = 0. Note that the plots for iteration i contains all
 observations alive in iteration i.</p></dd>
+
+
 <dt>pause</dt>
 <dd><p>(<code>logical(1)</code>)<br>
 Should the process be paused after each iteration?
 Default is <code>TRUE</code>.</p></dd>
+
+
 <dt>xlim</dt>
 <dd><p><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a> <br>
 X axis limits for the plots. Must be a named list, so you can specify the
@@ -117,6 +123,8 @@ Note: We do not support setting lims for the over.time.plots. We think, in
 nearly every case the ggplot defaults are fine, and the very rare case you
 have to set them, you can you can extract the plots and add your own
 limits.</p></dd>
+
+
 <dt>ylim</dt>
 <dd><p><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a> <br>
 Y axis limits for the plots. Must be a named list, so you can specify the
@@ -129,11 +137,16 @@ Note: We do not support setting lims for the over.time.plots. We think, in
 nearly every case the ggplot defaults are fine, and the very rare case you
 have to set them, you can you can extract the plots and add your own
 limits.</p></dd>
+
+
 <dt>title</dt>
 <dd><p>(<code>character(1)</code>)<br>
 Main title for the arranged plots, default is Optimization Path Plots.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional parameters for <code><a href="renderOptPathPlot.html">renderOptPathPlot()</a></code>.</p></dd>
+
 </dl></div>
 
   </div>
@@ -148,7 +161,7 @@ Main title for the arranged plots, default is Optimization Path Plots.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer></div>
