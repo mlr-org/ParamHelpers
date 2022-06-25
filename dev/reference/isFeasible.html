@@ -85,7 +85,7 @@ the negative result.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">isFeasible</span><span class="op">(</span><span class="va">par</span>, <span class="va">x</span>, use.defaults <span class="op">=</span> <span class="cn">FALSE</span>, filter <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">isFeasible</span><span class="op">(</span><span class="va">par</span>, <span class="va">x</span>, use.defaults <span class="op">=</span> <span class="cn">FALSE</span>, filter <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -128,21 +128,21 @@ conducted after the insertion of the default values. Default is <code>FALSE</cod
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">p</span> <span class="op">=</span> <span class="fu"><a href="Param.html">makeNumericParam</a></span><span class="op">(</span><span class="st">"x"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, upper <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">isFeasible</span><span class="op">(</span><span class="va">p</span>, <span class="fl">0</span><span class="op">)</span> <span class="co"># True</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">p</span> <span class="op">=</span> <span class="fu"><a href="Param.html">makeNumericParam</a></span><span class="op">(</span><span class="st">"x"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, upper <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">isFeasible</span><span class="op">(</span><span class="va">p</span>, <span class="fl">0</span><span class="op">)</span> <span class="co"># True</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-in"><span class="fu">isFeasible</span><span class="op">(</span><span class="va">p</span>, <span class="fl">2</span><span class="op">)</span> <span class="co"># False, out of bounds</span></span>
+<span class="r-in"><span><span class="fu">isFeasible</span><span class="op">(</span><span class="va">p</span>, <span class="fl">2</span><span class="op">)</span> <span class="co"># False, out of bounds</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
-<span class="r-in"><span class="fu">isFeasible</span><span class="op">(</span><span class="va">p</span>, <span class="st">"a"</span><span class="op">)</span> <span class="co"># False, wrong type</span></span>
+<span class="r-in"><span><span class="fu">isFeasible</span><span class="op">(</span><span class="va">p</span>, <span class="st">"a"</span><span class="op">)</span> <span class="co"># False, wrong type</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
-<span class="r-in"><span class="co"># now for parameter sets</span></span>
-<span class="r-in"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="makeParamSet.html">makeParamSet</a></span><span class="op">(</span></span>
-<span class="r-in">  <span class="fu"><a href="Param.html">makeNumericParam</a></span><span class="op">(</span><span class="st">"x"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, upper <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
-<span class="r-in">  <span class="fu"><a href="Param.html">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"y"</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="fu">isFeasible</span><span class="op">(</span><span class="va">ps</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">0</span>, <span class="st">"a"</span><span class="op">)</span><span class="op">)</span> <span class="co"># True</span></span>
+<span class="r-in"><span><span class="co"># now for parameter sets</span></span></span>
+<span class="r-in"><span><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="makeParamSet.html">makeParamSet</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="Param.html">makeNumericParam</a></span><span class="op">(</span><span class="st">"x"</span>, lower <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, upper <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="fu"><a href="Param.html">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"y"</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">isFeasible</span><span class="op">(</span><span class="va">ps</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">0</span>, <span class="st">"a"</span><span class="op">)</span><span class="op">)</span> <span class="co"># True</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-in"><span class="fu">isFeasible</span><span class="op">(</span><span class="va">ps</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="co"># False, wrong order</span></span>
+<span class="r-in"><span><span class="fu">isFeasible</span><span class="op">(</span><span class="va">ps</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="co"># False, wrong order</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"warning")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "The parameter setting x=a does not meet constraints"</span>

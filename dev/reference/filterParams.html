@@ -77,27 +77,27 @@ tunable).</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">filterParams</span><span class="op">(</span>
-  <span class="va">par.set</span>,
-  ids <span class="op">=</span> <span class="cn">NULL</span>,
-  type <span class="op">=</span> <span class="cn">NULL</span>,
-  tunable <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>,
-  check.requires <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span>
-
-<span class="fu">filterParamsNumeric</span><span class="op">(</span>
-  <span class="va">par.set</span>,
-  ids <span class="op">=</span> <span class="cn">NULL</span>,
-  tunable <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>,
-  include.int <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span>
-
-<span class="fu">filterParamsDiscrete</span><span class="op">(</span>
-  <span class="va">par.set</span>,
-  ids <span class="op">=</span> <span class="cn">NULL</span>,
-  tunable <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>,
-  include.logical <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">filterParams</span><span class="op">(</span></span>
+<span>  <span class="va">par.set</span>,</span>
+<span>  ids <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  type <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  tunable <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
+<span>  check.requires <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">filterParamsNumeric</span><span class="op">(</span></span>
+<span>  <span class="va">par.set</span>,</span>
+<span>  ids <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  tunable <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
+<span>  include.int <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">filterParamsDiscrete</span><span class="op">(</span></span>
+<span>  <span class="va">par.set</span>,</span>
+<span>  ids <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  tunable <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>,</span>
+<span>  include.logical <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -160,29 +160,29 @@ Default is <code>TRUE</code>.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="makeParamSet.html">makeParamSet</a></span><span class="op">(</span></span>
-<span class="r-in">  <span class="fu"><a href="Param.html">makeNumericParam</a></span><span class="op">(</span><span class="st">"u"</span>, lower <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
-<span class="r-in">  <span class="fu"><a href="Param.html">makeIntegerParam</a></span><span class="op">(</span><span class="st">"v"</span>, lower <span class="op">=</span> <span class="fl">1</span>, upper <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span>
-<span class="r-in">  <span class="fu"><a href="Param.html">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"w"</span>, values <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span>,</span>
-<span class="r-in">  <span class="fu"><a href="Param.html">makeLogicalParam</a></span><span class="op">(</span><span class="st">"x"</span><span class="op">)</span>,</span>
-<span class="r-in">  <span class="fu"><a href="Param.html">makeCharacterParam</a></span><span class="op">(</span><span class="st">"s"</span><span class="op">)</span>,</span>
-<span class="r-in">  <span class="fu"><a href="Param.html">makeNumericParam</a></span><span class="op">(</span><span class="st">"y"</span>, tunable <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># filter for numeric and integer parameters</span></span>
-<span class="r-in"><span class="fu">filterParams</span><span class="op">(</span><span class="va">ps</span>, type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"integer"</span>, <span class="st">"numeric"</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="makeParamSet.html">makeParamSet</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="Param.html">makeNumericParam</a></span><span class="op">(</span><span class="st">"u"</span>, lower <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="fu"><a href="Param.html">makeIntegerParam</a></span><span class="op">(</span><span class="st">"v"</span>, lower <span class="op">=</span> <span class="fl">1</span>, upper <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="fu"><a href="Param.html">makeDiscreteParam</a></span><span class="op">(</span><span class="st">"w"</span>, values <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="fu"><a href="Param.html">makeLogicalParam</a></span><span class="op">(</span><span class="st">"x"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="fu"><a href="Param.html">makeCharacterParam</a></span><span class="op">(</span><span class="st">"s"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="fu"><a href="Param.html">makeNumericParam</a></span><span class="op">(</span><span class="st">"y"</span>, tunable <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># filter for numeric and integer parameters</span></span></span>
+<span class="r-in"><span><span class="fu">filterParams</span><span class="op">(</span><span class="va">ps</span>, type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"integer"</span>, <span class="st">"numeric"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      Type len Def      Constr Req Tunable Trafo</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> u numeric   -   -    1 to Inf   -    TRUE     -</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> v integer   -   -      1 to 2   -    TRUE     -</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> y numeric   -   - -Inf to Inf   -   FALSE     -</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># filter for tunable, numeric parameters</span></span>
-<span class="r-in"><span class="fu">filterParams</span><span class="op">(</span><span class="va">ps</span>, type <span class="op">=</span> <span class="st">"numeric"</span>, tunable <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># filter for tunable, numeric parameters</span></span></span>
+<span class="r-in"><span><span class="fu">filterParams</span><span class="op">(</span><span class="va">ps</span>, type <span class="op">=</span> <span class="st">"numeric"</span>, tunable <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      Type len Def   Constr Req Tunable Trafo</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> u numeric   -   - 1 to Inf   -    TRUE     -</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># filter for all numeric parameters among "u", "v" and "x"</span></span>
-<span class="r-in"><span class="fu">filterParams</span><span class="op">(</span><span class="va">ps</span>, type <span class="op">=</span> <span class="st">"numeric"</span>, ids <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"u"</span>, <span class="st">"v"</span>, <span class="st">"x"</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># filter for all numeric parameters among "u", "v" and "x"</span></span></span>
+<span class="r-in"><span><span class="fu">filterParams</span><span class="op">(</span><span class="va">ps</span>, type <span class="op">=</span> <span class="st">"numeric"</span>, ids <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"u"</span>, <span class="st">"v"</span>, <span class="st">"x"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      Type len Def   Constr Req Tunable Trafo</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> u numeric   -   - 1 to Inf   -    TRUE     -</span>
 </code></pre></div>
