@@ -211,11 +211,11 @@ of the vector. The result will have an <code>logical(1)</code> attribute
 <span class="r-in"><span><span class="co"># random latin hypercube design with 5 samples:</span></span></span>
 <span class="r-in"><span><span class="fu">generateDesign</span><span class="op">(</span><span class="fl">5</span>, <span class="va">ps</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           x1 x2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 -1.8398390 13</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 -0.2322244 19</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  0.4052396 10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  0.3889754 15</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 -1.0734180 17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 -0.6414301 10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 -1.4451242 16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  0.6501852 19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  0.3232539 16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 -1.3631635 12</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># with trafo</span></span></span>
 <span class="r-in"><span><span class="va">ps</span> <span class="op">=</span> <span class="fu"><a href="makeParamSet.html">makeParamSet</a></span><span class="op">(</span></span></span>
@@ -223,17 +223,17 @@ of the vector. The result will have an <code>logical(1)</code> attribute
 <span class="r-in"><span>  <span class="fu"><a href="Param.html">makeNumericVectorParam</a></span><span class="op">(</span><span class="st">"y"</span>, len <span class="op">=</span> <span class="fl">2</span>, lower <span class="op">=</span> <span class="fl">0</span>, upper <span class="op">=</span> <span class="fl">1</span>, trafo <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">generateDesign</span><span class="op">(</span><span class="fl">10</span>, <span class="va">ps</span>, trafo <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              x         y1        y2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   0.67357031 0.40542685 0.5945732</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   0.08181393 0.51737082 0.4826292</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  -1.70772668 0.83321713 0.1667829</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  -1.08803315 0.04027778 0.9597222</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  -1.15822987 0.55258816 0.4474118</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6   0.70469738 0.67474617 0.3252538</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  -0.21762643 0.89647040 0.1035296</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  -1.48596652 0.17964152 0.8203585</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9   0.13791276 0.52662618 0.4733738</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 -0.56595361 0.37298749 0.6270125</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             x         y1         y2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   0.5460204 0.60688780 0.39311220</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  -1.6977944 0.49795037 0.50204963</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  -1.2325419 0.73052671 0.26947329</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  -1.8103106 0.61986246 0.38013754</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  -0.1516574 0.90757722 0.09242278</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   0.8377650 0.10764220 0.89235780</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  -0.7611485 0.34231325 0.65768675</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8   0.2340729 0.85671071 0.14328929</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  -0.3662320 0.50201625 0.49798375</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 -0.9129264 0.07384704 0.92615296</span>
 </code></pre></div>
     </div>
   </div>
