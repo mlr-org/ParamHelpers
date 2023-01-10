@@ -231,7 +231,7 @@ determineReqVectorized = function(pars) {
   # heuristic if we allow this requirement to be evaluated in an vectorized fashion
   vapply(X = lapply(pars, function(p) p$requires), function(req) {
     # vectorized if no "&&", "||" or "(" is detected
-    !grepl(x = deparse(req), pattern = "\\|\\||&&|\\(")
+    !any(grepl(x = deparse(req), pattern = "\\|\\||&&|\\("))
   }, FUN.VALUE = logical(1))
 }
 
