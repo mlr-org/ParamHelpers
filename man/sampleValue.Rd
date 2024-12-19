@@ -12,7 +12,7 @@ Parameter or parameter set.}
 
 \item{discrete.names}{(\code{logical(1)})\cr
 Should names be sampled for discrete parameters or values instead?
-Default is code {FALSE}.}
+Default is \code{FALSE}.}
 
 \item{trafo}{(\code{logical(1)})\cr
 Transform all parameters by using theirs respective transformation

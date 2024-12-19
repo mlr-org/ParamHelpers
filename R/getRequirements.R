@@ -7,7 +7,7 @@
 #' @param remove.null (`logical(1)`)\cr
 #'   If not set, params without a requires-setting will result in a `NULL`
 #'   element in the returned list, otherwise they are removed. Default is
-#'   code{TRUE}.
+#'   \code{TRUE}.
 #' @return xnamed `list`.
 #'   Named list of require-call-objects, lengths corresponds to number of params
 #'   (potentially only the subset with requires-field), named with with param

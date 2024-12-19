@@ -103,12 +103,12 @@ getValues.list = function(obj, dict = NULL) {
   return(values)
 }
 
-
 getBounds = function(obj, type.of.bounds, with.nr = FALSE, dict = NULL) {
   UseMethod("getBounds")
 }
 
 # workhorse for getLower and getUpper (for Param)
+#' @export
 getBounds.Param = function(obj, type.of.bounds, with.nr = FALSE, dict = NULL) {
 
   assertClass(obj, "Param")
@@ -138,6 +138,7 @@ getBounds.Param = function(obj, type.of.bounds, with.nr = FALSE, dict = NULL) {
 }
 
 # workhorse for getLower and getUpper for ParamSet
+#' @export
 getBounds.ParamSet = function(obj, type.of.bounds, with.nr = FALSE, dict = NULL) {
 
   assertClass(obj, "ParamSet")
@@ -158,6 +159,7 @@ getBounds.ParamSet = function(obj, type.of.bounds, with.nr = FALSE, dict = NULL)
 }
 
 # workhorse for of getLower and getUpper for regular lists
+#' @export
 getBounds.list = function(obj, type.of.bounds, with.nr = FALSE, dict = NULL) {
   assertClass(obj, "list")
   assertList(dict, names = "unique", null.ok = TRUE)

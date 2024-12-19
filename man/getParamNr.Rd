@@ -12,7 +12,7 @@ Parameter set.}
 
 \item{devectorize}{(\code{logical(1)})\cr
 Sum over length of vector parameters?
-Default is code{FALSE}.}
+Default is \code{FALSE}.}
 }
 \value{
 \code{\link{integer}}.

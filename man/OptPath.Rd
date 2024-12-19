@@ -81,8 +81,8 @@ Contents depend on implementation.}
 Other optpath: 
 \code{\link{addOptPathEl}()},
 \code{\link{getOptPathBestIndex}()},
-\code{\link{getOptPathCols}()},
 \code{\link{getOptPathCol}()},
+\code{\link{getOptPathCols}()},
 \code{\link{getOptPathDOB}()},
 \code{\link{getOptPathEOL}()},
 \code{\link{getOptPathEl}()},

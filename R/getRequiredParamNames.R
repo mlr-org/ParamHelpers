@@ -6,10 +6,12 @@ getRequiredParamNames = function(par) {
   UseMethod("getRequiredParamNames")
 }
 
+#' @export
 getRequiredParamNames.Param = function(par) {
   all.vars(par$requires)
 }
 
+#' @export
 getRequiredParamNames.ParamSet = function(par) {
   if (isEmpty(par)) {
     return(character(0L))

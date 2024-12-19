@@ -13,7 +13,7 @@ Parameter set.}
 \item{remove.null}{(\code{logical(1)})\cr
 If not set, params without a requires-setting will result in a \code{NULL}
 element in the returned list, otherwise they are removed. Default is
-code{TRUE}.}
+\code{TRUE}.}
 }
 \value{
 xnamed \code{list}.

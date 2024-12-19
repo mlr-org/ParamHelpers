@@ -83,8 +83,8 @@ as.data.frame(op)
 Other optpath: 
 \code{\link{OptPath}},
 \code{\link{getOptPathBestIndex}()},
-\code{\link{getOptPathCols}()},
 \code{\link{getOptPathCol}()},
+\code{\link{getOptPathCols}()},
 \code{\link{getOptPathDOB}()},
 \code{\link{getOptPathEOL}()},
 \code{\link{getOptPathEl}()},

@@ -60,8 +60,8 @@ getOptPathBestIndex(op, ties = "first")
 Other optpath: 
 \code{\link{OptPath}},
 \code{\link{addOptPathEl}()},
-\code{\link{getOptPathCols}()},
 \code{\link{getOptPathCol}()},
+\code{\link{getOptPathCols}()},
 \code{\link{getOptPathDOB}()},
 \code{\link{getOptPathEOL}()},
 \code{\link{getOptPathEl}()},
