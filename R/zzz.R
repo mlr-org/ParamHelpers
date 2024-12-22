@@ -21,3 +21,4 @@ ph$type.strings = c(ph$type.strings.integer, ph$type.strings.double, ph$type.str
 ph$convert.param.types.from = c("numericvector", "integervector", "discrete", "discretevector", "logicalvector", "charactervector")
 ph$convert.to.ctypes = c("numeric", "integer", "factor", "logical", "character")
 ph$value.component.names = c("numericvector", "integervector", "logicalvector")
+globalVariables(".data")

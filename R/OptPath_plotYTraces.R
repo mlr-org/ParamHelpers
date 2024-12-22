@@ -61,8 +61,8 @@ renderYTraces = function(opt.paths, over.time = "dob") {
   mean.data = aggregate(data[[y.name]], by = list(data$time, data$.algo), FUN = mean)
   names(mean.data) = c("time", ".algo", y.name)
 
-  pl = ggplot2::ggplot(data, ggplot2::aes_string(x = "time", y = y.name, group = ".algo",
-    linetype = ".algo", col = ".algo"))
+  pl = ggplot2::ggplot(data, ggplot2::aes(x = .data$time, y = .data[[y.name]], group = .data$.algo,
+    linetype = .data$.algo, col = .data$.algo))
   if (over.time == "dob") {
     pl = pl + ggplot2::geom_point(size = 3)
   }

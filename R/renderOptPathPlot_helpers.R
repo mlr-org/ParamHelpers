@@ -15,7 +15,7 @@ getOptPathLims = function(xlim, ylim, op.x, op.y, iters, scale) {
   for (space in c("XSpace", "YSpace")) {
     op.frame = if (space == "XSpace") op.x else op.y
     dim = ncol(op.frame)
-    classes = BBmisc::vcapply(op.frame, function(x) class(x))
+    classes = BBmisc::vcapply(op.frame, class)
 
     # For Multi-D Plot, no limits are needed. Warn, if the user specified some
     # and set to NULL
@@ -160,10 +160,10 @@ getOptPathLims = function(xlim, ylim, op.x, op.y, iters, scale) {
 imputeMissingValues = function(x, impute.scale, impute.value) {
   na.index = which(is.na(x))
   if (length(na.index) > 0) {
-    if (class(x) == "numeric") {
+    if (inherits(x, "numeric")) {
       x[na.index] = max(x, na.rm = TRUE) + impute.scale * (diff(range(x, na.rm = TRUE)))
     }
-    if (class(x) == "factor") {
+    if (inherits(x, "factor")) {
       levels(x) = c(levels(x), impute.value)
       x[na.index] = impute.value
     }

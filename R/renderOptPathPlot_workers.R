@@ -48,11 +48,11 @@ plot1DNum = function(op, .alpha, .type, log, names, short.names,
     title = ggplot2::ggtitle("Y-Space")
   }
 
-  pl = ggplot2::ggplot(op, ggplot2::aes_string(x = names))
+  pl = ggplot2::ggplot(op, ggplot2::aes(x = .data[[names]]))
   pl = pl + ggplot2::geom_density(colour = "black")
   pl = pl + title
   pl = pl + ggplot2::xlab(short.names)
-  pl = pl + ggplot2::geom_rug(ggplot2::aes_string(alpha = ".alpha", colour = ".type"),
+  pl = pl + ggplot2::geom_rug(ggplot2::aes(alpha = .data$.alpha, colour = .data$.type),
     sides = "b", size = 2L, data = op)
   if (names %in% log) {
     pl = pl + ggplot2::coord_trans(xtrans = "log10", limx = xlim)
@@ -84,7 +84,7 @@ plot1DDisc = function(op, .alpha, .type, log, names, short.names,
     title = ggplot2::ggtitle("Y-Space")
   }
 
-  pl = ggplot2::ggplot(op, ggplot2::aes_string(x = names[1L], fill = ".type", alpha = ".alpha"))
+  pl = ggplot2::ggplot(op, ggplot2::aes(x = .data[[names[1L]]], fill = .data$.type, alpha = .data$.alpha))
   pl = pl + ggplot2::geom_bar()
   pl = pl + title
   pl = pl + ggplot2::xlab(short.names)
@@ -139,11 +139,11 @@ plot2D = function(op, .alpha, .type, log, names, short.names, y.name = NULL, op.
   }
 
   pl = ggplot2::ggplot()
-  pl = pl + ggplot2::geom_point(data = op, ggplot2::aes_string(x = names[1L], y = names[2L],
-    shape = ".type", colour = ".type", alpha = ".alpha"), size = size, position = pos)
+  pl = pl + ggplot2::geom_point(data = op, ggplot2::aes(x = .data[[names[1L]]], y = .data[[names[2L]]],
+    shape = .data$.type, colour = .data$.type, alpha = .data$.alpha), size = size, position = pos)
   # add contour
   if (!is.null(y.name)) {
-    pl = pl + ggplot2::stat_contour(ggplot2::aes_string(x = names[1L], y = names[2L], z = y.name), data = df)
+    pl = pl + ggplot2::stat_contour(ggplot2::aes(x = .data[[names[1L]]], y = .data[[names[2L]]], z = .data[[y.name]]), data = df)
   }
   pl = pl + title
   pl = pl + ggplot2::xlab(short.names[1L]) + ggplot2::ylab(short.names[2L])
@@ -251,8 +251,8 @@ multiVariablesOverTime = function(op, .alpha, dob, log, names, short.names,
     times = names, timevar = "variable",
     varying = list(names), direction = "long", v.names = c("value"))
 
-  pl = ggplot2::ggplot(op2, ggplot2::aes_string(x = "dob", y = "value", group = "variable",
-    linetype = "variable"))
+  pl = ggplot2::ggplot(op2, ggplot2::aes(x = .data$dob, y = .data$value, group = .data$variable,
+    linetype = .data$variable))
   pl = pl + ggplot2::geom_point()
   pl = pl + ggplot2::geom_line()
   pl = pl + ggplot2::scale_linetype_discrete(labels = short.names)
@@ -304,10 +304,10 @@ oneVariableOverTime = function(op, .alpha, .type, dob, log, names, short.names, 
     op.seq.opt[, names] = -op.seq.opt[, names]
   }
 
-  aes.points = ggplot2::aes_string(x = "dob", y = names, shape = ".type",
-    colour = ".type", alpha = ".alpha")
+  aes.points = ggplot2::aes(x = .data$dob, y = .data[[names]], shape = .data$.type,
+    colour = .data$.type, alpha = .data$.alpha)
 
-  pl = ggplot2::ggplot(op, ggplot2::aes_string(x = "dob", y = names))
+  pl = ggplot2::ggplot(op, ggplot2::aes(x = .data$dob, y = .data[[names]]))
   # add initial design points allays with jitter in x-direction,
   # if discrete also with jitter in y-direction
   if (length(na.omit(op.init.des[, names])) > 0L) {
@@ -334,7 +334,7 @@ oneVariableOverTime = function(op, .alpha, .type, dob, log, names, short.names, 
     if (is.numeric(op[, names])) {
       op.seq.means = op.seq.opt[!duplicated(op.seq.opt$dob), ]
       op.seq.means[, names] = tapply(op.seq.opt[, names], op.seq.opt[, "dob"], mean)
-      pl = pl + ggplot2::geom_line(data = op.seq.means, ggplot2::aes_string(x = "dob", y = names), alpha = 0.3)
+      pl = pl + ggplot2::geom_line(data = op.seq.means, ggplot2::aes(x = .data$dob, y = .data[[names]]), alpha = 0.3)
     }
   }
 
