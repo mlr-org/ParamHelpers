@@ -66,7 +66,7 @@ renderYTraces = function(opt.paths, over.time = "dob") {
   if (over.time == "dob") {
     pl = pl + ggplot2::geom_point(size = 3)
   }
-  pl = pl + ggplot2::geom_line(data = mean.data, size = 1)
+  pl = pl + ggplot2::geom_line(data = mean.data, linewidth = 1)
 
   return(pl)
 }

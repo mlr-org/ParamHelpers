@@ -1,4 +1,7 @@
-muffle = function(x) expect_warning(x, "to numeric for over time plot")
+muffle = function(x) {
+  expect_warning(res <- x, "to numeric for over time plot")
+  return(res)
+}
 
 test_that("renderOptPathPlot", {
   # Test 1D-1D + short names + alpha + title
@@ -15,7 +18,7 @@ test_that("renderOptPathPlot", {
     dob = dob[i])
   }
   pl = renderOptPathPlot(op0, iter = 0, alpha = FALSE)
-  pl = sapply(c(0, 2), FUN = function(x) {
+  pl = lapply(c(0, 2), FUN = function(x) {
     renderOptPathPlot(op0, iter = x, short.x.names = "e", short.y.names = "f")
   })
   pl = plotOptPath(op0, iters = 0:2, pause = FALSE, title = "Optimization Path")
@@ -38,12 +41,12 @@ test_that("renderOptPathPlot", {
   muffle({
     pl = renderOptPathPlot(op1, iter = 3)
   })
-  pl = sapply(c(0, 20), FUN = function(x) {
+  pl = lapply(c(0, 20), FUN = function(x) {
     muffle(renderOptPathPlot(op1, iter = x, marked = "best",
       ggplot.theme = ggplot2::theme(legend.position = "bottom"),
       size.points = 1, size.lines = 3))
   })
-  pl = sapply(c(0, 20), FUN = function(x) {
+  pl = lapply(c(0, 20), FUN = function(x) {
     muffle(renderOptPathPlot(op1, iter = x, marked = c(4, 10, 18), x.over.time = list(c("x"), c("z")),
       y.over.time = list(c("y1"), c("y2", "y3")), log = c("x", "y2", "y3")))
   })
@@ -70,7 +73,7 @@ test_that("renderOptPathPlot", {
     pl = renderOptPathPlot(op2, iter = 2, x.over.time = list(c("x"), c("extra.var")),
       short.rest.names = c("extra"))
   })
-  pl = sapply(c(0, 2), FUN = function(x) {
+  pl = lapply(c(0, 2), FUN = function(x) {
     muffle(renderOptPathPlot(op2, iter = x, marked = c(3),
       xlim = list(YSpace = c(-10, 10)),
       ylim = list(YSpace = c(-10, 10), XSpace = c(0, 10)),

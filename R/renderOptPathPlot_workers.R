@@ -53,7 +53,7 @@ plot1DNum = function(op, .alpha, .type, log, names, short.names,
   pl = pl + title
   pl = pl + ggplot2::xlab(short.names)
   pl = pl + ggplot2::geom_rug(ggplot2::aes(alpha = .data$.alpha, colour = .data$.type),
-    sides = "b", size = 2L, data = op)
+    sides = "b", linewidth = 2L, data = op)
   if (names %in% log) {
     pl = pl + ggplot2::coord_trans(xtrans = "log10", limx = xlim)
   } else {
@@ -89,7 +89,7 @@ plot1DDisc = function(op, .alpha, .type, log, names, short.names,
   pl = pl + title
   pl = pl + ggplot2::xlab(short.names)
   pl = pl + ggplot2::ylim(ylim)
-  pl = pl + ggplot2::scale_alpha_discrete(range = c(max(1 / (iter + 1), 0.1), 1L))
+  pl = pl + ggplot2::scale_alpha_ordinal(range = c(max(1 / (iter + 1), 0.1), 1L))
   pl = pl + ggplot2::scale_fill_manual(name = "type",
     values = c(init = colours[1L], seq = colours[2L], prop = colours[3L], marked = colours[4L]))
   pl = pl + ggplot.theme
@@ -194,7 +194,7 @@ plotMultiD = function(op, .alpha, .type, log, names, short.names,
   args$alphaLines = ".alpha"
   args$groupColumn = ncol(op)
   args$scale = scale
-  args$mapping = ggplot2::aes_q(lwd = size)
+  args$mapping = eval(substitute(ggplot2::aes(linewidth = size), list(size = size)))
 
 
 
