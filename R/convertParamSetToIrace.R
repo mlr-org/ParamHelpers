@@ -49,7 +49,8 @@ convertParamSetToIrace = function(par.set, as.chars = FALSE) {
         stopf("Unknown parameter type: %s", p$type)
       }
       if (hasRequires(p)) {
-        line = paste(line, collapse(deparse(p$requires, width.cutoff = 500L), sep = ""), sep = " | ")
+        requires = eval(substitute(substitute(expr, list("&&" = as.symbol("&"), "||" = as.symbol("|"))), list(expr = p$requires)))
+        line = paste(line, collapse(deparse(requires, width.cutoff = 500L), sep = ""), sep = " | ")
       }
       lines[count] = line
       count = count + 1L
@@ -67,10 +68,10 @@ convertParamSetToIrace = function(par.set, as.chars = FALSE) {
         pids = getParamIds(p, repeated = TRUE, with.nr = TRUE)
         for (j in seq_len(p$len)) {
           if (isNumeric(p, include.int = FALSE)) {
-            params$boundary[[pids[j]]] = c(p$lower[j], p$upper[j])
+            params$domains[[pids[j]]] = c(p$lower[j], p$upper[j])
           }
           if (isInteger(p)) {
-            params$boundary[[pids[j]]] = as.integer(c(p$lower[j], p$upper[j]))
+            params$domains[[pids[j]]] = as.integer(c(p$lower[j], p$upper[j]))
           }
         }
       }

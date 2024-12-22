@@ -11,9 +11,9 @@ test_that("convertParamSetToIrace", {
           targetRunner = target.runner,
           instances = 1:10,
           maxExperiments = max.exps,
-          logFile = tempfile()
-        ),
-        parameters = ip
+          logFile = tempfile(),
+          parameters = ip
+        )
       )
     )
   }
@@ -68,10 +68,10 @@ test_that("convertParamSetToIrace uses correct boundaries", {
   )
   ips = convertParamSetToIrace(ps)
 
-  expect_identical(vcapply(ips$domain, function(x) class(x)),
-    c(kernel = "character", sigma = "numeric", myInt = "numeric", Binar = "character"))
-  expect_identical(ips$boundary$sigma, as.numeric(unlist(ps$pars$sigma[c("lower", "upper")])))
-  expect_identical(ips$boundary$myInt, as.integer(unlist(ps$pars$myInt[c("lower", "upper")])))
+  expect_identical(vcapply(ips$domains, function(x) class(x)),
+    c(kernel = "character", sigma = "numeric", myInt = "integer", Binar = "character"))
+  expect_identical(ips$domains$sigma, as.numeric(unlist(ps$pars$sigma[c("lower", "upper")])))
+  expect_identical(ips$domains$myInt, as.integer(unlist(ps$pars$myInt[c("lower", "upper")])))
 })
 
 test_that("convertParamSetToIrace work with vecparam", { # has issue here, see 85
@@ -81,7 +81,7 @@ test_that("convertParamSetToIrace work with vecparam", { # has issue here, see 8
     makeNumericVectorParam("c", len = 2, -10, 10)
   )
   i = convertParamSetToIrace(ps)
-  b = i$domain
+  b = i$domains
   expect_equal(b$a1, c(-10, 10))
   expect_equal(b$a2, c(-10, 10))
   expect_equal(b$b, c("v", "w"))
