@@ -11,7 +11,7 @@ test_that("updateParVals works", {
     makeLogicalParam("f", default = TRUE))
   pc = updateParVals(ps, pa, pb)
   expect_equal(pc, list(a = 0, c = 3, d = 4, e = 5))
-  expect_warning(updateParVals(ps, pa, pb, warn = TRUE), "ParamSetting b=2")
+  expect_warning(expect_warning(updateParVals(ps, pa, pb, warn = TRUE), "ParamSetting b=2"), "ParamSetting b=2")
 
   pb2 = list(a = 0, f = FALSE)
   pc2 = updateParVals(ps, pa, pb2)

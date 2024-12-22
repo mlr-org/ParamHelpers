@@ -164,7 +164,7 @@ renderOptPathPlot = function(op, iter, x.over.time, y.over.time, contour.name = 
   }
 
   # set and check x and y lims, if needed
-  lims = getOptPathLims(xlim, ylim, op.x, op.y, iter, 0.05)
+  lims = getOptPathLims(xlim, ylim, op.x, op.y, iter, 0)
   xlim = lims$xlim
   ylim = lims$ylim
 
